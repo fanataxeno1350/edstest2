@@ -1,0 +1,68 @@
+{
+  "definitions": [
+    {
+      "title": "Our-Foot-Print",
+      "id": "ourFootPrint",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "ourFootPrint",
+              "model": "ourFootPrint",
+              "name": "Our-Foot-Print"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footprint-Card",
+      "id": "footprintCard",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footprintCard",
+              "name": "Footprint-Card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footprintCard",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Video",
+          "name": "video",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "ourFootPrint",
+      "components": [
+        "footprintCard"
+      ]
+    }
+  ]
+}

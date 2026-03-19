@@ -1,0 +1,130 @@
+{
+  "definitions": [
+    {
+      "title": "Popular-Products",
+      "id": "popularProducts",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "popularProducts",
+              "model": "popularProducts",
+              "name": "Popular-Products"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Product",
+      "id": "product",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "product",
+              "name": "Product"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "product",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Product Name",
+          "name": "productName",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Product Details",
+          "name": "productDetails",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "popularProducts",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Subtitle",
+          "name": "subtitle",
+          "valueType": "string"
+        },
+        {
+          "component": "boolean",
+          "label": "Show Arrows",
+          "name": "showArrows"
+        },
+        {
+          "component": "boolean",
+          "label": "Meatballs",
+          "name": "meatballs"
+        },
+        {
+          "component": "boolean",
+          "label": "Auto Play Is Enabled",
+          "name": "autoPlayIsEnabled"
+        },
+        {
+          "component": "number",
+          "label": "Auto Play Speed in ms",
+          "name": "autoPlaySpeedInMs"
+        },
+        {
+          "component": "boolean",
+          "label": "Infinite Scroll",
+          "name": "infiniteScroll"
+        },
+        {
+          "component": "text",
+          "label": "Endpoint",
+          "name": "endpoint",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": {
+            "type": "product"
+          },
+          "label": "Products",
+          "name": "products"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "popularProducts",
+      "components": [
+        "product"
+      ]
+    }
+  ]
+}

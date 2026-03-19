@@ -51,7 +51,16 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "header",
+        "search",
+        "carousel",
+        "productCategoryListing",
+        "teaser",
+        "recipeGroup",
+        "popularProducts",
+        "ourFootPrint",
+        "footer"
       ]
     }
   ]
