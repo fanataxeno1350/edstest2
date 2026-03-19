@@ -1,0 +1,274 @@
+{
+  "definitions": [
+    {
+      "title": "Footer",
+      "id": "footer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "footer",
+              "model": "footer",
+              "name": "Footer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "FooterLogo",
+      "id": "footerLogo",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerLogo",
+              "name": "FooterLogo"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "FooterLink",
+      "id": "footerLink",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerLink",
+              "name": "FooterLink"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "FooterSocial",
+      "id": "footerSocial",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerSocial",
+              "name": "FooterSocial"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "FooterContact",
+      "id": "footerContact",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerContact",
+              "name": "FooterContact"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "FooterCopyright",
+      "id": "footerCopyright",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerCopyright",
+              "name": "FooterCopyright"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "FooterSecondaryLink",
+      "id": "footerSecondaryLink",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerSecondaryLink",
+              "name": "FooterSecondaryLink"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footer",
+      "fields": [
+        {
+          "component": "container",
+          "items": {
+            "component": "footerLogo"
+          },
+          "label": "Logos",
+          "name": "logos"
+        },
+        {
+          "component": "container",
+          "items": {
+            "component": "footerLink"
+          },
+          "label": "Links",
+          "name": "links"
+        },
+        {
+          "component": "container",
+          "items": {
+            "component": "footerSocial"
+          },
+          "label": "Social Icons",
+          "name": "socials"
+        },
+        {
+          "component": "footerContact",
+          "label": "Contact Details",
+          "name": "contactDetails"
+        },
+        {
+          "component": "footerCopyright",
+          "label": "Copyright",
+          "name": "copyright"
+        },
+        {
+          "component": "container",
+          "items": {
+            "component": "footerSecondaryLink"
+          },
+          "label": "Secondary Links",
+          "name": "secondaryLinks"
+        }
+      ]
+    },
+    {
+      "id": "footerLogo",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerLink",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerSocial",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Social Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerContact",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Name",
+          "name": "name",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Contact Info",
+          "name": "contactInfo",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Timing",
+          "name": "timing",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerCopyright",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Copyright Text",
+          "name": "copyrightText",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerSecondaryLink",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Secondary Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "footer",
+      "components": [
+        "footerLogo",
+        "footerLink",
+        "footerSocial",
+        "footerContact",
+        "footerCopyright",
+        "footerSecondaryLink"
+      ]
+    }
+  ]
+}
