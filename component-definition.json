@@ -83,75 +83,262 @@
       "id": "blocks",
       "components": [
         {
-          "title": "Cards",
-          "id": "cards",
+          "title": "Banner-Carousel",
+          "id": "bannerCarousel",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Cards",
-                  "filter": "cards"
+                  "filter": "bannerCarousel",
+                  "model": "bannerCarousel",
+                  "name": "Banner-Carousel"
                 }
               }
             }
           }
         },
         {
-          "title": "Card",
-          "id": "card",
+          "title": "Banner-Slide",
+          "id": "bannerSlide",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Card",
-                  "model": "card"
+                  "model": "bannerSlide",
+                  "name": "Banner-Slide"
                 }
               }
             }
           }
         },
         {
-          "title": "Columns",
-          "id": "columns",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/columns/v1/columns",
-                "template": {
-                  "columns": "2",
-                  "rows": "1"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Fragment",
-          "id": "fragment",
+          "title": "Delightful-Delicacies",
+          "id": "delightfulDelicacies",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Fragment",
-                  "model": "fragment"
+                  "filter": "delightfulDelicacies",
+                  "model": "delightfulDelicacies",
+                  "name": "Delightful-Delicacies"
                 }
               }
             }
           }
         },
         {
-          "title": "Hero",
-          "id": "hero",
+          "title": "Category",
+          "id": "category",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "category",
+                  "name": "Category"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer",
+          "id": "footer",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Hero",
-                  "model": "hero"
+                  "filter": "footer",
+                  "model": "footer",
+                  "name": "Footer"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "FooterLogo",
+          "id": "footerLogo",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footerLogo",
+                  "name": "FooterLogo"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "FooterLink",
+          "id": "footerLink",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footerLink",
+                  "name": "FooterLink"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "FooterSocial",
+          "id": "footerSocial",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footerSocial",
+                  "name": "FooterSocial"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "FooterContact",
+          "id": "footerContact",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footerContact",
+                  "name": "FooterContact"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "FooterCopyright",
+          "id": "footerCopyright",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footerCopyright",
+                  "name": "FooterCopyright"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "FooterSecondaryLink",
+          "id": "footerSecondaryLink",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footerSecondaryLink",
+                  "name": "FooterSecondaryLink"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Header",
+          "id": "header",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "header",
+                  "model": "header",
+                  "name": "Header"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "ITC-Club-Carousel",
+          "id": "itcClubCarousel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "itcClubCarousel",
+                  "model": "itcClubCarousel",
+                  "name": "ITC-Club-Carousel"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Carousel-Item",
+          "id": "carouselItem",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "carouselItem",
+                  "name": "Carousel-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "RS-Cards",
+          "id": "rsCards",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "rsCards",
+                  "model": "rsCards",
+                  "name": "RS-Cards"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "RS-Card",
+          "id": "rsCard",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "rsCard",
+                  "name": "RS-Card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Text",
+          "id": "text",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "text",
+                  "model": "text",
+                  "name": "Text"
                 }
               }
             }

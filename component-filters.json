@@ -15,28 +15,61 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "header",
+      "bannerCarousel",
+      "itcClubCarousel",
+      "delightfulDelicacies",
+      "rsCards",
+      "footer"
     ]
   },
   {
-    "id": "cards",
+    "id": "bannerCarousel",
     "components": [
-      "card"
+      "bannerSlide"
     ]
   },
   {
-    "id": "columns",
+    "id": "delightfulDelicacies",
     "components": [
-      "column"
+      "category"
     ]
   },
   {
-    "id": "column",
+    "id": "footer",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "footerLogo",
+      "footerLink",
+      "footerSocial",
+      "footerContact",
+      "footerCopyright",
+      "footerSecondaryLink"
+    ]
+  },
+  {
+    "id": "header",
+    "components": [
+      "header"
+    ]
+  },
+  {
+    "id": "itcClubCarousel",
+    "components": [
+      "carouselItem"
+    ]
+  },
+  {
+    "id": "rsCards",
+    "components": [
+      "rsCard"
+    ]
+  },
+  {
+    "id": "text",
+    "components": [
+      "text"
     ]
   }
 ]
