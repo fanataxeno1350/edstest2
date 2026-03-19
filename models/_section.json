@@ -51,14 +51,8 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----",
-        "header",
-        "bannerCarousel",
-        "spaceadder",
-        "itcClubCarousel",
-        "delightfulDelicacies",
-        "rsCards",
-        "footer"
+        "---new--blocks-----"
+        
       ]
     }
   ]
