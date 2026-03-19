@@ -1,0 +1,166 @@
+{
+  "definitions": [
+    {
+      "title": "Header",
+      "id": "header",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "header",
+              "model": "header",
+              "name": "Header"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Navigation Link",
+      "id": "navigationLink",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "navigationLink",
+              "name": "Navigation Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Country Option",
+      "id": "countryOption",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "countryOption",
+              "name": "Country Option"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "header",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Primary Logo",
+          "name": "primaryLogo",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Primary Logo Link",
+          "name": "primaryLogoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Secondary Logo",
+          "name": "secondaryLogo",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Secondary Logo Link",
+          "name": "secondaryLogoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "label": "Navigation Links",
+          "name": "navigationLinks",
+          "reference": "navigationLink"
+        },
+        {
+          "component": "reference",
+          "label": "Current Country Flag",
+          "name": "countryFlag",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Current Country Code",
+          "name": "countryCode",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "label": "Country Options",
+          "name": "countryOptions",
+          "reference": "countryOption"
+        },
+        {
+          "component": "reference",
+          "label": "Search Icon",
+          "name": "searchIcon",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "navigationLink",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "countryOption",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Flag",
+          "name": "flag",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Country Name",
+          "name": "countryName",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Country Code",
+          "name": "countryCode",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Country URL",
+          "name": "countryUrl",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "header",
+      "components": [
+        "navigationLink",
+        "countryOption"
+      ]
+    }
+  ]
+}
