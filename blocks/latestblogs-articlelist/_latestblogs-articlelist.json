@@ -1,0 +1,97 @@
+{
+  "definitions": [
+    {
+      "title": "LatestBlogs-ArticleList",
+      "id": "latestBlogsArticleList",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "latestBlogsArticleList",
+              "model": "latestBlogsArticleList",
+              "name": "LatestBlogs-ArticleList"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Article",
+      "id": "article",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "article",
+              "name": "Article"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "article",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Date",
+          "name": "date",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "latestBlogsArticleList",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "View All Link",
+          "name": "viewAllLink",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "latestBlogsArticleList",
+      "components": [
+        "article"
+      ]
+    }
+  ]
+}

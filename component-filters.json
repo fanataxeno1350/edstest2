@@ -15,28 +15,102 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "header",
+      "sidebar",
+      "footerBrand",
+      "footerList",
+      "carousel",
+      "banner",
+      "bannerCta",
+      "featureCards",
+      "latestBlogsArticleList",
+      "spaceAdder",
+      "stickyNavigation"
     ]
   },
   {
-    "id": "cards",
+    "id": "bannerCta",
     "components": [
-      "card"
+      "bannerCta"
     ]
   },
   {
-    "id": "columns",
+    "id": "banner",
     "components": [
-      "column"
+      "banner"
     ]
   },
   {
-    "id": "column",
+    "id": "carousel",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "carouselItem"
+    ]
+  },
+  {
+    "id": "featureCards",
+    "components": [
+      "featureCard"
+    ]
+  },
+  {
+    "id": "footerBrand",
+    "components": [
+      "footerLinkGroup",
+      "footerSocial"
+    ]
+  },
+  {
+    "id": "footerLinkGroup",
+    "components": [
+      "footerLink"
+    ]
+  },
+  {
+    "id": "footerList",
+    "components": [
+      "footerLink"
+    ]
+  },
+  {
+    "id": "header",
+    "components": [
+      "headerMenuItem",
+      "footerLink",
+      "socialLink"
+    ]
+  },
+  {
+    "id": "latestBlogsArticleList",
+    "components": [
+      "article"
+    ]
+  },
+  {
+    "id": "sidebar",
+    "components": [
+      "sidebarMenuItem",
+      "footerPrimaryLogo",
+      "footerSecondaryLogo",
+      "footerNavItem",
+      "footerSocialItem",
+      "footerLeftLinkItem"
+    ]
+  },
+  {
+    "id": "spaceAdder"
+  },
+  {
+    "id": "stickyNavigation",
+    "components": [
+      "stickyNavigationItem"
+    ]
+  },
+  {
+    "id": "text",
+    "components": [
+      "text"
     ]
   }
 ]

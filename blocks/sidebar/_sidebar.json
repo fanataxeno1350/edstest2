@@ -1,0 +1,274 @@
+{
+  "definitions": [
+    {
+      "title": "Sidebar",
+      "id": "sidebar",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "sidebar",
+              "model": "sidebar",
+              "name": "Sidebar"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Sidebar-Menu-Item",
+      "id": "sidebarMenuItem",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "sidebarMenuItem",
+              "name": "Sidebar-Menu-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Primary-Logo",
+      "id": "footerPrimaryLogo",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerPrimaryLogo",
+              "name": "Footer-Primary-Logo"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Secondary-Logo",
+      "id": "footerSecondaryLogo",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerSecondaryLogo",
+              "name": "Footer-Secondary-Logo"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Nav-Item",
+      "id": "footerNavItem",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerNavItem",
+              "name": "Footer-Nav-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Social-Item",
+      "id": "footerSocialItem",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerSocialItem",
+              "name": "Footer-Social-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Left-Link-Item",
+      "id": "footerLeftLinkItem",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerLeftLinkItem",
+              "name": "Footer-Left-Link-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "sidebar",
+      "fields": [
+        {
+          "component": "container",
+          "itemType": "sidebarMenuItem",
+          "label": "Sidebar Menu Items",
+          "name": "sidebarMenuItems"
+        },
+        {
+          "component": "container",
+          "itemType": "footerPrimaryLogo",
+          "label": "Footer Primary Logos",
+          "name": "footerPrimaryLogos"
+        },
+        {
+          "component": "container",
+          "itemType": "footerSecondaryLogo",
+          "label": "Footer Secondary Logos",
+          "name": "footerSecondaryLogos"
+        },
+        {
+          "component": "container",
+          "itemType": "footerNavItem",
+          "label": "Footer Nav Items",
+          "name": "footerNavItems"
+        },
+        {
+          "component": "container",
+          "itemType": "footerSocialItem",
+          "label": "Footer Social Items",
+          "name": "footerSocialItems"
+        },
+        {
+          "component": "container",
+          "itemType": "footerLeftLinkItem",
+          "label": "Footer Left Link Items",
+          "name": "footerLeftLinkItems"
+        },
+        {
+          "component": "text",
+          "label": "Copyright Text",
+          "name": "copyrightText",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "sidebarMenuItem",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Menu Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Menu Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Menu Label",
+          "name": "label",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerPrimaryLogo",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Logo Image",
+          "name": "image",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerSecondaryLogo",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Secondary Logo Image",
+          "name": "image",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerNavItem",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Footer Nav Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Footer Nav Label",
+          "name": "label",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerSocialItem",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Social Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Social Icon",
+          "name": "icon",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerLeftLinkItem",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Footer Left Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Footer Left Label",
+          "name": "label",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "sidebar",
+      "components": [
+        "sidebarMenuItem",
+        "footerPrimaryLogo",
+        "footerSecondaryLogo",
+        "footerNavItem",
+        "footerSocialItem",
+        "footerLeftLinkItem"
+      ]
+    }
+  ]
+}

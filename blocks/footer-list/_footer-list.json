@@ -1,0 +1,62 @@
+{
+  "definitions": [
+    {
+      "title": "Footer-List",
+      "id": "footerList",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "footerList",
+              "model": "footerList",
+              "name": "Footer-List"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Link",
+      "id": "footerLink",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerLink",
+              "name": "Footer-Link"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footerLink",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "footerList",
+      "components": [
+        "footerLink"
+      ]
+    }
+  ]
+}
