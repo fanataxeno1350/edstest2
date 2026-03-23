@@ -1,0 +1,142 @@
+{
+  "definitions": [
+    {
+      "title": "Header",
+      "id": "header",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "header",
+              "model": "header",
+              "name": "Header"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "NavItem",
+      "id": "navItem",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "navItem",
+              "name": "NavItem"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "CountryOption",
+      "id": "countryOption",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "countryOption",
+              "name": "CountryOption"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "header",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo",
+          "name": "logo",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Logo Link Image",
+          "name": "logoLinkImage",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Logo Link Alt",
+          "name": "logoLinkAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "itemResourceType": "navItem",
+          "label": "Navigation Items",
+          "name": "navItems"
+        },
+        {
+          "component": "container",
+          "itemResourceType": "countryOption",
+          "label": "Country Options",
+          "name": "countryOptions"
+        }
+      ]
+    },
+    {
+      "id": "navItem",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "countryOption",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Flag",
+          "name": "flag",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Country Name",
+          "name": "countryName",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Country URL",
+          "name": "countryUrl",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "header",
+      "components": [
+        "navItem",
+        "countryOption"
+      ]
+    }
+  ]
+}
