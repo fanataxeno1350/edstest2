@@ -1,3 +1,46 @@
+.hero-qd-icon {  
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "qd-icomoon" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  }
+
+.hero-qd-icon--cheveron-right:before {  
+  content: "\e905";
+  }
+
+.hero-qd-icon--play:before {  
+  content: "\e90a";
+  }
+
+.hero-qd-icon--fullscreen:before {  
+  content: "\e90b";
+  }
+
+.hero-qd-icon--volume:before {  
+  content: "\e90f";
+  }
+
+.hero-heading-weight-boldest {  
+  font-weight: 700 !important;
+  }
+
+/* .hero-Slider .hero-CSS .hero-Starts .hero-here */ .hero-slide-wrap {  
+  overflow: hidden;
+  }
+
+/* .hero-Animation .hero-classes .hero-- .hero-applied .hero-when .hero-in .hero-view */ .hero-slide-up {  
+  animation: slideUp 0.8s ease-out 0.2s both;
+  opacity: 1;
+  }
+
 /* .hero-External .hero-stylesheet: https://qiddiya.hero-com/etc.hero-clientlibs/qiddiya-commons/clientlibs/components/clientlib-cta.hero-lc-aa2ee6a91b48decdf83e3d8d24ccf370-lc.hero-min.hero-css */ .hero-cta {  
   cursor: pointer;
   pointer-events: auto;
@@ -815,6 +858,22 @@
   background-color: var(--white);
   color: var(--tertiary-base);
   }
+
+.hero-qd-icon {   font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; -webkit-font-smoothing: antialiased; font-family: qd-icomoon !important;   }
+
+.hero-qd-icon--cheveron-right::before {   content: "";   }
+
+.hero-qd-icon--play::before {   content: "";   }
+
+.hero-qd-icon--fullscreen::before {   content: "";   }
+
+.hero-qd-icon--volume::before {   content: "";   }
+
+.hero-heading-weight-boldest {   font-weight: 700 !important;   }
+
+.hero-slide-wrap {   overflow: hidden;   }
+
+.hero-slide-up {   animation: 0.8s ease-out 0.2s 1 normal both running slideUp; opacity: 1;   }
 
 /* .hero-Stylesheet .hero-rules: https://qiddiya.hero-com/etc.hero-clientlibs/qiddiya-commons/clientlibs/components/clientlib-cta.hero-lc-aa2ee6a91b48decdf83e3d8d24ccf370-lc.hero-min.hero-css */ .hero-cta {   cursor: pointer; pointer-events: auto; text-decoration: none; border: none; position: relative; display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-1); width: fit-content; padding-inline: var(--clickable-element-padding-inline); block-size: var(--clickable-element-block-size);   }
 

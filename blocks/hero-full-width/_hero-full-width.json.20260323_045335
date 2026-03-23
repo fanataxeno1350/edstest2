@@ -23,14 +23,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Video MP4",
-          "name": "backgroundVideoMp4",
+          "label": "Background Video",
+          "name": "backgroundVideo",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Background Video HLS",
-          "name": "backgroundVideoHls",
+          "label": "Background Video MP4",
+          "name": "backgroundVideoMp4",
           "valueType": "string"
         },
         {
@@ -67,6 +67,12 @@
           "component": "text",
           "label": "Secondary CTA Label",
           "name": "secondaryCtaLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Modal Video",
+          "name": "modalVideo",
           "valueType": "string"
         }
       ]

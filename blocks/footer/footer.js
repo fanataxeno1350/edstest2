@@ -5,6 +5,7 @@ export default function decorate(block) {
   const footerWrapper = document.createElement('div');
   footerWrapper.classList.add('footer-wrapper');
 
+  // Footer Navigation Section
   const footerNavigation = document.createElement('div');
   footerNavigation.classList.add('footer-navigation', 'footer-nav-css-from-wrapper');
 
@@ -16,190 +17,176 @@ export default function decorate(block) {
 
   const logoLink = block.querySelector('[data-aue-prop="logoLink"]');
   if (logoLink) {
-    const newLogoLink = document.createElement('a');
-    newLogoLink.href = logoLink.href;
-    newLogoLink.target = logoLink.target;
-    newLogoLink.setAttribute('aria-label', logoLink.getAttribute('aria-label'));
-
-    const logoSpan = document.createElement('span');
-    logoSpan.classList.add('footer-qd-icon', 'footer-qd-icon--logo', 'footer-qd-logo-footer');
-    // Recreate all path spans
-    for (let i = 1; i <= 25; i += 1) {
-      const pathSpan = document.createElement('span');
-      pathSpan.classList.add(`footer-path${i}`);
-      logoSpan.append(pathSpan);
-    }
-    newLogoLink.append(logoSpan);
-    footerNavigationLogo.append(newLogoLink);
-    moveInstrumentation(logoLink, newLogoLink);
+    footerNavigationLogo.append(logoLink);
+    moveInstrumentation(logoLink, footerNavigationLogo);
   }
+  footerNavigationWrapper.append(footerNavigationLogo);
 
   const footerNavigationContent = document.createElement('div');
   footerNavigationContent.classList.add('footer-navigation__content');
 
-  const footerSocialLinks = document.createElement('div');
-  footerSocialLinks.classList.add('footer-socialLinks', 'footer-social-links', 'footer-social-css-from-wrapper');
-
+  // Footer Social Links
+  const footerSocialLinksDiv = document.createElement('div');
+  footerSocialLinksDiv.classList.add('footer-socialLinks', 'footer-social-links', 'footer-social-css-from-wrapper');
   const socialLinksList = document.createElement('ul');
-  socialLinksList.classList.add('footer-socialLinks__list');
+  socialLinksList.classList.add('footer-social-links__list');
 
   const socialLinkItems = block.querySelectorAll('[data-aue-model="footerSocialLink"]');
   socialLinkItems.forEach((itemNode) => {
-    const link = itemNode.querySelector('[data-aue-prop="link"]');
-    if (link) {
-      const listItem = document.createElement('li');
-      listItem.classList.add('footer-socialLinks__item');
+    const socialLinkItem = document.createElement('li');
+    socialLinkItem.classList.add('footer-social-links__item');
 
-      const newLink = document.createElement('a');
-      newLink.classList.add('footer-socialLinks__icon', 'footer-qd-icon');
-      newLink.target = '_blank';
-      newLink.href = link.href;
-      newLink.setAttribute('aria-label', link.getAttribute('aria-label'));
+    const socialUrl = itemNode.querySelector('[data-aue-prop="socialUrl"]');
+    const socialLabel = itemNode.querySelector('[data-aue-prop="socialLabel"]');
 
-      // Determine icon class based on aria-label or href
-      const ariaLabel = link.getAttribute('aria-label')?.toLowerCase();
-      if (ariaLabel.includes('x')) {
-        newLink.classList.add('footer-qd-icon--x');
-      } else if (ariaLabel.includes('instagram')) {
-        newLink.classList.add('footer-qd-icon--instagram');
-      } else if (ariaLabel.includes('youtube')) {
-        newLink.classList.add('footer-qd-icon--youtube');
-      } else if (ariaLabel.includes('tiktok')) {
-        newLink.classList.add('footer-qd-icon--tiktok');
-      } else if (ariaLabel.includes('linkedin')) {
-        newLink.classList.add('footer-qd-icon--linkedin');
+    if (socialUrl && socialLabel) {
+      const link = document.createElement('a');
+      link.classList.add('footer-social-links__icon', 'footer-qd-icon');
+      link.target = '_blank';
+      link.href = socialUrl.href;
+      link.setAttribute('aria-label', socialLabel.textContent);
+
+      // Determine icon class based on label (e.g., X, Instagram, Youtube, TikTok, LinkedIn)
+      const labelText = socialLabel.textContent.toLowerCase();
+      if (labelText === 'x') {
+        link.classList.add('footer-qd-icon--x');
+      } else if (labelText === 'instagram') {
+        link.classList.add('footer-qd-icon--instagram');
+      } else if (labelText === 'youtube') {
+        link.classList.add('footer-qd-icon--youtube');
+      } else if (labelText === 'tiktok') {
+        link.classList.add('footer-qd-icon--tiktok');
+      } else if (labelText === 'linkedin') {
+        link.classList.add('footer-qd-icon--linkedin');
       }
 
-      listItem.append(newLink);
-      socialLinksList.append(listItem);
-      moveInstrumentation(link, newLink);
-      moveInstrumentation(itemNode, listItem);
+      socialLinkItem.append(link);
+      moveInstrumentation(socialUrl, link);
+      moveInstrumentation(socialLabel, link);
     }
+    socialLinksList.append(socialLinkItem);
+    moveInstrumentation(itemNode, socialLinkItem);
   });
-  footerSocialLinks.append(socialLinksList);
+  footerSocialLinksDiv.append(socialLinksList);
+  footerNavigationContent.append(footerSocialLinksDiv);
 
-  const footerNavigationLinks = document.createElement('ul');
-  footerNavigationLinks.classList.add('footer-navigation__links');
+  // Footer Navigation Links
+  const navLinksList = document.createElement('ul');
+  navLinksList.classList.add('footer-navigation__links');
 
-  const navLinkItems = block.querySelectorAll('[data-aue-model="footerNavLink"]');
+  const navLinkItems = block.querySelectorAll('[data-aue-model="footerNavigationLink"]');
   navLinkItems.forEach((itemNode) => {
-    const link = itemNode.querySelector('[data-aue-prop="link"]');
-    const title = itemNode.querySelector('[data-aue-prop="title"]');
-    if (link) {
-      const listItem = document.createElement('li');
-      const newLink = document.createElement('a');
-      newLink.classList.add('footer-navigation__link-item');
-      newLink.tabIndex = 0;
-      newLink.target = '_self';
-      newLink.href = link.href;
-      newLink.title = title ? title.textContent : link.textContent;
-      newLink.textContent = title ? title.textContent : link.textContent;
+    const navLinkItem = document.createElement('li');
+    const navLinkUrl = itemNode.querySelector('[data-aue-prop="navLinkUrl"]');
+    const navLinkLabel = itemNode.querySelector('[data-aue-prop="navLinkLabel"]');
 
-      listItem.append(newLink);
-      footerNavigationLinks.append(listItem);
-      moveInstrumentation(link, newLink);
-      if (title) moveInstrumentation(title, newLink);
-      moveInstrumentation(itemNode, listItem);
+    if (navLinkUrl && navLinkLabel) {
+      const link = document.createElement('a');
+      link.classList.add('footer-navigation__link-item');
+      link.tabIndex = 0;
+      link.target = '_self';
+      link.title = navLinkLabel.textContent;
+      link.href = navLinkUrl.href;
+      link.textContent = navLinkLabel.textContent;
+      navLinkItem.append(link);
+      moveInstrumentation(navLinkUrl, link);
+      moveInstrumentation(navLinkLabel, link);
     }
+    navLinksList.append(navLinkItem);
+    moveInstrumentation(itemNode, navLinkItem);
   });
+  footerNavigationContent.append(navLinksList);
 
-  footerNavigationContent.append(footerSocialLinks, footerNavigationLinks);
-  footerNavigationWrapper.append(footerNavigationLogo, footerNavigationContent);
+  footerNavigationWrapper.append(footerNavigationContent);
   footerNavigation.append(footerNavigationWrapper);
+  footerWrapper.append(footerNavigation);
 
-  const divider = document.createElement('div');
-  divider.classList.add('footer-footer__divider');
+  // Footer Divider
+  const footerDivider = document.createElement('div');
+  footerDivider.classList.add('footer-divider');
+  footerWrapper.append(footerDivider);
 
+  // Footer Bottom Section
   const footerBottom = document.createElement('div');
-  footerBottom.classList.add('footer-footer__bottom');
+  footerBottom.classList.add('footer-bottom');
 
+  // Footer Language Selector
   const languageSelector = document.createElement('div');
   languageSelector.classList.add('footer-language-selector', 'footer-lang-css-from-wrapper');
+  const langList = document.createElement('ul');
+  langList.classList.add('footer-language-selector__list');
 
-  const languageList = document.createElement('ul');
-  languageList.classList.add('footer-language-selector__list');
+  const langLinkItems = block.querySelectorAll('[data-aue-model="footerLanguageLink"]');
+  langLinkItems.forEach((itemNode) => {
+    const langItem = document.createElement('li');
+    const langLinkUrl = itemNode.querySelector('[data-aue-prop="langLinkUrl"]');
+    const langLabel = itemNode.querySelector('[data-aue-prop="langLabel"]');
 
-  const languageLinkItems = block.querySelectorAll('[data-aue-model="footerLanguageLink"]');
-  languageLinkItems.forEach((itemNode) => {
-    const link = itemNode.querySelector('[data-aue-prop="link"]');
-    const ariaLabel = itemNode.querySelector('[data-aue-prop="ariaLabel"]');
-    const langCode = itemNode.querySelector('[data-aue-prop="langCode"]');
+    if (langLinkUrl && langLabel) {
+      const link = document.createElement('a');
+      link.classList.add('footer-language-selector__link');
+      link.href = langLinkUrl.href;
+      link.setAttribute('aria-label', langLabel.textContent);
+      link.setAttribute('data-lang', langLinkUrl.href.includes('/ar/') ? 'ar' : 'en'); // Assuming /ar/ for Arabic, root for English
+      link.textContent = langLabel.textContent;
+      langItem.append(link);
+      moveInstrumentation(langLinkUrl, link);
+      moveInstrumentation(langLabel, link);
 
-    if (link) {
-      const listItem = document.createElement('li');
-      if (link.closest('li')?.classList.contains('footer-active')) {
-        listItem.classList.add('footer-active');
+      // Add 'footer-active' class if it's the English link (or based on current path)
+      if (langLinkUrl.href === '/') {
+        langItem.classList.add('footer-active');
       }
-
-      const newLink = document.createElement('a');
-      newLink.href = link.href;
-      newLink.classList.add('footer-language-selector__link');
-      newLink.setAttribute('aria-label', ariaLabel ? ariaLabel.textContent : link.textContent);
-      if (langCode) {
-        newLink.setAttribute('data-lang', langCode.textContent);
-      }
-      newLink.textContent = link.textContent;
-
-      listItem.append(newLink);
-      languageList.append(listItem);
-      moveInstrumentation(link, newLink);
-      if (ariaLabel) moveInstrumentation(ariaLabel, newLink);
-      if (langCode) moveInstrumentation(langCode, newLink);
-      moveInstrumentation(itemNode, listItem);
     }
+    langList.append(langItem);
+    moveInstrumentation(itemNode, langItem);
   });
-  languageSelector.append(languageList);
+  languageSelector.append(langList);
+  footerBottom.append(languageSelector);
 
-  const policyLinksContainer = document.createElement('div');
-  policyLinksContainer.classList.add('footer-policy-links', 'footer-policy-css-from-wrapper');
-
+  // Footer Policy Links
+  const policyLinksDiv = document.createElement('div');
+  policyLinksDiv.classList.add('footer-policy-links', 'footer-policy-css-from-wrapper');
   const policyLinksWrapper = document.createElement('div');
   policyLinksWrapper.classList.add('footer-policy-links__wrapper');
-
   const policyLinksContent = document.createElement('div');
   policyLinksContent.classList.add('footer-policy-links__content');
 
   const policyLinkItems = block.querySelectorAll('[data-aue-model="footerPolicyLink"]');
   policyLinkItems.forEach((itemNode) => {
-    const link = itemNode.querySelector('[data-aue-prop="link"]');
-    const title = itemNode.querySelector('[data-aue-prop="title"]');
-    if (link) {
-      const newLink = document.createElement('a');
-      newLink.tabIndex = 0;
-      newLink.classList.add('footer-policy-links__item');
-      newLink.title = title ? title.textContent : link.textContent;
-      newLink.href = link.href;
-      newLink.target = '_self';
-      newLink.textContent = title ? title.textContent : link.textContent;
+    const policyLinkUrl = itemNode.querySelector('[data-aue-prop="policyLinkUrl"]');
+    const policyLabel = itemNode.querySelector('[data-aue-prop="policyLabel"]');
 
-      policyLinksContent.append(newLink);
-      moveInstrumentation(link, newLink);
-      if (title) moveInstrumentation(title, newLink);
-      moveInstrumentation(itemNode, newLink);
+    if (policyLinkUrl && policyLabel) {
+      const link = document.createElement('a');
+      link.classList.add('footer-policy-links__item');
+      link.tabIndex = 0;
+      link.title = policyLabel.textContent;
+      link.href = policyLinkUrl.href;
+      link.target = '_self';
+      link.textContent = policyLabel.textContent;
+      policyLinksContent.append(link);
+      moveInstrumentation(policyLinkUrl, link);
+      moveInstrumentation(policyLabel, link);
     }
+    moveInstrumentation(itemNode, policyLinksContent);
   });
+  policyLinksWrapper.append(policyLinksContent);
 
-  const copyrightText = block.querySelector('[data-aue-prop="copyright"]');
-  const copyrightParagraph = document.createElement('p');
-  copyrightParagraph.classList.add('footer-policy-links__copyright');
-  if (copyrightText) {
-    copyrightParagraph.textContent = copyrightText.textContent;
-    moveInstrumentation(copyrightText, copyrightParagraph);
-  } else {
-    // Fallback if copyrightText is not found via data-aue-prop
-    const oldCopyright = block.querySelector('.footer-policy-links__copyright');
-    if (oldCopyright) {
-      copyrightParagraph.textContent = oldCopyright.textContent;
-      moveInstrumentation(oldCopyright, copyrightParagraph);
-    }
+  // Copyright
+  const copyrightP = document.createElement('p');
+  copyrightP.classList.add('footer-policy-links__copyright');
+  const copyright = block.querySelector('[data-aue-prop="copyright"]');
+  if (copyright) {
+    copyrightP.textContent = copyright.textContent;
+    policyLinksWrapper.append(copyrightP);
+    moveInstrumentation(copyright, copyrightP);
   }
 
-  policyLinksWrapper.append(policyLinksContent, copyrightParagraph);
-  policyLinksContainer.append(policyLinksWrapper);
+  policyLinksDiv.append(policyLinksWrapper);
+  footerBottom.append(policyLinksDiv);
 
-  footerBottom.append(languageSelector, policyLinksContainer);
-
-  footerWrapper.append(footerNavigation, divider, footerBottom);
+  footerWrapper.append(footerBottom);
 
   block.textContent = '';
   block.append(footerWrapper);

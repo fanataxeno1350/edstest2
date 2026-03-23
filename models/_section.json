@@ -59,7 +59,9 @@
         "mediaVideo",
         "scarp",
         "statsByTheNumber",
-        "footer"
+        "footer",
+        "scarpComponent",
+        "statsByTheNumbers"
       ]
     }
   ]

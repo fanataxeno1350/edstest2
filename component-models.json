@@ -155,12 +155,6 @@
         "label": "CTA Link",
         "name": "ctaLink",
         "valueType": "string"
-      },
-      {
-        "component": "container",
-        "itemType": "card",
-        "label": "Cards",
-        "name": "cards"
       }
     ]
   },
@@ -197,34 +191,28 @@
         "valueType": "string"
       },
       {
-        "component": "reference",
-        "label": "Logo Image",
-        "name": "logoImage",
-        "valueType": "string"
+        "component": "container",
+        "itemType": "footerSocialLink",
+        "label": "Footer Social Links",
+        "name": "footerSocialLinks"
       },
       {
         "component": "container",
-        "itemComponent": "footerSocialLink",
-        "label": "Social Links",
-        "name": "socialLinks"
+        "itemType": "footerNavigationLink",
+        "label": "Footer Navigation Links",
+        "name": "footerNavigationLinks"
       },
       {
         "component": "container",
-        "itemComponent": "footerNavLink",
-        "label": "Navigation Links",
-        "name": "navLinks"
+        "itemType": "footerLanguageLink",
+        "label": "Footer Language Links",
+        "name": "footerLanguageLinks"
       },
       {
         "component": "container",
-        "itemComponent": "footerLanguageLink",
-        "label": "Language Links",
-        "name": "languageLinks"
-      },
-      {
-        "component": "container",
-        "itemComponent": "footerPolicyLink",
-        "label": "Policy Links",
-        "name": "policyLinks"
+        "itemType": "footerPolicyLink",
+        "label": "Footer Policy Links",
+        "name": "footerPolicyLinks"
       },
       {
         "component": "text",
@@ -239,31 +227,31 @@
     "fields": [
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "label": "Social Link URL",
+        "name": "socialUrl",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Aria Label",
-        "name": "ariaLabel",
+        "label": "Social Label",
+        "name": "socialLabel",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footerNavLink",
+    "id": "footerNavigationLink",
     "fields": [
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "label": "Navigation Link URL",
+        "name": "navLinkUrl",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Title",
-        "name": "title",
+        "label": "Navigation Link Label",
+        "name": "navLinkLabel",
         "valueType": "string"
       }
     ]
@@ -273,20 +261,14 @@
     "fields": [
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "label": "Language Link URL",
+        "name": "langLinkUrl",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Aria Label",
-        "name": "ariaLabel",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Language Code",
-        "name": "langCode",
+        "label": "Language Label",
+        "name": "langLabel",
         "valueType": "string"
       }
     ]
@@ -296,14 +278,54 @@
     "fields": [
       {
         "component": "aem-content",
+        "label": "Policy Link URL",
+        "name": "policyLinkUrl",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Policy Label",
+        "name": "policyLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "headerMenu",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
         "label": "Link",
         "name": "link",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Title",
-        "name": "title",
+        "component": "multiselect",
+        "label": "Submenu",
+        "name": "submenu",
+        "valueType": "array"
+      }
+    ]
+  },
+  {
+    "id": "headerLanguage",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
@@ -318,10 +340,10 @@
         "valueType": "string"
       },
       {
-        "component": "container",
-        "itemType": "menu",
-        "label": "Menus",
-        "name": "menus"
+        "component": "aem-content",
+        "label": "Contact Us Label",
+        "name": "contactUsLabel",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
@@ -330,67 +352,16 @@
         "valueType": "string"
       },
       {
-        "component": "container",
-        "itemType": "language",
+        "component": "multiselect",
+        "label": "Menus",
+        "name": "menus",
+        "valueType": "array"
+      },
+      {
+        "component": "multiselect",
         "label": "Languages",
-        "name": "languages"
-      }
-    ]
-  },
-  {
-    "id": "menu",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Menu Title",
-        "name": "title",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Menu Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "itemType": "submenu",
-        "label": "Submenus",
-        "name": "submenus"
-      }
-    ]
-  },
-  {
-    "id": "submenu",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Submenu Title",
-        "name": "title",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Submenu Link",
-        "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "language",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Language Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Language Link",
-        "name": "link",
-        "valueType": "string"
+        "name": "languages",
+        "valueType": "array"
       }
     ]
   },
@@ -399,14 +370,14 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Background Video",
-        "name": "backgroundVideo",
+        "label": "Background Video MP4",
+        "name": "backgroundVideoMp4",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Background Video MP4",
-        "name": "backgroundVideoMp4",
+        "label": "Background Video HLS",
+        "name": "backgroundVideoHls",
         "valueType": "string"
       },
       {
@@ -444,12 +415,6 @@
         "label": "Secondary CTA Label",
         "name": "secondaryCtaLabel",
         "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Modal Video",
-        "name": "modalVideo",
-        "valueType": "string"
       }
     ]
   },
@@ -467,11 +432,16 @@
         "label": "Video Source",
         "name": "videoSrc",
         "valueType": "string"
-      },
+      }
+    ]
+  },
+  {
+    "id": "scarpComponent",
+    "fields": [
       {
         "component": "reference",
-        "label": "Alternate Video Source",
-        "name": "alternateVideoSrc",
+        "label": "Image",
+        "name": "image",
         "valueType": "string"
       }
     ]
@@ -573,6 +543,93 @@
     ]
   },
   {
+    "id": "statsByTheNumbers",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "statsTab",
+        "label": "Tabs",
+        "name": "tabs",
+        "valueType": "array"
+      }
+    ]
+  },
+  {
+    "id": "statsTab",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Tab Label",
+        "name": "tabLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Main Image",
+        "name": "mainImage",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "statsCard",
+        "label": "Cards",
+        "name": "cards",
+        "valueType": "array"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "statsCard",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Hover Image",
+        "name": "hoverImage",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Hover Details",
+        "name": "hoverDetails",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Number",
+        "name": "number",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Card Description",
+        "name": "cardDescription",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "textAndMedia",
     "fields": [
       {
@@ -597,6 +654,12 @@
         "component": "aem-content",
         "label": "CTA Link",
         "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
         "valueType": "string"
       }
     ]

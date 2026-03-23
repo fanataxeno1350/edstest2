@@ -44,12 +44,6 @@
           "label": "CTA Link",
           "name": "ctaLink",
           "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
-          "valueType": "string"
         }
       ]
     }

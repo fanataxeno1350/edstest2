@@ -5,311 +5,171 @@ export default function decorate(block) {
   const headerWrapper = document.createElement('div');
   headerWrapper.classList.add('header-wrapper');
 
-  const headerNavigation = document.createElement('div');
-  headerNavigation.classList.add('header-navigation');
+  const headerContainer = document.createElement('div');
+  headerContainer.classList.add('header-container');
 
-  const cmpNavigationWrapper = document.createElement('div');
-  cmpNavigationWrapper.classList.add('header-cmp-navigation-wrapper');
-  cmpNavigationWrapper.setAttribute('role', 'banner');
-  cmpNavigationWrapper.setAttribute('aria-label', 'navigation.header.aria.label');
+  const nav = document.createElement('nav');
+  nav.id = 'nav';
 
-  const logoDiv = document.createElement('div');
-  logoDiv.classList.add('header-cmp-navigation-wrapper__logo');
+  const navSections = document.createElement('div');
+  navSections.classList.add('nav-sections');
+
+  const navBrand = document.createElement('div');
+  navBrand.classList.add('nav-brand');
 
   const logoLink = block.querySelector('[data-aue-prop="logoLink"]');
   if (logoLink) {
-    const newLogoLink = document.createElement('a');
-    newLogoLink.href = logoLink.href;
-    newLogoLink.target = logoLink.target;
-    newLogoLink.setAttribute('aria-label', logoLink.getAttribute('aria-label'));
-    newLogoLink.innerHTML = logoLink.innerHTML;
-    moveInstrumentation(logoLink, newLogoLink);
-    logoDiv.append(newLogoLink);
+    const logoAnchor = document.createElement('a');
+    logoAnchor.href = logoLink.href;
+    logoAnchor.setAttribute('aria-label', 'Qiddiya - Go to homepage');
+    const logoSpan = document.createElement('span');
+    logoSpan.classList.add('icon', 'icon-logo');
+    logoAnchor.append(logoSpan);
+    navBrand.append(logoAnchor);
+    moveInstrumentation(logoLink, logoAnchor);
   }
 
-  const contactUsCtaDiv = document.createElement('div');
-  contactUsCtaDiv.classList.add('header-cmp-navigation-wrapper__contactUs-cta');
+  const contactUsCta = document.createElement('div');
+  contactUsCta.classList.add('contact-us-cta');
 
+  const contactUsLabel = block.querySelector('[data-aue-prop="contactUsLabel"]');
   const contactUsLink = block.querySelector('[data-aue-prop="contactUsLink"]');
-  if (contactUsLink) {
-    const newContactUsLink = document.createElement('a');
-    newContactUsLink.href = contactUsLink.href;
-    newContactUsLink.classList.add('header-cta', 'header-cta__', 'header-cmp-navigation--content__cta');
-    newContactUsLink.target = contactUsLink.target;
-    newContactUsLink.setAttribute('aria-label', contactUsLink.getAttribute('aria-label'));
-    newContactUsLink.innerHTML = contactUsLink.innerHTML;
-    moveInstrumentation(contactUsLink, newContactUsLink);
-    contactUsCtaDiv.append(newContactUsLink);
+
+  if (contactUsLabel && contactUsLink) {
+    const ctaAnchor = document.createElement('a');
+    ctaAnchor.href = contactUsLink.href;
+    ctaAnchor.classList.add('button', 'contact-us');
+    ctaAnchor.setAttribute('aria-label', contactUsLabel.textContent.trim());
+
+    const ctaIcon = document.createElement('span');
+    ctaIcon.classList.add('icon', 'icon-cheveron-right');
+    ctaAnchor.append(ctaIcon);
+
+    const ctaLabelSpan = document.createElement('span');
+    ctaLabelSpan.textContent = contactUsLabel.textContent.trim();
+    ctaAnchor.append(ctaLabelSpan);
+
+    contactUsCta.append(ctaAnchor);
+    moveInstrumentation(contactUsLabel, ctaLabelSpan);
+    moveInstrumentation(contactUsLink, ctaAnchor);
   }
 
-  const hamburgerDiv = document.createElement('div');
-  hamburgerDiv.classList.add('header-cmp-navigation-wrapper__icon');
-  hamburgerDiv.id = 'navigation-toggle';
-  const hamburgerEllipse = document.createElement('div');
-  hamburgerEllipse.classList.add('header-hamburger-ellipse');
-  hamburgerEllipse.setAttribute('tabindex', '0');
-  hamburgerEllipse.innerHTML = `
-    <span class="header-hamburger-icon header-qd-icon header-qd-icon--hamburger"></span>
-    <span class="header-close-icon header-qd-icon header-qd-icon--cancel"></span>
-  `;
-  hamburgerDiv.append(hamburgerEllipse);
-  contactUsCtaDiv.append(hamburgerDiv);
-  logoDiv.append(contactUsCtaDiv);
-  cmpNavigationWrapper.append(logoDiv);
+  const navHamburger = document.createElement('div');
+  navHamburger.classList.add('nav-hamburger');
+  navHamburger.setAttribute('aria-expanded', 'false');
+  navHamburger.setAttribute('role', 'button');
+  navHamburger.setAttribute('tabindex', '0');
 
-  // Desktop Navbar
-  const desktopNavbar = document.createElement('nav');
-  desktopNavbar.classList.add('header-cmp-navigation-wrapper__navbar');
-  desktopNavbar.id = 'navbar-desktop';
-  desktopNavbar.setAttribute('role', 'navigation');
-  desktopNavbar.setAttribute('aria-label', 'navigation.main.aria.label');
+  const hamburgerIcon = document.createElement('span');
+  hamburgerIcon.classList.add('icon', 'icon-hamburger');
+  navHamburger.append(hamburgerIcon);
 
-  const desktopNavbarList = document.createElement('ul');
-  desktopNavbarList.classList.add('header-cmp-navigation-wrapper__navbar-list');
+  const closeIcon = document.createElement('span');
+  closeIcon.classList.add('icon', 'icon-cancel');
+  navHamburger.append(closeIcon);
 
-  const menus = block.querySelectorAll('[data-aue-model="menu"]');
-  menus.forEach((menuNode) => {
-    const menuLi = document.createElement('li');
-    menuLi.classList.add('header-cmp-navigation-wrapper__navbar-menu');
+  contactUsCta.append(navHamburger);
+  navBrand.append(contactUsCta);
+  navSections.append(navBrand);
 
-    const menuLink = menuNode.querySelector('[data-aue-prop="link"]');
-    const menuTitle = menuNode.querySelector('[data-aue-prop="title"]');
+  const navMenus = document.createElement('div');
+  navMenus.classList.add('nav-menus');
 
-    if (menuLink && menuTitle) {
-      const newMenuLink = document.createElement('a');
-      newMenuLink.href = menuLink.href;
-      newMenuLink.target = menuLink.target;
-      newMenuLink.classList.add('header-cmp-navigation-wrapper__navbar-menulink');
-      newMenuLink.setAttribute('aria-haspopup', 'true');
-      newMenuLink.setAttribute('aria-expanded', 'false');
+  const ul = document.createElement('ul');
 
-      const titleSpan = document.createElement('span');
-      titleSpan.textContent = menuTitle.textContent;
-      moveInstrumentation(menuTitle, titleSpan);
+  const menuItems = block.querySelectorAll('[data-aue-model="headerMenu"]');
+  menuItems.forEach((menuItemNode) => {
+    const li = document.createElement('li');
+    li.classList.add('nav-menu-item');
 
-      const iconWrapper = document.createElement('span');
-      iconWrapper.classList.add('header-qd-icon-wrapper');
-      iconWrapper.innerHTML = '<span class="header-menu-icon header-qd-icon header-qd-icon--cheveron-down"></span>';
+    const menuLink = menuItemNode.querySelector('[data-aue-prop="link"]');
+    const menuLabel = menuItemNode.querySelector('[data-aue-prop="label"]');
 
-      newMenuLink.append(titleSpan, iconWrapper);
-      moveInstrumentation(menuLink, newMenuLink);
-      menuLi.append(newMenuLink);
-    }
+    if (menuLink && menuLabel) {
+      const anchor = document.createElement('a');
+      anchor.href = menuLink.href;
+      anchor.textContent = menuLabel.textContent.trim();
+      moveInstrumentation(menuLabel, anchor);
+      moveInstrumentation(menuLink, anchor);
 
-    const submenuUl = document.createElement('ul');
-    submenuUl.classList.add('header-cmp-navigation-wrapper__navbar-submenu');
+      const submenuItems = menuItemNode.querySelectorAll('[data-aue-prop="submenu"] > div');
+      if (submenuItems.length > 0) {
+        anchor.setAttribute('aria-haspopup', 'true');
+        anchor.setAttribute('aria-expanded', 'false');
+        anchor.classList.add('has-submenu');
 
-    const submenus = menuNode.querySelectorAll('[data-aue-model="submenu"]');
-    submenus.forEach((submenuNode) => {
-      const submenuLi = document.createElement('li');
-      const submenuLink = submenuNode.querySelector('[data-aue-prop="link"]');
-      const submenuTitle = submenuNode.querySelector('[data-aue-prop="title"]');
+        const iconWrapper = document.createElement('span');
+        iconWrapper.classList.add('icon-wrapper');
+        const cheveronIcon = document.createElement('span');
+        cheveronIcon.classList.add('icon', 'icon-cheveron-down');
+        iconWrapper.append(cheveronIcon);
+        anchor.append(iconWrapper);
 
-      if (submenuLink && submenuTitle) {
-        const newSubmenuLink = document.createElement('a');
-        newSubmenuLink.href = submenuLink.href;
-        newSubmenuLink.target = submenuLink.target;
-        newSubmenuLink.setAttribute('aria-expanded', 'false');
+        const subUl = document.createElement('ul');
+        subUl.classList.add('nav-submenu');
 
-        const titleSpan = document.createElement('span');
-        titleSpan.textContent = submenuTitle.textContent;
-        moveInstrumentation(submenuTitle, titleSpan);
-
-        newSubmenuLink.append(titleSpan);
-        moveInstrumentation(submenuLink, newSubmenuLink);
-        submenuLi.append(newSubmenuLink);
+        submenuItems.forEach((subMenuItem) => {
+          const subLi = document.createElement('li');
+          const subLink = subMenuItem.querySelector('a');
+          if (subLink) {
+            const subAnchor = document.createElement('a');
+            subAnchor.href = subLink.href;
+            subAnchor.textContent = subLink.textContent.trim();
+            subLi.append(subAnchor);
+            moveInstrumentation(subLink, subAnchor);
+          }
+          subUl.append(subLi);
+        });
+        li.append(anchor, subUl);
+      } else {
+        li.append(anchor);
       }
-      moveInstrumentation(submenuNode, submenuLi);
-      submenuUl.append(submenuLi);
-    });
-    if (submenus.length > 0) {
-      menuLi.append(submenuUl);
     }
-    moveInstrumentation(menuNode, menuLi);
-    desktopNavbarList.append(menuLi);
+    ul.append(li);
+    moveInstrumentation(menuItemNode, li);
   });
 
-  desktopNavbar.append(desktopNavbarList);
+  navMenus.append(ul);
 
-  // Desktop Contact Us CTA (duplicate of the one in logo div, but for desktop nav)
-  const desktopContactUsLink = block.querySelector('.header-cmp-navigation-wrapper__navbar > .header-cta');
-  if (desktopContactUsLink) {
-    const newDesktopContactUsLink = document.createElement('a');
-    newDesktopContactUsLink.href = desktopContactUsLink.href;
-    newDesktopContactUsLink.classList.add('header-cta', 'header-cta__', 'header-cmp-navigation--content__cta');
-    newDesktopContactUsLink.target = desktopContactUsLink.target;
-    newDesktopContactUsLink.setAttribute('aria-label', desktopContactUsLink.getAttribute('aria-label'));
-    newDesktopContactUsLink.innerHTML = desktopContactUsLink.innerHTML;
-    moveInstrumentation(desktopContactUsLink, newDesktopContactUsLink);
-    desktopNavbar.append(newDesktopContactUsLink);
-  }
+  const languageSelector = document.createElement('div');
+  languageSelector.classList.add('language-selector');
 
-  // Desktop Language Selector
-  const desktopLanguageSelector = document.createElement('div');
-  desktopLanguageSelector.classList.add('header-language-selector', 'header-lang-css-from-wrapper');
-  desktopLanguageSelector.style.visibility = 'visible';
+  const langUl = document.createElement('ul');
 
-  const desktopLangUl = document.createElement('ul');
-  desktopLangUl.classList.add('header-cmp-language-selector');
-
-  const languages = block.querySelectorAll('[data-aue-model="language"]');
-  languages.forEach((langNode) => {
+  const languageItems = block.querySelectorAll('[data-aue-model="headerLanguage"]');
+  languageItems.forEach((langItemNode, index) => {
     const langLi = document.createElement('li');
-    const langLink = langNode.querySelector('[data-aue-prop="link"]');
-    const langLabel = langNode.querySelector('[data-aue-prop="label"]');
+    if (index === 0) {
+      langLi.classList.add('active');
+    }
+
+    const langLink = langItemNode.querySelector('[data-aue-prop="link"]');
+    const langLabel = langItemNode.querySelector('[data-aue-prop="label"]');
 
     if (langLink && langLabel) {
-      const newLangLink = document.createElement('a');
-      newLangLink.href = langLink.href;
-      newLangLink.classList.add('header-cmp-language-selector__link');
-      newLangLink.setAttribute('aria-label', langLabel.textContent);
-      newLangLink.setAttribute('data-lang', langLink.getAttribute('data-lang'));
-      newLangLink.textContent = langLabel.textContent;
-      moveInstrumentation(langLabel, newLangLink);
-      moveInstrumentation(langLink, newLangLink);
-      langLi.append(newLangLink);
+      const langAnchor = document.createElement('a');
+      langAnchor.href = langLink.href;
+      langAnchor.setAttribute('aria-label', langLabel.textContent.trim());
+      langAnchor.setAttribute('data-lang', langLink.href.split('/').filter(Boolean).pop() || 'en');
+      langAnchor.textContent = langLabel.textContent.trim();
+      langLi.append(langAnchor);
+      moveInstrumentation(langLabel, langAnchor);
+      moveInstrumentation(langLink, langAnchor);
     }
-    if (langNode.classList.contains('header-active')) {
-      langLi.classList.add('header-active');
-    }
-    moveInstrumentation(langNode, langLi);
-    desktopLangUl.append(langLi);
-  });
-  desktopLanguageSelector.append(desktopLangUl);
-  desktopNavbar.append(desktopLanguageSelector);
-
-  cmpNavigationWrapper.append(desktopNavbar);
-
-  // Mobile Navbar
-  const mobileNavbar = document.createElement('nav');
-  mobileNavbar.classList.add('header-cmp-navigation-wrapper__mobilenavbar');
-  mobileNavbar.id = 'navbar-mobile';
-  mobileNavbar.setAttribute('role', 'navigation');
-  mobileNavbar.setAttribute('aria-label', 'navigation.main.aria.label');
-
-  const mobileNavbarList = document.createElement('ul');
-  mobileNavbarList.classList.add('header-cmp-navigation-wrapper__mobilenavbar-list');
-
-  menus.forEach((menuNode) => {
-    const menuLi = document.createElement('li');
-    menuLi.classList.add('header-cmp-navigation-wrapper__mobilenavbar-menu', 'header-border');
-
-    const menuLink = menuNode.querySelector('[data-aue-prop="link"]');
-    const menuTitle = menuNode.querySelector('[data-aue-prop="title"]');
-
-    if (menuLink && menuTitle) {
-      const newMenuLink = document.createElement('a');
-      newMenuLink.classList.add('header-cmp-navigation-wrapper__mobilenavbar-menulink');
-
-      const titleSpan = document.createElement('span');
-      titleSpan.textContent = menuTitle.textContent;
-      moveInstrumentation(menuTitle, titleSpan);
-
-      const iconSpan = document.createElement('span');
-      iconSpan.classList.add('header-qd-icon', 'header-qd-icon--cheveron-right', 'header-cmp-navigation-wrapper__mobilenavbar-menulink-icon');
-
-      newMenuLink.append(titleSpan, iconSpan);
-      moveInstrumentation(menuLink, newMenuLink);
-      menuLi.append(newMenuLink);
-    }
-
-    const submenuUl = document.createElement('ul');
-    submenuUl.classList.add('header-cmp-navigation-wrapper__mobilenavbar-submenu');
-
-    if (menuTitle) {
-      const submenuHeaderLi = document.createElement('li');
-      submenuHeaderLi.classList.add('header-cmp-navigation-wrapper__mobilenavbar-menuheader');
-      const submenuHeaderLink = document.createElement('a');
-      const headerTitleSpan = document.createElement('span');
-      headerTitleSpan.textContent = menuTitle.textContent;
-      submenuHeaderLink.append(headerTitleSpan);
-      submenuHeaderLi.append(submenuHeaderLink);
-      submenuUl.append(submenuHeaderLi);
-    }
-
-    const submenus = menuNode.querySelectorAll('[data-aue-model="submenu"]');
-    submenus.forEach((submenuNode) => {
-      const submenuLi = document.createElement('li');
-      submenuLi.classList.add('header-cmp-navigation-wrapper__mobilenavbar-menu');
-      const submenuLink = submenuNode.querySelector('[data-aue-prop="link"]');
-      const submenuTitle = submenuNode.querySelector('[data-aue-prop="title"]');
-
-      if (submenuLink && submenuTitle) {
-        const newSubmenuLink = document.createElement('a');
-        newSubmenuLink.href = submenuLink.href;
-        newSubmenuLink.target = submenuLink.target;
-        newSubmenuLink.classList.add('header-cmp-navigation-wrapper__mobilenavbar-menulink');
-
-        const titleSpan = document.createElement('span');
-        titleSpan.textContent = submenuTitle.textContent;
-        moveInstrumentation(submenuTitle, titleSpan);
-
-        newSubmenuLink.append(titleSpan);
-        moveInstrumentation(submenuLink, newSubmenuLink);
-        submenuLi.append(newSubmenuLink);
-      }
-      moveInstrumentation(submenuNode, submenuLi);
-      submenuUl.append(submenuLi);
-    });
-    if (submenus.length > 0) {
-      menuLi.append(submenuUl);
-    }
-    moveInstrumentation(menuNode, menuLi);
-    mobileNavbarList.append(menuLi);
+    langUl.append(langLi);
+    moveInstrumentation(langItemNode, langLi);
   });
 
-  mobileNavbar.append(mobileNavbarList);
+  languageSelector.append(langUl);
+  navMenus.append(languageSelector);
 
-  const mobileNavBack = document.createElement('div');
-  mobileNavBack.classList.add('header-cmp-navigation-wrapper__mobilenavbar-back', 'header-nav-back');
-  mobileNavBack.innerHTML = `
-    <a class="header-cmp-navigation-wrapper__icon">
-      <span class="header-back-icon header-qd-icon header-qd-icon--cheveron-left"></span>
-    </a>
-    <span class="header-cmp-navigation-wrapper__iconlabel">Back</span>
-  `;
-  mobileNavbar.append(mobileNavBack);
-
-  // Mobile Language Selector
-  const mobileLanguageSelector = document.createElement('div');
-  mobileLanguageSelector.classList.add('header-language-selector', 'header-lang-css-from-wrapper');
-  mobileLanguageSelector.style.visibility = 'visible';
-
-  const mobileLangUl = document.createElement('ul');
-  mobileLangUl.classList.add('header-cmp-language-selector');
-
-  languages.forEach((langNode) => {
-    const langLi = document.createElement('li');
-    const langLink = langNode.querySelector('[data-aue-prop="link"]');
-    const langLabel = langNode.querySelector('[data-aue-prop="label"]');
-
-    if (langLink && langLabel) {
-      const newLangLink = document.createElement('a');
-      newLangLink.href = langLink.href;
-      newLangLink.classList.add('header-cmp-language-selector__link');
-      newLangLink.setAttribute('aria-label', langLabel.textContent);
-      newLangLink.setAttribute('data-lang', langLink.getAttribute('data-lang'));
-      newLangLink.textContent = langLabel.textContent;
-      moveInstrumentation(langLabel, newLangLink);
-      moveInstrumentation(langLink, newLangLink);
-      langLi.append(newLangLink);
-    }
-    if (langNode.classList.contains('header-active')) {
-      langLi.classList.add('header-active');
-    }
-    moveInstrumentation(langNode, langLi);
-    mobileLangUl.append(langLi);
-  });
-  mobileLanguageSelector.append(mobileLangUl);
-  mobileNavbar.append(mobileLanguageSelector);
-
-  cmpNavigationWrapper.append(mobileNavbar);
-
-  headerNavigation.append(cmpNavigationWrapper);
-  headerWrapper.append(headerNavigation);
+  navSections.append(navMenus);
+  nav.append(navSections);
+  headerContainer.append(nav);
+  headerWrapper.append(headerContainer);
 
   block.textContent = '';
   block.append(headerWrapper);
-  block.className = `header block`;
+  block.classList.add('header'); // Add the block name as a class
   block.dataset.blockStatus = 'loaded';
 }

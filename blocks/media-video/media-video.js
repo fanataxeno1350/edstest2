@@ -2,153 +2,160 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const viewportVideo = document.createElement('div');
-  viewportVideo.className = 'media-viewport-video';
-  viewportVideo.setAttribute('hidden', '');
-  viewportVideo.setAttribute('aria-hidden', 'true');
-  block.append(viewportVideo);
-  moveInstrumentation(block.querySelector('.media-viewport-video'), viewportVideo);
-
-  const background = document.createElement('div');
-  background.className = 'media-cmp-media__background';
-  block.append(background);
-  moveInstrumentation(block.querySelector('.media-cmp-media__background'), background);
-
-  const wrapper = document.createElement('div');
-  wrapper.className = 'media-cmp-media__wrapper media-cmp-media__wrapper--no-title';
-
-  const header = document.createElement('div');
-  header.className = 'media-cmp-media__header';
-  const heading = document.createElement('div');
-  heading.className = 'media-cmp-media__heading';
-  const title = document.createElement('div');
-  title.className = 'media-cmp-media__title';
-  heading.append(title);
-  header.append(heading);
-  wrapper.append(header);
-  moveInstrumentation(block.querySelector('.media-cmp-media__wrapper'), wrapper);
-  moveInstrumentation(block.querySelector('.media-cmp-media__header'), header);
-  moveInstrumentation(block.querySelector('.media-cmp-media__heading'), heading);
-  moveInstrumentation(block.querySelector('.media-cmp-media__title'), title);
-
-  const videoWrapper = document.createElement('div');
-  videoWrapper.className = 'media-video media-apps.qiddiya__002d__commons.components.content.commons.video__002d__v1.v1.video__002d__v1.video__002d__v1__002e__html@e38a72f';
-
-  const posterDiv = document.createElement('div');
-  posterDiv.className = 'media-video-poster';
-
-  const playButton = document.createElement('button');
-  playButton.className = 'media-video-poster__play-button';
-  const playIcon = document.createElement('span');
-  playIcon.className = 'media-qd-icon media-qd-icon--play media-video-poster__play-button__icon';
-  const playText = document.createElement('span');
-  playText.className = 'media-video-poster__play-button__text';
-  playText.setAttribute('visually-hidden', '');
-  playText.textContent = 'Watch Video';
-  playButton.append(playIcon, playText);
-  posterDiv.append(playButton);
-
-  const posterVideo = document.createElement('video');
-  posterVideo.className = 'media-video-poster__video';
-  posterVideo.setAttribute('muted', '');
-  posterVideo.setAttribute('loop', '');
-  posterVideo.setAttribute('playsinline', '');
-  posterVideo.setAttribute('webkit-playsinline', '');
-  posterVideo.setAttribute('x-webkit-airplay', 'allow');
-  posterVideo.setAttribute('autoplay', '');
-
-  const posterSrc = block.querySelector('[data-aue-prop="poster"]');
-  if (posterSrc) {
-    posterVideo.setAttribute('poster', posterSrc.textContent.trim());
-    posterVideo.setAttribute('src', posterSrc.textContent.trim());
-    moveInstrumentation(posterSrc, posterVideo);
-  } else {
-    // Fallback if data-aue-prop is not found, try to find an existing video element
-    const existingPosterVideo = block.querySelector('.media-video-poster__video');
-    if (existingPosterVideo) {
-      posterVideo.setAttribute('poster', existingPosterVideo.getAttribute('poster'));
-      posterVideo.setAttribute('src', existingPosterVideo.getAttribute('src'));
-      moveInstrumentation(existingPosterVideo, posterVideo);
-    }
-  }
-  posterDiv.append(posterVideo);
-  videoWrapper.append(posterDiv);
-  moveInstrumentation(block.querySelector('.media-video-poster'), posterDiv);
-  moveInstrumentation(block.querySelector('.media-video-poster__play-button'), playButton);
-
-  const videoContainer = document.createElement('div');
-  videoContainer.className = 'media-video-container media-show-controls media-video-hide';
-
-  const containerViewportVideo = document.createElement('div');
-  containerViewportVideo.className = 'media-viewport-video';
-  containerViewportVideo.setAttribute('hidden', '');
-  containerViewportVideo.setAttribute('aria-hidden', 'true');
-  videoContainer.append(containerViewportVideo);
-  moveInstrumentation(block.querySelector('.media-video-container .media-viewport-video'), containerViewportVideo);
-
-  const controls = document.createElement('div');
-  controls.className = 'media-video-container__controls';
-
-  const timer = document.createElement('div');
-  timer.className = 'media-video-container__controls__timer';
-  const progressArea = document.createElement('div');
-  progressArea.className = 'media-video-container__controls__timer__progress-area';
-  progressArea.innerHTML = '<span class="media-video-container__controls__timer__progress-area__progress-bar"></span><span class="media-video-container__controls__timer__progress-area__pointer"></span><span class="media-video-container__controls__timer__progress-area__progress-pending"></span>';
-  const currentTime = document.createElement('p');
-  currentTime.className = 'media-video-container__controls__timer__current-time';
-  currentTime.textContent = '00:00';
-  const duration = document.createElement('p');
-  duration.className = 'media-video-container__controls__timer__duration';
-  duration.textContent = '00:00';
-  timer.append(progressArea, currentTime, duration);
-  controls.append(timer);
-  moveInstrumentation(block.querySelector('.media-video-container__controls__timer'), timer);
-
-  const buttons = document.createElement('div');
-  buttons.className = 'media-video-container__controls__buttons';
-  buttons.innerHTML = `
-    <button class="media-video-container__controls__buttons__play-button media-video-container__controls__buttons--button">
-        <span class="media-video-container__controls__buttons__icon media-qd-icon media-qd-icon--play"></span>
-    </button>
-    <button class="media-video-container__controls__buttons__mute-button media-video-container__controls__buttons--button">
-        <span class="media-video-container__controls__buttons__icon media-qd-icon media-qd-icon--volume"></span>
-    </button>
-    <button class="media-video-container__controls__buttons__fullscreen-button media-video-container__controls__buttons--button">
-        <span class="media-video-container__controls__buttons__icon media-qd-icon media-qd-icon--fullscreen"></span>
-    </button>
-  `;
-  controls.append(buttons);
-  videoContainer.append(controls);
-  moveInstrumentation(block.querySelector('.media-video-container__controls'), controls);
-  moveInstrumentation(block.querySelector('.media-video-container__controls__buttons'), buttons);
-
-  const mainVideo = document.createElement('video');
-  mainVideo.className = 'media-video-container__video';
-  mainVideo.setAttribute('playsinline', '');
-  mainVideo.setAttribute('webkit-playsinline', '');
-  mainVideo.setAttribute('x-webkit-airplay', 'allow');
-
-  const videoSrc = block.querySelector('[data-aue-prop="videoSrc"]');
-  if (videoSrc) {
-    mainVideo.setAttribute('data-video-src', videoSrc.textContent.trim());
-    mainVideo.setAttribute('src', videoSrc.textContent.trim());
-    moveInstrumentation(videoSrc, mainVideo);
-  } else {
-    const existingMainVideo = block.querySelector('.media-video-container__video');
-    if (existingMainVideo) {
-      mainVideo.setAttribute('data-video-src', existingMainVideo.getAttribute('data-video-src'));
-      mainVideo.setAttribute('src', existingMainVideo.getAttribute('src'));
-      moveInstrumentation(existingMainVideo, mainVideo);
-    }
-  }
-  videoContainer.append(mainVideo);
-  videoWrapper.append(videoContainer);
-  wrapper.append(videoWrapper);
-  moveInstrumentation(block.querySelector('.media-video'), videoWrapper);
-  moveInstrumentation(block.querySelector('.media-video-container'), videoContainer);
+  const posterSrc = block.querySelector('[data-aue-prop="poster"]')?.getAttribute('src');
+  const videoSrc = block.querySelector('[data-aue-prop="videoSrc"]')?.getAttribute('src');
 
   block.textContent = '';
-  block.append(viewportVideo, background, wrapper);
-  block.className = 'media-cmp-media block';
+
+  const mediaViewportVideo = document.createElement('div');
+  mediaViewportVideo.classList.add('media-viewport-video');
+  mediaViewportVideo.setAttribute('hidden', '');
+  mediaViewportVideo.setAttribute('aria-hidden', 'true');
+  block.append(mediaViewportVideo);
+
+  const mediaBackground = document.createElement('div');
+  mediaBackground.classList.add('media-background');
+  block.append(mediaBackground);
+
+  const mediaWrapper = document.createElement('div');
+  mediaWrapper.classList.add('media-wrapper', 'media-wrapper--no-title');
+  block.append(mediaWrapper);
+
+  const mediaHeader = document.createElement('div');
+  mediaHeader.classList.add('media-header');
+  mediaWrapper.append(mediaHeader);
+
+  const mediaHeading = document.createElement('div');
+  mediaHeading.classList.add('media-heading');
+  mediaHeader.append(mediaHeading);
+
+  const mediaTitle = document.createElement('div');
+  mediaTitle.classList.add('media-title');
+  mediaHeading.append(mediaTitle);
+
+  const mediaVideo = document.createElement('div');
+  mediaVideo.classList.add('media-video');
+  mediaWrapper.append(mediaVideo);
+
+  const mediaVideoPoster = document.createElement('div');
+  mediaVideoPoster.classList.add('media-video-poster');
+  mediaVideo.append(mediaVideoPoster);
+
+  const playButton = document.createElement('button');
+  playButton.classList.add('media-video-poster__play-button');
+  mediaVideoPoster.append(playButton);
+
+  const playIcon = document.createElement('span');
+  playIcon.classList.add('media-qd-icon', 'media-qd-icon--play', 'media-video-poster__play-button__icon');
+  playButton.append(playIcon);
+
+  const playText = document.createElement('span');
+  playText.classList.add('media-video-poster__play-button__text');
+  playText.setAttribute('visually-hidden', '');
+  playText.textContent = 'Watch Video';
+  playButton.append(playText);
+
+  if (posterSrc) {
+    const posterVideo = document.createElement('video');
+    posterVideo.classList.add('media-video-poster__video');
+    posterVideo.setAttribute('muted', '');
+    posterVideo.setAttribute('loop', '');
+    posterVideo.setAttribute('playsinline', '');
+    posterVideo.setAttribute('webkit-playsinline', '');
+    posterVideo.setAttribute('x-webkit-airplay', 'allow');
+    posterVideo.setAttribute('autoplay', '');
+    posterVideo.setAttribute('src', posterSrc);
+    posterVideo.setAttribute('poster', posterSrc);
+    mediaVideoPoster.append(posterVideo);
+    const originalPoster = block.querySelector('[data-aue-prop="poster"]');
+    if (originalPoster) moveInstrumentation(originalPoster, posterVideo);
+  }
+
+  const mediaVideoContainer = document.createElement('div');
+  mediaVideoContainer.classList.add('media-video-container', 'media-show-controls', 'media-video-hide');
+  mediaVideo.append(mediaVideoContainer);
+
+  const mediaVideoViewportVideo = document.createElement('div');
+  mediaVideoViewportVideo.classList.add('media-video-viewport-video');
+  mediaVideoViewportVideo.setAttribute('hidden', '');
+  mediaVideoViewportVideo.setAttribute('aria-hidden', 'true');
+  mediaVideoContainer.append(mediaVideoViewportVideo);
+
+  const controls = document.createElement('div');
+  controls.classList.add('media-video-container__controls');
+  mediaVideoContainer.append(controls);
+
+  const timer = document.createElement('div');
+  timer.classList.add('media-video-container__controls__timer');
+  controls.append(timer);
+
+  const progressArea = document.createElement('div');
+  progressArea.classList.add('media-video-container__controls__timer__progress-area');
+  timer.append(progressArea);
+
+  const progressBar = document.createElement('span');
+  progressBar.classList.add('media-video-container__controls__timer__progress-area__progress-bar');
+  progressArea.append(progressBar);
+
+  const pointer = document.createElement('span');
+  pointer.classList.add('media-video-container__controls__timer__progress-area__pointer');
+  progressArea.append(pointer);
+
+  const progressPending = document.createElement('span');
+  progressPending.classList.add('media-video-container__controls__timer__progress-area__progress-pending');
+  progressArea.append(progressPending);
+
+  const currentTime = document.createElement('p');
+  currentTime.classList.add('media-video-container__controls__timer__current-time');
+  currentTime.textContent = '00:00';
+  timer.append(currentTime);
+
+  const duration = document.createElement('p');
+  duration.classList.add('media-video-container__controls__timer__duration');
+  duration.textContent = '00:00';
+  timer.append(duration);
+
+  const buttons = document.createElement('div');
+  buttons.classList.add('media-video-container__controls__buttons');
+  controls.append(buttons);
+
+  const playButtonControls = document.createElement('button');
+  playButtonControls.classList.add('media-video-container__controls__buttons__play-button', 'media-video-container__controls__buttons--button');
+  buttons.append(playButtonControls);
+
+  const playIconControls = document.createElement('span');
+  playIconControls.classList.add('media-video-container__controls__buttons__icon', 'media-qd-icon', 'media-qd-icon--play');
+  playButtonControls.append(playIconControls);
+
+  const muteButton = document.createElement('button');
+  muteButton.classList.add('media-video-container__controls__buttons__mute-button', 'media-video-container__controls__buttons--button');
+  buttons.append(muteButton);
+
+  const muteIcon = document.createElement('span');
+  muteIcon.classList.add('media-video-container__controls__buttons__icon', 'media-qd-icon', 'media-qd-icon--volume');
+  muteButton.append(muteIcon);
+
+  const fullscreenButton = document.createElement('button');
+  fullscreenButton.classList.add('media-video-container__controls__buttons__fullscreen-button', 'media-video-container__controls__buttons--button');
+  buttons.append(fullscreenButton);
+
+  const fullscreenIcon = document.createElement('span');
+  fullscreenIcon.classList.add('media-video-container__controls__buttons__icon', 'media-qd-icon', 'media-qd-icon--fullscreen');
+  fullscreenButton.append(fullscreenIcon);
+
+  if (videoSrc) {
+    const videoElement = document.createElement('video');
+    videoElement.classList.add('media-video-container__video');
+    videoElement.setAttribute('playsinline', '');
+    videoElement.setAttribute('webkit-playsinline', '');
+    videoElement.setAttribute('x-webkit-airplay', 'allow');
+    videoElement.setAttribute('data-video-src', videoSrc);
+    videoElement.setAttribute('src', videoSrc);
+    mediaVideoContainer.append(videoElement);
+    const originalVideoSrc = block.querySelector('[data-aue-prop="videoSrc"]');
+    if (originalVideoSrc) moveInstrumentation(originalVideoSrc, videoElement);
+  }
+
+  block.className = `${block.dataset.blockName} block`;
   block.dataset.blockStatus = 'loaded';
 }

@@ -33,13 +33,13 @@
     },
     {
       "title": "Footer Navigation Link",
-      "id": "footerNavigationLink",
+      "id": "footerNavLink",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footerNavigationLink",
+              "model": "footerNavLink",
               "name": "Footer Navigation Link"
             }
           }
@@ -88,28 +88,34 @@
           "valueType": "string"
         },
         {
-          "component": "container",
-          "itemType": "footerSocialLink",
-          "label": "Footer Social Links",
-          "name": "footerSocialLinks"
+          "component": "reference",
+          "label": "Logo Image",
+          "name": "logoImage",
+          "valueType": "string"
         },
         {
           "component": "container",
-          "itemType": "footerNavigationLink",
-          "label": "Footer Navigation Links",
-          "name": "footerNavigationLinks"
+          "itemComponent": "footerSocialLink",
+          "label": "Social Links",
+          "name": "socialLinks"
         },
         {
           "component": "container",
-          "itemType": "footerLanguageLink",
-          "label": "Footer Language Links",
-          "name": "footerLanguageLinks"
+          "itemComponent": "footerNavLink",
+          "label": "Navigation Links",
+          "name": "navLinks"
         },
         {
           "component": "container",
-          "itemType": "footerPolicyLink",
-          "label": "Footer Policy Links",
-          "name": "footerPolicyLinks"
+          "itemComponent": "footerLanguageLink",
+          "label": "Language Links",
+          "name": "languageLinks"
+        },
+        {
+          "component": "container",
+          "itemComponent": "footerPolicyLink",
+          "label": "Policy Links",
+          "name": "policyLinks"
         },
         {
           "component": "text",
@@ -124,31 +130,31 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Social Link URL",
-          "name": "socialUrl",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Social Label",
-          "name": "socialLabel",
+          "label": "Aria Label",
+          "name": "ariaLabel",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "footerNavigationLink",
+      "id": "footerNavLink",
       "fields": [
         {
           "component": "aem-content",
-          "label": "Navigation Link URL",
-          "name": "navLinkUrl",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Navigation Link Label",
-          "name": "navLinkLabel",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         }
       ]
@@ -158,14 +164,20 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Language Link URL",
-          "name": "langLinkUrl",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Language Label",
-          "name": "langLabel",
+          "label": "Aria Label",
+          "name": "ariaLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Language Code",
+          "name": "langCode",
           "valueType": "string"
         }
       ]
@@ -175,14 +187,14 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Policy Link URL",
-          "name": "policyLinkUrl",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Policy Label",
-          "name": "policyLabel",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         }
       ]
@@ -193,7 +205,7 @@
       "id": "footer",
       "components": [
         "footerSocialLink",
-        "footerNavigationLink",
+        "footerNavLink",
         "footerLanguageLink",
         "footerPolicyLink"
       ]

@@ -1,0 +1,153 @@
+{
+  "definitions": [
+    {
+      "title": "Stats-By-The-Numbers",
+      "id": "statsByTheNumbers",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "statsByTheNumbers",
+              "model": "statsByTheNumbers",
+              "name": "Stats-By-The-Numbers"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Stats Tab",
+      "id": "statsTab",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "statsTab",
+              "name": "Stats Tab"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Stats Card",
+      "id": "statsCard",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "statsCard",
+              "name": "Stats Card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "statsByTheNumbers",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "statsTab",
+          "label": "Tabs",
+          "name": "tabs",
+          "valueType": "array"
+        }
+      ]
+    },
+    {
+      "id": "statsTab",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Tab Label",
+          "name": "tabLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Main Image",
+          "name": "mainImage",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "statsCard",
+          "label": "Cards",
+          "name": "cards",
+          "valueType": "array"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "statsCard",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Hover Image",
+          "name": "hoverImage",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Hover Details",
+          "name": "hoverDetails",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Number",
+          "name": "number",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Card Description",
+          "name": "cardDescription",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "statsByTheNumbers",
+      "components": [
+        "statsTab"
+      ]
+    },
+    {
+      "id": "statsTab",
+      "components": [
+        "statsCard"
+      ]
+    }
+  ]
+}
