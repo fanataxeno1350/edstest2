@@ -16,7 +16,73 @@
       "cards",
       "columns",
       "fragment",
-      "---new--blocks-----"
+      "---new--blocks-----",
+      "header",
+      "heroFullWidth",
+      "textAndMedia",
+      "cardList",
+      "mediaVideo",
+      "scarp",
+      "statsByTheNumber",
+      "footer"
+    ]
+  },
+  {
+    "id": "cardList",
+    "components": [
+      "card"
+    ]
+  },
+  {
+    "id": "footer",
+    "components": [
+      "footerSocialLink",
+      "footerNavLink",
+      "footerLanguageLink",
+      "footerPolicyLink"
+    ]
+  },
+  {
+    "id": "header",
+    "components": [
+      "menu",
+      "language"
+    ]
+  },
+  {
+    "id": "heroFullWidth",
+    "components": [
+      "heroFullWidth"
+    ]
+  },
+  {
+    "id": "mediaVideo",
+    "components": [
+      "mediaVideo"
+    ]
+  },
+  {
+    "id": "scarp",
+    "components": [
+      "scarp"
+    ]
+  },
+  {
+    "id": "statsByTheNumber",
+    "components": [
+      "statsTab"
+    ]
+  },
+  {
+    "id": "statsTab",
+    "components": [
+      "statsCard"
+    ]
+  },
+  {
+    "id": "textAndMedia",
+    "components": [
+      "textAndMedia"
     ]
   }
 ]
