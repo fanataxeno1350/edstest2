@@ -16,7 +16,62 @@
       "cards",
       "columns",
       "fragment",
-      "---new--blocks-----"
+      "---new--blocks-----",
+      "header",
+      "bannerCarousel",
+      "spaceadderSpaceAdderVerticalPadding",
+      "itcClubCarousel",
+      "makeRightShiftBanner",
+      "rsCards",
+      "footer"
+    ]
+  },
+  {
+    "id": "bannerCarousel",
+    "components": [
+      "bannerSlide"
+    ]
+  },
+  {
+    "id": "footer",
+    "components": [
+      "logo",
+      "footerLink",
+      "footerSocialLink"
+    ]
+  },
+  {
+    "id": "header",
+    "components": [
+      "navigationLink",
+      "countryOption"
+    ]
+  },
+  {
+    "id": "itcClubCarousel",
+    "components": [
+      "carouselItem"
+    ]
+  },
+  {
+    "id": "makeRightShiftBanner",
+    "components": [
+      "makeRightShiftItem"
+    ]
+  },
+  {
+    "id": "rs-cards",
+    "components": [
+      "rsCard"
+    ]
+  },
+  {
+    "id": "spaceadderSpaceAdderVerticalPadding"
+  },
+  {
+    "id": "text",
+    "components": [
+      "text"
     ]
   }
 ]
