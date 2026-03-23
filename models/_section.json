@@ -51,15 +51,7 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----",
-        "headerNavigation",
-        "heroFullWidth",
-        "textAndMedia",
-        "cardList",
-        "mediaVideo",
-        "scarpComponent",
-        "statsByTheNumber",
-        "footer"
+        "---new--blocks-----"
       ]
     }
   ]
