@@ -51,14 +51,7 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----",
-        "header",
-        "bannerCarousel",
-        "spaceAdder",
-        "itcClubCarousel",
-        "howShift",
-        "cardList",
-        "footer"
+        "---new--blocks-----"
       ]
     }
   ]
