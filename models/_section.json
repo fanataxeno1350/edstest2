@@ -51,7 +51,15 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "header",
+        "heroFullWidth",
+        "textAndMedia",
+        "cardList",
+        "mediaVideo",
+        "scarp",
+        "statsByTheNumber",
+        "footer"
       ]
     }
   ]

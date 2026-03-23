@@ -1,0 +1,41 @@
+{
+  "definitions": [
+    {
+      "title": "Scarp",
+      "id": "scarp",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "scarp",
+              "model": "scarp",
+              "name": "Scarp"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "scarp",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "scarp",
+      "components": [
+        "scarp"
+      ]
+    }
+  ]
+}

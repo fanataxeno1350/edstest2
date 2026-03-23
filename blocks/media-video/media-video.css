@@ -1,0 +1,1786 @@
+@keyframes media-cmp-search__loading-indicator-spin { 0%{transform:rotate(0)}
+100%{transform:rotate(360deg)}
+ }
+
+.media-qd-icon {  
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "qd-icomoon" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  }
+
+.media-qd-icon--play:before {  
+  content: "\e90a";
+  }
+
+.media-qd-icon--fullscreen:before {  
+  content: "\e90b";
+  }
+
+.media-qd-icon--volume:before {  
+  content: "\e90f";
+  }
+
+/* ---------- Keyframes ---------- */
+@keyframes media-slideUpFadeIn {  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  }
+
+.media-video-poster, .media-video-container {  
+  width: 100%;
+  height: 100%;
+  position: relative;
+  }
+
+.media-video-poster__video, .media-video-container__video {  
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: block;
+  position: relative;
+  }
+
+.media-video-hide {  
+  display: none;
+  }
+
+.media-video-poster__play-button {  
+  --clickable-element-block-size: clamp(48px, calc(48px + 16 * (100vw - 375px) / 817), 64px);
+  background: transparent;
+  padding: 0;
+  block-size: var(--clickable-element-block-size);
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: 50%;
+  transform: translate(calc(var(--clickable-element-block-size) * -0.5), -50%);
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-1);
+  z-index: 2;
+  }
+
+.media-video-poster__play-button:focus-visible {  
+  border-radius: 100px;
+  outline: 2px solid var(--white);
+  outline-offset: 2px;
+  }
+
+.media-video-poster__play-button:hover .media-video-poster__play-button__icon {  
+  transform: translateX(0.2em);
+  background: transparent;
+  border-color: var(--white);
+  }
+
+.media-video-poster__play-button:hover .media-video-poster__play-button__icon::before {  
+  color: var(--white);
+  }
+
+.media-video-poster__play-button:focus-visible .media-video-poster__play-button__icon {  
+  background: transparent;
+  border-color: var(--white);
+  }
+
+.media-video-poster__play-button:focus-visible .media-video-poster__play-button__icon::before {  
+  color: var(--white);
+  }
+
+.media-video-poster__play-button__icon {  
+  block-size: var(--clickable-element-block-size);
+  inline-size: var(--clickable-element-block-size);
+  background: var(--white);
+  border: 2px solid var(--clickable-element-border-color, var(--clickable-element-base-border-color, var(--clickable-element-base-background-color)));
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+
+.media-video-poster__play-button__icon::before {  
+  font-size: 24px;
+  color: #054021;
+  }
+
+.media-video-poster__play-button__text {  
+  font-family: var(--default-font-family);
+  font-weight: var(--heading-5-font-weight);
+  font-size: var(--heading-5-font-size);
+  line-height: var(--heading-5-line-height);
+  letter-spacing: var(--heading-5-letter-spacing);
+  color: var(--white);
+  padding-inline-end: var(--spacing-1);
+  }
+
+.media-video-container.media-show-controls .media-video-container__controls {  
+  bottom: 0;
+  opacity: 1;
+  pointer-events: auto;
+  transition: all ease 0.13s;
+  }
+
+.media-video-container__controls {  
+  position: absolute;
+  width: 100%;
+  padding: 16px;
+  color: var(--white);
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.5) 75%);
+  z-index: 2;
+  bottom: -15px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all ease 0.08s;
+  direction: ltr;
+  }
+
+.media-video-container__controls__timer {  
+  position: relative;
+  width: 100%;
+  block-size: 32px;
+  margin-bottom: 16px;
+  }
+
+.media-video-container__controls__timer__progress-area {  
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  }
+
+.media-video-container__controls__timer__progress-area__progress-bar {  
+  background-color: var(--white);
+  height: 3px;
+  }
+
+.media-video-container__controls__timer__progress-area__pointer {  
+  background: transparent;
+  border: 2px solid var(--white);
+  width: 16px;
+  height: 16px;
+  display: block;
+  border-radius: 50%;
+  }
+
+.media-video-container__controls__timer__progress-area__progress-pending {  
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.302);
+  flex: 1;
+  }
+
+.media-video-container__controls__timer__current-time {  
+  left: 0;
+  }
+
+.media-video-container__controls__timer__duration {  
+  right: 0;
+  }
+
+.media-video-container__controls__timer__current-time, .media-video-container__controls__timer__duration {  
+  position: absolute;
+  inset-block-end: 0;
+  }
+
+.media-video-container__controls__buttons {  
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  }
+
+.media-video-container__controls__buttons__icon {  
+  font-size: 24px;
+  }
+
+.media-video-container__controls__buttons--button {  
+  background-color: var(--tertiary-base);
+  color: var(--white);
+  border: 2px solid var(--tertiary-base);
+  border-radius: 50%;
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  }
+
+.media-video-container__controls__buttons--button:focus-visible {  
+  outline: 2px solid var(--tertiary-base);
+  outline-offset: 2px;
+  }
+
+.media-video-container__controls__buttons--button:first-child {  
+  margin-right: auto;
+  }
+
+.media-video-container__controls__buttons--button:hover {  
+  background-color: var(--white);
+  color: var(--tertiary-base);
+  }
+
+@keyframes media-cmp-search__loading-indicator-spin {  
+  100% { transform: rotate(360deg); }
+ }
+
+.media-qd-icon {   font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; -webkit-font-smoothing: antialiased; font-family: qd-icomoon !important;   }
+
+.media-qd-icon--play::before {   content: "";   }
+
+.media-qd-icon--fullscreen::before {   content: "";   }
+
+.media-qd-icon--volume::before {   content: "";   }
+
+.media-video-poster, .media-video-container {   width: 100%; height: 100%; position: relative;   }
+
+.media-video-poster__video, .media-video-container__video {   width: 100%; aspect-ratio: 16 / 9; display: block; position: relative;   }
+
+.media-video-hide {   display: none;   }
+
+.media-video-poster__play-button {   --clickable-element-block-size: clamp(48px, calc(48px + 16 * (100vw - 375px) / 817), 64px); background: transparent; padding: 0px; block-size: var(--clickable-element-block-size); position: absolute; inset-inline-start: 50%; inset-block-start: 50%; transform: translate(calc(var(--clickable-element-block-size) * -0.5), -50%); cursor: pointer; text-decoration: none; border: none; display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-1); z-index: 2;   }
+
+.media-video-poster__play-button:focus-visible {   border-radius: 100px; outline: 2px solid var(--white); outline-offset: 2px;   }
+
+.media-video-poster__play-button:hover .media-video-poster__play-button__icon {   transform: translateX(0.2em); background: transparent; border-color: var(--white);   }
+
+.media-video-poster__play-button:hover .media-video-poster__play-button__icon::before {   color: var(--white);   }
+
+.media-video-poster__play-button:focus-visible .media-video-poster__play-button__icon {   background: transparent; border-color: var(--white);   }
+
+.media-video-poster__play-button:focus-visible .media-video-poster__play-button__icon::before {   color: var(--white);   }
+
+.media-video-poster__play-button__icon {   block-size: var(--clickable-element-block-size); inline-size: var(--clickable-element-block-size); background: var(--white); border: 2px solid var(--clickable-element-border-color, var(--clickable-element-base-border-color, var(--clickable-element-base-background-color))); border-radius: 50%; transition: 0.2s ease-in-out; display: flex; align-items: center; justify-content: center;   }
+
+.media-video-poster__play-button__icon::before {   font-size: 24px; color: rgb(5, 64, 33);   }
+
+.media-video-poster__play-button__text {   font-family: var(--default-font-family); font-weight: var(--heading-5-font-weight); font-size: var(--heading-5-font-size); line-height: var(--heading-5-line-height); letter-spacing: var(--heading-5-letter-spacing); color: var(--white); padding-inline-end: var(--spacing-1);   }
+
+.media-video-container.media-show-controls .media-video-container__controls {   bottom: 0px; opacity: 1; pointer-events: auto; transition: 0.13s;   }
+
+.media-video-container__controls {   position: absolute; width: 100%; padding: 16px; color: var(--white); background: linear-gradient(transparent, rgba(0, 0, 0, 0.5) 75%); z-index: 2; bottom: -15px; opacity: 0; pointer-events: none; transition: 0.08s; direction: ltr;   }
+
+.media-video-container__controls__timer {   position: relative; width: 100%; block-size: 32px; margin-bottom: 16px;   }
+
+.media-video-container__controls__timer__progress-area {   width: 100%; height: 5px; cursor: pointer; display: flex; align-items: center;   }
+
+.media-video-container__controls__timer__progress-area__progress-bar {   background-color: var(--white); height: 3px;   }
+
+.media-video-container__controls__timer__progress-area__pointer {   background: transparent; border: 2px solid var(--white); width: 16px; height: 16px; display: block; border-radius: 50%;   }
+
+.media-video-container__controls__timer__progress-area__progress-pending {   height: 3px; background-color: rgba(255, 255, 255, 0.3); flex: 1 1 0%;   }
+
+.media-video-container__controls__timer__current-time {   left: 0px;   }
+
+.media-video-container__controls__timer__duration {   right: 0px;   }
+
+.media-video-container__controls__timer__current-time, .media-video-container__controls__timer__duration {   position: absolute; inset-block-end: 0px;   }
+
+.media-video-container__controls__buttons {   display: flex; align-items: center; gap: 8px;   }
+
+.media-video-container__controls__buttons__icon {   font-size: 24px;   }
+
+.media-video-container__controls__buttons--button {   background-color: var(--tertiary-base); color: var(--white); border: 2px solid var(--tertiary-base); border-radius: 50%; cursor: pointer; width: 48px; height: 48px;   }
+
+.media-video-container__controls__buttons--button:focus-visible {   outline: 2px solid var(--tertiary-base); outline-offset: 2px;   }
+
+.media-video-container__controls__buttons--button:first-child {   margin-right: auto;   }
+
+.media-video-container__controls__buttons--button:hover {   background-color: var(--white); color: var(--tertiary-base);   }
+
+/* Computed styles: span.qd-icon qd-icon--logo qd-logo */
+@media (min-width: 1200px) { span.media-qd-icon .media-qd-icon--logo .media-qd-logo { 
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    border-block-end-color: rgb(0, 0, 238);
+    border-block-start-color: rgb(0, 0, 238);
+    border-bottom-color: rgb(0, 0, 238);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(0, 0, 238);
+    border-inline-start-color: rgb(0, 0, 238);
+    border-left-color: rgb(0, 0, 238);
+    border-right-color: rgb(0, 0, 238);
+    border-top-color: rgb(0, 0, 238);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(0, 0, 238);
+    clip-rule: nonzero;
+    color: rgb(0, 0, 238);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(0, 0, 238);
+    cursor: pointer;
+    direction: ltr;
+    display: inline;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: qd-icomoon;
+    font-size: 67.2px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    hyphens: manual;
+    image-orientation: from-image;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 67.2px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(0, 0, 238);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 0px 0px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: start;
+    text-anchor: start;
+    text-decoration: none solid rgb(0, 0, 238);
+    text-decoration-color: rgb(0, 0, 238);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(0, 0, 238);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-rendering: optimizelegibility;
+    text-wrap-mode: wrap;
+    transform-origin: 0px 0px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-font-smoothing: antialiased;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);
+    -webkit-text-fill-color: rgb(0, 0, 238);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(0, 0, 238);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+   } }
+
+/* Computed styles: div.cmp-media */
+@media (min-width: 1200px) { div.media-cmp-media { 
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 728px;
+    border-block-end-color: rgb(0, 0, 0);
+    border-block-start-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(0, 0, 0);
+    border-inline-start-color: rgb(0, 0, 0);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(0, 0, 0);
+    clip-rule: nonzero;
+    color: rgb(0, 0, 0);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(0, 0, 0);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: proxima-nova-wide, "29LT-bukra-variable", sans-serif;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 728px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 1920px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(0, 0, 0);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 960px 364px;
+    position: relative;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: start;
+    text-anchor: start;
+    text-decoration: none solid rgb(0, 0, 0);
+    text-decoration-color: rgb(0, 0, 0);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(0, 0, 0);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-rendering: optimizelegibility;
+    text-wrap-mode: wrap;
+    transform-origin: 960px 364px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 1920px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-font-smoothing: antialiased;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);
+    -webkit-text-fill-color: rgb(0, 0, 0);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(0, 0, 0);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+   } }
+
+/* Computed styles: div.cmp-media__background */
+@media (min-width: 1200px) { div.media-cmp-media__background { 
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll, scroll;
+    background-blend-mode: normal, normal;
+    background-clip: border-box, border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: linear-gradient(rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 83.36%), linear-gradient(rgb(229, 207, 245) 0%, rgb(255, 255, 255) 100%);
+    background-origin: padding-box, padding-box;
+    background-position: 0% 0%, 0% 0%;
+    background-repeat: repeat, repeat;
+    background-size: auto, auto;
+    block-size: 728px;
+    border-block-end-color: rgb(0, 0, 0);
+    border-block-start-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(0, 0, 0);
+    border-inline-start-color: rgb(0, 0, 0);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(0, 0, 0);
+    clip-rule: nonzero;
+    color: rgb(0, 0, 0);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(0, 0, 0);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: proxima-nova-wide, "29LT-bukra-variable", sans-serif;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 728px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 1920px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(0, 0, 0);
+    overflow-block: hidden;
+    overflow-inline: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    perspective-origin: 960px 364px;
+    position: absolute;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: start;
+    text-anchor: start;
+    text-decoration: none solid rgb(0, 0, 0);
+    text-decoration-color: rgb(0, 0, 0);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(0, 0, 0);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-rendering: optimizelegibility;
+    text-wrap-mode: wrap;
+    transform-origin: 960px 364px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 1920px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-font-smoothing: antialiased;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);
+    -webkit-text-fill-color: rgb(0, 0, 0);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(0, 0, 0);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+   } }
+
+/* Computed styles: div.cmp-media__wrapper cmp-media__wrapper--no-title */
+@media (min-width: 1200px) { div.media-cmp-media__wrapper .media-cmp-media__wrapper--no-title { 
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 728px;
+    border-block-end-color: rgb(0, 0, 0);
+    border-block-start-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(0, 0, 0);
+    border-inline-start-color: rgb(0, 0, 0);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(0, 0, 0);
+    clip-rule: nonzero;
+    color: rgb(0, 0, 0);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-gap: 24px;
+    column-rule-color: rgb(0, 0, 0);
+    direction: ltr;
+    display: grid;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: proxima-nova-wide, "29LT-bukra-variable", sans-serif;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    grid-template-columns: 1920px;
+    grid-template-rows: 728px;
+    height: 728px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 1920px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(0, 0, 0);
+    overflow-inline: hidden;
+    overflow-x: hidden;
+    perspective-origin: 960px 364px;
+    position: relative;
+    position-visibility: always;
+    print-color-adjust: economy;
+    row-gap: 64px;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: start;
+    text-anchor: start;
+    text-decoration: none solid rgb(0, 0, 0);
+    text-decoration-color: rgb(0, 0, 0);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(0, 0, 0);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-rendering: optimizelegibility;
+    text-wrap-mode: wrap;
+    transform-origin: 960px 364px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 1920px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-font-smoothing: antialiased;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);
+    -webkit-text-fill-color: rgb(0, 0, 0);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(0, 0, 0);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+   } }
+
+/* Computed styles: div.video apps.qiddiya__002d__commons.components.content.commons.video__002d__v1.v1.video__002d__v1.video__002d__v1__002e__html@e38a72f */
+@media (min-width: 1200px) { div.media-video apps.media-qiddiya__002d__commons.media-components.media-content.media-commons.media-video__002d__v1.media-v1.media-video__002d__v1.media-video__002d__v1__002e__html@e38a72f { 
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 728px;
+    border-block-end-color: rgb(0, 0, 0);
+    border-block-start-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(0, 0, 0);
+    border-inline-start-color: rgb(0, 0, 0);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(0, 0, 0);
+    clip-rule: nonzero;
+    color: rgb(0, 0, 0);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(0, 0, 0);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: proxima-nova-wide, "29LT-bukra-variable", sans-serif;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 728px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 1920px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(0, 0, 0);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 960px 364px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: start;
+    text-anchor: start;
+    text-decoration: none solid rgb(0, 0, 0);
+    text-decoration-color: rgb(0, 0, 0);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(0, 0, 0);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-rendering: optimizelegibility;
+    text-wrap-mode: wrap;
+    transform-origin: 960px 364px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 1920px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-font-smoothing: antialiased;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);
+    -webkit-text-fill-color: rgb(0, 0, 0);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(0, 0, 0);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+   } }
+
+/* Computed styles: div.video-poster */
+@media (min-width: 1200px) { div.media-video-poster { 
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 728px;
+    border-block-end-color: rgb(0, 0, 0);
+    border-block-start-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(0, 0, 0);
+    border-inline-start-color: rgb(0, 0, 0);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(0, 0, 0);
+    clip-rule: nonzero;
+    color: rgb(0, 0, 0);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(0, 0, 0);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: proxima-nova-wide, "29LT-bukra-variable", sans-serif;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 728px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 1920px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: cover;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(0, 0, 0);
+    overflow-block: hidden;
+    overflow-inline: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    perspective-origin: 960px 364px;
+    position: absolute;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: start;
+    text-anchor: start;
+    text-decoration: none solid rgb(0, 0, 0);
+    text-decoration-color: rgb(0, 0, 0);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(0, 0, 0);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-rendering: optimizelegibility;
+    text-wrap-mode: wrap;
+    transform-origin: 960px 364px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 1920px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-font-smoothing: antialiased;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);
+    -webkit-text-fill-color: rgb(0, 0, 0);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(0, 0, 0);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+   } }
+
+/* Computed styles: button.video-poster__play-button */
+@media (min-width: 1200px) { button.media-video-poster__play-button { 
+    align-items: center;
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 64px;
+    border-block-end-color: rgb(0, 0, 0);
+    border-block-start-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(0, 0, 0);
+    border-inline-start-color: rgb(0, 0, 0);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    bottom: 300px;
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(0, 0, 0);
+    clip-rule: nonzero;
+    color: rgb(0, 0, 0);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-gap: 8px;
+    column-rule-color: rgb(0, 0, 0);
+    cursor: pointer;
+    direction: ltr;
+    display: flex;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Arial;
+    font-size: 13.3333px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 64px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 179px;
+    inset-block-end: 300px;
+    inset-block-start: 364px;
+    inset-inline-end: 781px;
+    inset-inline-start: 960px;
+    interpolate-size: numeric-only;
+    justify-content: center;
+    left: 960px;
+    lighting-color: rgb(255, 255, 255);
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(0, 0, 0);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 89.5px 32px;
+    position: absolute;
+    position-visibility: always;
+    print-color-adjust: economy;
+    right: 781px;
+    row-gap: 8px;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: center;
+    text-anchor: start;
+    text-decoration: none solid rgb(0, 0, 0);
+    text-decoration-color: rgb(0, 0, 0);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(0, 0, 0);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-wrap-mode: wrap;
+    top: 364px;
+    transform: matrix(1, 0, 0, 1, -32, -32);
+    transform-origin: 89.5px 32px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 179px;
+    writing-mode: horizontal-tb;
+    z-index: 2;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-font-smoothing: antialiased;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);
+    -webkit-text-fill-color: rgb(0, 0, 0);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(0, 0, 0);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+   } }
+
+/* Computed styles: span.qd-icon qd-icon--play video-poster__play-button__icon */
+@media (min-width: 1200px) { span.media-qd-icon .media-qd-icon--play .media-video-poster__play-button__icon { 
+    align-items: center;
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgb(255, 255, 255);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 64px;
+    border-block-end-color: rgba(42, 42, 42, 0.1);
+    border-block-end-style: solid;
+    border-block-end-width: 2px;
+    border-block-start-color: rgba(42, 42, 42, 0.1);
+    border-block-start-style: solid;
+    border-block-start-width: 2px;
+    border-bottom-color: rgba(42, 42, 42, 0.1);
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-collapse: separate;
+    border-end-end-radius: 50%;
+    border-end-start-radius: 50%;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgba(42, 42, 42, 0.1);
+    border-inline-end-style: solid;
+    border-inline-end-width: 2px;
+    border-inline-start-color: rgba(42, 42, 42, 0.1);
+    border-inline-start-style: solid;
+    border-inline-start-width: 2px;
+    border-left-color: rgba(42, 42, 42, 0.1);
+    border-left-style: solid;
+    border-left-width: 2px;
+    border-right-color: rgba(42, 42, 42, 0.1);
+    border-right-style: solid;
+    border-right-width: 2px;
+    border-start-end-radius: 50%;
+    border-start-start-radius: 50%;
+    border-top-color: rgba(42, 42, 42, 0.1);
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-top-style: solid;
+    border-top-width: 2px;
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(0, 0, 0);
+    clip-rule: nonzero;
+    color: rgb(0, 0, 0);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(0, 0, 0);
+    cursor: pointer;
+    direction: ltr;
+    display: flex;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: qd-icomoon;
+    font-size: 13.3333px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 64px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 64px;
+    interpolate-size: numeric-only;
+    justify-content: center;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 13.3333px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(0, 0, 0);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 32px 32px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: center;
+    text-anchor: start;
+    text-decoration: none solid rgb(0, 0, 0);
+    text-decoration-color: rgb(0, 0, 0);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(0, 0, 0);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-wrap-mode: wrap;
+    transform-origin: 32px 32px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0.2s;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 64px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-font-smoothing: antialiased;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);
+    -webkit-text-fill-color: rgb(0, 0, 0);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(0, 0, 0);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+   } }
+
+/* Computed styles: video.video-poster__video */
+@media (min-width: 1200px) { video.media-video-poster__video { 
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 728px;
+    border-block-end-color: rgb(0, 0, 0);
+    border-block-start-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(0, 0, 0);
+    border-inline-start-color: rgb(0, 0, 0);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(0, 0, 0);
+    clip-rule: nonzero;
+    color: rgb(0, 0, 0);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(0, 0, 0);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: proxima-nova-wide, "29LT-bukra-variable", sans-serif;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 728px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 1920px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    max-inline-size: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(0, 0, 0);
+    overflow-block: clip;
+    overflow-clip-margin: content-box;
+    overflow-inline: clip;
+    overflow-x: clip;
+    overflow-y: clip;
+    perspective-origin: 960px 364px;
+    position: relative;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: start;
+    text-anchor: start;
+    text-decoration: none solid rgb(0, 0, 0);
+    text-decoration-color: rgb(0, 0, 0);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(0, 0, 0);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-rendering: optimizelegibility;
+    text-wrap-mode: wrap;
+    transform-origin: 960px 364px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 1920px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-font-smoothing: antialiased;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);
+    -webkit-text-fill-color: rgb(0, 0, 0);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(0, 0, 0);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+   } }
+
+/* Computed styles: span.qd-icon qd-icon--logo qd-logo-footer */
+@media (min-width: 1200px) { span.media-qd-icon .media-qd-icon--logo .media-qd-logo-footer { 
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    border-block-end-color: rgb(0, 0, 238);
+    border-block-start-color: rgb(0, 0, 238);
+    border-bottom-color: rgb(0, 0, 238);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(0, 0, 238);
+    border-inline-start-color: rgb(0, 0, 238);
+    border-left-color: rgb(0, 0, 238);
+    border-right-color: rgb(0, 0, 238);
+    border-top-color: rgb(0, 0, 238);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(0, 0, 238);
+    clip-rule: nonzero;
+    color: rgb(0, 0, 238);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(0, 0, 238);
+    cursor: pointer;
+    direction: ltr;
+    display: inline;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: qd-icomoon;
+    font-size: 99px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    hyphens: manual;
+    image-orientation: from-image;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 99px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(0, 0, 238);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 0px 0px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: start;
+    text-anchor: start;
+    text-decoration: none solid rgb(0, 0, 238);
+    text-decoration-color: rgb(0, 0, 238);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(0, 0, 238);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-rendering: optimizelegibility;
+    text-wrap-mode: wrap;
+    transform-origin: 0px 0px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-font-smoothing: antialiased;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);
+    -webkit-text-fill-color: rgb(0, 0, 238);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(0, 0, 238);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+   } }
