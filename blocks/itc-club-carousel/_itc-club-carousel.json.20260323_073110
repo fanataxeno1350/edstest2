@@ -17,7 +17,7 @@
       }
     },
     {
-      "title": "Carousel-Item",
+      "title": "Carousel Item",
       "id": "carouselItem",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "carouselItem",
-              "name": "Carousel-Item"
+              "name": "Carousel Item"
             }
           }
         }
@@ -43,7 +43,7 @@
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Title",
           "name": "title",
           "valueType": "string"
@@ -59,7 +59,7 @@
   ],
   "filters": [
     {
-      "id": "itc-club-carousel",
+      "id": "itcClubCarousel",
       "components": [
         "carouselItem"
       ]

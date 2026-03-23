@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Social Icon",
-      "id": "socialIcon",
+      "title": "Social Link",
+      "id": "socialLink",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "socialIcon",
-              "name": "Social Icon"
+              "model": "socialLink",
+              "name": "Social Link"
             }
           }
         }
@@ -59,21 +59,33 @@
         },
         {
           "component": "reference",
-          "label": "Fssai Logo",
+          "label": "FSSAI Logo",
           "name": "fssaiLogo",
           "valueType": "string"
         },
         {
-          "component": "block",
-          "item": "footerLink",
-          "label": "Footer Links",
-          "name": "footerLinks"
+          "component": "aem-content",
+          "label": "ITC Logo Link",
+          "name": "itcLogoLink",
+          "valueType": "string"
         },
         {
-          "component": "block",
-          "item": "socialIcon",
-          "label": "Social Icons",
-          "name": "socialIcons"
+          "component": "container",
+          "item": {
+            "type": "footerLink"
+          },
+          "label": "Footer Links",
+          "name": "footerLinks",
+          "valueType": "array"
+        },
+        {
+          "component": "container",
+          "item": {
+            "type": "socialLink"
+          },
+          "label": "Social Links",
+          "name": "socialLinks",
+          "valueType": "array"
         },
         {
           "component": "text",
@@ -95,8 +107,8 @@
         },
         {
           "component": "text",
-          "label": "Grievance Officer Hours",
-          "name": "grievanceOfficerHours",
+          "label": "Grievance Officer Working Hours",
+          "name": "grievanceOfficerTime",
           "valueType": "string"
         },
         {
@@ -112,30 +124,30 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Link URL",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Label",
+          "label": "Link Label",
           "name": "label",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "socialIcon",
+      "id": "socialLink",
       "fields": [
         {
           "component": "aem-content",
-          "label": "Social Link",
+          "label": "Social Link URL",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Icon",
+          "label": "Social Icon",
           "name": "icon",
           "valueType": "string"
         }
@@ -147,7 +159,7 @@
       "id": "footer",
       "components": [
         "footerLink",
-        "socialIcon"
+        "socialLink"
       ]
     }
   ]

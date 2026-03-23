@@ -23,31 +23,43 @@
       "itcClubCarousel",
       "makeRightShift",
       "rsCards",
-      "footer"
+      "footer",
+      "howShift"
     ]
   },
   {
     "id": "bannerCarousel",
     "components": [
-      "bannerSlide"
+      "bannerCarouselItem"
+    ]
+  },
+  {
+    "id": "cards",
+    "components": [
+      "card"
     ]
   },
   {
     "id": "footer",
     "components": [
       "footerLink",
-      "socialLink"
+      "socialIcon"
     ]
   },
   {
     "id": "header",
     "components": [
-      "navigationLink",
-      "countryOption"
+      "header"
     ]
   },
   {
-    "id": "itcClubCarousel",
+    "id": "howShift",
+    "components": [
+      "howShiftItem"
+    ]
+  },
+  {
+    "id": "itc-club-carousel",
     "components": [
       "carouselItem"
     ]
@@ -63,6 +75,9 @@
     "components": [
       "rsCard"
     ]
+  },
+  {
+    "id": "spaceAdder"
   },
   {
     "id": "spaceAdder"

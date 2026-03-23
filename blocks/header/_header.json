@@ -15,36 +15,6 @@
           }
         }
       }
-    },
-    {
-      "title": "Navigation Link",
-      "id": "navigationLink",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "navigationLink",
-              "name": "Navigation Link"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Country Option",
-      "id": "countryOption",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "countryOption",
-              "name": "Country Option"
-            }
-          }
-        }
-      }
     }
   ],
   "models": [
@@ -53,8 +23,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Logo Asset",
-          "name": "logoAsset",
+          "label": "Logo Image",
+          "name": "logoImage",
           "valueType": "string"
         },
         {
@@ -65,82 +35,46 @@
         },
         {
           "component": "container",
-          "item": {
-            "type": "navigationLink"
-          },
-          "label": "Navigation Links",
-          "name": "navigationLinks"
-        },
-        {
-          "component": "reference",
-          "label": "India Flag",
-          "name": "flagIn",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "USA Flag",
-          "name": "flagUsa",
-          "valueType": "string"
+          "fields": [
+            {
+              "component": "aem-content",
+              "label": "Shop Link",
+              "name": "shopLink",
+              "valueType": "string"
+            },
+            {
+              "component": "aem-content",
+              "label": "Our Heritage Link",
+              "name": "ourHeritageLink",
+              "valueType": "string"
+            }
+          ],
+          "label": "Navigation",
+          "name": "navigation"
         },
         {
           "component": "container",
-          "item": {
-            "type": "countryOption"
-          },
-          "label": "Country Options",
-          "name": "countryOptions"
+          "fields": [
+            {
+              "component": "reference",
+              "label": "India Flag",
+              "name": "flagIndia",
+              "valueType": "string"
+            },
+            {
+              "component": "reference",
+              "label": "USA Flag",
+              "name": "flagUSA",
+              "valueType": "string"
+            }
+          ],
+          "label": "Country Selector",
+          "name": "countrySelector"
         },
         {
           "component": "reference",
           "label": "Search Icon",
           "name": "searchIcon",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "navigationLink",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "Navigation Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "countryOption",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Country Flag",
-          "name": "flag",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Country Name",
-          "name": "countryName",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Country Code",
-          "name": "countryCode",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Country URL",
-          "name": "countryUrl",
           "valueType": "string"
         }
       ]
@@ -150,8 +84,7 @@
     {
       "id": "header",
       "components": [
-        "navigationLink",
-        "countryOption"
+        "header"
       ]
     }
   ]

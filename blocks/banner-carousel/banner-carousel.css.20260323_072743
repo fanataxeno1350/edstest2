@@ -1,69 +1,51 @@
-@keyframes banner-cmp-search__loading-indicator-spin { 0%{transform:rotate(0)}
-100%{transform:rotate(360deg)}
- }
-
-@keyframes banner-cmp-search__loading-indicator-spin { 0%{transform:rotate(0)}
-100%{transform:rotate(360deg)}
- }
-
 @media print { *,::after,::before { text-shadow:none !important;box-shadow:none !important }
 
 a:not(.banner-btn) {  text-decoration:underline  }
 
-.banner-abbr[title]::after {  content:" (" attr(title) ")"  }
+abbr[title]::after {  content:" (" attr(title) ")"  }
 
-.banner-pre {  white-space:pre-wrap !important  }
+pre {  white-space:pre-wrap !important  }
 
-.banner-blockquote, .banner-pre {  border:1px solid #adb5bd;page-break-inside:avoid  }
+blockquote, .banner-pre {  border:1px solid #adb5bd;page-break-inside:avoid  }
 
-.banner-img, .banner-tr {  page-break-inside:avoid  }
+img, .banner-tr {  page-break-inside:avoid  }
 
-.banner-h2, .banner-h3, p {  orphans:3;widows:3  }
+h2, .banner-h3, p {  orphans:3;widows:3  }
 
-.banner-h2, h3 {  page-break-after:avoid  }
+h2, h3 {  page-break-after:avoid  }
 
 @page{size:a3}
 
-.banner-body { min-width:992px !important } }
+body { min-width:992px !important } }
+
+.banner-itc-carousel-section {  position:relative  }
 
 */.banner-itc-carousel-section .banner-content-wrapper h1 {  font-size:4vw  }
-
-@keyframes banner-cmp-search__loading-indicator-spin {  
-  100% { transform: rotate(360deg); }
- }
-
-@keyframes banner-cmp-search__loading-indicator-spin {  
-  100% { transform: rotate(360deg); }
- }
 
 @media print { *, ::after, ::before {  text-shadow: none !important; box-shadow: none !important;  }
 
 a:not(.banner-btn) {   text-decoration: underline;   }
 
-.banner-abbr[title]::after {   content: " (" attr(title) ")";   }
+abbr[title]::after {   content: " (" attr(title) ")";   }
 
-.banner-pre {   white-space: pre-wrap !important;   }
+pre {   white-space: pre-wrap !important;   }
 
-.banner-blockquote, .banner-pre {   border: 1px solid rgb(173, 181, 189); break-inside: avoid;   }
+blockquote, .banner-pre {   border: 1px solid rgb(173, 181, 189); break-inside: avoid;   }
 
-.banner-img, .banner-tr {   break-inside: avoid;   }
+img, .banner-tr {   break-inside: avoid;   }
 
-.banner-h2, .banner-h3, p {   orphans: 3; widows: 3;   }
+h2, .banner-h3, p {   orphans: 3; widows: 3;   }
 
-.banner-h2, h3 {   break-after: avoid;   }
+h2, h3 {   break-after: avoid;   }
 
 @page { size: a3; }
 
-.banner-body {  min-width: 992px !important;  } }
+body {  min-width: 992px !important;  } }
 
-@media (max-width: 370px) { .banner-content-wrapper p {   font-size: 14px; line-height: 1.2;   } }
+.banner-itc-carousel-section {   position: relative;   }
 
-@media (min-width: 768px) { .banner-content-wrapper {   max-width: 40vw;   } }
-
-@media (min-width: 992px) { .banner-content-wrapper {   max-width: 28vw;   } }
-
-/* Computed styles: span.d-block */
-@media (min-width: 1200px) { span.banner-d-block { 
+/* .banner-Computed .banner-styles: .banner-span.banner-d-block */ @media (min-width: 1200px) {  
+  span.d-block {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -204,10 +186,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(83, 48, 18);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: div.w-100 */
-@media (min-width: 1200px) { div.banner-w-100 { 
+/* .banner-Computed .banner-styles: .banner-div.banner-w-100 */ @media (min-width: 1200px) {  
+  div.w-100 {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -349,10 +332,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(45, 33, 25);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: section.itc-carousel-section */
-@media (min-width: 1200px) { section.banner-itc-carousel-section { 
+/* .banner-Computed .banner-styles: .banner-section.banner-itc-carousel-section */ @media (min-width: 1200px) {  
+  section.itc-carousel-section {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -494,10 +478,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(45, 33, 25);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: div#carouselExampleSlidesOnly.bannerCarousel carousel slide */
-@media (min-width: 1200px) { div#carouselExampleSlidesOnly.banner-bannerCarousel .banner-carousel .banner-slide { 
+/* .banner-Computed .banner-styles: .banner-div#carouselExampleSlidesOnly.banner-bannerCarousel .banner-carousel .banner-slide */ @media (min-width: 1200px) {  
+  div#carouselExampleSlidesOnly.bannerCarousel carousel slide {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -639,10 +624,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(45, 33, 25);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: ol.carousel-indicators */
-@media (min-width: 1200px) { ol.banner-carousel-indicators { 
+/* .banner-Computed .banner-styles: .banner-ol.banner-carousel-indicators */ @media (min-width: 1200px) {  
+  ol.carousel-indicators {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -793,184 +779,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(45, 33, 25);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: li.active */
-@media (min-width: 1200px) { li.banner-active { 
-    animation-composition: replace;
-    animation-delay: 0s;
-    animation-duration: 0s;
-    animation-iteration-count: 1;
-    animation-play-state: running;
-    animation-timing-function: ease;
-    backface-visibility: visible;
-    background-attachment: scroll;
-    background-clip: padding-box;
-    background-color: rgb(45, 33, 25);
-    background-origin: padding-box;
-    background-position: 0% 0%;
-    background-repeat: repeat;
-    block-size: 12px;
-    border-block-end-color: rgb(45, 33, 25);
-    border-block-end-style: solid;
-    border-block-end-width: 1px;
-    border-block-start-color: rgb(45, 33, 25);
-    border-block-start-style: solid;
-    border-block-start-width: 1px;
-    border-bottom-color: rgb(45, 33, 25);
-    border-bottom-left-radius: 50%;
-    border-bottom-right-radius: 50%;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-collapse: separate;
-    border-end-end-radius: 50%;
-    border-end-start-radius: 50%;
-    border-image-outset: 0;
-    border-image-repeat: stretch;
-    border-image-slice: 100%;
-    border-image-width: 1;
-    border-inline-end-color: rgb(45, 33, 25);
-    border-inline-end-style: solid;
-    border-inline-end-width: 1px;
-    border-inline-start-color: rgb(45, 33, 25);
-    border-inline-start-style: solid;
-    border-inline-start-width: 1px;
-    border-left-color: rgb(45, 33, 25);
-    border-left-style: solid;
-    border-left-width: 1px;
-    border-right-color: rgb(45, 33, 25);
-    border-right-style: solid;
-    border-right-width: 1px;
-    border-start-end-radius: 50%;
-    border-start-start-radius: 50%;
-    border-top-color: rgb(45, 33, 25);
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
-    border-top-style: solid;
-    border-top-width: 1px;
-    box-decoration-break: slice;
-    box-sizing: content-box;
-    caption-side: top;
-    caret-color: rgb(45, 33, 25);
-    clip-rule: nonzero;
-    color: rgb(45, 33, 25);
-    color-interpolation: srgb;
-    color-interpolation-filters: linearrgb;
-    column-rule-color: rgb(45, 33, 25);
-    cursor: pointer;
-    direction: ltr;
-    display: list-item;
-    dynamic-range-limit: no-limit;
-    empty-cells: show;
-    field-sizing: fixed;
-    fill: rgb(0, 0, 0);
-    fill-opacity: 1;
-    fill-rule: nonzero;
-    flex-direction: row;
-    flex-grow: 0;
-    flex-shrink: 1;
-    flex-wrap: nowrap;
-    flood-color: rgb(0, 0, 0);
-    flood-opacity: 1;
-    font-family: Urbanist;
-    font-size: 16px;
-    font-stretch: 100%;
-    font-weight: 400;
-    grid-auto-flow: row;
-    height: 12px;
-    hyphens: manual;
-    image-orientation: from-image;
-    inline-size: 12px;
-    interpolate-size: numeric-only;
-    lighting-color: rgb(255, 255, 255);
-    line-height: 24px;
-    list-style-position: outside;
-    margin-inline-end: 5px;
-    margin-inline-start: 3px;
-    margin-left: 3px;
-    margin-right: 5px;
-    mask-clip: border-box;
-    mask-composite: add;
-    mask-mode: match-source;
-    mask-origin: border-box;
-    mask-position: 0% 0%;
-    mask-repeat: repeat;
-    mask-type: luminance;
-    math-depth: 0;
-    object-fit: fill;
-    object-position: 50% 50%;
-    offset-rotate: auto 0deg;
-    opacity: 1;
-    order: 0;
-    orphans: 2;
-    outline-color: rgb(45, 33, 25);
-    overflow-block: visible;
-    overflow-inline: visible;
-    overflow-x: visible;
-    overflow-y: visible;
-    perspective-origin: 7px 7px;
-    position: static;
-    position-visibility: always;
-    print-color-adjust: economy;
-    ruby-align: space-around;
-    ruby-position: over;
-    scroll-timeline-axis: block;
-    shape-image-threshold: 0;
-    stop-color: rgb(0, 0, 0);
-    stop-opacity: 1;
-    stroke-linecap: butt;
-    stroke-linejoin: miter;
-    stroke-miterlimit: 4;
-    stroke-opacity: 1;
-    stroke-width: 1px;
-    tab-size: 8;
-    text-align: left;
-    text-anchor: start;
-    text-decoration: none solid rgb(45, 33, 25);
-    text-decoration-color: rgb(45, 33, 25);
-    text-decoration-style: solid;
-    text-emphasis-color: rgb(45, 33, 25);
-    text-emphasis-position: over;
-    text-indent: -999px;
-    text-overflow: clip;
-    text-size-adjust: 100%;
-    text-wrap-mode: wrap;
-    transform-origin: 7px 7px;
-    transform-style: flat;
-    transition-delay: 0s;
-    transition-duration: 0.6s;
-    transition-property: opacity;
-    transition-timing-function: ease;
-    unicode-bidi: isolate;
-    vertical-align: baseline;
-    view-timeline-axis: block;
-    visibility: visible;
-    white-space-collapse: collapse;
-    widows: 2;
-    width: 12px;
-    writing-mode: horizontal-tb;
-    zoom: 1;
-    -webkit-box-align: stretch;
-    -webkit-box-decoration-break: slice;
-    -webkit-box-flex: 0;
-    -webkit-box-ordinal-group: 1;
-    -webkit-box-orient: horizontal;
-    -webkit-box-pack: start;
-    -webkit-locale: "en";
-    -webkit-mask-box-image-outset: 0;
-    -webkit-mask-box-image-repeat: stretch;
-    -webkit-mask-box-image-slice: 0 fill;
-    -webkit-rtl-ordering: logical;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-text-fill-color: rgb(45, 33, 25);
-    -webkit-text-orientation: vertical-right;
-    -webkit-text-stroke-color: rgb(45, 33, 25);
-    -webkit-user-modify: read-only;
-    -webkit-writing-mode: horizontal-tb;
-   } }
-
-/* Computed styles: div.carousel-inner */
-@media (min-width: 1200px) { div.banner-carousel-inner { 
+/* .banner-Computed .banner-styles: .banner-div.banner-carousel-inner */ @media (min-width: 1200px) {  
+  div.carousel-inner {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1114,10 +927,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(45, 33, 25);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: div.carousel-item active */
-@media (min-width: 1200px) { div.banner-carousel-item .banner-active { 
+/* .banner-Computed .banner-styles: .banner-div.banner-carousel-item .banner-active */ @media (min-width: 1200px) {  
+  div.carousel-item active {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1263,10 +1077,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(45, 33, 25);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: img.d-none d-sm-block w-100 desktop-image */
-@media (min-width: 1200px) { img.banner-d-none .banner-d-sm-block .banner-w-100 .banner-desktop-image { 
+/* .banner-Computed .banner-styles: .banner-img.banner-d-none .banner-d-sm-block .banner-w-100 .banner-desktop-image */ @media (min-width: 1200px) {  
+  img.d-none d-sm-block w-100 desktop-image {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1408,10 +1223,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(45, 33, 25);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: div.banner-content-wrapper position-absolute */
-@media (min-width: 1200px) { div.banner-content-wrapper .banner-position-absolute { 
+/* .banner-Computed .banner-styles: .banner-div.banner-content-wrapper .banner-position-absolute */ @media (min-width: 1200px) {  
+  div.banner-content-wrapper position-absolute {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1558,10 +1374,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(252, 241, 228);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: h1.koi-carousel-heading text-sm-left */
-@media (min-width: 1200px) { h1.banner-koi-carousel-heading .banner-text-sm-left { 
+/* .banner-Computed .banner-styles: .banner-h1.banner-koi-carousel-heading .banner-text-sm-left */ @media (min-width: 1200px) {  
+  h1.koi-carousel-heading text-sm-left {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1707,10 +1524,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(60, 41, 4);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: div.koi-carousel-description */
-@media (min-width: 1200px) { div.banner-koi-carousel-description { 
+/* .banner-Computed .banner-styles: .banner-div.banner-koi-carousel-description */ @media (min-width: 1200px) {  
+  div.koi-carousel-description {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1852,10 +1670,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(252, 241, 228);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: a.koi-carousel-cta btn btn-primary btn-start-now */
-@media (min-width: 1200px) { a.banner-koi-carousel-cta .banner-btn .banner-btn-primary .banner-btn-start-now { 
+/* .banner-Computed .banner-styles: .banner-a.banner-koi-carousel-cta .banner-btn .banner-btn-primary .banner-btn-start-now */ @media (min-width: 1200px) {  
+  a.koi-carousel-cta btn btn-primary btn-start-now {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -2014,10 +1833,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(252, 241, 228);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: div.next-carousel-btn */
-@media (min-width: 1200px) { div.banner-next-carousel-btn { 
+/* .banner-Computed .banner-styles: .banner-div.banner-next-carousel-btn */ @media (min-width: 1200px) {  
+  div.next-carousel-btn {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -2157,10 +1977,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(45, 33, 25);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: a.carousel-control-prev */
-@media (min-width: 1200px) { a.banner-carousel-control-prev { 
+/* .banner-Computed .banner-styles: .banner-a.banner-carousel-control-prev */ @media (min-width: 1200px) {  
+  a.carousel-control-prev {
     align-items: center;
     animation-composition: replace;
     animation-delay: 0s;
@@ -2323,10 +2144,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: span.carousel-control-prev-icon */
-@media (min-width: 1200px) { span.banner-carousel-control-prev-icon { 
+/* .banner-Computed .banner-styles: .banner-span.banner-carousel-control-prev-icon */ @media (min-width: 1200px) {  
+  span.carousel-control-prev-icon {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -2479,170 +2301,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: span.sr-only */
-@media (min-width: 1200px) { span.banner-sr-only { 
-    animation-composition: replace;
-    animation-delay: 0s;
-    animation-duration: 0s;
-    animation-iteration-count: 1;
-    animation-play-state: running;
-    animation-timing-function: ease;
-    backface-visibility: visible;
-    background-attachment: scroll;
-    background-clip: border-box;
-    background-color: rgba(0, 0, 0, 0);
-    background-origin: padding-box;
-    background-position: 0% 0%;
-    background-repeat: repeat;
-    block-size: 1px;
-    border-block-end-color: rgb(255, 255, 255);
-    border-block-start-color: rgb(255, 255, 255);
-    border-bottom-color: rgb(255, 255, 255);
-    border-collapse: separate;
-    border-image-outset: 0;
-    border-image-repeat: stretch;
-    border-image-slice: 100%;
-    border-image-width: 1;
-    border-inline-end-color: rgb(255, 255, 255);
-    border-inline-start-color: rgb(255, 255, 255);
-    border-left-color: rgb(255, 255, 255);
-    border-right-color: rgb(255, 255, 255);
-    border-top-color: rgb(255, 255, 255);
-    bottom: 41px;
-    box-decoration-break: slice;
-    box-sizing: border-box;
-    caption-side: top;
-    caret-color: rgb(255, 255, 255);
-    clip: rect(0px, 0px, 0px, 0px);
-    clip-rule: nonzero;
-    color: rgb(255, 255, 255);
-    color-interpolation: srgb;
-    color-interpolation-filters: linearrgb;
-    column-rule-color: rgb(255, 255, 255);
-    cursor: pointer;
-    direction: ltr;
-    display: block;
-    dynamic-range-limit: no-limit;
-    empty-cells: show;
-    field-sizing: fixed;
-    fill: rgb(0, 0, 0);
-    fill-opacity: 1;
-    fill-rule: nonzero;
-    flex-direction: row;
-    flex-grow: 0;
-    flex-shrink: 1;
-    flex-wrap: nowrap;
-    flood-color: rgb(0, 0, 0);
-    flood-opacity: 1;
-    font-family: Urbanist;
-    font-size: 16px;
-    font-stretch: 100%;
-    font-weight: 400;
-    grid-auto-flow: row;
-    height: 1px;
-    hyphens: manual;
-    image-orientation: from-image;
-    inline-size: 1px;
-    inset-block-end: 41px;
-    inset-inline-end: 4px;
-    inset-inline-start: 37px;
-    interpolate-size: numeric-only;
-    left: 37px;
-    lighting-color: rgb(255, 255, 255);
-    line-height: 20px;
-    list-style-position: outside;
-    list-style-type: disc;
-    margin-block-end: -1px;
-    margin-block-start: -1px;
-    margin-bottom: -1px;
-    margin-inline-end: -1px;
-    margin-inline-start: -1px;
-    margin-left: -1px;
-    margin-right: -1px;
-    margin-top: -1px;
-    mask-clip: border-box;
-    mask-composite: add;
-    mask-mode: match-source;
-    mask-origin: border-box;
-    mask-position: 0% 0%;
-    mask-repeat: repeat;
-    mask-type: luminance;
-    math-depth: 0;
-    object-fit: fill;
-    object-position: 50% 50%;
-    offset-rotate: auto 0deg;
-    opacity: 1;
-    order: 0;
-    orphans: 2;
-    outline-color: rgb(255, 255, 255);
-    overflow-block: hidden;
-    overflow-inline: hidden;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    perspective-origin: 0.5px 0.5px;
-    position: absolute;
-    position-visibility: always;
-    print-color-adjust: economy;
-    right: 4px;
-    ruby-align: space-around;
-    ruby-position: over;
-    scroll-timeline-axis: block;
-    shape-image-threshold: 0;
-    stop-color: rgb(0, 0, 0);
-    stop-opacity: 1;
-    stroke-linecap: butt;
-    stroke-linejoin: miter;
-    stroke-miterlimit: 4;
-    stroke-opacity: 1;
-    stroke-width: 1px;
-    tab-size: 8;
-    text-align: center;
-    text-anchor: start;
-    text-decoration: none solid rgb(255, 255, 255);
-    text-decoration-color: rgb(255, 255, 255);
-    text-decoration-style: solid;
-    text-emphasis-color: rgb(255, 255, 255);
-    text-emphasis-position: over;
-    text-overflow: clip;
-    text-size-adjust: 100%;
-    text-wrap-mode: nowrap;
-    transform-origin: 0.5px 0.5px;
-    transform-style: flat;
-    transition-delay: 0s;
-    transition-duration: 0s;
-    transition-property: all;
-    transition-timing-function: ease;
-    vertical-align: baseline;
-    view-timeline-axis: block;
-    visibility: visible;
-    white-space-collapse: collapse;
-    widows: 2;
-    width: 1px;
-    writing-mode: horizontal-tb;
-    zoom: 1;
-    -webkit-box-align: stretch;
-    -webkit-box-decoration-break: slice;
-    -webkit-box-flex: 0;
-    -webkit-box-ordinal-group: 1;
-    -webkit-box-orient: horizontal;
-    -webkit-box-pack: start;
-    -webkit-locale: "en";
-    -webkit-mask-box-image-outset: 0;
-    -webkit-mask-box-image-repeat: stretch;
-    -webkit-mask-box-image-slice: 0 fill;
-    -webkit-rtl-ordering: logical;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-text-fill-color: rgb(255, 255, 255);
-    -webkit-text-orientation: vertical-right;
-    -webkit-text-stroke-color: rgb(255, 255, 255);
-    -webkit-user-modify: read-only;
-    -webkit-writing-mode: horizontal-tb;
-   } }
-
-/* Computed styles: a.carousel-control-next */
-@media (min-width: 1200px) { a.banner-carousel-control-next { 
+/* .banner-Computed .banner-styles: .banner-a.banner-carousel-control-next */ @media (min-width: 1200px) {  
+  a.carousel-control-next {
     align-items: center;
     animation-composition: replace;
     animation-delay: 0s;
@@ -2805,325 +2468,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: span.carousel-control-next-icon */
-@media (min-width: 1200px) { span.banner-carousel-control-next-icon { 
-    animation-composition: replace;
-    animation-delay: 0s;
-    animation-duration: 0s;
-    animation-iteration-count: 1;
-    animation-play-state: running;
-    animation-timing-function: ease;
-    backface-visibility: visible;
-    background-attachment: scroll;
-    background-clip: border-box;
-    background-color: rgba(0, 0, 0, 0);
-    background-image: url("https://kitchensofindia.com/etc.clientlibs/itc-rightshift/clientlibs/clientlib-rightshift/resources/icons/next-icon.svg");
-    background-origin: padding-box;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    block-size: 34px;
-    border-block-end-color: rgb(255, 255, 255);
-    border-block-start-color: rgb(255, 255, 255);
-    border-bottom-color: rgb(255, 255, 255);
-    border-collapse: separate;
-    border-image-outset: 0;
-    border-image-repeat: stretch;
-    border-image-slice: 100%;
-    border-image-width: 1;
-    border-inline-end-color: rgb(255, 255, 255);
-    border-inline-start-color: rgb(255, 255, 255);
-    border-left-color: rgb(255, 255, 255);
-    border-right-color: rgb(255, 255, 255);
-    border-top-color: rgb(255, 255, 255);
-    bottom: -4px;
-    box-decoration-break: slice;
-    box-sizing: border-box;
-    caption-side: top;
-    caret-color: rgb(255, 255, 255);
-    clip-rule: nonzero;
-    color: rgb(255, 255, 255);
-    color-interpolation: srgb;
-    color-interpolation-filters: linearrgb;
-    column-rule-color: rgb(255, 255, 255);
-    cursor: pointer;
-    direction: ltr;
-    display: inline-block;
-    dynamic-range-limit: no-limit;
-    empty-cells: show;
-    field-sizing: fixed;
-    fill: rgb(0, 0, 0);
-    fill-opacity: 1;
-    fill-rule: nonzero;
-    flex-direction: row;
-    flex-grow: 0;
-    flex-shrink: 1;
-    flex-wrap: nowrap;
-    flood-color: rgb(0, 0, 0);
-    flood-opacity: 1;
-    font-family: Urbanist;
-    font-size: 16px;
-    font-stretch: 100%;
-    font-weight: 400;
-    grid-auto-flow: row;
-    height: 34px;
-    hyphens: manual;
-    image-orientation: from-image;
-    inline-size: 34px;
-    inset-block-end: -4px;
-    inset-block-start: 4px;
-    inset-inline-end: -3px;
-    inset-inline-start: 3px;
-    interpolate-size: numeric-only;
-    left: 3px;
-    lighting-color: rgb(255, 255, 255);
-    line-height: 20px;
-    list-style-position: outside;
-    list-style-type: disc;
-    mask-clip: border-box;
-    mask-composite: add;
-    mask-mode: match-source;
-    mask-origin: border-box;
-    mask-position: 0% 0%;
-    mask-repeat: repeat;
-    mask-type: luminance;
-    math-depth: 0;
-    object-fit: fill;
-    object-position: 50% 50%;
-    offset-rotate: auto 0deg;
-    opacity: 1;
-    order: 0;
-    orphans: 2;
-    outline-color: rgb(255, 255, 255);
-    overflow-block: visible;
-    overflow-inline: visible;
-    overflow-x: visible;
-    overflow-y: visible;
-    perspective-origin: 17px 17px;
-    position: relative;
-    position-visibility: always;
-    print-color-adjust: economy;
-    right: -3px;
-    ruby-align: space-around;
-    ruby-position: over;
-    scroll-timeline-axis: block;
-    shape-image-threshold: 0;
-    stop-color: rgb(0, 0, 0);
-    stop-opacity: 1;
-    stroke-linecap: butt;
-    stroke-linejoin: miter;
-    stroke-miterlimit: 4;
-    stroke-opacity: 1;
-    stroke-width: 1px;
-    tab-size: 8;
-    text-align: center;
-    text-anchor: start;
-    text-decoration: none solid rgb(255, 255, 255);
-    text-decoration-color: rgb(255, 255, 255);
-    text-decoration-style: solid;
-    text-emphasis-color: rgb(255, 255, 255);
-    text-emphasis-position: over;
-    text-overflow: clip;
-    text-size-adjust: 100%;
-    text-wrap-mode: wrap;
-    top: 4px;
-    transform-origin: 17px 17px;
-    transform-style: flat;
-    transition-delay: 0s;
-    transition-duration: 0s;
-    transition-property: all;
-    transition-timing-function: ease;
-    vertical-align: baseline;
-    view-timeline-axis: block;
-    visibility: visible;
-    white-space-collapse: collapse;
-    widows: 2;
-    width: 34px;
-    writing-mode: horizontal-tb;
-    zoom: 1;
-    -webkit-box-align: stretch;
-    -webkit-box-decoration-break: slice;
-    -webkit-box-flex: 0;
-    -webkit-box-ordinal-group: 1;
-    -webkit-box-orient: horizontal;
-    -webkit-box-pack: start;
-    -webkit-locale: "en";
-    -webkit-mask-box-image-outset: 0;
-    -webkit-mask-box-image-repeat: stretch;
-    -webkit-mask-box-image-slice: 0 fill;
-    -webkit-rtl-ordering: logical;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-text-fill-color: rgb(255, 255, 255);
-    -webkit-text-orientation: vertical-right;
-    -webkit-text-stroke-color: rgb(255, 255, 255);
-    -webkit-user-modify: read-only;
-    -webkit-writing-mode: horizontal-tb;
-   } }
-
-/* Computed styles: span.sr-only */
-@media (min-width: 1200px) { span.banner-sr-only { 
-    animation-composition: replace;
-    animation-delay: 0s;
-    animation-duration: 0s;
-    animation-iteration-count: 1;
-    animation-play-state: running;
-    animation-timing-function: ease;
-    backface-visibility: visible;
-    background-attachment: scroll;
-    background-clip: border-box;
-    background-color: rgba(0, 0, 0, 0);
-    background-origin: padding-box;
-    background-position: 0% 0%;
-    background-repeat: repeat;
-    block-size: 1px;
-    border-block-end-color: rgb(255, 255, 255);
-    border-block-start-color: rgb(255, 255, 255);
-    border-bottom-color: rgb(255, 255, 255);
-    border-collapse: separate;
-    border-image-outset: 0;
-    border-image-repeat: stretch;
-    border-image-slice: 100%;
-    border-image-width: 1;
-    border-inline-end-color: rgb(255, 255, 255);
-    border-inline-start-color: rgb(255, 255, 255);
-    border-left-color: rgb(255, 255, 255);
-    border-right-color: rgb(255, 255, 255);
-    border-top-color: rgb(255, 255, 255);
-    bottom: 41px;
-    box-decoration-break: slice;
-    box-sizing: border-box;
-    caption-side: top;
-    caret-color: rgb(255, 255, 255);
-    clip: rect(0px, 0px, 0px, 0px);
-    clip-rule: nonzero;
-    color: rgb(255, 255, 255);
-    color-interpolation: srgb;
-    color-interpolation-filters: linearrgb;
-    column-rule-color: rgb(255, 255, 255);
-    cursor: pointer;
-    direction: ltr;
-    display: block;
-    dynamic-range-limit: no-limit;
-    empty-cells: show;
-    field-sizing: fixed;
-    fill: rgb(0, 0, 0);
-    fill-opacity: 1;
-    fill-rule: nonzero;
-    flex-direction: row;
-    flex-grow: 0;
-    flex-shrink: 1;
-    flex-wrap: nowrap;
-    flood-color: rgb(0, 0, 0);
-    flood-opacity: 1;
-    font-family: Urbanist;
-    font-size: 16px;
-    font-stretch: 100%;
-    font-weight: 400;
-    grid-auto-flow: row;
-    height: 1px;
-    hyphens: manual;
-    image-orientation: from-image;
-    inline-size: 1px;
-    inset-block-end: 41px;
-    inset-inline-end: 4px;
-    inset-inline-start: 37px;
-    interpolate-size: numeric-only;
-    left: 37px;
-    lighting-color: rgb(255, 255, 255);
-    line-height: 20px;
-    list-style-position: outside;
-    list-style-type: disc;
-    margin-block-end: -1px;
-    margin-block-start: -1px;
-    margin-bottom: -1px;
-    margin-inline-end: -1px;
-    margin-inline-start: -1px;
-    margin-left: -1px;
-    margin-right: -1px;
-    margin-top: -1px;
-    mask-clip: border-box;
-    mask-composite: add;
-    mask-mode: match-source;
-    mask-origin: border-box;
-    mask-position: 0% 0%;
-    mask-repeat: repeat;
-    mask-type: luminance;
-    math-depth: 0;
-    object-fit: fill;
-    object-position: 50% 50%;
-    offset-rotate: auto 0deg;
-    opacity: 1;
-    order: 0;
-    orphans: 2;
-    outline-color: rgb(255, 255, 255);
-    overflow-block: hidden;
-    overflow-inline: hidden;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    perspective-origin: 0.5px 0.5px;
-    position: absolute;
-    position-visibility: always;
-    print-color-adjust: economy;
-    right: 4px;
-    ruby-align: space-around;
-    ruby-position: over;
-    scroll-timeline-axis: block;
-    shape-image-threshold: 0;
-    stop-color: rgb(0, 0, 0);
-    stop-opacity: 1;
-    stroke-linecap: butt;
-    stroke-linejoin: miter;
-    stroke-miterlimit: 4;
-    stroke-opacity: 1;
-    stroke-width: 1px;
-    tab-size: 8;
-    text-align: center;
-    text-anchor: start;
-    text-decoration: none solid rgb(255, 255, 255);
-    text-decoration-color: rgb(255, 255, 255);
-    text-decoration-style: solid;
-    text-emphasis-color: rgb(255, 255, 255);
-    text-emphasis-position: over;
-    text-overflow: clip;
-    text-size-adjust: 100%;
-    text-wrap-mode: nowrap;
-    transform-origin: 0.5px 0.5px;
-    transform-style: flat;
-    transition-delay: 0s;
-    transition-duration: 0s;
-    transition-property: all;
-    transition-timing-function: ease;
-    vertical-align: baseline;
-    view-timeline-axis: block;
-    visibility: visible;
-    white-space-collapse: collapse;
-    widows: 2;
-    width: 1px;
-    writing-mode: horizontal-tb;
-    zoom: 1;
-    -webkit-box-align: stretch;
-    -webkit-box-decoration-break: slice;
-    -webkit-box-flex: 0;
-    -webkit-box-ordinal-group: 1;
-    -webkit-box-orient: horizontal;
-    -webkit-box-pack: start;
-    -webkit-locale: "en";
-    -webkit-mask-box-image-outset: 0;
-    -webkit-mask-box-image-repeat: stretch;
-    -webkit-mask-box-image-slice: 0 fill;
-    -webkit-rtl-ordering: logical;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-text-fill-color: rgb(255, 255, 255);
-    -webkit-text-orientation: vertical-right;
-    -webkit-text-stroke-color: rgb(255, 255, 255);
-    -webkit-user-modify: read-only;
-    -webkit-writing-mode: horizontal-tb;
-   } }
-
-/* Computed styles: div#carousel.carousel slide itc-club-carousel */
-@media (min-width: 1200px) { div#carousel.banner-carousel .banner-slide .banner-itc-club-carousel { 
+/* .banner-Computed .banner-styles: .banner-div#carousel.banner-carousel .banner-slide .banner-itc-club-carousel */ @media (min-width: 1200px) {  
+  div#carousel.carousel slide itc-club-carousel {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3265,10 +2614,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(45, 33, 25);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: div.carousel-inner */
-@media (min-width: 1200px) { div.banner-carousel-inner { 
+/* .banner-Computed .banner-styles: .banner-div.banner-carousel-inner */ @media (min-width: 1200px) {  
+  div.carousel-inner {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3420,10 +2770,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(45, 33, 25);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: ol.carousel-indicators */
-@media (min-width: 1200px) { ol.banner-carousel-indicators { 
+/* .banner-Computed .banner-styles: .banner-ol.banner-carousel-indicators */ @media (min-width: 1200px) {  
+  ol.carousel-indicators {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3578,184 +2929,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(45, 33, 25);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: li.active */
-@media (min-width: 1200px) { li.banner-active { 
-    animation-composition: replace;
-    animation-delay: 0s;
-    animation-duration: 0s;
-    animation-iteration-count: 1;
-    animation-play-state: running;
-    animation-timing-function: ease;
-    backface-visibility: visible;
-    background-attachment: scroll;
-    background-clip: padding-box;
-    background-color: rgb(45, 33, 25);
-    background-origin: padding-box;
-    background-position: 0% 0%;
-    background-repeat: repeat;
-    block-size: 12px;
-    border-block-end-color: rgb(45, 33, 25);
-    border-block-end-style: solid;
-    border-block-end-width: 1px;
-    border-block-start-color: rgb(45, 33, 25);
-    border-block-start-style: solid;
-    border-block-start-width: 1px;
-    border-bottom-color: rgb(45, 33, 25);
-    border-bottom-left-radius: 50%;
-    border-bottom-right-radius: 50%;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-collapse: separate;
-    border-end-end-radius: 50%;
-    border-end-start-radius: 50%;
-    border-image-outset: 0;
-    border-image-repeat: stretch;
-    border-image-slice: 100%;
-    border-image-width: 1;
-    border-inline-end-color: rgb(45, 33, 25);
-    border-inline-end-style: solid;
-    border-inline-end-width: 1px;
-    border-inline-start-color: rgb(45, 33, 25);
-    border-inline-start-style: solid;
-    border-inline-start-width: 1px;
-    border-left-color: rgb(45, 33, 25);
-    border-left-style: solid;
-    border-left-width: 1px;
-    border-right-color: rgb(45, 33, 25);
-    border-right-style: solid;
-    border-right-width: 1px;
-    border-start-end-radius: 50%;
-    border-start-start-radius: 50%;
-    border-top-color: rgb(45, 33, 25);
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
-    border-top-style: solid;
-    border-top-width: 1px;
-    box-decoration-break: slice;
-    box-sizing: content-box;
-    caption-side: top;
-    caret-color: rgb(45, 33, 25);
-    clip-rule: nonzero;
-    color: rgb(45, 33, 25);
-    color-interpolation: srgb;
-    color-interpolation-filters: linearrgb;
-    column-rule-color: rgb(45, 33, 25);
-    cursor: pointer;
-    direction: ltr;
-    display: list-item;
-    dynamic-range-limit: no-limit;
-    empty-cells: show;
-    field-sizing: fixed;
-    fill: rgb(0, 0, 0);
-    fill-opacity: 1;
-    fill-rule: nonzero;
-    flex-direction: row;
-    flex-grow: 0;
-    flex-shrink: 1;
-    flex-wrap: nowrap;
-    flood-color: rgb(0, 0, 0);
-    flood-opacity: 1;
-    font-family: Urbanist;
-    font-size: 16px;
-    font-stretch: 100%;
-    font-weight: 400;
-    grid-auto-flow: row;
-    height: 12px;
-    hyphens: manual;
-    image-orientation: from-image;
-    inline-size: 12px;
-    interpolate-size: numeric-only;
-    lighting-color: rgb(255, 255, 255);
-    line-height: 24px;
-    list-style-position: outside;
-    margin-inline-end: 5px;
-    margin-inline-start: 3px;
-    margin-left: 3px;
-    margin-right: 5px;
-    mask-clip: border-box;
-    mask-composite: add;
-    mask-mode: match-source;
-    mask-origin: border-box;
-    mask-position: 0% 0%;
-    mask-repeat: repeat;
-    mask-type: luminance;
-    math-depth: 0;
-    object-fit: fill;
-    object-position: 50% 50%;
-    offset-rotate: auto 0deg;
-    opacity: 1;
-    order: 0;
-    orphans: 2;
-    outline-color: rgb(45, 33, 25);
-    overflow-block: visible;
-    overflow-inline: visible;
-    overflow-x: visible;
-    overflow-y: visible;
-    perspective-origin: 7px 7px;
-    position: static;
-    position-visibility: always;
-    print-color-adjust: economy;
-    ruby-align: space-around;
-    ruby-position: over;
-    scroll-timeline-axis: block;
-    shape-image-threshold: 0;
-    stop-color: rgb(0, 0, 0);
-    stop-opacity: 1;
-    stroke-linecap: butt;
-    stroke-linejoin: miter;
-    stroke-miterlimit: 4;
-    stroke-opacity: 1;
-    stroke-width: 1px;
-    tab-size: 8;
-    text-align: left;
-    text-anchor: start;
-    text-decoration: none solid rgb(45, 33, 25);
-    text-decoration-color: rgb(45, 33, 25);
-    text-decoration-style: solid;
-    text-emphasis-color: rgb(45, 33, 25);
-    text-emphasis-position: over;
-    text-indent: -999px;
-    text-overflow: clip;
-    text-size-adjust: 100%;
-    text-wrap-mode: wrap;
-    transform-origin: 7px 7px;
-    transform-style: flat;
-    transition-delay: 0s;
-    transition-duration: 0.6s;
-    transition-property: opacity;
-    transition-timing-function: ease;
-    unicode-bidi: isolate;
-    vertical-align: baseline;
-    view-timeline-axis: block;
-    visibility: visible;
-    white-space-collapse: collapse;
-    widows: 2;
-    width: 12px;
-    writing-mode: horizontal-tb;
-    zoom: 1;
-    -webkit-box-align: stretch;
-    -webkit-box-decoration-break: slice;
-    -webkit-box-flex: 0;
-    -webkit-box-ordinal-group: 1;
-    -webkit-box-orient: horizontal;
-    -webkit-box-pack: start;
-    -webkit-locale: "en";
-    -webkit-mask-box-image-outset: 0;
-    -webkit-mask-box-image-repeat: stretch;
-    -webkit-mask-box-image-slice: 0 fill;
-    -webkit-rtl-ordering: logical;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-text-fill-color: rgb(45, 33, 25);
-    -webkit-text-orientation: vertical-right;
-    -webkit-text-stroke-color: rgb(45, 33, 25);
-    -webkit-user-modify: read-only;
-    -webkit-writing-mode: horizontal-tb;
-   } }
-
-/* Computed styles: div.carousel-item active */
-@media (min-width: 1200px) { div.banner-carousel-item .banner-active { 
+/* .banner-Computed .banner-styles: .banner-div.banner-carousel-item .banner-active */ @media (min-width: 1200px) {  
+  div.carousel-item active {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3903,10 +3081,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(45, 33, 25);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: button.carousel-control-prev */
-@media (min-width: 1200px) { button.banner-carousel-control-prev { 
+/* .banner-Computed .banner-styles: .banner-button.banner-carousel-control-prev */ @media (min-width: 1200px) {  
+  button.carousel-control-prev {
     align-items: center;
     animation-composition: replace;
     animation-delay: 0s;
@@ -4070,10 +3249,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: span.carousel-control-prev-icon */
-@media (min-width: 1200px) { span.banner-carousel-control-prev-icon { 
+/* .banner-Computed .banner-styles: .banner-span.banner-carousel-control-prev-icon */ @media (min-width: 1200px) {  
+  span.carousel-control-prev-icon {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -4226,10 +3406,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: span.sr-only */
-@media (min-width: 1200px) { span.banner-sr-only { 
+/* .banner-Computed .banner-styles: .banner-span.banner-sr-only */ @media (min-width: 1200px) {  
+  span.sr-only {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -4388,10 +3569,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: button.carousel-control-next */
-@media (min-width: 1200px) { button.banner-carousel-control-next { 
+/* .banner-Computed .banner-styles: .banner-button.banner-carousel-control-next */ @media (min-width: 1200px) {  
+  button.carousel-control-next {
     align-items: center;
     animation-composition: replace;
     animation-delay: 0s;
@@ -4555,165 +3737,11 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }
 
-/* Computed styles: span.carousel-control-next-icon */
-@media (min-width: 1200px) { span.banner-carousel-control-next-icon { 
-    animation-composition: replace;
-    animation-delay: 0s;
-    animation-duration: 0s;
-    animation-iteration-count: 1;
-    animation-play-state: running;
-    animation-timing-function: ease;
-    backface-visibility: visible;
-    background-attachment: scroll;
-    background-clip: border-box;
-    background-color: rgba(0, 0, 0, 0);
-    background-image: url("https://kitchensofindia.com/etc.clientlibs/itc-rightshift/clientlibs/clientlib-rightshift/resources/icons/next-icon.svg");
-    background-origin: padding-box;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    block-size: 34px;
-    border-block-end-color: rgb(255, 255, 255);
-    border-block-start-color: rgb(255, 255, 255);
-    border-bottom-color: rgb(255, 255, 255);
-    border-collapse: separate;
-    border-image-outset: 0;
-    border-image-repeat: stretch;
-    border-image-slice: 100%;
-    border-image-width: 1;
-    border-inline-end-color: rgb(255, 255, 255);
-    border-inline-start-color: rgb(255, 255, 255);
-    border-left-color: rgb(255, 255, 255);
-    border-right-color: rgb(255, 255, 255);
-    border-top-color: rgb(255, 255, 255);
-    bottom: -4px;
-    box-decoration-break: slice;
-    box-sizing: border-box;
-    caption-side: top;
-    caret-color: rgb(255, 255, 255);
-    clip-rule: nonzero;
-    color: rgb(255, 255, 255);
-    color-interpolation: srgb;
-    color-interpolation-filters: linearrgb;
-    column-rule-color: rgb(255, 255, 255);
-    cursor: pointer;
-    direction: ltr;
-    display: inline-block;
-    dynamic-range-limit: no-limit;
-    empty-cells: show;
-    field-sizing: fixed;
-    fill: rgb(0, 0, 0);
-    fill-opacity: 1;
-    fill-rule: nonzero;
-    flex-direction: row;
-    flex-grow: 0;
-    flex-shrink: 1;
-    flex-wrap: nowrap;
-    flood-color: rgb(0, 0, 0);
-    flood-opacity: 1;
-    font-family: Urbanist;
-    font-size: 16px;
-    font-stretch: 100%;
-    font-weight: 400;
-    grid-auto-flow: row;
-    height: 34px;
-    hyphens: manual;
-    image-orientation: from-image;
-    inline-size: 34px;
-    inset-block-end: -4px;
-    inset-block-start: 4px;
-    inset-inline-end: -3px;
-    inset-inline-start: 3px;
-    interpolate-size: numeric-only;
-    left: 3px;
-    lighting-color: rgb(255, 255, 255);
-    line-height: 20px;
-    list-style-position: outside;
-    list-style-type: disc;
-    mask-clip: border-box;
-    mask-composite: add;
-    mask-mode: match-source;
-    mask-origin: border-box;
-    mask-position: 0% 0%;
-    mask-repeat: repeat;
-    mask-type: luminance;
-    math-depth: 0;
-    object-fit: fill;
-    object-position: 50% 50%;
-    offset-rotate: auto 0deg;
-    opacity: 1;
-    order: 0;
-    orphans: 2;
-    outline-color: rgb(255, 255, 255);
-    overflow-block: visible;
-    overflow-inline: visible;
-    overflow-x: visible;
-    overflow-y: visible;
-    perspective-origin: 17px 17px;
-    position: relative;
-    position-visibility: always;
-    print-color-adjust: economy;
-    right: -3px;
-    ruby-align: space-around;
-    ruby-position: over;
-    scroll-timeline-axis: block;
-    shape-image-threshold: 0;
-    stop-color: rgb(0, 0, 0);
-    stop-opacity: 1;
-    stroke-linecap: butt;
-    stroke-linejoin: miter;
-    stroke-miterlimit: 4;
-    stroke-opacity: 1;
-    stroke-width: 1px;
-    tab-size: 8;
-    text-align: center;
-    text-anchor: start;
-    text-decoration: none solid rgb(255, 255, 255);
-    text-decoration-color: rgb(255, 255, 255);
-    text-decoration-style: solid;
-    text-emphasis-color: rgb(255, 255, 255);
-    text-emphasis-position: over;
-    text-overflow: clip;
-    text-size-adjust: 100%;
-    text-wrap-mode: wrap;
-    top: 4px;
-    transform-origin: 17px 17px;
-    transform-style: flat;
-    transition-delay: 0s;
-    transition-duration: 0s;
-    transition-property: all;
-    transition-timing-function: ease;
-    vertical-align: baseline;
-    view-timeline-axis: block;
-    visibility: visible;
-    white-space-collapse: collapse;
-    widows: 2;
-    width: 34px;
-    writing-mode: horizontal-tb;
-    zoom: 1;
-    -webkit-box-align: stretch;
-    -webkit-box-decoration-break: slice;
-    -webkit-box-flex: 0;
-    -webkit-box-ordinal-group: 1;
-    -webkit-box-orient: horizontal;
-    -webkit-box-pack: start;
-    -webkit-locale: "en";
-    -webkit-mask-box-image-outset: 0;
-    -webkit-mask-box-image-repeat: stretch;
-    -webkit-mask-box-image-slice: 0 fill;
-    -webkit-rtl-ordering: logical;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-text-fill-color: rgb(255, 255, 255);
-    -webkit-text-orientation: vertical-right;
-    -webkit-text-stroke-color: rgb(255, 255, 255);
-    -webkit-user-modify: read-only;
-    -webkit-writing-mode: horizontal-tb;
-   } }
-
-/* Computed styles: span.sr-only */
-@media (min-width: 1200px) { span.banner-sr-only { 
+/* .banner-Computed .banner-styles: .banner-span.banner-sr-only */ @media (min-width: 1200px) {  
+  span.sr-only {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -4872,4 +3900,5 @@ a:not(.banner-btn) {   text-decoration: underline;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+  }

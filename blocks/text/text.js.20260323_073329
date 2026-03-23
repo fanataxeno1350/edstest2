@@ -14,6 +14,6 @@ export default function decorate(block) {
 
   block.textContent = '';
   block.append(wrapper);
-  block.className = `${block.dataset.blockName} block`;
+  block.className = `text block`;
   block.dataset.blockStatus = 'loaded';
 }
