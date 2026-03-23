@@ -26,7 +26,6 @@
       "bannerCta",
       "featureCards",
       "latestBlogsArticleList",
-      "spaceAdder",
       "stickyNavigation"
     ]
   },
@@ -97,9 +96,6 @@
       "footerSocialItem",
       "footerLeftLinkItem"
     ]
-  },
-  {
-    "id": "spaceAdder"
   },
   {
     "id": "stickyNavigation",
