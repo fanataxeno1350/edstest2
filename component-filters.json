@@ -16,60 +16,7 @@
       "cards",
       "columns",
       "fragment",
-      "---new--blocks-----",
-      "header",
-      "bannerCarousel",
-      "itcClubCarousel",
-      "delightfulDelicacies",
-      "rsCards",
-      "footer"
-    ]
-  },
-  {
-    "id": "bannerCarousel",
-    "components": [
-      "bannerSlide"
-    ]
-  },
-  {
-    "id": "delightfulDelicacies",
-    "components": [
-      "category"
-    ]
-  },
-  {
-    "id": "footer",
-    "components": [
-      "footerLogo",
-      "footerLink",
-      "footerSocial",
-      "footerContact",
-      "footerCopyright",
-      "footerSecondaryLink"
-    ]
-  },
-  {
-    "id": "header",
-    "components": [
-      "header"
-    ]
-  },
-  {
-    "id": "itcClubCarousel",
-    "components": [
-      "carouselItem"
-    ]
-  },
-  {
-    "id": "rsCards",
-    "components": [
-      "rsCard"
-    ]
-  },
-  {
-    "id": "text",
-    "components": [
-      "text"
+      "---new--blocks-----"
     ]
   }
 ]
