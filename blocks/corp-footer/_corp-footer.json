@@ -1,0 +1,285 @@
+{
+  "definitions": [
+    {
+      "title": "corp-footer",
+      "id": "corp-footer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "corp-footer",
+              "model": "corp-footer",
+              "name": "corp-footer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer Link Column",
+      "id": "footer-link-column",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-link-column",
+              "name": "Footer Link Column"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer Link",
+      "id": "footer-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-link",
+              "name": "Footer Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer Contact Icon",
+      "id": "footer-contact-icon",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-contact-icon",
+              "name": "Footer Contact Icon"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer App Icon",
+      "id": "footer-app-icon",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-app-icon",
+              "name": "Footer App Icon"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer QR Icon",
+      "id": "footer-qr-icon",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-qr-icon",
+              "name": "Footer QR Icon"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer Bottom Column",
+      "id": "footer-bottom-column",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-bottom-column",
+              "name": "Footer Bottom Column"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "corp-footer",
+      "fields": [
+        {
+          "component": "container",
+          "items": {
+            "type": "footer-link-column"
+          },
+          "label": "Footer Link Columns",
+          "name": "footerLinkColumns"
+        },
+        {
+          "component": "container",
+          "items": {
+            "type": "footer-contact-icon"
+          },
+          "label": "Footer Contact Icons",
+          "name": "footerContactIcons"
+        },
+        {
+          "component": "container",
+          "items": {
+            "type": "footer-app-icon"
+          },
+          "label": "Footer App Icons",
+          "name": "footerAppIcons"
+        },
+        {
+          "component": "container",
+          "items": {
+            "type": "footer-qr-icon"
+          },
+          "label": "Footer QR Icons",
+          "name": "footerQrIcons"
+        },
+        {
+          "component": "container",
+          "items": {
+            "type": "footer-bottom-column"
+          },
+          "label": "Footer Bottom Columns",
+          "name": "footerBottomColumns"
+        }
+      ]
+    },
+    {
+      "id": "footer-link-column",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Column Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "items": {
+            "type": "footer-link"
+          },
+          "label": "Links",
+          "name": "links"
+        }
+      ]
+    },
+    {
+      "id": "footer-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Link Text",
+          "name": "text",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-contact-icon",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Icon Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon Image",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Alt Text",
+          "name": "alt",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-app-icon",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "App Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "App Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Alt Text",
+          "name": "alt",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-qr-icon",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "QR Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "QR Image",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Alt Text",
+          "name": "alt",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-bottom-column",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Footer Bottom Content",
+          "name": "content",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "corp-footer",
+      "components": [
+        "footer-link-column",
+        "footer-contact-icon",
+        "footer-app-icon",
+        "footer-qr-icon",
+        "footer-bottom-column"
+      ]
+    }
+  ]
+}

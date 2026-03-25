@@ -1,0 +1,130 @@
+{
+  "definitions": [
+    {
+      "title": "Corp-Counter",
+      "id": "corpCounter",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "corpCounter",
+              "model": "corpCounter",
+              "name": "Corp-Counter"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Counter-Background-Image",
+      "id": "counterBackgroundImage",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "counterBackgroundImage",
+              "name": "Counter-Background-Image"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Counter-Button",
+      "id": "counterButton",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "counterButton",
+              "name": "Counter-Button"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "counterBackgroundImage",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Background Image",
+          "name": "backgroundImage",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "counterButton",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Button Link",
+          "name": "buttonLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Button Text",
+          "name": "buttonText",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "corpCounter",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Mobile Background",
+          "name": "mobileBackground",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Desktop Background",
+          "name": "desktopBackground",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "itemType": "counterBackgroundImage",
+          "label": "Background Images",
+          "name": "backgroundImages"
+        },
+        {
+          "component": "text",
+          "label": "Counter Value",
+          "name": "counterValue",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Counter Label",
+          "name": "counterLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "itemType": "counterButton",
+          "label": "Buttons",
+          "name": "buttons"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "corpCounter",
+      "components": [
+        "counterBackgroundImage",
+        "counterButton"
+      ]
+    }
+  ]
+}

@@ -51,7 +51,21 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "corpHeader",
+        "logo",
+        "linkGrid",
+        "linkColumnLinkGridColumn",
+        "contactUs",
+        "signInUserDropdown",
+        "searchHeader",
+        "corpCarousel",
+        "corporateBusinessCard",
+        "highlights",
+        "corpSlider",
+        "corpOurValues",
+        "corpCounter",
+        "corp-footer"
       ]
     }
   ]

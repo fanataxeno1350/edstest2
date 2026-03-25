@@ -1,0 +1,186 @@
+{
+  "definitions": [
+    {
+      "title": "Corp Header",
+      "id": "corpHeader",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "corpHeader",
+              "model": "corpHeader",
+              "name": "Corp Header"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Header Link Group",
+      "id": "headerLinkGroup",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "headerLinkGroup",
+              "name": "Header Link Group"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Header Link",
+      "id": "headerLink",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "headerLink",
+              "name": "Header Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Header Contact",
+      "id": "headerContact",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "headerContact",
+              "name": "Header Contact"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "corpHeader",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo",
+          "name": "logo",
+          "valueType": "string"
+        },
+        {
+          "block": "headerLinkGroup",
+          "component": "container",
+          "label": "Links",
+          "name": "links"
+        },
+        {
+          "block": "headerContact",
+          "component": "container",
+          "label": "Contacts",
+          "name": "contacts"
+        }
+      ]
+    },
+    {
+      "id": "headerLinkGroup",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Group Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "block": "headerLink",
+          "component": "container",
+          "label": "Links",
+          "name": "links"
+        }
+      ]
+    },
+    {
+      "id": "headerLink",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "URL",
+          "name": "url",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "headerContact",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Contact Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Phone Icon",
+          "name": "phoneIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Phone",
+          "name": "phone",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "WhatsApp Icon",
+          "name": "whatsappIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "WhatsApp URL",
+          "name": "whatsapp",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Email Icon",
+          "name": "emailIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Email",
+          "name": "email",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "corpHeader",
+      "components": [
+        "headerLinkGroup",
+        "headerContact"
+      ]
+    },
+    {
+      "id": "headerLinkGroup",
+      "components": [
+        "headerLink"
+      ]
+    }
+  ]
+}
