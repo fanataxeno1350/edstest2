@@ -1,456 +1,10 @@
-/* .corporate-business-card----------------------- .corporate-business-card-BUTTONS .corporate-business-card-STYLE .corporate-business-card--------------------------- */ .corporate-business-card-button, a.corporate-business-card-button, .corporate-business-card-input[type='button'], .corporate-business-card-input[type='submit'], .corporate-business-card-input[type='reset'] {  
-  display: inline-flex;
-  padding: 0.5rem 1rem;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  font-family: var(--body-font-arena);
-  font-size: 0.875rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.125rem;
-  transition: all 0.3s linear;
-  position: relative !important;
-  @media (width >=1024px) {
-    font-size: 1rem;
-  }
-  }
-
-/* button .corporate-business-card-primary .corporate-business-card-dark .corporate-business-card-style */ .corporate-business-card-button-primary-white {  
-  background-color: var(--secondary-white);
-  color: var(--primary-blue-700);
-  border: 1px solid var(--secondary-white);
-  }
-
-@media (width >=768px) { :root { 
-    --nav-height: 64px;
-   }
-
-h1 {  
-    font-size: 84px;
-    line-height: normal;
-    }
-
-h2 {  
-    font-size: 64px;
-    line-height: normal;
-    }
-
-h3 {  
-    font-size: 48px;
-    line-height: normal;
-    }
-
-h4 {  
-    font-size: 24px;
-    line-height: normal;
-    }
-
-p {  
-    font-size: 16px;
-    line-height: 24px;
-    /* 133.333% */
-    }
-
-.corporate-business-card-button, a.corporate-business-card-button, .corporate-business-card-input[type='button'], .corporate-business-card-input[type='submit'], .corporate-business-card-input[type='reset'] {  
-    display: inline-flex;
-    padding: 0.75rem 1.5rem;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    font-style: normal;
-    font-weight: 400;
-    /* 128.571% */
-    }
-
-.corporate-business-card-button-primary-white:hover {  
-    background-color: var(--primary-blue-900);
-    color: var(--secondary-white);
-    border: 1px solid var(--primary-blue-900);
-    } }
-
-/* .corporate-business-card-Grid .corporate-business-card-system */ .corporate-business-card-g-container {  
-  width: 100%;
-  padding-inline: var(--container-margin);
-  }
-
-.corporate-business-card-business-card-container {  
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  display: flex;
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item {  
-  width: 100%;
-  height: 6rem;
-  position: relative;
-  overflow: hidden;
-  transition: width 0.3s ease;
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item .corporate-business-card-overlay {  
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.4);
-  height: 100%;
-  width: 100%;
-  z-index: 1;
-  pointer-events: none;
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-assets video {  
-  width: 100%;
-  height: 6rem;
-  object-fit: cover;
-  display: block;
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:not(.corporate-business-card-active) {  
-  height: 6rem;
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-assets {  
-  height: 0;
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-logo {  
-  position: relative;
-  padding-top: 1rem;
-  padding-left: 1rem;
-  z-index: 1;
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item .corporate-business-card-business-card-item-logo .corporate-business-card-picture {  
-  display: flex;
-  img {
-    width: auto;
-    max-width: 90%;
-    pointer-events: none;
-    z-index: 1;
-    height: 0.6712rem;
-  }
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-info {  
-  width: calc(100% - 1rem);
-  .business-card-item-desc {
-    opacity: 0;
-  }
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-button-primary-white {  
-  opacity: 0;
-  transform: none;
-  display: flex;
-  padding: 0.25rem 0.75rem;
-  justify-content: center;
-  align-items: center;
-  gap: 0.375rem;
-  cursor: pointer;
-  width: min-content;
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-button-primary-white {  
-  font-size: 0.5625rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1rem;
-  text-transform: capitalize;
-  color: var(--tertiary-black);
-
-  @media (width >= 1024px) {
-    font-size: 0.875rem;
-    line-height: 1.125rem;
-  }
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item .corporate-business-card-button-primary-white {  
-  gap: 6px;
-  &[target='_blank'] {
-    &::after {
-      content: '';
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      margin-left: 0rem;
-      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M9.25625 32.5001L7.5 30.7438L26.5771 11.6667H15V9.16675H30.8333V25.0001H28.3333V13.423L9.25625 32.5001Z" fill="%231D1D1D"/></svg>');
-    }
-  }
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:not(:first-of-type) .corporate-business-card-button-primary-white {  
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:first-of-type .corporate-business-card-button-primary-white {  
-  clip-path: polygon(4% 0, 100% 0, 100% 84%, 96% 100%, 0 100%, 0 20%);
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:first-of-type .corporate-business-card-button-primary-white:hover {  
-  background: var(--tertiary-light-grey);
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-title h3 {  
-  font-family: var(--body-font-family);
-  color: var(--tertiary-white);
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: var(--fw-600);
-  line-height: 1.25rem;
-  letter-spacing: -0.0199rem;
-  margin-bottom: 0rem;
-
-  @media (width >= 1024px) {
-    font-size: 2.5rem;
-    line-height: 3rem;
-    letter-spacing: -0.05rem;
-  }
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-subtitle {  
-  color: var(--tertiary-light-grey);
-  font-size: 0.75rem;
-  font-style: italic;
-  font-weight: 400;
-  line-height: 1rem;
-  margin-top: 0rem;
-
-  @media (width >= 1024px) {
-    line-height: 1.125rem !important;
-  }
-  }
-
-.corporate-business-card-business-card-title {  
-  font-size: 1.5rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.875rem;
-  margin: 0 0 0.5rem !important;
-
-  @media (width >= 1024px) {
-    font-size: 2rem !important;
-    line-height: 2.5rem !important;
-    letter-spacing: -0.03rem !important;
-    margin: 0 0 0.75rem !important;
-  }
-  }
-
-@media (width >=768px) { .corporate-business-card-business-card-container {  
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 1.5rem;
-    overflow: hidden;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item {  
-    width: 25.4375rem !important;
-    height: 40rem !important;
-    position: relative;
-    overflow: hidden;
-    transition: width 0.3s ease;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-assets {  
-    width: 100%;
-    position: relative;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-assets video {  
-    width: 100% !important;
-    height: 40rem !important;
-    object-fit: cover;
-    display: block;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-info {  
-    width: calc(100% - 1.5rem);
-    .business-card-item-desc {
-      opacity: 0;
-    }
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:not(:hover) .corporate-business-card-business-card-item-info {  
-    width: 100%;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-business-card-item-info {  
-    position: absolute;
-    top: 2.5rem;
-    left: 1.5rem;
-    transform: none;
-    z-index: 1;
-
-    .business-card-item-desc {
-      opacity: 1 !important;
-      width: 90%;
-    }
-    }
-
-.corporate-business-card-html:has(meta[name="car-model-name"][content="victoris"]) {  
-    @media (width >= 768px) {
-      .business-card-container .business-card-item:hover .business-card-item-info {
-        top: 0;
-      }
-    }
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-button-primary-white {  
-    opacity: 1 !important;
-    z-index: 1;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-button-primary-white {  
-    opacity: 0;
-    transform: none;
-    display: inline-flex;
-    padding: 0.75rem 1.5rem;
-    gap: 0.5rem;
-    justify-content: center;
-    align-items: center;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:first-of-type .corporate-business-card-button-primary-white {  
-    clip-path: polygon(4% 0, 100% 0, 100% 84%, 96% 100%, 0 100%, 0 20%);
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:first-of-type .corporate-business-card-button-primary-white:hover {  
-    background: #f2f2f2;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:not(:first-of-type) .corporate-business-card-button-primary-white {  
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item .corporate-business-card-button-primary-white {  
-    gap: 12px;
-    &[target='_blank'] {
-      &::after {
-        content: '';
-        width: 20px;
-        height: 20px;
-      }
-    }
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:not(:first-of-type) .corporate-business-card-button-primary-white:hover::after {  
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M9.25625 32.5001L7.5 30.7438L26.5771 11.6667H15V9.16675H30.8333V25.0001H28.3333V13.423L9.25625 32.5001Z" fill="rgb(255,255,255)"/></svg>');
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-button-primary-white:hover {  
-    color: var(--tertiary-white);
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-button-primary-white.corporate-business-card-button {  
-    transition: none !important;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:first-of-type .corporate-business-card-button-primary-white:hover {  
-    color: var(--tertiary-black);
-    }
-
-#refined-luxury-elevated-journey {  
-    font-family: 'Kepler Std', serif;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-business-card-item-info, .corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-button-primary-white {  
-    opacity: 1 !important;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-logo {  
-    position: relative;
-    text-align: center;
-    padding-top: 2.5rem;
-    padding-left: 0;
-    z-index: 1;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item .corporate-business-card-business-card-item-logo .corporate-business-card-picture img {  
-    position: unset;
-    margin-inline: auto;
-    pointer-events: none;
-    z-index: 1;
-    height: 1.25rem;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-business-card-item-logo {  
-    position: unset;
-    text-align: left;
-    padding-top: 0;
-    margin-bottom: 1.5rem;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-business-card-item-logo .corporate-business-card-picture img {  
-    transform: none;
-    position: unset;
-    margin-inline: unset;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-picture img {  
-    left: 5rem !important;
-    top: 1.875rem;
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover {  
-    width: 48.8% !important;
-    & .overlay {
-      background: linear-gradient(343deg, rgba(14, 19, 24, 0) 35.96%, rgba(36, 37, 43, 0.6) 66.12%);
-      width: 100%;
-    }
-    }
-
-.corporate-business-card-business-card-container:has(.corporate-business-card-business-card-item:hover) {  
-    .business-card-item:not(:hover) {
-      width: 15.15% !important;
-    }
-    }
-
-.corporate-business-card-business-card-title-hr {  
-    margin-bottom: 1.5625rem;
-    background-color: var(--secondary-gray-200);
-    height: 0.0625rem;
-    border: none;
-    } }
-
-@media (width >=1024px) { .corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-business-card-item-info {  
-    .business-card-item-desc {
-      width: 60%;
-    }
-    }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover {  
-    & .overlay {
-      background: linear-gradient(343deg, rgba(14, 19, 24, 0) 35.96%, rgba(36, 37, 43, 0.6) 66.12%);
-      width: 100%;
-    }
-    } }
-
-.corporate-business-card-vjs-has-started.corporate-business-card-vjs-paused.corporate-business-card-vjs-show-big-play-button-on-pause:not( .corporate-business-card-vjs-seeking, .corporate-business-card-vjs-error ) .corporate-business-card-vjs-big-play-button {  
-  display: block;
-  }
-
-.corporate-business-card-video-js:not(.corporate-business-card-vjs-controls-disabled, .corporate-business-card-vjs-error) .corporate-business-card-vjs-control-bar.corporate-business-card-vjs-lock-showing {  
-  display: flex !important;
-  }
-
-@media print { .corporate-business-card-video-js > :not(.corporate-business-card-vjs-tech, .corporate-business-card-vjs-poster) {  
-    visibility: hidden;
-    } }
-
-/* .corporate-business-card---- .corporate-business-card-Wrapper/General .corporate-business-card---- */ #webchat-container {  
+/* --- Wrapper/General --- */
+#webchat-container { 
     font-family: sans-serif;
-  }
+ }
 
-/* .corporate-business-card---- .corporate-business-card-FAQ .corporate-business-card-Popup .corporate-business-card-Container (Animation .corporate-business-card-Logic) .corporate-business-card---- */ #faq-popup {  
+/* --- FAQ Popup Container (Animation Logic) --- */
+#faq-popup { 
     position: absolute;
     top: 30%;
     left: 0;
@@ -470,222 +24,33 @@ p {
     box-shadow: 0px -4px 10px rgba(0,0,0,0.1);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-  }
+ }
 
-/* .corporate-business-card-Style .corporate-business-card-tag */ .corporate-business-card-video-wp5uel46y-dimensions {  
-        width: 300px;
-        height: 168.75px;
-        }
+.vjs-has-started.vjs-paused.vjs-show-big-play-button-on-pause:not(
+    .vjs-seeking, .vjs-error
+  )
+  .vjs-big-play-button { 
+  display: block;
+ }
 
-/* .corporate-business-card-Style .corporate-business-card-tag */ .corporate-business-card-video-7c944sj5f-dimensions {  
-        width: 300px;
-        height: 168.75px;
-        }
+.video-js:not(.vjs-controls-disabled, .vjs-error)
+  .vjs-control-bar.vjs-lock-showing { 
+  display: flex !important;
+ }
 
-/* .corporate-business-card-Style .corporate-business-card-tag */ .corporate-business-card-video-ayhahshsl-dimensions {  
-        width: 300px;
-        height: 168.75px;
-        }
+@media print { .video-js > :not(.vjs-tech, .vjs-poster) { 
+    visibility: hidden;
+   } }
 
-/* .corporate-business-card-Style .corporate-business-card-tag */ .corporate-business-card-video-6aa81qfom-dimensions {  
-        width: 300px;
-        height: 168.75px;
-        }
+.vjs-has-started.vjs-paused.vjs-show-big-play-button-on-pause:not(.vjs-seeking, .vjs-error) .vjs-big-play-button {  display: block;  }
 
-/* .corporate-business-card-Stylesheet .corporate-business-card-rules: .corporate-business-card-inline-2 */ .corporate-business-card-video-wp5uel46y-dimensions {   width: 300px; height: 168.75px;   }
+.video-js:not(.vjs-controls-disabled, .vjs-error) .vjs-control-bar.vjs-lock-showing {  display: flex !important;  }
 
-/* .corporate-business-card-Stylesheet .corporate-business-card-rules: .corporate-business-card-inline-3 */ .corporate-business-card-video-7c944sj5f-dimensions {   width: 300px; height: 168.75px;   }
-
-/* .corporate-business-card-Stylesheet .corporate-business-card-rules: .corporate-business-card-inline-4 */ .corporate-business-card-video-ayhahshsl-dimensions {   width: 300px; height: 168.75px;   }
-
-/* .corporate-business-card-Stylesheet .corporate-business-card-rules: .corporate-business-card-inline-5 */ .corporate-business-card-video-6aa81qfom-dimensions {   width: 300px; height: 168.75px;   }
-
-.corporate-business-card-button, a.corporate-business-card-button, .corporate-business-card-input[type="button"], .corporate-business-card-input[type="submit"], .corporate-business-card-input[type="reset"] {  
-  display: inline-flex; padding: 0.5rem 1rem; justify-content: center; align-items: center; gap: 10px; text-decoration: none; font-family: var(--body-font-arena); font-size: 0.875rem; font-style: normal; font-weight: 500; line-height: 1.125rem; transition: 0.3s linear; position: relative !important;
-  @media (width >= 1024px) {
-  font-size: 1rem;
-}
-  }
-
-.corporate-business-card-button-primary-white {   background-color: var(--secondary-white); color: var(--primary-blue-700); border: 1px solid var(--secondary-white);   }
-
-@media (width >= 768px) { :root {  --nav-height: 64px;  }
-
-h1 {   font-size: 84px; line-height: normal;   }
-
-h2 {   font-size: 64px; line-height: normal;   }
-
-h3 {   font-size: 48px; line-height: normal;   }
-
-h4 {   font-size: 24px; line-height: normal;   }
-
-p {   font-size: 16px; line-height: 24px;   }
-
-.corporate-business-card-button, a.corporate-business-card-button, .corporate-business-card-input[type="button"], .corporate-business-card-input[type="submit"], .corporate-business-card-input[type="reset"] {   display: inline-flex; padding: 0.75rem 1.5rem; justify-content: center; align-items: center; gap: 10px; font-style: normal; font-weight: 400;   }
-
-.corporate-business-card-button-primary-white:hover {   background-color: var(--primary-blue-900); color: var(--secondary-white); border: 1px solid var(--primary-blue-900);   } }
-
-.corporate-business-card-g-container {   width: 100%; padding-inline: var(--container-margin);   }
-
-.corporate-business-card-business-card-container {   flex-direction: column; align-items: center; gap: 1rem; display: flex;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item {   width: 100%; height: 6rem; position: relative; overflow: hidden; transition: width 0.3s;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item .corporate-business-card-overlay {   position: absolute; top: 0px; left: 0px; background: rgba(0, 0, 0, 0.4); height: 100%; width: 100%; z-index: 1; pointer-events: none;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-assets video {   width: 100%; height: 6rem; object-fit: cover; display: block;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:not(.corporate-business-card-active) {   height: 6rem;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-assets {   height: 0px;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-logo {   position: relative; padding-top: 1rem; padding-left: 1rem; z-index: 1;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item .corporate-business-card-business-card-item-logo .corporate-business-card-picture {  
-  display: flex;
-  & img { width: auto; max-width: 90%; pointer-events: none; z-index: 1; height: 0.6712rem; }
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-info {  
-  width: calc(100% - 1rem);
-  & .business-card-item-desc { opacity: 0; }
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-button-primary-white {   opacity: 0; transform: none; display: flex; padding: 0.25rem 0.75rem; justify-content: center; align-items: center; gap: 0.375rem; cursor: pointer; width: min-content;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-button-primary-white {  
-  font-size: 0.5625rem; font-style: normal; font-weight: 400; line-height: 1rem; text-transform: capitalize; color: var(--tertiary-black);
-  @media (width >= 1024px) {
-  font-size: 0.875rem; line-height: 1.125rem;
-}
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item .corporate-business-card-button-primary-white {  
-  gap: 6px;
-  &[target="_blank"] {
-  &::after { content: ""; display: inline-block; width: 10px; height: 10px; background-size: contain; background-repeat: no-repeat; margin-left: 0rem; background-image: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" fill=\"none\"><path d=\"M9.25625 32.5001L7.5 30.7438L26.5771 11.6667H15V9.16675H30.8333V25.0001H28.3333V13.423L9.25625 32.5001Z\" fill=\"%231D1D1D\"/></svg>"); }
-}
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:not(:first-of-type) .corporate-business-card-button-primary-white {   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:first-of-type .corporate-business-card-button-primary-white {   clip-path: polygon(4% 0px, 100% 0px, 100% 84%, 96% 100%, 0px 100%, 0px 20%);   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:first-of-type .corporate-business-card-button-primary-white:hover {   background: var(--tertiary-light-grey);   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-title h3 {  
-  font-family: var(--body-font-family); color: var(--tertiary-white); font-size: 1rem; font-style: normal; font-weight: var(--fw-600); line-height: 1.25rem; letter-spacing: -0.0199rem; margin-bottom: 0rem;
-  @media (width >= 1024px) {
-  font-size: 2.5rem; line-height: 3rem; letter-spacing: -0.05rem;
-}
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-subtitle {  
-  color: var(--tertiary-light-grey); font-size: 0.75rem; font-style: italic; font-weight: 400; line-height: 1rem; margin-top: 0rem;
-  @media (width >= 1024px) {
-  line-height: 1.125rem !important;
-}
-  }
-
-.corporate-business-card-business-card-title {  
-  font-size: 1.5rem; font-style: normal; font-weight: 400; line-height: 1.875rem; margin: 0px 0px 0.5rem !important;
-  @media (width >= 1024px) {
-  font-size: 2rem !important; line-height: 2.5rem !important; letter-spacing: -0.03rem !important; margin: 0px 0px 0.75rem !important;
-}
-  }
-
-@media (width >= 768px) { .corporate-business-card-business-card-container {   display: flex; flex-direction: row; justify-content: center; gap: 1.5rem; overflow: hidden;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item {   position: relative; overflow: hidden; transition: width 0.3s; width: 25.4375rem !important; height: 40rem !important;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-assets {   width: 100%; position: relative;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-assets video {   object-fit: cover; display: block; width: 100% !important; height: 40rem !important;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-info {  
-  width: calc(100% - 1.5rem);
-  & .business-card-item-desc { opacity: 0; }
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:not(:hover) .corporate-business-card-business-card-item-info {   width: 100%;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-business-card-item-info {  
-  position: absolute; top: 2.5rem; left: 1.5rem; transform: none; z-index: 1;
-  & .business-card-item-desc { opacity: 1 !important; width: 90%; }
-  }
-
-.corporate-business-card-html:has(meta[name="car-model-name"][content="victoris"]) {  
-  @media (width >= 768px) {
-  & .business-card-container .business-card-item:hover .business-card-item-info { top: 0px; }
-}
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-button-primary-white {   opacity: 1 !important; z-index: 1;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-button-primary-white {   opacity: 0; transform: none; display: inline-flex; padding: 0.75rem 1.5rem; gap: 0.5rem; justify-content: center; align-items: center;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:first-of-type .corporate-business-card-button-primary-white {   clip-path: polygon(4% 0px, 100% 0px, 100% 84%, 96% 100%, 0px 100%, 0px 20%);   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:first-of-type .corporate-business-card-button-primary-white:hover {   background: rgb(242, 242, 242);   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:not(:first-of-type) .corporate-business-card-button-primary-white {   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item .corporate-business-card-button-primary-white {  
-  gap: 12px;
-  &[target="_blank"] {
-  &::after { content: ""; width: 20px; height: 20px; }
-}
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:not(:first-of-type) .corporate-business-card-button-primary-white:hover::after {   background-image: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" fill=\"none\"><path d=\"M9.25625 32.5001L7.5 30.7438L26.5771 11.6667H15V9.16675H30.8333V25.0001H28.3333V13.423L9.25625 32.5001Z\" fill=\"rgb(255,255,255)\"/></svg>");   }
-
-.corporate-business-card-business-card-container .corporate-business-card-button-primary-white:hover {   color: var(--tertiary-white);   }
-
-.corporate-business-card-business-card-container .corporate-business-card-button-primary-white.corporate-business-card-button {   transition: none !important;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:first-of-type .corporate-business-card-button-primary-white:hover {   color: var(--tertiary-black);   }
-
-#refined-luxury-elevated-journey {   font-family: "Kepler Std", serif;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-business-card-item-info, .corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-button-primary-white {   opacity: 1 !important;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item-logo {   position: relative; text-align: center; padding-top: 2.5rem; padding-left: 0px; z-index: 1;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item .corporate-business-card-business-card-item-logo .corporate-business-card-picture img {   position: unset; margin-inline: auto; pointer-events: none; z-index: 1; height: 1.25rem;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-business-card-item-logo {   position: unset; text-align: left; padding-top: 0px; margin-bottom: 1.5rem;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-business-card-item-logo .corporate-business-card-picture img {   transform: none; position: unset; margin-inline: unset;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-picture img {   left: 5rem !important; top: 1.875rem;   }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover {  
-  width: 48.8% !important;
-  & .overlay { background: linear-gradient(343deg, rgba(14, 19, 24, 0) 35.96%, rgba(36, 37, 43, 0.6) 66.12%); width: 100%; }
-  }
-
-.corporate-business-card-business-card-container:has(.corporate-business-card-business-card-item:hover) {  
-  & .business-card-item:not(:hover) { width: 15.15% !important; }
-  }
-
-.corporate-business-card-business-card-title-hr {   margin-bottom: 1.5625rem; background-color: var(--secondary-gray-200); height: 0.0625rem; border: none;   } }
-
-@media (width >= 1024px) { .corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover .corporate-business-card-business-card-item-info {  
-  & .business-card-item-desc { width: 60%; }
-  }
-
-.corporate-business-card-business-card-container .corporate-business-card-business-card-item:hover {  
-  & .overlay { background: linear-gradient(343deg, rgba(14, 19, 24, 0) 35.96%, rgba(36, 37, 43, 0.6) 66.12%); width: 100%; }
-  } }
-
-.corporate-business-card-vjs-has-started.corporate-business-card-vjs-paused.corporate-business-card-vjs-show-big-play-button-on-pause:not(.corporate-business-card-vjs-seeking, .corporate-business-card-vjs-error) .corporate-business-card-vjs-big-play-button {   display: block;   }
-
-.corporate-business-card-video-js:not(.corporate-business-card-vjs-controls-disabled, .corporate-business-card-vjs-error) .corporate-business-card-vjs-control-bar.corporate-business-card-vjs-lock-showing {   display: flex !important;   }
-
-@media print { .corporate-business-card-video-js > :not(.corporate-business-card-vjs-tech, .corporate-business-card-vjs-poster) {   visibility: hidden;   } }
+@media print { .video-js > :not(.vjs-tech, .vjs-poster) {  visibility: hidden;  } }
 
 /* Computed styles: a.button */
-@media (min-width: 1200px) { a.corporate-business-card-button { 
+@media (min-width: 1200px) { 
+  a.button {
     align-items: center;
     animation-composition: replace;
     animation-delay: 0s;
@@ -830,10 +195,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(87, 90, 94);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: a.button */
-@media (min-width: 1200px) { a.corporate-business-card-button { 
+@media (min-width: 1200px) { 
+  a.button {
     align-items: center;
     animation-composition: replace;
     animation-delay: 0s;
@@ -978,10 +345,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(87, 90, 94);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: a.button */
-@media (min-width: 1200px) { a.corporate-business-card-button { 
+@media (min-width: 1200px) { 
+  a.button {
     align-items: center;
     animation-composition: replace;
     animation-delay: 0s;
@@ -1126,10 +495,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(87, 90, 94);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.corporate-business-card block */
-@media (min-width: 1200px) { div.corporate-business-card-corporate-business-card .corporate-business-card-block { 
+@media (min-width: 1200px) { 
+  div.corporate-business-card block {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1275,10 +646,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.g-container */
-@media (min-width: 1200px) { div.corporate-business-card-g-container { 
+@media (min-width: 1200px) { 
+  div.g-container {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1424,10 +797,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: p.business-card-title */
-@media (min-width: 1200px) { p.corporate-business-card-business-card-title { 
+@media (min-width: 1200px) { 
+  p.business-card-title {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1572,10 +947,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: hr.business-card-title-hr */
-@media (min-width: 1200px) { hr.corporate-business-card-business-card-title-hr { 
+@media (min-width: 1200px) { 
+  hr.business-card-title-hr {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1721,10 +1098,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-container */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-container { 
+@media (min-width: 1200px) { 
+  div.business-card-container {
     align-items: center;
     animation-composition: replace;
     animation-delay: 0s;
@@ -1870,10 +1249,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item { 
+@media (min-width: 1200px) { 
+  div.business-card-item {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -2015,10 +1396,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.overlay */
-@media (min-width: 1200px) { div.corporate-business-card-overlay { 
+@media (min-width: 1200px) { 
+  div.overlay {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -2161,10 +1544,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-assets */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-assets { 
+@media (min-width: 1200px) { 
+  div.business-card-item-assets {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -2304,10 +1689,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
-/* Computed styles: div#video-6aa81qfom.video-js business-card__video vjs-paused vjs-fill video-6aa81qfom-dimensions vjs-controls-disabled vjs-workinghover vjs-v8 vjs-user-active vjs-error */
-@media (min-width: 1200px) { div#video-6aa81qfom.corporate-business-card-video-js .corporate-business-card-business-card__video .corporate-business-card-vjs-paused .corporate-business-card-vjs-fill .corporate-business-card-video-6aa81qfom-dimensions .corporate-business-card-vjs-controls-disabled .corporate-business-card-vjs-workinghover .corporate-business-card-vjs-v8 .corporate-business-card-vjs-user-active .corporate-business-card-vjs-error { 
+/* Computed styles: div#video-e98k6uf3e.video-js business-card__video vjs-paused vjs-fill video-e98k6uf3e-dimensions vjs-controls-disabled vjs-workinghover vjs-v8 vjs-user-active vjs-error */
+@media (min-width: 1200px) { 
+  div#video-e98k6uf3e.video-js business-card__video vjs-paused vjs-fill video-e98k6uf3e-dimensions vjs-controls-disabled vjs-workinghover vjs-v8 vjs-user-active vjs-error {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -2447,10 +1834,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
-/* Computed styles: video#video-2yfvcwbwa.vjs-tech video-js business-card__video */
-@media (min-width: 1200px) { video#video-2yfvcwbwa.corporate-business-card-vjs-tech .corporate-business-card-video-js .corporate-business-card-business-card__video { 
+/* Computed styles: video#video-5j0occga1.vjs-tech video-js business-card__video */
+@media (min-width: 1200px) { 
+  video#video-5j0occga1.vjs-tech video-js business-card__video {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -2594,10 +1983,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.vjs-poster */
-@media (min-width: 1200px) { div.corporate-business-card-vjs-poster { 
+@media (min-width: 1200px) { 
+  div.vjs-poster {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -2738,10 +2129,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: picture.vjs-poster */
-@media (min-width: 1200px) { picture.corporate-business-card-vjs-poster { 
+@media (min-width: 1200px) { 
+  picture.vjs-poster {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -2881,10 +2274,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.vjs-error-display vjs-modal-dialog */
-@media (min-width: 1200px) { div.corporate-business-card-vjs-error-display .corporate-business-card-vjs-modal-dialog { 
+@media (min-width: 1200px) { 
+  div.vjs-error-display vjs-modal-dialog {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3021,10 +2416,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
-/* Computed styles: p#video-6aa81qfom_component_562_description.vjs-modal-dialog-description vjs-control-text */
-@media (min-width: 1200px) { p#video-6aa81qfom_component_562_description.corporate-business-card-vjs-modal-dialog-description .corporate-business-card-vjs-control-text { 
+/* Computed styles: p#video-e98k6uf3e_component_562_description.vjs-modal-dialog-description vjs-control-text */
+@media (min-width: 1200px) { 
+  p#video-e98k6uf3e_component_562_description.vjs-modal-dialog-description vjs-control-text {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3173,10 +2570,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.vjs-modal-dialog-content */
-@media (min-width: 1200px) { div.corporate-business-card-vjs-modal-dialog-content { 
+@media (min-width: 1200px) { 
+  div.vjs-modal-dialog-content {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3329,10 +2728,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-info */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-info { 
+@media (min-width: 1200px) { 
+  div.business-card-item-info {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3474,10 +2875,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-logo */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-logo { 
+@media (min-width: 1200px) { 
+  div.business-card-item-logo {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3622,10 +3025,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-title */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-title { 
+@media (min-width: 1200px) { 
+  div.business-card-item-title {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3767,10 +3172,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: p.business-card-item-subtitle */
-@media (min-width: 1200px) { p.corporate-business-card-business-card-item-subtitle { 
+@media (min-width: 1200px) { 
+  p.business-card-item-subtitle {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3915,10 +3322,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(242, 242, 242);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item { 
+@media (min-width: 1200px) { 
+  div.business-card-item {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -4060,10 +3469,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.overlay */
-@media (min-width: 1200px) { div.corporate-business-card-overlay { 
+@media (min-width: 1200px) { 
+  div.overlay {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -4206,10 +3617,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-assets */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-assets { 
+@media (min-width: 1200px) { 
+  div.business-card-item-assets {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -4349,10 +3762,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
-/* Computed styles: div#video-ayhahshsl.video-js business-card__video vjs-paused vjs-fill video-ayhahshsl-dimensions vjs-controls-disabled vjs-workinghover vjs-v8 vjs-user-active vjs-error */
-@media (min-width: 1200px) { div#video-ayhahshsl.corporate-business-card-video-js .corporate-business-card-business-card__video .corporate-business-card-vjs-paused .corporate-business-card-vjs-fill .corporate-business-card-video-ayhahshsl-dimensions .corporate-business-card-vjs-controls-disabled .corporate-business-card-vjs-workinghover .corporate-business-card-vjs-v8 .corporate-business-card-vjs-user-active .corporate-business-card-vjs-error { 
+/* Computed styles: div#video-fbrirjoc1.video-js business-card__video vjs-paused vjs-fill video-fbrirjoc1-dimensions vjs-controls-disabled vjs-workinghover vjs-v8 vjs-user-active vjs-error */
+@media (min-width: 1200px) { 
+  div#video-fbrirjoc1.video-js business-card__video vjs-paused vjs-fill video-fbrirjoc1-dimensions vjs-controls-disabled vjs-workinghover vjs-v8 vjs-user-active vjs-error {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -4492,10 +3907,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
-/* Computed styles: video#video-1zm3qa4jg.vjs-tech video-js business-card__video */
-@media (min-width: 1200px) { video#video-1zm3qa4jg.corporate-business-card-vjs-tech .corporate-business-card-video-js .corporate-business-card-business-card__video { 
+/* Computed styles: video#video-8i2bewqeu.vjs-tech video-js business-card__video */
+@media (min-width: 1200px) { 
+  video#video-8i2bewqeu.vjs-tech video-js business-card__video {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -4639,10 +4056,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.vjs-poster */
-@media (min-width: 1200px) { div.corporate-business-card-vjs-poster { 
+@media (min-width: 1200px) { 
+  div.vjs-poster {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -4783,10 +4202,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: picture.vjs-poster */
-@media (min-width: 1200px) { picture.corporate-business-card-vjs-poster { 
+@media (min-width: 1200px) { 
+  picture.vjs-poster {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -4926,10 +4347,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.vjs-error-display vjs-modal-dialog */
-@media (min-width: 1200px) { div.corporate-business-card-vjs-error-display .corporate-business-card-vjs-modal-dialog { 
+@media (min-width: 1200px) { 
+  div.vjs-error-display vjs-modal-dialog {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -5066,10 +4489,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
-/* Computed styles: p#video-ayhahshsl_component_1269_description.vjs-modal-dialog-description vjs-control-text */
-@media (min-width: 1200px) { p#video-ayhahshsl_component_1269_description.corporate-business-card-vjs-modal-dialog-description .corporate-business-card-vjs-control-text { 
+/* Computed styles: p#video-fbrirjoc1_component_1269_description.vjs-modal-dialog-description vjs-control-text */
+@media (min-width: 1200px) { 
+  p#video-fbrirjoc1_component_1269_description.vjs-modal-dialog-description vjs-control-text {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -5218,10 +4643,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.vjs-modal-dialog-content */
-@media (min-width: 1200px) { div.corporate-business-card-vjs-modal-dialog-content { 
+@media (min-width: 1200px) { 
+  div.vjs-modal-dialog-content {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -5374,10 +4801,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-info */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-info { 
+@media (min-width: 1200px) { 
+  div.business-card-item-info {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -5519,10 +4948,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-logo */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-logo { 
+@media (min-width: 1200px) { 
+  div.business-card-item-logo {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -5667,10 +5098,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-title */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-title { 
+@media (min-width: 1200px) { 
+  div.business-card-item-title {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -5812,10 +5245,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: p.business-card-item-subtitle */
-@media (min-width: 1200px) { p.corporate-business-card-business-card-item-subtitle { 
+@media (min-width: 1200px) { 
+  p.business-card-item-subtitle {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -5960,10 +5395,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(242, 242, 242);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item { 
+@media (min-width: 1200px) { 
+  div.business-card-item {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -6105,10 +5542,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.overlay */
-@media (min-width: 1200px) { div.corporate-business-card-overlay { 
+@media (min-width: 1200px) { 
+  div.overlay {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -6251,10 +5690,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-assets */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-assets { 
+@media (min-width: 1200px) { 
+  div.business-card-item-assets {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -6394,10 +5835,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
-/* Computed styles: div#video-7c944sj5f.video-js business-card__video vjs-paused vjs-fill video-7c944sj5f-dimensions vjs-controls-disabled vjs-workinghover vjs-v8 vjs-user-active vjs-error */
-@media (min-width: 1200px) { div#video-7c944sj5f.corporate-business-card-video-js .corporate-business-card-business-card__video .corporate-business-card-vjs-paused .corporate-business-card-vjs-fill .corporate-business-card-video-7c944sj5f-dimensions .corporate-business-card-vjs-controls-disabled .corporate-business-card-vjs-workinghover .corporate-business-card-vjs-v8 .corporate-business-card-vjs-user-active .corporate-business-card-vjs-error { 
+/* Computed styles: div#video-zmphyn8e6.video-js business-card__video vjs-paused vjs-fill video-zmphyn8e6-dimensions vjs-controls-disabled vjs-workinghover vjs-v8 vjs-user-active vjs-error */
+@media (min-width: 1200px) { 
+  div#video-zmphyn8e6.video-js business-card__video vjs-paused vjs-fill video-zmphyn8e6-dimensions vjs-controls-disabled vjs-workinghover vjs-v8 vjs-user-active vjs-error {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -6537,10 +5980,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
-/* Computed styles: video#video-pvptufl16.vjs-tech video-js business-card__video */
-@media (min-width: 1200px) { video#video-pvptufl16.corporate-business-card-vjs-tech .corporate-business-card-video-js .corporate-business-card-business-card__video { 
+/* Computed styles: video#video-qktjcamfo.vjs-tech video-js business-card__video */
+@media (min-width: 1200px) { 
+  video#video-qktjcamfo.vjs-tech video-js business-card__video {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -6684,10 +6129,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.vjs-poster */
-@media (min-width: 1200px) { div.corporate-business-card-vjs-poster { 
+@media (min-width: 1200px) { 
+  div.vjs-poster {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -6828,10 +6275,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: picture.vjs-poster */
-@media (min-width: 1200px) { picture.corporate-business-card-vjs-poster { 
+@media (min-width: 1200px) { 
+  picture.vjs-poster {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -6971,10 +6420,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.vjs-error-display vjs-modal-dialog */
-@media (min-width: 1200px) { div.corporate-business-card-vjs-error-display .corporate-business-card-vjs-modal-dialog { 
+@media (min-width: 1200px) { 
+  div.vjs-error-display vjs-modal-dialog {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -7111,10 +6562,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
-/* Computed styles: p#video-7c944sj5f_component_1976_description.vjs-modal-dialog-description vjs-control-text */
-@media (min-width: 1200px) { p#video-7c944sj5f_component_1976_description.corporate-business-card-vjs-modal-dialog-description .corporate-business-card-vjs-control-text { 
+/* Computed styles: p#video-zmphyn8e6_component_1976_description.vjs-modal-dialog-description vjs-control-text */
+@media (min-width: 1200px) { 
+  p#video-zmphyn8e6_component_1976_description.vjs-modal-dialog-description vjs-control-text {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -7263,10 +6716,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.vjs-modal-dialog-content */
-@media (min-width: 1200px) { div.corporate-business-card-vjs-modal-dialog-content { 
+@media (min-width: 1200px) { 
+  div.vjs-modal-dialog-content {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -7419,10 +6874,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-info */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-info { 
+@media (min-width: 1200px) { 
+  div.business-card-item-info {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -7564,10 +7021,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-logo */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-logo { 
+@media (min-width: 1200px) { 
+  div.business-card-item-logo {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -7712,10 +7171,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-title */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-title { 
+@media (min-width: 1200px) { 
+  div.business-card-item-title {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -7857,10 +7318,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: p.business-card-item-subtitle */
-@media (min-width: 1200px) { p.corporate-business-card-business-card-item-subtitle { 
+@media (min-width: 1200px) { 
+  p.business-card-item-subtitle {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -8005,10 +7468,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(242, 242, 242);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item { 
+@media (min-width: 1200px) { 
+  div.business-card-item {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -8150,10 +7615,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.overlay */
-@media (min-width: 1200px) { div.corporate-business-card-overlay { 
+@media (min-width: 1200px) { 
+  div.overlay {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -8296,10 +7763,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-assets */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-assets { 
+@media (min-width: 1200px) { 
+  div.business-card-item-assets {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -8439,10 +7908,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
-/* Computed styles: div#video-wp5uel46y.video-js business-card__video vjs-paused vjs-fill video-wp5uel46y-dimensions vjs-controls-disabled vjs-workinghover vjs-v8 vjs-user-active vjs-error */
-@media (min-width: 1200px) { div#video-wp5uel46y.corporate-business-card-video-js .corporate-business-card-business-card__video .corporate-business-card-vjs-paused .corporate-business-card-vjs-fill .corporate-business-card-video-wp5uel46y-dimensions .corporate-business-card-vjs-controls-disabled .corporate-business-card-vjs-workinghover .corporate-business-card-vjs-v8 .corporate-business-card-vjs-user-active .corporate-business-card-vjs-error { 
+/* Computed styles: div#video-hpuly59kx.video-js business-card__video vjs-paused vjs-fill video-hpuly59kx-dimensions vjs-controls-disabled vjs-workinghover vjs-v8 vjs-user-active vjs-error */
+@media (min-width: 1200px) { 
+  div#video-hpuly59kx.video-js business-card__video vjs-paused vjs-fill video-hpuly59kx-dimensions vjs-controls-disabled vjs-workinghover vjs-v8 vjs-user-active vjs-error {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -8582,10 +8053,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
-/* Computed styles: video#video-35nugvm2y.vjs-tech video-js business-card__video */
-@media (min-width: 1200px) { video#video-35nugvm2y.corporate-business-card-vjs-tech .corporate-business-card-video-js .corporate-business-card-business-card__video { 
+/* Computed styles: video#video-97pqttbyq.vjs-tech video-js business-card__video */
+@media (min-width: 1200px) { 
+  video#video-97pqttbyq.vjs-tech video-js business-card__video {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -8729,10 +8202,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.vjs-poster */
-@media (min-width: 1200px) { div.corporate-business-card-vjs-poster { 
+@media (min-width: 1200px) { 
+  div.vjs-poster {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -8873,10 +8348,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: picture.vjs-poster */
-@media (min-width: 1200px) { picture.corporate-business-card-vjs-poster { 
+@media (min-width: 1200px) { 
+  picture.vjs-poster {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -9016,10 +8493,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.vjs-error-display vjs-modal-dialog */
-@media (min-width: 1200px) { div.corporate-business-card-vjs-error-display .corporate-business-card-vjs-modal-dialog { 
+@media (min-width: 1200px) { 
+  div.vjs-error-display vjs-modal-dialog {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -9156,10 +8635,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
-/* Computed styles: p#video-wp5uel46y_component_2683_description.vjs-modal-dialog-description vjs-control-text */
-@media (min-width: 1200px) { p#video-wp5uel46y_component_2683_description.corporate-business-card-vjs-modal-dialog-description .corporate-business-card-vjs-control-text { 
+/* Computed styles: p#video-hpuly59kx_component_2683_description.vjs-modal-dialog-description vjs-control-text */
+@media (min-width: 1200px) { 
+  p#video-hpuly59kx_component_2683_description.vjs-modal-dialog-description vjs-control-text {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -9308,10 +8789,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.vjs-modal-dialog-content */
-@media (min-width: 1200px) { div.corporate-business-card-vjs-modal-dialog-content { 
+@media (min-width: 1200px) { 
+  div.vjs-modal-dialog-content {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -9464,10 +8947,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-info */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-info { 
+@media (min-width: 1200px) { 
+  div.business-card-item-info {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -9609,10 +9094,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-logo */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-logo { 
+@media (min-width: 1200px) { 
+  div.business-card-item-logo {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -9757,10 +9244,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.business-card-item-title */
-@media (min-width: 1200px) { div.corporate-business-card-business-card-item-title { 
+@media (min-width: 1200px) { 
+  div.business-card-item-title {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -9902,10 +9391,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: p.business-card-item-subtitle */
-@media (min-width: 1200px) { p.corporate-business-card-business-card-item-subtitle { 
+@media (min-width: 1200px) { 
+  p.business-card-item-subtitle {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -10050,10 +9541,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(242, 242, 242);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: a.button btns button-red */
-@media (min-width: 1200px) { a.corporate-business-card-button .corporate-business-card-btns .corporate-business-card-button-red { 
+@media (min-width: 1200px) { 
+  a.button btns button-red {
     align-items: center;
     animation-composition: replace;
     animation-delay: 0s;
@@ -10210,10 +9703,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: a.button btns button-red */
-@media (min-width: 1200px) { a.corporate-business-card-button .corporate-business-card-btns .corporate-business-card-button-red { 
+@media (min-width: 1200px) { 
+  a.button btns button-red {
     align-items: center;
     animation-composition: replace;
     animation-delay: 0s;
@@ -10368,10 +9863,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: a#BaSV-Home-red.button button-red button-180 */
-@media (min-width: 1200px) { a#BaSV-Home-red.corporate-business-card-button .corporate-business-card-button-red .corporate-business-card-button-180 { 
+@media (min-width: 1200px) { 
+  a#BaSV-Home-red.button button-red button-180 {
     align-items: center;
     animation-composition: replace;
     animation-delay: 0s;
@@ -10532,10 +10029,12 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: a#BSV-Home-red.button button-red button-180 bookAServiceAppointmentButton */
-@media (min-width: 1200px) { a#BSV-Home-red.corporate-business-card-button .corporate-business-card-button-red .corporate-business-card-button-180 .corporate-business-card-bookAServiceAppointmentButton { 
+@media (min-width: 1200px) { 
+  a#BSV-Home-red.button button-red button-180 bookAServiceAppointmentButton {
     align-items: center;
     animation-composition: replace;
     animation-delay: 0s;
@@ -10696,4 +10195,5 @@ p {   font-size: 16px; line-height: 24px;   }
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }

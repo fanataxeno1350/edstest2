@@ -2,91 +2,109 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const mainDiv = document.createElement('div');
-  mainDiv.classList.add('corp-header-corp-header', 'corp-header-block');
-
-  const navbar = document.createElement('div');
-  navbar.classList.add('corp-header-navbar', 'corp-header-navbar-arena', 'corp-header-g-container');
+  const navbarArena = document.createElement('div');
+  navbarArena.classList.add('navbar', 'navbar-arena', 'g-container');
 
   const navHamburger = document.createElement('div');
-  navHamburger.classList.add('corp-header-nav-hamburger');
+  navHamburger.classList.add('nav-hamburger');
   const hamburgerButton = document.createElement('button');
   hamburgerButton.setAttribute('type', 'button');
   hamburgerButton.setAttribute('aria-controls', 'nav');
   hamburgerButton.setAttribute('aria-label', 'Open navigation');
   hamburgerButton.setAttribute('aria-expanded', 'false');
   const hamburgerIcon = document.createElement('span');
-  hamburgerIcon.classList.add('corp-header-nav-hamburger-icon');
+  hamburgerIcon.classList.add('nav-hamburger-icon');
   hamburgerButton.append(hamburgerIcon);
   navHamburger.append(hamburgerButton);
-  navbar.append(navHamburger);
-  moveInstrumentation(block.querySelector('.corp-header-nav-hamburger'), navHamburger);
+  navbarArena.append(navHamburger);
+  moveInstrumentation(block.querySelector('.nav-hamburger'), navHamburger);
 
   const logoWrapper = document.createElement('div');
-  logoWrapper.classList.add('corp-header-logo-wrapper');
-  const logoDiv = document.createElement('div');
-  logoDiv.classList.add('corp-header-logo', 'corp-header-block');
-  const logoSpan = document.createElement('span');
-  logoSpan.classList.add('corp-header-arena');
-  const logoLink = block.querySelector('[data-aue-prop="logo"]');
+  logoWrapper.classList.add('logo-wrapper');
+  const logoBlock = document.createElement('div');
+  logoBlock.classList.add('logo', 'block');
+  logoBlock.setAttribute('data-block-name', 'logo');
+  const arenaSpan = document.createElement('span');
+  arenaSpan.classList.add('arena');
+
+  const logoLink = block.querySelector('[data-aue-prop="logoLink"]');
   if (logoLink) {
-    const logoImg = logoLink.querySelector('img');
-    if (logoImg) {
-      const picture = createOptimizedPicture(logoImg.src, logoImg.alt);
-      logoLink.innerHTML = '';
-      logoLink.append(picture);
-      logoSpan.append(logoLink);
-      moveInstrumentation(logoLink, logoSpan);
+    const logoPicture = logoLink.querySelector('picture');
+    if (logoPicture) {
+      arenaSpan.append(logoPicture);
     }
+    logoLink.classList.add('logo__picture');
+    logoLink.setAttribute('data-logo-name', 'Arena');
+    arenaSpan.prepend(logoLink);
+    moveInstrumentation(logoLink, arenaSpan);
   }
-  logoDiv.append(logoSpan);
-  logoWrapper.append(logoDiv);
-  navbar.append(logoWrapper);
-  moveInstrumentation(block.querySelector('.corp-header-logo-wrapper'), logoWrapper);
+  logoBlock.append(arenaSpan);
+  logoWrapper.append(logoBlock);
+  navbarArena.append(logoWrapper);
+  moveInstrumentation(block.querySelector('.logo.block'), logoBlock);
 
   const linksDiv = document.createElement('div');
-  linksDiv.classList.add('corp-header-links');
+  linksDiv.classList.add('links');
 
-  const linkGroups = block.querySelectorAll('[data-aue-model="headerLinkGroup"]');
-  linkGroups.forEach((groupNode) => {
-    const titleDiv = document.createElement('div');
-    titleDiv.classList.add('corp-header-link-title');
-    const titleSpan = document.createElement('span');
-    const titleLink = groupNode.querySelector('[data-aue-prop="title"] a');
-    if (titleLink) {
-      titleSpan.append(titleLink);
-      moveInstrumentation(titleLink, titleSpan);
+  const headerLinkGroups = block.querySelectorAll('[data-aue-model="headerLinkGroup"]');
+  headerLinkGroups.forEach((groupNode) => {
+    const groupTitleDiv = document.createElement('div');
+    groupTitleDiv.classList.add('link-title');
+    const groupTitleSpan = document.createElement('span');
+    const groupTitleLink = groupNode.querySelector('[data-aue-prop="groupTitle"] a');
+    if (groupTitleLink) {
+      groupTitleSpan.append(groupTitleLink);
+      groupTitleLink.classList.add('button');
+      moveInstrumentation(groupTitleLink, groupTitleSpan);
     } else {
-      const titleText = groupNode.querySelector('[data-aue-prop="title"]');
-      if (titleText) {
-        titleSpan.textContent = titleText.textContent;
-        moveInstrumentation(titleText, titleSpan);
+      const groupTitleText = groupNode.querySelector('[data-aue-prop="groupTitle"]');
+      if (groupTitleText) {
+        groupTitleSpan.append(groupTitleText.textContent);
+        moveInstrumentation(groupTitleText, groupTitleSpan);
       }
     }
-    titleDiv.append(titleSpan);
-    linksDiv.append(titleDiv);
-    moveInstrumentation(groupNode.querySelector('.corp-header-link-title'), titleDiv);
+    groupTitleDiv.append(groupTitleSpan);
+    linksDiv.append(groupTitleDiv);
+    moveInstrumentation(groupNode.querySelector('.link-title'), groupTitleDiv);
 
     const panelDiv = document.createElement('div');
-    panelDiv.classList.add('corp-header-desktop-panel', 'corp-header-panel');
-    const groupTitle = groupNode.querySelector('[data-aue-prop="title"]').textContent.toLowerCase().replace(/\s/g, '-');
-    panelDiv.classList.add(`corp-header-${groupTitle}`);
+    panelDiv.classList.add('desktop-panel', 'panel');
+    const groupTitleText = groupNode.querySelector('[data-aue-prop="groupTitle"]');
+    if (groupTitleText) {
+      panelDiv.classList.add(groupTitleText.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-*|-*$/g, ''));
+    }
 
     const linkGridBlock = document.createElement('div');
-    linkGridBlock.classList.add('corp-header-link-grid', 'corp-header-block');
+    linkGridBlock.classList.add('link-grid', 'block');
     const linkContainerSection = document.createElement('div');
-    linkContainerSection.classList.add('corp-header-link-container-section');
+    linkContainerSection.classList.add('link-container-section');
 
-    const linkColumns = groupNode.querySelectorAll('.corp-header-link-grid-column');
+    const linkColumns = groupNode.querySelectorAll('.link-grid-column');
     linkColumns.forEach((columnNode) => {
       const newColumn = document.createElement('div');
-      newColumn.classList.add('corp-header-link-grid-column', 'corp-header-link-column-vertical');
+      newColumn.classList.add(...columnNode.classList);
+
       const ul = document.createElement('ul');
-      ul.classList.add('corp-header-content', 'corp-header-links-container', 'corp-header-accordian-content');
-      const links = columnNode.querySelectorAll('li');
-      links.forEach((linkNode) => {
-        ul.append(linkNode);
-        moveInstrumentation(linkNode, ul);
+      ul.classList.add('content', 'links-container', 'accordian-content');
+
+      const headerLinks = columnNode.querySelectorAll('[data-aue-model="headerLink"]');
+      headerLinks.forEach((linkNode) => {
+        const li = document.createElement('li');
+        const link = linkNode.querySelector('[data-aue-prop="link"]');
+        const label = linkNode.querySelector('[data-aue-prop="label"]');
+
+        if (link) {
+          li.append(link);
+          moveInstrumentation(link, li);
+        }
+        if (label && label.textContent.trim() !== '') {
+          const p = document.createElement('p');
+          p.append(label.textContent);
+          li.append(p);
+          moveInstrumentation(label, p);
+        }
+        ul.append(li);
+        moveInstrumentation(linkNode, li);
       });
       newColumn.append(ul);
       linkContainerSection.append(newColumn);
@@ -95,170 +113,224 @@ export default function decorate(block) {
     linkGridBlock.append(linkContainerSection);
     panelDiv.append(linkGridBlock);
     linksDiv.append(panelDiv);
-    moveInstrumentation(groupNode.querySelector('.corp-header-desktop-panel'), panelDiv);
+    moveInstrumentation(groupNode.querySelector('.desktop-panel'), panelDiv);
   });
 
-  navbar.append(linksDiv);
-  moveInstrumentation(block.querySelector('.corp-header-links'), linksDiv);
+  navbarArena.append(linksDiv);
+  moveInstrumentation(block.querySelector('.links'), linksDiv);
 
   const rightDiv = document.createElement('div');
-  rightDiv.classList.add('corp-header-right');
+  rightDiv.classList.add('right');
   rightDiv.id = 'nav-right';
 
   const contactWrapper = document.createElement('div');
-  contactWrapper.classList.add('corp-header-contact-wrapper');
-  const contactDiv = document.createElement('div');
-  contactDiv.classList.add('corp-header-contact', 'corp-header-block');
+  contactWrapper.classList.add('contact-wrapper');
+  const contactBlock = document.createElement('div');
+  contactBlock.classList.add('contact', 'block');
+  contactBlock.setAttribute('data-block-name', 'contact');
 
-  const contactModel = block.querySelector('[data-aue-model="headerContact"]');
-  if (contactModel) {
-    const contactWrpArena = document.createElement('div');
-    contactWrpArena.classList.add('corp-header-contact_wrp_arena', 'corp-header-user__contact', 'corp-header-header');
-
-    const contactTitle = document.createElement('h4');
-    contactTitle.classList.add('corp-header-user__contact-title');
-    const authoredTitle = contactModel.querySelector('[data-aue-prop="title"]');
-    if (authoredTitle) {
-      contactTitle.textContent = authoredTitle.textContent;
-      moveInstrumentation(authoredTitle, contactTitle);
-    }
-    contactWrpArena.append(contactTitle);
-
-    const phoneIconSpan = document.createElement('span');
-    phoneIconSpan.classList.add('corp-header-user__contact-title', 'corp-header-icon-phone');
-    phoneIconSpan.setAttribute('aria-label', 'Contact Us');
-    contactWrpArena.append(phoneIconSpan);
-
-    const contactIconsDiv = document.createElement('div');
-    contactIconsDiv.classList.add('corp-header-user__contact__icons', 'corp-header-hidden');
-
-    // Phone link
-    const phoneLink = document.createElement('a');
-    phoneLink.href = '#';
-    phoneLink.classList.add('corp-header-user__contact--icon', 'corp-header-phone');
-    phoneLink.onclick = (e) => {
-      e.preventDefault();
-      phoneLink.closest('.corp-header-contact').querySelector('.corp-header-contact-toggle-box').classList.toggle('corp-header-hidden');
-    };
-    const phoneSrOnly = document.createElement('span');
-    phoneSrOnly.classList.add('corp-header-sr-only');
-    phoneSrOnly.textContent = 'phone';
-    phoneLink.append(phoneSrOnly);
-    const phoneIconImg = contactModel.querySelector('[data-aue-prop="phoneIcon"] img');
-    if (phoneIconImg) {
-      phoneLink.append(phoneIconImg);
-      moveInstrumentation(phoneIconImg, phoneLink);
-    }
-    contactIconsDiv.append(phoneLink);
-
-    // WhatsApp link
-    const whatsappLink = document.createElement('a');
-    const authoredWhatsapp = contactModel.querySelector('[data-aue-prop="whatsapp"]');
-    if (authoredWhatsapp) {
-      whatsappLink.href = authoredWhatsapp.href;
-      whatsappLink.target = '_blank';
-      whatsappLink.classList.add('corp-header-user__contact--icon', 'corp-header-whatsapp');
-      whatsappLink.setAttribute('rel', 'noopener noreferrer');
-      const whatsappSrOnly = document.createElement('span');
-      whatsappSrOnly.classList.add('corp-header-sr-only');
-      whatsappSrOnly.textContent = 'whatsapp';
-      whatsappLink.append(whatsappSrOnly);
-      const whatsappIconImg = contactModel.querySelector('[data-aue-prop="whatsappIcon"] img');
-      if (whatsappIconImg) {
-        whatsappLink.append(whatsappIconImg);
-        moveInstrumentation(whatsappIconImg, whatsappLink);
-      }
-      contactIconsDiv.append(whatsappLink);
-      moveInstrumentation(authoredWhatsapp, whatsappLink);
-    }
-
-    // Email link
-    const emailLink = document.createElement('a');
-    const authoredEmail = contactModel.querySelector('[data-aue-prop="email"]');
-    if (authoredEmail) {
-      emailLink.href = `mailto:${authoredEmail.textContent}`;
-      emailLink.classList.add('corp-header-user__contact--icon', 'corp-header-email');
-      const emailSrOnly = document.createElement('span');
-      emailSrOnly.classList.add('corp-header-sr-only');
-      emailSrOnly.textContent = 'email';
-      emailLink.append(emailSrOnly);
-      const emailIconImg = contactModel.querySelector('[data-aue-prop="emailIcon"] img');
-      if (emailIconImg) {
-        emailLink.append(emailIconImg);
-        moveInstrumentation(emailIconImg, emailLink);
-      }
-      contactIconsDiv.append(emailLink);
-      moveInstrumentation(authoredEmail, emailLink);
-    }
-
-    contactWrpArena.append(contactIconsDiv);
-
-    const contactToggleBox = document.createElement('div');
-    contactToggleBox.classList.add('corp-header-hidden', 'corp-header-contact-toggle-box');
-    const contactIconCallContainer = document.createElement('div');
-    contactIconCallContainer.classList.add('corp-header-user__contact__icon-call_container');
-    const primaryTelephone = document.createElement('a');
-    primaryTelephone.classList.add('corp-header-primary-telephone');
-    const authoredPhone = contactModel.querySelector('[data-aue-prop="phone"]');
-    if (authoredPhone) {
-      primaryTelephone.href = `tel:${authoredPhone.textContent}`;
-      primaryTelephone.textContent = authoredPhone.textContent;
-      moveInstrumentation(authoredPhone, primaryTelephone);
-    }
-    contactIconCallContainer.append(primaryTelephone);
-    contactToggleBox.append(contactIconCallContainer);
-    contactWrpArena.append(contactToggleBox);
-    contactDiv.append(contactWrpArena);
-    contactWrapper.append(contactDiv);
-    moveInstrumentation(contactModel, contactWrapper);
+  const contactContent = block.querySelector('.contact_wrp_arena');
+  if (contactContent) {
+    contactBlock.append(contactContent);
+    moveInstrumentation(contactContent, contactBlock);
   }
+  contactWrapper.append(contactBlock);
   rightDiv.append(contactWrapper);
+  moveInstrumentation(block.querySelector('.contact-wrapper'), contactWrapper);
 
   const languageDiv = document.createElement('div');
-  languageDiv.classList.add('corp-header-language');
+  languageDiv.classList.add('language');
   languageDiv.textContent = 'EN';
   rightDiv.append(languageDiv);
+  moveInstrumentation(block.querySelector('.language'), languageDiv);
 
   const signInWrapper = document.createElement('div');
-  signInWrapper.classList.add('corp-header-sign-in-wrapper', 'corp-header-hidden');
-  const signInDiv = document.createElement('div');
-  signInDiv.classList.add('corp-header-sign-in', 'corp-header-block');
+  signInWrapper.classList.add('sign-in-wrapper', 'hidden');
+  const signInBlock = document.createElement('div');
+  signInBlock.classList.add('sign-in', 'block');
+  signInBlock.setAttribute('data-block-name', 'sign-in');
+
   const userDropdown = document.createElement('div');
-  userDropdown.classList.add('corp-header-user__dropdown');
+  userDropdown.classList.add('user__dropdown');
   const userAccount = document.createElement('div');
-  userAccount.classList.add('corp-header-user__account');
+  userAccount.classList.add('user__account');
 
-  // Authored sign-in links (assuming these are not part of the AUE model directly but exist in the authored HTML)
-  const authoredSignInLinks = block.querySelectorAll('.corp-header-sign-in .corp-header-user__account--link');
-  authoredSignInLinks.forEach((linkNode) => {
-    userAccount.append(linkNode);
-    moveInstrumentation(linkNode, userAccount);
+  const profileLinks = block.querySelectorAll('[data-aue-model="headerProfileLink"]');
+  profileLinks.forEach((profileNode) => {
+    const profileLink = profileNode.querySelector('[data-aue-prop="profileLink"]');
+    const profileIcon = profileNode.querySelector('[data-aue-prop="icon"]');
+    const profileLabel = profileNode.querySelector('[data-aue-prop="profileLabel"]');
+
+    if (profileLink) {
+      profileLink.classList.add('user__account--link');
+      if (profileLabel) {
+        profileLink.classList.add(profileLabel.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-*|-*$/g, ''));
+      }
+      const iconSpan = document.createElement('span');
+      iconSpan.classList.add('user__account__list-icon');
+      if (profileIcon) {
+        iconSpan.append(profileIcon);
+        moveInstrumentation(profileIcon, iconSpan);
+      }
+      profileLink.prepend(iconSpan);
+      userAccount.append(profileLink);
+      moveInstrumentation(profileLink, userAccount);
+    }
   });
+
+  const signInBtnDiv = document.createElement('div');
+  signInBtnDiv.classList.add('user__account--link', 'sign-in-btn');
+  const signInIconSpan = document.createElement('span');
+  signInIconSpan.classList.add('user__account__list-icon');
+  const signInImg = block.querySelector('.sign-in-btn img');
+  if (signInImg) {
+    signInIconSpan.append(signInImg);
+    moveInstrumentation(signInImg, signInIconSpan);
+  }
+  const signInButton = block.querySelector('.sign-in-btn button');
+  if (signInButton) {
+    signInBtnDiv.append(signInIconSpan, signInButton);
+    moveInstrumentation(signInButton, signInBtnDiv);
+  }
+  userAccount.append(signInBtnDiv);
+  moveInstrumentation(block.querySelector('.sign-in-btn'), signInBtnDiv);
+
   userDropdown.append(userAccount);
-  signInDiv.append(userDropdown);
-  signInWrapper.append(signInDiv);
+  signInBlock.append(userDropdown);
+  signInWrapper.append(signInBlock);
   rightDiv.append(signInWrapper);
+  moveInstrumentation(block.querySelector('.sign-in-wrapper'), signInWrapper);
 
-  navbar.append(rightDiv);
+  navbarArena.append(rightDiv);
 
-  mainDiv.append(navbar);
+  const carFilterMenu = document.createElement('div');
+  carFilterMenu.classList.add('car-filter-menu', 'hidden', 'car-filter-arena');
+  carFilterMenu.id = 'carFilterMenu';
 
-  // Car filter menu (if needed, extract from authored HTML)
-  const carFilterMenu = block.querySelector('#carFilterMenu');
-  if (carFilterMenu) {
-    mainDiv.append(carFilterMenu);
-    moveInstrumentation(carFilterMenu, mainDiv);
+  const searchHeaderBlock = document.createElement('div');
+  searchHeaderBlock.classList.add('search-header', 'block');
+  searchHeaderBlock.setAttribute('data-block-name', 'search-header');
+
+  const searchLinkContainerSection = document.createElement('div');
+  searchLinkContainerSection.classList.add('link-container-section');
+
+  const searchLinkColumns = block.querySelectorAll('#carFilterMenu .link-grid-column');
+  searchLinkColumns.forEach((columnNode) => {
+    const newColumn = document.createElement('div');
+    newColumn.classList.add(...columnNode.classList);
+    const ul = document.createElement('ul');
+    ul.classList.add('content', 'links-container', 'accordian-content');
+    const links = columnNode.querySelectorAll('li a');
+    links.forEach((link) => {
+      const li = document.createElement('li');
+      li.append(link);
+      ul.append(li);
+      moveInstrumentation(link.closest('li'), li);
+    });
+    newColumn.append(ul);
+    searchLinkContainerSection.append(newColumn);
+    moveInstrumentation(columnNode, newColumn);
+  });
+  searchHeaderBlock.append(searchLinkContainerSection);
+  carFilterMenu.append(searchHeaderBlock);
+  moveInstrumentation(block.querySelector('.search-header.block'), searchHeaderBlock);
+
+  const carPanelHeader = document.createElement('div');
+  carPanelHeader.classList.add('car-panel-header');
+  carPanelHeader.innerHTML = '<div></div><span class="car-text">Cars</span><span class="car-filter-close"><img src="/content/dam/aemigrate/uploaded-folder/image/1774453712725.svg+xml" alt="close"></span>';
+  carFilterMenu.append(carPanelHeader);
+  moveInstrumentation(block.querySelector('.car-panel-header'), carPanelHeader);
+
+  const menuDiv = document.createElement('div');
+  menuDiv.id = 'menu';
+  menuDiv.classList.add('menu', 'hidden', 'menu-arena');
+
+  const menuHeader = document.createElement('div');
+  menuHeader.classList.add('menu-header');
+  menuHeader.innerHTML = '<div class="back-arrow"></div><span class="menu-title">Menu</span><span class="close-icon"></span>';
+  menuDiv.append(menuHeader);
+  moveInstrumentation(block.querySelector('.menu-header'), menuHeader);
+
+  const menuList = document.createElement('ul');
+  menuList.classList.add('menu-list');
+
+  const menuItems = block.querySelectorAll('.menu-list > li');
+  menuItems.forEach((itemNode) => {
+    const newMenuItem = document.createElement('li');
+    newMenuItem.id = itemNode.id;
+    newMenuItem.classList.add(...itemNode.classList);
+
+    const menuTitleSpan = document.createElement('span');
+    menuTitleSpan.classList.add('menu-title');
+    const link = itemNode.querySelector('.menu-title a');
+    if (link) {
+      menuTitleSpan.append(link);
+      moveInstrumentation(link, menuTitleSpan);
+    } else {
+      const textContent = itemNode.querySelector('.menu-title');
+      if (textContent) {
+        menuTitleSpan.append(textContent.textContent);
+        moveInstrumentation(textContent, menuTitleSpan);
+      }
+    }
+    newMenuItem.append(menuTitleSpan);
+
+    const panel = itemNode.nextElementSibling;
+    if (panel && panel.classList.contains('panel')) {
+      const newPanel = document.createElement('div');
+      newPanel.classList.add(...panel.classList);
+      const section = document.createElement('div');
+      section.classList.add('link-container-section');
+
+      const columns = panel.querySelectorAll('.link-grid-column');
+      columns.forEach((col) => {
+        const newCol = document.createElement('div');
+        newCol.classList.add(...col.classList);
+        const ul = document.createElement('ul');
+        ul.classList.add('content', 'links-container', 'accordian-content');
+        const links = col.querySelectorAll('li');
+        links.forEach((li) => {
+          const newLi = document.createElement('li');
+          newLi.append(...li.childNodes);
+          ul.append(newLi);
+          moveInstrumentation(li, newLi);
+        });
+        newCol.append(ul);
+        section.append(newCol);
+        moveInstrumentation(col, newCol);
+      });
+      newPanel.append(section);
+      menuList.append(newMenuItem, newPanel);
+      moveInstrumentation(itemNode, newMenuItem);
+      moveInstrumentation(panel, newPanel);
+    } else {
+      menuList.append(newMenuItem);
+      moveInstrumentation(itemNode, newMenuItem);
+    }
+  });
+
+  // Handle profile links at the end of the mobile menu
+  const mobileProfileLinks = block.querySelectorAll('.menu-list > li > a.user__account--link');
+  mobileProfileLinks.forEach((linkNode) => {
+    const li = document.createElement('li');
+    li.append(linkNode);
+    menuList.append(li);
+    moveInstrumentation(linkNode, li);
+  });
+
+  const mobileSignInBtn = block.querySelector('.menu-list > li > .user__account--link.sign-in-btn');
+  if (mobileSignInBtn) {
+    const li = document.createElement('li');
+    li.append(mobileSignInBtn);
+    menuList.append(li);
+    moveInstrumentation(mobileSignInBtn, li);
   }
 
-  // Mobile menu (if needed, extract from authored HTML)
-  const menu = block.querySelector('#menu');
-  if (menu) {
-    mainDiv.append(menu);
-    moveInstrumentation(menu, mainDiv);
-  }
+  menuDiv.append(menuList);
+  moveInstrumentation(block.querySelector('.menu-list'), menuList);
 
   block.textContent = '';
-  block.append(mainDiv);
-  block.className = 'corp-header-wrapper corp-header-header-scroll corp-header-header-scroll-threshold corp-header-block corp-header-header-wrapper corp-header-sticky corp-header-show';
+  block.append(navbarArena, carFilterMenu, menuDiv);
+  block.className = `${block.dataset.blockName} block`;
   block.dataset.blockStatus = 'loaded';
 }

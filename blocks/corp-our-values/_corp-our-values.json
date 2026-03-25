@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Value",
-      "id": "value",
+      "title": "Value-Item",
+      "id": "valueItem",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "value",
-              "name": "Value"
+              "model": "valueItem",
+              "name": "Value-Item"
             }
           }
         }
@@ -34,18 +34,12 @@
   ],
   "models": [
     {
-      "id": "value",
+      "id": "valueItem",
       "fields": [
         {
           "component": "reference",
-          "label": "Icon",
-          "name": "icon",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Alt Text",
-          "name": "alt",
+          "label": "Image",
+          "name": "image",
           "valueType": "string"
         }
       ]
@@ -55,28 +49,33 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image",
-          "name": "backgroundImage",
+          "label": "Background Image Desktop",
+          "name": "backgroundImageDesktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Background Image Mobile",
+          "name": "backgroundImageMobile",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Main Heading",
-          "name": "mainHeading",
+          "label": "Main Header 1",
+          "name": "mainHeader1",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Sub Heading",
-          "name": "subHeading",
+          "label": "Main Header 2",
+          "name": "mainHeader2",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": {
-            "type": "value"
-          },
+          "itemType": "valueItem",
           "label": "Values",
+          "multiple": true,
           "name": "values"
         },
         {
@@ -96,9 +95,9 @@
   ],
   "filters": [
     {
-      "id": "corp-our-values",
+      "id": "corpOurValues",
       "components": [
-        "value"
+        "valueItem"
       ]
     }
   ]

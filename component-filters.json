@@ -20,9 +20,8 @@
       "corpHeader",
       "logo",
       "linkGrid",
-      "linkColumnLinkGridColumn",
-      "contactUs",
-      "signInUserDropdown",
+      "contact",
+      "signIn",
       "searchHeader",
       "corpCarousel",
       "corporateBusinessCard",
@@ -30,7 +29,8 @@
       "corpSlider",
       "corpOurValues",
       "corpCounter",
-      "corp-footer"
+      "corpFooter",
+      "linkColumn"
     ]
   },
   {
@@ -40,39 +40,50 @@
     ]
   },
   {
-    "id": "contactUs",
+    "id": "contact",
     "components": [
-      "contactIcon"
+      "contact"
     ]
   },
   {
     "id": "corpCarousel",
     "components": [
-      "slide"
+      "carouselSlide"
     ]
   },
   {
     "id": "corpCounter",
     "components": [
-      "counterBackgroundImage",
-      "counterButton"
+      "corpCounter"
     ]
   },
   {
-    "id": "corp-footer",
+    "id": "corpFooter",
     "components": [
-      "footer-link-column",
-      "footer-contact-icon",
-      "footer-app-icon",
-      "footer-qr-icon",
-      "footer-bottom-column"
+      "footerLinkColumn",
+      "footerContact",
+      "footerDisclaimer",
+      "footerNote"
+    ]
+  },
+  {
+    "id": "footerLinkColumn",
+    "components": [
+      "footerLink"
+    ]
+  },
+  {
+    "id": "footerContact",
+    "components": [
+      "footerLink",
+      "footerContactIcon"
     ]
   },
   {
     "id": "corpHeader",
     "components": [
       "headerLinkGroup",
-      "headerContact"
+      "headerProfileLink"
     ]
   },
   {
@@ -82,9 +93,9 @@
     ]
   },
   {
-    "id": "corp-our-values",
+    "id": "corpOurValues",
     "components": [
-      "value"
+      "valueItem"
     ]
   },
   {
@@ -96,7 +107,7 @@
   {
     "id": "corporateBusinessCard",
     "components": [
-      "corporateBusinessCardItem"
+      "businessCardItem"
     ]
   },
   {
@@ -106,9 +117,9 @@
     ]
   },
   {
-    "id": "linkColumnLinkGridColumn",
+    "id": "linkColumn",
     "components": [
-      "link"
+      "linkItem"
     ]
   },
   {
@@ -120,7 +131,7 @@
   {
     "id": "linkGridColumn",
     "components": [
-      "link"
+      "linkItem"
     ]
   },
   {
@@ -130,21 +141,22 @@
     ]
   },
   {
-    "id": "search-header",
+    "id": "searchHeader",
     "components": [
-      "linkColumn"
+      "linkCategory"
     ]
   },
   {
-    "id": "linkColumn",
+    "id": "linkCategory",
     "components": [
       "linkItem"
     ]
   },
   {
-    "id": "signInUserDropdown",
+    "id": "signIn",
     "components": [
-      "signInUserAccount"
+      "userAccountLink",
+      "signInButton"
     ]
   }
 ]

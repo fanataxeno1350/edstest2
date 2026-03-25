@@ -1,45 +1,10 @@
-.search-header-block {  
-  display: block;
-  }
-
-/* .search-header-External .search-header-stylesheet: https://www.search-header-marutisuzuki.search-header-com/blocks/link-column/link-column.search-header-css */ .search-header-link-grid-column {  
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 0;
-  }
-
-.search-header-link-grid-column .search-header-links-container {  
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin: 0;
-  }
-
-.search-header-link-grid-column .search-header-links-container li {  
-  font-size: 14px;
-  line-height: 20px;
-  border: 0;
-  }
-
-.search-header-link-grid-column .search-header-links-container li a {  
-  display: inline-block;
-  font-family: var(--body-font-family);
-  font-size: 0.875rem;
-  font-weight: 400;
-  font-style: normal;
-  line-height: 1.125rem;
-  min-height: 40px;
-  color: var(--tertiary-medium-grey);
-  @media (width >=1024px) {
-    font-size: 0.75rem;
-  }
-  }
-
-/* .search-header---- .search-header-Wrapper/General .search-header---- */ #webchat-container {  
+/* --- Wrapper/General --- */
+#webchat-container { 
     font-family: sans-serif;
-  }
+ }
 
-/* .search-header---- .search-header-FAQ .search-header-Popup .search-header-Container (Animation .search-header-Logic) .search-header---- */ #faq-popup {  
+/* --- FAQ Popup Container (Animation Logic) --- */
+#faq-popup { 
     position: absolute;
     top: 30%;
     left: 0;
@@ -59,25 +24,11 @@
     box-shadow: 0px -4px 10px rgba(0,0,0,0.1);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-  }
-
-.search-header-block {   display: block;   }
-
-/* .search-header-Stylesheet .search-header-rules: https://www.search-header-marutisuzuki.search-header-com/blocks/link-column/link-column.search-header-css */ .search-header-link-grid-column {   display: flex; flex-direction: column; flex: 1 1 0px;   }
-
-.search-header-link-grid-column .search-header-links-container {   display: flex; flex-direction: column; gap: 12px; margin: 0px;   }
-
-.search-header-link-grid-column .search-header-links-container li {   font-size: 14px; line-height: 20px; border: 0px;   }
-
-.search-header-link-grid-column .search-header-links-container li a {  
-  display: inline-block; font-family: var(--body-font-family); font-size: 0.875rem; font-weight: 400; font-style: normal; line-height: 1.125rem; min-height: 40px; color: var(--tertiary-medium-grey);
-  @media (width >= 1024px) {
-  font-size: 0.75rem;
-}
-  }
+ }
 
 /* Computed styles: div.link-grid-column link-column-horizontal */
-@media (min-width: 1200px) { div.search-header-link-grid-column .search-header-link-column-horizontal { 
+@media (min-width: 1200px) { 
+  div.link-grid-column link-column-horizontal {
     align-items: flex-start;
     animation-composition: replace;
     animation-delay: 0s;
@@ -221,10 +172,12 @@
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: ul.content links-container accordian-content collpsable */
-@media (min-width: 1200px) { ul.search-header-content .search-header-links-container .search-header-accordian-content .search-header-collpsable { 
+@media (min-width: 1200px) { 
+  ul.content links-container accordian-content collpsable {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -368,10 +321,12 @@
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.link-grid-column link-column-vertical */
-@media (min-width: 1200px) { div.search-header-link-grid-column .search-header-link-column-vertical { 
+@media (min-width: 1200px) { 
+  div.link-grid-column link-column-vertical {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -513,10 +468,12 @@
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: ul.content links-container accordian-content collpsable */
-@media (min-width: 1200px) { ul.search-header-content .search-header-links-container .search-header-accordian-content .search-header-collpsable { 
+@media (min-width: 1200px) { 
+  ul.content links-container accordian-content collpsable {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -659,10 +616,12 @@
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.link-grid-column link-column-vertical */
-@media (min-width: 1200px) { div.search-header-link-grid-column .search-header-link-column-vertical { 
+@media (min-width: 1200px) { 
+  div.link-grid-column link-column-vertical {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -804,10 +763,12 @@
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: ul.content links-container accordian-content */
-@media (min-width: 1200px) { ul.search-header-content .search-header-links-container .search-header-accordian-content { 
+@media (min-width: 1200px) { 
+  ul.content links-container accordian-content {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -950,10 +911,12 @@
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.link-grid-column link-column-vertical */
-@media (min-width: 1200px) { div.search-header-link-grid-column .search-header-link-column-vertical { 
+@media (min-width: 1200px) { 
+  div.link-grid-column link-column-vertical {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1095,10 +1058,12 @@
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: ul.content links-container accordian-content */
-@media (min-width: 1200px) { ul.search-header-content .search-header-links-container .search-header-accordian-content { 
+@media (min-width: 1200px) { 
+  ul.content links-container accordian-content {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1241,4 +1206,5 @@
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }

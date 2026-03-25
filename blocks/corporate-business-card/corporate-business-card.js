@@ -1,130 +1,130 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
-  const gContainer = document.createElement('div');
-  gContainer.classList.add('corporate-business-card-g-container');
+const isVideo = (url) => url.endsWith('.mp4') || url.endsWith('.m3u8');
 
-  const titleElement = block.querySelector('p.corporate-business-card-business-card-title');
+function createVideoElement(src, poster) {
+  const video = document.createElement('video');
+  video.setAttribute('playsinline', '');
+  video.setAttribute('loop', '');
+  video.setAttribute('muted', '');
+  video.setAttribute('autoplay', '');
+  video.setAttribute('preload', 'auto');
+  if (poster) {
+    video.setAttribute('poster', poster);
+  }
+  const source = document.createElement('source');
+  source.setAttribute('src', src);
+  source.setAttribute('type', `video/${src.split('.').pop()}`);
+  video.append(source);
+  return video;
+}
+
+export default function decorate(block) {
+  const container = document.createElement('div');
+  container.classList.add('g-container');
+
+  const titleElement = block.querySelector('p.business-card-title');
   if (titleElement) {
-    gContainer.append(titleElement);
-    moveInstrumentation(titleElement, gContainer);
+    container.append(titleElement);
+    moveInstrumentation(titleElement, container);
   }
 
-  const hrElement = block.querySelector('hr.corporate-business-card-business-card-title-hr');
+  const hrElement = block.querySelector('hr.business-card-title-hr');
   if (hrElement) {
-    gContainer.append(hrElement);
-    moveInstrumentation(hrElement, gContainer);
+    container.append(hrElement);
+    moveInstrumentation(hrElement, container);
   }
 
   const businessCardContainer = document.createElement('div');
-  businessCardContainer.classList.add('corporate-business-card-business-card-container');
+  businessCardContainer.classList.add('business-card-container');
 
-  const businessCardItems = block.querySelectorAll('[data-aue-model="corporateBusinessCardItem"]');
+  const businessCardItems = block.querySelectorAll('[data-aue-model="businessCardItem"]');
   businessCardItems.forEach((itemNode) => {
-    const itemWrapper = document.createElement('div');
-    itemWrapper.classList.add('corporate-business-card-business-card-item');
+    const businessCardItem = document.createElement('div');
+    businessCardItem.classList.add('business-card-item');
 
     const overlay = document.createElement('div');
-    overlay.classList.add('corporate-business-card-overlay');
-    itemWrapper.append(overlay);
+    overlay.classList.add('overlay');
+    businessCardItem.append(overlay);
+    moveInstrumentation(itemNode.querySelector('.overlay'), overlay);
 
     const assetsDiv = document.createElement('div');
-    assetsDiv.classList.add('corporate-business-card-business-card-item-assets');
+    assetsDiv.classList.add('business-card-item-assets');
 
-    const videoPoster = itemNode.querySelector('[data-aue-prop="videoPoster"]');
-    if (videoPoster) {
-      const picture = createOptimizedPicture(videoPoster.src, videoPoster.alt);
+    const videoPosterProp = itemNode.querySelector('[data-aue-prop="videoPoster"]');
+    const videoPosterUrl = videoPosterProp ? videoPosterProp.textContent.trim() : '';
+
+    const videoLink = itemNode.querySelector('a[href$=".mp4"], a[href$=".m3u8"]');
+    if (videoLink) {
+      const video = createVideoElement(videoLink.href, videoPosterUrl);
+      assetsDiv.append(video);
+      moveInstrumentation(videoLink, assetsDiv);
+    } else if (videoPosterUrl) {
+      const picture = createOptimizedPicture(videoPosterUrl, 'Business Card Item Poster');
       assetsDiv.append(picture);
-      moveInstrumentation(videoPoster, picture);
-    } else {
-      const videoElement = itemNode.querySelector('div[id^="video-"]');
-      if (videoElement) {
-        const posterImg = videoElement.querySelector('picture img');
-        if (posterImg) {
-          const picture = createOptimizedPicture(posterImg.src, posterImg.alt);
-          assetsDiv.append(picture);
-          moveInstrumentation(posterImg, picture);
-        }
-        moveInstrumentation(videoElement, assetsDiv);
+      if (videoPosterProp) {
+        moveInstrumentation(videoPosterProp, assetsDiv);
       }
     }
-    itemWrapper.append(assetsDiv);
+    businessCardItem.append(assetsDiv);
 
     const infoDiv = document.createElement('div');
-    infoDiv.classList.add('corporate-business-card-business-card-item-info');
+    infoDiv.classList.add('business-card-item-info');
 
     const logoDiv = document.createElement('div');
-    logoDiv.classList.add('corporate-business-card-business-card-item-logo');
-    const logoImg = itemNode.querySelector('[data-aue-prop="logo"]');
+    logoDiv.classList.add('business-card-item-logo');
+    const logoImg = itemNode.querySelector('[data-aue-prop="logo"] img');
     if (logoImg) {
       const picture = createOptimizedPicture(logoImg.src, logoImg.alt);
       logoDiv.append(picture);
-      moveInstrumentation(logoImg, picture);
-    } else {
-      const oldLogoPicture = itemNode.querySelector('.corporate-business-card-business-card-item-logo picture');
-      if (oldLogoPicture) {
-        logoDiv.append(oldLogoPicture);
-        moveInstrumentation(oldLogoPicture, logoDiv);
-      }
+      moveInstrumentation(logoImg, logoDiv);
     }
     infoDiv.append(logoDiv);
 
     const descDiv = document.createElement('div');
-    descDiv.classList.add('corporate-business-card-business-card-item-desc');
+    descDiv.classList.add('business-card-item-desc');
 
     const titleDiv = document.createElement('div');
-    titleDiv.classList.add('corporate-business-card-business-card-item-title');
+    titleDiv.classList.add('business-card-item-title');
     const title = itemNode.querySelector('[data-aue-prop="title"]');
     if (title) {
       titleDiv.append(title);
       moveInstrumentation(title, titleDiv);
     } else {
-      const oldTitle = itemNode.querySelector('.corporate-business-card-business-card-item-title h3');
-      if (oldTitle) {
-        titleDiv.append(oldTitle);
-        moveInstrumentation(oldTitle, titleDiv);
+      const firstP = itemNode.querySelector('p');
+      if (firstP) {
+        titleDiv.append(firstP);
+        moveInstrumentation(firstP, titleDiv);
       }
     }
     descDiv.append(titleDiv);
 
-    const subtitle = itemNode.querySelector('[data-aue-prop="subtitle"]');
-    if (subtitle) {
-      subtitle.classList.add('corporate-business-card-business-card-item-subtitle');
-      descDiv.append(subtitle);
-      moveInstrumentation(subtitle, descDiv);
-    } else {
-      const oldSubtitle = itemNode.querySelector('p.corporate-business-card-business-card-item-subtitle');
-      if (oldSubtitle) {
-        descDiv.append(oldSubtitle);
-        moveInstrumentation(oldSubtitle, descDiv);
-      }
+    const subtitleP = itemNode.querySelector('[data-aue-prop="subtitle"]');
+    if (subtitleP) {
+      subtitleP.classList.add('business-card-item-subtitle');
+      descDiv.append(subtitleP);
+      moveInstrumentation(subtitleP, descDiv);
     }
 
-    const ctaLink = itemNode.querySelector('[data-aue-prop="ctaLink"]');
-    if (ctaLink) {
-      ctaLink.classList.add('corporate-business-card-button', 'corporate-business-card-button-primary-white');
-      descDiv.append(ctaLink);
-      moveInstrumentation(ctaLink, descDiv);
-    } else {
-      const oldCtaLink = itemNode.querySelector('a.corporate-business-card-button');
-      if (oldCtaLink) {
-        descDiv.append(oldCtaLink);
-        moveInstrumentation(oldCtaLink, descDiv);
-      }
+    const link = itemNode.querySelector('[data-aue-prop="link"] a');
+    if (link) {
+      link.classList.add('button', 'button-primary-white');
+      descDiv.append(link);
+      moveInstrumentation(link, descDiv);
     }
 
     infoDiv.append(descDiv);
-    itemWrapper.append(infoDiv);
+    businessCardItem.append(infoDiv);
 
-    businessCardContainer.append(itemWrapper);
-    moveInstrumentation(itemNode, itemWrapper);
+    businessCardContainer.append(businessCardItem);
+    moveInstrumentation(itemNode, businessCardItem);
   });
 
-  gContainer.append(businessCardContainer);
+  container.append(businessCardContainer);
 
   block.textContent = '';
-  block.append(gContainer);
-  block.className = 'corporate-business-card block';
+  block.append(container);
+  block.className = `${block.dataset.blockName} block`;
   block.dataset.blockStatus = 'loaded';
 }

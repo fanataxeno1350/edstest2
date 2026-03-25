@@ -146,14 +146,14 @@
     "fields": [
       {
         "component": "richtext",
-        "label": "Content",
-        "name": "content",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "contactUs",
+    "id": "contact",
     "fields": [
       {
         "component": "text",
@@ -162,53 +162,63 @@
         "valueType": "string"
       },
       {
-        "component": "container",
-        "item": {
-          "$ref": "contactIcon"
-        },
-        "label": "Icons",
-        "name": "icons",
-        "valueType": "array"
-      },
-      {
-        "component": "aem-content",
-        "label": "Primary Telephone",
-        "name": "primaryTelephone",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Secondary Telephone",
-        "name": "secondaryTelephone",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "contactIcon",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "component": "reference",
+        "label": "Phone Icon",
+        "name": "phoneIcon",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Icon",
-        "name": "icon",
+        "label": "Whatsapp Icon",
+        "name": "whatsappIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Email Icon",
+        "name": "emailIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Whatsapp Link",
+        "name": "whatsappLink",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Email Link",
+        "name": "emailLink",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Primary Telephone Link",
+        "name": "primaryTelephoneLink",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
+        "label": "Primary Telephone Number",
+        "name": "primaryTelephoneNumber",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Secondary Telephone Link",
+        "name": "secondaryTelephoneLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Secondary Telephone Number",
+        "name": "secondaryTelephoneNumber",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "slide",
+    "id": "carouselSlide",
     "fields": [
       {
         "component": "aem-content",
@@ -231,59 +241,31 @@
     ]
   },
   {
-    "id": "counterBackgroundImage",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Background Image",
-        "name": "backgroundImage",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "counterButton",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "Button Link",
-        "name": "buttonLink",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Button Text",
-        "name": "buttonText",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "corpCounter",
     "fields": [
       {
         "component": "reference",
-        "label": "Mobile Background",
-        "name": "mobileBackground",
+        "label": "Background Image Mobile",
+        "name": "backgroundImageMobile",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Desktop Background",
-        "name": "desktopBackground",
+        "label": "Background Image Desktop",
+        "name": "backgroundImageDesktop",
         "valueType": "string"
       },
       {
-        "component": "container",
-        "itemType": "counterBackgroundImage",
-        "label": "Background Images",
-        "name": "backgroundImages"
+        "component": "reference",
+        "label": "Counter Background Image",
+        "name": "counterBgImage",
+        "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "number",
         "label": "Counter Value",
         "name": "counterValue",
-        "valueType": "string"
+        "valueType": "number"
       },
       {
         "component": "text",
@@ -292,79 +274,79 @@
         "valueType": "string"
       },
       {
-        "component": "container",
-        "itemType": "counterButton",
-        "label": "Buttons",
-        "name": "buttons"
+        "component": "aem-content",
+        "label": "Button 1 Link",
+        "name": "button1Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Button 1 Text",
+        "name": "button1Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Button 2 Link",
+        "name": "button2Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Button 2 Text",
+        "name": "button2Text",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "corp-footer",
+    "id": "corpFooter",
     "fields": [
       {
         "component": "container",
-        "items": {
-          "type": "footer-link-column"
-        },
+        "itemType": "footerLinkColumn",
         "label": "Footer Link Columns",
         "name": "footerLinkColumns"
       },
       {
         "component": "container",
-        "items": {
-          "type": "footer-contact-icon"
-        },
-        "label": "Footer Contact Icons",
-        "name": "footerContactIcons"
+        "itemType": "footerContact",
+        "label": "Footer Contacts",
+        "name": "footerContacts"
       },
       {
         "component": "container",
-        "items": {
-          "type": "footer-app-icon"
-        },
-        "label": "Footer App Icons",
-        "name": "footerAppIcons"
+        "itemType": "footerDisclaimer",
+        "label": "Footer Disclaimers",
+        "name": "footerDisclaimers"
       },
       {
         "component": "container",
-        "items": {
-          "type": "footer-qr-icon"
-        },
-        "label": "Footer QR Icons",
-        "name": "footerQrIcons"
-      },
-      {
-        "component": "container",
-        "items": {
-          "type": "footer-bottom-column"
-        },
-        "label": "Footer Bottom Columns",
-        "name": "footerBottomColumns"
+        "itemType": "footerNote",
+        "label": "Footer Notes",
+        "name": "footerNotes"
       }
     ]
   },
   {
-    "id": "footer-link-column",
+    "id": "footerLinkColumn",
     "fields": [
       {
         "component": "text",
-        "label": "Column Title",
-        "name": "title",
+        "label": "Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
         "component": "container",
-        "items": {
-          "type": "footer-link"
-        },
+        "itemType": "footerLink",
         "label": "Links",
         "name": "links"
       }
     ]
   },
   {
-    "id": "footer-link",
+    "id": "footerLink",
     "fields": [
       {
         "component": "aem-content",
@@ -374,199 +356,44 @@
       },
       {
         "component": "text",
-        "label": "Link Text",
-        "name": "text",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-contact-icon",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "Icon Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Icon Image",
-        "name": "icon",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Alt Text",
-        "name": "alt",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footer-app-icon",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "App Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "App Icon",
-        "name": "icon",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Alt Text",
-        "name": "alt",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footer-qr-icon",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "QR Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "QR Image",
-        "name": "icon",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Alt Text",
-        "name": "alt",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footer-bottom-column",
-    "fields": [
-      {
-        "component": "richtext",
-        "label": "Footer Bottom Content",
-        "name": "content",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "corpHeader",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Logo",
-        "name": "logo",
-        "valueType": "string"
-      },
-      {
-        "block": "headerLinkGroup",
-        "component": "container",
-        "label": "Links",
-        "name": "links"
-      },
-      {
-        "block": "headerContact",
-        "component": "container",
-        "label": "Contacts",
-        "name": "contacts"
-      }
-    ]
-  },
-  {
-    "id": "headerLinkGroup",
+    "id": "footerContact",
     "fields": [
       {
         "component": "text",
-        "label": "Group Title",
+        "label": "Title",
         "name": "title",
         "valueType": "string"
       },
       {
-        "block": "headerLink",
         "component": "container",
-        "label": "Links",
-        "name": "links"
+        "itemType": "footerLink",
+        "label": "Contact Links",
+        "name": "contactLinks"
+      },
+      {
+        "component": "container",
+        "itemType": "footerContactIcon",
+        "label": "Icons",
+        "name": "icons"
       }
     ]
   },
   {
-    "id": "headerLink",
+    "id": "footerContactIcon",
     "fields": [
-      {
-        "component": "aem-content",
-        "label": "Link Label",
-        "name": "label",
-        "valueType": "string"
-      },
       {
         "component": "aem-content",
         "label": "URL",
         "name": "url",
         "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "headerContact",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Contact Title",
-        "name": "title",
-        "valueType": "string"
       },
-      {
-        "component": "reference",
-        "label": "Phone Icon",
-        "name": "phoneIcon",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Phone",
-        "name": "phone",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "WhatsApp Icon",
-        "name": "whatsappIcon",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "WhatsApp URL",
-        "name": "whatsapp",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Email Icon",
-        "name": "emailIcon",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Email",
-        "name": "email",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "value",
-    "fields": [
       {
         "component": "reference",
         "label": "Icon",
@@ -582,32 +409,156 @@
     ]
   },
   {
-    "id": "corpOurValues",
+    "id": "footerDisclaimer",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Disclaimer",
+        "name": "disclaimer",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footerNote",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Note",
+        "name": "note",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "corpHeader",
     "fields": [
       {
         "component": "reference",
-        "label": "Background Image",
-        "name": "backgroundImage",
+        "label": "Logo",
+        "name": "logo",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Main Heading",
-        "name": "mainHeading",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Sub Heading",
-        "name": "subHeading",
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logoLink",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": {
-          "type": "value"
-        },
+        "itemType": "headerLinkGroup",
+        "label": "Header Links",
+        "name": "headerLinks"
+      },
+      {
+        "component": "container",
+        "itemType": "headerProfileLink",
+        "label": "Profile Links",
+        "name": "profileLinks"
+      }
+    ]
+  },
+  {
+    "id": "headerLinkGroup",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Group Title",
+        "name": "groupTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "itemType": "headerLink",
+        "label": "Links",
+        "name": "links"
+      }
+    ]
+  },
+  {
+    "id": "headerLink",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "headerProfileLink",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Profile Link",
+        "name": "profileLink",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Profile Label",
+        "name": "profileLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "valueItem",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "corpOurValues",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image Desktop",
+        "name": "backgroundImageDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Background Image Mobile",
+        "name": "backgroundImageMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Main Header 1",
+        "name": "mainHeader1",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Main Header 2",
+        "name": "mainHeader2",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "itemType": "valueItem",
         "label": "Values",
+        "multiple": true,
         "name": "values"
       },
       {
@@ -634,13 +585,7 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Alt Text",
-        "name": "alt",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
+        "component": "richtext",
         "label": "Title",
         "name": "title",
         "valueType": "string"
@@ -658,19 +603,21 @@
     "fields": [
       {
         "component": "richtext",
-        "label": "Header",
-        "name": "header",
+        "label": "Slider Header",
+        "name": "sliderHeader",
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Slider Title",
         "name": "sliderTitle",
         "valueType": "string"
       },
       {
         "component": "container",
-        "itemType": "sliderItem",
+        "item": {
+          "type": "sliderItem"
+        },
         "label": "Slider Items",
         "name": "items",
         "valueType": "array"
@@ -678,7 +625,7 @@
     ]
   },
   {
-    "id": "corporateBusinessCardItem",
+    "id": "businessCardItem",
     "fields": [
       {
         "component": "reference",
@@ -706,8 +653,8 @@
       },
       {
         "component": "aem-content",
-        "label": "CTA Link",
-        "name": "ctaLink",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
@@ -717,8 +664,14 @@
     "fields": [
       {
         "component": "richtext",
-        "label": "Top Description",
-        "name": "topDescription",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       },
       {
@@ -729,20 +682,14 @@
       },
       {
         "component": "richtext",
-        "label": "Title",
-        "name": "title",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Bottom Description",
-        "name": "bottomDescription",
+        "label": "Link Title",
+        "name": "linkTitle",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "link",
+    "id": "linkItem",
     "fields": [
       {
         "component": "aem-content",
@@ -759,7 +706,7 @@
     ]
   },
   {
-    "id": "linkColumnLinkGridColumn",
+    "id": "linkColumn",
     "fields": [
       {
         "component": "text",
@@ -768,18 +715,25 @@
         "valueType": "string"
       },
       {
-        "component": "container",
-        "item": {
-          "type": "link"
-        },
+        "component": "linkItem",
         "label": "Links",
-        "name": "links",
-        "valueType": "array"
+        "name": "links"
       }
     ]
   },
   {
-    "id": "link",
+    "id": "linkGridColumn",
+    "fields": [
+      {
+        "component": "block",
+        "label": "Links",
+        "name": "links",
+        "resource": "linkItem"
+      }
+    ]
+  },
+  {
+    "id": "linkItem",
     "fields": [
       {
         "component": "aem-content",
@@ -789,20 +743,9 @@
       },
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "linkGridColumn",
-    "fields": [
-      {
-        "component": "block",
-        "itemType": "link",
-        "label": "Links",
-        "name": "links"
       }
     ]
   },
@@ -824,6 +767,28 @@
     ]
   },
   {
+    "id": "searchHeader",
+    "fields": [
+      {
+        "component": "container",
+        "itemType": "linkCategory",
+        "label": "Link Categories",
+        "name": "categories"
+      }
+    ]
+  },
+  {
+    "id": "linkCategory",
+    "fields": [
+      {
+        "component": "container",
+        "itemType": "linkItem",
+        "label": "Links",
+        "name": "links"
+      }
+    ]
+  },
+  {
     "id": "linkItem",
     "fields": [
       {
@@ -834,36 +799,14 @@
       },
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "linkColumn",
-    "fields": [
-      {
-        "component": "block",
-        "itemResourceType": "linkItem",
-        "label": "Links",
-        "name": "links"
-      }
-    ]
-  },
-  {
-    "id": "searchHeader",
-    "fields": [
-      {
-        "component": "block",
-        "itemResourceType": "linkColumn",
-        "label": "Columns",
-        "name": "columns"
-      }
-    ]
-  },
-  {
-    "id": "signInUserAccount",
+    "id": "userAccountLink",
     "fields": [
       {
         "component": "reference",
@@ -879,9 +822,53 @@
       },
       {
         "component": "text",
-        "label": "Text",
-        "name": "text",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "signInButton",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Button Text",
+        "name": "buttonText",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Sign Out Text",
+        "name": "signOutText",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "signIn",
+    "fields": [
+      {
+        "component": "container",
+        "items": {
+          "type": "userAccountLink"
+        },
+        "label": "User Account Links",
+        "name": "userAccountLinks"
+      },
+      {
+        "component": "container",
+        "items": {
+          "type": "signInButton"
+        },
+        "label": "Sign-In Button",
+        "name": "signInButton"
       }
     ]
   }

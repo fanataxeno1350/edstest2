@@ -3,110 +3,106 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const highlightItemsContainer = document.createElement('div');
-  highlightItemsContainer.classList.add('highlights-highlight-items-container');
+  highlightItemsContainer.classList.add('highlight-items-container');
 
-  const highlightItems = block.querySelectorAll('[data-aue-model="highlight"]');
-  highlightItems.forEach((itemNode, index) => {
-    const cardDiv = document.createElement('div');
-    cardDiv.classList.add('highlights-highlights__card', `highlights-gradient${index + 1}`);
+  const highlightCards = block.querySelectorAll('[data-aue-model="highlight"]');
+  const gradients = ['gradient1', 'gradient2', 'gradient3', 'gradient4', 'gradient5'];
 
-    const contentDiv = document.createElement('div');
-    contentDiv.classList.add('highlights-highlights__content');
+  highlightCards.forEach((cardNode, index) => {
+    const highlightCard = document.createElement('div');
+    highlightCard.classList.add('highlight__card', gradients[index % gradients.length]);
 
-    const infoDiv = document.createElement('div');
-    infoDiv.classList.add('highlights-highlights__info');
+    const highlightContent = document.createElement('div');
+    highlightContent.classList.add('highlight__content');
 
-    const highlightContainerDiv = document.createElement('div');
-    highlightContainerDiv.classList.add('highlights-highlight-container');
+    const highlightInfo = document.createElement('div');
+    highlightInfo.classList.add('highlight__info');
 
-    const topDiv = document.createElement('div');
-    topDiv.classList.add('highlights-highlights__top');
+    const highlightContainer = document.createElement('div');
+    highlightContainer.classList.add('highlight-container');
 
-    const iconSpan = document.createElement('span');
-    iconSpan.classList.add('highlights-highlightIcon');
-    topDiv.append(iconSpan);
+    const highlightTop = document.createElement('div');
+    highlightTop.classList.add('highlight__top');
 
-    const topDescriptionDiv = document.createElement('div');
-    topDescriptionDiv.classList.add('highlights-highlights__top__description');
-    const topDescription = itemNode.querySelector('[data-aue-prop="topDescription"]');
-    if (topDescription) {
-      topDescriptionDiv.append(topDescription);
-      moveInstrumentation(topDescription, topDescriptionDiv);
+    const highlightIcon = document.createElement('span');
+    highlightIcon.classList.add('highlightIcon');
+    highlightTop.append(highlightIcon);
+
+    const highlightTopDescription = document.createElement('div');
+    highlightTopDescription.classList.add('highlight__top__description');
+    const titleElement = cardNode.querySelector('[data-aue-prop="title"]');
+    if (titleElement) {
+      const h3 = document.createElement('h3');
+      h3.innerHTML = titleElement.innerHTML;
+      highlightTopDescription.append(h3);
+      moveInstrumentation(titleElement, h3);
     }
-    topDiv.append(topDescriptionDiv);
+    highlightTop.append(highlightTopDescription);
 
-    highlightContainerDiv.append(topDiv);
+    const linkElement = cardNode.querySelector('[data-aue-prop="link"]');
+    const linkTitleElement = cardNode.querySelector('[data-aue-prop="linkTitle"]');
+    const descriptionElement = cardNode.querySelector('[data-aue-prop="description"]');
 
-    const linkElement = itemNode.querySelector('[data-aue-prop="link"]');
     const anchor = document.createElement('a');
-    anchor.classList.add('highlights-bottom-section');
+    anchor.classList.add('bottom-section');
+    anchor.setAttribute('target', '_blank');
+    anchor.setAttribute('rel', 'noopener noreferrer');
     if (linkElement) {
-      anchor.href = linkElement.href || '#';
-      if (linkElement.target) {
-        anchor.target = linkElement.target;
-      }
-      if (linkElement.rel) {
-        anchor.rel = linkElement.rel;
-      }
+      anchor.href = linkElement.textContent.trim();
       moveInstrumentation(linkElement, anchor);
     }
 
-    const separatorSpan = document.createElement('span');
-    separatorSpan.classList.add('highlights-separator');
-    anchor.append(separatorSpan);
+    const separator = document.createElement('span');
+    separator.classList.add('separator');
+    anchor.append(separator);
 
-    const bottomContentDiv = document.createElement('div');
-    bottomContentDiv.classList.add('highlights-bottom__content');
+    const bottomContent = document.createElement('div');
+    bottomContent.classList.add('bottom__content');
 
-    const btmTitleDiv = document.createElement('div');
-    btmTitleDiv.classList.add('highlights-btm-title');
+    const btmTitle = document.createElement('div');
+    btmTitle.classList.add('btm-title');
 
-    const titleElement = itemNode.querySelector('[data-aue-prop="title"]');
-    const h4Title = document.createElement('h4');
-    h4Title.classList.add('highlights-h-title');
-    if (titleElement) {
-      h4Title.append(titleElement);
-      moveInstrumentation(titleElement, h4Title);
-    } else {
-      // Fallback for title, if link text is available
-      const linkText = linkElement ? linkElement.textContent : '';
-      h4Title.textContent = linkText;
+    const h4 = document.createElement('h4');
+    h4.classList.add('h-title');
+    if (linkTitleElement) {
+      h4.innerHTML = linkTitleElement.innerHTML;
+      moveInstrumentation(linkTitleElement, h4);
     }
-    btmTitleDiv.append(h4Title);
+    btmTitle.append(h4);
 
-    const arrowLinkSpan = document.createElement('span');
-    arrowLinkSpan.classList.add('highlights-arrow-link');
-    btmTitleDiv.append(arrowLinkSpan);
+    const arrowLink = document.createElement('span');
+    arrowLink.classList.add('arrow-link');
+    btmTitle.append(arrowLink);
 
-    bottomContentDiv.append(btmTitleDiv);
+    bottomContent.append(btmTitle);
 
-    const bottomDescriptionDiv = document.createElement('div');
-    bottomDescriptionDiv.classList.add('highlights-highlights__bottom__description', 'highlights-g-xl-2');
-    const bottomDescription = itemNode.querySelector('[data-aue-prop="bottomDescription"]');
-    if (bottomDescription) {
-      bottomDescriptionDiv.append(bottomDescription);
-      moveInstrumentation(bottomDescription, bottomDescriptionDiv);
+    const highlightBottomDescription = document.createElement('div');
+    highlightBottomDescription.classList.add('highlight__bottom__description', 'g-xl-2');
+    if (descriptionElement) {
+      const p = document.createElement('p');
+      p.innerHTML = descriptionElement.innerHTML;
+      highlightBottomDescription.append(p);
+      moveInstrumentation(descriptionElement, p);
     }
-    bottomContentDiv.append(bottomDescriptionDiv);
+    bottomContent.append(highlightBottomDescription);
 
-    anchor.append(bottomContentDiv);
+    anchor.append(bottomContent);
 
-    const backgroundOverlayDiv = document.createElement('div');
-    backgroundOverlayDiv.classList.add('highlights-background-overlay');
-    anchor.append(backgroundOverlayDiv);
+    const backgroundOverlay = document.createElement('div');
+    backgroundOverlay.classList.add('background-overlay');
+    anchor.append(backgroundOverlay);
 
-    highlightContainerDiv.append(anchor);
+    highlightContainer.append(highlightTop, anchor);
+    highlightInfo.append(highlightContainer);
+    highlightContent.append(highlightInfo);
+    highlightCard.append(highlightContent);
 
-    infoDiv.append(highlightContainerDiv);
-    contentDiv.append(infoDiv);
-    cardDiv.append(contentDiv);
-
-    highlightItemsContainer.append(cardDiv);
-    moveInstrumentation(itemNode, cardDiv);
+    highlightItemsContainer.append(highlightCard);
+    moveInstrumentation(cardNode, highlightCard);
   });
 
   block.textContent = '';
   block.append(highlightItemsContainer);
-  block.className = 'highlights-highlights highlights-block';
+  block.className = 'highlights block';
   block.dataset.blockStatus = 'loaded';
 }

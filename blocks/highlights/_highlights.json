@@ -38,8 +38,14 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Top Description",
-          "name": "topDescription",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
           "valueType": "string"
         },
         {
@@ -50,14 +56,8 @@
         },
         {
           "component": "richtext",
-          "label": "Title",
-          "name": "title",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Bottom Description",
-          "name": "bottomDescription",
+          "label": "Link Title",
+          "name": "linkTitle",
           "valueType": "string"
         }
       ]

@@ -43,13 +43,7 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Alt Text",
-          "name": "alt",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
+          "component": "richtext",
           "label": "Title",
           "name": "title",
           "valueType": "string"
@@ -67,19 +61,21 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Header",
-          "name": "header",
+          "label": "Slider Header",
+          "name": "sliderHeader",
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Slider Title",
           "name": "sliderTitle",
           "valueType": "string"
         },
         {
           "component": "container",
-          "itemType": "sliderItem",
+          "item": {
+            "type": "sliderItem"
+          },
           "label": "Slider Items",
           "name": "items",
           "valueType": "array"

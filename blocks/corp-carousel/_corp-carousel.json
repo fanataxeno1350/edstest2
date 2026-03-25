@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Slide",
-      "id": "slide",
+      "title": "Carousel-Slide",
+      "id": "carouselSlide",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "slide",
-              "name": "Slide"
+              "model": "carouselSlide",
+              "name": "Carousel-Slide"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "slide",
+      "id": "carouselSlide",
       "fields": [
         {
           "component": "aem-content",
@@ -61,7 +61,7 @@
     {
       "id": "corpCarousel",
       "components": [
-        "slide"
+        "carouselSlide"
       ]
     }
   ]

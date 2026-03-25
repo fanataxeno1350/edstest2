@@ -2,46 +2,37 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const searchHeaderLinkContainerSection = document.createElement('div');
-  searchHeaderLinkContainerSection.classList.add('search-header-link-container-section');
+  const linkContainerSection = document.createElement('div');
+  linkContainerSection.classList.add('link-container-section');
 
-  const columns = block.querySelectorAll('[data-aue-model="linkColumn"]');
+  const linkGridColumns = block.querySelectorAll('.link-grid-column.link-column-vertical');
 
-  columns.forEach((columnNode) => {
-    const searchHeaderLinkGridColumn = document.createElement('div');
-    searchHeaderLinkGridColumn.classList.add('search-header-link-grid-column', 'search-header-link-column-vertical');
+  linkGridColumns.forEach((columnNode) => {
+    const linkGridColumnDiv = document.createElement('div');
+    linkGridColumnDiv.classList.add('link-grid-column', 'link-column-vertical');
 
-    const searchHeaderContent = document.createElement('ul');
-    searchHeaderContent.classList.add('search-header-content', 'search-header-links-container', 'search-header-accordian-content');
+    const linksContainer = document.createElement('ul');
+    linksContainer.classList.add('content', 'links-container', 'accordian-content');
 
-    const links = columnNode.querySelectorAll('[data-aue-model="linkItem"]');
-    links.forEach((linkNode) => {
+    const linkItems = columnNode.querySelectorAll('li');
+    linkItems.forEach((itemNode) => {
       const li = document.createElement('li');
-      const a = linkNode.querySelector('a');
+      const a = itemNode.querySelector('a');
       if (a) {
-        const newA = document.createElement('a');
-        newA.href = a.href;
-        if (a.target) {
-          newA.target = a.target;
-        }
-        if (a.rel) {
-          newA.rel = a.rel;
-        }
-        newA.textContent = a.textContent;
-        li.append(newA);
-        moveInstrumentation(a, newA);
+        li.append(a);
+        moveInstrumentation(a, li);
       }
-      searchHeaderContent.append(li);
-      moveInstrumentation(linkNode, li);
+      linksContainer.append(li);
+      moveInstrumentation(itemNode, li);
     });
 
-    searchHeaderLinkGridColumn.append(searchHeaderContent);
-    moveInstrumentation(columnNode, searchHeaderLinkGridColumn);
-    searchHeaderLinkContainerSection.append(searchHeaderLinkGridColumn);
+    linkGridColumnDiv.append(linksContainer);
+    moveInstrumentation(columnNode, linkGridColumnDiv);
+    linkContainerSection.append(linkGridColumnDiv);
   });
 
   block.textContent = '';
-  block.append(searchHeaderLinkContainerSection);
-  block.classList.add('search-header-block');
+  block.append(linkContainerSection);
+  block.className = 'search-header block';
   block.dataset.blockStatus = 'loaded';
 }

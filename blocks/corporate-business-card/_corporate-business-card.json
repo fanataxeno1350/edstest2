@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Corporate-Business-Card",
+      "title": "Corporate Business Card",
       "id": "corporateBusinessCard",
       "plugins": {
         "xwalk": {
@@ -10,22 +10,22 @@
             "template": {
               "filter": "corporateBusinessCard",
               "model": "corporateBusinessCard",
-              "name": "Corporate-Business-Card"
+              "name": "Corporate Business Card"
             }
           }
         }
       }
     },
     {
-      "title": "Corporate-Business-Card-Item",
-      "id": "corporateBusinessCardItem",
+      "title": "Business Card Item",
+      "id": "businessCardItem",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "corporateBusinessCardItem",
-              "name": "Corporate-Business-Card-Item"
+              "model": "businessCardItem",
+              "name": "Business Card Item"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "corporateBusinessCardItem",
+      "id": "businessCardItem",
       "fields": [
         {
           "component": "reference",
@@ -62,8 +62,8 @@
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
@@ -73,7 +73,7 @@
     {
       "id": "corporateBusinessCard",
       "components": [
-        "corporateBusinessCardItem"
+        "businessCardItem"
       ]
     }
   ]

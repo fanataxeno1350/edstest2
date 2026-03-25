@@ -55,9 +55,8 @@
         "corpHeader",
         "logo",
         "linkGrid",
-        "linkColumnLinkGridColumn",
-        "contactUs",
-        "signInUserDropdown",
+        "contact",
+        "signIn",
         "searchHeader",
         "corpCarousel",
         "corporateBusinessCard",
@@ -65,7 +64,8 @@
         "corpSlider",
         "corpOurValues",
         "corpCounter",
-        "corp-footer"
+        "corpFooter",
+        "linkColumn"
       ]
     }
   ]

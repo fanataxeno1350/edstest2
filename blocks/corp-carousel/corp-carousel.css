@@ -1,8 +1,10 @@
-/* .corp-carousel---- .corp-carousel-Wrapper/General .corp-carousel---- */ #webchat-container {  
+/* --- Wrapper/General --- */
+#webchat-container { 
     font-family: sans-serif;
-  }
+ }
 
-/* .corp-carousel---- .corp-carousel-FAQ .corp-carousel-Popup .corp-carousel-Container (Animation .corp-carousel-Logic) .corp-carousel---- */ #faq-popup {  
+/* --- FAQ Popup Container (Animation Logic) --- */
+#faq-popup { 
     position: absolute;
     top: 30%;
     left: 0;
@@ -22,16 +24,11 @@
     box-shadow: 0px -4px 10px rgba(0,0,0,0.1);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-  }
-
-/* .corp-carousel-Inline .corp-carousel-style: div#carousel-main.corp-carousel-slideshow-container */ div#carousel-main.corp-carousel-slideshow-container {   position:relative   }
-
-/* .corp-carousel-Inline .corp-carousel-style: div.corp-carousel-mySlides */ div.corp-carousel-mySlides {   display: none;   }
-
-/* .corp-carousel-Inline .corp-carousel-style: div.corp-carousel-mySlides */ div.corp-carousel-mySlides {   display: block;   }
+ }
 
 /* Computed styles: div.corp-carousel block */
-@media (min-width: 1200px) { div.corp-carousel-corp-carousel .corp-carousel-block { 
+@media (min-width: 1200px) { 
+  div.corp-carousel block {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -173,10 +170,12 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div#carousel-main.slideshow-container */
-@media (min-width: 1200px) { div#carousel-main.corp-carousel-slideshow-container { 
+@media (min-width: 1200px) { 
+  div#carousel-main.slideshow-container {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -320,10 +319,12 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.mySlides */
-@media (min-width: 1200px) { div.corp-carousel-mySlides { 
+@media (min-width: 1200px) { 
+  div.mySlides {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -465,10 +466,12 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: img.generic-desktop */
-@media (min-width: 1200px) { img.corp-carousel-generic-desktop { 
+@media (min-width: 1200px) { 
+  img.generic-desktop {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -611,10 +614,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: a.prev */
-@media (min-width: 1200px) { a.corp-carousel-prev { 
+@media (min-width: 1200px) { 
+  a.prev {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -777,10 +782,12 @@
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: a.next */
-@media (min-width: 1200px) { a.corp-carousel-next { 
+@media (min-width: 1200px) { 
+  a.next {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -943,10 +950,12 @@
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: span.dot active */
-@media (min-width: 1200px) { span.corp-carousel-dot .corp-carousel-active { 
+@media (min-width: 1200px) { 
+  span.dot active {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -956,7 +965,7 @@
     backface-visibility: visible;
     background-attachment: scroll;
     background-clip: border-box;
-    background-color: rgb(207, 208, 212);
+    background-color: rgb(41, 49, 153);
     background-origin: padding-box;
     background-position: 0% 0%;
     background-repeat: repeat;
@@ -1092,10 +1101,12 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: span.dot */
-@media (min-width: 1200px) { span.corp-carousel-dot { 
+@media (min-width: 1200px) { 
+  span.dot {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1105,7 +1116,7 @@
     backface-visibility: visible;
     background-attachment: scroll;
     background-clip: border-box;
-    background-color: rgb(48, 55, 155);
+    background-color: rgb(214, 214, 214);
     background-origin: padding-box;
     background-position: 0% 0%;
     background-repeat: repeat;
@@ -1241,10 +1252,12 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: img.generic-desktop */
-@media (min-width: 1200px) { img.corp-carousel-generic-desktop { 
+@media (min-width: 1200px) { 
+  img.generic-desktop {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1387,4 +1400,5 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }

@@ -1,8 +1,10 @@
-/* .columns---- .columns-Wrapper/General .columns---- */ #webchat-container {  
+/* --- Wrapper/General --- */
+#webchat-container { 
     font-family: sans-serif;
-  }
+ }
 
-/* .columns---- .columns-FAQ .columns-Popup .columns-Container (Animation .columns-Logic) .columns---- */ #faq-popup {  
+/* --- FAQ Popup Container (Animation Logic) --- */
+#faq-popup { 
     position: absolute;
     top: 30%;
     left: 0;
@@ -22,10 +24,11 @@
     box-shadow: 0px -4px 10px rgba(0,0,0,0.1);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-  }
+ }
 
 /* Computed styles: div.columns block columns-1-cols */
-@media (min-width: 1200px) { div.columns-columns .columns-block .columns-1-cols { 
+@media (min-width: 1200px) { 
+  div.columns block columns-1-cols {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -167,4 +170,5 @@
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }

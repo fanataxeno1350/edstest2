@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Link-Column",
-      "id": "linkColumn",
+      "title": "Link-Category",
+      "id": "linkCategory",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "linkColumn",
-              "name": "Link-Column"
+              "model": "linkCategory",
+              "name": "Link-Category"
             }
           }
         }
@@ -49,6 +49,28 @@
   ],
   "models": [
     {
+      "id": "searchHeader",
+      "fields": [
+        {
+          "component": "container",
+          "itemType": "linkCategory",
+          "label": "Link Categories",
+          "name": "categories"
+        }
+      ]
+    },
+    {
+      "id": "linkCategory",
+      "fields": [
+        {
+          "component": "container",
+          "itemType": "linkItem",
+          "label": "Links",
+          "name": "links"
+        }
+      ]
+    },
+    {
       "id": "linkItem",
       "fields": [
         {
@@ -59,44 +81,22 @@
         },
         {
           "component": "text",
-          "label": "Label",
-          "name": "label",
+          "label": "Text",
+          "name": "text",
           "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "linkColumn",
-      "fields": [
-        {
-          "component": "block",
-          "itemResourceType": "linkItem",
-          "label": "Links",
-          "name": "links"
-        }
-      ]
-    },
-    {
-      "id": "searchHeader",
-      "fields": [
-        {
-          "component": "block",
-          "itemResourceType": "linkColumn",
-          "label": "Columns",
-          "name": "columns"
         }
       ]
     }
   ],
   "filters": [
     {
-      "id": "search-header",
+      "id": "searchHeader",
       "components": [
-        "linkColumn"
+        "linkCategory"
       ]
     },
     {
-      "id": "linkColumn",
+      "id": "linkCategory",
       "components": [
         "linkItem"
       ]

@@ -1,213 +1,10 @@
-.highlights-highlight-container {  
-  position: relative;
-  }
-
-.highlights-arrow-link {  
-  display: none;
-  }
-
-.highlights-bottom__content {  
-  position: relative;
-  }
-
-.highlights-bottom-section {  
-  display: block;
-  padding: 16px;
-  border: 1px solid #d1d1d1;
-  }
-
-.highlights-bottom-section .highlights-h-title {  
-  margin: 0;
-  color: #000;
-  font-size: 1.5rem;
-  font-style: normal;
-  font-weight: var(--fw-700);
-  line-height: 24px;
-  transition: all 0.2s linear;
-  padding-right: 32px;
-  /* 120% */
-  @media (width >= 1024px) {
-    font-family: var(--body-font-family);
-    line-height: 1.75rem;
-    padding-right: 0;
-  }
-  }
-
-.highlights-highlightIcon {  
-  display: inline-block;
-  position: absolute;
-  right: 16px;
-  top: 20px;
-  height: 24px;
-  width: 24px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  }
-
-.highlights-btm-title {  
-  line-height: 24px;
-  padding-bottom: 2px;
-  }
-
-@media (width >=768px) { .highlights-highlight-container {  
-    border: 1px solid #d1d1d1;
-    border-bottom: none;
-    }
-
-.highlights-bottom-section .highlights-h-title {  
-    font-size: 20px;
-    font-weight: var(--fw-700);
-    transition: all 0.2s linear;
-    width: 85%;
-    }
-
-.highlights-bottom-section {  
-    display: block;
-    padding: 0;
-    border: none;
-    position: relative;
-    }
-
-.highlights-bottom__content {  
-    padding: 16px 16px 17px;
-    position: relative;
-    z-index: 1;
-    }
-
-.highlights-btm-title {  
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    }
-
-.highlights-arrow-link {  
-    width: 22px;
-    height: 22px;
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M2.39195 21.6878L0.830078 20.0929L17.7958 2.76925H7.5V0.499023H21.5809V14.8771H19.3576V4.36408L2.39195 21.6878Z" fill="%231D1D1D"/></svg>');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    transition: all 0.2s linear;
-    }
-
-.highlights-background-overlay {  
-    height: 2px;
-    width: 100%;
-    background-color: #000;
-    position: absolute;
-    bottom: 0;
-    transition: all 0.2s linear;
-    }
-
-.highlights-bottom-section:hover {  
-    text-decoration: none;
-    }
-
-.highlights-bottom-section:hover .highlights-background-overlay {  
-    height: 100%;
-    }
-
-.highlights-bottom-section:hover .highlights-h-title, .highlights-bottom-section:hover p {  
-    color: #fff;
-    }
-
-.highlights-bottom-section:hover .highlights-arrow-link {  
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M1.89195 21.6878L0.330078 20.0929L17.2958 2.76925H7V0.499023H21.0809V14.8771H18.8576V4.36408L1.89195 21.6878Z" fill="white"/></svg>');
-    } }
-
-@media (width >= 1024px) { .highlights-bottom-section .highlights-h-title {  
-    font-size: 32px;
-    line-height: 38px;
-    }
-
-.highlights-highlight-container .highlights-bottom__content {  
-    padding: 32px 40px 40px;
-    }
-
-.highlights-highlight-container .highlights-highlightIcon {  
-    display: inline-block;
-    min-height: 40px;
-    width: 40px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    top: 43px;
-    right: 40px;
-    } }
-
-.highlights-highlight-items-container {  
-  display: grid;
-  gap: 16px;
-  @media (width >= 1200px) {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 24px;
-  }
-  @media (width >= 1366px) {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-  }
-  }
-
-@media (width >=1200px) { .highlights-highlight-container {  
-    grid-template-rows: 212px auto;
-    display: grid;
-    height: 100%;
-    }
-
-.highlights-bottom__content {  
-    padding: 48px 36px;
-    }
-
-.highlights-bottom-section .highlights-h-title {  
-    font-size: 22px;
-    line-height: 24px;
-    }
-
-.highlights-highlightIcon {  
-    position: static;
-    }
-
-.highlights-arrow-link {  
-    display: block;
-    }
-
-.highlights-separator {  
-    display: none;
-    height: 1px;
-    position: absolute;
-    top: 0;
-    left: 40px;
-    right: 36px;
-    background-color: #d0d0d0;
-    width: inherit;
-    } }
-
-@media (width >=1366px) { .highlights-bottom-section .highlights-h-title {  
-    font-size: 2rem;
-    line-height: 2.375rem;
-    }
-
-.highlights-highlightIcon {  
-    display: inline-block;
-    height: 40px;
-    width: 40px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    }
-
-.highlights-highlight-container .highlights-bottom__content {  
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    } }
-
-/* .highlights---- .highlights-Wrapper/General .highlights---- */ #webchat-container {  
+/* --- Wrapper/General --- */
+#webchat-container { 
     font-family: sans-serif;
-  }
+ }
 
-/* .highlights---- .highlights-FAQ .highlights-Popup .highlights-Container (Animation .highlights-Logic) .highlights---- */ #faq-popup {  
+/* --- FAQ Popup Container (Animation Logic) --- */
+#faq-popup { 
     position: absolute;
     top: 30%;
     left: 0;
@@ -227,383 +24,11 @@
     box-shadow: 0px -4px 10px rgba(0,0,0,0.1);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-  }
-
-.highlights-highlight-container {   position: relative;   }
-
-.highlights-arrow-link {   display: none;   }
-
-.highlights-bottom__content {   position: relative;   }
-
-.highlights-bottom-section {   display: block; padding: 16px; border: 1px solid rgb(209, 209, 209);   }
-
-.highlights-bottom-section .highlights-h-title {  
-  margin: 0px; color: rgb(0, 0, 0); font-size: 1.5rem; font-style: normal; font-weight: var(--fw-700); line-height: 24px; transition: 0.2s linear; padding-right: 32px;
-  @media (width >= 1024px) {
-  font-family: var(--body-font-family); line-height: 1.75rem; padding-right: 0px;
-}
-  }
-
-.highlights-highlightIcon {   display: inline-block; position: absolute; right: 16px; top: 20px; height: 24px; width: 24px; background-size: contain; background-repeat: no-repeat; background-position: center center;   }
-
-.highlights-btm-title {   line-height: 24px; padding-bottom: 2px;   }
-
-@media (width >= 768px) { .highlights-highlight-container {   border-top: 1px solid rgb(209, 209, 209); border-right: 1px solid rgb(209, 209, 209); border-left: 1px solid rgb(209, 209, 209); border-image: initial; border-bottom: none;   }
-
-.highlights-bottom-section .highlights-h-title {   font-size: 20px; font-weight: var(--fw-700); transition: 0.2s linear; width: 85%;   }
-
-.highlights-bottom-section {   display: block; padding: 0px; border: none; position: relative;   }
-
-.highlights-bottom__content {   padding: 16px 16px 17px; position: relative; z-index: 1;   }
-
-.highlights-btm-title {   display: flex; justify-content: space-between; align-items: baseline;   }
-
-.highlights-arrow-link {   width: 22px; height: 22px; background-image: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><path d=\"M2.39195 21.6878L0.830078 20.0929L17.7958 2.76925H7.5V0.499023H21.5809V14.8771H19.3576V4.36408L2.39195 21.6878Z\" fill=\"%231D1D1D\"/></svg>"); background-repeat: no-repeat; background-position: center center; background-size: contain; transition: 0.2s linear;   }
-
-.highlights-background-overlay {   height: 2px; width: 100%; background-color: rgb(0, 0, 0); position: absolute; bottom: 0px; transition: 0.2s linear;   }
-
-.highlights-bottom-section:hover {   text-decoration: none;   }
-
-.highlights-bottom-section:hover .highlights-background-overlay {   height: 100%;   }
-
-.highlights-bottom-section:hover .highlights-h-title, .highlights-bottom-section:hover p {   color: rgb(255, 255, 255);   }
-
-.highlights-bottom-section:hover .highlights-arrow-link {   background-image: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><path d=\"M1.89195 21.6878L0.330078 20.0929L17.2958 2.76925H7V0.499023H21.0809V14.8771H18.8576V4.36408L1.89195 21.6878Z\" fill=\"white\"/></svg>");   } }
-
-@media (width >= 1024px) { .highlights-bottom-section .highlights-h-title {   font-size: 32px; line-height: 38px;   }
-
-.highlights-highlight-container .highlights-bottom__content {   padding: 32px 40px 40px;   }
-
-.highlights-highlight-container .highlights-highlightIcon {   display: inline-block; min-height: 40px; width: 40px; background-size: contain; background-repeat: no-repeat; background-position: center center; top: 43px; right: 40px;   } }
-
-.highlights-highlight-items-container {  
-  display: grid; gap: 16px;
-  @media (width >= 1200px) {
-  grid-template-columns: 1fr 1fr 1fr 1fr; gap: 24px;
-}
-  @media (width >= 1366px) {
-  grid-template-columns: repeat(4, 1fr); gap: 24px;
-}
-  }
-
-@media (width >= 1200px) { .highlights-highlight-container {   grid-template-rows: 212px auto; display: grid; height: 100%;   }
-
-.highlights-bottom__content {   padding: 48px 36px;   }
-
-.highlights-bottom-section .highlights-h-title {   font-size: 22px; line-height: 24px;   }
-
-.highlights-highlightIcon {   position: static;   }
-
-.highlights-arrow-link {   display: block;   }
-
-.highlights-separator {   display: none; height: 1px; position: absolute; top: 0px; left: 40px; right: 36px; background-color: rgb(208, 208, 208); width: inherit;   } }
-
-@media (width >= 1366px) { .highlights-bottom-section .highlights-h-title {   font-size: 2rem; line-height: 2.375rem;   }
-
-.highlights-highlightIcon {   display: inline-block; height: 40px; width: 40px; background-size: contain; background-repeat: no-repeat; background-position: center center;   }
-
-.highlights-highlight-container .highlights-bottom__content {   display: flex; flex-direction: column; gap: 16px;   } }
-
-/* Computed styles: div.g-container */
-@media (min-width: 1200px) { div.highlights-g-container { 
-    animation-composition: replace;
-    animation-delay: 0s;
-    animation-duration: 0s;
-    animation-iteration-count: 1;
-    animation-play-state: running;
-    animation-timing-function: ease;
-    backface-visibility: visible;
-    background-attachment: scroll;
-    background-clip: border-box;
-    background-color: rgba(0, 0, 0, 0);
-    background-origin: padding-box;
-    background-position: 0% 0%;
-    background-repeat: repeat;
-    block-size: 722px;
-    border-block-end-color: rgb(33, 37, 41);
-    border-block-start-color: rgb(33, 37, 41);
-    border-bottom-color: rgb(33, 37, 41);
-    border-collapse: separate;
-    border-image-outset: 0;
-    border-image-repeat: stretch;
-    border-image-slice: 100%;
-    border-image-width: 1;
-    border-inline-end-color: rgb(33, 37, 41);
-    border-inline-start-color: rgb(33, 37, 41);
-    border-left-color: rgb(33, 37, 41);
-    border-right-color: rgb(33, 37, 41);
-    border-top-color: rgb(33, 37, 41);
-    box-decoration-break: slice;
-    box-sizing: border-box;
-    caption-side: top;
-    caret-color: rgb(33, 37, 41);
-    clip-rule: nonzero;
-    color: rgb(33, 37, 41);
-    color-interpolation: srgb;
-    color-interpolation-filters: linearrgb;
-    column-rule-color: rgb(33, 37, 41);
-    direction: ltr;
-    display: block;
-    dynamic-range-limit: no-limit;
-    empty-cells: show;
-    field-sizing: fixed;
-    fill: rgb(0, 0, 0);
-    fill-opacity: 1;
-    fill-rule: nonzero;
-    flex-direction: row;
-    flex-grow: 0;
-    flex-shrink: 1;
-    flex-wrap: nowrap;
-    flood-color: rgb(0, 0, 0);
-    flood-opacity: 1;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 16px;
-    font-stretch: 100%;
-    font-weight: 400;
-    grid-auto-flow: row;
-    height: 722px;
-    hyphens: manual;
-    image-orientation: from-image;
-    inline-size: 1920px;
-    interpolate-size: numeric-only;
-    lighting-color: rgb(255, 255, 255);
-    line-height: 24px;
-    list-style-position: outside;
-    list-style-type: disc;
-    mask-clip: border-box;
-    mask-composite: add;
-    mask-mode: match-source;
-    mask-origin: border-box;
-    mask-position: 0% 0%;
-    mask-repeat: repeat;
-    mask-type: luminance;
-    math-depth: 0;
-    object-fit: fill;
-    object-position: 50% 50%;
-    offset-rotate: auto 0deg;
-    opacity: 1;
-    order: 0;
-    orphans: 2;
-    outline-color: rgb(33, 37, 41);
-    overflow-block: visible;
-    overflow-inline: visible;
-    overflow-x: visible;
-    overflow-y: visible;
-    padding-inline-end: 56px;
-    padding-inline-start: 56px;
-    padding-left: 56px;
-    padding-right: 56px;
-    perspective-origin: 960px 361px;
-    position: static;
-    position-visibility: always;
-    print-color-adjust: economy;
-    ruby-align: space-around;
-    ruby-position: over;
-    scroll-timeline-axis: block;
-    shape-image-threshold: 0;
-    stop-color: rgb(0, 0, 0);
-    stop-opacity: 1;
-    stroke-linecap: butt;
-    stroke-linejoin: miter;
-    stroke-miterlimit: 4;
-    stroke-opacity: 1;
-    stroke-width: 1px;
-    tab-size: 8;
-    text-align: left;
-    text-anchor: start;
-    text-decoration: none solid rgb(33, 37, 41);
-    text-decoration-color: rgb(33, 37, 41);
-    text-decoration-style: solid;
-    text-emphasis-color: rgb(33, 37, 41);
-    text-emphasis-position: over;
-    text-overflow: clip;
-    text-size-adjust: 100%;
-    text-wrap-mode: wrap;
-    transform-origin: 960px 361px;
-    transform-style: flat;
-    transition-delay: 0s;
-    transition-duration: 0s;
-    transition-property: all;
-    transition-timing-function: ease;
-    unicode-bidi: isolate;
-    vertical-align: baseline;
-    view-timeline-axis: block;
-    visibility: visible;
-    white-space-collapse: collapse;
-    widows: 2;
-    width: 1920px;
-    writing-mode: horizontal-tb;
-    zoom: 1;
-    -webkit-box-align: stretch;
-    -webkit-box-decoration-break: slice;
-    -webkit-box-flex: 0;
-    -webkit-box-ordinal-group: 1;
-    -webkit-box-orient: horizontal;
-    -webkit-box-pack: start;
-    -webkit-locale: "en";
-    -webkit-mask-box-image-outset: 0;
-    -webkit-mask-box-image-repeat: stretch;
-    -webkit-mask-box-image-slice: 0 fill;
-    -webkit-rtl-ordering: logical;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-text-fill-color: rgb(33, 37, 41);
-    -webkit-text-orientation: vertical-right;
-    -webkit-text-stroke-color: rgb(33, 37, 41);
-    -webkit-user-modify: read-only;
-    -webkit-writing-mode: horizontal-tb;
-   } }
-
-/* Computed styles: div.highlights-wrapper g-container */
-@media (min-width: 1200px) { div.highlights-wrapper .highlights-g-container { 
-    animation-composition: replace;
-    animation-delay: 0s;
-    animation-duration: 0s;
-    animation-iteration-count: 1;
-    animation-play-state: running;
-    animation-timing-function: ease;
-    backface-visibility: visible;
-    background-attachment: scroll;
-    background-clip: border-box;
-    background-color: rgba(0, 0, 0, 0);
-    background-origin: padding-box;
-    background-position: 0% 0%;
-    background-repeat: repeat;
-    block-size: 376px;
-    border-block-end-color: rgb(33, 37, 41);
-    border-block-start-color: rgb(33, 37, 41);
-    border-bottom-color: rgb(33, 37, 41);
-    border-collapse: separate;
-    border-image-outset: 0;
-    border-image-repeat: stretch;
-    border-image-slice: 100%;
-    border-image-width: 1;
-    border-inline-end-color: rgb(33, 37, 41);
-    border-inline-start-color: rgb(33, 37, 41);
-    border-left-color: rgb(33, 37, 41);
-    border-right-color: rgb(33, 37, 41);
-    border-top-color: rgb(33, 37, 41);
-    box-decoration-break: slice;
-    box-sizing: border-box;
-    caption-side: top;
-    caret-color: rgb(33, 37, 41);
-    clip-rule: nonzero;
-    color: rgb(33, 37, 41);
-    color-interpolation: srgb;
-    color-interpolation-filters: linearrgb;
-    column-rule-color: rgb(33, 37, 41);
-    direction: ltr;
-    display: block;
-    dynamic-range-limit: no-limit;
-    empty-cells: show;
-    field-sizing: fixed;
-    fill: rgb(0, 0, 0);
-    fill-opacity: 1;
-    fill-rule: nonzero;
-    flex-direction: row;
-    flex-grow: 0;
-    flex-shrink: 1;
-    flex-wrap: nowrap;
-    flood-color: rgb(0, 0, 0);
-    flood-opacity: 1;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 16px;
-    font-stretch: 100%;
-    font-weight: 400;
-    grid-auto-flow: row;
-    height: 376px;
-    hyphens: manual;
-    image-orientation: from-image;
-    inline-size: 1920px;
-    interpolate-size: numeric-only;
-    lighting-color: rgb(255, 255, 255);
-    line-height: 24px;
-    list-style-position: outside;
-    list-style-type: disc;
-    mask-clip: border-box;
-    mask-composite: add;
-    mask-mode: match-source;
-    mask-origin: border-box;
-    mask-position: 0% 0%;
-    mask-repeat: repeat;
-    mask-type: luminance;
-    math-depth: 0;
-    object-fit: fill;
-    object-position: 50% 50%;
-    offset-rotate: auto 0deg;
-    opacity: 1;
-    order: 0;
-    orphans: 2;
-    outline-color: rgb(33, 37, 41);
-    overflow-block: visible;
-    overflow-inline: visible;
-    overflow-x: visible;
-    overflow-y: visible;
-    padding-inline-end: 56px;
-    padding-inline-start: 56px;
-    padding-left: 56px;
-    padding-right: 56px;
-    perspective-origin: 960px 188px;
-    position: static;
-    position-visibility: always;
-    print-color-adjust: economy;
-    ruby-align: space-around;
-    ruby-position: over;
-    scroll-timeline-axis: block;
-    shape-image-threshold: 0;
-    stop-color: rgb(0, 0, 0);
-    stop-opacity: 1;
-    stroke-linecap: butt;
-    stroke-linejoin: miter;
-    stroke-miterlimit: 4;
-    stroke-opacity: 1;
-    stroke-width: 1px;
-    tab-size: 8;
-    text-align: left;
-    text-anchor: start;
-    text-decoration: none solid rgb(33, 37, 41);
-    text-decoration-color: rgb(33, 37, 41);
-    text-decoration-style: solid;
-    text-emphasis-color: rgb(33, 37, 41);
-    text-emphasis-position: over;
-    text-overflow: clip;
-    text-size-adjust: 100%;
-    text-wrap-mode: wrap;
-    transform-origin: 960px 188px;
-    transform-style: flat;
-    transition-delay: 0s;
-    transition-duration: 0s;
-    transition-property: all;
-    transition-timing-function: ease;
-    unicode-bidi: isolate;
-    vertical-align: baseline;
-    view-timeline-axis: block;
-    visibility: visible;
-    white-space-collapse: collapse;
-    widows: 2;
-    width: 1920px;
-    writing-mode: horizontal-tb;
-    zoom: 1;
-    -webkit-box-align: stretch;
-    -webkit-box-decoration-break: slice;
-    -webkit-box-flex: 0;
-    -webkit-box-ordinal-group: 1;
-    -webkit-box-orient: horizontal;
-    -webkit-box-pack: start;
-    -webkit-locale: "en";
-    -webkit-mask-box-image-outset: 0;
-    -webkit-mask-box-image-repeat: stretch;
-    -webkit-mask-box-image-slice: 0 fill;
-    -webkit-rtl-ordering: logical;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-text-fill-color: rgb(33, 37, 41);
-    -webkit-text-orientation: vertical-right;
-    -webkit-text-stroke-color: rgb(33, 37, 41);
-    -webkit-user-modify: read-only;
-    -webkit-writing-mode: horizontal-tb;
-   } }
+ }
 
 /* Computed styles: div.highlights block */
-@media (min-width: 1200px) { div.highlights-highlights .highlights-block { 
+@media (min-width: 1200px) { 
+  div.highlights block {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -746,10 +171,12 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.highlight-items-container */
-@media (min-width: 1200px) { div.highlights-highlight-items-container { 
+@media (min-width: 1200px) { 
+  div.highlight-items-container {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -895,10 +322,454 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
+
+/* Computed styles: div.highlight__card gradient1 */
+@media (min-width: 1200px) { 
+  div.highlight__card gradient1 {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: linear-gradient(359deg, rgba(215, 116, 58, 0.1) -48.53%, rgba(255, 255, 255, 0.1) 43.7%);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 376px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 376px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 342.391px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 171.188px 188px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 171.195px 188px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 342.391px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
+
+/* Computed styles: div.highlight__content */
+@media (min-width: 1200px) { 
+  div.highlight__content {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 376px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 376px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 342.391px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 171.188px 188px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 171.195px 188px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 342.391px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
+
+/* Computed styles: div.highlight__info */
+@media (min-width: 1200px) { 
+  div.highlight__info {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 376px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 376px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 342.391px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 171.188px 188px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 171.195px 188px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 342.391px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
 
 /* Computed styles: div.highlight-container */
-@media (min-width: 1200px) { div.highlights-highlight-container { 
+@media (min-width: 1200px) { 
+  div.highlight-container {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1054,10 +925,167 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
+
+/* Computed styles: div.highlight__top */
+@media (min-width: 1200px) { 
+  div.highlight__top {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 191px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-gap: 22px;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: flex;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: column;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 191px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 340.391px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-block-start: 64px;
+    padding-inline-end: 16px;
+    padding-inline-start: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 64px;
+    perspective-origin: 170.188px 95.5px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    row-gap: 22px;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 170.195px 95.5px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 340.391px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
 
 /* Computed styles: span.highlightIcon */
-@media (min-width: 1200px) { span.highlights-highlightIcon { 
+@media (min-width: 1200px) { 
+  span.highlightIcon {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1206,10 +1234,170 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
+
+/* Computed styles: div.highlight__top__description */
+@media (min-width: 1200px) { 
+  div.highlight__top__description {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 57px;
+    border-block-end-color: rgb(208, 208, 208);
+    border-block-end-style: solid;
+    border-block-end-width: 1px;
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(208, 208, 208);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-basis: 0%;
+    flex-direction: row;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 14px;
+    font-stretch: 100%;
+    font-weight: 300;
+    grid-auto-flow: row;
+    height: 57px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 300.391px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 21px;
+    list-style-position: outside;
+    list-style-type: disc;
+    margin-inline-end: 4px;
+    margin-inline-start: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-block-end: 8px;
+    padding-bottom: 8px;
+    perspective-origin: 150.188px 28.5px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 150.195px 28.5px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 300.391px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
 
 /* Computed styles: a.bottom-section */
-@media (min-width: 1200px) { a.highlights-bottom-section { 
+@media (min-width: 1200px) { 
+  a.bottom-section {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1351,10 +1539,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.bottom__content */
-@media (min-width: 1200px) { div.highlights-bottom__content { 
+@media (min-width: 1200px) { 
+  div.bottom__content {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1508,10 +1698,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.btm-title */
-@media (min-width: 1200px) { div.highlights-btm-title { 
+@media (min-width: 1200px) { 
+  div.btm-title {
     align-items: baseline;
     animation-composition: replace;
     animation-delay: 0s;
@@ -1661,10 +1853,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: h4.h-title */
-@media (min-width: 1200px) { h4.highlights-h-title { 
+@media (min-width: 1200px) { 
+  h4.h-title {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1807,10 +2001,12 @@
     -webkit-text-stroke-color: rgb(29, 29, 29);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: span.arrow-link */
-@media (min-width: 1200px) { span.highlights-arrow-link { 
+@media (min-width: 1200px) { 
+  span.arrow-link {
     align-self: flex-end;
     animation-composition: replace;
     animation-delay: 0s;
@@ -1954,10 +2150,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.background-overlay */
-@media (min-width: 1200px) { div.highlights-background-overlay { 
+@media (min-width: 1200px) { 
+  div.background-overlay {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -2102,10 +2300,454 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
+
+/* Computed styles: div.highlight__card gradient2 */
+@media (min-width: 1200px) { 
+  div.highlight__card gradient2 {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: linear-gradient(359deg, rgba(57, 139, 215, 0.1) -48.53%, rgba(255, 255, 255, 0.1) 43.7%);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 376px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 376px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 342.406px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 171.203px 188px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 171.203px 188px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 342.406px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
+
+/* Computed styles: div.highlight__content */
+@media (min-width: 1200px) { 
+  div.highlight__content {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 376px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 376px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 342.406px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 171.203px 188px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 171.203px 188px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 342.406px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
+
+/* Computed styles: div.highlight__info */
+@media (min-width: 1200px) { 
+  div.highlight__info {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 376px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 376px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 342.406px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 171.203px 188px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 171.203px 188px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 342.406px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
 
 /* Computed styles: div.highlight-container */
-@media (min-width: 1200px) { div.highlights-highlight-container { 
+@media (min-width: 1200px) { 
+  div.highlight-container {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -2261,10 +2903,167 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
+
+/* Computed styles: div.highlight__top */
+@media (min-width: 1200px) { 
+  div.highlight__top {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 191px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-gap: 22px;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: flex;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: column;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 191px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 340.406px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-block-start: 64px;
+    padding-inline-end: 16px;
+    padding-inline-start: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 64px;
+    perspective-origin: 170.203px 95.5px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    row-gap: 22px;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 170.203px 95.5px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 340.406px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
 
 /* Computed styles: span.highlightIcon */
-@media (min-width: 1200px) { span.highlights-highlightIcon { 
+@media (min-width: 1200px) { 
+  span.highlightIcon {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -2413,10 +3212,170 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
+
+/* Computed styles: div.highlight__top__description */
+@media (min-width: 1200px) { 
+  div.highlight__top__description {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 57px;
+    border-block-end-color: rgb(208, 208, 208);
+    border-block-end-style: solid;
+    border-block-end-width: 1px;
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(208, 208, 208);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-basis: 0%;
+    flex-direction: row;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 14px;
+    font-stretch: 100%;
+    font-weight: 300;
+    grid-auto-flow: row;
+    height: 57px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 300.406px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 21px;
+    list-style-position: outside;
+    list-style-type: disc;
+    margin-inline-end: 4px;
+    margin-inline-start: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-block-end: 8px;
+    padding-bottom: 8px;
+    perspective-origin: 150.203px 28.5px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 150.203px 28.5px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 300.406px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
 
 /* Computed styles: a.bottom-section */
-@media (min-width: 1200px) { a.highlights-bottom-section { 
+@media (min-width: 1200px) { 
+  a.bottom-section {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -2558,10 +3517,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.bottom__content */
-@media (min-width: 1200px) { div.highlights-bottom__content { 
+@media (min-width: 1200px) { 
+  div.bottom__content {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -2715,10 +3676,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.btm-title */
-@media (min-width: 1200px) { div.highlights-btm-title { 
+@media (min-width: 1200px) { 
+  div.btm-title {
     align-items: baseline;
     animation-composition: replace;
     animation-delay: 0s;
@@ -2868,10 +3831,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: h4.h-title */
-@media (min-width: 1200px) { h4.highlights-h-title { 
+@media (min-width: 1200px) { 
+  h4.h-title {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3014,10 +3979,12 @@
     -webkit-text-stroke-color: rgb(29, 29, 29);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: span.arrow-link */
-@media (min-width: 1200px) { span.highlights-arrow-link { 
+@media (min-width: 1200px) { 
+  span.arrow-link {
     align-self: flex-end;
     animation-composition: replace;
     animation-delay: 0s;
@@ -3161,10 +4128,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.background-overlay */
-@media (min-width: 1200px) { div.highlights-background-overlay { 
+@media (min-width: 1200px) { 
+  div.background-overlay {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3309,10 +4278,454 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
+
+/* Computed styles: div.highlight__card gradient3 */
+@media (min-width: 1200px) { 
+  div.highlight__card gradient3 {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: linear-gradient(359deg, rgba(0, 188, 164, 0.1) -48.53%, rgba(255, 255, 255, 0.1) 43.7%);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 376px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 376px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 342.391px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 171.188px 188px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 171.195px 188px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 342.391px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
+
+/* Computed styles: div.highlight__content */
+@media (min-width: 1200px) { 
+  div.highlight__content {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 376px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 376px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 342.391px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 171.188px 188px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 171.195px 188px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 342.391px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
+
+/* Computed styles: div.highlight__info */
+@media (min-width: 1200px) { 
+  div.highlight__info {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 376px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 376px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 342.391px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 171.188px 188px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 171.195px 188px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 342.391px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
 
 /* Computed styles: div.highlight-container */
-@media (min-width: 1200px) { div.highlights-highlight-container { 
+@media (min-width: 1200px) { 
+  div.highlight-container {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3468,10 +4881,167 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
+
+/* Computed styles: div.highlight__top */
+@media (min-width: 1200px) { 
+  div.highlight__top {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 191px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-gap: 22px;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: flex;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: column;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 191px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 340.391px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-block-start: 64px;
+    padding-inline-end: 16px;
+    padding-inline-start: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 64px;
+    perspective-origin: 170.188px 95.5px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    row-gap: 22px;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 170.195px 95.5px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 340.391px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
 
 /* Computed styles: span.highlightIcon */
-@media (min-width: 1200px) { span.highlights-highlightIcon { 
+@media (min-width: 1200px) { 
+  span.highlightIcon {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3620,10 +5190,170 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
+
+/* Computed styles: div.highlight__top__description */
+@media (min-width: 1200px) { 
+  div.highlight__top__description {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 57px;
+    border-block-end-color: rgb(208, 208, 208);
+    border-block-end-style: solid;
+    border-block-end-width: 1px;
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(208, 208, 208);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-basis: 0%;
+    flex-direction: row;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 14px;
+    font-stretch: 100%;
+    font-weight: 300;
+    grid-auto-flow: row;
+    height: 57px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 300.391px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 21px;
+    list-style-position: outside;
+    list-style-type: disc;
+    margin-inline-end: 4px;
+    margin-inline-start: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-block-end: 8px;
+    padding-bottom: 8px;
+    perspective-origin: 150.188px 28.5px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 150.195px 28.5px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 300.391px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
 
 /* Computed styles: a.bottom-section */
-@media (min-width: 1200px) { a.highlights-bottom-section { 
+@media (min-width: 1200px) { 
+  a.bottom-section {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3765,10 +5495,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.bottom__content */
-@media (min-width: 1200px) { div.highlights-bottom__content { 
+@media (min-width: 1200px) { 
+  div.bottom__content {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -3922,10 +5654,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.btm-title */
-@media (min-width: 1200px) { div.highlights-btm-title { 
+@media (min-width: 1200px) { 
+  div.btm-title {
     align-items: baseline;
     animation-composition: replace;
     animation-delay: 0s;
@@ -4075,10 +5809,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: h4.h-title */
-@media (min-width: 1200px) { h4.highlights-h-title { 
+@media (min-width: 1200px) { 
+  h4.h-title {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -4221,10 +5957,12 @@
     -webkit-text-stroke-color: rgb(29, 29, 29);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: span.arrow-link */
-@media (min-width: 1200px) { span.highlights-arrow-link { 
+@media (min-width: 1200px) { 
+  span.arrow-link {
     align-self: flex-end;
     animation-composition: replace;
     animation-delay: 0s;
@@ -4368,10 +6106,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.background-overlay */
-@media (min-width: 1200px) { div.highlights-background-overlay { 
+@media (min-width: 1200px) { 
+  div.background-overlay {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -4516,10 +6256,454 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
+
+/* Computed styles: div.highlight__card gradient4 */
+@media (min-width: 1200px) { 
+  div.highlight__card gradient4 {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: linear-gradient(359deg, rgba(197, 99, 177, 0.1) -48.53%, rgba(255, 255, 255, 0.1) 43.7%);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 376px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 376px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 342.406px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 171.203px 188px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 171.203px 188px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 342.406px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
+
+/* Computed styles: div.highlight__content */
+@media (min-width: 1200px) { 
+  div.highlight__content {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 376px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 376px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 342.406px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 171.203px 188px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 171.203px 188px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 342.406px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
+
+/* Computed styles: div.highlight__info */
+@media (min-width: 1200px) { 
+  div.highlight__info {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 376px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 376px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 342.406px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 171.203px 188px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 171.203px 188px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 342.406px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
 
 /* Computed styles: div.highlight-container */
-@media (min-width: 1200px) { div.highlights-highlight-container { 
+@media (min-width: 1200px) { 
+  div.highlight-container {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -4675,10 +6859,167 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
+
+/* Computed styles: div.highlight__top */
+@media (min-width: 1200px) { 
+  div.highlight__top {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 191px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-gap: 22px;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: flex;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: column;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 191px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 340.406px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-block-start: 64px;
+    padding-inline-end: 16px;
+    padding-inline-start: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 64px;
+    perspective-origin: 170.203px 95.5px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    row-gap: 22px;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 170.203px 95.5px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 340.406px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
 
 /* Computed styles: span.highlightIcon */
-@media (min-width: 1200px) { span.highlights-highlightIcon { 
+@media (min-width: 1200px) { 
+  span.highlightIcon {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -4827,10 +7168,170 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
+
+/* Computed styles: div.highlight__top__description */
+@media (min-width: 1200px) { 
+  div.highlight__top__description {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 57px;
+    border-block-end-color: rgb(208, 208, 208);
+    border-block-end-style: solid;
+    border-block-end-width: 1px;
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(208, 208, 208);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-basis: 0%;
+    flex-direction: row;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 14px;
+    font-stretch: 100%;
+    font-weight: 300;
+    grid-auto-flow: row;
+    height: 57px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 300.406px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 21px;
+    list-style-position: outside;
+    list-style-type: disc;
+    margin-inline-end: 4px;
+    margin-inline-start: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-block-end: 8px;
+    padding-bottom: 8px;
+    perspective-origin: 150.203px 28.5px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 150.203px 28.5px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 300.406px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
 
 /* Computed styles: a.bottom-section */
-@media (min-width: 1200px) { a.highlights-bottom-section { 
+@media (min-width: 1200px) { 
+  a.bottom-section {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -4972,10 +7473,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.bottom__content */
-@media (min-width: 1200px) { div.highlights-bottom__content { 
+@media (min-width: 1200px) { 
+  div.bottom__content {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -5129,10 +7632,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.btm-title */
-@media (min-width: 1200px) { div.highlights-btm-title { 
+@media (min-width: 1200px) { 
+  div.btm-title {
     align-items: baseline;
     animation-composition: replace;
     animation-delay: 0s;
@@ -5282,10 +7787,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: h4.h-title */
-@media (min-width: 1200px) { h4.highlights-h-title { 
+@media (min-width: 1200px) { 
+  h4.h-title {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -5428,10 +7935,12 @@
     -webkit-text-stroke-color: rgb(29, 29, 29);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: span.arrow-link */
-@media (min-width: 1200px) { span.highlights-arrow-link { 
+@media (min-width: 1200px) { 
+  span.arrow-link {
     align-self: flex-end;
     animation-composition: replace;
     animation-delay: 0s;
@@ -5575,10 +8084,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.background-overlay */
-@media (min-width: 1200px) { div.highlights-background-overlay { 
+@media (min-width: 1200px) { 
+  div.background-overlay {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -5723,10 +8234,454 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
+
+/* Computed styles: div.highlight__card gradient5 */
+@media (min-width: 1200px) { 
+  div.highlight__card gradient5 {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: linear-gradient(359deg, rgba(252, 190, 98, 0.1) -48.53%, rgba(255, 255, 255, 0.1) 43.7%);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 376px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 376px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 342.391px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 171.188px 188px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 171.195px 188px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 342.391px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
+
+/* Computed styles: div.highlight__content */
+@media (min-width: 1200px) { 
+  div.highlight__content {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 376px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 376px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 342.391px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 171.188px 188px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 171.195px 188px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 342.391px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
+
+/* Computed styles: div.highlight__info */
+@media (min-width: 1200px) { 
+  div.highlight__info {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 376px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 376px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 342.391px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 171.188px 188px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 171.195px 188px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 342.391px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
 
 /* Computed styles: div.highlight-container */
-@media (min-width: 1200px) { div.highlights-highlight-container { 
+@media (min-width: 1200px) { 
+  div.highlight-container {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -5882,10 +8837,167 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
+
+/* Computed styles: div.highlight__top */
+@media (min-width: 1200px) { 
+  div.highlight__top {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 191px;
+    border-block-end-color: rgb(33, 37, 41);
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(33, 37, 41);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-gap: 22px;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: flex;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: column;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 191px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 340.391px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-block-start: 64px;
+    padding-inline-end: 16px;
+    padding-inline-start: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 64px;
+    perspective-origin: 170.188px 95.5px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    row-gap: 22px;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 170.195px 95.5px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 340.391px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
 
 /* Computed styles: span.highlightIcon */
-@media (min-width: 1200px) { span.highlights-highlightIcon { 
+@media (min-width: 1200px) { 
+  span.highlightIcon {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -6034,10 +9146,170 @@
     -webkit-text-stroke-color: rgb(33, 37, 41);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
+
+/* Computed styles: div.highlight__top__description */
+@media (min-width: 1200px) { 
+  div.highlight__top__description {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 57px;
+    border-block-end-color: rgb(208, 208, 208);
+    border-block-end-style: solid;
+    border-block-end-width: 1px;
+    border-block-start-color: rgb(33, 37, 41);
+    border-bottom-color: rgb(208, 208, 208);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(33, 37, 41);
+    border-inline-start-color: rgb(33, 37, 41);
+    border-left-color: rgb(33, 37, 41);
+    border-right-color: rgb(33, 37, 41);
+    border-top-color: rgb(33, 37, 41);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(33, 37, 41);
+    clip-rule: nonzero;
+    color: rgb(33, 37, 41);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(33, 37, 41);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-basis: 0%;
+    flex-direction: row;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 14px;
+    font-stretch: 100%;
+    font-weight: 300;
+    grid-auto-flow: row;
+    height: 57px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 300.391px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 21px;
+    list-style-position: outside;
+    list-style-type: disc;
+    margin-inline-end: 4px;
+    margin-inline-start: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(33, 37, 41);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-block-end: 8px;
+    padding-bottom: 8px;
+    perspective-origin: 150.188px 28.5px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(33, 37, 41);
+    text-decoration-color: rgb(33, 37, 41);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(33, 37, 41);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 150.195px 28.5px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 300.391px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(33, 37, 41);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(33, 37, 41);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+ }
 
 /* Computed styles: a.bottom-section */
-@media (min-width: 1200px) { a.highlights-bottom-section { 
+@media (min-width: 1200px) { 
+  a.bottom-section {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -6179,10 +9451,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.bottom__content */
-@media (min-width: 1200px) { div.highlights-bottom__content { 
+@media (min-width: 1200px) { 
+  div.bottom__content {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -6336,10 +9610,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.btm-title */
-@media (min-width: 1200px) { div.highlights-btm-title { 
+@media (min-width: 1200px) { 
+  div.btm-title {
     align-items: baseline;
     animation-composition: replace;
     animation-delay: 0s;
@@ -6489,10 +9765,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: h4.h-title */
-@media (min-width: 1200px) { h4.highlights-h-title { 
+@media (min-width: 1200px) { 
+  h4.h-title {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -6635,10 +9913,12 @@
     -webkit-text-stroke-color: rgb(29, 29, 29);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: span.arrow-link */
-@media (min-width: 1200px) { span.highlights-arrow-link { 
+@media (min-width: 1200px) { 
+  span.arrow-link {
     align-self: flex-end;
     animation-composition: replace;
     animation-delay: 0s;
@@ -6782,10 +10062,12 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.background-overlay */
-@media (min-width: 1200px) { div.highlights-background-overlay { 
+@media (min-width: 1200px) { 
+  div.background-overlay {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -6930,4 +10212,5 @@
     -webkit-text-stroke-color: rgb(0, 123, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }

@@ -1,16 +1,16 @@
 {
   "definitions": [
     {
-      "title": "corp-footer",
-      "id": "corp-footer",
+      "title": "Corp Footer",
+      "id": "corpFooter",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "corp-footer",
-              "model": "corp-footer",
-              "name": "corp-footer"
+              "filter": "corpFooter",
+              "model": "corpFooter",
+              "name": "Corp Footer"
             }
           }
         }
@@ -18,13 +18,13 @@
     },
     {
       "title": "Footer Link Column",
-      "id": "footer-link-column",
+      "id": "footerLinkColumn",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-link-column",
+              "model": "footerLinkColumn",
               "name": "Footer Link Column"
             }
           }
@@ -32,75 +32,45 @@
       }
     },
     {
-      "title": "Footer Link",
-      "id": "footer-link",
+      "title": "Footer Contact",
+      "id": "footerContact",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-link",
-              "name": "Footer Link"
+              "model": "footerContact",
+              "name": "Footer Contact"
             }
           }
         }
       }
     },
     {
-      "title": "Footer Contact Icon",
-      "id": "footer-contact-icon",
+      "title": "Footer Disclaimer",
+      "id": "footerDisclaimer",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-contact-icon",
-              "name": "Footer Contact Icon"
+              "model": "footerDisclaimer",
+              "name": "Footer Disclaimer"
             }
           }
         }
       }
     },
     {
-      "title": "Footer App Icon",
-      "id": "footer-app-icon",
+      "title": "Footer Note",
+      "id": "footerNote",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-app-icon",
-              "name": "Footer App Icon"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Footer QR Icon",
-      "id": "footer-qr-icon",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footer-qr-icon",
-              "name": "Footer QR Icon"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Footer Bottom Column",
-      "id": "footer-bottom-column",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footer-bottom-column",
-              "name": "Footer Bottom Column"
+              "model": "footerNote",
+              "name": "Footer Note"
             }
           }
         }
@@ -109,71 +79,53 @@
   ],
   "models": [
     {
-      "id": "corp-footer",
+      "id": "corpFooter",
       "fields": [
         {
           "component": "container",
-          "items": {
-            "type": "footer-link-column"
-          },
+          "itemType": "footerLinkColumn",
           "label": "Footer Link Columns",
           "name": "footerLinkColumns"
         },
         {
           "component": "container",
-          "items": {
-            "type": "footer-contact-icon"
-          },
-          "label": "Footer Contact Icons",
-          "name": "footerContactIcons"
+          "itemType": "footerContact",
+          "label": "Footer Contacts",
+          "name": "footerContacts"
         },
         {
           "component": "container",
-          "items": {
-            "type": "footer-app-icon"
-          },
-          "label": "Footer App Icons",
-          "name": "footerAppIcons"
+          "itemType": "footerDisclaimer",
+          "label": "Footer Disclaimers",
+          "name": "footerDisclaimers"
         },
         {
           "component": "container",
-          "items": {
-            "type": "footer-qr-icon"
-          },
-          "label": "Footer QR Icons",
-          "name": "footerQrIcons"
-        },
-        {
-          "component": "container",
-          "items": {
-            "type": "footer-bottom-column"
-          },
-          "label": "Footer Bottom Columns",
-          "name": "footerBottomColumns"
+          "itemType": "footerNote",
+          "label": "Footer Notes",
+          "name": "footerNotes"
         }
       ]
     },
     {
-      "id": "footer-link-column",
+      "id": "footerLinkColumn",
       "fields": [
         {
           "component": "text",
-          "label": "Column Title",
-          "name": "title",
+          "label": "Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
           "component": "container",
-          "items": {
-            "type": "footer-link"
-          },
+          "itemType": "footerLink",
           "label": "Links",
           "name": "links"
         }
       ]
     },
     {
-      "id": "footer-link",
+      "id": "footerLink",
       "fields": [
         {
           "component": "aem-content",
@@ -183,24 +135,47 @@
         },
         {
           "component": "text",
-          "label": "Link Text",
-          "name": "text",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "footer-contact-icon",
+      "id": "footerContact",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "itemType": "footerLink",
+          "label": "Contact Links",
+          "name": "contactLinks"
+        },
+        {
+          "component": "container",
+          "itemType": "footerContactIcon",
+          "label": "Icons",
+          "name": "icons"
+        }
+      ]
+    },
+    {
+      "id": "footerContactIcon",
       "fields": [
         {
           "component": "aem-content",
-          "label": "Icon Link",
-          "name": "link",
+          "label": "URL",
+          "name": "url",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Icon Image",
+          "label": "Icon",
           "name": "icon",
           "valueType": "string"
         },
@@ -213,58 +188,23 @@
       ]
     },
     {
-      "id": "footer-app-icon",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "App Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "App Icon",
-          "name": "icon",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Alt Text",
-          "name": "alt",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "footer-qr-icon",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "QR Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "QR Image",
-          "name": "icon",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Alt Text",
-          "name": "alt",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "footer-bottom-column",
+      "id": "footerDisclaimer",
       "fields": [
         {
           "component": "richtext",
-          "label": "Footer Bottom Content",
-          "name": "content",
+          "label": "Disclaimer",
+          "name": "disclaimer",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerNote",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Note",
+          "name": "note",
           "valueType": "string"
         }
       ]
@@ -272,13 +212,25 @@
   ],
   "filters": [
     {
-      "id": "corp-footer",
+      "id": "corpFooter",
       "components": [
-        "footer-link-column",
-        "footer-contact-icon",
-        "footer-app-icon",
-        "footer-qr-icon",
-        "footer-bottom-column"
+        "footerLinkColumn",
+        "footerContact",
+        "footerDisclaimer",
+        "footerNote"
+      ]
+    },
+    {
+      "id": "footerLinkColumn",
+      "components": [
+        "footerLink"
+      ]
+    },
+    {
+      "id": "footerContact",
+      "components": [
+        "footerLink",
+        "footerContactIcon"
       ]
     }
   ]

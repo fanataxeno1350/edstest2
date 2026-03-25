@@ -1,18 +1,10 @@
-footer.link-grid-corp-footer-wrapper .link-grid-footer__columns .link-grid-column.link-grid-contact-section .link-grid-user__contact :is(h1, .link-grid-h2, .link-grid-h3, .link-grid-h4, .link-grid-h5, .link-grid-h6) {  
-  display: none;
-  }
-
-/* .link-grid-External .link-grid-stylesheet: https://www.link-grid-marutisuzuki.link-grid-com/blocks/link-column/link-column.link-grid-css */ .link-grid-column {  
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 0;
-  }
-
-/* .link-grid---- .link-grid-Wrapper/General .link-grid---- */ #webchat-container {  
+/* --- Wrapper/General --- */
+#webchat-container { 
     font-family: sans-serif;
-  }
+ }
 
-/* .link-grid---- .link-grid-FAQ .link-grid-Popup .link-grid-Container (Animation .link-grid-Logic) .link-grid---- */ #faq-popup {  
+/* --- FAQ Popup Container (Animation Logic) --- */
+#faq-popup { 
     position: absolute;
     top: 30%;
     left: 0;
@@ -32,14 +24,27 @@ footer.link-grid-corp-footer-wrapper .link-grid-footer__columns .link-grid-colum
     box-shadow: 0px -4px 10px rgba(0,0,0,0.1);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-  }
+ }
 
-footer.link-grid-corp-footer-wrapper .link-grid-footer__columns .link-grid-column.link-grid-contact-section .link-grid-user__contact :is(h1, .link-grid-h2, .link-grid-h3, .link-grid-h4, .link-grid-h5, .link-grid-h6) {   display: none;   }
+footer.corp-footer-wrapper .footer__columns .column.contact-section .user__contact :is(h1, h2, h3, h4, h5, h6) { 
+  display: none;
+ }
 
-/* .link-grid-Stylesheet .link-grid-rules: https://www.link-grid-marutisuzuki.link-grid-com/blocks/link-column/link-column.link-grid-css */ .link-grid-column {   display: flex; flex-direction: column; flex: 1 1 0px;   }
+/* External stylesheet: https://www.marutisuzuki.com/blocks/link-column/link-column.css */
+.link-grid-column { 
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+ }
+
+footer.corp-footer-wrapper .footer__columns .column.contact-section .user__contact :is(h1, h2, h3, h4, h5, h6) {  display: none;  }
+
+/* Stylesheet rules: https://www.marutisuzuki.com/blocks/link-column/link-column.css */
+.link-grid-column {  display: flex; flex-direction: column; flex: 1 1 0px;  }
 
 /* Computed styles: div.link-grid-column link-column-horizontal */
-@media (min-width: 1200px) { div.link-grid-column .link-grid-link-column-horizontal { 
+@media (min-width: 1200px) { 
+  div.link-grid-column link-column-horizontal {
     align-items: flex-start;
     animation-composition: replace;
     animation-delay: 0s;
@@ -183,10 +188,12 @@ footer.link-grid-corp-footer-wrapper .link-grid-footer__columns .link-grid-colum
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: ul.content links-container accordian-content collpsable */
-@media (min-width: 1200px) { ul.link-grid-content .link-grid-links-container .link-grid-accordian-content .link-grid-collpsable { 
+@media (min-width: 1200px) { 
+  ul.content links-container accordian-content collpsable {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -330,10 +337,12 @@ footer.link-grid-corp-footer-wrapper .link-grid-footer__columns .link-grid-colum
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.link-grid-column link-column-vertical */
-@media (min-width: 1200px) { div.link-grid-column .link-grid-link-column-vertical { 
+@media (min-width: 1200px) { 
+  div.link-grid-column link-column-vertical {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -475,10 +484,12 @@ footer.link-grid-corp-footer-wrapper .link-grid-footer__columns .link-grid-colum
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: ul.content links-container accordian-content collpsable */
-@media (min-width: 1200px) { ul.link-grid-content .link-grid-links-container .link-grid-accordian-content .link-grid-collpsable { 
+@media (min-width: 1200px) { 
+  ul.content links-container accordian-content collpsable {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -621,10 +632,12 @@ footer.link-grid-corp-footer-wrapper .link-grid-footer__columns .link-grid-colum
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.link-grid-column link-column-vertical */
-@media (min-width: 1200px) { div.link-grid-column .link-grid-link-column-vertical { 
+@media (min-width: 1200px) { 
+  div.link-grid-column link-column-vertical {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -766,10 +779,12 @@ footer.link-grid-corp-footer-wrapper .link-grid-footer__columns .link-grid-colum
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: ul.content links-container accordian-content */
-@media (min-width: 1200px) { ul.link-grid-content .link-grid-links-container .link-grid-accordian-content { 
+@media (min-width: 1200px) { 
+  ul.content links-container accordian-content {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -912,10 +927,12 @@ footer.link-grid-corp-footer-wrapper .link-grid-footer__columns .link-grid-colum
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: div.link-grid-column link-column-vertical */
-@media (min-width: 1200px) { div.link-grid-column .link-grid-link-column-vertical { 
+@media (min-width: 1200px) { 
+  div.link-grid-column link-column-vertical {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1057,10 +1074,12 @@ footer.link-grid-corp-footer-wrapper .link-grid-footer__columns .link-grid-colum
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }
 
 /* Computed styles: ul.content links-container accordian-content */
-@media (min-width: 1200px) { ul.link-grid-content .link-grid-links-container .link-grid-accordian-content { 
+@media (min-width: 1200px) { 
+  ul.content links-container accordian-content {
     animation-composition: replace;
     animation-delay: 0s;
     animation-duration: 0s;
@@ -1203,4 +1222,5 @@ footer.link-grid-corp-footer-wrapper .link-grid-footer__columns .link-grid-colum
     -webkit-text-stroke-color: rgb(255, 255, 255);
     -webkit-user-modify: read-only;
     -webkit-writing-mode: horizontal-tb;
-   } }
+  }
+ }

@@ -2,234 +2,209 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const mainDiv = document.createElement('div');
-  mainDiv.classList.add('corp-slider-range-component');
+  const rangeComponent = document.createElement('div');
+  rangeComponent.classList.add('range-component');
 
-  // Header
-  const headerWrapper = document.createElement('div');
-  headerWrapper.classList.add('corp-slider-row');
-  const headerCol = document.createElement('div');
-  headerCol.classList.add('corp-slider-col-md12', 'corp-slider-col-sm-12', 'corp-slider-col-md-12', 'corp-slider-gallery-header');
-  const headerContent = block.querySelector('[data-aue-prop="header"]');
-  if (headerContent) {
-    headerCol.append(headerContent);
-    moveInstrumentation(headerContent, headerCol);
+  // Slider Header
+  const sliderHeaderWrapper = document.createElement('div');
+  sliderHeaderWrapper.classList.add('row');
+  const sliderHeaderCol = document.createElement('div');
+  sliderHeaderCol.classList.add('col-md12', 'col-sm-12', 'col-md-12', 'gallery-header');
+  const sliderHeaderContent = block.querySelector('[data-aue-prop="sliderHeader"]');
+  if (sliderHeaderContent) {
+    sliderHeaderCol.append(sliderHeaderContent);
+    moveInstrumentation(sliderHeaderContent, sliderHeaderCol);
+  } else {
+    const defaultHeader = block.querySelector('.gallery-header p');
+    if (defaultHeader) {
+      sliderHeaderCol.append(defaultHeader);
+      moveInstrumentation(defaultHeader, sliderHeaderCol);
+    }
   }
-  headerWrapper.append(headerCol);
-  mainDiv.append(headerWrapper);
-  moveInstrumentation(headerContent?.parentElement, headerWrapper);
+  sliderHeaderWrapper.append(sliderHeaderCol);
+  rangeComponent.append(sliderHeaderWrapper);
 
   // Slider Title
   const sliderTitleWrapper = document.createElement('div');
-  sliderTitleWrapper.classList.add('corp-slider-slider-title');
+  sliderTitleWrapper.classList.add('slider-title');
   const sliderTitleContent = block.querySelector('[data-aue-prop="sliderTitle"]');
   if (sliderTitleContent) {
-    const h4 = document.createElement('h4');
-    h4.id = sliderTitleContent.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    h4.append(sliderTitleContent);
-    sliderTitleWrapper.append(h4);
-    moveInstrumentation(sliderTitleContent, h4);
+    sliderTitleWrapper.append(sliderTitleContent);
+    moveInstrumentation(sliderTitleContent, sliderTitleWrapper);
+  } else {
+    const defaultTitle = block.querySelector('.slider-title h4');
+    if (defaultTitle) {
+      sliderTitleWrapper.append(defaultTitle);
+      moveInstrumentation(defaultTitle, sliderTitleWrapper);
+    }
   }
-  mainDiv.append(sliderTitleWrapper);
-  moveInstrumentation(sliderTitleContent?.parentElement, sliderTitleWrapper);
+  rangeComponent.append(sliderTitleWrapper);
 
-  // Desktop Carousel
-  const desktopCarousel = document.createElement('div');
-  desktopCarousel.id = 'range-slider-arena-desktop';
-  desktopCarousel.classList.add('corp-slider-carousel', 'corp-slider-slide', 'corp-slider-d-none', 'corp-slider-d-sm-block');
-  desktopCarousel.setAttribute('data-ride', 'carousel');
+  // Desktop Slider
+  const desktopSlider = document.createElement('div');
+  desktopSlider.id = 'range-slider-arena-desktop';
+  desktopSlider.classList.add('carousel', 'slide', 'd-none', 'd-sm-block');
+  desktopSlider.setAttribute('data-ride', 'carousel');
 
   const desktopCarouselInner = document.createElement('div');
-  desktopCarouselInner.classList.add('corp-slider-carousel-inner');
+  desktopCarouselInner.classList.add('carousel-inner');
+  desktopSlider.append(desktopCarouselInner);
 
-  // Mobile Carousel
-  const mobileCarousel = document.createElement('div');
-  mobileCarousel.id = 'range-slider-arena-mobile';
-  mobileCarousel.classList.add('corp-slider-carousel', 'corp-slider-slide', 'corp-slider-d-sm-none');
-  mobileCarousel.setAttribute('data-ride', 'carousel');
+  // Mobile Slider
+  const mobileSlider = document.createElement('div');
+  mobileSlider.id = 'range-slider-arena-mobile';
+  mobileSlider.classList.add('carousel', 'slide', 'd-sm-none');
+  mobileSlider.setAttribute('data-ride', 'carousel');
 
   const mobileCarouselInner = document.createElement('div');
-  mobileCarouselInner.classList.add('corp-slider-carousel-inner');
+  mobileCarouselInner.classList.add('carousel-inner');
+  mobileSlider.append(mobileCarouselInner);
 
   const items = block.querySelectorAll('[data-aue-model="sliderItem"]');
+  const itemsPerDesktopSlide = 4;
+  const itemsPerMobileSlide = 2;
 
-  const desktopItemsPerSlide = 4;
-  const mobileItemsPerSlide = 2;
+  let desktopItemIndex = 0;
+  let mobileItemIndex = 0;
 
-  let desktopSlideIndex = 0;
-  let mobileSlideIndex = 0;
+  let desktopCarouselItem;
+  let desktopRow;
+  let mobileCarouselItem;
+  let mobileRow;
 
-  while (desktopSlideIndex * desktopItemsPerSlide < items.length) {
-    const desktopCarouselItem = document.createElement('div');
-    desktopCarouselItem.classList.add('corp-slider-carousel-item');
-    if (desktopSlideIndex === 0) {
-      desktopCarouselItem.classList.add('corp-slider-active');
-    }
-    const desktopRow = document.createElement('div');
-    desktopRow.classList.add('corp-slider-row');
-
-    for (let i = 0; i < desktopItemsPerSlide; i += 1) {
-      const itemIndex = (desktopSlideIndex * desktopItemsPerSlide) + i;
-      if (itemIndex < items.length) {
-        const itemNode = items[itemIndex];
-        const col = document.createElement('div');
-        col.classList.add('corp-slider-col-6', 'corp-slider-col-sm-6', 'corp-slider-col-lg-3');
-
-        const linkElement = itemNode.querySelector('[data-aue-prop="link"]');
-        const linkHref = linkElement ? linkElement.textContent.trim() : '#';
-
-        const imageArea = document.createElement('a');
-        imageArea.classList.add('corp-slider-image-area');
-        imageArea.href = linkHref;
-
-        const imageContainer = document.createElement('div');
-        imageContainer.classList.add('corp-slider-image-container');
-        imageContainer.setAttribute('target', '_self');
-
-        const img = itemNode.querySelector('[data-aue-prop="image"]');
-        if (img) {
-          const picture = createOptimizedPicture(img.src, img.alt);
-          imageContainer.append(picture);
-          moveInstrumentation(img, picture);
+  items.forEach((itemNode, index) => {
+    // Desktop slide logic
+    if (index % itemsPerDesktopSlide === 0) {
+      desktopCarouselItem = document.createElement('div');
+      desktopCarouselItem.classList.add('carousel-item');
+      if (index === 0) {
+        // The authored HTML has the 'active' class on the *third* item for desktop.
+        // We'll mimic this behavior for the first item in the authored list.
+        // However, for programmatic generation, it's more common to have the first item active.
+        // For now, we'll keep the first generated item active.
+        // If the requirement is to strictly match the authored 'active' class position,
+        // additional logic would be needed to find the original active item.
+        // For this exercise, we'll make the first *generated* item active for simplicity.
+        // To match the authored HTML's active item, we'd need to find the original authored
+        // carousel-item that had 'active' and apply it to the corresponding generated one.
+        // Given the prompt's focus on content extraction and structure, we'll assume
+        // the first item should be active unless explicitly told otherwise for the generated output.
+        // Looking at the provided HTML, the *third* carousel-item has 'active'.
+        // Let's replicate that by setting the active class on the item that corresponds to the 3rd authored group.
+        if (Math.floor(index / itemsPerDesktopSlide) === 2) { // Assuming 0-indexed, 2 is the third group
+          desktopCarouselItem.classList.add('active');
         }
-
-        const titleElement = itemNode.querySelector('[data-aue-prop="title"]');
-        const h6 = document.createElement('h6');
-        h6.classList.add('corp-slider-img-title');
-        if (titleElement) {
-          h6.append(titleElement);
-          moveInstrumentation(titleElement, h6);
-        }
-
-        imageArea.append(imageContainer, h6);
-        col.append(imageArea);
-        desktopRow.append(col);
-        moveInstrumentation(itemNode, col);
       }
+      desktopRow = document.createElement('div');
+      desktopRow.classList.add('row');
+      desktopCarouselItem.append(desktopRow);
+      desktopCarouselInner.append(desktopCarouselItem);
+      desktopItemIndex = 0;
     }
-    desktopCarouselItem.append(desktopRow);
-    desktopCarouselInner.append(desktopCarouselItem);
-    desktopSlideIndex += 1;
-  }
 
-  while (mobileSlideIndex * mobileItemsPerSlide < items.length) {
-    const mobileCarouselItem = document.createElement('div');
-    mobileCarouselItem.classList.add('corp-slider-carousel-item');
-    if (mobileSlideIndex === 0) {
-      mobileCarouselItem.classList.add('corp-slider-active');
-    }
-    const mobileRow = document.createElement('div');
-    mobileRow.classList.add('corp-slider-row');
-
-    for (let i = 0; i < mobileItemsPerSlide; i += 1) {
-      const itemIndex = (mobileSlideIndex * mobileItemsPerSlide) + i;
-      if (itemIndex < items.length) {
-        const itemNode = items[itemIndex];
-        const col = document.createElement('div');
-        col.classList.add('corp-slider-col-6', 'corp-slider-col-sm-6', 'corp-slider-col-lg-3');
-
-        const linkElement = itemNode.querySelector('[data-aue-prop="link"]');
-        const linkHref = linkElement ? linkElement.textContent.trim() : '#';
-
-        const imageArea = document.createElement('a');
-        imageArea.classList.add('corp-slider-image-area');
-        imageArea.href = linkHref;
-
-        const imageContainer = document.createElement('div');
-        imageContainer.classList.add('corp-slider-image-container');
-        imageContainer.setAttribute('target', '_self');
-
-        const img = itemNode.querySelector('[data-aue-prop="image"]');
-        if (img) {
-          const picture = createOptimizedPicture(img.src, img.alt);
-          imageContainer.append(picture);
-          moveInstrumentation(img, picture);
-        }
-
-        const titleElement = itemNode.querySelector('[data-aue-prop="title"]');
-        const h6 = document.createElement('h6');
-        h6.classList.add('corp-slider-img-title');
-        if (titleElement) {
-          h6.append(titleElement);
-          moveInstrumentation(titleElement, h6);
-        }
-
-        imageArea.append(imageContainer, h6);
-        col.append(imageArea);
-        mobileRow.append(col);
-        moveInstrumentation(itemNode, col);
+    // Mobile slide logic
+    if (index % itemsPerMobileSlide === 0) {
+      mobileCarouselItem = document.createElement('div');
+      mobileCarouselItem.classList.add('carousel-item');
+      if (index === 0) {
+        mobileCarouselItem.classList.add('active');
       }
+      mobileRow = document.createElement('div');
+      mobileRow.classList.add('row');
+      mobileCarouselItem.append(mobileRow);
+      mobileCarouselInner.append(mobileCarouselItem);
+      mobileItemIndex = 0;
     }
-    mobileCarouselItem.append(mobileRow);
-    mobileCarouselInner.append(mobileCarouselItem);
-    mobileSlideIndex += 1;
-  }
 
-  desktopCarousel.append(desktopCarouselInner);
-  mobileCarousel.append(mobileCarouselInner);
+    const linkElement = itemNode.querySelector('[data-aue-prop="link"]') || itemNode.querySelector('.image-area');
+    const imageElement = itemNode.querySelector('[data-aue-prop="image"]') || itemNode.querySelector('.image-container img');
+    const titleElement = itemNode.querySelector('[data-aue-prop="title"]') || itemNode.querySelector('.img-title');
 
-  // Carousel Controls (Desktop)
+    const createCard = (colClass) => {
+      const colDiv = document.createElement('div');
+      colDiv.classList.add(colClass);
+
+      const cardLink = document.createElement('a');
+      cardLink.classList.add('image-area');
+      if (linkElement) {
+        cardLink.href = linkElement.href || '#';
+        moveInstrumentation(linkElement, cardLink);
+      }
+
+      const imageContainer = document.createElement('div');
+      imageContainer.classList.add('image-container');
+      imageContainer.setAttribute('target', '_self');
+
+      if (imageElement) {
+        const picture = createOptimizedPicture(imageElement.src, imageElement.alt, false, [{ width: '750' }]);
+        imageContainer.append(picture);
+        moveInstrumentation(imageElement, picture);
+      }
+
+      const titleH6 = document.createElement('h6');
+      titleH6.classList.add('img-title');
+      if (titleElement) {
+        titleH6.append(titleElement.textContent);
+        moveInstrumentation(titleElement, titleH6);
+      }
+
+      cardLink.append(imageContainer, titleH6);
+      colDiv.append(cardLink);
+      moveInstrumentation(itemNode, colDiv);
+      return colDiv;
+    };
+
+    // Append to desktop slider
+    if (desktopRow) {
+      desktopRow.append(createCard('col-6', 'col-sm-6', 'col-lg-3'));
+      desktopItemIndex++;
+    }
+
+    // Append to mobile slider
+    if (mobileRow) {
+      mobileRow.append(createCard('col-6', 'col-sm-6', 'col-lg-3'));
+      mobileItemIndex++;
+    }
+  });
+
+  // Add controls for desktop slider
   const desktopPrevControl = document.createElement('a');
-  desktopPrevControl.classList.add('corp-slider-carousel-control-prev');
+  desktopPrevControl.classList.add('carousel-control-prev');
   desktopPrevControl.href = '#range-slider-arena-desktop';
   desktopPrevControl.setAttribute('role', 'button');
   desktopPrevControl.setAttribute('data-slide', 'prev');
-  const desktopPrevIcon = document.createElement('span');
-  desktopPrevIcon.classList.add('corp-slider-carousel-control-prev-icon');
-  desktopPrevIcon.setAttribute('aria-hidden', 'true');
-  const desktopPrevSrOnly = document.createElement('span');
-  desktopPrevSrOnly.classList.add('corp-slider-sr-only');
-  desktopPrevSrOnly.textContent = 'previous';
-  desktopPrevControl.append(desktopPrevIcon, desktopPrevSrOnly);
-  desktopCarousel.append(desktopPrevControl);
+  desktopPrevControl.innerHTML = '<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">previous</span>';
+  desktopSlider.append(desktopPrevControl);
 
   const desktopNextControl = document.createElement('a');
-  desktopNextControl.classList.add('corp-slider-carousel-control-next');
+  desktopNextControl.classList.add('carousel-control-next');
   desktopNextControl.href = '#range-slider-arena-desktop';
   desktopNextControl.setAttribute('role', 'button');
   desktopNextControl.setAttribute('data-slide', 'next');
-  const desktopNextIcon = document.createElement('span');
-  desktopNextIcon.classList.add('corp-slider-carousel-control-next-icon');
-  desktopNextIcon.setAttribute('aria-hidden', 'true');
-  const desktopNextSrOnly = document.createElement('span');
-  desktopNextSrOnly.classList.add('corp-slider-sr-only');
-  desktopNextSrOnly.textContent = 'next';
-  desktopNextControl.append(desktopNextIcon, desktopNextSrOnly);
-  desktopCarousel.append(desktopNextControl);
+  desktopNextControl.innerHTML = '<span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">next</span>';
+  desktopSlider.append(desktopNextControl);
 
-  // Carousel Controls (Mobile)
+  // Add controls for mobile slider
   const mobilePrevControl = document.createElement('a');
-  mobilePrevControl.classList.add('corp-slider-carousel-control-prev');
+  mobilePrevControl.classList.add('carousel-control-prev');
   mobilePrevControl.href = '#range-slider-arena-mobile';
   mobilePrevControl.setAttribute('role', 'button');
   mobilePrevControl.setAttribute('data-slide', 'prev');
-  const mobilePrevIcon = document.createElement('span');
-  mobilePrevIcon.classList.add('corp-slider-carousel-control-prev-icon');
-  mobilePrevIcon.setAttribute('aria-hidden', 'true');
-  const mobilePrevSrOnly = document.createElement('span');
-  mobilePrevSrOnly.classList.add('corp-slider-sr-only');
-  mobilePrevSrOnly.textContent = 'previous';
-  mobilePrevControl.append(mobilePrevIcon, mobilePrevSrOnly);
-  mobileCarousel.append(mobilePrevControl);
+  mobilePrevControl.innerHTML = '<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">previous</span>';
+  mobileSlider.append(mobilePrevControl);
 
   const mobileNextControl = document.createElement('a');
-  mobileNextControl.classList.add('corp-slider-carousel-control-next');
+  mobileNextControl.classList.add('carousel-control-next');
   mobileNextControl.href = '#range-slider-arena-mobile';
   mobileNextControl.setAttribute('role', 'button');
   mobileNextControl.setAttribute('data-slide', 'next');
-  const mobileNextIcon = document.createElement('span');
-  mobileNextIcon.classList.add('corp-slider-carousel-control-next-icon');
-  mobileNextIcon.setAttribute('aria-hidden', 'true');
-  const mobileNextSrOnly = document.createElement('span');
-  mobileNextSrOnly.classList.add('corp-slider-sr-only');
-  mobileNextSrOnly.textContent = 'next';
-  mobileNextControl.append(mobileNextIcon, mobileNextSrOnly);
-  mobileCarousel.append(mobileNextControl);
+  mobileNextControl.innerHTML = '<span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">next</span>';
+  mobileSlider.append(mobileNextControl);
 
-  mainDiv.append(desktopCarousel, mobileCarousel);
+  rangeComponent.append(desktopSlider, mobileSlider);
 
   block.textContent = '';
-  block.append(mainDiv);
-  block.className = `${block.dataset.blockName} block`;
+  block.append(rangeComponent);
+  block.className = 'corp-slider block';
   block.dataset.blockStatus = 'loaded';
 }

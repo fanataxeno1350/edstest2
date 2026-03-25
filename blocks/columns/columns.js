@@ -4,42 +4,28 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const cols = [...block.children];
   block.innerHTML = '';
-  const numCols = cols.length;
 
-  const columnsWrapper = document.createElement('div');
-  columnsWrapper.classList.add('columns-wrapper');
-  columnsWrapper.classList.add(`columns-${numCols}-cols`);
+  const columnsContainer = document.createElement('div');
+  columnsContainer.classList.add('columns-container');
 
-  cols.forEach((col) => {
-    const columnDiv = document.createElement('div');
-    columnDiv.classList.add('column');
+  cols.forEach((col, index) => {
+    const columnWrapper = document.createElement('div');
+    columnWrapper.classList.add('column');
+    columnWrapper.dataset.aueModel = 'column';
 
-    // Extract content from the authored column div
-    const content = col.querySelector('[data-aue-prop="content"]') || col.querySelector('p');
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add('column-content');
+    contentDiv.dataset.aueProp = 'text';
 
-    if (content) {
-      // Move all children of the authored column into the new columnDiv
-      while (col.firstChild) {
-        const child = col.firstChild;
-        columnDiv.append(child);
-        moveInstrumentation(child, columnDiv);
-      }
-    } else {
-      // If no specific content prop, move all children directly
-      while (col.firstChild) {
-        const child = col.firstChild;
-        columnDiv.append(child);
-        moveInstrumentation(child, columnDiv);
-      }
+    // Move all children of the original column into the new contentDiv
+    while (col.firstChild) {
+      contentDiv.append(col.firstChild);
     }
 
-    moveInstrumentation(col, columnDiv);
-    columnsWrapper.append(columnDiv);
+    columnWrapper.append(contentDiv);
+    columnsContainer.append(columnWrapper);
+    moveInstrumentation(col, columnWrapper);
   });
 
-  block.append(columnsWrapper);
-
-  // Ensure the block has the correct class and status
-  block.className = `columns block columns-${numCols}-cols`;
-  block.dataset.blockStatus = 'loaded';
+  block.append(columnsContainer);
 }

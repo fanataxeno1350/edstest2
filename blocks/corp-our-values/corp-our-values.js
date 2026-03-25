@@ -3,105 +3,124 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const genericWrapper = document.createElement('section');
-  genericWrapper.classList.add('corp-our-values-genericWrapper');
+  genericWrapper.classList.add('genericWrapper');
 
-  // Background Image
-  const bgImage = block.querySelector('[data-aue-prop="backgroundImage"]');
-  if (bgImage) {
-    const picture = createOptimizedPicture(bgImage.src, bgImage.alt);
-    picture.querySelector('img').classList.add('corp-our-values-img-responsive', 'corp-our-values-bg-image', 'corp-our-values-lazyload');
+  // Background Image Desktop
+  const bgImageDesktop = block.querySelector('[data-aue-prop="backgroundImageDesktop"]');
+  const bgImageMobile = block.querySelector('[data-aue-prop="backgroundImageMobile"]');
+
+  if (bgImageDesktop || bgImageMobile) {
+    const picture = document.createElement('picture');
+    if (bgImageDesktop) {
+      const sourceDesktop = document.createElement('source');
+      sourceDesktop.setAttribute('media', '(min-width: 1024px)');
+      sourceDesktop.setAttribute('srcset', bgImageDesktop.src);
+      sourceDesktop.setAttribute('loading', 'lazy');
+      picture.append(sourceDesktop);
+      moveInstrumentation(bgImageDesktop, sourceDesktop);
+    }
+    if (bgImageMobile) {
+      const sourceMobile = document.createElement('source');
+      sourceMobile.setAttribute('media', '(min-width: 768px)');
+      sourceMobile.setAttribute('srcset', bgImageMobile.src);
+      sourceMobile.setAttribute('loading', 'lazy');
+      picture.append(sourceMobile);
+      moveInstrumentation(bgImageMobile, sourceMobile);
+
+      const img = document.createElement('img');
+      img.setAttribute('src', bgImageMobile.src);
+      img.setAttribute('alt', bgImageMobile.alt || 'bg-img');
+      img.classList.add('img-responsive', 'bg-image', 'lazyload');
+      picture.append(img);
+    }
     genericWrapper.append(picture);
-    moveInstrumentation(bgImage, picture);
   }
 
   const ourValuesWrapper = document.createElement('section');
-  ourValuesWrapper.classList.add('corp-our-values-our-values-wrapper');
+  ourValuesWrapper.classList.add('our-values-wrapper');
 
-  const mainHeader = document.createElement('div');
-  mainHeader.classList.add('corp-our-values-main-header', 'corp-our-values-container');
+  const mainHeaderContainer = document.createElement('div');
+  mainHeaderContainer.classList.add('main-header', 'container');
 
   const topBorder = document.createElement('div');
-  topBorder.classList.add('corp-our-values-topBorder');
+  topBorder.classList.add('topBorder');
   topBorder.innerHTML = '&nbsp;';
-  mainHeader.append(topBorder);
+  mainHeaderContainer.append(topBorder);
 
-  const mainHeading = block.querySelector('[data-aue-prop="mainHeading"]');
-  if (mainHeading) {
+  const mainHeader1 = block.querySelector('[data-aue-prop="mainHeader1"]');
+  if (mainHeader1) {
     const h2 = document.createElement('h2');
-    h2.id = mainHeading.textContent.toLowerCase();
-    h2.classList.add('corp-our-values-text-uppercase');
-    h2.textContent = mainHeading.textContent;
-    mainHeader.append(h2);
-    moveInstrumentation(mainHeading, h2);
+    h2.id = mainHeader1.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    h2.classList.add('text-uppercase');
+    h2.textContent = mainHeader1.textContent;
+    mainHeaderContainer.append(h2);
+    moveInstrumentation(mainHeader1, h2);
   }
 
-  const subHeading = block.querySelector('[data-aue-prop="subHeading"]');
-  if (subHeading) {
+  const mainHeader2 = block.querySelector('[data-aue-prop="mainHeader2"]');
+  if (mainHeader2) {
     const h3 = document.createElement('h3');
-    h3.id = subHeading.textContent.toLowerCase();
-    h3.classList.add('corp-our-values-text-uppercase');
-    h3.textContent = subHeading.textContent;
-    mainHeader.append(h3);
-    moveInstrumentation(subHeading, h3);
+    h3.id = mainHeader2.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    h3.classList.add('text-uppercase');
+    h3.textContent = mainHeader2.textContent;
+    mainHeaderContainer.append(h3);
+    moveInstrumentation(mainHeader2, h3);
   }
-  ourValuesWrapper.append(mainHeader);
+  ourValuesWrapper.append(mainHeaderContainer);
 
   const ourValuesComponents = document.createElement('div');
-  ourValuesComponents.classList.add('corp-our-values-our-values-components', 'corp-our-values-g-row');
+  ourValuesComponents.classList.add('our-values-components', 'g-row');
 
   const ul = document.createElement('ul');
-  ul.classList.add('corp-our-values-col-lg-12', 'corp-our-values-col-md-12', 'corp-our-values-col-sm-12');
+  ul.classList.add('col-lg-12', 'col-md-12', 'col-sm-12');
 
-  const values = block.querySelectorAll('[data-aue-model="value"]');
-  values.forEach((valueItem) => {
+  const valueItems = block.querySelectorAll('[data-aue-model="valueItem"]');
+  valueItems.forEach((itemNode) => {
     const li = document.createElement('li');
-    li.classList.add('corp-our-values-sub-holder', 'corp-our-values-col-lg-2', 'corp-our-values-col-sm-2', 'corp-our-values-col-md-3', 'corp-our-values-col-xs-6');
+    li.classList.add('sub-holder', 'col-lg-2', 'col-sm-2', 'col-md-3', 'col-xs-6');
 
     const imgSpace = document.createElement('div');
-    imgSpace.classList.add('corp-our-values-img-space');
+    imgSpace.classList.add('img-space');
 
-    const icon = valueItem.querySelector('[data-aue-prop="icon"]');
-    if (icon) {
-      const img = document.createElement('img');
-      img.classList.add('corp-our-values-lazyload');
-      img.src = icon.src;
-      img.alt = icon.alt || '';
-      imgSpace.append(img);
-      moveInstrumentation(icon, img);
+    const image = itemNode.querySelector('[data-aue-prop="image"]');
+    if (image) {
+      const picture = createOptimizedPicture(image.src, image.alt || '');
+      imgSpace.append(picture);
+      moveInstrumentation(image, picture);
     }
     li.append(imgSpace);
     ul.append(li);
-    moveInstrumentation(valueItem, li);
+    moveInstrumentation(itemNode, li);
   });
   ourValuesComponents.append(ul);
   ourValuesWrapper.append(ourValuesComponents);
 
   const buttonHolder = document.createElement('div');
-  buttonHolder.classList.add('corp-our-values-button-holder');
+  buttonHolder.classList.add('button-holder');
 
   const workWithUsLink = block.querySelector('[data-aue-prop="workWithUsLink"]');
   if (workWithUsLink) {
-    const link = document.createElement('a');
-    link.href = workWithUsLink.href;
-    link.title = workWithUsLink.textContent;
-    link.classList.add('corp-our-values-button', 'corp-our-values-btns', 'corp-our-values-button-red');
-    link.target = '_self';
-    link.textContent = workWithUsLink.textContent;
-    link.style.marginRight = '10px';
-    buttonHolder.append(link);
-    moveInstrumentation(workWithUsLink, link);
+    const a = document.createElement('a');
+    a.href = workWithUsLink.href;
+    a.title = workWithUsLink.textContent;
+    a.classList.add('button', 'btns', 'button-red');
+    a.target = '_self';
+    a.style.marginRight = '10px';
+    a.textContent = workWithUsLink.textContent;
+    buttonHolder.append(a);
+    moveInstrumentation(workWithUsLink, a);
   }
 
   const trainWithUsLink = block.querySelector('[data-aue-prop="trainWithUsLink"]');
   if (trainWithUsLink) {
-    const link = document.createElement('a');
-    link.href = trainWithUsLink.href;
-    link.title = trainWithUsLink.textContent;
-    link.classList.add('corp-our-values-button', 'corp-our-values-btns', 'corp-our-values-button-red');
-    link.target = '_self';
-    link.textContent = trainWithUsLink.textContent;
-    buttonHolder.append(link);
-    moveInstrumentation(trainWithUsLink, link);
+    const a = document.createElement('a');
+    a.href = trainWithUsLink.href;
+    a.title = trainWithUsLink.textContent;
+    a.classList.add('button', 'btns', 'button-red');
+    a.target = '_self';
+    a.textContent = trainWithUsLink.textContent;
+    buttonHolder.append(a);
+    moveInstrumentation(trainWithUsLink, a);
   }
   ourValuesWrapper.append(buttonHolder);
 
@@ -109,6 +128,6 @@ export default function decorate(block) {
 
   block.textContent = '';
   block.append(genericWrapper);
-  block.className = `${block.dataset.blockName} block`;
+  block.className = 'corp-our-values block';
   block.dataset.blockStatus = 'loaded';
 }
