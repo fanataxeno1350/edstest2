@@ -16,66 +16,7 @@
       "cards",
       "columns",
       "fragment",
-      "---new--blocks-----",
-      "corp-header",
-      "corp-carousel",
-      "corporate-business-card",
-      "highlights",
-      "corp-slider",
-      "corp-our-values",
-      "corp-counter",
-      "corp-footer"
-    ]
-  },
-  {
-    "id": "corp-carousel",
-    "components": [
-      "slide"
-    ]
-  },
-  {
-    "id": "corp-counter",
-    "components": [
-      "counter-item",
-      "button"
-    ]
-  },
-  {
-    "id": "corp-footer",
-    "components": [
-      "link-column",
-      "contact",
-      "columns"
-    ]
-  },
-  {
-    "id": "corp-header",
-    "components": [
-      "corp-header-link"
-    ]
-  },
-  {
-    "id": "corp-our-values",
-    "components": [
-      "value"
-    ]
-  },
-  {
-    "id": "corp-slider",
-    "components": [
-      "corp-slider-item"
-    ]
-  },
-  {
-    "id": "corporate-business-card",
-    "components": [
-      "business-card-item"
-    ]
-  },
-  {
-    "id": "highlights",
-    "components": [
-      "highlight"
+      "---new--blocks-----"
     ]
   }
 ]
