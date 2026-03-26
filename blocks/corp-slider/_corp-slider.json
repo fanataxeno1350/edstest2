@@ -38,21 +38,15 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Heading",
-          "name": "heading",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Slider Title",
-          "name": "slider-title",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "corp-slider-item",
-          "label": "Slides",
-          "name": "slides"
+          "label": "Items",
+          "name": "items"
         }
       ]
     },
@@ -67,19 +61,19 @@
         },
         {
           "component": "text",
-          "label": "Image Alt Text",
+          "label": "Alt Text",
           "name": "alt",
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Car Title",
-          "name": "title",
+          "component": "richtext",
+          "label": "Caption",
+          "name": "caption",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Car Link",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         }

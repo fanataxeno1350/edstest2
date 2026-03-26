@@ -39,7 +39,7 @@
         {
           "component": "text",
           "label": "Business Card Title",
-          "name": "title",
+          "name": "business-card-title",
           "valueType": "string"
         }
       ]
@@ -49,32 +49,32 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image",
-          "name": "background-image",
+          "label": "Business Card Item Assets",
+          "name": "business-card-item-assets",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Logo",
-          "name": "logo",
+          "label": "Business Card Item Logo",
+          "name": "business-card-item-logo",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Business Card Item Title",
+          "name": "business-card-item-title",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Subtitle",
-          "name": "subtitle",
+          "label": "Business Card Item Subtitle",
+          "name": "business-card-item-subtitle",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "cta-link",
+          "label": "Business Card Item Link",
+          "name": "business-card-item-link",
           "valueType": "string"
         }
       ]

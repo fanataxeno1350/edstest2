@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Link",
-      "id": "link",
+      "title": "Corp-Header-Link",
+      "id": "corp-header-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "link",
-              "name": "Link"
+              "model": "corp-header-link",
+              "name": "Corp-Header-Link"
             }
           }
         }
@@ -44,37 +44,19 @@
         },
         {
           "component": "text",
-          "label": "Logo Link",
-          "name": "logo-link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
           "label": "Language",
           "name": "language",
           "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "link",
-          "label": "Links",
-          "name": "links"
         }
       ]
     },
     {
-      "id": "link",
+      "id": "corp-header-link",
       "fields": [
         {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
-          "label": "URL",
-          "name": "url",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
@@ -84,7 +66,7 @@
     {
       "id": "corp-header",
       "components": [
-        "link"
+        "corp-header-link"
       ]
     }
   ]

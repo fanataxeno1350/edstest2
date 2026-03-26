@@ -7,13 +7,11 @@ export default function decorate(block) {
   const gContainer = document.createElement('div');
   gContainer.classList.add('g-container');
 
-  // The original HTML shows the title is wrapped in a <p> tag, but the block structure
-  // indicates it's a div. We should append the original element to preserve its content
-  // and instrumentation, rather than creating a new <p> and just taking textContent.
-  const titleElement = titleRow.firstElementChild;
-  moveInstrumentation(titleElement, titleElement); // Move instrumentation to itself if needed, or ensure it's on the correct element
-  titleElement.classList.add('business-card-title');
-  gContainer.append(titleElement);
+  const titleP = document.createElement('p');
+  moveInstrumentation(titleRow.firstElementChild, titleP);
+  titleP.classList.add('business-card-title');
+  titleP.append(...titleRow.firstElementChild.childNodes);
+  gContainer.append(titleP);
 
   const hr = document.createElement('hr');
   hr.classList.add('business-card-title-hr');
@@ -27,86 +25,99 @@ export default function decorate(block) {
     moveInstrumentation(row, businessCardItem);
     businessCardItem.classList.add('business-card-item');
 
-    // BlockJson and EDS Block Structure confirm 5 cells per item row.
-    const [backgroundImageCell, logoCell, headingCell, subtitleCell, ctaLinkCell] = [...row.children];
-
     const overlay = document.createElement('div');
     overlay.classList.add('overlay');
     businessCardItem.append(overlay);
 
-    const assetsDiv = document.createElement('div');
-    assetsDiv.classList.add('business-card-item-assets');
+    const businessCardItemAssets = document.createElement('div');
+    businessCardItemAssets.classList.add('business-card-item-assets');
 
-    // Check if the background image cell contains a video element, as seen in original HTML
-    const videoElement = backgroundImageCell.querySelector('.video-js');
-    if (videoElement) {
-      // If it's a video, append the video element directly
-      moveInstrumentation(backgroundImageCell.firstElementChild, videoElement);
-      assetsDiv.append(videoElement);
-    } else {
-      // Otherwise, assume it's a picture and optimize it
-      const backgroundPicture = backgroundImageCell.querySelector('picture');
-      if (backgroundPicture) {
-        const optimizedPic = createOptimizedPicture(
-          backgroundPicture.querySelector('img').src,
-          backgroundPicture.querySelector('img').alt,
-          false,
-          [{ width: '750' }],
-        );
-        moveInstrumentation(backgroundPicture, optimizedPic.querySelector('img'));
-        assetsDiv.append(optimizedPic);
+    const businessCardItemInfo = document.createElement('div');
+    businessCardItemInfo.classList.add('business-card-item-info');
+
+    const businessCardItemLogo = document.createElement('div');
+    businessCardItemLogo.classList.add('business-card-item-logo');
+
+    const businessCardItemDesc = document.createElement('div');
+    businessCardItemDesc.classList.add('business-card-item-desc');
+
+    [...row.children].forEach((cell, index) => {
+      if (index === 0) { // business-card-item-assets
+        const picture = cell.querySelector('picture');
+        const videoContainer = cell.querySelector('div[playsinline="true"]');
+        if (picture) {
+          businessCardItemAssets.append(picture);
+        } else if (videoContainer) {
+          // Handle video element if present
+          businessCardItemAssets.append(videoContainer);
+          const video = videoContainer.querySelector('video');
+          const bigPlayButton = videoContainer.querySelector('.vjs-big-play-button');
+          const playPauseButton = videoContainer.querySelector('.vjs-play-control');
+
+          if (video) {
+            // Add click listener to the entire item to play/pause video
+            businessCardItem.addEventListener('click', () => {
+              if (video.paused) {
+                video.play();
+                videoContainer.classList.remove('vjs-paused');
+                videoContainer.classList.add('vjs-playing');
+                if (bigPlayButton) bigPlayButton.style.display = 'none';
+                if (playPauseButton) playPauseButton.title = 'Pause';
+              } else {
+                video.pause();
+                videoContainer.classList.remove('vjs-playing');
+                videoContainer.classList.add('vjs-paused');
+                if (bigPlayButton) bigPlayButton.style.display = 'block';
+                if (playPauseButton) playPauseButton.title = 'Play';
+              }
+            });
+
+            // Handle video ending to reset state
+            video.addEventListener('ended', () => {
+              videoContainer.classList.remove('vjs-playing');
+              videoContainer.classList.add('vjs-paused');
+              if (bigPlayButton) bigPlayButton.style.display = 'block';
+              if (playPauseButton) playPauseButton.title = 'Play';
+            });
+          }
+        }
+      } else if (index === 1) { // business-card-item-logo
+        const picture = cell.querySelector('picture');
+        if (picture) {
+          businessCardItemLogo.append(picture);
+        }
+      } else if (index === 2) { // business-card-item-title
+        const titleDiv = document.createElement('div');
+        titleDiv.classList.add('business-card-item-title');
+        moveInstrumentation(cell, titleDiv);
+        const h3 = document.createElement('h3');
+        h3.append(...cell.childNodes);
+        titleDiv.append(h3);
+        businessCardItemDesc.append(titleDiv);
+      } else if (index === 3) { // business-card-item-subtitle
+        const subtitleP = document.createElement('p');
+        subtitleP.classList.add('business-card-item-subtitle');
+        moveInstrumentation(cell, subtitleP);
+        subtitleP.append(...cell.childNodes);
+        businessCardItemDesc.append(subtitleP);
+      } else if (index === 4) { // business-card-item-link
+        const link = cell.querySelector('a');
+        if (link) {
+          const button = document.createElement('a');
+          button.classList.add('button', 'button-primary-white');
+          button.href = link.href;
+          button.textContent = link.textContent;
+          if (link.target) button.target = link.target;
+          if (link.rel) button.rel = link.rel;
+          moveInstrumentation(cell, button);
+          businessCardItemDesc.append(button);
+        }
       }
-    }
-    businessCardItem.append(assetsDiv);
+    });
 
-    const infoDiv = document.createElement('div');
-    infoDiv.classList.add('business-card-item-info');
-
-    const logoDiv = document.createElement('div');
-    logoDiv.classList.add('business-card-item-logo');
-    const logoPicture = logoCell.querySelector('picture');
-    if (logoPicture) {
-      const optimizedPic = createOptimizedPicture(
-        logoPicture.querySelector('img').src,
-        logoPicture.querySelector('img').alt,
-        false,
-        [{ width: '210' }],
-      );
-      moveInstrumentation(logoPicture, optimizedPic.querySelector('img'));
-      logoDiv.append(optimizedPic);
-    }
-    infoDiv.append(logoDiv);
-
-    const descDiv = document.createElement('div');
-    descDiv.classList.add('business-card-item-desc');
-
-    const titleDiv = document.createElement('div');
-    titleDiv.classList.add('business-card-item-title');
-    // The original HTML shows an h3 inside a div for the title, and the block structure
-    // indicates the headingCell contains the heading value.
-    const h3 = headingCell.querySelector('h3') || document.createElement('h3');
-    moveInstrumentation(headingCell.firstElementChild, h3);
-    h3.textContent = headingCell.textContent;
-    titleDiv.append(h3);
-    descDiv.append(titleDiv);
-
-    const subtitleP = subtitleCell.querySelector('p') || document.createElement('p');
-    moveInstrumentation(subtitleCell.firstElementChild, subtitleP);
-    subtitleP.classList.add('business-card-item-subtitle');
-    subtitleP.textContent = subtitleCell.textContent;
-    descDiv.append(subtitleP);
-
-    const ctaLink = ctaLinkCell.querySelector('a');
-    if (ctaLink) {
-      // The original HTML already has the correct classes and attributes on the <a> tag.
-      // We should append the existing <a> tag directly, rather than creating a new one
-      // and copying properties.
-      moveInstrumentation(ctaLink, ctaLink); // Ensure instrumentation is on the correct element
-      ctaLink.classList.add('button', 'button-primary-white'); // Ensure classes are present
-      descDiv.append(ctaLink);
-    }
-    infoDiv.append(descDiv);
-    businessCardItem.append(infoDiv);
+    businessCardItem.append(businessCardItemAssets);
+    businessCardItemInfo.append(businessCardItemLogo, businessCardItemDesc);
+    businessCardItem.append(businessCardItemInfo);
     businessCardContainer.append(businessCardItem);
   });
 
@@ -115,12 +126,6 @@ export default function decorate(block) {
   block.textContent = '';
   block.append(gContainer);
 
-  // This part of the code seems to be a general picture optimization,
-  // but it might re-optimize pictures that were already handled or
-  // interfere with video elements. Given the specific handling above,
-  // this general optimization might be redundant or problematic.
-  // For now, keeping it as is, assuming it's intended for any remaining
-  // pictures not explicitly handled.
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));

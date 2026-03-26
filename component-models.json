@@ -142,62 +142,6 @@
     ]
   },
   {
-    "id": "columns",
-    "fields": [
-      {
-        "component": "container",
-        "item": "columns-item",
-        "label": "Columns Items",
-        "name": "items"
-      }
-    ]
-  },
-  {
-    "id": "columns-item",
-    "fields": [
-      {
-        "component": "richtext",
-        "label": "Text",
-        "name": "text",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "contact",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Title",
-        "name": "title",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "contact-icon",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Icon Image",
-        "name": "icon",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "corp-carousel",
     "fields": [
       {
@@ -219,14 +163,14 @@
       },
       {
         "component": "reference",
-        "label": "Image Mobile",
-        "name": "image-mobile",
+        "label": "Mobile Image",
+        "name": "mobile-image",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Image Desktop",
-        "name": "image-desktop",
+        "label": "Desktop Image",
+        "name": "desktop-image",
         "valueType": "string"
       }
     ]
@@ -248,9 +192,9 @@
       },
       {
         "component": "container",
-        "item": "counter",
-        "label": "Counters",
-        "name": "counters"
+        "item": "counter-item",
+        "label": "Counter Items",
+        "name": "counter-items"
       },
       {
         "component": "container",
@@ -261,24 +205,24 @@
     ]
   },
   {
-    "id": "counter",
+    "id": "counter-item",
     "fields": [
       {
         "component": "reference",
         "label": "Background Image",
-        "name": "bg-image",
+        "name": "background-image",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Number",
-        "name": "number",
+        "label": "Count Number",
+        "name": "count-number",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
+        "label": "Count Label",
+        "name": "count-label",
         "valueType": "string"
       }
     ]
@@ -287,41 +231,21 @@
     "id": "button",
     "fields": [
       {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
         "component": "text",
         "label": "Text",
         "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "href",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "corp-footer",
-    "fields": [
-      {
-        "component": "container",
-        "item": "link-column",
-        "label": "Link Columns",
-        "name": "link-columns"
-      },
-      {
-        "component": "container",
-        "item": "contact",
-        "label": "Contacts",
-        "name": "contacts"
-      },
-      {
-        "component": "container",
-        "item": "columns",
-        "label": "Columns",
-        "name": "columns"
-      }
-    ]
+    "id": "corp-footer"
   },
   {
     "id": "link-column",
@@ -334,19 +258,25 @@
       },
       {
         "component": "container",
-        "item": "footer-link",
+        "item": "link",
         "label": "Links",
         "name": "links"
       }
     ]
   },
   {
-    "id": "footer-link",
+    "id": "link",
     "fields": [
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
@@ -373,20 +303,20 @@
     "fields": [
       {
         "component": "aem-content",
-        "label": "Icon Link",
-        "name": "icon-link",
+        "label": "URL",
+        "name": "url",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Icon Image",
-        "name": "icon-image",
+        "label": "Image",
+        "name": "image",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Icon Label",
-        "name": "icon-label",
+        "label": "Alt Text",
+        "name": "alt",
         "valueType": "string"
       }
     ]
@@ -413,37 +343,19 @@
       },
       {
         "component": "text",
-        "label": "Logo Link",
-        "name": "logo-link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
         "label": "Language",
         "name": "language",
         "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "link",
-        "label": "Links",
-        "name": "links"
       }
     ]
   },
   {
-    "id": "link",
+    "id": "corp-header-link",
     "fields": [
       {
-        "component": "text",
-        "label": "Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
         "component": "aem-content",
-        "label": "URL",
-        "name": "url",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
@@ -477,14 +389,14 @@
       },
       {
         "component": "aem-content",
-        "label": "Button 1",
-        "name": "button-1",
+        "label": "Primary Button Link",
+        "name": "primary-button-link",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Button 2",
-        "name": "button-2",
+        "label": "Secondary Button Link",
+        "name": "secondary-button-link",
         "valueType": "string"
       }
     ]
@@ -494,8 +406,8 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Icon",
-        "name": "icon",
+        "label": "Image",
+        "name": "image",
         "valueType": "string"
       }
     ]
@@ -505,21 +417,15 @@
     "fields": [
       {
         "component": "richtext",
-        "label": "Heading",
-        "name": "heading",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Slider Title",
-        "name": "slider-title",
+        "label": "Title",
+        "name": "title",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "corp-slider-item",
-        "label": "Slides",
-        "name": "slides"
+        "label": "Items",
+        "name": "items"
       }
     ]
   },
@@ -534,19 +440,19 @@
       },
       {
         "component": "text",
-        "label": "Image Alt Text",
+        "label": "Alt Text",
         "name": "alt",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Car Title",
-        "name": "title",
+        "component": "richtext",
+        "label": "Caption",
+        "name": "caption",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Car Link",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       }
@@ -558,7 +464,7 @@
       {
         "component": "text",
         "label": "Business Card Title",
-        "name": "title",
+        "name": "business-card-title",
         "valueType": "string"
       }
     ]
@@ -568,32 +474,32 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Background Image",
-        "name": "background-image",
+        "label": "Business Card Item Assets",
+        "name": "business-card-item-assets",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Logo",
-        "name": "logo",
+        "label": "Business Card Item Logo",
+        "name": "business-card-item-logo",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Heading",
-        "name": "heading",
+        "label": "Business Card Item Title",
+        "name": "business-card-item-title",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Subtitle",
-        "name": "subtitle",
+        "label": "Business Card Item Subtitle",
+        "name": "business-card-item-subtitle",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "CTA Link",
-        "name": "cta-link",
+        "label": "Business Card Item Link",
+        "name": "business-card-item-link",
         "valueType": "string"
       }
     ]
@@ -619,162 +525,6 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
-        "label": "Description",
-        "name": "description",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "link-column",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Heading",
-        "name": "heading",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "link",
-        "label": "Links",
-        "name": "links"
-      }
-    ]
-  },
-  {
-    "id": "link",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "URL",
-        "name": "url",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Text",
-        "name": "text",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "link-grid",
-    "fields": [
-      {
-        "component": "container",
-        "item": "link",
-        "label": "Links",
-        "name": "links"
-      }
-    ]
-  },
-  {
-    "id": "link",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "URL",
-        "name": "url",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Text",
-        "name": "text",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "logo",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Image",
-        "name": "image",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "search-header"
-  },
-  {
-    "id": "link-column",
-    "fields": [
-      {
-        "component": "container",
-        "item": "link",
-        "label": "Links",
-        "name": "links"
-      }
-    ]
-  },
-  {
-    "id": "link",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "Href",
-        "name": "href",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Text",
-        "name": "text",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Target",
-        "name": "target",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Rel",
-        "name": "rel",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "sign-in",
-    "fields": [
-      {
-        "component": "container",
-        "item": "user-account-link",
-        "label": "User Account Links",
-        "name": "userAccountLinks"
-      }
-    ]
-  },
-  {
-    "id": "user-account-link",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Icon",
-        "name": "icon",
-        "valueType": "string"
-      },
-      {
         "component": "aem-content",
         "label": "Link",
         "name": "link",
@@ -787,9 +537,9 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Button Text",
-        "name": "buttonText",
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       }
     ]

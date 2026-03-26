@@ -64,27 +64,7 @@
   ],
   "models": [
     {
-      "id": "corp-footer",
-      "fields": [
-        {
-          "component": "container",
-          "item": "link-column",
-          "label": "Link Columns",
-          "name": "link-columns"
-        },
-        {
-          "component": "container",
-          "item": "contact",
-          "label": "Contacts",
-          "name": "contacts"
-        },
-        {
-          "component": "container",
-          "item": "columns",
-          "label": "Columns",
-          "name": "columns"
-        }
-      ]
+      "id": "corp-footer"
     },
     {
       "id": "link-column",
@@ -97,19 +77,25 @@
         },
         {
           "component": "container",
-          "item": "footer-link",
+          "item": "link",
           "label": "Links",
           "name": "links"
         }
       ]
     },
     {
-      "id": "footer-link",
+      "id": "link",
       "fields": [
         {
           "component": "aem-content",
-          "label": "Link",
-          "name": "link",
+          "label": "URL",
+          "name": "url",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Text",
+          "name": "text",
           "valueType": "string"
         }
       ]
@@ -136,20 +122,20 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Icon Link",
-          "name": "icon-link",
+          "label": "URL",
+          "name": "url",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Icon Image",
-          "name": "icon-image",
+          "label": "Image",
+          "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Icon Label",
-          "name": "icon-label",
+          "label": "Alt Text",
+          "name": "alt",
           "valueType": "string"
         }
       ]

@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Counter",
-      "id": "counter",
+      "title": "Counter-Item",
+      "id": "counter-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "counter",
-              "name": "Counter"
+              "model": "counter-item",
+              "name": "Counter-Item"
             }
           }
         }
@@ -65,9 +65,9 @@
         },
         {
           "component": "container",
-          "item": "counter",
-          "label": "Counters",
-          "name": "counters"
+          "item": "counter-item",
+          "label": "Counter Items",
+          "name": "counter-items"
         },
         {
           "component": "container",
@@ -78,24 +78,24 @@
       ]
     },
     {
-      "id": "counter",
+      "id": "counter-item",
       "fields": [
         {
           "component": "reference",
           "label": "Background Image",
-          "name": "bg-image",
+          "name": "background-image",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Number",
-          "name": "number",
+          "label": "Count Number",
+          "name": "count-number",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Label",
-          "name": "label",
+          "label": "Count Label",
+          "name": "count-label",
           "valueType": "string"
         }
       ]
@@ -104,15 +104,15 @@
       "id": "button",
       "fields": [
         {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
           "component": "text",
           "label": "Text",
           "name": "text",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "href",
           "valueType": "string"
         }
       ]
@@ -122,7 +122,7 @@
     {
       "id": "corp-counter",
       "components": [
-        "counter",
+        "counter-item",
         "button"
       ]
     }

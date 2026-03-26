@@ -2,10 +2,13 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // The first child is the "Slides" container, which we don't need directly for rendering
-  // as its children are the actual slides.
-  const [slidesContainerRow] = [...block.children];
-  slidesContainerRow.remove(); // Remove the "Slides" container row from the block
+  // The first child of the block is the "Slides" container, which holds the actual slide items.
+  // We need to extract the children (slide items) from this container.
+  const slidesContainerRow = block.children[0];
+  const slideItems = [...slidesContainerRow.children]; // These are the actual slide item rows
+
+  // Remove the original block content as we will rebuild it
+  block.innerHTML = '';
 
   const slideshowContainer = document.createElement('div');
   slideshowContainer.classList.add('slideshow-container');
@@ -17,61 +20,66 @@ export default function decorate(block) {
 
   let slideIndex = 0;
 
-  // Iterate over the remaining children, which are the actual slide items
-  [...block.children].forEach((row, index) => {
-    const mySlide = document.createElement('div');
-    mySlide.classList.add('mySlides');
+  slideItems.forEach((row, index) => {
+    const slide = document.createElement('div');
+    moveInstrumentation(row, slide);
+    slide.classList.add('mySlides');
     if (index === 0) {
-      mySlide.style.display = 'block';
+      slide.style.display = 'block';
     } else {
-      mySlide.style.display = 'none';
+      slide.style.display = 'none';
     }
-    moveInstrumentation(row, mySlide);
 
     const linkEl = document.createElement('a');
-    const dot = document.createElement('span');
-    dot.classList.add('dot');
+    // The link is in the first cell of the item row
+    const linkCell = row.children[0];
+    const foundLink = linkCell ? linkCell.querySelector('a') : null;
 
-    // According to BlockJson, each slide row has 3 cells: link, image-mobile, image-desktop
-    const [linkCell, imageMobileCell, imageDesktopCell] = [...row.children];
-
-    // Process Link
-    const foundLink = linkCell.querySelector('a');
     if (foundLink) {
       linkEl.href = foundLink.href;
-      if (foundLink.target) {
-        linkEl.target = foundLink.target;
+      linkEl.target = foundLink.target;
+      moveInstrumentation(foundLink, linkEl);
+    }
+
+    // Mobile image is in the second cell, Desktop image in the third cell
+    const mobileImageCell = row.children[1];
+    const desktopImageCell = row.children[2];
+
+    if (mobileImageCell) {
+      const mobilePicture = mobileImageCell.querySelector('picture');
+      if (mobilePicture) {
+        const mobileImg = mobilePicture.querySelector('img');
+        if (mobileImg) {
+          const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '750' }]);
+          optimizedMobilePic.querySelector('img').classList.add('generic-mobile');
+          moveInstrumentation(mobileImg, optimizedMobilePic.querySelector('img'));
+          linkEl.append(optimizedMobilePic);
+        }
       }
     }
 
-    // Process Image Mobile
-    const pictureMobile = imageMobileCell.querySelector('picture');
-    if (pictureMobile) {
-      const imgMobile = pictureMobile.querySelector('img');
-      if (imgMobile) {
-        const optimizedPic = createOptimizedPicture(imgMobile.src, imgMobile.alt, false, [{ width: '750' }]);
-        const optimizedImg = optimizedPic.querySelector('img');
-        optimizedImg.classList.add('generic-mobile');
-        moveInstrumentation(imgMobile, optimizedImg);
-        linkEl.append(optimizedPic);
+    if (desktopImageCell) {
+      const desktopPicture = desktopImageCell.querySelector('picture');
+      if (desktopPicture) {
+        const desktopImg = desktopPicture.querySelector('img');
+        if (desktopImg) {
+          const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '2000' }]);
+          optimizedDesktopPic.querySelector('img').classList.add('generic-desktop');
+          moveInstrumentation(desktopImg, optimizedDesktopPic.querySelector('img'));
+          linkEl.append(optimizedDesktopPic);
+        }
       }
     }
 
-    // Process Image Desktop
-    const pictureDesktop = imageDesktopCell.querySelector('picture');
-    if (pictureDesktop) {
-      const imgDesktop = pictureDesktop.querySelector('img');
-      if (imgDesktop) {
-        const optimizedPic = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '2000' }]);
-        const optimizedImg = optimizedPic.querySelector('img');
-        optimizedImg.classList.add('generic-desktop');
-        moveInstrumentation(imgDesktop, optimizedImg);
-        linkEl.append(optimizedPic);
-      }
-    }
+    slide.append(linkEl);
+    slideshowContainer.append(slide);
 
-    mySlide.append(linkEl);
-    slideshowContainer.append(mySlide);
+    const dot = document.createElement('span');
+    dot.classList.add('dot');
+    if (index === 0) {
+      dot.classList.add('active');
+    }
+    dot.addEventListener('click', () => currentSlide(index + 1));
     dotContainer.append(dot);
   });
 
@@ -85,36 +93,40 @@ export default function decorate(block) {
   nextButton.addEventListener('click', () => plusSlides(1));
   slideshowContainer.append(nextButton);
 
-  block.textContent = '';
   block.append(slideshowContainer, dotContainer);
 
-  const slides = slideshowContainer.querySelectorAll('.mySlides');
-  const dots = dotContainer.querySelectorAll('.dot');
-
   function showSlides(n) {
-    if (n > slides.length - 1) {
-      slideIndex = 0;
+    let i;
+    const slides = slideshowContainer.querySelectorAll('.mySlides');
+    const dots = dotContainer.querySelectorAll('.dot');
+    if (n > slides.length) {
+      slideIndex = 1;
     }
-    if (n < 0) {
-      slideIndex = slides.length - 1;
+    if (n < 1) {
+      slideIndex = slides.length;
     }
-
-    slides.forEach((slide) => (slide.style.display = 'none'));
-    dots.forEach((dot) => dot.classList.remove('active'));
-
-    slides[slideIndex].style.display = 'block';
-    dots[slideIndex].classList.add('active');
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = 'none';
+    }
+    for (i = 0; i < dots.length; i++) {
+      dots[i].classList.remove('active');
+    }
+    if (slides.length > 0) { // Ensure there are slides to display
+      slides[slideIndex - 1].style.display = 'block';
+      dots[slideIndex - 1].classList.add('active');
+    }
   }
 
   function plusSlides(n) {
-    showSlides((slideIndex += n));
+    showSlides(slideIndex += n);
   }
 
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      showSlides((slideIndex = index));
-    });
-  });
+  function currentSlide(n) {
+    showSlides(slideIndex = n);
+  }
 
-  showSlides(slideIndex);
+  // Initialize carousel
+  if (slideshowContainer.querySelectorAll('.mySlides').length > 0) {
+    showSlides(1);
+  }
 }

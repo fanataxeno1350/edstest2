@@ -6,34 +6,30 @@ export default function decorate(block) {
     bgImageRow,
     heading1Row,
     heading2Row,
-    valuesContainerRow, // This row is empty in EDS, just a placeholder for the container field
-    button1Row,
-    button2Row,
+    valuesRow, // This row is a container for value items, but its content is not directly used in the current JS.
+    primaryButtonRow,
+    secondaryButtonRow,
     ...valueItemRows
   ] = [...block.children];
 
-  // Create genericWrapper
   const genericWrapper = document.createElement('section');
   genericWrapper.classList.add('genericWrapper');
-  moveInstrumentation(block, genericWrapper); // Move block instrumentation to the wrapper
 
   // Background Image
   const bgPicture = bgImageRow.querySelector('picture');
   if (bgPicture) {
     const img = bgPicture.querySelector('img');
     if (img) {
+      img.classList.add('img-responsive', 'bg-image', 'lazyload');
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '2000' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      optimizedPic.querySelector('img').classList.add('img-responsive', 'bg-image', 'lazyload');
+      moveInstrumentation(bgPicture, optimizedPic);
       genericWrapper.append(optimizedPic);
     }
   }
 
-  // our-values-wrapper
   const ourValuesWrapper = document.createElement('section');
   ourValuesWrapper.classList.add('our-values-wrapper');
 
-  // main-header container
   const mainHeader = document.createElement('div');
   mainHeader.classList.add('main-header', 'container');
 
@@ -43,22 +39,21 @@ export default function decorate(block) {
   mainHeader.append(topBorder);
 
   const h2 = document.createElement('h2');
-  h2.classList.add('text-uppercase');
-  moveInstrumentation(heading1Row.firstElementChild, h2);
+  moveInstrumentation(heading1Row, h2);
   h2.id = 'our';
-  h2.textContent = heading1Row.firstElementChild.textContent.trim();
+  h2.classList.add('text-uppercase');
+  while (heading1Row.firstChild) h2.append(heading1Row.firstChild);
   mainHeader.append(h2);
 
   const h3 = document.createElement('h3');
-  h3.classList.add('text-uppercase');
-  moveInstrumentation(heading2Row.firstElementChild, h3);
+  moveInstrumentation(heading2Row, h3);
   h3.id = 'values';
-  h3.textContent = heading2Row.firstElementChild.textContent.trim();
+  h3.classList.add('text-uppercase');
+  while (heading2Row.firstChild) h3.append(heading2Row.firstChild);
   mainHeader.append(h3);
 
   ourValuesWrapper.append(mainHeader);
 
-  // our-values-components
   const ourValuesComponents = document.createElement('div');
   ourValuesComponents.classList.add('our-values-components', 'g-row');
 
@@ -73,15 +68,18 @@ export default function decorate(block) {
     const imgSpace = document.createElement('div');
     imgSpace.classList.add('img-space');
 
-    // Each value item row has only one cell, which contains the picture for the icon
-    const picture = row.firstElementChild.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        optimizedPic.querySelector('img').classList.add('lazyload');
-        imgSpace.append(optimizedPic);
+    // Each value item row has one cell, which contains the picture.
+    const imageCell = row.children[0];
+    if (imageCell) {
+      const picture = imageCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        if (img) {
+          img.classList.add('lazyload');
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
+          moveInstrumentation(picture, optimizedPic);
+          imgSpace.append(optimizedPic);
+        }
       }
     }
     li.append(imgSpace);
@@ -90,34 +88,32 @@ export default function decorate(block) {
   ourValuesComponents.append(ul);
   ourValuesWrapper.append(ourValuesComponents);
 
-  // button-holder
   const buttonHolder = document.createElement('div');
   buttonHolder.classList.add('button-holder');
 
-  const createButton = (rowElement) => {
-    const anchor = rowElement.querySelector('a');
-    if (anchor) {
-      const buttonLink = document.createElement('a');
-      moveInstrumentation(anchor, buttonLink);
-      buttonLink.href = anchor.href;
-      buttonLink.title = anchor.textContent.trim();
-      buttonLink.textContent = anchor.textContent.trim();
-      buttonLink.classList.add('button', 'btns', 'button-red');
-      buttonLink.target = '_self'; // Assuming _self as default based on original HTML
-      return buttonLink;
-    }
-    return null;
-  };
-
-  const button1 = createButton(button1Row.firstElementChild);
-  if (button1) {
-    button1.style.marginRight = '10px';
-    buttonHolder.append(button1);
+  const primaryLink = primaryButtonRow.querySelector('a');
+  if (primaryLink) {
+    const btn1 = document.createElement('a');
+    moveInstrumentation(primaryButtonRow, btn1);
+    btn1.classList.add('button', 'btns', 'button-red');
+    btn1.href = primaryLink.href;
+    btn1.title = primaryLink.textContent;
+    btn1.target = '_self';
+    btn1.style.marginRight = '10px';
+    btn1.textContent = primaryLink.textContent;
+    buttonHolder.append(btn1);
   }
 
-  const button2 = createButton(button2Row.firstElementChild);
-  if (button2) {
-    buttonHolder.append(button2);
+  const secondaryLink = secondaryButtonRow.querySelector('a');
+  if (secondaryLink) {
+    const btn2 = document.createElement('a');
+    moveInstrumentation(secondaryButtonRow, btn2);
+    btn2.classList.add('button', 'btns', 'button-red');
+    btn2.href = secondaryLink.href;
+    btn2.title = secondaryLink.textContent;
+    btn2.target = '_self';
+    btn2.textContent = secondaryLink.textContent;
+    buttonHolder.append(btn2);
   }
 
   ourValuesWrapper.append(buttonHolder);

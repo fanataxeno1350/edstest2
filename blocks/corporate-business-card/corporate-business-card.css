@@ -1699,6 +1699,39 @@ h2, h3, h4, h5, h6) {
   display: none;
  }
 
+ul { 
+  list-style: none;
+  padding: 0;
+ }
+
+h2, h3, h4, h5, h6 { 
+  font-family: var(--body-font-family);
+  line-height: 1.25rem;
+  font-size: 1rem;
+  font-weight: 700;
+
+ }
+
+@media(width >=1200px) {
+  .contact-wrapper {
+    .user__contact {
+      gap: 1.5rem;
+
+      .user__contact-title {
+        font-size: 1.5rem;
+        line-height: 28px;
+      }
+
+      .user__contact__icon-call_container {
+        a {
+          font-size: 0.875rem;
+          line-height: 1.25rem;
+        }
+      }
+    }
+  }
+}
+
 .video-js .vjs-big-play-button .vjs-icon-placeholder:before, .video-js .vjs-modal-dialog, .vjs-button > .vjs-icon-placeholder:before, .vjs-modal-dialog .vjs-modal-dialog-content { 
   position: absolute;
   top: 0;
@@ -2997,39 +3030,6 @@ h2, h3 { page-break-after:avoid }
 
 body{min-width:992px!important} }
 
-ul { 
-  list-style: none;
-  padding: 0;
- }
-
-h2, h3, h4, h5, h6 { 
-  font-family: var(--body-font-family);
-  line-height: 1.25rem;
-  font-size: 1rem;
-  font-weight: 700;
-
- }
-
-@media(width >=1200px) {
-  .contact-wrapper {
-    .user__contact {
-      gap: 1.5rem;
-
-      .user__contact-title {
-        font-size: 1.5rem;
-        line-height: 28px;
-      }
-
-      .user__contact__icon-call_container {
-        a {
-          font-size: 0.875rem;
-          line-height: 1.25rem;
-        }
-      }
-    }
-  }
-}
-
 #chat-icon { 
     position: fixed;
     bottom: 10%;
@@ -3451,22 +3451,22 @@ h2, h3, h4, h5, h6 {
     }
  }
 
-@keyframes atNodeInserted393 {from {opacity:0.99} to {opacity:1}}
+@keyframes atNodeInserted952 {from {opacity:0.99} to {opacity:1}}
 
-@-moz-keyframes atNodeInserted393 {from {opacity:0.99} to {opacity:1}}
+@-moz-keyframes atNodeInserted952 {from {opacity:0.99} to {opacity:1}}
 
-@-webkit-keyframes atNodeInserted393 {from {opacity:0.99} to {opacity:1}}
+@-webkit-keyframes atNodeInserted952 {from {opacity:0.99} to {opacity:1}}
 
-@-ms-keyframes atNodeInserted393 {from {opacity:0.99} to {opacity:1}}
+@-ms-keyframes atNodeInserted952 {from {opacity:0.99} to {opacity:1}}
 
-@-o-keyframes atNodeInserted393 {from {opacity:0.99} to {opacity:1}}
+@-o-keyframes atNodeInserted952 {from {opacity:0.99} to {opacity:1}}
 
 #chat-icon { 
-animation-duration:0.001s;animation-name:atNodeInserted393;
--moz-animation-duration:0.001s;-moz-animation-name:atNodeInserted393;
--webkit-animation-duration:0.001s;-webkit-animation-name:atNodeInserted393;
--ms-animation-duration:0.001s;-ms-animation-name:atNodeInserted393;
--o-animation-duration:0.001s;-o-animation-name:atNodeInserted393;
+animation-duration:0.001s;animation-name:atNodeInserted952;
+-moz-animation-duration:0.001s;-moz-animation-name:atNodeInserted952;
+-webkit-animation-duration:0.001s;-webkit-animation-name:atNodeInserted952;
+-ms-animation-duration:0.001s;-ms-animation-name:atNodeInserted952;
+-o-animation-duration:0.001s;-o-animation-name:atNodeInserted952;
  }
 
 .video-js { 
@@ -3474,22 +3474,22 @@ animation-duration:0.001s;animation-name:atNodeInserted393;
         height: 150px;
        }
 
-.video-kcdzcmz31-dimensions { 
+.video-y0i5se6kg-dimensions { 
         width: 300px;
         height: 168.75px;
        }
 
-.video-o3bo4bu0f-dimensions { 
+.video-jyf82gtx9-dimensions { 
         width: 300px;
         height: 168.75px;
        }
 
-.video-rw84qykem-dimensions { 
+.video-0xixf7xur-dimensions { 
         width: 300px;
         height: 168.75px;
        }
 
-.video-t21ypdhg7-dimensions { 
+.video-6l2mtcck4-dimensions { 
         width: 300px;
         height: 168.75px;
        }

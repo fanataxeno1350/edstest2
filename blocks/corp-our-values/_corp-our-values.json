@@ -62,14 +62,14 @@
         },
         {
           "component": "aem-content",
-          "label": "Button 1",
-          "name": "button-1",
+          "label": "Primary Button Link",
+          "name": "primary-button-link",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Button 2",
-          "name": "button-2",
+          "label": "Secondary Button Link",
+          "name": "secondary-button-link",
           "valueType": "string"
         }
       ]
@@ -79,8 +79,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Icon",
-          "name": "icon",
+          "label": "Image",
+          "name": "image",
           "valueType": "string"
         }
       ]

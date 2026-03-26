@@ -53,19 +53,13 @@
         "fragment",
         "---new--blocks-----",
         "corp-header",
-        "logo",
-        "link-grid",
-        "contact",
-        "sign-in",
-        "search-header",
         "corp-carousel",
         "corporate-business-card",
         "highlights",
         "corp-slider",
         "corp-our-values",
         "corp-counter",
-        "corp-footer",
-        "link-column"
+        "corp-footer"
       ]
     }
   ]

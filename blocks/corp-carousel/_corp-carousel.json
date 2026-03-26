@@ -55,14 +55,14 @@
         },
         {
           "component": "reference",
-          "label": "Image Mobile",
-          "name": "image-mobile",
+          "label": "Mobile Image",
+          "name": "mobile-image",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Image Desktop",
-          "name": "image-desktop",
+          "label": "Desktop Image",
+          "name": "desktop-image",
           "valueType": "string"
         }
       ]

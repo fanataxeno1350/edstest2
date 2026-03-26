@@ -2,43 +2,53 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  // Corrected destructuring to match the BlockJson and EDS Block Structure
+  // block.children[0]: field="background-image-mobile"
+  // block.children[1]: field="background-image-desktop"
+  // block.children[2]: field="counter-items" (container, but its content is ignored in JS)
+  // block.children[3]: field="buttons" (container, but its content is ignored in JS)
+  // ...itemRows: actual counter-item and button rows
   const [
     bgImageMobileRow,
     bgImageDesktopRow,
-    countersContainerRow, // This row is just a container, its content is not used
-    buttonsContainerRow,  // This row is just a container, its content is not used
+    _counterItemsContainerRow, // Ignored as per BlockJson, actual items are in itemRows
+    _buttonsContainerRow, // Ignored as per BlockJson, actual items are in itemRows
     ...itemRows
   ] = [...block.children];
+
+  // Distinguish item types based on cell count as per BlockJson
+  const counterItems = itemRows.filter((row) => row.children.length === 3); // counter-item has 3 fields
+  const buttons = itemRows.filter((row) => row.children.length === 2); // button has 2 fields
 
   const genericWrapper = document.createElement('div');
   genericWrapper.classList.add('genericWrapper');
 
   // Background Image Mobile
-  const mobilePicture = bgImageMobileRow.querySelector('picture');
-  if (mobilePicture) {
-    const mobileImg = mobilePicture.querySelector('img');
-    const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '750' }]);
-    const newMobileImg = optimizedMobilePic.querySelector('img');
-    newMobileImg.classList.add('generic-mobile');
-    newMobileImg.setAttribute('srcset', newMobileImg.src); // Copy src to srcset as per original
-    newMobileImg.removeAttribute('width'); // Remove width and height if present
-    newMobileImg.removeAttribute('height');
-    moveInstrumentation(mobileImg, newMobileImg);
-    genericWrapper.append(optimizedMobilePic);
+  if (bgImageMobileRow) {
+    const mobilePic = bgImageMobileRow.querySelector('picture');
+    if (mobilePic) {
+      const img = mobilePic.querySelector('img');
+      const mobileImg = document.createElement('img');
+      mobileImg.classList.add('generic-mobile');
+      mobileImg.alt = img?.alt || 'section background';
+      mobileImg.src = img?.src || ''; // Will be replaced by createOptimizedPicture
+      moveInstrumentation(img, mobileImg);
+      genericWrapper.append(mobileImg);
+    }
   }
 
   // Background Image Desktop
-  const desktopPicture = bgImageDesktopRow.querySelector('picture');
-  if (desktopPicture) {
-    const desktopImg = desktopPicture.querySelector('img');
-    const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '2000' }]);
-    const newDesktopImg = optimizedDesktopPic.querySelector('img');
-    newDesktopImg.classList.add('generic-desktop');
-    newDesktopImg.setAttribute('srcset', newDesktopImg.src); // Copy src to srcset as per original
-    newDesktopImg.removeAttribute('width'); // Remove width and height if present
-    newDesktopImg.removeAttribute('height');
-    moveInstrumentation(desktopImg, newDesktopImg);
-    genericWrapper.append(optimizedDesktopPic);
+  if (bgImageDesktopRow) {
+    const desktopPic = bgImageDesktopRow.querySelector('picture');
+    if (desktopPic) {
+      const img = desktopPic.querySelector('img');
+      const desktopImg = document.createElement('img');
+      desktopImg.classList.add('generic-desktop');
+      desktopImg.alt = img?.alt || 'section background';
+      desktopImg.src = img?.src || ''; // Will be replaced by createOptimizedPicture
+      moveInstrumentation(img, desktopImg);
+      genericWrapper.append(desktopImg);
+    }
   }
 
   const innerCounterContainer = document.createElement('div');
@@ -47,115 +57,120 @@ export default function decorate(block) {
   const gRow = document.createElement('div');
   gRow.classList.add('g-row');
 
-  // Distinguish item types based on cell count
-  const counters = itemRows.filter((row) => row.children.length === 3);
-  const buttons = itemRows.filter((row) => row.children.length === 2);
+  counterItems.forEach((row, index) => {
+    const [bgImageCell, countNumberCell, countLabelCell] = [...row.children];
 
-  counters.forEach((row, index) => {
-    const counterDiv = document.createElement('div');
-    counterDiv.classList.add('col-6', 'col-sm-6', 'col-md-6', 'col-lg-3', 'col-xl-3', 'text-center');
+    const col = document.createElement('div');
+    // Apply base classes from original HTML
+    col.classList.add('text-center');
 
-    // The first counter has different column classes
+    // Conditional classes based on index, matching original HTML structure
     if (index === 0) {
-      // Remove the default classes and add the specific ones for the first counter
-      counterDiv.classList.remove('col-6', 'col-sm-6', 'col-md-6', 'col-lg-3', 'col-xl-3');
-      counterDiv.classList.add('col-12', 'col-sm-12', 'col-md-12', 'col-lg-6', 'col-xl-6');
+      col.classList.add('col-12', 'col-sm-12', 'col-md-12', 'col-lg-6', 'col-xl-6', 'col-lg-12', 'col-xl-12');
+    } else {
+      col.classList.add('col-6', 'col-sm-6', 'col-md-6', 'col-lg-3', 'col-xl-3');
     }
 
-    const [bgImageCell, numberCell, labelCell] = [...row.children];
+    if (index === 1) {
+      col.classList.add('middle-component', 'col-divider');
+    }
 
-    if (index === 0) {
-      const customerCountDiv = document.createElement('div');
-      customerCountDiv.classList.add('customer-count', 'clearfix');
-      // Instrumentation should be moved from the original row, not the container row
-      moveInstrumentation(row, customerCountDiv);
+    moveInstrumentation(row, col);
 
-      const numscrollerDiv = document.createElement('div');
-      numscrollerDiv.classList.add('numscroller');
+    const customerCount = document.createElement('div');
+    customerCount.classList.add('customer-count', 'clearfix');
 
-      const bgImageWrapper = document.createElement('div');
-      bgImageWrapper.classList.add('bg-image-wrapper');
-      const picture = bgImageCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
+    const numscroller = document.createElement('div');
+    numscroller.classList.add('numscroller');
+
+    const bgImageWrapper = document.createElement('div');
+    bgImageWrapper.classList.add('bg-image-wrapper');
+
+    const picture = bgImageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
         const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 768px)', width: '2000' }, { media: '(max-width: 767px)', width: '750' }]);
         moveInstrumentation(img, optimizedPic.querySelector('img'));
         bgImageWrapper.append(optimizedPic);
       }
-      numscrollerDiv.append(bgImageWrapper);
-
-      const spanNumber = document.createElement('span');
-      moveInstrumentation(numberCell, spanNumber);
-      spanNumber.setAttribute('data-delay', '20000');
-      spanNumber.setAttribute('data-increment', '111111');
-      spanNumber.setAttribute('data-min', '0');
-      spanNumber.setAttribute('data-max', numberCell.textContent.trim());
-      spanNumber.textContent = numberCell.textContent.trim();
-      numscrollerDiv.append(spanNumber);
-
-      customerCountDiv.append(numscrollerDiv);
-      counterDiv.append(customerCountDiv);
-
-      const spanLabel = document.createElement('span');
-      spanLabel.classList.add('count-label');
-      moveInstrumentation(labelCell, spanLabel);
-      spanLabel.textContent = labelCell.textContent.trim();
-      counterDiv.append(spanLabel);
-    } else {
-      const middleComponentDiv = document.createElement('div');
-      middleComponentDiv.classList.add('middle-component');
-      if (index === 1) { // Only the second counter has col-divider
-        middleComponentDiv.classList.add('col-divider');
-      }
-
-      const h2Number = document.createElement('h2');
-      h2Number.classList.add('count-number');
-      moveInstrumentation(numberCell, h2Number);
-      h2Number.textContent = numberCell.textContent.trim();
-      middleComponentDiv.append(h2Number);
-
-      const spanLabel = document.createElement('span');
-      spanLabel.classList.add('count-label');
-      moveInstrumentation(labelCell, spanLabel);
-      spanLabel.textContent = labelCell.textContent.trim();
-      middleComponentDiv.append(spanLabel);
-      counterDiv.append(middleComponentDiv);
     }
-    gRow.append(counterDiv);
+
+    const countNumberSpan = document.createElement('span');
+    countNumberSpan.classList.add('count-number');
+    countNumberSpan.textContent = countNumberCell.textContent.trim();
+    // Add data attributes for numscroller if it's the first item
+    if (index === 0) {
+      countNumberSpan.setAttribute('data-delay', '20000');
+      countNumberSpan.setAttribute('data-increment', '111111');
+      countNumberSpan.setAttribute('data-min', '0');
+      countNumberSpan.setAttribute('data-max', countNumberCell.textContent.trim());
+    }
+
+    const countLabelSpan = document.createElement('span');
+    countLabelSpan.classList.add('count-label');
+    countLabelSpan.textContent = countLabelCell.textContent.trim();
+
+    if (index === 0) {
+      numscroller.append(bgImageWrapper, countNumberSpan);
+      customerCount.append(numscroller);
+      col.append(customerCount, countLabelSpan);
+    } else {
+      const h2 = document.createElement('h2');
+      h2.classList.add('count-number');
+      h2.textContent = countNumberCell.textContent.trim();
+      col.append(h2, countLabelSpan);
+    }
+
+    gRow.append(col);
   });
 
   innerCounterContainer.append(gRow);
 
   const buttonGutter = document.createElement('div');
   buttonGutter.classList.add('button-gutter', 'text-center');
-  // Instrumentation should be moved from the original row, not the container row
-  moveInstrumentation(buttonsContainerRow, buttonGutter);
 
   buttons.forEach((row) => {
-    const [linkCell, textCell] = [...row.children];
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      const a = document.createElement('a');
-      a.classList.add('button', 'button-red', 'button-180');
-      a.href = foundLink.href;
-      a.textContent = textCell.textContent.trim();
-      moveInstrumentation(linkCell, a); // Move instrumentation from link cell
-      buttonGutter.append(a);
+    const [textCell, linkCell] = [...row.children];
+    const link = linkCell.querySelector('a');
+    if (link) {
+      const buttonLink = document.createElement('a');
+      // Ensure all classes are from the allowlist
+      buttonLink.classList.add('button', 'button-red', 'button-180');
+      buttonLink.href = link.href;
+      buttonLink.textContent = textCell.textContent.trim();
+      // Add specific classes from original HTML if present
+      if (link.id) {
+        buttonLink.id = link.id;
+      }
+      if (link.target) {
+        buttonLink.target = link.target;
+      }
+      if (link.classList.contains('bookAServiceAppointmentButton')) {
+        buttonLink.classList.add('bookAServiceAppointmentButton');
+      }
+
+      moveInstrumentation(row, buttonLink); // Move instrumentation from the button row to the new buttonLink
+      buttonGutter.append(buttonLink);
     }
   });
-  innerCounterContainer.append(buttonGutter);
 
+  innerCounterContainer.append(buttonGutter);
   genericWrapper.append(innerCounterContainer);
+
   block.textContent = '';
   block.append(genericWrapper);
 
-  // Image optimization for all pictures within the block
-  block.querySelectorAll('picture > img').forEach((img) => {
-    // Only optimize if it's not the already handled background images
-    if (!img.classList.contains('generic-mobile') && !img.classList.contains('generic-desktop')) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      img.closest('picture').replaceWith(optimizedPic);
-    }
+  // Optimize images
+  // This section seems to be a general image optimization, not specific to the block structure.
+  // It should be handled by the createOptimizedPicture calls within the block's specific logic.
+  // Removing the generic block.querySelectorAll('picture > img') optimization to avoid double processing
+  // or unintended optimization of images not explicitly handled by the block's structure.
+
+  // Optimize generic-mobile and generic-desktop images
+  block.querySelectorAll('img.generic-mobile, img.generic-desktop').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '2000' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.replaceWith(optimizedPic);
   });
 }
