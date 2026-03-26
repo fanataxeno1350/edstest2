@@ -1,0 +1,67 @@
+{
+  "definitions": [
+    {
+      "title": "Columns",
+      "id": "columns",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "columns",
+              "model": "columns",
+              "name": "Columns"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Columns Item",
+      "id": "columns-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "columns-item",
+              "name": "Columns Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "columns",
+      "fields": [
+        {
+          "component": "container",
+          "item": "columns-item",
+          "label": "Columns Items",
+          "name": "items"
+        }
+      ]
+    },
+    {
+      "id": "columns-item",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "columns",
+      "components": [
+        "columns-item"
+      ]
+    }
+  ]
+}

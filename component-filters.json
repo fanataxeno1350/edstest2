@@ -16,7 +16,111 @@
       "cards",
       "columns",
       "fragment",
-      "---new--blocks-----"
+      "---new--blocks-----",
+      "corp-header",
+      "logo",
+      "link-grid",
+      "contact",
+      "sign-in",
+      "search-header",
+      "corp-carousel",
+      "corporate-business-card",
+      "highlights",
+      "corp-slider",
+      "corp-our-values",
+      "corp-counter",
+      "corp-footer",
+      "link-column"
+    ]
+  },
+  {
+    "id": "columns",
+    "components": [
+      "columns-item"
+    ]
+  },
+  {
+    "id": "contact",
+    "components": [
+      "contact-icon"
+    ]
+  },
+  {
+    "id": "corp-carousel",
+    "components": [
+      "slide"
+    ]
+  },
+  {
+    "id": "corp-counter",
+    "components": [
+      "counter",
+      "button"
+    ]
+  },
+  {
+    "id": "corp-footer",
+    "components": [
+      "link-column",
+      "contact",
+      "columns"
+    ]
+  },
+  {
+    "id": "corp-header",
+    "components": [
+      "link"
+    ]
+  },
+  {
+    "id": "corp-our-values",
+    "components": [
+      "value"
+    ]
+  },
+  {
+    "id": "corp-slider",
+    "components": [
+      "corp-slider-item"
+    ]
+  },
+  {
+    "id": "corporate-business-card",
+    "components": [
+      "business-card-item"
+    ]
+  },
+  {
+    "id": "highlights",
+    "components": [
+      "highlight"
+    ]
+  },
+  {
+    "id": "link-column",
+    "components": [
+      "link"
+    ]
+  },
+  {
+    "id": "link-grid",
+    "components": [
+      "link"
+    ]
+  },
+  {
+    "id": "logo"
+  },
+  {
+    "id": "search-header",
+    "components": [
+      "link-column"
+    ]
+  },
+  {
+    "id": "sign-in",
+    "components": [
+      "user-account-link"
     ]
   }
 ]

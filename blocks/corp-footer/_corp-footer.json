@@ -1,0 +1,179 @@
+{
+  "definitions": [
+    {
+      "title": "Corp-Footer",
+      "id": "corp-footer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "corp-footer",
+              "model": "corp-footer",
+              "name": "Corp-Footer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Link-Column",
+      "id": "link-column",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "link-column",
+              "name": "Link-Column"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Contact",
+      "id": "contact",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "contact",
+              "name": "Contact"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Columns",
+      "id": "columns",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "columns",
+              "name": "Columns"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "corp-footer",
+      "fields": [
+        {
+          "component": "container",
+          "item": "link-column",
+          "label": "Link Columns",
+          "name": "link-columns"
+        },
+        {
+          "component": "container",
+          "item": "contact",
+          "label": "Contacts",
+          "name": "contacts"
+        },
+        {
+          "component": "container",
+          "item": "columns",
+          "label": "Columns",
+          "name": "columns"
+        }
+      ]
+    },
+    {
+      "id": "link-column",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "footer-link",
+          "label": "Links",
+          "name": "links"
+        }
+      ]
+    },
+    {
+      "id": "footer-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "contact-icon",
+          "label": "Icons",
+          "name": "icons"
+        }
+      ]
+    },
+    {
+      "id": "contact-icon",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Icon Link",
+          "name": "icon-link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon Image",
+          "name": "icon-image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Icon Label",
+          "name": "icon-label",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "columns",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Content",
+          "name": "content",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "corp-footer",
+      "components": [
+        "link-column",
+        "contact",
+        "columns"
+      ]
+    }
+  ]
+}
