@@ -17,6 +17,21 @@
       }
     },
     {
+      "title": "Footer Logo",
+      "id": "footerLogo",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerLogo",
+              "name": "Footer Logo"
+            }
+          }
+        }
+      }
+    },
+    {
       "title": "Footer Link",
       "id": "footerLink",
       "plugins": {
@@ -32,15 +47,15 @@
       }
     },
     {
-      "title": "Social Icon",
-      "id": "socialIcon",
+      "title": "Footer Social Icon",
+      "id": "footerSocialIcon",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "socialIcon",
-              "name": "Social Icon"
+              "model": "footerSocialIcon",
+              "name": "Footer Social Icon"
             }
           }
         }
@@ -52,34 +67,22 @@
       "id": "footer",
       "fields": [
         {
-          "component": "reference",
-          "label": "ITC Logo",
-          "name": "itcLogo",
-          "valueType": "string"
+          "component": "container",
+          "itemComponent": "footerLogo",
+          "label": "Footer Logos",
+          "name": "footerLogos"
         },
         {
-          "component": "reference",
-          "label": "Fssai Logo",
-          "name": "fssaiLogo",
-          "valueType": "string"
-        },
-        {
-          "component": "block",
-          "item": "footerLink",
+          "component": "container",
+          "itemComponent": "footerLink",
           "label": "Footer Links",
           "name": "footerLinks"
         },
         {
-          "component": "block",
-          "item": "socialIcon",
-          "label": "Social Icons",
-          "name": "socialIcons"
-        },
-        {
-          "component": "text",
-          "label": "Grievance Officer Title",
-          "name": "grievanceOfficerTitle",
-          "valueType": "string"
+          "component": "container",
+          "itemComponent": "footerSocialIcon",
+          "label": "Footer Social Icons",
+          "name": "footerSocialIcons"
         },
         {
           "component": "text",
@@ -95,8 +98,8 @@
         },
         {
           "component": "text",
-          "label": "Grievance Officer Hours",
-          "name": "grievanceOfficerHours",
+          "label": "Grievance Officer Timing",
+          "name": "grievanceOfficerTiming",
           "valueType": "string"
         },
         {
@@ -108,35 +111,52 @@
       ]
     },
     {
-      "id": "footerLink",
+      "id": "footerLogo",
       "fields": [
         {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
+          "component": "reference",
+          "label": "Logo Image",
+          "name": "image",
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "socialIcon",
+      "id": "footerLink",
       "fields": [
         {
           "component": "aem-content",
-          "label": "Social Link",
-          "name": "link",
+          "label": "Link URL",
+          "name": "url",
           "valueType": "string"
         },
         {
+          "component": "text",
+          "label": "Link Text",
+          "name": "text",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerSocialIcon",
+      "fields": [
+        {
           "component": "reference",
-          "label": "Icon",
+          "label": "Social Icon Image",
           "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Social Link URL",
+          "name": "url",
           "valueType": "string"
         }
       ]
@@ -146,8 +166,9 @@
     {
       "id": "footer",
       "components": [
+        "footerLogo",
         "footerLink",
-        "socialIcon"
+        "footerSocialIcon"
       ]
     }
   ]

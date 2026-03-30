@@ -3,299 +3,301 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const headerContainer = document.createElement('div');
-  headerContainer.classList.add('header-container');
+  headerContainer.className = 'header-container';
 
-  const nav = document.createElement('nav');
-  nav.classList.add('header-navbar', 'header-navbar-expand-xl', 'header-navbar-light', 'header-bg-light', 'header-px-xl-5', 'header-d-flex', 'header-justify-content-between', 'header-align-items-center');
+  const navbar = document.createElement('nav');
+  navbar.className = 'header-navbar header-navbar-expand-xl header-navbar-light header-bg-light header-px-xl-5 header-d-flex header-justify-content-between header-align-items-center';
 
-  const togglerButton = document.createElement('button');
-  togglerButton.classList.add('header-navbar-toggler', 'header-collapsed');
-  togglerButton.setAttribute('type', 'button');
-  togglerButton.setAttribute('data-toggle', 'collapse');
-  togglerButton.setAttribute('data-target', '#navbarSupportedContent');
-  togglerButton.setAttribute('aria-controls', 'navbarSupportedContent');
-  togglerButton.setAttribute('aria-expanded', 'false');
-  togglerButton.setAttribute('aria-label', 'Toggle navigation');
-  const togglerSpan = document.createElement('span');
-  togglerSpan.classList.add('header-navbar-toggler-icon');
-  togglerButton.append(togglerSpan);
-  moveInstrumentation(block.querySelector('button.header-navbar-toggler'), togglerButton);
+  const navbarToggler = document.createElement('button');
+  navbarToggler.className = 'header-navbar-toggler header-collapsed';
+  navbarToggler.type = 'button';
+  navbarToggler.setAttribute('data-toggle', 'collapse');
+  navbarToggler.setAttribute('data-target', '#navbarSupportedContent');
+  navbarToggler.setAttribute('aria-controls', 'navbarSupportedContent');
+  navbarToggler.setAttribute('aria-expanded', 'false');
+  navbarToggler.setAttribute('aria-label', 'Toggle navigation');
+  const togglerIcon = document.createElement('span');
+  togglerIcon.className = 'header-navbar-toggler-icon';
+  navbarToggler.append(togglerIcon);
+  moveInstrumentation(block.querySelector('.header-navbar-toggler'), navbarToggler);
 
-  const dXlNoneDiv = document.createElement('div');
-  dXlNoneDiv.classList.add('header-d-xl-none');
-  dXlNoneDiv.innerHTML = '&nbsp;';
-  moveInstrumentation(block.querySelector('.header-d-xl-none'), dXlNoneDiv);
+  const spacerDiv = document.createElement('div');
+  spacerDiv.className = 'header-d-xl-none';
+  moveInstrumentation(block.querySelector('.header-d-xl-none'), spacerDiv);
 
   const logoDiv = document.createElement('div');
-  logoDiv.classList.add('header-logo', 'header-image');
-  const logoImageAUE = block.querySelector('[data-aue-prop="logoImage"]');
-  if (logoImageAUE) {
-    const logoLinkAUE = block.querySelector('[data-aue-prop="logoLink"]');
-    const logoLink = document.createElement('a');
-    logoLink.classList.add('header-cmp-image__link');
-    logoLink.setAttribute('target', '_blank');
-    if (logoLinkAUE) {
-      logoLink.setAttribute('href', logoLinkAUE.textContent.trim());
-      moveInstrumentation(logoLinkAUE, logoLink);
+  logoDiv.className = 'header-logo header-image';
+
+  const logoLink = block.querySelector('[data-aue-prop="logoLink"]');
+  const secondaryLogoLink = block.querySelector('[data-aue-prop="secondaryLogoLink"]');
+
+  if (logoLink) {
+    const logoAnchor = document.createElement('a');
+    logoAnchor.href = logoLink.href;
+    if (logoLink.target) {
+      logoAnchor.target = logoLink.target;
     }
-    const logoImg = logoImageAUE.querySelector('img');
-    if (logoImg) {
-      const picture = createOptimizedPicture(logoImg.src, logoImg.alt);
-      logoLink.append(picture);
-      moveInstrumentation(logoImageAUE, picture);
+    const logoImage = block.querySelector('[data-aue-prop="logoImage"]');
+    if (logoImage) {
+      const picture = createOptimizedPicture(logoImage.src, logoImage.alt);
+      logoAnchor.append(picture);
+      moveInstrumentation(logoImage, picture);
     }
-    logoDiv.append(logoLink);
+    logoDiv.append(logoAnchor);
+    moveInstrumentation(logoLink, logoAnchor);
+  }
+
+  if (secondaryLogoLink) {
+    const secondaryLogoAnchor = document.createElement('a');
+    secondaryLogoAnchor.href = secondaryLogoLink.href;
+    if (secondaryLogoLink.target) {
+      secondaryLogoAnchor.target = secondaryLogoLink.target;
+    }
+    const secondaryLogoImage = block.querySelector('[data-aue-prop="secondaryLogoImage"]');
+    if (secondaryLogoImage) {
+      const picture = createOptimizedPicture(secondaryLogoImage.src, secondaryLogoImage.alt);
+      secondaryLogoAnchor.append(picture);
+      moveInstrumentation(secondaryLogoImage, picture);
+    }
+    logoDiv.append(secondaryLogoAnchor);
+    moveInstrumentation(secondaryLogoLink, secondaryLogoAnchor);
   }
 
   const collapseDiv = document.createElement('div');
-  collapseDiv.classList.add('header-collapse', 'header-navbar-collapse', 'header-justify-content-center');
-  collapseDiv.setAttribute('id', 'navbarSupportedContent');
+  collapseDiv.className = 'header-collapse header-navbar-collapse header-justify-content-center';
+  collapseDiv.id = 'navbarSupportedContent';
 
-  const navItemNavDiv = document.createElement('div');
-  navItemNavDiv.classList.add('header-nav-item', 'header-navigation');
-  const navCmpNav = document.createElement('nav');
-  navCmpNav.setAttribute('id', 'navigation-6d5dcb0126');
-  navCmpNav.classList.add('header-cmp-navigation');
-  navCmpNav.setAttribute('itemscope', '');
-  navCmpNav.setAttribute('itemtype', 'http://schema.org/SiteNavigationElement');
-  navCmpNav.setAttribute('role', 'navigation');
-  const navCmpGroup = document.createElement('ul');
-  navCmpGroup.classList.add('header-cmp-navigation__group');
+  const navItem = document.createElement('div');
+  navItem.className = 'header-nav-item header-navigation';
 
-  const shopLinkAUE = block.querySelector('[data-aue-prop="shopLink"]');
-  if (shopLinkAUE) {
-    const shopLi = document.createElement('li');
-    shopLi.classList.add('header-cmp-navigation__item', 'header-cmp-navigation__item--level-0');
-    const shopA = document.createElement('a');
-    shopA.classList.add('header-cmp-navigation__item-link');
-    shopA.setAttribute('href', shopLinkAUE.textContent.trim());
-    shopA.textContent = 'Shop';
-    shopLi.append(shopA);
-    navCmpGroup.append(shopLi);
-    moveInstrumentation(shopLinkAUE, shopA);
-  }
+  const nav = document.createElement('nav');
+  nav.id = 'navigation-6d5dcb0126';
+  nav.className = 'header-cmp-navigation';
+  nav.setAttribute('itemscope', '');
+  nav.setAttribute('itemtype', 'http://schema.org/SiteNavigationElement');
+  nav.setAttribute('role', 'navigation');
 
-  const ourHeritageLinkAUE = block.querySelector('[data-aue-prop="ourHeritageLink"]');
-  if (ourHeritageLinkAUE) {
-    const heritageLi = document.createElement('li');
-    heritageLi.classList.add('header-cmp-navigation__item', 'header-cmp-navigation__item--level-0');
-    const heritageA = document.createElement('a');
-    heritageA.classList.add('header-cmp-navigation__item-link');
-    heritageA.setAttribute('href', ourHeritageLinkAUE.textContent.trim());
-    heritageA.textContent = 'Our Heritage';
-    heritageLi.append(heritageA);
-    navCmpGroup.append(heritageLi);
-    moveInstrumentation(ourHeritageLinkAUE, heritageA);
-  }
+  const navGroup = document.createElement('ul');
+  navGroup.className = 'header-cmp-navigation__group';
 
-  navCmpNav.append(navCmpGroup);
-  navItemNavDiv.append(navCmpNav);
+  const navigationLinks = block.querySelectorAll('[data-aue-model="headerNavLink"]');
+  navigationLinks.forEach((linkNode) => {
+    const linkItem = document.createElement('li');
+    linkItem.className = 'header-cmp-navigation__item header-cmp-navigation__item--level-0';
+    const linkAnchor = document.createElement('a');
+    linkAnchor.className = 'header-cmp-navigation__item-link';
+    const linkUrl = linkNode.querySelector('[data-aue-prop="linkUrl"]');
+    const linkLabel = linkNode.querySelector('[data-aue-prop="linkLabel"]') || linkNode.querySelector('p');
+
+    if (linkUrl) {
+      linkAnchor.href = linkUrl.href;
+      moveInstrumentation(linkUrl, linkAnchor);
+    }
+    if (linkLabel) {
+      linkAnchor.textContent = linkLabel.textContent;
+      moveInstrumentation(linkLabel, linkAnchor);
+    }
+    linkItem.append(linkAnchor);
+    navGroup.append(linkItem);
+    moveInstrumentation(linkNode, linkItem);
+  });
+
+  nav.append(navGroup);
+  navItem.append(nav);
+  moveInstrumentation(block.querySelector('.header-nav-item.header-navigation'), navItem);
 
   const sectionDiv = document.createElement('div');
-  sectionDiv.classList.add('header-section', 'header-d-flex', 'header-align-items-center', 'header-justify-content-end');
+  sectionDiv.className = 'header-section header-d-flex header-align-items-center header-justify-content-end';
 
-  const countrySelectorDiv = document.createElement('div');
-  countrySelectorDiv.classList.add('header-search-icon', 'header-country-selector-trigger', 'header-d-flex', 'header-align-items-center');
-  countrySelectorDiv.setAttribute('data-toggle', 'modal');
-  countrySelectorDiv.setAttribute('data-target', '#countryModal');
+  const searchIconDiv = document.createElement('div');
+  searchIconDiv.className = 'header-search-icon header-country-selector-trigger header-d-flex header-align-items-center';
+  searchIconDiv.setAttribute('data-toggle', 'modal');
+  searchIconDiv.setAttribute('data-target', '#countryModal');
 
   const countryCodeSpan = document.createElement('span');
-  countryCodeSpan.classList.add('header-country-code');
-  countryCodeSpan.textContent = 'IN'; // Default
-  countrySelectorDiv.append(countryCodeSpan);
-
-  const flagIndiaAUE = block.querySelector('[data-aue-prop="flagIndia"]');
-  if (flagIndiaAUE) {
-    const flagImg = document.createElement('img');
-    flagImg.classList.add('header-country-flag');
-    flagImg.setAttribute('src', flagIndiaAUE.textContent.trim());
-    flagImg.setAttribute('alt', 'flag');
-    countrySelectorDiv.append(flagImg);
-    countrySelectorDiv.setAttribute('data-flag-in', flagIndiaAUE.textContent.trim());
-    moveInstrumentation(flagIndiaAUE, flagImg);
+  countryCodeSpan.className = 'header-country-code';
+  const countryCode = block.querySelector('[data-aue-prop="countryCode"]');
+  if (countryCode) {
+    countryCodeSpan.textContent = countryCode.textContent;
+    moveInstrumentation(countryCode, countryCodeSpan);
   }
 
-  const flagUSAAUE = block.querySelector('[data-aue-prop="flagUSA"]');
-  if (flagUSAAUE) {
-    countrySelectorDiv.setAttribute('data-flag-usa', flagUSAAUE.textContent.trim());
-    moveInstrumentation(flagUSAAUE, countrySelectorDiv);
+  const countryFlagImage = block.querySelector('[data-aue-prop="countryFlagImage"]');
+  if (countryFlagImage) {
+    const flagImg = createOptimizedPicture(countryFlagImage.src, countryFlagImage.alt).querySelector('img');
+    flagImg.className = 'header-header-country-flag header-country-flag';
+    searchIconDiv.append(flagImg);
+    moveInstrumentation(countryFlagImage, flagImg);
   }
 
   const dropdownIcon = document.createElement('img');
-  dropdownIcon.setAttribute('src', '/content/dam/aemigrate/uploaded-folder/image/dropdown-icon.png');
-  dropdownIcon.setAttribute('alt', 'dropdown-icon');
-  dropdownIcon.classList.add('header-dropdown-icon');
-  countrySelectorDiv.append(dropdownIcon);
+  dropdownIcon.src = '/content/dam/aemigrate/uploaded-folder/image/dropdown-icon.png'; // Hardcoded as per sample
+  dropdownIcon.alt = 'dropdown-icon';
+  dropdownIcon.className = 'header-dropdown-icon';
 
-  sectionDiv.append(countrySelectorDiv);
-
-  collapseDiv.append(navItemNavDiv, sectionDiv);
+  searchIconDiv.append(countryCodeSpan, dropdownIcon);
+  sectionDiv.append(searchIconDiv);
+  moveInstrumentation(block.querySelector('.header-search-icon.header-country-selector-trigger'), searchIconDiv);
 
   const itcHeaderIconList = document.createElement('div');
-  itcHeaderIconList.classList.add('header-itc-header-icon-list');
+  itcHeaderIconList.className = 'header-itc-header-icon-list';
 
   const searchBlock = document.createElement('div');
-  searchBlock.setAttribute('id', 'searchBlock');
-  searchBlock.classList.add('header-search-block', 'header-hidden');
+  searchBlock.id = 'searchBlock';
+  searchBlock.className = 'header-search-block header-hidden';
 
   const searchBox = document.createElement('div');
-  searchBox.setAttribute('id', 'searchBox');
-  searchBox.classList.add('header-search-box');
+  searchBox.id = 'searchBox';
+  searchBox.className = 'header-search-box';
 
   const searchContainer = document.createElement('div');
-  searchContainer.setAttribute('id', 'searchContainer');
-  searchContainer.classList.add('header-search-container', 'header-hidden');
+  searchContainer.id = 'searchContainer';
+  searchContainer.className = 'header-search-container header-hidden';
 
   const searchInput = document.createElement('input');
-  searchInput.setAttribute('type', 'text');
-  searchInput.setAttribute('id', 'searchInput');
-  searchInput.setAttribute('placeholder', 'Search');
+  searchInput.type = 'text';
+  searchInput.id = 'searchInput';
+  searchInput.placeholder = 'Search';
 
   const searchButton = document.createElement('button');
-  searchButton.setAttribute('id', 'searchButton');
+  searchButton.id = 'searchButton';
   const searchButtonImg = document.createElement('img');
-  searchButtonImg.setAttribute('loading', 'lazy');
-  searchButtonImg.setAttribute('src', '/content/dam/aemigrate/uploaded-folder/image/search-icon.png');
-  searchButtonImg.setAttribute('alt', 'Search icon');
+  searchButtonImg.loading = 'lazy';
+  searchButtonImg.src = '/content/dam/aemigrate/uploaded-folder/image/search-icon.png'; // Hardcoded
+  searchButtonImg.alt = 'Search icon';
   searchButton.append(searchButtonImg);
-
   searchContainer.append(searchInput, searchButton);
 
   const closeButton = document.createElement('img');
-  closeButton.setAttribute('id', 'closeButton');
-  closeButton.setAttribute('loading', 'lazy');
-  closeButton.setAttribute('src', '/content/dam/aemigrate/uploaded-folder/image/1774253626039.svg+xml');
-  closeButton.setAttribute('alt', 'Close icon');
+  closeButton.id = 'closeButton';
+  closeButton.loading = 'lazy';
+  closeButton.src = '/content/dam/aemigrate/uploaded-folder/image/1774855562454.svg+xml'; // Hardcoded
+  closeButton.alt = 'Close icon';
 
   searchBox.append(searchContainer, closeButton);
 
   const searchResults = document.createElement('div');
-  searchResults.setAttribute('id', 'searchResults');
-  searchResults.classList.add('header-search-results', 'header-hidden');
+  searchResults.id = 'searchResults';
+  searchResults.className = 'header-search-results header-hidden';
 
-  const popularSuggestionsH4 = document.createElement('h4');
-  popularSuggestionsH4.classList.add('header-resultList');
-  popularSuggestionsH4.textContent = 'Popular Suggestions';
+  const popularSuggestions = document.createElement('h4');
+  popularSuggestions.className = 'header-resultList';
+  popularSuggestions.textContent = 'Popular Suggestions';
   const suggestionsList = document.createElement('ul');
-  suggestionsList.setAttribute('id', 'suggestionsList');
+  suggestionsList.id = 'suggestionsList';
 
-  const pagesH4 = document.createElement('h4');
-  pagesH4.classList.add('header-resultList');
-  pagesH4.textContent = 'Pages';
+  const pagesListTitle = document.createElement('h4');
+  pagesListTitle.className = 'header-resultList';
+  pagesListTitle.textContent = 'Pages';
   const productsList = document.createElement('ul');
-  productsList.setAttribute('id', 'productsList');
-  productsList.classList.add('header-products');
+  productsList.id = 'productsList';
+  productsList.className = 'header-products';
 
   const viewAllButton = document.createElement('button');
-  viewAllButton.setAttribute('id', 'viewAllButton');
+  viewAllButton.id = 'viewAllButton';
   viewAllButton.textContent = 'VIEW ALL ITEMS';
 
-  searchResults.append(popularSuggestionsH4, suggestionsList, pagesH4, productsList, viewAllButton);
+  searchResults.append(popularSuggestions, suggestionsList, pagesListTitle, productsList, viewAllButton);
   searchBlock.append(searchBox, searchResults);
+  itcHeaderIconList.append(searchBlock);
+  moveInstrumentation(block.querySelector('#searchBlock'), searchBlock);
 
-  const searchLink = document.createElement('a');
-  searchLink.classList.add('header-nav-link');
-
-  const searchIconAUE = block.querySelector('[data-aue-prop="searchIcon"]');
-  if (searchIconAUE) {
-    const searchIconImg = document.createElement('img');
-    searchIconImg.setAttribute('loading', 'lazy');
-    searchIconImg.setAttribute('id', 'searchIcon');
-    searchIconImg.setAttribute('src', searchIconAUE.textContent.trim());
-    searchIconImg.setAttribute('alt', 'Search icon');
-    searchLink.append(searchIconImg);
-    moveInstrumentation(searchIconAUE, searchIconImg);
+  const searchNavLink = document.createElement('a');
+  searchNavLink.className = 'header-nav-link';
+  const searchIconImage = block.querySelector('[data-aue-prop="searchIconImage"]');
+  if (searchIconImage) {
+    const searchImg = createOptimizedPicture(searchIconImage.src, searchIconImage.alt).querySelector('img');
+    searchImg.loading = 'lazy';
+    searchImg.id = 'searchIcon';
+    searchNavLink.append(searchImg);
+    moveInstrumentation(searchIconImage, searchImg);
   }
-
   const searchSpan = document.createElement('span');
-  searchSpan.classList.add('header-d-block');
-  searchSpan.textContent = 'Search';
-  searchLink.append(searchSpan);
+  searchSpan.className = 'header-d-block';
+  searchSpan.textContent = 'Search'; // Hardcoded as per sample
+  searchNavLink.append(searchSpan);
+  itcHeaderIconList.append(searchNavLink);
+  moveInstrumentation(block.querySelector('a.header-nav-link'), searchNavLink);
 
-  itcHeaderIconList.append(searchBlock, searchLink);
+  navbar.append(navbarToggler, spacerDiv, logoDiv, collapseDiv, itcHeaderIconList);
+  collapseDiv.append(navItem, sectionDiv);
 
-  nav.append(togglerButton, dXlNoneDiv, logoDiv, collapseDiv, itcHeaderIconList);
-  headerContainer.append(nav);
+  headerContainer.append(navbar);
 
   const modal = document.createElement('div');
-  modal.classList.add('header-modal', 'header-fade', 'header-itc-country-selector', 'header-show');
-  modal.setAttribute('id', 'countryModal');
-  modal.setAttribute('tabindex', '-1');
+  modal.className = 'header-modal header-fade header-itc-country-selector header-show';
+  modal.id = 'countryModal';
+  modal.tabIndex = -1;
   modal.setAttribute('role', 'dialog');
   modal.setAttribute('aria-labelledby', 'countryModalLabel');
   modal.setAttribute('aria-modal', 'true');
-  modal.setAttribute('style', 'display: block;');
+  modal.style.display = 'block';
 
   const modalDialog = document.createElement('div');
-  modalDialog.classList.add('header-modal-dialog', 'header-modal-dialog-centered');
+  modalDialog.className = 'header-modal-dialog header-modal-dialog-centered';
   modalDialog.setAttribute('role', 'document');
 
   const modalContent = document.createElement('div');
-  modalContent.classList.add('header-modal-content');
+  modalContent.className = 'header-modal-content';
 
   const modalHeader = document.createElement('div');
-  modalHeader.classList.add('header-modal-header', 'header-border-0', 'header-text-center');
+  modalHeader.className = 'header-modal-header header-border-0 header-text-center';
 
-  const modalHeaderW100 = document.createElement('div');
-  modalHeaderW100.classList.add('header-w-100');
+  const headerW100 = document.createElement('div');
+  headerW100.className = 'header-w-100';
 
   const modalTitle = document.createElement('h2');
-  modalTitle.classList.add('header-modal-title');
-  modalTitle.innerHTML = 'SELECT YOUR <br>KITCHENS OF INDIA';
+  modalTitle.className = 'header-modal-title';
+  modalTitle.innerHTML = 'SELECT YOUR <br>KITCHENS OF INDIA'; // Hardcoded
 
   const experienceText = document.createElement('p');
-  experienceText.classList.add('header-experience-text');
-  experienceText.textContent = 'Experience';
+  experienceText.className = 'header-experience-text';
+  experienceText.textContent = 'Experience'; // Hardcoded
 
-  modalHeaderW100.append(modalTitle, experienceText);
-  modalHeader.append(modalHeaderW100);
+  headerW100.append(modalTitle, experienceText);
+  modalHeader.append(headerW100);
 
   const modalBody = document.createElement('div');
-  modalBody.classList.add('header-modal-body');
+  modalBody.className = 'header-modal-body';
 
-  const countryOptions = document.createElement('div');
-  countryOptions.classList.add('header-country-options', 'header-d-flex', 'header-justify-content-center', 'header-align-items-center');
+  const countryOptionsDiv = document.createElement('div');
+  countryOptionsDiv.className = 'header-country-options header-d-flex header-justify-content-center header-align-items-center';
 
-  const indiaOption = document.createElement('div');
-  indiaOption.classList.add('header-country-option', 'header-selected', 'header-mx-3', 'header-d-flex', 'header-flex-column', 'header-align-items-center');
-  indiaOption.setAttribute('data-country', 'india');
-  indiaOption.setAttribute('data-url', '/india');
+  const countryOptions = block.querySelectorAll('[data-aue-model="headerCountryOption"]');
+  countryOptions.forEach((optionNode) => {
+    const countryOptionDiv = document.createElement('div');
+    countryOptionDiv.className = 'header-country-option header-mx-3 header-d-flex header-flex-column header-align-items-center';
 
-  const indiaFlagImg = document.createElement('img');
-  indiaFlagImg.setAttribute('src', '/content/dam/aemigrate/uploaded-folder/image/india-1-fmt-webp-alpha.webp');
-  indiaFlagImg.setAttribute('alt', 'India Flag');
-  indiaFlagImg.classList.add('header-country-flag', 'header-india-flag');
+    const flagImage = optionNode.querySelector('[data-aue-prop="flagImage"]');
+    if (flagImage) {
+      const flagImg = createOptimizedPicture(flagImage.src, flagImage.alt).querySelector('img');
+      flagImg.className = 'header-country-flag';
+      countryOptionDiv.append(flagImg);
+      moveInstrumentation(flagImage, flagImg);
+    }
 
-  const indiaCountryName = document.createElement('p');
-  indiaCountryName.classList.add('header-country-name');
-  indiaCountryName.textContent = 'India';
+    const countryName = optionNode.querySelector('[data-aue-prop="countryName"]') || optionNode.querySelector('p');
+    if (countryName) {
+      const countryNameP = document.createElement('p');
+      countryNameP.className = 'header-country-name';
+      countryNameP.textContent = countryName.textContent;
+      countryOptionDiv.append(countryNameP);
+      moveInstrumentation(countryName, countryNameP);
+    }
 
-  indiaOption.append(indiaFlagImg, indiaCountryName);
+    countryOptionsDiv.append(countryOptionDiv);
+    moveInstrumentation(optionNode, countryOptionDiv);
+  });
 
-  const usaOption = document.createElement('div');
-  usaOption.classList.add('header-country-option', 'header-mx-3', 'header-d-flex', 'header-flex-column', 'header-align-items-center');
-  usaOption.setAttribute('data-country', 'usa');
-  usaOption.setAttribute('data-url', '/usa');
-
-  const usaFlagImg = document.createElement('img');
-  usaFlagImg.setAttribute('src', '/content/dam/aemigrate/uploaded-folder/image/usa-fmt-webp-alpha.webp');
-  usaFlagImg.setAttribute('alt', 'USA Flag');
-  usaFlagImg.classList.add('header-country-flag', 'header-usa-flag');
-
-  const usaCountryName = document.createElement('p');
-  usaCountryName.classList.add('header-country-name');
-  usaCountryName.textContent = 'USA';
-
-  usaOption.append(usaFlagImg, usaCountryName);
-
-  countryOptions.append(indiaOption, usaOption);
-  modalBody.append(countryOptions);
+  modalBody.append(countryOptionsDiv);
   modalContent.append(modalHeader, modalBody);
   modalDialog.append(modalContent);
   modal.append(modalDialog);
 
+  headerContainer.append(modal);
+
   block.textContent = '';
-  block.append(headerContainer, modal);
-  block.className = 'header-itc-header-section block';
+  block.append(headerContainer);
+  block.className = 'header block';
   block.dataset.blockStatus = 'loaded';
 }

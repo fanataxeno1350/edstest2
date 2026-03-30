@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Banner-Carousel",
-      "id": "bannerCarousel",
+      "title": "Card-List",
+      "id": "cardList",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "bannerCarousel",
-              "model": "bannerCarousel",
-              "name": "Banner-Carousel"
+              "filter": "cardList",
+              "model": "cardList",
+              "name": "Card-List"
             }
           }
         }
       }
     },
     {
-      "title": "Banner-Carousel-Item",
-      "id": "bannerCarouselItem",
+      "title": "Card",
+      "id": "card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "bannerCarouselItem",
-              "name": "Banner-Carousel-Item"
+              "model": "card",
+              "name": "Card"
             }
           }
         }
@@ -34,24 +34,18 @@
   ],
   "models": [
     {
-      "id": "bannerCarouselItem",
+      "id": "card",
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Image",
-          "name": "desktopImage",
+          "label": "Image",
+          "name": "image",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Mobile Image",
-          "name": "mobileImage",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "component": "richtext",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
@@ -61,15 +55,15 @@
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
+          "component": "reference",
+          "label": "Link Icon",
+          "name": "linkIcon",
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
@@ -77,9 +71,9 @@
   ],
   "filters": [
     {
-      "id": "bannerCarousel",
+      "id": "card-List",
       "components": [
-        "bannerCarouselItem"
+        "card"
       ]
     }
   ]

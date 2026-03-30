@@ -17,14 +17,19 @@
       "columns",
       "fragment",
       "---new--blocks-----",
+      "rsCardList",
+      "koiRSCardList",
+      "experienceFragmentHeader",
       "header",
+      "logoHeader",
+      "navigation",
       "bannerCarousel",
       "spaceAdder",
       "itcClubCarousel",
-      "makeRightShift",
-      "rsCards",
+      "delightfulDelicacies",
+      "cardList",
       "footer",
-      "howShift"
+      "footerLinks"
     ]
   },
   {
@@ -34,50 +39,74 @@
     ]
   },
   {
-    "id": "cards",
+    "id": "card-List",
     "components": [
       "card"
     ]
   },
   {
-    "id": "footer",
-    "components": [
-      "footerLink",
-      "socialIcon"
-    ]
-  },
-  {
-    "id": "header",
-    "components": [
-      "header"
-    ]
-  },
-  {
-    "id": "howShift",
-    "components": [
-      "howShiftItem"
-    ]
-  },
-  {
-    "id": "itc-club-carousel",
-    "components": [
-      "carouselItem"
-    ]
-  },
-  {
-    "id": "makeRightShift",
+    "id": "delightfulDelicacies",
     "components": [
       "category"
     ]
   },
   {
-    "id": "rsCards",
+    "id": "experienceFragmentHeader",
     "components": [
-      "rsCard"
+      "navigationLink",
+      "countryOption"
     ]
   },
   {
-    "id": "spaceAdder"
+    "id": "footerLinks",
+    "components": [
+      "footerLink"
+    ]
+  },
+  {
+    "id": "footer",
+    "components": [
+      "footerLogo",
+      "footerLink",
+      "footerSocialIcon"
+    ]
+  },
+  {
+    "id": "header",
+    "components": [
+      "headerNavLink",
+      "headerCountryOption"
+    ]
+  },
+  {
+    "id": "itcClubCarousel",
+    "components": [
+      "carouselItem"
+    ]
+  },
+  {
+    "id": "koiRSCardList",
+    "components": [
+      "koiRSCard"
+    ]
+  },
+  {
+    "id": "logoHeader",
+    "components": [
+      "logoHeader"
+    ]
+  },
+  {
+    "id": "navigation",
+    "components": [
+      "navItem"
+    ]
+  },
+  {
+    "id": "rsCardList",
+    "components": [
+      "rsCard"
+    ]
   },
   {
     "id": "spaceAdder"

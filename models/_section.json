@@ -52,14 +52,19 @@
         "columns",
         "fragment",
         "---new--blocks-----",
+        "rsCardList",
+        "koiRSCardList",
+        "experienceFragmentHeader",
         "header",
+        "logoHeader",
+        "navigation",
         "bannerCarousel",
         "spaceAdder",
         "itcClubCarousel",
-        "makeRightShift",
-        "rsCards",
+        "delightfulDelicacies",
+        "cardList",
         "footer",
-        "howShift"
+        "footerLinks"
       ]
     }
   ]

@@ -17,6 +17,6 @@ export default function decorate(block) {
 
   block.textContent = '';
   block.append(section);
-  block.className = `spaceadder-spaceAdder spaceadder-aem-GridColumn spaceadder-aem-GridColumn--default--12 block`;
+  block.className = `spaceadder-spaceAdder spaceadder-aem-GridColumn spaceadder-aem-GridColumn--default--12 ${block.dataset.blockName} block`;
   block.dataset.blockStatus = 'loaded';
 }
