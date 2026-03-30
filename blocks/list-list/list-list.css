@@ -1,0 +1,345 @@
+@keyframes list-cmp-search__loading-indicator-spin { 0%{transform:rotate(0)}
+100%{transform:rotate(360deg)}
+ }
+
+@keyframes list-cmp-search__loading-indicator-spin { 0%{transform:rotate(0)}
+100%{transform:rotate(360deg)}
+ }
+
+@media print { *,::after,::before { text-shadow:none !important;box-shadow:none !important }
+
+.list-abbr[title]::after {  content:" (" attr(title) ")"  }
+
+.list-pre {  white-space:pre-wrap !important  }
+
+.list-blockquote, .list-pre {  border:1px solid #adb5bd;page-break-inside:avoid  }
+
+.list-img, .list-tr {  page-break-inside:avoid  }
+
+.list-h2, .list-h3, p {  orphans:3;widows:3  }
+
+.list-h2, h3 {  page-break-after:avoid  }
+
+@page{size:a3}
+
+.list-body { min-width:992px !important } }
+
+@keyframes list-cmp-search__loading-indicator-spin {  
+  100% { transform: rotate(360deg); }
+ }
+
+@keyframes list-cmp-search__loading-indicator-spin {  
+  100% { transform: rotate(360deg); }
+ }
+
+@media print { *, ::after, ::before {  text-shadow: none !important; box-shadow: none !important;  }
+
+.list-abbr[title]::after {   content: " (" attr(title) ")";   }
+
+.list-pre {   white-space: pre-wrap !important;   }
+
+.list-blockquote, .list-pre {   border: 1px solid rgb(173, 181, 189); break-inside: avoid;   }
+
+.list-img, .list-tr {   break-inside: avoid;   }
+
+.list-h2, .list-h3, p {   orphans: 3; widows: 3;   }
+
+.list-h2, h3 {   break-after: avoid;   }
+
+@page { size: a3; }
+
+.list-body {  min-width: 992px !important;  } }
+
+/* Computed styles: div.list-4 list */
+@media (min-width: 1200px) { div.list-4 .list-list { 
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 118px;
+    border-block-end-color: rgb(45, 33, 25);
+    border-block-start-color: rgb(45, 33, 25);
+    border-bottom-color: rgb(45, 33, 25);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(45, 33, 25);
+    border-inline-start-color: rgb(45, 33, 25);
+    border-left-color: rgb(45, 33, 25);
+    border-right-color: rgb(45, 33, 25);
+    border-top-color: rgb(45, 33, 25);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(45, 33, 25);
+    clip-rule: nonzero;
+    color: rgb(45, 33, 25);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(45, 33, 25);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-basis: 0%;
+    flex-direction: row;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 118px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 310px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(45, 33, 25);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 155px 59px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(45, 33, 25);
+    text-decoration-color: rgb(45, 33, 25);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(45, 33, 25);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 155px 59px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 310px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(45, 33, 25);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(45, 33, 25);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+   } }
+
+/* Computed styles: ul#list-499c6a3139.cmp-list */
+@media (min-width: 1200px) { ul#list-499c6a3139.list-cmp-list { 
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 48px;
+    border-block-end-color: rgb(45, 33, 25);
+    border-block-start-color: rgb(45, 33, 25);
+    border-bottom-color: rgb(45, 33, 25);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(45, 33, 25);
+    border-inline-start-color: rgb(45, 33, 25);
+    border-left-color: rgb(45, 33, 25);
+    border-right-color: rgb(45, 33, 25);
+    border-top-color: rgb(45, 33, 25);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(45, 33, 25);
+    clip-rule: nonzero;
+    color: rgb(45, 33, 25);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(45, 33, 25);
+    direction: ltr;
+    display: grid;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    grid-template-columns: 310px;
+    grid-template-rows: 24px 24px;
+    height: 48px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 310px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    margin-block-end: 16px;
+    margin-bottom: 16px;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(45, 33, 25);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 155px 24px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(45, 33, 25);
+    text-decoration-color: rgb(45, 33, 25);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(45, 33, 25);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 155px 24px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 310px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(45, 33, 25);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(45, 33, 25);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+   } }

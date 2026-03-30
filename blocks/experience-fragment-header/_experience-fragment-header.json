@@ -1,0 +1,125 @@
+{
+  "definitions": [
+    {
+      "title": "Experience-Fragment-Header",
+      "id": "experienceFragmentHeader",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "experienceFragmentHeader",
+              "model": "experienceFragmentHeader",
+              "name": "Experience-Fragment-Header"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "experienceFragmentHeader",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo Image",
+          "name": "logoImage",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Secondary Logo Link",
+          "name": "secondaryLogoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Secondary Logo Image",
+          "name": "secondaryLogoImage",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Nav Shop Label",
+          "name": "navShopLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Nav Shop Link",
+          "name": "navShopLink",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Nav Our Heritage Label",
+          "name": "navOurHeritageLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Nav Our Heritage Link",
+          "name": "navOurHeritageLink",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Country Flag India",
+          "name": "countryFlagIndia",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Country Flag USA",
+          "name": "countryFlagUsa",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Country Name India",
+          "name": "countryNameIndia",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Country Name USA",
+          "name": "countryNameUsa",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Search Icon",
+          "name": "searchIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Dropdown Icon",
+          "name": "dropdownIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Close Icon",
+          "name": "closeIcon",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "experienceFragmentHeader",
+      "components": [
+        "experienceFragmentHeader"
+      ]
+    }
+  ]
+}
