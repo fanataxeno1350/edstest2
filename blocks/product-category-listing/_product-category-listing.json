@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Category",
-      "id": "category",
+      "title": "Product-Category",
+      "id": "productCategory",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "category",
-              "name": "Category"
+              "model": "productCategory",
+              "name": "Product-Category"
             }
           }
         }
@@ -34,33 +34,7 @@
   ],
   "models": [
     {
-      "id": "productCategoryListing",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Title",
-          "name": "title",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Subtitle",
-          "name": "subtitle",
-          "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": {
-            "type": "category"
-          },
-          "label": "Categories",
-          "name": "categories",
-          "valueType": "array"
-        }
-      ]
-    },
-    {
-      "id": "category",
+      "id": "productCategory",
       "fields": [
         {
           "component": "reference",
@@ -70,8 +44,8 @@
         },
         {
           "component": "text",
-          "label": "Name",
-          "name": "name",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
@@ -81,13 +55,30 @@
           "valueType": "string"
         }
       ]
+    },
+    {
+      "id": "productCategoryListing",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Sub Title",
+          "name": "subTitle",
+          "valueType": "string"
+        }
+      ]
     }
   ],
   "filters": [
     {
       "id": "productCategoryListing",
       "components": [
-        "category"
+        "productCategory"
       ]
     }
   ]

@@ -18,14 +18,28 @@
       "fragment",
       "---new--blocks-----",
       "header",
+      "logo",
+      "navigation",
+      "productofmonthPlantProtein",
       "search",
+      "footer",
       "carousel",
+      "banner",
       "productCategoryListing",
       "teaser",
-      "recipeGroup",
+      "recipeCarousel",
+      "card",
       "popularProducts",
       "ourFootPrint",
-      "footer"
+      "video",
+      "footerSubscribe",
+      "formText"
+    ]
+  },
+  {
+    "id": "banner",
+    "components": [
+      "banner"
     ]
   },
   {
@@ -35,24 +49,60 @@
     ]
   },
   {
+    "id": "card",
+    "components": [
+      "card"
+    ]
+  },
+  {
     "id": "carousel",
     "components": [
       "carouselItem"
     ]
   },
   {
+    "id": "footerSubscribe",
+    "components": [
+      "footerSubscribe"
+    ]
+  },
+  {
     "id": "footer",
     "components": [
-      "footerNavItem",
-      "footerNavRightItem",
-      "footerBottomLink",
-      "footerSocialItem"
+      "footerLink",
+      "footerSocialLink"
+    ]
+  },
+  {
+    "id": "formText",
+    "components": [
+      "formText"
     ]
   },
   {
     "id": "header",
     "components": [
       "navItem",
+      "policyLink",
+      "socialLink"
+    ]
+  },
+  {
+    "id": "image",
+    "components": [
+      "image"
+    ]
+  },
+  {
+    "id": "logo",
+    "components": [
+      "logo"
+    ]
+  },
+  {
+    "id": "navigation",
+    "components": [
+      "navigationItem",
       "policyLink",
       "socialLink"
     ]
@@ -72,14 +122,19 @@
   {
     "id": "productCategoryListing",
     "components": [
-      "category"
+      "productCategory"
     ]
   },
   {
-    "id": "recipeGroup",
+    "id": "productofmonth-plant-protein",
     "components": [
-      "tab",
-      "recipeCard"
+      "productofmonthPlantProtein"
+    ]
+  },
+  {
+    "id": "recipeCarousel",
+    "components": [
+      "recipe"
     ]
   },
   {
@@ -98,6 +153,12 @@
     "id": "text",
     "components": [
       "text"
+    ]
+  },
+  {
+    "id": "video",
+    "components": [
+      "video"
     ]
   }
 ]

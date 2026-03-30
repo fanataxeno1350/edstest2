@@ -1,0 +1,94 @@
+{
+  "definitions": [
+    {
+      "title": "Footer-Subscribe",
+      "id": "footerSubscribe",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "footerSubscribe",
+              "model": "footerSubscribe",
+              "name": "Footer-Subscribe"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footerSubscribe",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo",
+          "name": "logo",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Email",
+          "name": "email",
+          "valueType": "string"
+        },
+        {
+          "component": "boolean",
+          "label": "I Agree",
+          "name": "i_agree"
+        },
+        {
+          "component": "aem-content",
+          "label": "Privacy Policy Link",
+          "name": "privacyPolicyLink",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Consent Text",
+          "name": "consentText",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Register Button Label",
+          "name": "registerButtonLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Register API Url",
+          "name": "registerApiUrl",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Success Message",
+          "name": "successMessage",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Failure Message",
+          "name": "failureMessage",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "footerSubscribe",
+      "components": [
+        "footerSubscribe"
+      ]
+    }
+  ]
+}

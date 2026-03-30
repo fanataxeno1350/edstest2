@@ -37,15 +37,15 @@
       "id": "product",
       "fields": [
         {
-          "component": "reference",
-          "label": "Image",
-          "name": "image",
+          "component": "aem-content",
+          "label": "Product Link",
+          "name": "productLink",
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
           "valueType": "string"
         },
         {
@@ -59,62 +59,6 @@
           "label": "Product Details",
           "name": "productDetails",
           "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "popularProducts",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Title",
-          "name": "title",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Subtitle",
-          "name": "subtitle",
-          "valueType": "string"
-        },
-        {
-          "component": "boolean",
-          "label": "Show Arrows",
-          "name": "showArrows"
-        },
-        {
-          "component": "boolean",
-          "label": "Meatballs",
-          "name": "meatballs"
-        },
-        {
-          "component": "boolean",
-          "label": "Auto Play Is Enabled",
-          "name": "autoPlayIsEnabled"
-        },
-        {
-          "component": "number",
-          "label": "Auto Play Speed in ms",
-          "name": "autoPlaySpeedInMs"
-        },
-        {
-          "component": "boolean",
-          "label": "Infinite Scroll",
-          "name": "infiniteScroll"
-        },
-        {
-          "component": "text",
-          "label": "Endpoint",
-          "name": "endpoint",
-          "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": {
-            "type": "product"
-          },
-          "label": "Products",
-          "name": "products"
         }
       ]
     }

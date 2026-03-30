@@ -38,8 +38,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Logo",
-          "name": "logo",
+          "label": "Background Image",
+          "name": "backgroundImage",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Logo Image",
+          "name": "logoImage",
           "valueType": "string"
         },
         {
@@ -56,8 +62,14 @@
         },
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image",
+          "label": "Main Image Desktop",
+          "name": "mainImageDesktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Main Image Mobile",
+          "name": "mainImageMobile",
           "valueType": "string"
         },
         {

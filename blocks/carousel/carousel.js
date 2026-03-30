@@ -2,48 +2,101 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const wrapper = document.createElement('div');
-  wrapper.classList.add('slickcarousel-cmp-carousel');
-  wrapper.setAttribute('id', 'slickcarousel-45c1cf16aa');
-  wrapper.setAttribute('data-placeholder-text', 'false');
-  wrapper.setAttribute('data-cmp-is', 'carousel');
-  wrapper.setAttribute('data-show-infinite-scroll', 'false');
-  wrapper.setAttribute('data-show-arrows', 'true');
-  wrapper.setAttribute('data-show-dots', 'true');
-  wrapper.setAttribute('data-item-count-per-slide', '1');
-  wrapper.setAttribute('data-auto-play-is-enabled', 'false');
-  wrapper.setAttribute('data-auto-play-speed-in-ms', '2000');
-  wrapper.setAttribute('data-reveal-next-item-partially', 'false');
-  wrapper.setAttribute('data-component', 'carousel');
+  const carouselItems = block.querySelectorAll('[data-aue-model="carouselItem"]');
 
-  [...block.children].forEach((row) => {
-    const item = document.createElement('div');
-    moveInstrumentation(row, item);
-    item.classList.add('slickcarousel-cmp-carousel__item', 'slickcarousel-cmp-carousel__item--active', 'slickcarousel-slick-slide', 'slickcarousel-slick-current', 'slickcarousel-slick-active');
-    while (row.firstElementChild) item.append(row.firstElementChild);
-    [...item.children].forEach((div) => {
-      if (div.querySelector('img')) {
-        div.className = 'slickcarousel-banner-cmp-banner__item-logo';
-      } else if (div.querySelector('h2')) {
-        div.className = 'slickcarousel-banner-cmp-banner__title';
-      } else if (div.querySelector('h3')) {
-        div.className = 'slickcarousel-banner-cmp-banner__sub-title';
-      } else if (div.children.length === 1 && div.querySelector('picture')) {
-        div.classList.add('slickcarousel-w-100', 'slickcarousel-d-block');
-      } else if (div.querySelector('a')) {
-        div.classList.add('slickcarousel-null', 'slickcarousel-button', 'slickcarousel-cmp-button--primary-anchor');
-      } else {
+  const carouselWrapper = document.createElement('div');
+  carouselWrapper.classList.add('carousel-wrapper');
+
+  carouselItems.forEach((itemNode) => {
+    const slide = document.createElement('div');
+    slide.classList.add('carousel-slide');
+
+    const contentWrapper = document.createElement('div');
+    contentWrapper.classList.add('carousel-slide-content');
+
+    // Background Image
+    const backgroundImageSrc = itemNode.querySelector('[data-aue-prop="backgroundImage"]')?.textContent.trim();
+    if (backgroundImageSrc) {
+      slide.style.backgroundImage = `url("${backgroundImageSrc}")`;
+    }
+
+    // Logo Image
+    const logoImg = itemNode.querySelector('[data-aue-prop="logoImage"]');
+    if (logoImg) {
+      const logoPicture = createOptimizedPicture(logoImg.src, logoImg.alt);
+      logoPicture.classList.add('carousel-logo');
+      contentWrapper.append(logoPicture);
+      moveInstrumentation(logoImg, logoPicture);
+    }
+
+    // Title
+    const titleElement = itemNode.querySelector('[data-aue-prop="title"]');
+    if (titleElement) {
+      const h2 = document.createElement('h2');
+      h2.classList.add('carousel-title');
+      h2.textContent = titleElement.textContent.trim();
+      contentWrapper.append(h2);
+      moveInstrumentation(titleElement, h2);
+    }
+
+    // Subtitle
+    const subtitleElement = itemNode.querySelector('[data-aue-prop="subtitle"]');
+    if (subtitleElement) {
+      const h3 = document.createElement('h3');
+      h3.classList.add('carousel-subtitle');
+      h3.textContent = subtitleElement.textContent.trim();
+      contentWrapper.append(h3);
+      moveInstrumentation(subtitleElement, h3);
+    }
+
+    // Main Image (Desktop and Mobile)
+    const mainImageDesktop = itemNode.querySelector('[data-aue-prop="mainImageDesktop"]');
+    const mainImageMobile = itemNode.querySelector('[data-aue-prop="mainImageMobile"]');
+
+    if (mainImageDesktop || mainImageMobile) {
+      const picture = document.createElement('picture');
+      picture.classList.add('carousel-main-image');
+
+      if (mainImageMobile) {
+        const sourceMobile = document.createElement('source');
+        sourceMobile.media = '(max-width: 600px)';
+        sourceMobile.srcset = mainImageMobile.src;
+        picture.append(sourceMobile);
+        moveInstrumentation(mainImageMobile, sourceMobile);
       }
-    });
-    wrapper.append(item);
-  });
 
-  wrapper.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
+      if (mainImageDesktop) {
+        const img = createOptimizedPicture(mainImageDesktop.src, mainImageDesktop.alt).querySelector('img');
+        picture.append(img);
+        moveInstrumentation(mainImageDesktop, img);
+      }
+      contentWrapper.append(picture);
+    }
+
+    // CTA Link
+    const ctaLinkElement = itemNode.querySelector('[data-aue-prop="ctaLink"]');
+    const ctaTextElement = itemNode.querySelector('[data-aue-prop="ctaText"]');
+
+    if (ctaLinkElement && ctaTextElement) {
+      const buttonContainer = document.createElement('div');
+      buttonContainer.classList.add('button-container');
+      const link = document.createElement('a');
+      link.href = ctaLinkElement.textContent.trim();
+      link.textContent = ctaTextElement.textContent.trim();
+      link.classList.add('button', 'primary');
+      buttonContainer.append(link);
+      contentWrapper.append(buttonContainer);
+      moveInstrumentation(ctaLinkElement, link);
+      moveInstrumentation(ctaTextElement, link);
+    }
+
+    slide.append(contentWrapper);
+    carouselWrapper.append(slide);
+    moveInstrumentation(itemNode, slide);
   });
 
   block.textContent = '';
-  block.append(wrapper);
+  block.append(carouselWrapper);
+  block.className = `${block.dataset.blockName} block`;
+  block.dataset.blockStatus = 'loaded';
 }

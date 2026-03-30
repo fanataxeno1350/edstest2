@@ -37,6 +37,12 @@
       "id": "search",
       "fields": [
         {
+          "component": "text",
+          "label": "Input Placeholder",
+          "name": "inputPlaceholder",
+          "valueType": "string"
+        },
+        {
           "component": "number",
           "label": "Minimum Length",
           "name": "minLength",
@@ -56,12 +62,6 @@
         },
         {
           "component": "text",
-          "label": "Input Placeholder",
-          "name": "inputPlaceholder",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
           "label": "No Results Title",
           "name": "noResultsTitle",
           "valueType": "string"
@@ -75,7 +75,7 @@
         {
           "component": "container",
           "item": {
-            "$ref": "category"
+            "type": "category"
           },
           "label": "Categories",
           "name": "categories",

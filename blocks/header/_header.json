@@ -17,7 +17,7 @@
       }
     },
     {
-      "title": "Nav-Item",
+      "title": "Navigation Item",
       "id": "navItem",
       "plugins": {
         "xwalk": {
@@ -25,14 +25,29 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "navItem",
-              "name": "Nav-Item"
+              "name": "Navigation Item"
             }
           }
         }
       }
     },
     {
-      "title": "Policy-Link",
+      "title": "Sub Navigation Item",
+      "id": "subNavItem",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "subNavItem",
+              "name": "Sub Navigation Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Policy Link",
       "id": "policyLink",
       "plugins": {
         "xwalk": {
@@ -40,14 +55,14 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "policyLink",
-              "name": "Policy-Link"
+              "name": "Policy Link"
             }
           }
         }
       }
     },
     {
-      "title": "Social-Link",
+      "title": "Social Link",
       "id": "socialLink",
       "plugins": {
         "xwalk": {
@@ -55,7 +70,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "socialLink",
-              "name": "Social-Link"
+              "name": "Social Link"
             }
           }
         }
@@ -67,38 +82,38 @@
       "id": "header",
       "fields": [
         {
-          "component": "boolean",
+          "component": "reference",
+          "label": "Logo Image",
+          "name": "logoImage",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "checkbox-group",
           "label": "Show Hamburger",
           "name": "showHamburger",
           "valueType": "boolean"
         },
         {
-          "component": "reference",
-          "label": "Logo",
-          "name": "logo",
-          "valueType": "string"
-        },
-        {
           "component": "container",
-          "items": {
-            "type": "navItem"
-          },
+          "itemType": "navItem",
           "label": "Navigation Items",
-          "name": "navigation"
+          "name": "navigationItems"
         },
         {
           "component": "container",
-          "items": {
-            "type": "policyLink"
-          },
+          "itemType": "policyLink",
           "label": "Policy Links",
           "name": "policyLinks"
         },
         {
           "component": "container",
-          "items": {
-            "type": "socialLink"
-          },
+          "itemType": "socialLink",
           "label": "Social Links",
           "name": "socialLinks"
         }
@@ -108,15 +123,38 @@
       "id": "navItem",
       "fields": [
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "URL",
-          "name": "url",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "itemType": "subNavItem",
+          "label": "Sub Navigation Items",
+          "name": "subNavigationItems"
+        }
+      ]
+    },
+    {
+      "id": "subNavItem",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
@@ -125,15 +163,15 @@
       "id": "policyLink",
       "fields": [
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "URL",
-          "name": "url",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
@@ -142,15 +180,15 @@
       "id": "socialLink",
       "fields": [
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Platform",
           "name": "platform",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "URL",
-          "name": "url",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]

@@ -1,0 +1,237 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const topContent = document.createElement('div');
+  topContent.classList.add('footer-cmp-footer__top-content');
+
+  const navLogo = document.createElement('div');
+  navLogo.classList.add('footer-cmp-footer__nav-logo');
+
+  const logoWrapper = document.createElement('div');
+  logoWrapper.classList.add('footer-logo', 'footer-image', 'footer-cmp-footer__logo');
+  const logoImg = block.querySelector('[data-aue-prop="logo"] img');
+  if (logoImg) {
+    const picture = createOptimizedPicture(logoImg.src, logoImg.alt);
+    const link = logoImg.closest('a');
+    if (link) {
+      const newLink = document.createElement('a');
+      newLink.href = link.href;
+      newLink.append(picture);
+      logoWrapper.append(newLink);
+      moveInstrumentation(logoImg.closest('.footer-cmp-image'), logoWrapper);
+    } else {
+      logoWrapper.append(picture);
+      moveInstrumentation(logoImg.closest('.footer-cmp-image'), logoWrapper);
+    }
+  }
+  navLogo.append(logoWrapper);
+
+  const fssaiLogoWrapper = document.createElement('div');
+  fssaiLogoWrapper.classList.add('footer-logofssai', 'footer-logo', 'footer-image', 'footer-cmp-footer__fssai_logo');
+  const fssaiLogoImg = block.querySelector('[data-aue-prop="fssaiLogo"] img');
+  if (fssaiLogoImg) {
+    fssaiLogoWrapper.append(createOptimizedPicture(fssaiLogoImg.src, fssaiLogoImg.alt));
+    moveInstrumentation(fssaiLogoImg.closest('.footer-cmp-image'), fssaiLogoWrapper);
+  }
+  navLogo.append(fssaiLogoWrapper);
+  topContent.append(navLogo);
+
+  const subscribeDiv = document.createElement('div');
+  subscribeDiv.classList.add('footer-cmp-footer__nav-subscribe');
+
+  const subscribeTextDiv = document.createElement('div');
+  subscribeTextDiv.classList.add('footer-cmp-footer__nav-text');
+  const subscribeImage = block.querySelector('[data-aue-prop="subscribeImage"] img');
+  if (subscribeImage) {
+    subscribeTextDiv.append(subscribeImage);
+    moveInstrumentation(subscribeImage, subscribeTextDiv);
+  }
+  const subscribeTitle = block.querySelector('[data-aue-prop="subscribeTitle"]');
+  if (subscribeTitle) {
+    const h3 = document.createElement('h3');
+    h3.textContent = subscribeTitle.textContent;
+    subscribeTextDiv.append(h3);
+    moveInstrumentation(subscribeTitle, h3);
+  }
+  subscribeDiv.append(subscribeTextDiv);
+
+  const inputContainer = document.createElement('div');
+  inputContainer.classList.add('footer-container', 'footer-responsivegrid', 'footer-cmp-input');
+  const inputDiv = document.createElement('div');
+  inputDiv.classList.add('footer-text', 'footer-aem-GridColumn', 'footer-aem-GridColumn--default--12', 'footer-cmp-input__email');
+  const inputCmpDiv = document.createElement('div');
+  inputCmpDiv.classList.add('footer-cmp-form-text');
+  const input = document.createElement('input');
+  input.classList.add('footer-cmp-form-text__text');
+  input.type = 'email';
+  const subscribePlaceholder = block.querySelector('[data-aue-prop="subscribePlaceholder"]');
+  input.placeholder = subscribePlaceholder ? subscribePlaceholder.textContent : 'Enter your Email ID';
+  if (subscribePlaceholder) {
+    moveInstrumentation(subscribePlaceholder, input);
+  }
+  input.name = 'email';
+  inputCmpDiv.append(input);
+  inputDiv.append(inputCmpDiv);
+  inputContainer.append(inputDiv);
+  subscribeDiv.append(inputContainer);
+
+  const errorMessageDiv = document.createElement('div');
+  errorMessageDiv.classList.add('footer-cmp-footer__error-message');
+  subscribeDiv.append(errorMessageDiv);
+
+  const consentDiv = document.createElement('div');
+  consentDiv.classList.add('footer-cmp-footer__consent');
+  const consentInput = document.createElement('input');
+  consentInput.type = 'checkbox';
+  consentInput.id = 'i_agree';
+  consentInput.name = 'i_agree';
+  consentInput.value = 'i_agree';
+  consentInput.classList.add('footer-cmp-footer__consent--checkbox');
+  const consentCheckbox = block.querySelector('[data-aue-prop="consent"]');
+  if (consentCheckbox) {
+    consentInput.checked = consentCheckbox.checked;
+    moveInstrumentation(consentCheckbox, consentInput);
+  }
+  consentDiv.append(consentInput);
+
+  const consentLinkDiv = document.createElement('div');
+  consentLinkDiv.classList.add('footer-cmp-footer__consent--link');
+  const privacyPolicyLink = block.querySelector('[data-aue-prop="privacyPolicyLink"]');
+  if (privacyPolicyLink) {
+    consentLinkDiv.append(privacyPolicyLink);
+    moveInstrumentation(privacyPolicyLink, consentLinkDiv);
+  }
+  consentDiv.append(consentLinkDiv);
+  subscribeDiv.append(consentDiv);
+
+  const registerButtonDiv = document.createElement('div');
+  registerButtonDiv.classList.add('footer-button', 'footer-cmp-button--primary', 'footer-cmp-button--primary-anchor-dark');
+  const registerButton = document.createElement('button');
+  registerButton.type = 'button';
+  registerButton.classList.add('footer-cmp-button');
+  registerButton.disabled = true;
+  const registerButtonTextSpan = document.createElement('span');
+  registerButtonTextSpan.classList.add('footer-cmp-button__text');
+  const registerButtonText = block.querySelector('[data-aue-prop="registerButtonText"]');
+  registerButtonTextSpan.textContent = registerButtonText ? registerButtonText.textContent : 'Register Now';
+  if (registerButtonText) {
+    moveInstrumentation(registerButtonText, registerButtonTextSpan);
+  }
+  registerButton.append(registerButtonTextSpan);
+  registerButtonDiv.append(registerButton);
+  subscribeDiv.append(registerButtonDiv);
+
+  topContent.append(subscribeDiv);
+
+  const navDiv = document.createElement('div');
+  navDiv.classList.add('footer-cmp-footer__nav');
+
+  const navLeftDiv = document.createElement('div');
+  navLeftDiv.classList.add('footer-cmp-footer__nav-items', 'footer-cmp-navigation__group--left');
+  const navLeftNav = document.createElement('nav');
+  navLeftNav.classList.add('footer-navigation', 'footer-cmp-navigation');
+  const navLeftUl = document.createElement('ul');
+  navLeftUl.classList.add('footer-cmp-navigation__group');
+  const footerNavLeftItems = block.querySelectorAll('[data-aue-model="footerNavLeft"]');
+  footerNavLeftItems.forEach((itemNode) => {
+    const li = document.createElement('li');
+    li.classList.add('footer-cmp-navigation__item', 'footer-cmp-navigation__item--level-0');
+    const link = itemNode.querySelector('[data-aue-prop="link"]');
+    if (link) {
+      const newLink = document.createElement('a');
+      newLink.href = link.href;
+      newLink.classList.add('footer-cmp-navigation__item-link');
+      newLink.textContent = link.textContent;
+      li.append(newLink);
+      moveInstrumentation(link, newLink);
+    }
+    navLeftUl.append(li);
+    moveInstrumentation(itemNode, li);
+  });
+  navLeftNav.append(navLeftUl);
+  navLeftDiv.append(navLeftNav);
+  navDiv.append(navLeftDiv);
+
+  const navRightDiv = document.createElement('div');
+  navRightDiv.classList.add('footer-cmp-footer__nav-items', 'footer-cmp-navigation__group--right');
+  const navRightNav = document.createElement('nav');
+  navRightNav.classList.add('footer-navigation', 'footer-cmp-navigation');
+  const navRightUl = document.createElement('ul');
+  navRightUl.classList.add('footer-cmp-navigation__group');
+  const footerNavRightItems = block.querySelectorAll('[data-aue-model="footerNavRight"]');
+  footerNavRightItems.forEach((itemNode) => {
+    const li = document.createElement('li');
+    li.classList.add('footer-cmp-navigation__item', 'footer-cmp-navigation__item--level-0');
+    const link = itemNode.querySelector('[data-aue-prop="link"]');
+    if (link) {
+      const newLink = document.createElement('a');
+      newLink.href = link.href;
+      newLink.classList.add('footer-cmp-navigation__item-link');
+      newLink.textContent = link.textContent;
+      li.append(newLink);
+      moveInstrumentation(link, newLink);
+    }
+    navRightUl.append(li);
+    moveInstrumentation(itemNode, li);
+  });
+  navRightNav.append(navRightUl);
+  navRightDiv.append(navRightNav);
+  navDiv.append(navRightDiv);
+
+  topContent.append(navDiv);
+
+  const bottomContent = document.createElement('div');
+  bottomContent.classList.add('footer-cmp-footer__bottom-content');
+
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('footer-cmp-footer__container');
+
+  const itcTitlesDiv = document.createElement('div');
+  itcTitlesDiv.classList.add('footer-cmp-footer__ITC-Titles');
+  const itcPortalLink = block.querySelector('[data-aue-prop="itcPortalLink"]');
+  if (itcPortalLink) {
+    const newLink = document.createElement('a');
+    newLink.href = itcPortalLink.href;
+    newLink.target = '_blank';
+    newLink.classList.add('footer-desc-1');
+    newLink.textContent = itcPortalLink.textContent;
+    itcTitlesDiv.append(newLink);
+    moveInstrumentation(itcPortalLink, newLink);
+  }
+  const copyrightText = block.querySelector('[data-aue-prop="copyrightText"]');
+  if (copyrightText) {
+    const newLink = document.createElement('a'); // This was an 'a' tag in the sample, so recreating it as such.
+    newLink.target = '_blank';
+    newLink.classList.add('footer-desc-1');
+    newLink.textContent = copyrightText.textContent;
+    itcTitlesDiv.append(newLink);
+    moveInstrumentation(copyrightText, newLink);
+  }
+  containerDiv.append(itcTitlesDiv);
+
+  const socialMediaDiv = document.createElement('div');
+  socialMediaDiv.classList.add('footer-cmp-footer__social-media');
+  const socialLinks = block.querySelectorAll('[data-aue-model="socialLinks"]');
+  socialLinks.forEach((itemNode) => {
+    const link = itemNode.querySelector('[data-aue-prop="link"]');
+    if (link) {
+      const newLink = document.createElement('a');
+      newLink.href = link.href;
+      newLink.target = '_blank';
+      newLink.classList.add(link.className);
+      newLink.dataset.social = link.dataset.social;
+      socialMediaDiv.append(newLink);
+      moveInstrumentation(link, newLink);
+    }
+    moveInstrumentation(itemNode, socialMediaDiv);
+  });
+  containerDiv.append(socialMediaDiv);
+
+  bottomContent.append(containerDiv);
+
+  block.textContent = '';
+  block.append(topContent, bottomContent);
+  block.className = 'footer block';
+  block.dataset.blockStatus = 'loaded';
+}

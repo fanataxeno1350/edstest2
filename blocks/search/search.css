@@ -1,0 +1,14 @@
+@keyframes search-cmp-search__loading-indicator-spin { 0%{transform:rotate(0deg)}to{transform:rotate(1turn)} }
+
+.search-cmp-search .search-cmp-search__results:not(:has(.search-cmp-search__item)) {  padding-bottom:1.375rem  }
+
+@media only screen and (max-width:1023px) { .search-cmp-search .search-cmp-search__results:not(:has(.search-cmp-search__item)) {  padding-bottom:.75rem  } }
+
+@keyframes search-cmp-search__loading-indicator-spin {  
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(1turn); }
+ }
+
+.search-cmp-search .search-cmp-search__results:not(:has(.search-cmp-search__item)) {   padding-bottom: 1.375rem;   }
+
+@media only screen and (max-width: 1023px) { .search-cmp-search .search-cmp-search__results:not(:has(.search-cmp-search__item)) {   padding-bottom: 0.75rem;   } }
