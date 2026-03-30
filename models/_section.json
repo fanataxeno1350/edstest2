@@ -51,20 +51,7 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----",
-        "rsCardList",
-        "koiRSCardList",
-        "experienceFragmentHeader",
-        "header",
-        "logoHeader",
-        "navigation",
-        "bannerCarousel",
-        "spaceAdder",
-        "itcClubCarousel",
-        "delightfulDelicacies",
-        "cardList",
-        "footer",
-        "footerLinks"
+        "---new--blocks-----"
       ]
     }
   ]
