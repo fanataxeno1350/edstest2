@@ -15,28 +15,34 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "header-nav",
+      "category-list",
+      "search-block",
+      "elementor-footer"
     ]
   },
   {
-    "id": "cards",
+    "id": "category-list",
     "components": [
-      "card"
+      "category"
     ]
   },
   {
-    "id": "columns",
+    "id": "elementor-footer",
     "components": [
-      "column"
+      "social-link"
     ]
   },
   {
-    "id": "column",
+    "id": "header-nav",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "header-nav-menu-item",
+      "header-nav-icon-link"
     ]
+  },
+  {
+    "id": "search-block"
   }
 ]

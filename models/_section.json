@@ -51,7 +51,11 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "header-nav",
+        "category-list",
+        "search-block",
+        "elementor-footer"
       ]
     }
   ]

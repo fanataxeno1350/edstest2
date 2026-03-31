@@ -142,75 +142,185 @@
     ]
   },
   {
-    "id": "card",
+    "id": "category-list",
     "fields": [
       {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
       },
       {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
+        "component": "container",
+        "item": "category",
+        "label": "Categories",
+        "name": "categories"
+      }
+    ]
+  },
+  {
+    "id": "category",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "columns",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "columns",
-        "value": "",
-        "label": "Columns"
-      },
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "rows",
-        "value": "",
-        "label": "Rows"
-      }
-    ]
-  },
-  {
-    "id": "fragment",
+    "id": "elementor-footer",
     "fields": [
       {
         "component": "aem-content",
-        "name": "reference",
-        "label": "Reference"
+        "label": "Careers Link",
+        "name": "careers-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Terms & Conditions",
+        "name": "terms-conditions",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Disclaimer",
+        "name": "disclaimer",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Follow Us",
+        "name": "follow-us",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "social-link",
+        "label": "Social Links",
+        "name": "social-links"
+      },
+      {
+        "component": "reference",
+        "label": "Site Logo",
+        "name": "site-logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Site Logo Link",
+        "name": "site-logo-link",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "hero",
+    "id": "social-link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "header-nav",
     "fields": [
       {
         "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
+        "label": "Site Logo",
+        "name": "site-logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Site Logo Link",
+        "name": "site-logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "header-nav-menu-item",
+        "label": "Menu Items",
+        "name": "menu-items"
+      },
+      {
+        "component": "container",
+        "item": "header-nav-icon-link",
+        "label": "Icon Links",
+        "name": "icon-links"
+      }
+    ]
+  },
+  {
+    "id": "header-nav-menu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "header-nav-icon-link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "search-block",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Alt",
-        "value": ""
-      },
-      {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
+        "label": "Placeholder",
+        "name": "placeholder",
         "valueType": "string"
       }
     ]

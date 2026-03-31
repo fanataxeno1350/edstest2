@@ -1,0 +1,88 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const eConInner = document.createElement('div');
+  eConInner.classList.add('e-con-inner');
+
+  const eGridConBoxed = document.createElement('div');
+  eGridConBoxed.classList.add('elementor-element', 'elementor-element-956ee7c', 'e-grid', 'e-con-boxed', 'e-con', 'e-child');
+  eGridConBoxed.append(eConInner);
+
+  [...block.children].forEach((row) => {
+    const cells = [...row.children]; // Get all cells in the current row
+
+    const eConFull = document.createElement('div');
+    moveInstrumentation(row, eConFull);
+    eConFull.classList.add('elementor-element', 'e-con-full', 'e-flex', 'e-con', 'e-child');
+
+    // Check 1: Title cell
+    const titleCell = cells[0];
+    if (titleCell) {
+      const headingDiv = document.createElement('div');
+      headingDiv.classList.add('elementor-element', 'elementor-widget', 'elementor-widget-heading');
+      const headingWidgetContainer = document.createElement('div');
+      headingWidgetContainer.classList.add('elementor-widget-container');
+      const h2 = document.createElement('h2');
+      h2.classList.add('elementor-heading-title', 'elementor-size-default');
+      moveInstrumentation(titleCell, h2);
+      while (titleCell.firstChild) h2.append(titleCell.firstChild);
+      headingWidgetContainer.append(h2);
+      headingDiv.append(headingWidgetContainer);
+      eConFull.append(headingDiv);
+    }
+
+    // Check 2: Link cell
+    const linkCell = cells[1]; // Access the second cell for the link
+    if (linkCell) {
+      const flipBoxDiv = document.createElement('div');
+      flipBoxDiv.classList.add('elementor-element', 'elementor-flip-box--effect-fade', 'elementor-widget', 'elementor-widget-flip-box');
+      const flipBoxWidgetContainer = document.createElement('div');
+      flipBoxWidgetContainer.classList.add('elementor-widget-container');
+      const elementorFlipBox = document.createElement('div');
+      elementorFlipBox.classList.add('elementor-flip-box');
+      elementorFlipBox.setAttribute('tabindex', '0');
+
+      const frontLayer = document.createElement('div');
+      frontLayer.classList.add('elementor-flip-box__layer', 'elementor-flip-box__front');
+      const frontOverlay = document.createElement('div');
+      frontOverlay.classList.add('elementor-flip-box__layer__overlay');
+      const frontInner = document.createElement('div');
+      frontInner.classList.add('elementor-flip-box__layer__inner');
+      frontOverlay.append(frontInner);
+      frontLayer.append(frontOverlay);
+      elementorFlipBox.append(frontLayer);
+
+      const backLayer = document.createElement('div');
+      backLayer.classList.add('elementor-flip-box__layer', 'elementor-flip-box__back');
+      const backOverlay = document.createElement('div');
+      backOverlay.classList.add('elementor-flip-box__layer__overlay');
+      const backInner = document.createElement('div');
+      backInner.classList.add('elementor-flip-box__layer__inner');
+
+      const foundLink = linkCell.querySelector('a');
+      if (foundLink) {
+        const linkButton = document.createElement('a');
+        linkButton.classList.add('elementor-flip-box__button', 'elementor-button', 'elementor-size-sm');
+        linkButton.href = foundLink.href;
+        moveInstrumentation(linkCell, linkButton);
+        // Append the text content of the link cell to the button
+        while (linkCell.firstChild) {
+          linkButton.append(linkCell.firstChild);
+        }
+        backInner.append(linkButton);
+      }
+
+      backOverlay.append(backInner);
+      backLayer.append(backOverlay);
+      elementorFlipBox.append(backLayer);
+      flipBoxWidgetContainer.append(elementorFlipBox);
+      flipBoxDiv.append(flipBoxWidgetContainer);
+      eConFull.append(flipBoxDiv);
+    }
+    eConInner.append(eConFull);
+  });
+
+  block.textContent = '';
+  block.append(eGridConBoxed);
+}
