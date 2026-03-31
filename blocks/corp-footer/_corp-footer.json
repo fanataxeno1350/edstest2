@@ -81,8 +81,8 @@
         {
           "component": "container",
           "item": "columns",
-          "label": "Columns",
-          "name": "columns"
+          "label": "Footer Columns",
+          "name": "footer-columns"
         }
       ]
     },
@@ -97,26 +97,9 @@
         },
         {
           "component": "container",
-          "item": "link",
+          "item": "aem-content",
           "label": "Links",
           "name": "links"
-        }
-      ]
-    },
-    {
-      "id": "link",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "Link URL",
-          "name": "url",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Link Text",
-          "name": "text",
-          "valueType": "string"
         }
       ]
     },
@@ -131,32 +114,9 @@
         },
         {
           "component": "container",
-          "item": "contact-icon",
-          "label": "Contact Icons",
-          "name": "icons"
-        }
-      ]
-    },
-    {
-      "id": "contact-icon",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "Icon Link",
-          "name": "url",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Icon Image",
-          "name": "icon",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Alt Text",
-          "name": "alt",
-          "valueType": "string"
+          "item": "aem-content",
+          "label": "Contact Items",
+          "name": "contact-items"
         }
       ]
     },

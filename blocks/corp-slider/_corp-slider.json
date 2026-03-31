@@ -37,9 +37,9 @@
       "id": "corp-slider",
       "fields": [
         {
-          "component": "richtext",
-          "label": "Heading",
-          "name": "heading",
+          "component": "text",
+          "label": "Section Title",
+          "name": "section-title",
           "valueType": "string"
         },
         {
@@ -51,7 +51,7 @@
         {
           "component": "container",
           "item": "corp-slider-item",
-          "label": "Slider Items",
+          "label": "Items",
           "name": "items"
         }
       ]
@@ -66,21 +66,15 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Alt Text",
-          "name": "alt",
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Title",
           "name": "title",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
           "valueType": "string"
         }
       ]

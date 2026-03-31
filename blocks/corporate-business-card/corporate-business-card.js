@@ -2,20 +2,17 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [titleRow, ...itemRows] = [...block.children];
+  const [businessCardTitleRow, ...itemRows] = [...block.children];
 
   const gContainer = document.createElement('div');
   gContainer.classList.add('g-container');
 
-  // Title
-  const titleP = document.createElement('p');
-  // The title content is in the first div of the titleRow
-  moveInstrumentation(titleRow.firstElementChild, titleP);
-  titleP.classList.add('business-card-title');
-  titleP.append(titleRow.firstElementChild.textContent);
-  gContainer.append(titleP);
+  const businessCardTitle = document.createElement('p');
+  moveInstrumentation(businessCardTitleRow.firstElementChild, businessCardTitle);
+  businessCardTitle.classList.add('business-card-title');
+  businessCardTitle.append(...businessCardTitleRow.firstElementChild.children);
+  gContainer.append(businessCardTitle);
 
-  // Horizontal Rule
   const hr = document.createElement('hr');
   hr.classList.add('business-card-title-hr');
   gContainer.append(hr);
@@ -28,6 +25,8 @@ export default function decorate(block) {
     moveInstrumentation(row, businessCardItem);
     businessCardItem.classList.add('business-card-item');
 
+    const [videoPosterCell, logoCell, titleCell, subtitleCell, linkCell] = [...row.children];
+
     const overlay = document.createElement('div');
     overlay.classList.add('overlay');
     businessCardItem.append(overlay);
@@ -35,128 +34,66 @@ export default function decorate(block) {
     const businessCardItemAssets = document.createElement('div');
     businessCardItemAssets.classList.add('business-card-item-assets');
 
+    // Video Poster
+    const videoContainer = document.createElement('div');
+    // Corrected class names for videoContainer
+    videoContainer.classList.add('video-js', 'business-card__video');
+    const picture = videoPosterCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        videoContainer.append(optimizedPic);
+      }
+    }
+    businessCardItemAssets.append(videoContainer);
+    businessCardItem.append(businessCardItemAssets);
+
     const businessCardItemInfo = document.createElement('div');
     businessCardItemInfo.classList.add('business-card-item-info');
 
     const businessCardItemLogo = document.createElement('div');
     businessCardItemLogo.classList.add('business-card-item-logo');
+    const logoPicture = logoCell.querySelector('picture');
+    if (logoPicture) {
+      const logoImg = logoPicture.querySelector('img');
+      if (logoImg) {
+        const optimizedLogoPic = createOptimizedPicture(logoImg.src, logoImg.alt, false, [{ width: '750' }]);
+        moveInstrumentation(logoImg, optimizedLogoPic.querySelector('img'));
+        businessCardItemLogo.append(optimizedLogoPic);
+      }
+    }
+    businessCardItemInfo.append(businessCardItemLogo);
 
     const businessCardItemDesc = document.createElement('div');
     businessCardItemDesc.classList.add('business-card-item-desc');
 
     const businessCardItemTitle = document.createElement('div');
     businessCardItemTitle.classList.add('business-card-item-title');
+    moveInstrumentation(titleCell, businessCardItemTitle);
+    businessCardItemTitle.append(...titleCell.children);
+    businessCardItemDesc.append(businessCardItemTitle);
 
     const businessCardItemSubtitle = document.createElement('p');
     businessCardItemSubtitle.classList.add('business-card-item-subtitle');
+    moveInstrumentation(subtitleCell, businessCardItemSubtitle);
+    businessCardItemSubtitle.append(...subtitleCell.children);
+    businessCardItemDesc.append(businessCardItemSubtitle);
 
-    let videoPosterPicture;
-    let logoPicture;
-    let headingText;
-    let subtitleText;
-    let linkElement;
-
-    // Destructure cells based on BlockJson model
-    const cells = [...row.children];
-    if (cells.length >= 5) { // Ensure there are enough cells
-      videoPosterPicture = cells[0].querySelector('picture');
-      logoPicture = cells[1].querySelector('picture');
-      headingText = cells[2].textContent;
-      subtitleText = cells[3].textContent;
-      linkElement = cells[4].querySelector('a');
+    const link = linkCell.querySelector('a');
+    if (link) {
+      const buttonLink = document.createElement('a');
+      moveInstrumentation(link, buttonLink);
+      buttonLink.href = link.href;
+      // Corrected class names for buttonLink
+      buttonLink.classList.add('button', 'button-primary-white');
+      buttonLink.textContent = link.textContent;
+      businessCardItemDesc.append(buttonLink);
     }
 
-    // Handle video poster image and video playback
-    if (videoPosterPicture) {
-      const videoDiv = document.createElement('div');
-      videoDiv.classList.add('video-js', 'business-card__video');
-      videoDiv.setAttribute('playsinline', 'true');
-      videoDiv.setAttribute('loop', 'true');
-      videoDiv.setAttribute('muted', 'true');
-      videoDiv.setAttribute('preload', 'auto');
-      videoDiv.setAttribute('poster', videoPosterPicture.querySelector('img').src);
-
-      const video = document.createElement('video');
-      video.classList.add('vjs-tech', 'video-js', 'business-card__video');
-      video.setAttribute('playsinline', '');
-      video.setAttribute('muted', 'muted');
-      video.setAttribute('loop', '');
-      video.setAttribute('preload', 'auto');
-      video.setAttribute('poster', videoPosterPicture.querySelector('img').src);
-      videoDiv.append(video);
-
-      const posterDiv = document.createElement('div');
-      posterDiv.classList.add('vjs-poster');
-      posterDiv.setAttribute('aria-disabled', 'false');
-      posterDiv.setAttribute('tabindex', '-1');
-
-      const optimizedPosterPic = createOptimizedPicture(
-        videoPosterPicture.querySelector('img').src,
-        videoPosterPicture.querySelector('img').alt,
-        false,
-        [{ width: '750' }],
-      );
-      moveInstrumentation(videoPosterPicture.querySelector('img'), optimizedPosterPic.querySelector('img'));
-      posterDiv.append(optimizedPosterPic);
-      videoDiv.append(posterDiv);
-
-      // Add play/pause functionality
-      businessCardItem.addEventListener('mouseenter', () => {
-        video.play();
-        videoDiv.classList.remove('vjs-paused');
-        videoDiv.classList.add('vjs-playing');
-      });
-
-      businessCardItem.addEventListener('mouseleave', () => {
-        video.pause();
-        video.currentTime = 0; // Reset video to start
-        videoDiv.classList.remove('vjs-playing');
-        videoDiv.classList.add('vjs-paused');
-      });
-
-      businessCardItemAssets.append(videoDiv);
-    }
-
-    // Handle logo
-    if (logoPicture) {
-      const optimizedLogoPic = createOptimizedPicture(
-        logoPicture.querySelector('img').src,
-        logoPicture.querySelector('img').alt,
-        false,
-        [{ width: '210' }],
-      );
-      moveInstrumentation(logoPicture.querySelector('img'), optimizedLogoPic.querySelector('img'));
-      businessCardItemLogo.append(optimizedLogoPic);
-    }
-    businessCardItemInfo.append(businessCardItemLogo);
-
-    // Handle heading
-    if (headingText) {
-      const h3 = document.createElement('h3');
-      h3.textContent = headingText;
-      businessCardItemTitle.append(h3);
-    }
-    businessCardItemDesc.append(businessCardItemTitle);
-
-    // Handle subtitle
-    if (subtitleText) {
-      businessCardItemSubtitle.textContent = subtitleText;
-      businessCardItemDesc.append(businessCardItemSubtitle);
-    }
-
-    // Handle link
-    if (linkElement) {
-      const newLink = document.createElement('a');
-      newLink.href = linkElement.href;
-      newLink.textContent = linkElement.textContent;
-      newLink.classList.add('button', 'button-primary-white');
-      if (linkElement.target) newLink.target = linkElement.target;
-      if (linkElement.rel) newLink.rel = linkElement.rel;
-      businessCardItemDesc.append(newLink);
-    }
     businessCardItemInfo.append(businessCardItemDesc);
-
-    businessCardItem.append(businessCardItemAssets, businessCardItemInfo);
+    businessCardItem.append(businessCardItemInfo);
     businessCardContainer.append(businessCardItem);
   });
 
@@ -164,7 +101,6 @@ export default function decorate(block) {
   block.textContent = '';
   block.append(gContainer);
 
-  // Image optimization (this part was already correct)
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));

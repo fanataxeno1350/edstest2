@@ -2,26 +2,21 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // BlockJson has 5 root model fields: background-image, heading-1, heading-2, values (container), buttons (container)
-  // The remaining rows are item sub-components.
+  // BlockJson defines 8 root fields. The rest are item rows.
   const [
     bgImageRow,
     heading1Row,
     heading2Row,
-    valuesContainerRow, // This row is just a placeholder for the container, its content is not used directly.
-    buttonsContainerRow, // This row is just a placeholder for the container, its content is not used directly.
-    ...itemRows
+    valuesContainerRow, // This row is a container for the value items, but its content isn't directly used.
+    button1LinkRow,
+    button1LabelRow,
+    button2LinkRow,
+    button2LabelRow,
+    ...valueItemRows // All subsequent rows are 'corp-our-value' items
   ] = [...block.children];
-
-  // Distinguish item sub-components based on their content structure.
-  // 'value' items have a picture in their first cell.
-  // 'button' items have an 'a' tag in their first cell and text in their second.
-  const valueItems = itemRows.filter((row) => row.children[0]?.querySelector('picture'));
-  const buttonItems = itemRows.filter((row) => row.children[0]?.querySelector('a') && row.children[1]);
 
   const genericWrapper = document.createElement('section');
   genericWrapper.classList.add('genericWrapper');
-  moveInstrumentation(block, genericWrapper);
 
   // Background Image
   const bgPicture = bgImageRow.querySelector('picture');
@@ -32,6 +27,7 @@ export default function decorate(block) {
     optimizedPic.querySelector('img').classList.add('img-responsive', 'bg-image', 'lazyload');
     genericWrapper.append(optimizedPic);
   }
+  moveInstrumentation(bgImageRow, genericWrapper);
 
   const ourValuesWrapper = document.createElement('section');
   ourValuesWrapper.classList.add('our-values-wrapper');
@@ -45,17 +41,17 @@ export default function decorate(block) {
   mainHeader.append(topBorder);
 
   const h2 = document.createElement('h2');
-  moveInstrumentation(heading1Row.children[0], h2); // Instrumentation should be from the cell, not the row.
   h2.id = 'our';
   h2.classList.add('text-uppercase');
-  h2.textContent = heading1Row.children[0].textContent.trim(); // Read content from the cell.
+  moveInstrumentation(heading1Row, h2);
+  h2.append(heading1Row.firstElementChild.textContent);
   mainHeader.append(h2);
 
   const h3 = document.createElement('h3');
-  moveInstrumentation(heading2Row.children[0], h3); // Instrumentation should be from the cell, not the row.
   h3.id = 'values';
   h3.classList.add('text-uppercase');
-  h3.textContent = heading2Row.children[0].textContent.trim(); // Read content from the cell.
+  moveInstrumentation(heading2Row, h3);
+  h3.append(heading2Row.firstElementChild.textContent);
   mainHeader.append(h3);
 
   ourValuesWrapper.append(mainHeader);
@@ -66,9 +62,10 @@ export default function decorate(block) {
   const ul = document.createElement('ul');
   ul.classList.add('col-lg-12', 'col-md-12', 'col-sm-12');
 
-  valueItems.forEach((row) => {
-    // 'value' item has 1 cell: image
-    const imageCell = row.children[0];
+  // Process 'corp-our-value' item rows
+  valueItemRows.forEach((row) => {
+    // Each item row has two cells: [image, alt-text]
+    const [imageCell, altTextCell] = [...row.children];
 
     const li = document.createElement('li');
     moveInstrumentation(row, li);
@@ -80,7 +77,9 @@ export default function decorate(block) {
     const picture = imageCell.querySelector('picture');
     if (picture) {
       const img = picture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      // Use the alt text from the second cell if available, otherwise fallback to img.alt
+      const altText = altTextCell?.textContent.trim() || img.alt;
+      const optimizedPic = createOptimizedPicture(img.src, altText, false, [{ width: '750' }]);
       moveInstrumentation(img, optimizedPic.querySelector('img'));
       optimizedPic.querySelector('img').classList.add('lazyload');
       imgSpace.append(optimizedPic);
@@ -94,23 +93,33 @@ export default function decorate(block) {
   const buttonHolder = document.createElement('div');
   buttonHolder.classList.add('button-holder');
 
-  buttonItems.forEach((row) => {
-    // 'button' item has 2 cells: link, text
-    const linkCell = row.children[0];
-    const textCell = row.children[1];
+  // Button 1
+  const button1Link = button1LinkRow.querySelector('a');
+  const button1 = document.createElement('a');
+  if (button1Link) {
+    button1.href = button1Link.href;
+    button1.title = button1LabelRow.firstElementChild.textContent;
+    button1.classList.add('button', 'btns', 'button-red');
+    button1.style.marginRight = '10px';
+    button1.target = '_self';
+    moveInstrumentation(button1LinkRow, button1);
+    button1.textContent = button1LabelRow.firstElementChild.textContent;
+    buttonHolder.append(button1);
+  }
 
-    if (linkCell && textCell) {
-      const originalLink = linkCell.querySelector('a');
-      const a = document.createElement('a');
-      moveInstrumentation(linkCell, a);
-      a.href = originalLink.href;
-      a.title = textCell.textContent.trim();
-      a.classList.add('button', 'btns', 'button-red');
-      a.target = '_self';
-      a.textContent = textCell.textContent.trim();
-      buttonHolder.append(a);
-    }
-  });
+  // Button 2
+  const button2Link = button2LinkRow.querySelector('a');
+  const button2 = document.createElement('a');
+  if (button2Link) {
+    button2.href = button2Link.href;
+    button2.title = button2LabelRow.firstElementChild.textContent;
+    button2.classList.add('button', 'btns', 'button-red');
+    button2.target = '_self';
+    moveInstrumentation(button2LinkRow, button2);
+    button2.textContent = button2LabelRow.firstElementChild.textContent;
+    buttonHolder.append(button2);
+  }
+
   ourValuesWrapper.append(buttonHolder);
   genericWrapper.append(ourValuesWrapper);
 

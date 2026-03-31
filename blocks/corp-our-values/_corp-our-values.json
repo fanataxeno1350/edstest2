@@ -17,30 +17,15 @@
       }
     },
     {
-      "title": "Value",
-      "id": "value",
+      "title": "Corp-Our-Value",
+      "id": "corp-our-value",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "value",
-              "name": "Value"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Button",
-      "id": "button",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "button",
-              "name": "Button"
+              "model": "corp-our-value",
+              "name": "Corp-Our-Value"
             }
           }
         }
@@ -71,42 +56,49 @@
         },
         {
           "component": "container",
-          "item": "value",
+          "item": "corp-our-value",
           "label": "Values",
           "name": "values"
         },
         {
-          "component": "container",
-          "item": "button",
-          "label": "Buttons",
-          "name": "buttons"
+          "component": "aem-content",
+          "label": "Button 1 Link",
+          "name": "button-1-link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Button 1 Label",
+          "name": "button-1-label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Button 2 Link",
+          "name": "button-2-link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Button 2 Label",
+          "name": "button-2-label",
+          "valueType": "string"
         }
       ]
     },
     {
-      "id": "value",
+      "id": "corp-our-value",
       "fields": [
         {
           "component": "reference",
           "label": "Image",
           "name": "image",
           "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "button",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Text",
-          "name": "text",
+          "label": "Alt Text",
+          "name": "alt-text",
           "valueType": "string"
         }
       ]
@@ -116,8 +108,7 @@
     {
       "id": "corp-our-values",
       "components": [
-        "value",
-        "button"
+        "corp-our-value"
       ]
     }
   ]

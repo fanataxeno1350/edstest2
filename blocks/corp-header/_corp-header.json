@@ -37,12 +37,6 @@
       "id": "corp-header",
       "fields": [
         {
-          "component": "reference",
-          "label": "Logo",
-          "name": "logo",
-          "valueType": "string"
-        },
-        {
           "component": "container",
           "item": "corp-header-link",
           "label": "Links",
@@ -55,14 +49,8 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "URL",
-          "name": "url",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Text",
-          "name": "text",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]

@@ -37,10 +37,22 @@
       "id": "corp-slider",
       "fields": [
         {
-          "component": "richtext",
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
           "label": "Title",
           "name": "title",
           "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "corp-slider-item",
+          "label": "Slides",
+          "name": "slides"
         }
       ]
     },
@@ -61,8 +73,8 @@
         },
         {
           "component": "text",
-          "label": "Label",
-          "name": "label",
+          "label": "Car Title",
+          "name": "title",
           "valueType": "string"
         },
         {

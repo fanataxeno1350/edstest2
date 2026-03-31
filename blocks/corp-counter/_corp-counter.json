@@ -30,21 +30,6 @@
           }
         }
       }
-    },
-    {
-      "title": "Button",
-      "id": "button",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "button",
-              "name": "Button"
-            }
-          }
-        }
-      }
     }
   ],
   "models": [
@@ -53,27 +38,33 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image Mobile",
-          "name": "background-image-mobile",
+          "label": "Background Mobile",
+          "name": "background-mobile",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Background Image Desktop",
-          "name": "background-image-desktop",
+          "label": "Background Desktop",
+          "name": "background-desktop",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "counter-item",
-          "label": "Counters",
-          "name": "counters"
+          "label": "Counter Items",
+          "name": "counter-items"
         },
         {
-          "component": "container",
-          "item": "button",
-          "label": "Buttons",
-          "name": "buttons"
+          "component": "aem-content",
+          "label": "Button 1",
+          "name": "button-1",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Button 2",
+          "name": "button-2",
+          "valueType": "string"
         }
       ]
     },
@@ -88,31 +79,14 @@
         },
         {
           "component": "text",
-          "label": "Number",
-          "name": "number",
+          "label": "Count Number",
+          "name": "count-number",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Label",
-          "name": "label",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "button",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Text",
-          "name": "text",
+          "label": "Count Label",
+          "name": "count-label",
           "valueType": "string"
         }
       ]
@@ -122,8 +96,7 @@
     {
       "id": "corp-counter",
       "components": [
-        "counter-item",
-        "button"
+        "counter-item"
       ]
     }
   ]

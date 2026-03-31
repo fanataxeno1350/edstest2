@@ -17,10 +17,6 @@
       "columns",
       "fragment",
       "---new--blocks-----",
-      "header-nav",
-      "category-list",
-      "search-block",
-      "elementor-footer",
       "corp-header",
       "corp-carousel",
       "corporate-business-card",
@@ -34,14 +30,13 @@
   {
     "id": "corp-carousel",
     "components": [
-      "carousel-slide"
+      "slide"
     ]
   },
   {
     "id": "corp-counter",
     "components": [
-      "counter-item",
-      "button"
+      "counter-item"
     ]
   },
   {
@@ -61,8 +56,7 @@
   {
     "id": "corp-our-values",
     "components": [
-      "value",
-      "button"
+      "corp-our-value"
     ]
   },
   {

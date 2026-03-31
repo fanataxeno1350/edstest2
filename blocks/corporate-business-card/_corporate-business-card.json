@@ -38,8 +38,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "Title",
-          "name": "title",
+          "label": "Business Card Title",
+          "name": "business-card-title",
           "valueType": "string"
         }
       ]
@@ -61,8 +61,8 @@
         },
         {
           "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
