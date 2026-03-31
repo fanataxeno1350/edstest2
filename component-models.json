@@ -140,5 +140,360 @@
         ]
       }
     ]
+  },
+  {
+    "id": "banner-carousel",
+    "fields": [
+      {
+        "component": "container",
+        "item": "banner",
+        "label": "Banners",
+        "name": "banners"
+      }
+    ]
+  },
+  {
+    "id": "banner",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Desktop Image",
+        "name": "desktop-image",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Image",
+        "name": "mobile-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "cta-link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "cmp-text",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "itc-club-carousel"
+  },
+  {
+    "id": "carousel-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "itc-footer-section",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logo-image",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "FSSAI Logo Image",
+        "name": "fssai-logo-image",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Footer Links",
+        "name": "footer-links"
+      },
+      {
+        "component": "container",
+        "item": "footer-social",
+        "label": "Footer Social Icons",
+        "name": "footer-social-icons"
+      },
+      {
+        "component": "richtext",
+        "label": "Grievance Officer Title",
+        "name": "grievance-officer-title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Grievance Officer Name",
+        "name": "grievance-officer-name",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Grievance Officer Contact",
+        "name": "grievance-officer-contact",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Grievance Officer Hours",
+        "name": "grievance-officer-hours",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Social Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Social Icon Image",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "itc-header-section",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logo-image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "navigation-item",
+        "label": "Navigation Items",
+        "name": "navigation-items"
+      },
+      {
+        "component": "reference",
+        "label": "Flag Image (IN)",
+        "name": "country-flag-in",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Flag Image (USA)",
+        "name": "country-flag-usa",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "country-option",
+        "label": "Country Options",
+        "name": "country-options"
+      }
+    ]
+  },
+  {
+    "id": "navigation-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Navigation Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Navigation Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "country-option",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Flag Image",
+        "name": "flag-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Country Name",
+        "name": "country-name",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "itc-how-shift",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Left Image",
+        "name": "left-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Subtitle",
+        "name": "subtitle",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "why-shift-item",
+        "label": "Why Shift Items",
+        "name": "items"
+      },
+      {
+        "component": "aem-content",
+        "label": "Button Link",
+        "name": "button-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Button Text",
+        "name": "button-text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "why-shift-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "rs-cards",
+    "fields": [
+      {
+        "component": "container",
+        "item": "rs-card",
+        "label": "Rs Cards",
+        "name": "cards"
+      }
+    ]
+  },
+  {
+    "id": "rs-card",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Body",
+        "name": "body",
+        "valueType": "string"
+      }
+    ]
   }
 ]
