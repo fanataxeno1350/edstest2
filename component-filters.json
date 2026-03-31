@@ -23,8 +23,7 @@
       "itc-how-shift",
       "cmp-text",
       "rs-cards",
-      "itc-footer-section",
-      "space-adder"
+      "itc-footer-section"
     ]
   },
   {
@@ -68,9 +67,6 @@
     "components": [
       "rs-card"
     ]
-  },
-  {
-    "id": "space-adder"
   },
   {
     "id": "text"
