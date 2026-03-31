@@ -39,7 +39,7 @@
         {
           "component": "container",
           "item": "rs-card",
-          "label": "Rs Cards",
+          "label": "Cards",
           "name": "cards"
         }
       ]
@@ -55,14 +55,26 @@
         },
         {
           "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Alt Text",
+          "name": "alt",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Body",
-          "name": "body",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "cta",
           "valueType": "string"
         }
       ]

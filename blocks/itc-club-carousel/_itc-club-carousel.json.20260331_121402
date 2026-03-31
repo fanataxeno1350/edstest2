@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "ITC-Club-Carousel",
+      "title": "Itc-Club-Carousel",
       "id": "itc-club-carousel",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "itc-club-carousel",
               "model": "itc-club-carousel",
-              "name": "ITC-Club-Carousel"
+              "name": "Itc-Club-Carousel"
             }
           }
         }
@@ -34,15 +34,7 @@
   ],
   "models": [
     {
-      "id": "itc-club-carousel",
-      "fields": [
-        {
-          "component": "container",
-          "item": "carousel-item",
-          "label": "Carousel Items",
-          "name": "carousel-items"
-        }
-      ]
+      "id": "itc-club-carousel"
     },
     {
       "id": "carousel-item",
@@ -51,12 +43,6 @@
           "component": "reference",
           "label": "Image",
           "name": "image",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Alt Text",
-          "name": "alt",
           "valueType": "string"
         },
         {

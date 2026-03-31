@@ -2,178 +2,177 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const carouselId = 'itcCarousel'; // Unique ID for the carousel
+  const allRows = [...block.children];
 
-  block.classList.add('carousel', 'slide', 'itc-club-carousel');
-  block.setAttribute('id', carouselId);
-  // data-ride="carousel" is not needed as we are implementing custom JS for controls
-  // block.setAttribute('data-ride', 'carousel');
+  // Remove the first row which is just the "Carousel Items" label
+  allRows.shift();
 
-  const itcCarouselShift = document.createElement('div');
-  itcCarouselShift.classList.add('itc-carousel-shift');
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
 
-  const carouselInner = document.createElement('div');
-  carouselInner.classList.add('carousel-inner');
+  const carouselDiv = document.createElement('div');
+  carouselDiv.id = 'carousel';
+  carouselDiv.classList.add('carousel', 'slide', 'itc-club-carousel');
+  carouselDiv.setAttribute('data-ride', 'carousel');
 
-  const carouselIndicators = document.createElement('ol');
-  carouselIndicators.classList.add('carousel-indicators');
+  const carouselShiftDiv = document.createElement('div');
+  carouselShiftDiv.classList.add('itc-carousel-shift');
 
-  [...block.children].forEach((row, index) => {
-    // Indicators
+  const carouselInnerDiv = document.createElement('div');
+  carouselInnerDiv.classList.add('carousel-inner');
+
+  const carouselIndicatorsOl = document.createElement('ol');
+  carouselIndicatorsOl.classList.add('carousel-indicators');
+
+  allRows.forEach((row, index) => {
+    // Create indicator
     const indicatorLi = document.createElement('li');
-    indicatorLi.setAttribute('data-target', `#${carouselId}`);
-    indicatorLi.setAttribute('data-slide-to', index);
+    indicatorLi.setAttribute('data-target', '#carousel');
+    indicatorLi.setAttribute('data-slide-to', index.toString());
     if (index === 0) {
       indicatorLi.classList.add('active');
     }
-    carouselIndicators.append(indicatorLi);
+    carouselIndicatorsOl.append(indicatorLi);
 
-    // Add event listener to indicator
-    indicatorLi.addEventListener('click', () => {
-      const currentActiveItem = carouselInner.querySelector('.carousel-item.active');
-      const currentActiveIndicator = carouselIndicators.querySelector('.active');
-
-      if (currentActiveItem) {
-        currentActiveItem.classList.remove('active');
-      }
-      if (currentActiveIndicator) {
-        currentActiveIndicator.classList.remove('active');
-      }
-
-      carouselInner.children[index].classList.add('active');
-      indicatorLi.classList.add('active');
-    });
-
-    // Carousel Item
-    const carouselItem = document.createElement('div');
-    moveInstrumentation(row, carouselItem);
-    carouselItem.classList.add('carousel-item');
+    // Create carousel item
+    const carouselItemDiv = document.createElement('div');
+    carouselItemDiv.classList.add('carousel-item');
     if (index === 0) {
-      carouselItem.classList.add('active');
+      carouselItemDiv.classList.add('active');
+    }
+    moveInstrumentation(row, carouselItemDiv);
+
+    const dFlexDiv = document.createElement('div');
+    dFlexDiv.classList.add('d-md-flex', 'd-block');
+
+    const [imageCell, altCell, titleCell, descriptionCell] = [...row.children];
+
+    // Image
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      const newImg = optimizedPic.querySelector('img');
+      newImg.classList.add('carousel__img', 'd-block', 'w-md-50', 'w-100');
+      newImg.setAttribute('loading', 'lazy');
+      newImg.alt = altCell.textContent.trim(); // Use alt text from model
+      moveInstrumentation(img, newImg);
+      dFlexDiv.append(optimizedPic);
     }
 
-    const itemContentWrapper = document.createElement('div');
-    itemContentWrapper.classList.add('d-md-flex', 'd-block');
+    // Right wrapper
+    const rightWrapperDiv = document.createElement('div');
+    rightWrapperDiv.classList.add('w-md-50', 'w-100', 'itc-club-right-wrapper', 'read-more');
 
-    // According to BlockJson, each item row has 3 cells: Image, Title, Description
-    const cells = [...row.children];
-    const imageCell = cells[0];
-    const titleCell = cells[1];
-    const descriptionCell = cells[2];
+    const titleH2 = document.createElement('h2');
+    titleH2.classList.add('carousel-inner__title');
+    moveInstrumentation(titleCell, titleH2);
+    while (titleCell.firstChild) titleH2.append(titleCell.firstChild);
+    rightWrapperDiv.append(titleH2);
 
-    if (imageCell && imageCell.querySelector('picture')) {
-      const img = imageCell.querySelector('picture').querySelector('img');
-      const carouselImg = document.createElement('img');
-      carouselImg.loading = 'lazy';
-      carouselImg.src = img.src;
-      carouselImg.alt = img.alt;
-      carouselImg.classList.add('carousel__img', 'd-block', 'w-md-50', 'w-100');
-      itemContentWrapper.append(carouselImg);
-    }
+    const descriptionP = document.createElement('p');
+    descriptionP.classList.add('carousel-inner__description');
+    moveInstrumentation(descriptionCell, descriptionP);
+    while (descriptionCell.firstChild) descriptionP.append(descriptionCell.firstChild);
+    rightWrapperDiv.append(descriptionP);
 
-    const rightWrapper = document.createElement('div');
-    rightWrapper.classList.add('w-md-50', 'w-100', 'itc-club-right-wrapper', 'read-more');
-
-    if (titleCell) {
-      const h2 = document.createElement('h2');
-      h2.classList.add('carousel-inner__title');
-      // Move instrumentation from the cell containing the title
-      moveInstrumentation(titleCell, h2);
-      // Append all child nodes from the titleCell to h2
-      while (titleCell.firstChild) h2.append(titleCell.firstChild);
-      rightWrapper.append(h2);
-    }
-
-    if (descriptionCell) {
-      const p = document.createElement('p');
-      p.classList.add('carousel-inner__description');
-      // Move instrumentation from the cell containing the description
-      moveInstrumentation(descriptionCell, p);
-      // Append all child nodes from the descriptionCell to p
-      while (descriptionCell.firstChild) p.append(descriptionCell.firstChild);
-      rightWrapper.append(p);
-    }
-
-    itemContentWrapper.append(rightWrapper);
-    carouselItem.append(itemContentWrapper);
-    carouselInner.append(carouselItem);
+    dFlexDiv.append(rightWrapperDiv);
+    carouselItemDiv.append(dFlexDiv);
+    carouselInnerDiv.append(carouselItemDiv);
   });
 
-  itcCarouselShift.append(carouselIndicators);
-  itcCarouselShift.append(carouselInner);
+  carouselInnerDiv.prepend(carouselIndicatorsOl); // Indicators should be inside carousel-inner
+  carouselShiftDiv.append(carouselInnerDiv);
 
+  function updateIndicators() {
+    const activeItem = carouselInnerDiv.querySelector('.carousel-item.active');
+    // Find the index of the active carousel-item among its siblings
+    // We need to filter out the carouselIndicatorsOl which is also a child
+    const carouselItems = [...carouselInnerDiv.children].filter(child => child.classList.contains('carousel-item'));
+    const activeIndex = carouselItems.indexOf(activeItem);
+
+    carouselIndicatorsOl.querySelectorAll('li').forEach((li, idx) => {
+      if (idx === activeIndex) {
+        li.classList.add('active');
+      } else {
+        li.classList.remove('active');
+      }
+    });
+  }
+
+  // Previous button
   const prevButton = document.createElement('button');
   prevButton.classList.add('carousel-control-prev');
-  prevButton.setAttribute('type', 'button');
+  prevButton.type = 'button';
+  prevButton.setAttribute('data-target', '#carousel');
+  prevButton.setAttribute('data-slide', 'prev');
   prevButton.addEventListener('click', () => {
-    const activeItem = carouselInner.querySelector('.carousel-item.active');
-    const activeIndicator = carouselIndicators.querySelector('.active');
-
-    if (activeItem && activeIndicator) {
-      activeItem.classList.remove('active');
-      activeIndicator.classList.remove('active');
-
-      const prevItem = activeItem.previousElementSibling || carouselInner.lastElementChild;
-      const prevIndicator = activeIndicator.previousElementSibling || carouselIndicators.lastElementChild;
-
-      if (prevItem) {
-        prevItem.classList.add('active');
-      }
-      if (prevIndicator) {
-        prevIndicator.classList.add('active');
-      }
-    }
+    const activeItem = carouselInnerDiv.querySelector('.carousel-item.active');
+    const carouselItems = [...carouselInnerDiv.querySelectorAll('.carousel-item')];
+    const currentIndex = carouselItems.indexOf(activeItem);
+    const prevIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length; // Loop around
+    
+    activeItem.classList.remove('active');
+    carouselItems[prevIndex].classList.add('active');
+    updateIndicators();
   });
 
-  const prevIcon = document.createElement('span');
-  prevIcon.classList.add('carousel-control-prev-icon');
-  prevIcon.setAttribute('aria-hidden', 'true');
-  prevButton.append(prevIcon);
-  const prevSrOnly = document.createElement('span');
-  prevSrOnly.classList.add('sr-only');
-  prevSrOnly.textContent = 'Previous';
-  prevButton.append(prevSrOnly);
-  itcCarouselShift.append(prevButton);
+  const prevIconSpan = document.createElement('span');
+  prevIconSpan.classList.add('carousel-control-prev-icon');
+  prevIconSpan.setAttribute('aria-hidden', 'true');
+  prevButton.append(prevIconSpan);
 
+  const prevSrOnlySpan = document.createElement('span');
+  prevSrOnlySpan.classList.add('sr-only');
+  prevSrOnlySpan.textContent = 'Previous';
+  prevButton.append(prevSrOnlySpan);
+  carouselShiftDiv.append(prevButton);
+
+  // Next button
   const nextButton = document.createElement('button');
   nextButton.classList.add('carousel-control-next');
-  nextButton.setAttribute('type', 'button');
+  nextButton.type = 'button';
+  nextButton.setAttribute('data-target', '#carousel');
+  nextButton.setAttribute('data-slide', 'next');
   nextButton.addEventListener('click', () => {
-    const activeItem = carouselInner.querySelector('.carousel-item.active');
-    const activeIndicator = carouselIndicators.querySelector('.active');
-
-    if (activeItem && activeIndicator) {
-      activeItem.classList.remove('active');
-      activeIndicator.classList.remove('active');
-
-      const nextItem = activeItem.nextElementSibling || carouselInner.firstElementChild;
-      const nextIndicator = activeIndicator.nextElementSibling || carouselIndicators.firstElementChild;
-
-      if (nextItem) {
-        nextItem.classList.add('active');
-      }
-      if (nextIndicator) {
-        nextIndicator.classList.add('active');
-      }
-    }
+    const activeItem = carouselInnerDiv.querySelector('.carousel-item.active');
+    const carouselItems = [...carouselInnerDiv.querySelectorAll('.carousel-item')];
+    const currentIndex = carouselItems.indexOf(activeItem);
+    const nextIndex = (currentIndex + 1) % carouselItems.length; // Loop around
+    
+    activeItem.classList.remove('active');
+    carouselItems[nextIndex].classList.add('active');
+    updateIndicators();
   });
 
-  const nextIcon = document.createElement('span');
-  nextIcon.classList.add('carousel-control-next-icon');
-  nextIcon.setAttribute('aria-hidden', 'true');
-  nextButton.append(nextIcon);
-  const nextSrOnly = document.createElement('span');
-  nextSrOnly.classList.add('sr-only');
-  nextSrOnly.textContent = 'Next';
-  nextButton.append(nextSrOnly);
-  itcCarouselShift.append(nextButton);
+  const nextIconSpan = document.createElement('span');
+  nextIconSpan.classList.add('carousel-control-next-icon');
+  nextIconSpan.setAttribute('aria-hidden', 'true');
+  nextButton.append(nextIconSpan);
 
+  const nextSrOnlySpan = document.createElement('span');
+  nextSrOnlySpan.classList.add('sr-only');
+  nextSrOnlySpan.textContent = 'Next';
+  nextButton.append(nextSrOnlySpan);
+  carouselShiftDiv.append(nextButton);
+
+  carouselDiv.append(carouselShiftDiv);
+  containerDiv.append(carouselDiv);
   block.textContent = '';
-  block.append(itcCarouselShift);
+  block.append(containerDiv);
 
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
+  // Handle indicator clicks
+  carouselIndicatorsOl.querySelectorAll('li').forEach((indicator, idx) => {
+    indicator.addEventListener('click', () => {
+      const carouselItems = carouselInnerDiv.querySelectorAll('.carousel-item');
+      carouselItems.forEach((item, itemIdx) => {
+        if (itemIdx === idx) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+      updateIndicators();
+    });
   });
 }

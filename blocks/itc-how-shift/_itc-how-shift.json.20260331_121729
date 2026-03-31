@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "ITC-How-Shift",
+      "title": "Itc-How-Shift",
       "id": "itc-how-shift",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "itc-how-shift",
               "model": "itc-how-shift",
-              "name": "ITC-How-Shift"
+              "name": "Itc-How-Shift"
             }
           }
         }
@@ -38,8 +38,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Main Image",
-          "name": "main-image",
+          "label": "Left Image",
+          "name": "left-image",
           "valueType": "string"
         },
         {
@@ -50,8 +50,8 @@
         },
         {
           "component": "richtext",
-          "label": "Subheading",
-          "name": "subheading",
+          "label": "Subtitle",
+          "name": "subtitle",
           "valueType": "string"
         },
         {
@@ -64,7 +64,7 @@
           "component": "container",
           "item": "why-shift-item",
           "label": "Why Shift Items",
-          "name": "why-shift-items"
+          "name": "items"
         },
         {
           "component": "aem-content",
@@ -74,8 +74,8 @@
         },
         {
           "component": "text",
-          "label": "Button Label",
-          "name": "button-label",
+          "label": "Button Text",
+          "name": "button-text",
           "valueType": "string"
         }
       ]

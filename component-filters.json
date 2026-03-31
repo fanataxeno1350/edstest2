@@ -23,13 +23,14 @@
       "itc-how-shift",
       "cmp-text",
       "rs-cards",
-      "itc-footer-section"
+      "itc-footer-section",
+      "space-adder"
     ]
   },
   {
     "id": "banner-carousel",
     "components": [
-      "banner"
+      "banner-carousel-item"
     ]
   },
   {
@@ -45,7 +46,8 @@
     "id": "itc-footer-section",
     "components": [
       "footer-link",
-      "footer-social"
+      "social-link",
+      "secondary-footer-link"
     ]
   },
   {
@@ -66,5 +68,11 @@
     "components": [
       "rs-card"
     ]
+  },
+  {
+    "id": "space-adder"
+  },
+  {
+    "id": "text"
   }
 ]

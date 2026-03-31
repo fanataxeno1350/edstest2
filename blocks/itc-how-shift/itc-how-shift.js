@@ -3,153 +3,152 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const [
-    leftImageRow,
+    mainImageRow,
     headingRow,
-    subtitleRow,
+    subheadingRow,
     descriptionRow,
-    whyShiftItemsLabelRow, // This row contains "Why Shift Items value" and is not rendered directly.
+    whyShiftItemsContainerRow, // This is the container row for why-shift-items
     buttonLinkRow,
-    buttonTextRow,
-    ...itemRows
+    buttonLabelRow,
+    ...itemRows // These are the actual why-shift-item rows
   ] = [...block.children];
 
-  block.innerHTML = '';
+  // Main container
   block.classList.add('itc-how-shift');
 
   // Left Image Div
   const leftImageDiv = document.createElement('div');
   leftImageDiv.classList.add('left-image-div');
-  moveInstrumentation(leftImageRow, leftImageDiv);
-  const picture = leftImageRow.querySelector('picture');
-  if (picture) {
-    const img = picture.querySelector('img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      leftImageDiv.append(optimizedPic);
-    }
+  moveInstrumentation(mainImageRow, leftImageDiv);
+  const mainPicture = mainImageRow.querySelector('picture');
+  if (mainPicture) {
+    leftImageDiv.append(mainPicture);
   }
-  block.append(leftImageDiv);
 
-  // Container Read More
-  const containerDiv = document.createElement('div');
-  containerDiv.classList.add('container', 'read-more');
+  // Right Content Container
+  const rightContentContainer = document.createElement('div');
+  rightContentContainer.classList.add('container', 'read-more');
 
   // Heading
   const heading = document.createElement('h1');
   heading.classList.add('text-center', 'pb-4', 'rs-heading');
   moveInstrumentation(headingRow, heading);
-  heading.textContent = headingRow.textContent.trim();
-  containerDiv.append(heading);
+  while (headingRow.firstChild) heading.append(headingRow.firstChild);
+  rightContentContainer.append(heading);
 
-  // Subtitle and Description
+  // Subheading and Description
   const readMoreTextDiv = document.createElement('div');
   readMoreTextDiv.classList.add('read-more-text');
-  moveInstrumentation(subtitleRow, readMoreTextDiv);
-  while (subtitleRow.firstChild) readMoreTextDiv.append(subtitleRow.firstChild);
+  moveInstrumentation(subheadingRow, readMoreTextDiv);
+  while (subheadingRow.firstChild) readMoreTextDiv.append(subheadingRow.firstChild);
   moveInstrumentation(descriptionRow, readMoreTextDiv);
   while (descriptionRow.firstChild) readMoreTextDiv.append(descriptionRow.firstChild);
-  containerDiv.append(readMoreTextDiv);
+  rightContentContainer.append(readMoreTextDiv);
 
   const readMoreSpan = document.createElement('span');
   readMoreSpan.classList.add('readMore');
-  containerDiv.append(readMoreSpan);
+  rightContentContainer.append(readMoreSpan);
 
   // Why Shift Items Wrapper
   const whyShiftWrapper = document.createElement('div');
   whyShiftWrapper.classList.add('d-flex', 'justify-content-evenly', 'flex-wrap', 'why-shift-wrapper');
+  // Instrument the container row for why-shift-items, not the individual item rows
+  moveInstrumentation(whyShiftItemsContainerRow, whyShiftWrapper); 
 
   itemRows.forEach((row) => {
+    // Each item row has 3 cells: Image, Link, Label
+    const [imageCell, linkCell, labelCell] = [...row.children];
+
     const itemDiv = document.createElement('div');
     itemDiv.classList.add('mb-md-0', 'mb-3', 'text-center');
     moveInstrumentation(row, itemDiv);
 
-    const itcHealthGoalWrapper = document.createElement('div');
-    itcHealthGoalWrapper.classList.add('itc-health-goal-wrapper');
+    const imageWrapper = document.createElement('div');
+    imageWrapper.classList.add('itc-health-goal-wrapper');
 
-    // Destructure item cells based on BlockJson: Image, Link, Label
-    const [itemImageCell, itemLinkCell, itemLabelCell] = [...row.children];
-
-    if (itemImageCell) {
-      const pictureElement = itemImageCell.querySelector('picture');
-      if (pictureElement) {
-        const img = pictureElement.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          itcHealthGoalWrapper.append(optimizedPic);
-        }
-      }
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      imageWrapper.append(picture);
     }
-    itemDiv.append(itcHealthGoalWrapper);
+    itemDiv.append(imageWrapper);
 
-    const itemLink = itemLinkCell ? itemLinkCell.querySelector('a') : null;
+    const linkEl = document.createElement('a');
+    linkEl.classList.add('text-center', 'd-block', 'text-capitalize', 'pt-2', 'image-label');
 
-    if (itemLink && itemLabelCell) {
-      const anchor = document.createElement('a');
-      anchor.href = itemLink.href;
-      anchor.alt = itemLink.textContent.trim();
-      anchor.classList.add('text-center', 'd-block', 'text-capitalize', 'pt-2', 'image-label');
-      moveInstrumentation(itemLabelCell, anchor);
-      while (itemLabelCell.firstChild) anchor.append(itemLabelCell.firstChild);
-      itemDiv.append(anchor);
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      linkEl.href = foundLink.href;
+      // The alt attribute on <a> in original HTML is for the link itself, not the image.
+      // The label content will be appended to the link.
+      linkEl.alt = foundLink.textContent; 
     }
-    whyShiftWrapper.append(itemDiv);
+
+    const labelP = labelCell.querySelector('p');
+    if (labelP) {
+      linkEl.innerHTML = labelP.innerHTML; // Use innerHTML to preserve any rich text in the label
+    }
+    itemDiv.append(linkEl);
+    whyShiftWrapper.append(itemDiv); // Append itemDiv to whyShiftWrapper
   });
-  containerDiv.append(whyShiftWrapper);
+  rightContentContainer.append(whyShiftWrapper); // Append whyShiftWrapper to rightContentContainer
 
-  const dMdNoneDiv = document.createElement('div');
-  dMdNoneDiv.classList.add('d-md-none', 'd-block');
-  containerDiv.append(dMdNoneDiv);
+  const mobileSpacer = document.createElement('div');
+  mobileSpacer.classList.add('d-md-none', 'd-block');
+  rightContentContainer.append(mobileSpacer);
 
   // Button
   const buttonDiv = document.createElement('div');
   buttonDiv.classList.add('button', 'how-shift-button');
 
-  const buttonAnchor = document.createElement('a');
-  buttonAnchor.classList.add('cmp-button');
-  moveInstrumentation(buttonLinkRow, buttonAnchor);
+  const buttonA = document.createElement('a');
+  buttonA.classList.add('cmp-button');
+  moveInstrumentation(buttonLinkRow, buttonA);
   const foundButtonLink = buttonLinkRow.querySelector('a');
   if (foundButtonLink) {
-    buttonAnchor.href = foundButtonLink.href;
-    buttonAnchor.alt = foundButtonLink.textContent.trim();
+    buttonA.href = foundButtonLink.href;
+    buttonA.alt = foundButtonLink.textContent;
+    // Check for target="_blank" from original HTML
+    if (foundButtonLink.target === '_blank') {
+      buttonA.target = '_blank';
+    }
   }
 
   const buttonSpanText = document.createElement('span');
   buttonSpanText.classList.add('cmp-button__text');
-  moveInstrumentation(buttonTextRow, buttonSpanText);
-  buttonSpanText.textContent = buttonTextRow.textContent.trim();
-  buttonAnchor.append(buttonSpanText);
+  moveInstrumentation(buttonLabelRow, buttonSpanText);
+  while (buttonLabelRow.firstChild) buttonSpanText.append(buttonLabelRow.firstChild);
+  buttonA.append(buttonSpanText);
 
-  // Screen reader only span for target blank (if applicable, assuming it's an external link)
-  if (buttonAnchor.href && !buttonAnchor.href.startsWith(window.location.origin)) {
-    buttonAnchor.target = '_blank';
-    const screenReaderSpan = document.createElement('span');
-    screenReaderSpan.classList.add('cmp-link__screen-reader-only');
-    screenReaderSpan.textContent = 'opens in a new tab';
-    buttonAnchor.append(screenReaderSpan);
-  }
+  const screenReaderSpan = document.createElement('span');
+  screenReaderSpan.classList.add('cmp-link__screen-reader-only');
+  screenReaderSpan.textContent = 'opens in a new tab';
+  buttonA.append(screenReaderSpan);
 
-  buttonDiv.append(buttonAnchor);
-  containerDiv.append(buttonDiv);
+  buttonDiv.append(buttonA);
+  rightContentContainer.append(buttonDiv);
 
-  block.append(containerDiv);
+  block.textContent = '';
+  block.append(leftImageDiv, rightContentContainer);
 
-  // Add event listener for the "readMore" span
-  readMoreSpan.addEventListener('click', () => {
-    readMoreTextDiv.classList.toggle('expanded');
-    readMoreSpan.classList.toggle('expanded');
-  });
-
-  // This part seems redundant as createOptimizedPicture is already used above
-  // and the block.querySelectorAll('picture > img') would target images that are already processed
-  // or images that are part of the initial block structure before it's cleared.
-  // Keeping it commented out unless there's a specific reason for a second pass.
-  /*
+  // Optimize images
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
   });
-  */
+
+  // Interactivity: Read More functionality
+  const readMoreButton = rightContentContainer.querySelector('.readMore');
+  if (readMoreButton) {
+    readMoreButton.addEventListener('click', () => {
+      readMoreTextDiv.classList.toggle('expanded'); // Toggle a class to expand/collapse
+      if (readMoreTextDiv.classList.contains('expanded')) {
+        readMoreButton.textContent = 'Read Less'; // Or change icon
+      } else {
+        readMoreButton.textContent = 'Read More'; // Or change icon
+      }
+    });
+    // Initialize text for readMore button based on initial state (if any)
+    readMoreButton.textContent = 'Read More'; 
+  }
 }

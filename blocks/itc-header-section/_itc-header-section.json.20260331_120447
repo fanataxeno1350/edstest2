@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "ITC-Header-Section",
+      "title": "Itc-Header-Section",
       "id": "itc-header-section",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "itc-header-section",
               "model": "itc-header-section",
-              "name": "ITC-Header-Section"
+              "name": "Itc-Header-Section"
             }
           }
         }
@@ -71,14 +71,14 @@
         },
         {
           "component": "reference",
-          "label": "Flag IN",
-          "name": "flag-in",
+          "label": "Flag Image (IN)",
+          "name": "country-flag-in",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Flag USA",
-          "name": "flag-usa",
+          "label": "Flag Image (USA)",
+          "name": "country-flag-usa",
           "valueType": "string"
         },
         {
@@ -93,15 +93,15 @@
       "id": "navigation-item",
       "fields": [
         {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
+          "component": "aem-content",
+          "label": "Navigation Link",
+          "name": "link",
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
+          "component": "text",
+          "label": "Navigation Label",
+          "name": "label",
           "valueType": "string"
         }
       ]
@@ -112,25 +112,13 @@
         {
           "component": "reference",
           "label": "Flag Image",
-          "name": "flag",
+          "name": "flag-image",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Country Name",
           "name": "country-name",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Data Country",
-          "name": "data-country",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Data URL",
-          "name": "data-url",
           "valueType": "string"
         }
       ]

@@ -5,94 +5,77 @@ export default function decorate(block) {
   const wrapper = document.createElement('div');
   wrapper.classList.add('row');
 
-  // The first child is the "Rs Cards" container field, which we can ignore as it's just a wrapper.
-  // All subsequent children are the actual "rs-card" items.
-  const itemRows = [...block.children].slice(1);
+  // The first row is the container field, which we can ignore for rendering
+  // BlockJson indicates a 'cards' container field, which is block.children[0].
+  // The actual card items start from block.children[1].
+  const cardRows = [...block.children].slice(1);
 
-  itemRows.forEach((row) => {
-    const colDiv = document.createElement('div');
-    colDiv.classList.add('col-xl-4', 'col-lg-6', 'pb-md-0', 'pb-4', 'row-gap-4', 'koi-rscard-padding');
-    moveInstrumentation(row, colDiv);
+  cardRows.forEach((row) => {
+    const col = document.createElement('div');
+    col.classList.add('col-xl-4', 'col-lg-6', 'pb-md-0', 'pb-4', 'row-gap-4', 'koi-rscard-padding');
+    moveInstrumentation(row, col);
 
-    const cardDiv = document.createElement('div');
-    cardDiv.classList.add('card', 'rs-card');
+    const card = document.createElement('div');
+    card.classList.add('card', 'rs-card');
 
-    const cardBodyDiv = document.createElement('div');
-    cardBodyDiv.classList.add('card-body');
+    // BlockJson model for 'rs-card' has 5 fields: image, alt, title, description, cta
+    const [imageCell, altTextCell, titleCell, descriptionCell, ctaCell] = [...row.children];
 
-    // Create the 'explore-btn-hide-id' link and image as per original HTML
-    const exploreLink = document.createElement('a');
-    exploreLink.setAttribute('aria-label', `Read more about '${row.children[1].textContent.trim()}'`); // Use heading text for aria-label
-    exploreLink.setAttribute('target', '_self');
-    exploreLink.setAttribute('id', 'explore-btn-hide-id');
-    // The first card in the original HTML has display: none, others don't.
-    // For consistency, we'll assume it should be present but potentially hidden by CSS.
-    // We'll not set display:none here, as it might be controlled by CSS or JS later.
-    const exploreImg = document.createElement('img');
-    exploreImg.loading = 'lazy';
-    exploreImg.src = '/content/dam/aemigrate/uploaded-folder/image/1774935172662.svg+xml'; // Hardcoded as per original HTML
-    exploreLink.append(exploreImg);
-    cardBodyDiv.append(exploreLink);
-
-
-    [...row.children].forEach((cell, index) => {
-      if (index === 0) { // Image cell
-        const picture = cell.querySelector('picture');
-        if (picture) {
-          const img = picture.querySelector('img');
-          if (img) {
-            const newImg = document.createElement('img');
-            newImg.src = img.src;
-            newImg.alt = img.alt;
-            newImg.loading = 'lazy';
-            newImg.classList.add('w-100', 'kitchens-image'); // Use kitchens-image for the displayed image
-            newImg.style.display = 'block'; // As per original HTML
-
-            // The original HTML also has a 'rightshift-image' with display:none.
-            // We'll create it for consistency, but it won't be visible.
-            const rightshiftImg = document.createElement('img');
-            rightshiftImg.loading = 'lazy';
-            rightshiftImg.classList.add('w-100', 'rightshift-image');
-            rightshiftImg.alt = img.alt; // Use the same alt text
-            rightshiftImg.style.display = 'none';
-            rightshiftImg.src = img.src; // Use the same image source for rightshift-image
-
-            cardDiv.append(rightshiftImg, newImg);
-          }
-        }
-      } else if (index === 1) { // Heading cell
-        const h5 = document.createElement('h5');
-        h5.classList.add('blog-card-title');
-        h5.style.display = 'block'; // As per original HTML
-        moveInstrumentation(cell, h5);
-        // Append all children from the cell to the h5
-        while (cell.firstChild) h5.append(cell.firstChild);
-        cardBodyDiv.append(h5);
-      } else if (index === 2) { // Body cell
-        const h5 = document.createElement('h5'); // Original HTML uses h5 for the card-title
-        h5.classList.add('card-title');
-        moveInstrumentation(cell, h5);
-        // Append all children from the cell to the h5 (which should contain a p tag)
-        while (cell.firstChild) h5.append(cell.firstChild);
-        cardBodyDiv.append(h5);
+    // Image
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        // Use the src from the authored picture and alt text from the altTextCell.
+        // The original HTML has two image elements, one with rightshift-image and one with kitchens-image.
+        // The 'kitchens-image' is the one displayed.
+        const optimizedPic = createOptimizedPicture(img.src, altTextCell.textContent.trim(), false, [{ width: '750' }]);
+        const newImg = optimizedPic.querySelector('img');
+        newImg.classList.add('w-100', 'kitchens-image'); // Apply the correct class from original HTML
+        moveInstrumentation(img, newImg); // Move instrumentation from original img to the new one
+        card.append(optimizedPic);
       }
-    });
+    }
 
-    cardDiv.append(cardBodyDiv);
-    colDiv.append(cardDiv);
-    wrapper.append(colDiv);
+    const cardBody = document.createElement('div');
+    cardBody.classList.add('card-body');
+
+    // Title (Original HTML uses blog-card-title for the title itself)
+    const title = document.createElement('h5');
+    title.classList.add('blog-card-title');
+    moveInstrumentation(titleCell, title);
+    while (titleCell.firstChild) title.append(titleCell.firstChild);
+    cardBody.append(title);
+
+    // Description (Original HTML uses card-title for the description)
+    const description = document.createElement('h5');
+    description.classList.add('card-title');
+    moveInstrumentation(descriptionCell, description);
+    while (descriptionCell.firstChild) description.append(descriptionCell.firstChild);
+    cardBody.append(description);
+
+    // CTA Link
+    const ctaLink = ctaCell.querySelector('a');
+    if (ctaLink) {
+      const newCta = document.createElement('a');
+      newCta.href = ctaLink.href;
+      newCta.setAttribute('aria-label', `Read more about '${titleCell.textContent.trim()}'`);
+      newCta.target = ctaLink.target || '_self'; // Preserve target if present, default to _self
+      // The original HTML has an img inside the anchor, but EDS model provides text.
+      // We need to move all children from the original ctaLink to newCta.
+      moveInstrumentation(ctaLink, newCta);
+      while (ctaLink.firstChild) newCta.append(ctaLink.firstChild);
+      cardBody.append(newCta);
+    }
+
+    card.append(cardBody);
+    col.append(card);
+    wrapper.append(col);
   });
 
-  // Add the tab-para div at the end of the wrapper as per original HTML
-  const tabParaDiv = document.createElement('div');
-  tabParaDiv.classList.add('tab-para');
-  wrapper.append(tabParaDiv);
-
-  wrapper.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
+  const tabPara = document.createElement('div');
+  tabPara.classList.add('tab-para');
+  wrapper.append(tabPara);
 
   block.textContent = '';
   block.append(wrapper);
