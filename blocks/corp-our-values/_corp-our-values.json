@@ -1,0 +1,124 @@
+{
+  "definitions": [
+    {
+      "title": "Corp-Our-Values",
+      "id": "corp-our-values",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "corp-our-values",
+              "model": "corp-our-values",
+              "name": "Corp-Our-Values"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Value",
+      "id": "value",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "value",
+              "name": "Value"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Button",
+      "id": "button",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "button",
+              "name": "Button"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "corp-our-values",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Background Image",
+          "name": "background-image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Heading 1",
+          "name": "heading-1",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Heading 2",
+          "name": "heading-2",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "value",
+          "label": "Values",
+          "name": "values"
+        },
+        {
+          "component": "container",
+          "item": "button",
+          "label": "Buttons",
+          "name": "buttons"
+        }
+      ]
+    },
+    {
+      "id": "value",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "button",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "corp-our-values",
+      "components": [
+        "value",
+        "button"
+      ]
+    }
+  ]
+}

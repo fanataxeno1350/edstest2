@@ -1,0 +1,236 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [titleRow, ...itemRows] = [...block.children];
+
+  const rangeComponent = document.createElement('div');
+  rangeComponent.classList.add('range-component');
+
+  // Title section
+  const titleContainerRow = document.createElement('div');
+  titleContainerRow.classList.add('row');
+  const titleCell = document.createElement('div');
+  // Corrected class names based on ORIGINAL HTML
+  titleCell.classList.add('col-md12', 'col-sm-12', 'gallery-header');
+  moveInstrumentation(titleRow, titleCell);
+  while (titleRow.firstChild) titleCell.append(titleRow.firstChild);
+  titleContainerRow.append(titleCell);
+  rangeComponent.append(titleContainerRow);
+
+  const sliderTitleDiv = document.createElement('div');
+  sliderTitleDiv.classList.add('slider-title');
+  const h4 = document.createElement('h4');
+  h4.id = 'arena'; // Assuming 'arena' is a common ID based on the original HTML
+  // Extract text content from the first paragraph within the titleCell
+  const titleParagraph = titleCell.querySelector('p');
+  if (titleParagraph) {
+    h4.textContent = titleParagraph.textContent.trim();
+  } else {
+    h4.textContent = titleCell.textContent.trim(); // Fallback if no paragraph
+  }
+  sliderTitleDiv.append(h4);
+  rangeComponent.append(sliderTitleDiv);
+
+  // Desktop Slider
+  const desktopCarousel = document.createElement('div');
+  desktopCarousel.id = 'range-slider-arena-desktop';
+  desktopCarousel.classList.add('carousel', 'slide', 'd-none', 'd-sm-block');
+  desktopCarousel.setAttribute('data-ride', 'carousel');
+
+  const desktopCarouselInner = document.createElement('div');
+  desktopCarouselInner.classList.add('carousel-inner');
+  desktopCarousel.append(desktopCarouselInner);
+
+  // Mobile Slider
+  const mobileCarousel = document.createElement('div');
+  mobileCarousel.id = 'range-slider-arena-mobile';
+  mobileCarousel.classList.add('carousel', 'slide', 'd-sm-none');
+  mobileCarousel.setAttribute('data-ride', 'carousel');
+
+  const mobileCarouselInner = document.createElement('div');
+  mobileCarouselInner.classList.add('carousel-inner');
+  mobileCarousel.append(mobileCarouselInner);
+
+  const itemsPerDesktopSlide = 4;
+  const itemsPerMobileSlide = 2;
+
+  let desktopSlideIndex = 0;
+  let mobileSlideIndex = 0;
+
+  let desktopCurrentRow = null;
+  let mobileCurrentRow = null;
+
+  itemRows.forEach((row, index) => {
+    // BlockJson indicates 4 cells per item row: image, alt, label, link
+    const [imageCell, altTextCell, labelCell, linkCell] = [...row.children];
+
+    const foundLink = linkCell.querySelector('a');
+    const linkHref = foundLink ? foundLink.href : '#';
+
+    const imageArea = document.createElement('a');
+    imageArea.classList.add('image-area');
+    imageArea.href = linkHref;
+    moveInstrumentation(row, imageArea); // Move instrumentation from the item row to the anchor
+
+    const imageContainer = document.createElement('div');
+    imageContainer.classList.add('image-container');
+    imageContainer.setAttribute('target', '_self'); // From original HTML
+
+    const picture = imageCell.querySelector('picture');
+    const img = picture ? picture.querySelector('img') : null;
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, altTextCell.textContent.trim(), false, [{ width: '750' }]);
+      // Add img-fluid class to the img inside the optimized picture
+      optimizedPic.querySelector('img').classList.add('img-fluid');
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      imageContainer.append(optimizedPic);
+    }
+
+    const imgTitle = document.createElement('h6');
+    imgTitle.classList.add('img-title');
+    imgTitle.textContent = labelCell.textContent.trim();
+
+    imageArea.append(imageContainer, imgTitle);
+
+    // Desktop item placement
+    if (index % itemsPerDesktopSlide === 0) {
+      desktopCurrentRow = document.createElement('div');
+      desktopCurrentRow.classList.add('row');
+      const carouselItem = document.createElement('div');
+      carouselItem.classList.add('carousel-item');
+      if (desktopSlideIndex === 0) carouselItem.classList.add('active');
+      carouselItem.append(desktopCurrentRow);
+      desktopCarouselInner.append(carouselItem);
+      desktopSlideIndex += 1;
+    }
+    const desktopCol = document.createElement('div');
+    desktopCol.classList.add('col-6', 'col-sm-6', 'col-lg-3');
+    desktopCol.append(imageArea.cloneNode(true)); // Clone for desktop
+    desktopCurrentRow.append(desktopCol);
+
+
+    // Mobile item placement
+    if (index % itemsPerMobileSlide === 0) {
+      mobileCurrentRow = document.createElement('div');
+      mobileCurrentRow.classList.add('row');
+      const carouselItem = document.createElement('div');
+      carouselItem.classList.add('carousel-item');
+      if (mobileSlideIndex === 0) carouselItem.classList.add('active');
+      carouselItem.append(mobileCurrentRow);
+      mobileCarouselInner.append(carouselItem);
+      mobileSlideIndex += 1;
+    }
+    const mobileCol = document.createElement('div');
+    mobileCol.classList.add('col-6', 'col-sm-6', 'col-lg-3');
+    mobileCol.append(imageArea); // Original element for mobile
+    mobileCurrentRow.append(mobileCol);
+  });
+
+  // Add navigation controls for desktop carousel
+  const desktopPrevButton = document.createElement('a');
+  desktopPrevButton.classList.add('carousel-control-prev');
+  desktopPrevButton.href = '#range-slider-arena-desktop';
+  desktopPrevButton.setAttribute('role', 'button');
+  desktopPrevButton.setAttribute('data-slide', 'prev'); // Added data-slide attribute
+  const desktopPrevIcon = document.createElement('span');
+  desktopPrevIcon.classList.add('carousel-control-prev-icon');
+  desktopPrevIcon.setAttribute('aria-hidden', 'true');
+  const desktopPrevSrOnly = document.createElement('span');
+  desktopPrevSrOnly.classList.add('sr-only');
+  desktopPrevSrOnly.textContent = 'previous';
+  desktopPrevButton.append(desktopPrevIcon, desktopPrevSrOnly);
+  desktopCarousel.append(desktopPrevButton);
+
+  const desktopNextButton = document.createElement('a');
+  desktopNextButton.classList.add('carousel-control-next');
+  desktopNextButton.href = '#range-slider-arena-desktop';
+  desktopNextButton.setAttribute('role', 'button');
+  desktopNextButton.setAttribute('data-slide', 'next'); // Added data-slide attribute
+  const desktopNextIcon = document.createElement('span');
+  desktopNextIcon.classList.add('carousel-control-next-icon');
+  desktopNextIcon.setAttribute('aria-hidden', 'true');
+  const desktopNextSrOnly = document.createElement('span');
+  desktopNextSrOnly.classList.add('sr-only');
+  desktopNextSrOnly.textContent = 'next';
+  desktopNextButton.append(desktopNextIcon, desktopNextSrOnly);
+  desktopCarousel.append(desktopNextButton);
+
+  // Add navigation controls for mobile carousel
+  const mobilePrevButton = document.createElement('a');
+  mobilePrevButton.classList.add('carousel-control-prev');
+  mobilePrevButton.href = '#range-slider-arena-mobile';
+  mobilePrevButton.setAttribute('role', 'button');
+  mobilePrevButton.setAttribute('data-slide', 'prev'); // Added data-slide attribute
+  const mobilePrevIcon = document.createElement('span');
+  mobilePrevIcon.classList.add('carousel-control-prev-icon');
+  mobilePrevIcon.setAttribute('aria-hidden', 'true');
+  const mobilePrevSrOnly = document.createElement('span');
+  mobilePrevSrOnly.classList.add('sr-only');
+  mobilePrevSrOnly.textContent = 'previous';
+  mobilePrevButton.append(mobilePrevIcon, mobilePrevSrOnly);
+  mobileCarousel.append(mobilePrevButton);
+
+  const mobileNextButton = document.createElement('a');
+  mobileNextButton.classList.add('carousel-control-next');
+  mobileNextButton.href = '#range-slider-arena-mobile';
+  mobileNextButton.setAttribute('role', 'button');
+  mobileNextButton.setAttribute('data-slide', 'next'); // Added data-slide attribute
+  const mobileNextIcon = document.createElement('span');
+  mobileNextIcon.classList.add('carousel-control-next-icon');
+  mobileNextIcon.setAttribute('aria-hidden', 'true');
+  const mobileNextSrOnly = document.createElement('span');
+  mobileNextSrOnly.classList.add('sr-only');
+  mobileNextSrOnly.textContent = 'next';
+  mobileNextButton.append(mobileNextIcon, mobileNextSrOnly);
+  mobileCarousel.append(mobileNextButton);
+
+  rangeComponent.append(desktopCarousel, mobileCarousel);
+
+  block.textContent = '';
+  block.append(rangeComponent);
+
+  // Implement carousel functionality
+  const setupCarousel = (carouselElement) => {
+    let currentIndex = 0;
+    const carouselItems = [...carouselElement.querySelectorAll('.carousel-inner > .carousel-item')];
+    const totalItems = carouselItems.length;
+
+    const showItem = (index) => {
+      carouselItems.forEach((item, i) => {
+        if (i === index) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    };
+
+    const prevButton = carouselElement.querySelector('.carousel-control-prev');
+    const nextButton = carouselElement.querySelector('.carousel-control-next');
+
+    if (prevButton) {
+      prevButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+        showItem(currentIndex);
+      });
+    }
+
+    if (nextButton) {
+      nextButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentIndex = (currentIndex + 1) % totalItems;
+        showItem(currentIndex);
+      });
+    }
+
+    // Initialize first item as active
+    if (carouselItems.length > 0) {
+      carouselItems[0].classList.add('active');
+    }
+  };
+
+  setupCarousel(desktopCarousel);
+  setupCarousel(mobileCarousel);
+}
