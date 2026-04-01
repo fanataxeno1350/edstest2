@@ -40,7 +40,7 @@
           "component": "container",
           "item": "carousel-item",
           "label": "Carousel Items",
-          "name": "carousel-items"
+          "name": "items"
         }
       ]
     },
@@ -49,8 +49,20 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Logo",
-          "name": "logo",
+          "label": "Background Image",
+          "name": "background-image",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Logo Image",
+          "name": "logo-image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Logo Alt",
+          "name": "logo-alt",
           "valueType": "string"
         },
         {
@@ -67,8 +79,14 @@
         },
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image",
+          "label": "Main Image",
+          "name": "main-image",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Main Image (Mobile)",
+          "name": "main-image-mobile",
           "valueType": "string"
         },
         {

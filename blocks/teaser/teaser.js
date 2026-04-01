@@ -9,69 +9,96 @@ export default function decorate(block) {
     buttonTextRow,
   ] = [...block.children];
 
-  const linkEl = linkRow.querySelector('a');
-  const buttonText = buttonTextRow.textContent.trim();
+  block.classList.add('cmp-teaser--cta');
+  const cmpTeaser = document.createElement('div');
+  cmpTeaser.classList.add('cmp-teaser');
+  moveInstrumentation(block, cmpTeaser);
 
-  const teaserLink = document.createElement('a');
-  teaserLink.classList.add('cmp-teaser__link');
-  if (linkEl) {
-    teaserLink.href = linkEl.href;
-    if (linkEl.target) teaserLink.target = linkEl.target;
+  const linkEl = document.createElement('a');
+  linkEl.classList.add('cmp-teaser__link');
+  const originalLink = linkRow.querySelector('a');
+  if (originalLink) {
+    linkEl.href = originalLink.href;
+    if (originalLink.target) {
+      linkEl.target = originalLink.target;
+    }
   }
-  moveInstrumentation(linkRow, teaserLink);
+  moveInstrumentation(linkRow, linkEl);
 
-  const teaserContent = document.createElement('div');
-  teaserContent.classList.add('cmp-teaser__content');
+  const cmpTeaserContent = document.createElement('div');
+  cmpTeaserContent.classList.add('cmp-teaser__content');
 
-  const actionContainer = document.createElement('div');
-  actionContainer.classList.add('cmp-teaser__action-container');
+  const cmpTeaserActionContainer = document.createElement('div');
+  cmpTeaserActionContainer.classList.add('cmp-teaser__action-container');
 
   const buttonWrapper = document.createElement('div');
-  // Corrected class names to match original HTML
   buttonWrapper.classList.add('button', 'cmp-button--primary-anchor');
 
-  const button = document.createElement('button');
-  // Corrected class name to match original HTML
-  button.classList.add('cmp-button');
-  button.type = 'button';
-  moveInstrumentation(buttonTextRow, button);
+  const buttonEl = document.createElement('button');
+  buttonEl.classList.add('cmp-button'); // Ensure cmp-button class is added
+  // buttonEl.type = 'button'; // The original HTML does not explicitly set type="button" on the button, it's the default.
+  moveInstrumentation(buttonTextRow, buttonEl);
 
-  const buttonSpan = document.createElement('span');
-  buttonSpan.classList.add('cmp-button__text');
-  buttonSpan.textContent = buttonText;
-  button.append(buttonSpan);
+  const buttonTextSpan = document.createElement('span');
+  buttonTextSpan.classList.add('cmp-button__text');
+  // Extract text content from the buttonTextRow's div, not the row itself
+  const buttonTextDiv = buttonTextRow.querySelector('div');
+  if (buttonTextDiv) {
+    buttonTextSpan.textContent = buttonTextDiv.textContent.trim();
+  }
+  buttonEl.append(buttonTextSpan);
 
-  buttonWrapper.append(button);
-  actionContainer.append(buttonWrapper);
-  teaserContent.append(actionContainer);
-  teaserLink.append(teaserContent);
+  buttonWrapper.append(buttonEl);
+  cmpTeaserActionContainer.append(buttonWrapper);
+  cmpTeaserContent.append(cmpTeaserActionContainer);
+  linkEl.append(cmpTeaserContent);
+  cmpTeaser.append(linkEl);
 
+  // Set background images
   const desktopPicture = backgroundImageDesktopRow.querySelector('picture');
   const mobilePicture = backgroundImageMobileRow.querySelector('picture');
 
+  let desktopSrc = '';
   if (desktopPicture) {
-    const desktopImg = desktopPicture.querySelector('img');
-    if (desktopImg) {
-      const optimizedPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '2000' }]);
-      moveInstrumentation(desktopImg, optimizedPic.querySelector('img'));
-      desktopImg.closest('picture').replaceWith(optimizedPic);
-      teaserLink.style.backgroundImage = `url(${optimizedPic.querySelector('img').src})`;
-      teaserLink.classList.add('cmp-teaser'); // Add the base teaser class here
+    const img = desktopPicture.querySelector('img');
+    if (img) {
+      desktopSrc = img.src;
+      // Optimize desktop image
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '2000' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      img.closest('picture').replaceWith(optimizedPic);
     }
   }
 
+  let mobileSrc = '';
   if (mobilePicture) {
-    const mobileImg = mobilePicture.querySelector('img');
-    if (mobileImg) {
-      const optimizedPic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '750' }]);
-      moveInstrumentation(mobileImg, optimizedPic.querySelector('img'));
-      mobileImg.closest('picture').replaceWith(optimizedPic);
-      // For simplicity, we apply desktop image as background.
-      // In a real scenario, you might use media queries or JS to swap background based on screen size.
+    const img = mobilePicture.querySelector('img');
+    if (img) {
+      mobileSrc = img.src;
+      // Optimize mobile image
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      img.closest('picture').replaceWith(optimizedPic);
     }
   }
+
+  // Set inline style for background image
+  if (desktopSrc) {
+    cmpTeaser.style.backgroundImage = `url("${desktopSrc}")`;
+  }
+
+  // Handle responsive background images
+  const updateBackgroundImage = () => {
+    if (window.innerWidth <= 768 && mobileSrc) { // Example breakpoint for mobile
+      cmpTeaser.style.backgroundImage = `url("${mobileSrc}")`;
+    } else if (desktopSrc) {
+      cmpTeaser.style.backgroundImage = `url("${desktopSrc}")`;
+    }
+  };
+
+  updateBackgroundImage();
+  window.addEventListener('resize', updateBackgroundImage);
 
   block.textContent = '';
-  block.classList.add('cmp-teaser--cta');
-  block.append(teaserLink);
+  block.append(cmpTeaser);
 }

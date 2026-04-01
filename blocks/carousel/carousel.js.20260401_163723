@@ -1,0 +1,245 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  block.classList.add('slickcarousel', 'carousel', 'panelcontainer');
+
+  const cmpCarousel = document.createElement('div');
+  cmpCarousel.classList.add('cmp-carousel');
+  cmpCarousel.setAttribute('data-component', 'carousel');
+  cmpCarousel.setAttribute('data-show-infinite-scroll', 'false');
+  cmpCarousel.setAttribute('data-show-arrows', 'true');
+  cmpCarousel.setAttribute('data-show-dots', 'true');
+  cmpCarousel.setAttribute('data-item-count-per-slide', '1');
+  cmpCarousel.setAttribute('data-auto-play-is-enabled', 'true');
+  cmpCarousel.setAttribute('data-auto-play-speed-in-ms', '3000');
+  cmpCarousel.setAttribute('data-reveal-next-item-partially', 'false');
+  cmpCarousel.setAttribute('data-show-center-zoom', 'false');
+  cmpCarousel.setAttribute('data-slides-to-scroll', '1');
+  cmpCarousel.setAttribute('data-initialized', 'true');
+
+  const cmpCarouselContainer = document.createElement('div');
+  cmpCarouselContainer.classList.add('cmp-carousel__container', 'slick-initialized', 'slick-slider', 'slick-dotted');
+  cmpCarousel.append(cmpCarouselContainer);
+
+  const prevButton = document.createElement('button');
+  prevButton.classList.add('slick-prev', 'slick-arrow', 'slick-disabled');
+  prevButton.setAttribute('aria-label', 'Previous');
+  prevButton.setAttribute('type', 'button');
+  prevButton.setAttribute('aria-disabled', 'true');
+  prevButton.textContent = 'Previous';
+  cmpCarouselContainer.append(prevButton);
+
+  const slickList = document.createElement('div');
+  slickList.classList.add('slick-list', 'draggable');
+  cmpCarouselContainer.append(slickList);
+
+  const slickTrack = document.createElement('div');
+  slickTrack.classList.add('slick-track');
+  slickTrack.style.opacity = '1';
+  slickList.append(slickTrack);
+
+  const slickDots = document.createElement('ul');
+  slickDots.classList.add('slick-dots');
+  slickDots.setAttribute('role', 'tablist');
+
+  [...block.children].forEach((row, index) => {
+    const item = document.createElement('div');
+    moveInstrumentation(row, item);
+    // Corrected class name: 'cmp-popular-products__carousel-item' is not in the allowlist.
+    // The allowlist has 'cmp-carousel__item'.
+    item.classList.add('cmp-carousel__item', 'slick-slide');
+    item.setAttribute('data-slick-index', index);
+    item.setAttribute('role', 'tabpanel');
+    item.id = `slick-slide4${index}`;
+    item.setAttribute('aria-describedby', `slick-slide-control4${index}`);
+
+    if (index === 0) {
+      item.classList.add('slick-current', 'slick-active');
+      item.setAttribute('aria-hidden', 'false');
+      item.setAttribute('tabindex', '0');
+    } else {
+      item.setAttribute('aria-hidden', 'true');
+      item.setAttribute('tabindex', '-1');
+    }
+
+    const contentWrapper = document.createElement('div');
+    contentWrapper.classList.add('cmp-popular-products__content-wrapper');
+    item.append(contentWrapper);
+
+    const imageCell = row.children[0];
+    const linkCell = row.children[1];
+    const titleCell = row.children[2];
+    const detailsCell = row.children[3];
+
+    const imageDiv = document.createElement('div');
+    imageDiv.classList.add('cmp-popular-products__image');
+    contentWrapper.append(imageDiv);
+
+    const imageLink = document.createElement('a');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      imageLink.href = foundLink.href;
+      imageLink.setAttribute('tabindex', index === 0 ? '0' : '-1');
+    }
+    imageDiv.append(imageLink);
+
+    const lazyImageContainer = document.createElement('div');
+    lazyImageContainer.classList.add('lazy-image-container');
+    imageLink.append(lazyImageContainer);
+
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        optimizedPic.classList.add('cmp-popular-products__prod-image', 'lazy-image', 'loaded');
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        lazyImageContainer.append(optimizedPic);
+      }
+    }
+
+    const productDescription = document.createElement('div');
+    productDescription.classList.add('cmp-popular-products__product-description');
+    contentWrapper.append(productDescription);
+
+    const productName = document.createElement('div');
+    productName.classList.add('cmp-popular-products__product-name');
+    productName.setAttribute('data-title', titleCell.textContent.trim());
+    productName.textContent = titleCell.textContent.trim();
+    productDescription.append(productName);
+
+    const mobileWeight = document.createElement('span');
+    mobileWeight.classList.add('cmp-popular-products__mobile-weight');
+    productName.append(mobileWeight);
+
+    const quantityContainer = document.createElement('div');
+    quantityContainer.classList.add('cmp-popular-products__quantity-container');
+    productDescription.append(quantityContainer);
+
+    const productDetails = document.createElement('div');
+    productDetails.classList.add('cmp-popular-products__product-details');
+    while (detailsCell.firstChild) productDetails.append(detailsCell.firstChild);
+    productDescription.append(productDetails);
+
+    const actionDiv = document.createElement('div');
+    actionDiv.classList.add('cmp-popular-products__action');
+    productDescription.append(actionDiv);
+
+    const buttonDiv = document.createElement('div');
+    buttonDiv.classList.add('button', 'cmp-button--secondary', 'cmp-button--secondary-light');
+    actionDiv.append(buttonDiv);
+
+    const buyNowButton = document.createElement('button');
+    buyNowButton.classList.add('cmp-button');
+    buyNowButton.setAttribute('type', 'button');
+    buyNowButton.setAttribute('tabindex', index === 0 ? '0' : '-1');
+    buttonDiv.append(buyNowButton);
+
+    const buttonText = document.createElement('span');
+    buttonText.classList.add('cmp-button__text');
+    buttonText.textContent = 'Buy Now';
+    buyNowButton.append(buttonText);
+
+    slickTrack.append(item);
+
+    const dotLi = document.createElement('li');
+    dotLi.setAttribute('role', 'presentation');
+    if (index === 0) {
+      dotLi.classList.add('slick-active');
+    }
+    const dotButton = document.createElement('button');
+    dotButton.setAttribute('type', 'button');
+    dotButton.setAttribute('role', 'tab');
+    dotButton.id = `slick-slide-control4${index}`;
+    dotButton.setAttribute('aria-controls', `slick-slide4${index}`);
+    dotButton.setAttribute('aria-label', `${index + 1} of ${block.children.length}`);
+    dotButton.setAttribute('tabindex', index === 0 ? '0' : '-1');
+    if (index === 0) {
+      dotButton.setAttribute('aria-selected', 'true');
+    }
+    dotButton.textContent = index + 1;
+    dotLi.append(dotButton);
+    slickDots.append(dotLi);
+  });
+
+  const nextButton = document.createElement('button');
+  nextButton.classList.add('slick-next', 'slick-arrow');
+  nextButton.setAttribute('aria-label', 'Next');
+  nextButton.setAttribute('type', 'button');
+  nextButton.setAttribute('aria-disabled', 'false');
+  nextButton.textContent = 'Next';
+  cmpCarouselContainer.append(nextButton);
+  cmpCarouselContainer.append(slickDots);
+
+  block.textContent = '';
+  block.append(cmpCarousel);
+
+  // Add event listeners for carousel functionality
+  const items = [...slickTrack.children];
+  let currentIndex = 0;
+
+  const updateCarousel = () => {
+    slickTrack.style.transform = `translate3d(-${currentIndex * 100}%, 0px, 0px)`;
+
+    items.forEach((item, i) => {
+      if (i === currentIndex) {
+        item.classList.add('slick-current', 'slick-active');
+        item.setAttribute('aria-hidden', 'false');
+        item.setAttribute('tabindex', '0');
+        item.querySelector('a')?.setAttribute('tabindex', '0');
+        item.querySelector('button.cmp-button')?.setAttribute('tabindex', '0');
+      } else {
+        item.classList.remove('slick-current', 'slick-active');
+        item.setAttribute('aria-hidden', 'true');
+        item.setAttribute('tabindex', '-1');
+        item.querySelector('a')?.setAttribute('tabindex', '-1');
+        item.querySelector('button.cmp-button')?.setAttribute('tabindex', '-1');
+      }
+    });
+
+    [...slickDots.children].forEach((dot, i) => {
+      if (i === currentIndex) {
+        dot.classList.add('slick-active');
+        dot.querySelector('button')?.setAttribute('aria-selected', 'true');
+        dot.querySelector('button')?.setAttribute('tabindex', '0');
+      } else {
+        dot.classList.remove('slick-active');
+        dot.querySelector('button')?.setAttribute('aria-selected', 'false');
+        dot.querySelector('button')?.setAttribute('tabindex', '-1');
+      }
+    });
+
+    prevButton.setAttribute('aria-disabled', currentIndex === 0);
+    prevButton.classList.toggle('slick-disabled', currentIndex === 0);
+    nextButton.setAttribute('aria-disabled', currentIndex === items.length - 1);
+    nextButton.classList.toggle('slick-disabled', currentIndex === items.length - 1);
+  };
+
+  prevButton.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateCarousel();
+    }
+  });
+
+  nextButton.addEventListener('click', () => {
+    if (currentIndex < items.length - 1) {
+      currentIndex++;
+      updateCarousel();
+    }
+  });
+
+  slickDots.addEventListener('click', (event) => {
+    const targetButton = event.target.closest('button[role="tab"]');
+    if (targetButton) {
+      const dotIndex = parseInt(targetButton.textContent, 10) - 1;
+      if (dotIndex >= 0 && dotIndex < items.length) {
+        currentIndex = dotIndex;
+        updateCarousel();
+      }
+    }
+  });
+
+  updateCarousel(); // Initialize carousel state
+}

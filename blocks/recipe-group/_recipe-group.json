@@ -58,12 +58,12 @@
           "component": "container",
           "item": "recipe-card",
           "label": "Recipe Cards",
-          "name": "cards"
+          "name": "recipeCards"
         },
         {
           "component": "text",
-          "label": "View All Label",
-          "name": "view-all-label",
+          "label": "Button Label",
+          "name": "button-label",
           "valueType": "string"
         }
       ]
@@ -73,8 +73,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "Tab Label",
-          "name": "tab-label",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         }
       ]
@@ -84,7 +84,7 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Recipe Link",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         },
@@ -102,7 +102,7 @@
         },
         {
           "component": "text",
-          "label": "Recipe Title",
+          "label": "Title",
           "name": "title",
           "valueType": "string"
         },

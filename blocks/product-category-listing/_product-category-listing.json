@@ -44,8 +44,8 @@
         },
         {
           "component": "text",
-          "label": "Subtitle",
-          "name": "subtitle",
+          "label": "Sub Title",
+          "name": "sub-title",
           "valueType": "string"
         },
         {

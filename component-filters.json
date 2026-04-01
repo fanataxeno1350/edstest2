@@ -23,10 +23,8 @@
       "product-category-listing",
       "teaser",
       "recipe-group",
-      "popular-products",
-      "cta-text",
-      "slickcarousel",
-      "follow-us",
+      "ourcommunity-teasercarousel",
+      "footer-social-media",
       "footer"
     ]
   },
@@ -37,16 +35,10 @@
     ]
   },
   {
-    "id": "cmp-search",
+    "id": "footer-social-media",
     "components": [
-      "cmp-search-item"
+      "footer-social-media-item"
     ]
-  },
-  {
-    "id": "cta-text"
-  },
-  {
-    "id": "follow-us"
   },
   {
     "id": "footer",
@@ -59,14 +51,14 @@
     "id": "header",
     "components": [
       "nav-item",
-      "social-link",
-      "policy-link"
+      "policy-link",
+      "social-link"
     ]
   },
   {
-    "id": "popular-products",
+    "id": "ourcommunity-teasercarousel",
     "components": [
-      "popular-product-item"
+      "teaser"
     ]
   },
   {
@@ -80,12 +72,6 @@
     "components": [
       "tab",
       "recipe-card"
-    ]
-  },
-  {
-    "id": "slickcarousel",
-    "components": [
-      "teaser"
     ]
   },
   {

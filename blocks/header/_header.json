@@ -80,15 +80,15 @@
         },
         {
           "component": "container",
-          "item": "social-link",
-          "label": "Social Media Links",
-          "name": "socialLinks"
-        },
-        {
-          "component": "container",
           "item": "policy-link",
           "label": "Policy Links",
           "name": "policyLinks"
+        },
+        {
+          "component": "container",
+          "item": "social-link",
+          "label": "Social Links",
+          "name": "socialLinks"
         }
       ]
     },
@@ -96,26 +96,15 @@
       "id": "nav-item",
       "fields": [
         {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "URL",
-          "name": "url",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "social-link",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "URL",
-          "name": "url",
+          "component": "text",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         }
       ]
@@ -125,8 +114,25 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "URL",
-          "name": "url",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "social-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
@@ -137,8 +143,8 @@
       "id": "header",
       "components": [
         "nav-item",
-        "social-link",
-        "policy-link"
+        "policy-link",
+        "social-link"
       ]
     }
   ]

@@ -58,10 +58,8 @@
         "product-category-listing",
         "teaser",
         "recipe-group",
-        "popular-products",
-        "cta-text",
-        "slickcarousel",
-        "follow-us",
+        "ourcommunity-teasercarousel",
+        "footer-social-media",
         "footer"
       ]
     }

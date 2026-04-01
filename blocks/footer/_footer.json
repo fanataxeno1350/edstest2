@@ -72,8 +72,8 @@
         {
           "component": "container",
           "item": "footer-social",
-          "label": "Footer Socials",
-          "name": "footer_socials"
+          "label": "Footer Social Media",
+          "name": "footer_social"
         }
       ]
     },

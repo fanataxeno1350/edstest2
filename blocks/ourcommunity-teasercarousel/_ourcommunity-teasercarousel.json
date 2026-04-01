@@ -1,16 +1,16 @@
 {
   "definitions": [
     {
-      "title": "Slickcarousel",
-      "id": "slickcarousel",
+      "title": "Ourcommunity-Teasercarousel",
+      "id": "ourcommunity-teasercarousel",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "slickcarousel",
-              "model": "slickcarousel",
-              "name": "Slickcarousel"
+              "filter": "ourcommunity-teasercarousel",
+              "model": "ourcommunity-teasercarousel",
+              "name": "Ourcommunity-Teasercarousel"
             }
           }
         }
@@ -34,6 +34,29 @@
   ],
   "models": [
     {
+      "id": "ourcommunity-teasercarousel",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "teaser",
+          "label": "Teasers",
+          "name": "teasers"
+        }
+      ]
+    },
+    {
       "id": "teaser",
       "fields": [
         {
@@ -56,20 +79,20 @@
         },
         {
           "component": "richtext",
-          "label": "Description",
-          "name": "description",
+          "label": "Teaser Description",
+          "name": "teaser-description",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Button Link",
-          "name": "button-link",
+          "label": "CTA Link",
+          "name": "cta-link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Button Text",
-          "name": "button-text",
+          "label": "CTA Text",
+          "name": "cta-text",
           "valueType": "string"
         }
       ]
@@ -77,7 +100,7 @@
   ],
   "filters": [
     {
-      "id": "slickcarousel",
+      "id": "ourcommunity-teasercarousel",
       "components": [
         "teaser"
       ]

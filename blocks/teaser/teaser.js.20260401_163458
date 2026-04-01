@@ -1,0 +1,119 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [
+    backgroundImageDesktopRow,
+    backgroundImageMobileRow,
+    titleRow,
+    descriptionRow,
+    buttonLinkRow,
+    buttonTextRow,
+  ] = [...block.children];
+
+  // The block itself already has 'teaser' from the outer div.
+  // Add specific modifier class from original HTML if applicable.
+  // The original HTML shows 'cmp-teaser' and 'cmp-teaser--first-half-center-aligned'
+  // on the inner div. The outer div has 'teaser'.
+  // The decorate function receives the outer div as 'block'.
+  // We need to ensure the inner structure matches the original HTML.
+
+  // The original HTML structure has an outer div with class 'teaser' and
+  // an inner div with classes 'cmp-teaser' and 'cmp-teaser--first-half-center-aligned'.
+  // The decorate function receives the outer div.
+  // Let's create the inner div and move the classes to it.
+  const innerTeaserDiv = document.createElement('div');
+  innerTeaserDiv.classList.add('cmp-teaser', 'cmp-teaser--first-half-center-aligned');
+  block.append(innerTeaserDiv); // Append early to allow setting styles/attributes on it
+
+  // Background Images
+  const desktopPicture = backgroundImageDesktopRow.querySelector('picture');
+  const mobilePicture = backgroundImageMobileRow.querySelector('picture');
+
+  if (desktopPicture) {
+    const desktopImg = desktopPicture.querySelector('img');
+    const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '1013' }]);
+    moveInstrumentation(desktopImg, optimizedDesktopPic.querySelector('img'));
+    desktopPicture.replaceWith(optimizedDesktopPic);
+    // Apply background image to the innerTeaserDiv as per original HTML
+    innerTeaserDiv.style.backgroundImage = `url(${optimizedDesktopPic.querySelector('img').src})`;
+  }
+
+  // Handle mobile background image for responsive design (CSS will handle media queries)
+  if (mobilePicture) {
+    const mobileImg = mobilePicture.querySelector('img');
+    const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '750' }]);
+    moveInstrumentation(mobileImg, optimizedMobilePic.querySelector('img'));
+    mobilePicture.replaceWith(optimizedMobilePic);
+    // Add a data attribute to the innerTeaserDiv as per original HTML
+    innerTeaserDiv.setAttribute('data-background-image-mobile', optimizedMobilePic.querySelector('img').src);
+  }
+
+  const contentDiv = document.createElement('div');
+  contentDiv.classList.add('cmp-teaser__content');
+
+  // Title
+  if (titleRow) {
+    const titleH2 = document.createElement('h2');
+    moveInstrumentation(titleRow, titleH2);
+    titleH2.classList.add('cmp-teaser__title');
+    // The titleRow contains a div, which contains the text. We need to extract the text.
+    const titleTextDiv = titleRow.querySelector('div');
+    if (titleTextDiv) {
+      titleH2.textContent = titleTextDiv.textContent.trim();
+    }
+    contentDiv.append(titleH2);
+  }
+
+  // Description
+  if (descriptionRow) {
+    const descriptionDiv = document.createElement('div');
+    moveInstrumentation(descriptionRow, descriptionDiv);
+    descriptionDiv.classList.add('cmp-teaser__description');
+    // The descriptionRow contains a div, which contains the richtext.
+    const descriptionContentDiv = descriptionRow.querySelector('div');
+    if (descriptionContentDiv) {
+      while (descriptionContentDiv.firstChild) descriptionDiv.append(descriptionContentDiv.firstChild);
+    }
+    contentDiv.append(descriptionDiv);
+  }
+
+  // Button
+  if (buttonLinkRow && buttonTextRow) {
+    const actionContainer = document.createElement('div');
+    actionContainer.classList.add('cmp-teaser__action-container');
+
+    const buttonWrapper = document.createElement('div');
+    buttonWrapper.classList.add('button', 'cmp-button--primary-anchor');
+
+    const buttonLink = buttonLinkRow.querySelector('a');
+    // The buttonTextRow contains a div, which contains the text.
+    const buttonTextContentDiv = buttonTextRow.querySelector('div');
+
+    if (buttonLink && buttonTextContentDiv) {
+      const anchor = document.createElement('a');
+      moveInstrumentation(buttonLinkRow, anchor);
+      anchor.classList.add('cmp-button');
+      anchor.href = buttonLink.href;
+      // Add target="_blank" if present in the original link
+      if (buttonLink.target) {
+        anchor.target = buttonLink.target;
+      }
+
+      const span = document.createElement('span');
+      moveInstrumentation(buttonTextRow, span);
+      span.classList.add('cmp-button__text');
+      span.textContent = buttonTextContentDiv.textContent.trim(); // Get text from the div
+
+      anchor.append(span);
+      buttonWrapper.append(anchor);
+      actionContainer.append(buttonWrapper);
+      contentDiv.append(actionContainer);
+    }
+  }
+
+  // Clear the original block content and append the new inner structure
+  block.textContent = '';
+  innerTeaserDiv.append(contentDiv); // Append contentDiv to the innerTeaserDiv
+  // The innerTeaserDiv is already appended to the block.
+}

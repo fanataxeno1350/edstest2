@@ -17,7 +17,7 @@
       }
     },
     {
-      "title": "Carousel Item",
+      "title": "Carousel-Item",
       "id": "carousel-item",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "carousel-item",
-              "name": "Carousel Item"
+              "name": "Carousel-Item"
             }
           }
         }
@@ -48,13 +48,13 @@
         {
           "component": "richtext",
           "label": "Description",
-          "name": "description",
+          "name": "desc",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Video Embed URL",
-          "name": "video-embed-url",
+          "label": "Video Iframe Src",
+          "name": "video-iframe-src",
           "valueType": "string"
         }
       ]

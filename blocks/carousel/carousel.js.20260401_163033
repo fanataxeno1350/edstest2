@@ -1,0 +1,243 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const itemRows = [...block.children].slice(1); // Skip the first row which is the container label
+
+  const carouselContainer = document.createElement('div');
+  carouselContainer.classList.add('cmp-carousel__container', 'slick-initialized', 'slick-slider', 'slick-dotted');
+
+  const prevButton = document.createElement('button');
+  prevButton.classList.add('slick-prev', 'slick-arrow', 'slick-disabled');
+  prevButton.setAttribute('aria-label', 'Previous');
+  prevButton.setAttribute('type', 'button');
+  prevButton.setAttribute('aria-disabled', 'true');
+  prevButton.textContent = 'Previous';
+
+  const slickList = document.createElement('div');
+  slickList.classList.add('slick-list', 'draggable');
+
+  const slickTrack = document.createElement('div');
+  slickTrack.classList.add('slick-track');
+
+  const dotsList = document.createElement('ul');
+  dotsList.classList.add('slick-dots');
+  dotsList.setAttribute('role', 'tablist');
+
+  itemRows.forEach((row, index) => {
+    const [
+      bgImageCell,
+      logoImageCell,
+      logoAltCell,
+      titleCell,
+      subtitleCell,
+      mainImageCell,
+      mainImageMobileCell,
+      buttonLinkCell,
+      buttonTextCell,
+    ] = row.children;
+
+    const carouselItem = document.createElement('div');
+    carouselItem.classList.add('cmp-carousel__item', 'slick-slide');
+    if (index === 0) {
+      carouselItem.classList.add('cmp-carousel__item--active', 'slick-current', 'slick-active');
+      carouselItem.setAttribute('aria-hidden', 'false');
+      carouselItem.setAttribute('tabindex', '0');
+      dotsList.innerHTML += `<li class="slick-active" role="presentation"><button type="button" role="tab" id="slick-slide-control0${index}" aria-controls="slick-slide0${index}" aria-label="${index + 1} of ${itemRows.length}" tabindex="0" aria-selected="true">${index + 1}</button></li>`;
+    } else {
+      carouselItem.setAttribute('aria-hidden', 'true');
+      carouselItem.setAttribute('tabindex', '-1');
+      dotsList.innerHTML += `<li role="presentation"><button type="button" role="tab" id="slick-slide-control0${index}" aria-controls="slick-slide0${index}" aria-label="${index + 1} of ${itemRows.length}" tabindex="-1">${index + 1}</button></li>`;
+    }
+    carouselItem.id = `slick-slide0${index}`;
+    carouselItem.setAttribute('role', 'tabpanel');
+    carouselItem.setAttribute('aria-roledescription', 'slide');
+    carouselItem.setAttribute('aria-label', `Slide ${index + 1} of ${itemRows.length}`);
+    carouselItem.setAttribute('data-slick-index', index);
+    carouselItem.setAttribute('aria-describedby', `slick-slide-control0${index}`);
+
+    const bannerDiv = document.createElement('div');
+    bannerDiv.classList.add('banner', 'cmp-banner--logo');
+
+    const cmpBannerDiv = document.createElement('div');
+    cmpBannerDiv.classList.add('cmp-banner');
+    cmpBannerDiv.setAttribute('data-component', 'banner');
+    cmpBannerDiv.setAttribute('data-initialized', 'true');
+
+    const bgImage = bgImageCell.querySelector('picture > img');
+    if (bgImage) {
+      cmpBannerDiv.style.backgroundImage = `url("${bgImage.src}")`;
+    }
+
+    const cmpBannerContent = document.createElement('div');
+    cmpBannerContent.classList.add('cmp-banner__content');
+
+    const logoItemDiv = document.createElement('div');
+    logoItemDiv.classList.add('cmp-banner__item-logo');
+    const logoImage = logoImageCell.querySelector('picture > img');
+    if (logoImage) {
+      const newLogoImg = document.createElement('img');
+      newLogoImg.src = logoImage.src;
+      newLogoImg.alt = logoAltCell.textContent.trim();
+      newLogoImg.setAttribute('fetchpriority', 'high');
+      moveInstrumentation(logoImage, newLogoImg);
+      logoItemDiv.append(newLogoImg);
+    }
+    cmpBannerContent.append(logoItemDiv);
+
+    const titleH2 = document.createElement('h2');
+    titleH2.classList.add('cmp-banner__title');
+    moveInstrumentation(titleCell, titleH2);
+    while (titleCell.firstChild) titleH2.append(titleCell.firstChild);
+    cmpBannerContent.append(titleH2);
+
+    const subtitleH3 = document.createElement('h3');
+    subtitleH3.classList.add('cmp-banner__sub-title');
+    moveInstrumentation(subtitleCell, subtitleH3);
+    while (subtitleCell.firstChild) subtitleH3.append(subtitleCell.firstChild);
+    cmpBannerContent.append(subtitleH3);
+
+    const pictureEl = document.createElement('picture');
+    pictureEl.classList.add('w-100', 'd-block');
+
+    const mainImage = mainImageCell.querySelector('picture > img');
+    const mainImageMobile = mainImageMobileCell.querySelector('picture > img');
+
+    if (mainImageMobile) {
+      const sourceMobile = document.createElement('source');
+      sourceMobile.setAttribute('media', '(max-width: 600px)');
+      sourceMobile.setAttribute('srcset', mainImageMobile.src);
+      pictureEl.append(sourceMobile);
+    }
+
+    if (mainImage) {
+      const imgEl = document.createElement('img');
+      imgEl.src = mainImage.src;
+      imgEl.alt = mainImage.alt;
+      imgEl.classList.add('cmp-banner__image', 'w-100', 'd-block');
+      imgEl.setAttribute('fetchpriority', 'high');
+      moveInstrumentation(mainImage, imgEl);
+      pictureEl.append(imgEl);
+    }
+    cmpBannerContent.append(pictureEl);
+
+    const buttonDiv = document.createElement('div');
+    // Corrected class name from 'null' to 'button' based on original HTML
+    buttonDiv.classList.add('button', 'cmp-button--primary-anchor');
+    const buttonLink = buttonLinkCell.querySelector('a');
+    if (buttonLink) {
+      const newButtonLink = document.createElement('a');
+      newButtonLink.classList.add('cmp-button');
+      newButtonLink.href = buttonLink.href;
+      newButtonLink.setAttribute('data-request', 'true');
+      newButtonLink.setAttribute('tabindex', index === 0 ? '0' : '-1');
+      const buttonSpan = document.createElement('span');
+      buttonSpan.classList.add('cmp-button__text');
+      moveInstrumentation(buttonTextCell, buttonSpan);
+      while (buttonTextCell.firstChild) buttonSpan.append(buttonTextCell.firstChild);
+      newButtonLink.append(buttonSpan);
+      moveInstrumentation(buttonLink, newButtonLink);
+      buttonDiv.append(newButtonLink);
+    }
+    cmpBannerContent.append(buttonDiv);
+
+    cmpBannerDiv.append(cmpBannerContent);
+    bannerDiv.append(cmpBannerDiv);
+    carouselItem.append(bannerDiv);
+    slickTrack.append(carouselItem);
+
+    moveInstrumentation(row, carouselItem); // Move instrumentation from original row to new carousel item
+  });
+
+  slickList.append(slickTrack);
+
+  const nextButton = document.createElement('button');
+  nextButton.classList.add('slick-next', 'slick-arrow');
+  nextButton.setAttribute('aria-label', 'Next');
+  nextButton.setAttribute('type', 'button');
+  nextButton.setAttribute('aria-disabled', 'false');
+  nextButton.textContent = 'Next';
+
+  carouselContainer.append(prevButton, slickList, nextButton, dotsList);
+
+  block.textContent = '';
+  block.classList.add('cmp-carousel');
+  block.append(carouselContainer);
+
+  // Add event listeners for carousel navigation
+  let currentIndex = 0;
+  const totalItems = itemRows.length;
+
+  function updateCarousel() {
+    slickTrack.style.transform = `translate3d(-${currentIndex * 100}%, 0px, 0px)`;
+
+    [...slickTrack.children].forEach((item, i) => {
+      item.classList.remove('cmp-carousel__item--active', 'slick-current', 'slick-active');
+      item.setAttribute('aria-hidden', 'true');
+      item.setAttribute('tabindex', '-1');
+      const buttonLink = item.querySelector('.cmp-button');
+      if (buttonLink) buttonLink.setAttribute('tabindex', '-1');
+    });
+
+    slickTrack.children[currentIndex].classList.add('cmp-carousel__item--active', 'slick-current', 'slick-active');
+    slickTrack.children[currentIndex].setAttribute('aria-hidden', 'false');
+    slickTrack.children[currentIndex].setAttribute('tabindex', '0');
+    const currentButtonLink = slickTrack.children[currentIndex].querySelector('.cmp-button');
+    if (currentButtonLink) currentButtonLink.setAttribute('tabindex', '0');
+
+    [...dotsList.children].forEach((dot, i) => {
+      dot.classList.remove('slick-active');
+      dot.querySelector('button').setAttribute('aria-selected', 'false');
+      dot.querySelector('button').setAttribute('tabindex', '-1');
+    });
+    dotsList.children[currentIndex].classList.add('slick-active');
+    dotsList.children[currentIndex].querySelector('button').setAttribute('aria-selected', 'true');
+    dotsList.children[currentIndex].querySelector('button').setAttribute('tabindex', '0');
+
+    if (currentIndex === 0) {
+      prevButton.classList.add('slick-disabled');
+      prevButton.setAttribute('aria-disabled', 'true');
+    } else {
+      prevButton.classList.remove('slick-disabled');
+      prevButton.setAttribute('aria-disabled', 'false');
+    }
+
+    if (currentIndex === totalItems - 1) {
+      nextButton.classList.add('slick-disabled');
+      nextButton.setAttribute('aria-disabled', 'true');
+    } else {
+      nextButton.classList.remove('slick-disabled');
+      nextButton.setAttribute('aria-disabled', 'false');
+    }
+  }
+
+  prevButton.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateCarousel();
+    }
+  });
+
+  nextButton.addEventListener('click', () => {
+    if (currentIndex < totalItems - 1) {
+      currentIndex++;
+      updateCarousel();
+    }
+  });
+
+  [...dotsList.children].forEach((dot, index) => {
+    dot.querySelector('button').addEventListener('click', () => {
+      currentIndex = index;
+      updateCarousel();
+    });
+  });
+
+  // Optimize images
+  carouselContainer.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+
+  updateCarousel(); // Initial state
+}

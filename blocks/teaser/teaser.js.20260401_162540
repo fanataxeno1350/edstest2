@@ -1,0 +1,86 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [
+    backgroundImageDesktopRow,
+    backgroundImageMobileRow,
+    titleRow,
+    descriptionRow,
+    actionLinkRow,
+  ] = [...block.children];
+
+  block.classList.add('cmp-teaser--first-half-center-aligned');
+
+  const content = document.createElement('div');
+  content.classList.add('cmp-teaser__content');
+
+  const title = document.createElement('h2');
+  moveInstrumentation(titleRow, title);
+  title.classList.add('cmp-teaser__title');
+  while (titleRow.firstElementChild) title.append(titleRow.firstElementChild);
+  content.append(title);
+
+  const description = document.createElement('div');
+  moveInstrumentation(descriptionRow, description);
+  description.classList.add('cmp-teaser__description');
+  while (descriptionRow.firstElementChild) description.append(descriptionRow.firstElementChild);
+  content.append(description);
+
+  const actionContainer = document.createElement('div');
+  actionContainer.classList.add('cmp-teaser__action-container');
+
+  const buttonWrapper = document.createElement('div');
+  buttonWrapper.classList.add('button', 'cmp-button--primary-anchor');
+
+  const actionLink = document.createElement('a');
+  moveInstrumentation(actionLinkRow, actionLink);
+  actionLink.classList.add('cmp-button');
+  const foundLink = actionLinkRow.querySelector('a');
+  if (foundLink) {
+    actionLink.href = foundLink.href;
+    if (foundLink.target) actionLink.target = foundLink.target;
+    // Append the text content of the found link to the actionLink
+    actionLink.textContent = foundLink.textContent;
+  }
+  
+  // The span for button text is already part of the original HTML structure for the link
+  // We need to wrap the link's content in a span with class 'cmp-button__text'
+  const span = document.createElement('span');
+  span.classList.add('cmp-button__text');
+  while (actionLink.firstChild) {
+    span.append(actionLink.firstChild);
+  }
+  actionLink.append(span);
+
+
+  buttonWrapper.append(actionLink);
+  actionContainer.append(buttonWrapper);
+  content.append(actionContainer);
+
+  const desktopPicture = backgroundImageDesktopRow.querySelector('picture');
+  const mobilePicture = backgroundImageMobileRow.querySelector('picture');
+
+  if (desktopPicture) {
+    const desktopImg = desktopPicture.querySelector('img');
+    const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '1013' }]);
+    moveInstrumentation(desktopImg, optimizedDesktopPic.querySelector('img'));
+    desktopPicture.replaceWith(optimizedDesktopPic);
+    block.style.backgroundImage = `url(${optimizedDesktopPic.querySelector('img').src})`;
+
+    // Handle mobile image as a source within the desktop picture for responsive background
+    if (mobilePicture) {
+      const mobileImg = mobilePicture.querySelector('img');
+      const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '750' }]);
+      moveInstrumentation(mobileImg, optimizedMobilePic.querySelector('img'));
+      const mobileSource = optimizedMobilePic.querySelector('source');
+      if (mobileSource) {
+        mobileSource.media = '(max-width: 768px)';
+        optimizedDesktopPic.prepend(mobileSource); // Prepend to the optimized desktop picture
+      }
+    }
+  }
+
+  block.textContent = '';
+  block.append(content);
+}

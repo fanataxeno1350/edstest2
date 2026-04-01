@@ -6,8 +6,9 @@ export default function decorate(block) {
     titleRow,
     subtitleRow,
     tabsRow,
-    cardsRow, // This row is not used directly for content but marks the start of item rows
-    viewAllLabelRow,
+    // recipeCardsRow is not a distinct root row, it's a container for itemRows.
+    // The BlockJson defines 5 root fields, and itemRows are the remaining children.
+    buttonLabelRow,
     ...itemRows
   ] = [...block.children];
 
@@ -20,15 +21,15 @@ export default function decorate(block) {
   block.append(headerSection);
 
   const title = document.createElement('h2');
-  moveInstrumentation(titleRow.firstElementChild, title);
   title.classList.add('cmp-recipe-group__title');
-  title.textContent = titleRow.firstElementChild.textContent;
+  moveInstrumentation(titleRow.firstElementChild, title);
+  title.append(titleRow.firstElementChild.textContent);
   headerSection.append(title);
 
   const subtitle = document.createElement('div');
-  moveInstrumentation(subtitleRow.firstElementChild, subtitle);
   subtitle.classList.add('cmp-recipe-group__subtitle');
-  subtitle.textContent = subtitleRow.firstElementChild.textContent;
+  moveInstrumentation(subtitleRow.firstElementChild, subtitle);
+  subtitle.append(subtitleRow.firstElementChild.textContent);
   headerSection.append(subtitle);
 
   // Tabs Section
@@ -49,23 +50,24 @@ export default function decorate(block) {
   );
   tabGroup.append(tabCarouselItem);
 
-  // Correctly read tab labels from the tabsRow children
-  const tabLabels = [...tabsRow.firstElementChild.children].map((cell) => cell.textContent.trim());
+  // The tabsRow contains a single div with comma-separated tab labels.
+  // The BlockJson for 'tab' item has a single 'label' field.
+  const tabLabels = tabsRow.firstElementChild.textContent
+    .split(',')
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
 
   tabLabels.forEach((label, index) => {
     const tabItem = document.createElement('div');
     tabItem.classList.add('cmp-tab-group__tab-item');
-
     const tabDiv = document.createElement('div');
     tabDiv.classList.add('tab', 'cmp-tab--primary');
-
     const tabButton = document.createElement('button');
-    tabButton.type = 'button';
+    tabButton.setAttribute('type', 'button');
     tabButton.classList.add('cmp-tab');
     if (index === 0) {
       tabButton.classList.add('selected');
     }
-
     const tabText = document.createElement('span');
     tabText.classList.add('cmp-tab__text');
     tabText.textContent = label;
@@ -80,42 +82,33 @@ export default function decorate(block) {
         .querySelectorAll('.cmp-tab')
         .forEach((btn) => btn.classList.remove('selected'));
       tabButton.classList.add('selected');
-      // TODO: Implement actual tab content switching logic here
+      // TODO: Implement actual filtering logic for recipe cards based on tab selection
     });
   });
 
-  // Content Section (Carousel for Recipe Cards)
+  // Content Section (Recipe Cards)
   const contentSection = document.createElement('div');
   contentSection.classList.add('cmp-recipe-group__content');
   block.append(contentSection);
 
   const recipeCarousel = document.createElement('div');
-  recipeCarousel.classList.add('slickcarousel', 'carousel', 'panelcontainer'); // Removed 'cmp-recipe-group__carousel', 'undefined' as they are not in original HTML
+  recipeCarousel.classList.add(
+    'cmp-recipe-group__carousel',
+    'slickcarousel',
+    'carousel',
+    'panelcontainer',
+    'cmp-carousel', // Corrected from 'undefined' in original HTML
+  );
   contentSection.append(recipeCarousel);
-
-  const carouselCmp = document.createElement('div');
-  carouselCmp.classList.add('cmp-carousel');
-  carouselCmp.setAttribute('data-component', 'carousel');
-  carouselCmp.setAttribute('data-show-infinite-scroll', 'false');
-  carouselCmp.setAttribute('data-show-arrows', 'true');
-  carouselCmp.setAttribute('data-show-dots', 'false');
-  carouselCmp.setAttribute('data-item-count-per-slide', '3');
-  carouselCmp.setAttribute('data-auto-play-is-enabled', 'false');
-  carouselCmp.setAttribute('data-auto-play-speed-in-ms', '500');
-  carouselCmp.setAttribute('data-reveal-next-item-partially', 'false');
-  carouselCmp.setAttribute('data-show-center-zoom', 'false');
-  carouselCmp.setAttribute('data-slides-to-scroll', '3');
-  carouselCmp.setAttribute('data-initialized', 'true');
-  recipeCarousel.append(carouselCmp);
 
   const carouselContainer = document.createElement('div');
   carouselContainer.classList.add('cmp-carousel__container', 'slick-initialized', 'slick-slider');
-  carouselCmp.append(carouselContainer);
+  recipeCarousel.append(carouselContainer);
 
   const prevButton = document.createElement('button');
   prevButton.classList.add('slick-prev', 'slick-arrow', 'slick-disabled');
-  prevButton.type = 'button';
   prevButton.setAttribute('aria-label', 'Previous');
+  prevButton.setAttribute('type', 'button');
   prevButton.setAttribute('aria-disabled', 'true');
   prevButton.textContent = 'Previous';
   carouselContainer.append(prevButton);
@@ -126,36 +119,46 @@ export default function decorate(block) {
 
   const slickTrack = document.createElement('div');
   slickTrack.classList.add('slick-track');
+  slickTrack.style.opacity = '1';
   slickList.append(slickTrack);
 
   itemRows.forEach((row, index) => {
-    // Each row is a div, its children are the cells
-    const linkCell = row.children[0];
-    const imageCell = row.children[1];
-    const tagCell = row.children[2];
-    const recipeTitleCell = row.children[3];
-    const timeCell = row.children[4];
-    const difficultyCell = row.children[5];
+    // BlockJson for 'recipe-card' defines 6 fields: link, image, tag, title, time, difficulty
+    const [linkCell, imageCell, tagCell, cardTitleCell, timeCell, difficultyCell] = [
+      ...row.children,
+    ];
 
     const carouselItem = document.createElement('div');
-    carouselItem.classList.add('cmp-recipe-group__carousel-item', 'cmp-carousel__item', 'slick-slide');
+    carouselItem.classList.add(
+      'cmp-recipe-group__carousel-item',
+      'cmp-carousel__item',
+      'slick-slide',
+    );
+    if (index < 3) {
+      carouselItem.classList.add('slick-current', 'slick-active');
+    }
     carouselItem.setAttribute('data-slick-index', index);
-    carouselItem.setAttribute('aria-hidden', index !== 0);
-    carouselItem.setAttribute('tabindex', index === 0 ? '0' : '-1');
-    slickTrack.append(carouselItem);
+    carouselItem.setAttribute('aria-hidden', index >= 3);
+    carouselItem.style.width = '316px'; // Hardcoded from original HTML
 
-    const recipeLink = document.createElement('a');
+    const cardLink = document.createElement('a');
     const foundLink = linkCell.querySelector('a');
     if (foundLink) {
-      recipeLink.href = foundLink.href;
-      moveInstrumentation(linkCell, recipeLink);
+      cardLink.href = foundLink.href;
+      moveInstrumentation(linkCell, cardLink);
     }
-    recipeLink.classList.add('card', 'cmp-card--recipe', 'cmp-card--aashirvaad-recipe', 'color-background-background-2');
-    carouselItem.append(recipeLink);
+    cardLink.classList.add(
+      'card',
+      'cmp-card--recipe',
+      'cmp-card--aashirvaad-recipe',
+      'color-background-background-2',
+    );
+    cardLink.setAttribute('tabindex', index < 3 ? '0' : '-1');
+    carouselItem.append(cardLink);
 
     const card = document.createElement('div');
     card.classList.add('cmp-card');
-    recipeLink.append(card);
+    cardLink.append(card);
 
     const cardContent = document.createElement('div');
     cardContent.classList.add('cmp-card__content');
@@ -167,22 +170,13 @@ export default function decorate(block) {
 
     const cardOptions = document.createElement('div');
     cardOptions.classList.add('cmp-card__options');
-    cardMedia.append(cardOptions);
-
     const threeDots = document.createElement('div');
     threeDots.classList.add('cmp-card__three-dots', 'icon-open-card-popup');
     cardOptions.append(threeDots);
-
-    // Add event listener for the three-dots icon
-    threeDots.addEventListener('click', () => {
-      // TODO: Implement popup logic here
-      console.log('Three dots clicked for recipe:', recipeTitleCell.textContent.trim());
-    });
+    cardMedia.append(cardOptions);
 
     const cardImage = document.createElement('div');
     cardImage.classList.add('cmp-card__image');
-    cardMedia.append(cardImage);
-
     const lazyImageContainer = document.createElement('div');
     lazyImageContainer.classList.add('lazy-image-container');
     cardImage.append(lazyImageContainer);
@@ -190,10 +184,16 @@ export default function decorate(block) {
     const picture = imageCell.querySelector('picture');
     if (picture) {
       const img = picture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      lazyImageContainer.append(optimizedPic);
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        lazyImageContainer.append(optimizedPic);
+        optimizedPic.querySelector('img').classList.add('lazy-image', 'loaded');
+        optimizedPic.querySelector('img').style.opacity = '1';
+        optimizedPic.querySelector('img').style.transition = 'opacity 0.3s ease-in-out';
+      }
     }
+    cardMedia.append(cardImage);
 
     const cardInfo = document.createElement('div');
     cardInfo.classList.add('cmp-card__info');
@@ -201,30 +201,28 @@ export default function decorate(block) {
 
     const cardTag = document.createElement('div');
     cardTag.classList.add('cmp-card__tag', 'cmp-card__tag--with-heart');
-    cardInfo.append(cardTag);
-
     const tagWrapper = document.createElement('div');
     tagWrapper.classList.add('cmp-card__tag-wrapper');
     const tagP = document.createElement('p');
     moveInstrumentation(tagCell.firstElementChild, tagP);
-    tagP.textContent = tagCell.textContent.trim();
+    tagP.textContent = tagCell.firstElementChild.textContent;
     tagWrapper.append(tagP);
     cardTag.append(tagWrapper);
-
     const heartsWrapper = document.createElement('div');
     heartsWrapper.classList.add('cmp-card__hearts-wrapper', 'hidden');
     const heartIcon = document.createElement('div');
     heartIcon.classList.add('cmp-card__icon', 'icon-favorite_FILL1_wght400_GRAD0_opsz20');
     heartsWrapper.append(heartIcon);
-    heartsWrapper.append(document.createElement('p'));
+    heartsWrapper.append(document.createElement('p')); // Empty p tag from original HTML
     cardTag.append(heartsWrapper);
+    cardInfo.append(cardTag);
 
     const cardTitle = document.createElement('div');
     cardTitle.classList.add('cmp-card__title');
-    const titleH4 = document.createElement('h4');
-    moveInstrumentation(recipeTitleCell.firstElementChild, titleH4);
-    titleH4.textContent = recipeTitleCell.textContent.trim();
-    cardTitle.append(titleH4);
+    const cardTitleH4 = document.createElement('h4');
+    moveInstrumentation(cardTitleCell.firstElementChild, cardTitleH4);
+    cardTitleH4.textContent = cardTitleCell.firstElementChild.textContent;
+    cardTitle.append(cardTitleH4);
     cardInfo.append(cardTitle);
 
     const recipeFooter = document.createElement('div');
@@ -238,7 +236,7 @@ export default function decorate(block) {
     timeInMinutes.append(timeIcon);
     const timeP = document.createElement('p');
     moveInstrumentation(timeCell.firstElementChild, timeP);
-    timeP.textContent = timeCell.textContent.trim();
+    timeP.textContent = timeCell.firstElementChild.textContent;
     timeInMinutes.append(timeP);
     recipeFooter.append(timeInMinutes);
 
@@ -249,29 +247,56 @@ export default function decorate(block) {
     difficultyLevel.append(difficultyIcon);
     const difficultyP = document.createElement('p');
     moveInstrumentation(difficultyCell.firstElementChild, difficultyP);
-    difficultyP.textContent = difficultyCell.textContent.trim();
+    difficultyP.textContent = difficultyCell.firstElementChild.textContent;
     difficultyLevel.append(difficultyP);
     recipeFooter.append(difficultyLevel);
+
+    slickTrack.append(carouselItem);
   });
 
   const nextButton = document.createElement('button');
   nextButton.classList.add('slick-next', 'slick-arrow');
-  nextButton.type = 'button';
   nextButton.setAttribute('aria-label', 'Next');
+  nextButton.setAttribute('type', 'button');
   nextButton.setAttribute('aria-disabled', 'false');
   nextButton.textContent = 'Next';
   carouselContainer.append(nextButton);
 
-  // Simple carousel logic (for demonstration, a full slick carousel implementation is complex)
+  // Action Button
+  const actionSection = document.createElement('div');
+  actionSection.classList.add('cmp-recipe-group__action');
+  block.append(actionSection);
+
+  const buttonDiv = document.createElement('div');
+  buttonDiv.classList.add('button', 'cmp-button--primary', 'cmp-button--primary-light');
+  actionSection.append(buttonDiv);
+
+  const actionButton = document.createElement('button');
+  actionButton.setAttribute('type', 'button');
+  actionButton.classList.add('cmp-button');
+  const buttonText = document.createElement('span');
+  buttonText.classList.add('cmp-button__text');
+  moveInstrumentation(buttonLabelRow.firstElementChild, buttonText);
+  buttonText.textContent = buttonLabelRow.firstElementChild.textContent;
+  actionButton.append(buttonText);
+  buttonDiv.append(actionButton);
+
+  // Share Div (empty from original HTML)
+  const shareDiv = document.createElement('div');
+  shareDiv.classList.add('share');
+  block.append(shareDiv);
+
+  // Add basic carousel functionality (simplified)
   let currentIndex = 0;
-  const slides = [...slickTrack.children];
-  const slideWidth = 316; // This should ideally be calculated dynamically
+  const itemsPerSlide = 3;
+  const totalItems = itemRows.length;
 
   const updateCarousel = () => {
-    slickTrack.style.transform = `translate3d(-${currentIndex * slideWidth}px, 0px, 0px)`;
-
-    slides.forEach((slide, i) => {
-      if (i >= currentIndex && i < currentIndex + 3) {
+    slickTrack.style.transform = `translate3d(-${
+      currentIndex * (316 * itemsPerSlide)
+    }px, 0px, 0px)`; // Assuming 316px width per item
+    slickTrack.querySelectorAll('.slick-slide').forEach((slide, i) => {
+      if (i >= currentIndex && i < currentIndex + itemsPerSlide) {
         slide.classList.add('slick-current', 'slick-active');
         slide.setAttribute('aria-hidden', 'false');
         slide.setAttribute('tabindex', '0');
@@ -290,7 +315,7 @@ export default function decorate(block) {
       prevButton.setAttribute('aria-disabled', 'false');
     }
 
-    if (currentIndex >= slides.length - 3) {
+    if (currentIndex >= totalItems - itemsPerSlide) {
       nextButton.classList.add('slick-disabled');
       nextButton.setAttribute('aria-disabled', 'true');
     } else {
@@ -307,36 +332,11 @@ export default function decorate(block) {
   });
 
   nextButton.addEventListener('click', () => {
-    if (currentIndex < slides.length - 3) {
+    if (currentIndex < totalItems - itemsPerSlide) {
       currentIndex += 1;
       updateCarousel();
     }
   });
 
-  updateCarousel(); // Initialize carousel state
-
-  // Action Section (View All Button)
-  const actionSection = document.createElement('div');
-  actionSection.classList.add('cmp-recipe-group__action');
-  block.append(actionSection);
-
-  const buttonDiv = document.createElement('div');
-  buttonDiv.classList.add('button', 'cmp-button--primary', 'cmp-button--primary-light');
-  actionSection.append(buttonDiv);
-
-  const viewAllButton = document.createElement('button');
-  viewAllButton.type = 'button';
-  viewAllButton.classList.add('cmp-button');
-  moveInstrumentation(viewAllLabelRow.firstElementChild, viewAllButton);
-
-  const viewAllText = document.createElement('span');
-  viewAllText.classList.add('cmp-button__text');
-  viewAllText.textContent = viewAllLabelRow.firstElementChild.textContent.trim();
-  viewAllButton.append(viewAllText);
-  buttonDiv.append(viewAllButton);
-
-  // Share Section
-  const shareDiv = document.createElement('div');
-  shareDiv.classList.add('share');
-  block.append(shareDiv);
+  updateCarousel(); // Initial state
 }

@@ -156,57 +156,31 @@
       {
         "component": "richtext",
         "label": "Description",
-        "name": "description",
+        "name": "desc",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Video Embed URL",
-        "name": "video-embed-url",
+        "label": "Video Iframe Src",
+        "name": "video-iframe-src",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "cmp-search"
-  },
-  {
-    "id": "cmp-search-item",
+    "id": "footer-social-media",
     "fields": [
       {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Title",
-        "name": "title",
-        "valueType": "string"
+        "component": "container",
+        "item": "footer-social-media-item",
+        "label": "Social Media Links",
+        "name": "social-media-links"
       }
     ]
   },
   {
-    "id": "cta-text",
+    "id": "footer-social-media-item",
     "fields": [
-      {
-        "component": "richtext",
-        "label": "Text",
-        "name": "text",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "follow-us",
-    "fields": [
-      {
-        "component": "richtext",
-        "label": "Content",
-        "name": "content",
-        "valueType": "string"
-      },
       {
         "component": "aem-content",
         "label": "Link",
@@ -239,8 +213,8 @@
       {
         "component": "container",
         "item": "footer-social",
-        "label": "Footer Socials",
-        "name": "footer_socials"
+        "label": "Footer Social Media",
+        "name": "footer_social"
       }
     ]
   },
@@ -283,15 +257,15 @@
       },
       {
         "component": "container",
-        "item": "social-link",
-        "label": "Social Media Links",
-        "name": "socialLinks"
-      },
-      {
-        "component": "container",
         "item": "policy-link",
         "label": "Policy Links",
         "name": "policyLinks"
+      },
+      {
+        "component": "container",
+        "item": "social-link",
+        "label": "Social Links",
+        "name": "socialLinks"
       }
     ]
   },
@@ -299,26 +273,15 @@
     "id": "nav-item",
     "fields": [
       {
-        "component": "text",
-        "label": "Label",
-        "name": "label",
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       },
       {
-        "component": "aem-content",
-        "label": "URL",
-        "name": "url",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "social-link",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "URL",
-        "name": "url",
+        "component": "text",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
@@ -328,15 +291,67 @@
     "fields": [
       {
         "component": "aem-content",
-        "label": "URL",
-        "name": "url",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "popular-products",
+    "id": "social-link",
     "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "ourcommunity-teasercarousel",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "teaser",
+        "label": "Teasers",
+        "name": "teasers"
+      }
+    ]
+  },
+  {
+    "id": "teaser",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image Desktop",
+        "name": "background-image-desktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Background Image Mobile",
+        "name": "background-image-mobile",
+        "valueType": "string"
+      },
       {
         "component": "text",
         "label": "Title",
@@ -344,44 +359,21 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Subtitle",
-        "name": "subtitle",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "popular-product-item",
-        "label": "Products",
-        "name": "products"
-      }
-    ]
-  },
-  {
-    "id": "popular-product-item",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Product Image",
-        "name": "image",
+        "component": "richtext",
+        "label": "Teaser Description",
+        "name": "teaser-description",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Product Link",
-        "name": "link",
+        "label": "CTA Link",
+        "name": "cta-link",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Product Name",
-        "name": "product-name",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Product Details",
-        "name": "product-details",
+        "label": "CTA Text",
+        "name": "cta-text",
         "valueType": "string"
       }
     ]
@@ -397,8 +389,8 @@
       },
       {
         "component": "text",
-        "label": "Subtitle",
-        "name": "subtitle",
+        "label": "Sub Title",
+        "name": "sub-title",
         "valueType": "string"
       },
       {
@@ -457,12 +449,12 @@
         "component": "container",
         "item": "recipe-card",
         "label": "Recipe Cards",
-        "name": "cards"
+        "name": "recipeCards"
       },
       {
         "component": "text",
-        "label": "View All Label",
-        "name": "view-all-label",
+        "label": "Button Label",
+        "name": "button-label",
         "valueType": "string"
       }
     ]
@@ -472,8 +464,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Tab Label",
-        "name": "tab-label",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
@@ -483,7 +475,7 @@
     "fields": [
       {
         "component": "aem-content",
-        "label": "Recipe Link",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       },
@@ -501,7 +493,7 @@
       },
       {
         "component": "text",
-        "label": "Recipe Title",
+        "label": "Title",
         "name": "title",
         "valueType": "string"
       },
@@ -515,47 +507,6 @@
         "component": "text",
         "label": "Difficulty",
         "name": "difficulty",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "teaser",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Background Image Desktop",
-        "name": "background-image-desktop",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Background Image Mobile",
-        "name": "background-image-mobile",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Title",
-        "name": "title",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Description",
-        "name": "description",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Button Link",
-        "name": "button-link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Button Text",
-        "name": "button-text",
         "valueType": "string"
       }
     ]

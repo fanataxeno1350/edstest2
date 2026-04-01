@@ -47,14 +47,8 @@
         },
         {
           "component": "aem-content",
-          "label": "Button Link",
-          "name": "button-link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Button Text",
-          "name": "button-text",
+          "label": "Action Link",
+          "name": "action-link",
           "valueType": "string"
         }
       ]
