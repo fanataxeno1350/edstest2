@@ -34,9 +34,6 @@
   ],
   "models": [
     {
-      "id": "slickcarousel"
-    },
-    {
       "id": "teaser",
       "fields": [
         {
