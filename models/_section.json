@@ -53,22 +53,16 @@
         "fragment",
         "---new--blocks-----",
         "header",
-        "logo",
-        "navigation",
-        "productofmonthPlantProtein",
-        "search",
-        "footer",
+        "cmp-search",
         "carousel",
-        "banner",
-        "productCategoryListing",
+        "product-category-listing",
         "teaser",
-        "recipeCarousel",
-        "card",
-        "popularProducts",
-        "ourFootPrint",
-        "video",
-        "footerSubscribe",
-        "formText"
+        "recipe-group",
+        "popular-products",
+        "cta-text",
+        "slickcarousel",
+        "follow-us",
+        "footer"
       ]
     }
   ]

@@ -1,0 +1,110 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [
+    backgroundImageDesktopRow,
+    backgroundImageMobileRow,
+    titleRow,
+    descriptionRow,
+    buttonLinkRow,
+    buttonTextRow,
+  ] = [...block.children];
+
+  block.classList.add('cmp-teaser--first-half-center-aligned');
+
+  const cmpTeaser = document.createElement('div');
+  cmpTeaser.classList.add('cmp-teaser');
+  moveInstrumentation(block, cmpTeaser);
+
+  // Background Images
+  // Each row has a div > div structure, so we need to query for the picture inside the first child div.
+  const desktopPicture = backgroundImageDesktopRow.querySelector('div:first-child picture');
+  const mobilePicture = backgroundImageMobileRow.querySelector('div:first-child picture');
+
+  if (desktopPicture) {
+    const desktopImg = desktopPicture.querySelector('img');
+    const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '2000' }]);
+    cmpTeaser.style.backgroundImage = `url(${optimizedDesktopPic.querySelector('img').src})`;
+  }
+
+  // Handle mobile background image for responsive display
+  if (mobilePicture) {
+    const mobileImg = mobilePicture.querySelector('img');
+    const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '768' }]);
+    const mobileSrc = optimizedMobilePic.querySelector('img').src;
+
+    // Add a style block to handle responsive background image
+    const style = document.createElement('style');
+    style.textContent = `
+      @media (max-width: 768px) {
+        .teaser.cmp-teaser--first-half-center-aligned .cmp-teaser {
+          background-image: url("${mobileSrc}") !important;
+        }
+      }
+    `;
+    block.append(style);
+  }
+
+  const contentDiv = document.createElement('div');
+  contentDiv.classList.add('cmp-teaser__content');
+
+  // Title
+  // Content is in the first child div of the row
+  const titleContentDiv = titleRow.querySelector('div:first-child');
+  if (titleContentDiv && titleContentDiv.textContent.trim()) {
+    const title = document.createElement('h2');
+    title.classList.add('cmp-teaser__title');
+    moveInstrumentation(titleRow, title);
+    title.textContent = titleContentDiv.textContent.trim();
+    contentDiv.append(title);
+  }
+
+  // Description
+  // Content is in the first child div of the row
+  const descriptionContentDiv = descriptionRow.querySelector('div:first-child');
+  if (descriptionContentDiv && descriptionContentDiv.textContent.trim()) {
+    const description = document.createElement('div');
+    description.classList.add('cmp-teaser__description');
+    moveInstrumentation(descriptionRow, description);
+    // Move all children from the description content div to the new description div
+    while (descriptionContentDiv.firstChild) description.append(descriptionContentDiv.firstChild);
+    contentDiv.append(description);
+  }
+
+  // Button
+  // Button link is in the first child div of buttonLinkRow
+  const buttonLinkCell = buttonLinkRow.querySelector('div:first-child');
+  const buttonLink = buttonLinkCell ? buttonLinkCell.querySelector('a') : null;
+
+  // Button text is in the first child div of buttonTextRow
+  const buttonTextCell = buttonTextRow.querySelector('div:first-child');
+  const buttonText = buttonTextCell ? buttonTextCell.textContent.trim() : '';
+
+  if (buttonLink && buttonText) {
+    const actionContainer = document.createElement('div');
+    actionContainer.classList.add('cmp-teaser__action-container');
+
+    const buttonDiv = document.createElement('div');
+    buttonDiv.classList.add('button', 'cmp-button--primary-anchor', 'cmp-button--primary-anchor-light');
+
+    const anchor = document.createElement('a');
+    anchor.classList.add('cmp-button');
+    anchor.href = buttonLink.href;
+    moveInstrumentation(buttonLinkRow, anchor); // Move instrumentation from buttonLinkRow to anchor
+    moveInstrumentation(buttonTextRow, anchor); // Move instrumentation from buttonTextRow to anchor
+
+    const span = document.createElement('span');
+    span.classList.add('cmp-button__text');
+    span.textContent = buttonText;
+    anchor.append(span);
+
+    buttonDiv.append(anchor);
+    actionContainer.append(buttonDiv);
+    contentDiv.append(actionContainer);
+  }
+
+  cmpTeaser.append(contentDiv);
+  block.textContent = '';
+  block.append(cmpTeaser);
+}

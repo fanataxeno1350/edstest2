@@ -2,117 +2,76 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const teaserCmpTeaser = block.querySelector('.teaser-cmp-teaser');
-  const contentDiv = document.createElement('div');
-  contentDiv.classList.add('teaser-cmp-teaser__content');
+  const [
+    backgroundImageDesktopRow,
+    backgroundImageMobileRow,
+    linkRow,
+    buttonTextRow,
+  ] = [...block.children];
 
-  // Extract and move title
-  const title = block.querySelector('[data-aue-prop="title"]');
-  if (title) {
-    const h2 = document.createElement('h2');
-    h2.classList.add('teaser-cmp-teaser__title');
-    h2.append(title);
-    moveInstrumentation(title, h2);
-    contentDiv.append(h2);
+  const linkEl = linkRow.querySelector('a');
+  const buttonText = buttonTextRow.textContent.trim();
+
+  const teaserLink = document.createElement('a');
+  teaserLink.classList.add('cmp-teaser__link');
+  if (linkEl) {
+    teaserLink.href = linkEl.href;
+    if (linkEl.target) teaserLink.target = linkEl.target;
   }
+  moveInstrumentation(linkRow, teaserLink);
 
-  // Extract and move description
-  const description = block.querySelector('[data-aue-prop="description"]');
-  if (description) {
-    const descriptionDiv = document.createElement('div');
-    descriptionDiv.classList.add('teaser-cmp-teaser__description');
-    descriptionDiv.append(description);
-    moveInstrumentation(description, descriptionDiv);
-    contentDiv.append(descriptionDiv);
-  }
+  const teaserContent = document.createElement('div');
+  teaserContent.classList.add('cmp-teaser__content');
 
-  // Extract and move CTA
-  const ctaLink = block.querySelector('[data-aue-prop="ctaLink"]');
-  const ctaText = block.querySelector('[data-aue-prop="ctaText"]');
-  const buttonContainer = block.querySelector('.teaser-cmp-teaser__action-container');
+  const actionContainer = document.createElement('div');
+  actionContainer.classList.add('cmp-teaser__action-container');
 
-  if (ctaLink || ctaText || buttonContainer) {
-    const actionContainer = document.createElement('div');
-    actionContainer.classList.add('teaser-cmp-teaser__action-container');
+  const buttonWrapper = document.createElement('div');
+  // Corrected class names to match original HTML
+  buttonWrapper.classList.add('button', 'cmp-button--primary-anchor');
 
-    const buttonDiv = document.createElement('div');
-    buttonDiv.classList.add('teaser-button', 'teaser-cmp-button--primary-anchor');
+  const button = document.createElement('button');
+  // Corrected class name to match original HTML
+  button.classList.add('cmp-button');
+  button.type = 'button';
+  moveInstrumentation(buttonTextRow, button);
 
-    const a = document.createElement('a');
-    a.classList.add('teaser-cmp-button');
+  const buttonSpan = document.createElement('span');
+  buttonSpan.classList.add('cmp-button__text');
+  buttonSpan.textContent = buttonText;
+  button.append(buttonSpan);
 
-    if (ctaLink) {
-      a.href = ctaLink.href;
-      if (ctaLink.target) {
-        a.target = ctaLink.target;
-      }
-      moveInstrumentation(ctaLink, a);
-    } else if (buttonContainer) {
-      const authoredLink = buttonContainer.querySelector('a');
-      if (authoredLink) {
-        a.href = authoredLink.href;
-        if (authoredLink.target) {
-          a.target = authoredLink.target;
-        }
-        moveInstrumentation(authoredLink, a);
-      }
+  buttonWrapper.append(button);
+  actionContainer.append(buttonWrapper);
+  teaserContent.append(actionContainer);
+  teaserLink.append(teaserContent);
+
+  const desktopPicture = backgroundImageDesktopRow.querySelector('picture');
+  const mobilePicture = backgroundImageMobileRow.querySelector('picture');
+
+  if (desktopPicture) {
+    const desktopImg = desktopPicture.querySelector('img');
+    if (desktopImg) {
+      const optimizedPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '2000' }]);
+      moveInstrumentation(desktopImg, optimizedPic.querySelector('img'));
+      desktopImg.closest('picture').replaceWith(optimizedPic);
+      teaserLink.style.backgroundImage = `url(${optimizedPic.querySelector('img').src})`;
+      teaserLink.classList.add('cmp-teaser'); // Add the base teaser class here
     }
+  }
 
-    const span = document.createElement('span');
-    span.classList.add('teaser-cmp-button__text');
-    if (ctaText) {
-      span.append(ctaText);
-      moveInstrumentation(ctaText, span);
-    } else if (buttonContainer) {
-      const authoredSpan = buttonContainer.querySelector('.teaser-cmp-button__text');
-      if (authoredSpan) {
-        span.append(...authoredSpan.childNodes);
-        moveInstrumentation(authoredSpan, span);
-      }
+  if (mobilePicture) {
+    const mobileImg = mobilePicture.querySelector('img');
+    if (mobileImg) {
+      const optimizedPic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '750' }]);
+      moveInstrumentation(mobileImg, optimizedPic.querySelector('img'));
+      mobileImg.closest('picture').replaceWith(optimizedPic);
+      // For simplicity, we apply desktop image as background.
+      // In a real scenario, you might use media queries or JS to swap background based on screen size.
     }
-
-    a.append(span);
-    buttonDiv.append(a);
-    actionContainer.append(buttonDiv);
-    contentDiv.append(actionContainer);
   }
 
-  // Set background image
-  const backgroundImageDesktop = block.querySelector('[data-aue-prop="backgroundImageDesktop"]');
-  const backgroundImageMobile = block.querySelector('[data-aue-prop="backgroundImageMobile"]');
-
-  let desktopSrc = backgroundImageDesktop ? backgroundImageDesktop.textContent.trim() : '';
-  let mobileSrc = backgroundImageMobile ? backgroundImageMobile.textContent.trim() : '';
-
-  // Fallback to data attributes if not found as direct content
-  if (!desktopSrc && teaserCmpTeaser) {
-    desktopSrc = teaserCmpTeaser.dataset.backgroundImageDesktop || '';
-  }
-  if (!mobileSrc && teaserCmpTeaser) {
-    mobileSrc = teaserCmpTeaser.dataset.backgroundImageMobile || '';
-  }
-
-  if (desktopSrc || mobileSrc) {
-    const picture = createOptimizedPicture(desktopSrc || mobileSrc, '', true, [
-      { media: '(min-width: 600px)', srcset: desktopSrc },
-      { srcset: mobileSrc || desktopSrc },
-    ]);
-    picture.classList.add('teaser-cmp-teaser__image');
-    block.prepend(picture);
-  }
-
-  // Clear the block and append the new structure
   block.textContent = '';
-  if (teaserCmpTeaser) {
-    block.classList.add(...teaserCmpTeaser.classList);
-    block.dataset.component = teaserCmpTeaser.dataset.component;
-    block.dataset.showMediaUrl = teaserCmpTeaser.dataset.showMediaUrl;
-    if (teaserCmpTeaser.id) {
-      block.id = teaserCmpTeaser.id;
-    }
-    moveInstrumentation(teaserCmpTeaser, block);
-  }
-  block.append(contentDiv);
-  block.className = `${block.dataset.blockName} block`;
-  block.dataset.blockStatus = 'loaded';
+  block.classList.add('cmp-teaser--cta');
+  block.append(teaserLink);
 }

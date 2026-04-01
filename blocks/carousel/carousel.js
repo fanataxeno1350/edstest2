@@ -2,101 +2,137 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const carouselItems = block.querySelectorAll('[data-aue-model="carouselItem"]');
+  const carouselContainer = document.createElement('div');
+  carouselContainer.classList.add('cmp-carousel__container', 'slick-initialized', 'slick-slider');
 
-  const carouselWrapper = document.createElement('div');
-  carouselWrapper.classList.add('carousel-wrapper');
+  const slickList = document.createElement('div');
+  slickList.classList.add('slick-list', 'draggable');
 
-  carouselItems.forEach((itemNode) => {
-    const slide = document.createElement('div');
-    slide.classList.add('carousel-slide');
+  const slickTrack = document.createElement('div');
+  slickTrack.classList.add('slick-track');
+  slickTrack.style.opacity = '1';
 
-    const contentWrapper = document.createElement('div');
-    contentWrapper.classList.add('carousel-slide-content');
+  [...block.children].forEach((row, index) => {
+    const itemDiv = document.createElement('div');
+    moveInstrumentation(row, itemDiv);
+    itemDiv.classList.add(
+      'cmp-our-foot-print__carousel-item',
+      'cmp-carousel__item',
+      // 'cmp-our-foot-print-carouselcard-index-${index}', // This class is not in the allowlist
+      'slick-slide',
+    );
+    if (index === 0) {
+      itemDiv.classList.add('slick-current', 'slick-active');
+      itemDiv.setAttribute('aria-hidden', 'false');
+    } else {
+      itemDiv.setAttribute('aria-hidden', 'true');
+    }
+    itemDiv.setAttribute('data-slick-index', index.toString());
+    itemDiv.setAttribute('tabindex', '0');
 
-    // Background Image
-    const backgroundImageSrc = itemNode.querySelector('[data-aue-prop="backgroundImage"]')?.textContent.trim();
-    if (backgroundImageSrc) {
-      slide.style.backgroundImage = `url("${backgroundImageSrc}")`;
+    const itemContent = document.createElement('div');
+    itemContent.classList.add('item');
+
+    const card = document.createElement('div');
+    card.classList.add('card', 'cmp-card--foot-print');
+    // Add default or highlighted class based on index or other logic if available
+    if (index === 0) {
+      card.classList.add('cmp-card--foot-print-highlighted', 'color-background-background-2');
+    } else if (index === 1) {
+      card.classList.add('cmp-card--foot-print-default', 'color-background-primary-6');
+    } else {
+      card.classList.add('cmp-card--foot-print-default', 'color-background-background-3');
     }
 
-    // Logo Image
-    const logoImg = itemNode.querySelector('[data-aue-prop="logoImage"]');
-    if (logoImg) {
-      const logoPicture = createOptimizedPicture(logoImg.src, logoImg.alt);
-      logoPicture.classList.add('carousel-logo');
-      contentWrapper.append(logoPicture);
-      moveInstrumentation(logoImg, logoPicture);
+    const cmpCard = document.createElement('div');
+    cmpCard.classList.add('cmp-card');
+
+    const cmpCardContent = document.createElement('div');
+    cmpCardContent.classList.add('cmp-card__content');
+
+    const [titleCell, descriptionCell, videoUrlCell] = [...row.children];
+
+    // Video Embed
+    const videoLink = videoUrlCell.querySelector('a');
+    if (videoLink && videoLink.href !== 'https://example.com/video-embed-url') {
+      const cmpCardMedia = document.createElement('div');
+      cmpCardMedia.classList.add('cmp-card__media');
+
+      const cmpCardImage = document.createElement('div');
+      cmpCardImage.classList.add('cmp-card__image');
+
+      const videoDiv = document.createElement('div');
+      videoDiv.classList.add('video', 'cmp-video--foot-print-card');
+
+      const cmpVideo = document.createElement('div');
+      cmpVideo.classList.add('cmp-video');
+
+      const youtubeWrapper = document.createElement('div');
+      youtubeWrapper.classList.add('cmp-video__youtube-wrapper');
+      youtubeWrapper.style.minHeight = '200px';
+
+      const iframeWrapper = document.createElement('div');
+      iframeWrapper.classList.add('cmp-video__iframe-wrapper');
+
+      const iframe = document.createElement('iframe');
+      iframe.classList.add('cmp-video__iframe');
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+      iframe.setAttribute('title', titleCell.textContent.trim());
+      iframe.setAttribute('width', '640');
+      iframe.setAttribute('height', '360');
+      iframe.setAttribute('loading', 'lazy');
+      iframe.setAttribute('src', videoLink.href.replace('watch?v=', 'embed/'));
+      iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
+
+      iframeWrapper.append(iframe);
+      youtubeWrapper.append(iframeWrapper);
+      cmpVideo.append(youtubeWrapper);
+      videoDiv.append(cmpVideo);
+      cmpCardImage.append(videoDiv);
+      cmpCardMedia.append(cmpCardImage);
+      cmpCardContent.append(cmpCardMedia);
     }
 
-    // Title
-    const titleElement = itemNode.querySelector('[data-aue-prop="title"]');
-    if (titleElement) {
-      const h2 = document.createElement('h2');
-      h2.classList.add('carousel-title');
-      h2.textContent = titleElement.textContent.trim();
-      contentWrapper.append(h2);
-      moveInstrumentation(titleElement, h2);
-    }
+    // Card Info
+    const cmpCardInfo = document.createElement('div');
+    cmpCardInfo.classList.add('cmp-card__info');
 
-    // Subtitle
-    const subtitleElement = itemNode.querySelector('[data-aue-prop="subtitle"]');
-    if (subtitleElement) {
-      const h3 = document.createElement('h3');
-      h3.classList.add('carousel-subtitle');
-      h3.textContent = subtitleElement.textContent.trim();
-      contentWrapper.append(h3);
-      moveInstrumentation(subtitleElement, h3);
-    }
+    const cmpCardTitle = document.createElement('div');
+    cmpCardTitle.classList.add('cmp-card__title');
+    moveInstrumentation(titleCell, cmpCardTitle);
+    while (titleCell.firstChild) cmpCardTitle.append(titleCell.firstChild);
 
-    // Main Image (Desktop and Mobile)
-    const mainImageDesktop = itemNode.querySelector('[data-aue-prop="mainImageDesktop"]');
-    const mainImageMobile = itemNode.querySelector('[data-aue-prop="mainImageMobile"]');
+    const cmpCardDesc = document.createElement('div');
+    cmpCardDesc.classList.add('cmp-card__desc');
+    moveInstrumentation(descriptionCell, cmpCardDesc);
+    while (descriptionCell.firstChild) cmpCardDesc.append(descriptionCell.firstChild);
 
-    if (mainImageDesktop || mainImageMobile) {
-      const picture = document.createElement('picture');
-      picture.classList.add('carousel-main-image');
-
-      if (mainImageMobile) {
-        const sourceMobile = document.createElement('source');
-        sourceMobile.media = '(max-width: 600px)';
-        sourceMobile.srcset = mainImageMobile.src;
-        picture.append(sourceMobile);
-        moveInstrumentation(mainImageMobile, sourceMobile);
-      }
-
-      if (mainImageDesktop) {
-        const img = createOptimizedPicture(mainImageDesktop.src, mainImageDesktop.alt).querySelector('img');
-        picture.append(img);
-        moveInstrumentation(mainImageDesktop, img);
-      }
-      contentWrapper.append(picture);
-    }
-
-    // CTA Link
-    const ctaLinkElement = itemNode.querySelector('[data-aue-prop="ctaLink"]');
-    const ctaTextElement = itemNode.querySelector('[data-aue-prop="ctaText"]');
-
-    if (ctaLinkElement && ctaTextElement) {
-      const buttonContainer = document.createElement('div');
-      buttonContainer.classList.add('button-container');
-      const link = document.createElement('a');
-      link.href = ctaLinkElement.textContent.trim();
-      link.textContent = ctaTextElement.textContent.trim();
-      link.classList.add('button', 'primary');
-      buttonContainer.append(link);
-      contentWrapper.append(buttonContainer);
-      moveInstrumentation(ctaLinkElement, link);
-      moveInstrumentation(ctaTextElement, link);
-    }
-
-    slide.append(contentWrapper);
-    carouselWrapper.append(slide);
-    moveInstrumentation(itemNode, slide);
+    cmpCardInfo.append(cmpCardTitle, cmpCardDesc);
+    cmpCardContent.append(cmpCardInfo);
+    cmpCard.append(cmpCardContent);
+    itemContent.append(card);
+    itemDiv.append(itemContent);
+    slickTrack.append(itemDiv);
   });
 
+  slickList.append(slickTrack);
+  carouselContainer.append(slickList);
+
   block.textContent = '';
-  block.append(carouselWrapper);
-  block.className = `${block.dataset.blockName} block`;
-  block.dataset.blockStatus = 'loaded';
+  block.classList.add('slickcarousel', 'carousel', 'panelcontainer');
+  block.setAttribute('data-component', 'carousel');
+  block.setAttribute('data-show-infinite-scroll', 'false');
+  block.setAttribute('data-show-arrows', 'false');
+  block.setAttribute('data-show-dots', 'true');
+  block.setAttribute('data-item-count-per-slide', '1');
+  block.setAttribute('data-auto-play-is-enabled', 'false');
+  block.setAttribute('data-auto-play-speed-in-ms', '500');
+  block.setAttribute('data-reveal-next-item-partially', 'false');
+  block.setAttribute('data-show-center-zoom', 'false');
+  block.setAttribute('data-slides-to-scroll', '1');
+  block.setAttribute('data-initialized', 'true');
+  block.append(carouselContainer);
 }

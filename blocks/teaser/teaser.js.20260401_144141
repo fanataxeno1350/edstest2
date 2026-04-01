@@ -1,0 +1,110 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [
+    bgImageDesktopRow,
+    bgImageMobileRow,
+    titleRow,
+    descriptionRow,
+    buttonLinkRow,
+    buttonTextRow,
+  ] = [...block.children];
+
+  // The main block element itself should have the 'cmp-teaser' class and other block-level classes.
+  // The original HTML shows the outer div with 'teaser' and 'cmp-teaser--first-half-center-aligned'.
+  // The inner div has 'cmp-teaser'. We should align the block element itself with 'cmp-teaser'
+  // and then apply the modifier class.
+  block.classList.add('cmp-teaser'); // Add cmp-teaser to the block itself
+
+  // Copy block classes from original HTML
+  if (block.classList.contains('cmp-teaser--first-half-center-aligned')) {
+    // This class is already on the block, no need to add to a new div.
+    // The original HTML shows it on the outer div.
+  }
+
+  // Set background images
+  const desktopPicture = bgImageDesktopRow.querySelector('picture');
+  const mobilePicture = bgImageMobileRow.querySelector('picture');
+
+  if (desktopPicture) {
+    const desktopImg = desktopPicture.querySelector('img');
+    if (desktopImg) {
+      // Create optimized picture for desktop
+      const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '1013' }]);
+      moveInstrumentation(desktopImg, optimizedDesktopPic.querySelector('img'));
+      // Set desktop background image via style on the block element
+      block.style.backgroundImage = `url(${optimizedDesktopPic.querySelector('img').src})`;
+    }
+  }
+
+  // Handle mobile background image for responsive display
+  if (mobilePicture) {
+    const mobileImg = mobilePicture.querySelector('img');
+    if (mobileImg) {
+      const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '750' }]);
+      moveInstrumentation(mobileImg, optimizedMobilePic.querySelector('img'));
+
+      // Create a style element or add a class for responsive background
+      const styleEl = document.createElement('style');
+      // Apply mobile background to the block element itself
+      styleEl.textContent = `
+        @media (max-width: 767px) {
+          .cmp-teaser { /* Target the block element with cmp-teaser class */
+            background-image: url(${optimizedMobilePic.querySelector('img').src}) !important;
+          }
+        }
+      `;
+      document.head.append(styleEl);
+    }
+  }
+
+  const contentDiv = document.createElement('div');
+  contentDiv.classList.add('cmp-teaser__content');
+
+  const titleEl = document.createElement('h2');
+  titleEl.classList.add('cmp-teaser__title');
+  moveInstrumentation(titleRow.firstElementChild, titleEl);
+  while (titleRow.firstElementChild.firstChild) {
+    titleEl.append(titleRow.firstElementChild.firstChild);
+  }
+  contentDiv.append(titleEl);
+
+  const descriptionDiv = document.createElement('div');
+  descriptionDiv.classList.add('cmp-teaser__description');
+  moveInstrumentation(descriptionRow.firstElementChild, descriptionDiv);
+  while (descriptionRow.firstElementChild.firstChild) {
+    descriptionDiv.append(descriptionRow.firstElementChild.firstChild);
+  }
+  contentDiv.append(descriptionDiv);
+
+  const actionContainerDiv = document.createElement('div');
+  actionContainerDiv.classList.add('cmp-teaser__action-container');
+
+  const buttonWrapperDiv = document.createElement('div');
+  buttonWrapperDiv.classList.add('button', 'cmp-button--primary-anchor');
+
+  const buttonLink = buttonLinkRow.querySelector('a');
+  const buttonEl = document.createElement('a');
+  buttonEl.classList.add('cmp-button');
+  if (buttonLink) {
+    buttonEl.href = buttonLink.href;
+    moveInstrumentation(buttonLink, buttonEl); // Move instrumentation from original link
+  }
+
+  const buttonTextSpan = document.createElement('span');
+  buttonTextSpan.classList.add('cmp-button__text');
+  moveInstrumentation(buttonTextRow.firstElementChild, buttonTextSpan);
+  while (buttonTextRow.firstElementChild.firstChild) {
+    buttonTextSpan.append(buttonTextRow.firstElementChild.firstChild);
+  }
+  buttonEl.append(buttonTextSpan);
+
+  buttonWrapperDiv.append(buttonEl);
+  actionContainerDiv.append(buttonWrapperDiv);
+  contentDiv.append(actionContainerDiv);
+
+  // Clear existing content and append the new structure to the block
+  block.textContent = '';
+  block.append(contentDiv);
+}

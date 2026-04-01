@@ -2,247 +2,273 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  // Corrected destructuring to match the BlockJson model:
+  // 0: logo, 1: fssai_logo, 2: footer_links (container), 3: footer_socials (container)
+  // All subsequent rows are item rows for either footer-link or footer-social.
+  const [logoRow, fssaiLogoRow, footerLinksContainerRow, footerSocialsContainerRow, ...itemRows] = [...block.children];
+
+  const footer = document.createElement('div');
+  footer.classList.add('cmp-footer');
+
+  // Top content
   const topContent = document.createElement('div');
-  topContent.classList.add('footer-cmp-footer__top-content');
+  topContent.classList.add('cmp-footer__top-content');
 
   const navLogo = document.createElement('div');
-  navLogo.classList.add('footer-cmp-footer__nav-logo');
+  navLogo.classList.add('cmp-footer__nav-logo');
+
+  // Logo
+  const logoDiv = document.createElement('div');
+  logoDiv.classList.add('logo', 'image', 'cmp-footer__logo');
+  const logoLink = document.createElement('a');
+  logoLink.classList.add('cmp-image__link');
+  logoLink.href = '/'; // Assuming the logo links to home
+  const logoPicture = logoRow.querySelector('picture');
+  if (logoPicture) {
+    moveInstrumentation(logoRow.firstElementChild, logoLink);
+    logoLink.append(logoPicture);
+  }
+  logoDiv.append(logoLink);
+  navLogo.append(logoDiv);
+
+  // FSSAI Logo
+  const fssaiLogoDiv = document.createElement('div');
+  fssaiLogoDiv.classList.add('logofssai', 'logo', 'image', 'cmp-footer__fssai_logo');
+  const fssaiPicture = fssaiLogoRow.querySelector('picture');
+  if (fssaiPicture) {
+    moveInstrumentation(fssaiLogoRow.firstElementChild, fssaiLogoDiv);
+    fssaiLogoDiv.append(fssaiPicture);
+  }
+  navLogo.append(fssaiLogoDiv);
+
   topContent.append(navLogo);
 
-  // Logo Image
-  const logoWrapper = document.createElement('div');
-  logoWrapper.classList.add('footer-logo', 'footer-image', 'footer-cmp-footer__logo');
-  const logoImg = block.querySelector('[data-aue-prop="logoImage"] img');
-  if (logoImg) {
-    const picture = createOptimizedPicture(logoImg.src, logoImg.alt);
-    const link = block.querySelector('[data-aue-prop="logoImage"] a');
-    if (link) {
-      link.textContent = '';
-      link.append(picture);
-      logoWrapper.append(link);
-      moveInstrumentation(logoImg.closest('[data-cmp-is="image"]'), logoWrapper);
-    } else {
-      logoWrapper.append(picture);
-      moveInstrumentation(logoImg.closest('[data-cmp-is="image"]'), logoWrapper);
-    }
-  }
-  navLogo.append(logoWrapper);
-
-  // FSSAI Logo Image
-  const fssaiLogoWrapper = document.createElement('div');
-  fssaiLogoWrapper.classList.add('footer-logofssai', 'footer-logo', 'footer-image', 'footer-cmp-footer__fssai_logo');
-  const fssaiImg = block.querySelector('[data-aue-prop="fssaiLogoImage"] img');
-  if (fssaiImg) {
-    const picture = createOptimizedPicture(fssaiImg.src, fssaiImg.alt);
-    fssaiLogoWrapper.append(picture);
-    moveInstrumentation(fssaiImg.closest('[data-cmp-is="image"]'), fssaiLogoWrapper);
-  }
-  navLogo.append(fssaiLogoWrapper);
-
-  // Subscribe Section
+  // Subscribe Now section (from original HTML, not directly in BlockJson fields but present in the structure)
   const subscribeSection = document.createElement('div');
-  subscribeSection.classList.add('footer-cmp-footer__nav-subscribe');
+  subscribeSection.classList.add('cmp-footer__nav-subscribe');
   subscribeSection.setAttribute('data-register-api-url', '/content/itc-foods-brands/servicespath/itcemail.register.json');
   subscribeSection.setAttribute('data-popup-success-message', 'Registered Successfully!!');
   subscribeSection.setAttribute('data-popup-failure-message', 'Registered Failed, Please try after some time.');
 
   const subscribeText = document.createElement('div');
-  subscribeText.classList.add('footer-cmp-footer__nav-text');
-  const subscribeImage = block.querySelector('[data-aue-prop="subscribeImage"] img');
-  if (subscribeImage) {
-    subscribeText.append(subscribeImage);
-    moveInstrumentation(subscribeImage, subscribeText);
-  }
-  const subscribeTitle = block.querySelector('[data-aue-prop="subscribeTitle"]');
-  if (subscribeTitle) {
-    const h3 = document.createElement('h3');
-    h3.textContent = subscribeTitle.textContent;
-    subscribeText.append(h3);
-    moveInstrumentation(subscribeTitle, h3);
-  }
+  subscribeText.classList.add('cmp-footer__nav-text');
+  const subscribeLogo = document.createElement('img');
+  subscribeLogo.src = '/content/dam/aemigrate/uploaded-folder/image/1775032968499.svg+xml';
+  subscribeLogo.alt = 'aashirvaad-logo';
+  subscribeLogo.loading = 'lazy';
+  subscribeLogo.fetchpriority = 'low';
+  subscribeText.append(subscribeLogo);
+  const subscribeH3 = document.createElement('h3');
+  subscribeH3.textContent = 'in Your Inbox';
+  subscribeText.append(subscribeH3);
   subscribeSection.append(subscribeText);
 
-  const emailInputContainer = document.createElement('div');
-  emailInputContainer.classList.add('footer-container', 'footer-responsivegrid', 'footer-cmp-input');
-  const emailInputWrapper = document.createElement('div');
-  emailInputWrapper.classList.add('footer-text', 'footer-aem-GridColumn', 'footer-aem-GridColumn--default--12', 'footer-cmp-input__email');
+  const inputContainer = document.createElement('div');
+  inputContainer.classList.add('container', 'responsivegrid', 'cmp-input');
   const emailInputDiv = document.createElement('div');
-  emailInputDiv.classList.add('footer-cmp-form-text');
-  emailInputDiv.setAttribute('data-cmp-required-message', 'This field is required');
-  emailInputDiv.setAttribute('data-cmp-valid-email', 'Please enter valid email id');
-  const label = document.createElement('label');
-  label.setAttribute('for', 'form-text-2014401237');
-  const input = document.createElement('input');
-  input.classList.add('footer-cmp-form-text__text');
-  input.type = 'email';
-  const emailPlaceholder = block.querySelector('[data-aue-prop="subscribeEmailPlaceholder"]');
-  if (emailPlaceholder) {
-    input.placeholder = emailPlaceholder.textContent;
-    moveInstrumentation(emailPlaceholder, input);
-  } else {
-    input.placeholder = 'Enter your Email ID';
-  }
-  input.name = 'email';
-  emailInputDiv.append(label, input);
-  emailInputWrapper.append(emailInputDiv);
-  emailInputContainer.append(emailInputWrapper);
-  subscribeSection.append(emailInputContainer);
+  emailInputDiv.classList.add('text', 'aem-GridColumn', 'aem-GridColumn--default--12', 'cmp-input__email');
+  const formTextDiv = document.createElement('div');
+  formTextDiv.classList.add('cmp-form-text');
+  formTextDiv.setAttribute('data-cmp-required-message', 'This field is required');
+  formTextDiv.setAttribute('data-cmp-valid-email', 'Please enter valid email id');
+  const emailLabel = document.createElement('label');
+  emailLabel.htmlFor = 'form-text-2014401237'; // Placeholder ID
+  const emailInput = document.createElement('input');
+  emailInput.classList.add('cmp-form-text__text');
+  emailInput.type = 'email';
+  emailInput.placeholder = 'Enter your Email ID';
+  emailInput.name = 'email';
+  formTextDiv.append(emailLabel, emailInput);
+  emailInputDiv.append(formTextDiv);
+  inputContainer.append(emailInputDiv);
+  subscribeSection.append(inputContainer);
 
-  const errorMessage = document.createElement('div');
-  errorMessage.classList.add('footer-cmp-footer__error-message');
-  subscribeSection.append(errorMessage);
+  const errorMessageDiv = document.createElement('div');
+  errorMessageDiv.classList.add('cmp-footer__error-message');
+  subscribeSection.append(errorMessageDiv);
 
   const consentDiv = document.createElement('div');
-  consentDiv.classList.add('footer-cmp-footer__consent');
+  consentDiv.classList.add('cmp-footer__consent');
   const consentCheckbox = document.createElement('input');
   consentCheckbox.type = 'checkbox';
   consentCheckbox.id = 'i_agree';
   consentCheckbox.name = 'i_agree';
   consentCheckbox.value = 'i_agree';
-  consentCheckbox.classList.add('footer-cmp-footer__consent--checkbox');
+  consentCheckbox.classList.add('cmp-footer__consent--checkbox');
   const consentLinkDiv = document.createElement('div');
-  consentLinkDiv.classList.add('footer-cmp-footer__consent--link');
-  const privacyPolicyLink = block.querySelector('[data-aue-prop="subscribePrivacyPolicyLink"]');
-  if (privacyPolicyLink) {
-    consentLinkDiv.append(privacyPolicyLink);
-    moveInstrumentation(privacyPolicyLink, consentLinkDiv);
-  }
+  consentLinkDiv.classList.add('cmp-footer__consent--link');
+  consentLinkDiv.innerHTML = '<p>By clicking “Register Now”, you agree to the&nbsp;<a href="/conditions-policy/privacy-policy.html" target="_self" rel="noopener noreferrer">Privacy Policy</a>&nbsp;and to receive marketing emails from the Aashirvaad community</p>';
   consentDiv.append(consentCheckbox, consentLinkDiv);
   subscribeSection.append(consentDiv);
 
   const registerButtonDiv = document.createElement('div');
-  registerButtonDiv.classList.add('footer-button', 'footer-cmp-button--primary', 'footer-cmp-button--primary-anchor-dark');
+  registerButtonDiv.classList.add('button', 'cmp-button--primary', 'cmp-button--primary-anchor-dark');
   const registerButton = document.createElement('button');
   registerButton.type = 'button';
-  registerButton.id = 'button-fb2118d4d9';
-  registerButton.classList.add('footer-cmp-button');
+  registerButton.id = 'button-fb2118d4d9'; // Placeholder ID
+  registerButton.classList.add('cmp-button');
   registerButton.setAttribute('data-request', 'true');
-  registerButton.disabled = true;
-  const registerButtonText = document.createElement('span');
-  registerButtonText.classList.add('footer-cmp-button__text');
-  const authoredRegisterText = block.querySelector('[data-aue-prop="subscribeRegisterButtonText"]');
-  if (authoredRegisterText) {
-    registerButtonText.textContent = authoredRegisterText.textContent;
-    moveInstrumentation(authoredRegisterText, registerButtonText);
-  } else {
-    registerButtonText.textContent = 'Register Now';
-  }
-  registerButton.append(registerButtonText);
+  registerButton.disabled = true; // Initially disabled
+  const buttonTextSpan = document.createElement('span');
+  buttonTextSpan.classList.add('cmp-button__text');
+  buttonTextSpan.textContent = 'Register Now';
+  registerButton.append(buttonTextSpan);
   registerButtonDiv.append(registerButton);
   subscribeSection.append(registerButtonDiv);
+
   topContent.append(subscribeSection);
 
-  // Navigation Lists
-  const navDiv = document.createElement('div');
-  navDiv.classList.add('footer-cmp-footer__nav');
+  // Event listeners for subscribe form
+  const validateForm = () => {
+    const isValidEmail = emailInput.value.includes('@') && emailInput.value.includes('.');
+    const isChecked = consentCheckbox.checked;
+    registerButton.disabled = !(isValidEmail && isChecked);
+  };
 
-  const navLeft = document.createElement('div');
-  navLeft.classList.add('footer-cmp-footer__nav-items', 'footer-cmp-navigation__group--left');
+  emailInput.addEventListener('input', validateForm);
+  consentCheckbox.addEventListener('change', validateForm);
+  registerButton.addEventListener('click', () => {
+    if (!registerButton.disabled) {
+      // Implement registration logic here
+      console.log('Registering with email:', emailInput.value);
+      errorMessageDiv.textContent = subscribeSection.dataset.popupSuccessMessage;
+      errorMessageDiv.style.color = 'green';
+      // Clear form or show success
+      emailInput.value = '';
+      consentCheckbox.checked = false;
+      registerButton.disabled = true;
+    } else {
+      errorMessageDiv.textContent = 'Please enter a valid email and agree to the terms.';
+      errorMessageDiv.style.color = 'red';
+    }
+  });
+
+
+  // Navigation for links
+  const nav = document.createElement('div');
+  nav.classList.add('cmp-footer__nav');
+
+  const navItemsLeft = document.createElement('div');
+  navItemsLeft.classList.add('cmp-footer__nav-items', 'cmp-navigation__group--left');
   const navLeftWrapper = document.createElement('div');
-  navLeftWrapper.classList.add('footer-navigation');
-  const navLeftList = document.createElement('nav');
-  navLeftList.id = 'navigation-506467e377';
-  navLeftList.classList.add('footer-cmp-navigation');
-  navLeftList.setAttribute('itemscope', '');
-  navLeftList.setAttribute('itemtype', 'http://schema.org/SiteNavigationElement');
-  navLeftList.setAttribute('role', 'navigation');
+  navLeftWrapper.classList.add('navigation');
+  const navLeft = document.createElement('nav');
+  navLeft.classList.add('cmp-navigation');
+  navLeft.setAttribute('role', 'navigation');
   const ulLeft = document.createElement('ul');
-  ulLeft.classList.add('footer-cmp-navigation__group');
-  const footerLinksLeft = block.querySelectorAll('[data-aue-model="footerLinksLeft"]');
-  footerLinksLeft.forEach((linkNode) => {
-    const li = document.createElement('li');
-    li.classList.add('footer-cmp-navigation__item', 'footer-cmp-navigation__item--level-0');
-    const link = linkNode.querySelector('[data-aue-prop="link"]');
-    if (link) {
-      li.append(link);
-      moveInstrumentation(link, li);
-    }
-    ulLeft.append(li);
-    moveInstrumentation(linkNode, li);
-  });
-  navLeftList.append(ulLeft);
-  navLeftWrapper.append(navLeftList);
-  navLeft.append(navLeftWrapper);
-  navDiv.append(navLeft);
+  ulLeft.classList.add('cmp-navigation__group');
 
-  const navRight = document.createElement('div');
-  navRight.classList.add('footer-cmp-footer__nav-items', 'footer-cmp-navigation__group--right');
+  const navItemsRight = document.createElement('div');
+  navItemsRight.classList.add('cmp-footer__nav-items', 'cmp-navigation__group--right');
   const navRightWrapper = document.createElement('div');
-  navRightWrapper.classList.add('footer-navigation');
-  const navRightList = document.createElement('nav');
-  navRightList.id = 'navigation-b90fc6744f';
-  navRightList.classList.add('footer-cmp-navigation');
-  navRightList.setAttribute('itemscope', '');
-  navRightList.setAttribute('itemtype', 'http://schema.org/SiteNavigationElement');
-  navRightList.setAttribute('role', 'navigation');
+  navRightWrapper.classList.add('navigation');
+  const navRight = document.createElement('nav');
+  navRight.classList.add('cmp-navigation');
+  navRight.setAttribute('role', 'navigation');
   const ulRight = document.createElement('ul');
-  ulRight.classList.add('footer-cmp-navigation__group');
-  const footerLinksRight = block.querySelectorAll('[data-aue-model="footerLinksRight"]');
-  footerLinksRight.forEach((linkNode) => {
+  ulRight.classList.add('cmp-navigation__group');
+
+  // Distribute footer links into two columns
+  // Filter for 'footer-link' items: they have one child cell containing an 'a' tag.
+  const footerLinks = itemRows.filter((row) => row.children.length === 1 && row.querySelector('div > a'));
+  footerLinks.forEach((row, index) => {
     const li = document.createElement('li');
-    li.classList.add('footer-cmp-navigation__item', 'footer-cmp-navigation__item--level-0');
-    const link = linkNode.querySelector('[data-aue-prop="link"]');
+    moveInstrumentation(row, li);
+    li.classList.add('cmp-navigation__item', 'cmp-navigation__item--level-0');
+    const link = row.querySelector('div > a'); // Ensure we get the link from the cell
     if (link) {
+      link.classList.add('cmp-navigation__item-link');
       li.append(link);
-      moveInstrumentation(link, li);
     }
-    ulRight.append(li);
-    moveInstrumentation(linkNode, li);
+    if (index % 2 === 0) {
+      ulLeft.append(li);
+    } else {
+      ulRight.append(li);
+    }
   });
-  navRightList.append(ulRight);
-  navRightWrapper.append(navRightList);
-  navRight.append(navRightWrapper);
-  navDiv.append(navRight);
 
-  topContent.append(navDiv);
+  navLeft.append(ulLeft);
+  navLeftWrapper.append(navLeft);
+  navItemsLeft.append(navLeftWrapper);
+  nav.append(navItemsLeft);
 
+  navRight.append(ulRight);
+  navRightWrapper.append(navRight);
+  navItemsRight.append(navRightWrapper);
+  nav.append(navItemsRight);
+
+  topContent.append(nav);
+  footer.append(topContent);
+
+  // Bottom content
   const bottomContent = document.createElement('div');
-  bottomContent.classList.add('footer-cmp-footer__bottom-content');
+  bottomContent.classList.add('cmp-footer__bottom-content');
 
-  const bottomContainer = document.createElement('div');
-  bottomContainer.classList.add('footer-cmp-footer__container');
+  const footerContainer = document.createElement('div');
+  footerContainer.classList.add('cmp-footer__container');
 
   const itcTitles = document.createElement('div');
-  itcTitles.classList.add('footer-cmp-footer__ITC-Titles');
-  const itcPortalLink = block.querySelector('[data-aue-prop="itcPortalLink"]');
-  if (itcPortalLink) {
-    itcTitles.append(itcPortalLink);
-    moveInstrumentation(itcPortalLink, itcTitles);
-  }
-  const copyrightText = block.querySelector('[data-aue-prop="copyrightText"]');
-  if (copyrightText) {
-    const copyrightLink = document.createElement('a');
-    copyrightLink.classList.add('footer-desc-1');
-    copyrightLink.textContent = copyrightText.textContent;
-    itcTitles.append(copyrightLink);
-    moveInstrumentation(copyrightText, copyrightLink);
-  }
-  bottomContainer.append(itcTitles);
+  itcTitles.classList.add('cmp-footer__ITC-Titles');
+  // Assuming these are static links or derived from some other content
+  // For now, hardcoding based on original HTML structure.
+  const itcPortalLink = document.createElement('a');
+  itcPortalLink.href = 'https://www.itcportal.com/';
+  itcPortalLink.target = '_blank';
+  itcPortalLink.classList.add('desc-1');
+  itcPortalLink.textContent = 'ITC Portal';
+  itcTitles.append(itcPortalLink);
+
+  const copyrightLink = document.createElement('a');
+  copyrightLink.target = '_blank';
+  copyrightLink.classList.add('desc-1');
+  copyrightLink.textContent = '© 2026 Aashirvaad. All Rights Reserved.';
+  itcTitles.append(copyrightLink);
+
+  footerContainer.append(itcTitles);
 
   const socialMedia = document.createElement('div');
-  socialMedia.classList.add('footer-cmp-footer__social-media');
-  const footerSocialLinks = block.querySelectorAll('[data-aue-model="footerSocialLinks"]');
-  footerSocialLinks.forEach((socialLinkNode) => {
-    const link = socialLinkNode.querySelector('[data-aue-prop="link"]');
-    const platform = socialLinkNode.querySelector('[data-aue-prop="platform"]');
-    if (link && platform) {
-      link.classList.add(`footer-icon-${platform.textContent.toLowerCase()}`);
-      link.setAttribute('data-social', platform.textContent.toLowerCase());
-      socialMedia.append(link);
-      moveInstrumentation(link, socialMedia);
-      moveInstrumentation(platform, link);
-    }
-    moveInstrumentation(socialLinkNode, socialMedia);
-  });
-  bottomContainer.append(socialMedia);
+  socialMedia.classList.add('cmp-footer__social-media');
 
-  bottomContent.append(bottomContainer);
+  // Filter for 'footer-social' items: they have one child cell containing an 'a' tag
+  // and the href is expected to be a social link.
+  const footerSocials = itemRows.filter((row) => row.children.length === 1 && row.querySelector('div > a'));
+  footerSocials.forEach((row) => {
+    const socialLink = row.querySelector('div > a'); // Ensure we get the link from the cell
+    if (socialLink) {
+      const newSocialLink = document.createElement('a');
+      moveInstrumentation(row, newSocialLink);
+      newSocialLink.href = socialLink.href;
+      newSocialLink.target = '_blank';
+
+      // Determine social icon class based on href
+      if (socialLink.href.includes('instagram')) {
+        newSocialLink.classList.add('icon-instagram');
+        newSocialLink.setAttribute('data-social', 'instagram');
+      } else if (socialLink.href.includes('facebook')) {
+        newSocialLink.classList.add('icon-facebok'); // Original HTML uses 'icon-facebok', not 'icon-facebook'
+        newSocialLink.setAttribute('data-social', 'facebook');
+      } else if (socialLink.href.includes('twitter')) {
+        newSocialLink.classList.add('icon-twitter');
+        newSocialLink.setAttribute('data-social', 'twitter');
+      } else if (socialLink.href.includes('youtube')) {
+        newSocialLink.classList.add('icon-youtube');
+        newSocialLink.setAttribute('data-social', 'youtube');
+      }
+      socialMedia.append(newSocialLink);
+    }
+  });
+
+  footerContainer.append(socialMedia);
+  bottomContent.append(footerContainer);
+  footer.append(bottomContent);
 
   block.textContent = '';
-  const footerCmpFooter = document.createElement('div');
-  footerCmpFooter.classList.add('footer-cmp-footer');
-  footerCmpFooter.append(topContent, bottomContent);
-  block.append(footerCmpFooter);
-  block.classList.add('footer', 'block');
-  block.dataset.blockStatus = 'loaded';
+  block.append(footer);
+
+  // Optimize images
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 }

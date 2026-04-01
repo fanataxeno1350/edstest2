@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Product-Category-Listing",
-      "id": "product-category-listing",
+      "title": "Carousel",
+      "id": "carousel",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "product-category-listing",
-              "model": "product-category-listing",
-              "name": "Product-Category-Listing"
+              "filter": "carousel",
+              "model": "carousel",
+              "name": "Carousel"
             }
           }
         }
       }
     },
     {
-      "title": "Category",
-      "id": "category",
+      "title": "Carousel Item",
+      "id": "carousel-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "category",
-              "name": "Category"
+              "model": "carousel-item",
+              "name": "Carousel Item"
             }
           }
         }
@@ -34,8 +34,25 @@
   ],
   "models": [
     {
-      "id": "product-category-listing",
+      "id": "carousel",
       "fields": [
+        {
+          "component": "container",
+          "item": "carousel-item",
+          "label": "Carousel Items",
+          "name": "carousel-items"
+        }
+      ]
+    },
+    {
+      "id": "carousel-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo",
+          "name": "logo",
+          "valueType": "string"
+        },
         {
           "component": "text",
           "label": "Title",
@@ -49,32 +66,21 @@
           "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "category",
-          "label": "Categories",
-          "name": "categories"
-        }
-      ]
-    },
-    {
-      "id": "category",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
           "component": "reference",
           "label": "Image",
           "name": "image",
           "valueType": "string"
         },
         {
+          "component": "aem-content",
+          "label": "Button Link",
+          "name": "button-link",
+          "valueType": "string"
+        },
+        {
           "component": "text",
-          "label": "Name",
-          "name": "name",
+          "label": "Button Text",
+          "name": "button-text",
           "valueType": "string"
         }
       ]
@@ -82,9 +88,9 @@
   ],
   "filters": [
     {
-      "id": "product-category-listing",
+      "id": "carousel",
       "components": [
-        "category"
+        "carousel-item"
       ]
     }
   ]

@@ -18,147 +18,77 @@
       "fragment",
       "---new--blocks-----",
       "header",
-      "logo",
-      "navigation",
-      "productofmonthPlantProtein",
-      "search",
-      "footer",
+      "cmp-search",
       "carousel",
-      "banner",
-      "productCategoryListing",
+      "product-category-listing",
       "teaser",
-      "recipeCarousel",
-      "card",
-      "popularProducts",
-      "ourFootPrint",
-      "video",
-      "footerSubscribe",
-      "formText"
-    ]
-  },
-  {
-    "id": "banner",
-    "components": [
-      "banner"
-    ]
-  },
-  {
-    "id": "button",
-    "components": [
-      "button"
-    ]
-  },
-  {
-    "id": "card",
-    "components": [
-      "card"
+      "recipe-group",
+      "popular-products",
+      "cta-text",
+      "slickcarousel",
+      "follow-us",
+      "footer"
     ]
   },
   {
     "id": "carousel",
     "components": [
-      "carouselItem"
+      "carousel-item"
     ]
   },
   {
-    "id": "footerSubscribe",
+    "id": "cmp-search",
     "components": [
-      "footerSubscribe"
+      "cmp-search-item"
     ]
+  },
+  {
+    "id": "cta-text"
+  },
+  {
+    "id": "follow-us"
   },
   {
     "id": "footer",
     "components": [
-      "footerLink",
-      "footerSocialLink"
-    ]
-  },
-  {
-    "id": "formText",
-    "components": [
-      "formText"
+      "footer-link",
+      "footer-social"
     ]
   },
   {
     "id": "header",
     "components": [
-      "navItem",
-      "policyLink",
-      "socialLink"
+      "nav-item",
+      "social-link",
+      "policy-link"
     ]
   },
   {
-    "id": "image",
+    "id": "popular-products",
     "components": [
-      "image"
+      "popular-product-item"
     ]
   },
   {
-    "id": "logo",
-    "components": [
-      "logo"
-    ]
-  },
-  {
-    "id": "navigation",
-    "components": [
-      "navigationItem",
-      "policyLink",
-      "socialLink"
-    ]
-  },
-  {
-    "id": "ourFootPrint",
-    "components": [
-      "footprintCard"
-    ]
-  },
-  {
-    "id": "popularProducts",
-    "components": [
-      "product"
-    ]
-  },
-  {
-    "id": "productCategoryListing",
-    "components": [
-      "productCategory"
-    ]
-  },
-  {
-    "id": "productofmonth-plant-protein",
-    "components": [
-      "productofmonthPlantProtein"
-    ]
-  },
-  {
-    "id": "recipeCarousel",
-    "components": [
-      "recipe"
-    ]
-  },
-  {
-    "id": "search",
+    "id": "product-category-listing",
     "components": [
       "category"
     ]
   },
   {
-    "id": "teaser",
+    "id": "recipe-group",
+    "components": [
+      "tab",
+      "recipe-card"
+    ]
+  },
+  {
+    "id": "slickcarousel",
     "components": [
       "teaser"
     ]
   },
   {
-    "id": "text",
-    "components": [
-      "text"
-    ]
-  },
-  {
-    "id": "video",
-    "components": [
-      "video"
-    ]
+    "id": "teaser"
   }
 ]
