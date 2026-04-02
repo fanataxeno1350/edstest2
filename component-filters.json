@@ -15,28 +15,62 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "header-message",
+      "site-header",
+      "hero-type",
+      "news-features",
+      "carousel",
+      "home-areas-of-focus-block",
+      "callout-section",
+      "site-footer"
     ]
   },
   {
-    "id": "cards",
+    "id": "callout-section"
+  },
+  {
+    "id": "carousel",
     "components": [
-      "card"
+      "carousel-item"
     ]
   },
   {
-    "id": "columns",
+    "id": "header-message"
+  },
+  {
+    "id": "hero-type"
+  },
+  {
+    "id": "home-areas-of-focus-block",
     "components": [
-      "column"
+      "home-areas-of-focus-item"
     ]
   },
   {
-    "id": "column",
+    "id": "news-features",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "hero-mosaic-item"
+    ]
+  },
+  {
+    "id": "site-footer",
+    "components": [
+      "footer-nav-item",
+      "language-item",
+      "social-item",
+      "legal-link",
+      "end-polio"
+    ]
+  },
+  {
+    "id": "site-header",
+    "components": [
+      "site-nav-utility-link",
+      "site-nav-utility-cta",
+      "site-nav-item",
+      "site-nav-subitem"
     ]
   }
 ]

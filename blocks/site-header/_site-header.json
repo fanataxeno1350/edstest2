@@ -1,0 +1,184 @@
+{
+  "definitions": [
+    {
+      "title": "Site-Header",
+      "id": "site-header",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "site-header",
+              "model": "site-header",
+              "name": "Site-Header"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Site-Nav-Utility-Link",
+      "id": "site-nav-utility-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "site-nav-utility-link",
+              "name": "Site-Nav-Utility-Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Site-Nav-Utility-CTA",
+      "id": "site-nav-utility-cta",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "site-nav-utility-cta",
+              "name": "Site-Nav-Utility-CTA"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Site-Nav-Item",
+      "id": "site-nav-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "site-nav-item",
+              "name": "Site-Nav-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Site-Nav-Subitem",
+      "id": "site-nav-subitem",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "site-nav-subitem",
+              "name": "Site-Nav-Subitem"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "site-header",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo Image",
+          "name": "logo-image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logo-link",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "site-nav-utility-link",
+          "label": "Utility Links (Large)",
+          "name": "utility-links-large"
+        },
+        {
+          "component": "container",
+          "item": "site-nav-utility-link",
+          "label": "Utility Links (Small)",
+          "name": "utility-links-small"
+        },
+        {
+          "component": "container",
+          "item": "site-nav-utility-cta",
+          "label": "Utility CTAs",
+          "name": "utility-ctas"
+        },
+        {
+          "component": "container",
+          "item": "site-nav-item",
+          "label": "Navigation Items",
+          "name": "nav-items"
+        }
+      ]
+    },
+    {
+      "id": "site-nav-utility-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "site-nav-utility-cta",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "cta-link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "site-nav-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Item Heading Link",
+          "name": "item-heading-link",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "site-nav-subitem",
+          "label": "Subitems",
+          "name": "subitems"
+        }
+      ]
+    },
+    {
+      "id": "site-nav-subitem",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Subitem Link",
+          "name": "subitem-link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "site-header",
+      "components": [
+        "site-nav-utility-link",
+        "site-nav-utility-cta",
+        "site-nav-item",
+        "site-nav-subitem"
+      ]
+    }
+  ]
+}

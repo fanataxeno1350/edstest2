@@ -142,75 +142,407 @@
     ]
   },
   {
-    "id": "card",
+    "id": "callout-section",
     "fields": [
       {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "columns",
+    "id": "carousel",
     "fields": [
       {
         "component": "text",
-        "valueType": "number",
-        "name": "columns",
-        "value": "",
-        "label": "Columns"
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
       },
       {
-        "component": "text",
-        "valueType": "number",
-        "name": "rows",
-        "value": "",
-        "label": "Rows"
+        "component": "container",
+        "item": "carousel-item",
+        "label": "Carousel Items",
+        "name": "items"
       }
     ]
   },
   {
-    "id": "fragment",
-    "fields": [
-      {
-        "component": "aem-content",
-        "name": "reference",
-        "label": "Reference"
-      }
-    ]
-  },
-  {
-    "id": "hero",
+    "id": "carousel-item",
     "fields": [
       {
         "component": "reference",
-        "valueType": "string",
-        "name": "image",
         "label": "Image",
-        "multi": false
+        "name": "image",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Alt",
-        "value": ""
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
         "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "header-message",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Message",
+        "name": "message",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Button Label",
+        "name": "button-label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "hero-type",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Video MP4",
+        "name": "video",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Supporting Text",
+        "name": "supporting-text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "cta-link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "home-areas-of-focus-block",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "home-areas-of-focus-item",
+        "label": "Causes",
+        "name": "causes"
+      }
+    ]
+  },
+  {
+    "id": "home-areas-of-focus-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "news-features",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Button Link",
+        "name": "button-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "hero-mosaic-item",
+        "label": "Hero Mosaic Items",
+        "name": "hero-mosaic-items"
+      }
+    ]
+  },
+  {
+    "id": "hero-mosaic-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Headline",
+        "name": "headline",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "site-footer",
+    "fields": [
+      {
+        "component": "container",
+        "item": "footer-nav-item",
+        "label": "Footer Navigation Items",
+        "name": "footerNav"
+      },
+      {
+        "component": "container",
+        "item": "language-item",
+        "label": "Language Items",
+        "name": "languageNav"
+      },
+      {
+        "component": "container",
+        "item": "social-item",
+        "label": "Social Items",
+        "name": "socialNav"
+      },
+      {
+        "component": "richtext",
+        "label": "Legal Text",
+        "name": "legalText",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "legal-link",
+        "label": "Legal Links",
+        "name": "legalLinks"
+      },
+      {
+        "component": "container",
+        "item": "end-polio",
+        "label": "End Polio",
+        "name": "endPolio"
+      }
+    ]
+  },
+  {
+    "id": "footer-nav-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "language-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "legal-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "end-polio",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "site-header",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logo-image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "site-nav-utility-link",
+        "label": "Utility Links (Large)",
+        "name": "utility-links-large"
+      },
+      {
+        "component": "container",
+        "item": "site-nav-utility-link",
+        "label": "Utility Links (Small)",
+        "name": "utility-links-small"
+      },
+      {
+        "component": "container",
+        "item": "site-nav-utility-cta",
+        "label": "Utility CTAs",
+        "name": "utility-ctas"
+      },
+      {
+        "component": "container",
+        "item": "site-nav-item",
+        "label": "Navigation Items",
+        "name": "nav-items"
+      }
+    ]
+  },
+  {
+    "id": "site-nav-utility-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "site-nav-utility-cta",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "cta-link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "site-nav-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Item Heading Link",
+        "name": "item-heading-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "site-nav-subitem",
+        "label": "Subitems",
+        "name": "subitems"
+      }
+    ]
+  },
+  {
+    "id": "site-nav-subitem",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Subitem Link",
+        "name": "subitem-link",
         "valueType": "string"
       }
     ]

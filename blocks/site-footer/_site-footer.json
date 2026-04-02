@@ -1,0 +1,223 @@
+{
+  "definitions": [
+    {
+      "title": "Site-Footer",
+      "id": "site-footer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "site-footer",
+              "model": "site-footer",
+              "name": "Site-Footer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Nav-Item",
+      "id": "footer-nav-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-nav-item",
+              "name": "Footer-Nav-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Language-Item",
+      "id": "language-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "language-item",
+              "name": "Language-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Social-Item",
+      "id": "social-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "social-item",
+              "name": "Social-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Legal-Link",
+      "id": "legal-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "legal-link",
+              "name": "Legal-Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "End-Polio",
+      "id": "end-polio",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "end-polio",
+              "name": "End-Polio"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "site-footer",
+      "fields": [
+        {
+          "component": "container",
+          "item": "footer-nav-item",
+          "label": "Footer Navigation Items",
+          "name": "footerNav"
+        },
+        {
+          "component": "container",
+          "item": "language-item",
+          "label": "Language Items",
+          "name": "languageNav"
+        },
+        {
+          "component": "container",
+          "item": "social-item",
+          "label": "Social Items",
+          "name": "socialNav"
+        },
+        {
+          "component": "richtext",
+          "label": "Legal Text",
+          "name": "legalText",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "legal-link",
+          "label": "Legal Links",
+          "name": "legalLinks"
+        },
+        {
+          "component": "container",
+          "item": "end-polio",
+          "label": "End Polio",
+          "name": "endPolio"
+        }
+      ]
+    },
+    {
+      "id": "footer-nav-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "language-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "social-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "legal-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "end-polio",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "site-footer",
+      "components": [
+        "footer-nav-item",
+        "language-item",
+        "social-item",
+        "legal-link",
+        "end-polio"
+      ]
+    }
+  ]
+}
