@@ -1,0 +1,136 @@
+{
+  "definitions": [
+    {
+      "title": "Latest-News",
+      "id": "latest-news",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "latest-news",
+              "model": "latest-news",
+              "name": "Latest-News"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "News-Item",
+      "id": "news-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "news-item",
+              "name": "News-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Top-News-Item",
+      "id": "top-news-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "top-news-item",
+              "name": "Top-News-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "latest-news",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Section Title",
+          "name": "section-title",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "More News Link",
+          "name": "more-news-link",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Regional Resilience Partnership Link",
+          "name": "partnership-link",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "news-item",
+          "label": "Sidebar News",
+          "name": "sidebar-news"
+        },
+        {
+          "component": "container",
+          "item": "top-news-item",
+          "label": "Top News",
+          "name": "top-news"
+        }
+      ]
+    },
+    {
+      "id": "news-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Title Link",
+          "name": "title-link",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Body",
+          "name": "body",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "top-news-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Title Link",
+          "name": "title-link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Sub Heading",
+          "name": "sub-heading",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "latest-news",
+      "components": [
+        "news-item",
+        "top-news-item"
+      ]
+    }
+  ]
+}

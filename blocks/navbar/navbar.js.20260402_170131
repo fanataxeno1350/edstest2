@@ -1,0 +1,66 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const nav = document.createElement('nav');
+  nav.classList.add('navbar'); // Copy from ORIGINAL HTML
+  nav.id = 'navbar-top'; // Copy from ORIGINAL HTML
+
+  const section = document.createElement('section');
+  section.classList.add('row', 'region', 'region-secondary-menu'); // Copy from ORIGINAL HTML
+  nav.append(section);
+
+  const innerNav = document.createElement('nav');
+  innerNav.classList.add('block', 'block-menu', 'navigation', 'menu--account'); // Copy from ORIGINAL HTML
+  innerNav.setAttribute('role', 'navigation');
+  innerNav.setAttribute('aria-labelledby', 'block-cbcog-account-menu-menu');
+  innerNav.id = 'block-cbcog-account-menu';
+  innerNav.setAttribute('data-block-plugin-id', 'system_menu_block:account');
+  section.append(innerNav);
+
+  const h2 = document.createElement('h2');
+  h2.classList.add('visually-hidden'); // Copy from ORIGINAL HTML
+  h2.id = 'block-cbcog-account-menu-menu';
+  h2.textContent = 'User account menu';
+  innerNav.append(h2);
+
+  const ul = document.createElement('ul');
+  ul.classList.add('clearfix', 'nav', 'flex-row'); // Copy from ORIGINAL HTML
+  ul.setAttribute('data-component-id', 'bootstrap_barrio:menu_columns');
+  innerNav.append(ul);
+
+  [...block.children].forEach((row) => {
+    const li = document.createElement('li');
+    moveInstrumentation(row, li);
+    li.classList.add('nav-item'); // Copy from ORIGINAL HTML
+
+    // Check 0 & 1: Replaced row.children[0] with content detection
+    // The BlockJson indicates 'nav-item' has one field 'link' which is aem-content,
+    // so we expect one cell containing an <a> tag.
+    const cells = [...row.children];
+    const linkCell = cells.find(cell => cell.querySelector('a'));
+
+    if (linkCell) {
+      const foundLink = linkCell.querySelector('a');
+      if (foundLink) {
+        const a = document.createElement('a');
+        a.href = foundLink.href;
+        a.classList.add('nav-link', 'nav-link--user-login'); // Copy from ORIGINAL HTML
+        // The original HTML has data-drupal-link-system-path, so we should copy it.
+        if (foundLink.hasAttribute('data-drupal-link-system-path')) {
+          a.setAttribute('data-drupal-link-system-path', foundLink.getAttribute('data-drupal-link-system-path'));
+        } else {
+          // Fallback if not present in source, but prefer to copy from source.
+          a.setAttribute('data-drupal-link-system-path', 'user/login');
+        }
+        moveInstrumentation(foundLink, a);
+        while (foundLink.firstChild) a.append(foundLink.firstChild);
+        li.append(a);
+      }
+    }
+    ul.append(li);
+  });
+
+  block.textContent = '';
+  block.append(nav);
+}

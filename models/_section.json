@@ -51,7 +51,19 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "header",
+        "skip-link",
+        "front-latest-news",
+        "navbar",
+        "main-container",
+        "highlighted",
+        "block-system-main-block",
+        "landing-page",
+        "front-web-banner",
+        "call-to-action",
+        "latest-news",
+        "site-footer"
       ]
     }
   ]

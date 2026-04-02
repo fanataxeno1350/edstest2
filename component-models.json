@@ -142,75 +142,581 @@
     ]
   },
   {
-    "id": "card",
+    "id": "block-system-main-block"
+  },
+  {
+    "id": "news-item",
     "fields": [
       {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
+        "component": "aem-content",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
+        "label": "Body",
+        "name": "body",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "columns",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "columns",
-        "value": "",
-        "label": "Columns"
-      },
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "rows",
-        "value": "",
-        "label": "Rows"
-      }
-    ]
-  },
-  {
-    "id": "fragment",
+    "id": "top-news-item",
     "fields": [
       {
         "component": "aem-content",
-        "name": "reference",
-        "label": "Reference"
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Subheading",
+        "name": "subheading",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "hero",
+    "id": "call-to-action",
+    "fields": [
+      {
+        "component": "container",
+        "item": "call-to-action-item",
+        "label": "Items",
+        "name": "items"
+      }
+    ]
+  },
+  {
+    "id": "call-to-action-item",
     "fields": [
       {
         "component": "reference",
-        "valueType": "string",
-        "name": "image",
         "label": "Image",
-        "multi": false
+        "name": "image",
+        "valueType": "string"
       },
       {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Alt",
-        "value": ""
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
         "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "front-latest-news",
+    "fields": [
+      {
+        "component": "container",
+        "item": "sidebar-news-item",
+        "label": "Sidebar News Items",
+        "name": "sidebar-news-items"
+      },
+      {
+        "component": "container",
+        "item": "top-news-item",
+        "label": "Top News Items",
+        "name": "top-news-items"
+      }
+    ]
+  },
+  {
+    "id": "sidebar-news-item",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Body",
+        "name": "body",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "top-news-item",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Subheading",
+        "name": "subheading",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "front-web-banner"
+  },
+  {
+    "id": "banner-content",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Video",
+        "name": "video",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Poster",
+        "name": "poster",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "header"
+  },
+  {
+    "id": "nav",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "nav-item",
+        "label": "Nav Items",
+        "name": "nav-items"
+      }
+    ]
+  },
+  {
+    "id": "nav-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "highlighted"
+  },
+  {
+    "id": "landing-page",
+    "fields": [
+      {
+        "component": "container",
+        "item": "landing-page-row",
+        "label": "Rows",
+        "name": "rows"
+      }
+    ]
+  },
+  {
+    "id": "landing-page-row",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Content",
+        "name": "content",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "latest-news",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Section Title",
+        "name": "section-title",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "More News Link",
+        "name": "more-news-link",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Regional Resilience Partnership Link",
+        "name": "partnership-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "news-item",
+        "label": "Sidebar News",
+        "name": "sidebar-news"
+      },
+      {
+        "component": "container",
+        "item": "top-news-item",
+        "label": "Top News",
+        "name": "top-news"
+      }
+    ]
+  },
+  {
+    "id": "news-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Title Link",
+        "name": "title-link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Body",
+        "name": "body",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "top-news-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Title Link",
+        "name": "title-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Sub Heading",
+        "name": "sub-heading",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "main-container",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Banner Heading",
+        "name": "banner-heading",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Banner Video Poster",
+        "name": "banner-video-poster",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Banner Video Src",
+        "name": "banner-video-src",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "sidebar-news-item",
+        "label": "Sidebar News Items",
+        "name": "sidebar-news-items"
+      },
+      {
+        "component": "container",
+        "item": "top-news-item",
+        "label": "Top News Items",
+        "name": "top-news-items"
+      }
+    ]
+  },
+  {
+    "id": "sidebar-news-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Title Link",
+        "name": "title-link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Body",
+        "name": "body",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "top-news-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Title Link",
+        "name": "title-link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Sub Heading",
+        "name": "sub-heading",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Media Image",
+        "name": "media-image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "navbar",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Site Name",
+        "name": "site-name",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "nav-item",
+        "label": "Nav Items",
+        "name": "nav-items"
+      },
+      {
+        "component": "container",
+        "item": "dropdown",
+        "label": "Dropdowns",
+        "name": "dropdowns"
+      }
+    ]
+  },
+  {
+    "id": "nav-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "dropdown",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Dropdown Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "dropdown-item",
+        "label": "Dropdown Items",
+        "name": "dropdown-items"
+      }
+    ]
+  },
+  {
+    "id": "dropdown-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "site-footer",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Mobile",
+        "name": "logo-mobile",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Address",
+        "name": "address",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Phone",
+        "name": "phone",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-social",
+        "label": "Social Icons",
+        "name": "social-icons"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Menu Links",
+        "name": "menu-links"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Departments Links",
+        "name": "departments-links"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Other Links",
+        "name": "other-links"
+      },
+      {
+        "component": "richtext",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Credit",
+        "name": "credit",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "skip-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
