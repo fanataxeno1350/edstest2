@@ -67,9 +67,6 @@
     "id": "hero-section"
   },
   {
-    "id": "pubble-app"
-  },
-  {
     "id": "service-section",
     "components": [
       "service-card"
