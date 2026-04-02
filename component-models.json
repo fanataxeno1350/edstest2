@@ -282,9 +282,6 @@
     ]
   },
   {
-    "id": "front-web-banner"
-  },
-  {
     "id": "banner-content",
     "fields": [
       {
@@ -306,9 +303,6 @@
         "valueType": "string"
       }
     ]
-  },
-  {
-    "id": "header"
   },
   {
     "id": "nav",
@@ -343,9 +337,6 @@
         "valueType": "string"
       }
     ]
-  },
-  {
-    "id": "highlighted"
   },
   {
     "id": "landing-page",

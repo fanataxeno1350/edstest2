@@ -34,9 +34,6 @@
   ],
   "models": [
     {
-      "id": "front-web-banner"
-    },
-    {
       "id": "banner-content",
       "fields": [
         {

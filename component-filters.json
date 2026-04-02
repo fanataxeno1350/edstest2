@@ -64,9 +64,6 @@
     ]
   },
   {
-    "id": "highlighted"
-  },
-  {
     "id": "landing-page",
     "components": [
       "landing-page-row"
