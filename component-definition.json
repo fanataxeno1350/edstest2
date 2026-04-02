@@ -83,75 +83,281 @@
       "id": "blocks",
       "components": [
         {
-          "title": "Cards",
-          "id": "cards",
+          "title": "About-Section",
+          "id": "about-section",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Cards",
-                  "filter": "cards"
+                  "filter": "about-section",
+                  "model": "about-section",
+                  "name": "About-Section"
                 }
               }
             }
           }
         },
         {
-          "title": "Card",
-          "id": "card",
+          "title": "About-Item",
+          "id": "about-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Card",
-                  "model": "card"
+                  "model": "about-item",
+                  "name": "About-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Columns",
-          "id": "columns",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/columns/v1/columns",
-                "template": {
-                  "columns": "2",
-                  "rows": "1"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Fragment",
-          "id": "fragment",
+          "title": "Blog-Section",
+          "id": "blog-section",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Fragment",
-                  "model": "fragment"
+                  "filter": "blog-section",
+                  "model": "blog-section",
+                  "name": "Blog-Section"
                 }
               }
             }
           }
         },
         {
-          "title": "Hero",
-          "id": "hero",
+          "title": "Blog-Card",
+          "id": "blog-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "blog-card",
+                  "name": "Blog-Card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Contact-Section",
+          "id": "contact-section",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Hero",
-                  "model": "hero"
+                  "filter": "contact-section",
+                  "model": "contact-section",
+                  "name": "Contact-Section"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Faqs",
+          "id": "faqs",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "faqs",
+                  "model": "faqs",
+                  "name": "Faqs"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Accordion-Item",
+          "id": "accordion-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "accordion-item",
+                  "name": "Accordion-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer",
+          "id": "footer",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "footer",
+                  "model": "footer",
+                  "name": "Footer"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Link",
+          "id": "footer-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-link",
+                  "name": "Footer-Link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Header-Nav",
+          "id": "header-nav",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "header-nav",
+                  "model": "header-nav",
+                  "name": "Header-Nav"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Nav-Link",
+          "id": "nav-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "nav-link",
+                  "name": "Nav-Link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Hero-Section",
+          "id": "hero-section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "hero-section",
+                  "model": "hero-section",
+                  "name": "Hero-Section"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Pubble-App",
+          "id": "pubble-app",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "pubble-app",
+                  "model": "pubble-app",
+                  "name": "Pubble-App"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Service-Section",
+          "id": "service-section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "service-section",
+                  "model": "service-section",
+                  "name": "Service-Section"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Service-Card",
+          "id": "service-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "service-card",
+                  "name": "Service-Card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Toast",
+          "id": "toast",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "toast",
+                  "model": "toast",
+                  "name": "Toast"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Why-Techatom",
+          "id": "why-techatom",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "why-techatom",
+                  "model": "why-techatom",
+                  "name": "Why-Techatom"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Why-Card",
+          "id": "why-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "why-card",
+                  "name": "Why-Card"
                 }
               }
             }

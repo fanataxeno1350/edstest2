@@ -51,7 +51,18 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "header-nav",
+        "toast",
+        "hero-section",
+        "why-techatom",
+        "service-section",
+        "about-section",
+        "blog-section",
+        "faqs",
+        "contact-section",
+        "footer",
+        "pubble-app"
       ]
     }
   ]

@@ -1,0 +1,128 @@
+{
+  "definitions": [
+    {
+      "title": "Contact-Section",
+      "id": "contact-section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "contact-section",
+              "model": "contact-section",
+              "name": "Contact-Section"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "contact-section",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Main Heading",
+          "name": "main-heading",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Sub Heading",
+          "name": "sub-heading",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Address",
+          "name": "address",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Contact Image",
+          "name": "contact-image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Email Link",
+          "name": "email-link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "LinkedIn Image",
+          "name": "linkedin-image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "LinkedIn Link",
+          "name": "linkedin-link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Facebook Image",
+          "name": "facebook-image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Facebook Link",
+          "name": "facebook-link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Instagram Image",
+          "name": "instagram-image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Instagram Link",
+          "name": "instagram-link",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Map Embed",
+          "name": "map-embed",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Form Name Placeholder",
+          "name": "form-name-placeholder",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Form Email Placeholder",
+          "name": "form-email-placeholder",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Form Message Placeholder",
+          "name": "form-message-placeholder",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Form Submit Label",
+          "name": "form-submit-label",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "contact-section"
+    }
+  ]
+}
