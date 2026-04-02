@@ -16,7 +16,56 @@
       "cards",
       "columns",
       "fragment",
-      "---new--blocks-----"
+      "---new--blocks-----",
+      "cmp-navigation-wrapper",
+      "hero-full-width",
+      "text-and-media",
+      "card-list",
+      "media",
+      "scarp",
+      "cmp-stats-by-the-number",
+      "footer"
     ]
+  },
+  {
+    "id": "card-list",
+    "components": [
+      "card"
+    ]
+  },
+  {
+    "id": "cmp-navigation-wrapper",
+    "components": [
+      "cmp-navigation-link",
+      "cmp-language-link"
+    ]
+  },
+  {
+    "id": "cmp-stats-by-the-number",
+    "components": [
+      "tab",
+      "card"
+    ]
+  },
+  {
+    "id": "footer",
+    "components": [
+      "social-link",
+      "navigation-link",
+      "language-link",
+      "policy-link"
+    ]
+  },
+  {
+    "id": "hero-full-width"
+  },
+  {
+    "id": "media"
+  },
+  {
+    "id": "scarp"
+  },
+  {
+    "id": "text-and-media"
   }
 ]

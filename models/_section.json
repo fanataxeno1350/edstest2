@@ -51,7 +51,15 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "cmp-navigation-wrapper",
+        "hero-full-width",
+        "text-and-media",
+        "card-list",
+        "media",
+        "scarp",
+        "cmp-stats-by-the-number",
+        "footer"
       ]
     }
   ]
