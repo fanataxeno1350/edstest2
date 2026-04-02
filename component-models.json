@@ -142,9 +142,6 @@
     ]
   },
   {
-    "id": "block-system-main-block"
-  },
-  {
     "id": "news-item",
     "fields": [
       {
