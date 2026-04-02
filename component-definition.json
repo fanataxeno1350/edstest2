@@ -83,75 +83,234 @@
       "id": "blocks",
       "components": [
         {
-          "title": "Cards",
-          "id": "cards",
+          "title": "Button",
+          "id": "button",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Cards",
-                  "filter": "cards"
+                  "filter": "button",
+                  "model": "button",
+                  "name": "Button"
                 }
               }
             }
           }
         },
         {
-          "title": "Card",
-          "id": "card",
+          "title": "Campaign-Banner",
+          "id": "campaign-banner",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "campaign-banner",
+                  "model": "campaign-banner",
+                  "name": "Campaign-Banner"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Cookie-Banner",
+          "id": "cookie-banner",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "cookie-banner",
+                  "model": "cookie-banner",
+                  "name": "Cookie-Banner"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Cookie-Setting",
+          "id": "cookie-setting",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Card",
-                  "model": "card"
+                  "model": "cookie-setting",
+                  "name": "Cookie-Setting"
                 }
               }
             }
           }
         },
         {
-          "title": "Columns",
-          "id": "columns",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/columns/v1/columns",
-                "template": {
-                  "columns": "2",
-                  "rows": "1"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Fragment",
-          "id": "fragment",
+          "title": "Footer",
+          "id": "footer",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Fragment",
-                  "model": "fragment"
+                  "filter": "footer",
+                  "model": "footer",
+                  "name": "Footer"
                 }
               }
             }
           }
         },
         {
-          "title": "Hero",
-          "id": "hero",
+          "title": "Footer-Widget",
+          "id": "footer-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-widget",
+                  "name": "Footer-Widget"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Sponsor",
+          "id": "footer-sponsor",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-sponsor",
+                  "name": "Footer-Sponsor"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Header",
+          "id": "header",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Hero",
-                  "model": "hero"
+                  "filter": "header",
+                  "model": "header",
+                  "name": "Header"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Menu-Item",
+          "id": "menu-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "menu-item",
+                  "name": "Menu-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Language-Switch",
+          "id": "language-switch",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "language-switch",
+                  "name": "Language-Switch"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Hero-Video",
+          "id": "hero-video",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "hero-video",
+                  "model": "hero-video",
+                  "name": "Hero-Video"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Page-Title",
+          "id": "page-title",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "page-title",
+                  "model": "page-title",
+                  "name": "Page-Title"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Wp-Block-Columns",
+          "id": "wp-block-columns",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "wp-block-columns",
+                  "model": "wp-block-columns",
+                  "name": "Wp-Block-Columns"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Wp-Block-Column",
+          "id": "wp-block-column",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "wp-block-column",
+                  "name": "Wp-Block-Column"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Wp-Block-Media-Text",
+          "id": "wp-block-media-text",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "wp-block-media-text",
+                  "model": "wp-block-media-text",
+                  "name": "Wp-Block-Media-Text"
                 }
               }
             }

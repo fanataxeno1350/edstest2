@@ -1,0 +1,69 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // Use content detection instead of array destructuring for robustness
+  const rows = [...block.children];
+  const imageRow = rows.find(row => row.querySelector('picture'));
+  const contentRow = rows.find(row => !row.querySelector('picture') && !row.querySelector('a'));
+  const linkRow = rows.find(row => row.querySelector('a'));
+
+  const figure = document.createElement('figure');
+  figure.classList.add('wp-block-media-text__media');
+
+  if (imageRow) {
+    const imageCell = imageRow.firstElementChild;
+    if (imageCell) {
+      const picture = imageCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        if (img) {
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
+          picture.replaceWith(optimizedPic);
+        }
+      }
+      moveInstrumentation(imageRow, figure);
+      while (imageRow.firstChild) figure.append(imageRow.firstChild);
+    }
+  }
+
+  const contentDiv = document.createElement('div');
+  contentDiv.classList.add('wp-block-media-text__content');
+
+  if (contentRow) {
+    const contentCell = contentRow.firstElementChild;
+    if (contentCell) {
+      moveInstrumentation(contentRow, contentDiv);
+      while (contentRow.firstChild) contentDiv.append(contentRow.firstChild);
+    }
+  }
+
+  if (linkRow) {
+    const linkCell = linkRow.firstElementChild;
+    if (linkCell) {
+      const link = linkCell.querySelector('a');
+      if (link) {
+        const buttonsDiv = document.createElement('div');
+        buttonsDiv.classList.add('wp-block-buttons', 'is-layout-flex', 'wp-block-buttons-is-layout-flex');
+
+        const buttonDiv = document.createElement('div');
+        buttonDiv.classList.add('wp-block-button', 'is-style-outline', 'is-style-outline--2');
+
+        const buttonLink = document.createElement('a');
+        buttonLink.classList.add('wp-block-button__link', 'wp-element-button');
+        buttonLink.href = link.href;
+        buttonLink.textContent = link.textContent;
+
+        moveInstrumentation(linkRow, buttonLink);
+
+        buttonDiv.append(buttonLink);
+        buttonsDiv.append(buttonDiv);
+        contentDiv.append(buttonsDiv);
+      }
+    }
+  }
+
+  block.textContent = '';
+  block.append(figure, contentDiv);
+}

@@ -142,75 +142,352 @@
     ]
   },
   {
-    "id": "card",
+    "id": "button",
     "fields": [
       {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
       },
       {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
+        "component": "text",
+        "label": "Title",
+        "name": "title",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "columns",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "columns",
-        "value": "",
-        "label": "Columns"
-      },
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "rows",
-        "value": "",
-        "label": "Rows"
-      }
-    ]
-  },
-  {
-    "id": "fragment",
-    "fields": [
-      {
-        "component": "aem-content",
-        "name": "reference",
-        "label": "Reference"
-      }
-    ]
-  },
-  {
-    "id": "hero",
+    "id": "campaign-banner",
     "fields": [
       {
         "component": "reference",
-        "valueType": "string",
-        "name": "image",
         "label": "Image",
-        "multi": false
+        "name": "image",
+        "valueType": "string"
       },
       {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Alt",
-        "value": ""
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "cookie-banner",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Read More Link",
+        "name": "read-more-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "cookie-setting",
+        "label": "Cookie Settings",
+        "name": "cookie-settings"
+      },
+      {
+        "component": "text",
+        "label": "Accept All Label",
+        "name": "accept-all-label",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Only Necessary Label",
+        "name": "only-necessary-label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "cookie-setting",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "boolean",
+        "label": "Enabled",
+        "name": "enabled",
+        "valueType": "boolean"
+      }
+    ]
+  },
+  {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "container",
+        "item": "footer-widget",
+        "label": "Footer Widgets",
+        "name": "footer-widgets"
+      },
+      {
+        "component": "container",
+        "item": "footer-sponsor",
+        "label": "Footer Sponsors",
+        "name": "footer-sponsors"
+      },
+      {
+        "component": "richtext",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-widget",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Body",
+        "name": "body",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-sponsor",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Alt Text",
+        "name": "alt",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "header",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "menu-item",
+        "label": "Menu Items",
+        "name": "menu-items"
+      },
+      {
+        "component": "container",
+        "item": "language-switch",
+        "label": "Language Switcher",
+        "name": "language-switcher"
+      }
+    ]
+  },
+  {
+    "id": "menu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "language-switch",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Flag",
+        "name": "flag",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Language",
+        "name": "language",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "hero-video",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Video",
+        "name": "video",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Lead",
+        "name": "lead",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Button Link",
+        "name": "button-link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Campaign Image",
+        "name": "campaign-image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Campaign Link",
+        "name": "campaign-link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Campaign Heading",
+        "name": "campaign-heading",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "page-title",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "wp-block-column",
+    "fields": [
+      {
+        "component": "container",
+        "item": "wp-block-column-item",
+        "label": "Column Items",
+        "name": "items"
+      }
+    ]
+  },
+  {
+    "id": "wp-block-column-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Icon Class",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
         "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "wp-block-media-text",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Body",
+        "name": "body",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Button Link",
+        "name": "button-link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
         "valueType": "string"
       }
     ]

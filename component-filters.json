@@ -15,28 +15,58 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "header",
+      "hero-video",
+      "campaign-banner",
+      "page-title",
+      "wp-block-columns",
+      "wp-block-spacer",
+      "wp-block-media-text",
+      "footer",
+      "cookie-banner"
     ]
   },
   {
-    "id": "cards",
+    "id": "button"
+  },
+  {
+    "id": "campaign-banner"
+  },
+  {
+    "id": "cookie-banner",
     "components": [
-      "card"
+      "cookie-setting"
     ]
   },
   {
-    "id": "columns",
+    "id": "footer",
     "components": [
-      "column"
+      "footer-widget",
+      "footer-sponsor"
     ]
   },
   {
-    "id": "column",
+    "id": "header",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "menu-item",
+      "language-switch"
     ]
+  },
+  {
+    "id": "hero-video"
+  },
+  {
+    "id": "page-title"
+  },
+  {
+    "id": "wp-block-columns",
+    "components": [
+      "wp-block-column"
+    ]
+  },
+  {
+    "id": "wp-block-media-text"
   }
 ]

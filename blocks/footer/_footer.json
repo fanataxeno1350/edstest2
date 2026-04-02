@@ -1,0 +1,118 @@
+{
+  "definitions": [
+    {
+      "title": "Footer",
+      "id": "footer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "footer",
+              "model": "footer",
+              "name": "Footer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Widget",
+      "id": "footer-widget",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-widget",
+              "name": "Footer-Widget"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Sponsor",
+      "id": "footer-sponsor",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-sponsor",
+              "name": "Footer-Sponsor"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footer",
+      "fields": [
+        {
+          "component": "container",
+          "item": "footer-widget",
+          "label": "Footer Widgets",
+          "name": "footer-widgets"
+        },
+        {
+          "component": "container",
+          "item": "footer-sponsor",
+          "label": "Footer Sponsors",
+          "name": "footer-sponsors"
+        },
+        {
+          "component": "richtext",
+          "label": "Copyright",
+          "name": "copyright",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-widget",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Body",
+          "name": "body",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-sponsor",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Alt Text",
+          "name": "alt",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "footer",
+      "components": [
+        "footer-widget",
+        "footer-sponsor"
+      ]
+    }
+  ]
+}

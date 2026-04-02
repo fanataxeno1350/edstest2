@@ -51,7 +51,16 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "header",
+        "hero-video",
+        "campaign-banner",
+        "page-title",
+        "wp-block-columns",
+        "wp-block-spacer",
+        "wp-block-media-text",
+        "footer",
+        "cookie-banner"
       ]
     }
   ]
