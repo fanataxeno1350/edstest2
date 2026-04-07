@@ -1,0 +1,160 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // CHECK 0 & 1: Destructuring block.children directly for root rows,
+  // aligning with BlockJson model fields.
+  const [
+    imageRow,
+    imageAltRow,
+    titleRow,
+    textRow,
+    primaryLinkRow,
+    captionRow,
+  ] = [...block.children];
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+
+  const gridWrapper = document.createElement('div');
+  gridWrapper.classList.add('grid', 'grid-full', 'md:gap-grid-gutter', 'justify-center', 'items-center');
+
+  // Image section
+  const imageSection = document.createElement('div');
+  imageSection.classList.add(
+    'order-1',
+    'md:order-2',
+    'relative',
+    'md:col-start-8',
+    'md:col-span-8',
+    'xl:col-start-7',
+    'xl:col-span-7',
+    'lg:z-10',
+    'min-w-0',
+    'md:row-start-1',
+    'md:row-end-1',
+  );
+
+  const imageAspectWrapper = document.createElement('div');
+  imageAspectWrapper.classList.add('aspect-4/3', 'max-w-[672px]', 'w-full', 'mx-auto');
+
+  const picture = imageRow.querySelector('picture');
+  if (picture) {
+    const img = picture.querySelector('img');
+    if (img) {
+      // CHECK 1: Accessing imageAltRow's content directly, as per model.
+      const altText = imageAltRow.querySelector('div').textContent.trim();
+      img.alt = altText;
+      img.classList.add('rounded-t-sm', 'md:rounded-sm', 'overflow-hidden', 'w-full', 'h-auto');
+      img.setAttribute('height', '504'); // From original HTML
+      img.setAttribute('width', '672'); // From original HTML
+      img.setAttribute('loading', 'lazy'); // From original HTML
+
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      picture.replaceWith(optimizedPic);
+    }
+  }
+  moveInstrumentation(imageRow.firstElementChild, imageAspectWrapper);
+  while (imageRow.firstElementChild) imageAspectWrapper.append(imageRow.firstElementChild);
+  imageSection.append(imageAspectWrapper);
+  gridWrapper.append(imageSection);
+
+  // Content section
+  const contentSection = document.createElement('div');
+  contentSection.classList.add(
+    'order-2',
+    'md:order-1',
+    'relative',
+    'md:col-span-8',
+    'md:col-start-1',
+    'xl:col-start-2',
+    'xl:col-span-6',
+    'md:z-20',
+    'bg-card-surface',
+    'theme-dark:bg-card-surface-td',
+    'theme-medium:bg-card-surface-tm',
+    'text-foreground',
+    'theme-dark:text-foreground-tm',
+    'theme-medium:text-foreground-td',
+    'rounded-sm',
+    'flex',
+    'flex-col',
+    'justify-center',
+    'space-y-2xs',
+    'p-6',
+    'xl:p-lg',
+  );
+
+  // Title
+  const title = document.createElement('h4');
+  title.classList.add('text-h4', 'font-bold');
+  moveInstrumentation(titleRow.firstElementChild, title);
+  while (titleRow.firstElementChild) title.append(titleRow.firstElementChild);
+  contentSection.append(title);
+
+  // Text
+  const textDiv = document.createElement('div');
+  textDiv.classList.add('prose', 'theme-dark:prose-tm', 'theme-medium:prose-td', 'max-w-none');
+  moveInstrumentation(textRow.firstElementChild, textDiv);
+  while (textRow.firstElementChild) textDiv.append(textRow.firstElementChild);
+  contentSection.append(textDiv);
+
+  // Primary Link
+  const linksWrapper = document.createElement('div');
+  linksWrapper.classList.add('flex', 'flex-wrap', 'gap-xs', 'mt-6');
+
+  const primaryLink = primaryLinkRow.querySelector('a');
+  if (primaryLink) {
+    const newPrimaryLink = document.createElement('a');
+    newPrimaryLink.href = primaryLink.href;
+    newPrimaryLink.classList.add('w-full', 'md:w-auto', 'button', 'button--dark', 'theme-medium:button--light');
+    moveInstrumentation(primaryLinkRow.firstElementChild, newPrimaryLink);
+    while (primaryLinkRow.firstElementChild) newPrimaryLink.append(primaryLinkRow.firstElementChild);
+    linksWrapper.append(newPrimaryLink);
+  }
+  contentSection.append(linksWrapper);
+  gridWrapper.append(contentSection);
+  container.append(gridWrapper);
+
+  // Caption
+  const captionGridWrapper = document.createElement('div');
+  captionGridWrapper.classList.add('grid-full', 'grid-centered-12');
+
+  const captionDiv = document.createElement('div');
+  captionDiv.classList.add(
+    'md:text-end',
+    'order-1',
+    'md:order-2',
+    'relative',
+    'md:col-start-8',
+    'md:col-span-8',
+    'xl:col-start-8',
+    'xl:col-span-6',
+    'lg:z-10',
+    'min-w-0',
+    'md:row-start-1',
+    'md:row-end-1',
+  );
+
+  const captionInnerDiv = document.createElement('div');
+  captionInnerDiv.classList.add('mt-2xs');
+
+  const captionP = document.createElement('p');
+  captionP.classList.add(
+    'z-1',
+    'relative',
+    'text-caption-size',
+    'theme-dark:text-foreground-colored-muted',
+    'text-foreground-muted',
+  );
+  moveInstrumentation(captionRow.firstElementChild, captionP);
+  while (captionRow.firstElementChild) captionP.append(captionRow.firstElementChild);
+  captionInnerDiv.append(captionP);
+  captionDiv.append(captionInnerDiv);
+  captionGridWrapper.append(captionDiv);
+  container.append(captionGridWrapper);
+
+  block.textContent = '';
+  block.append(container);
+}

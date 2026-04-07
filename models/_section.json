@@ -51,7 +51,17 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "svg-symbols",
+        "skip-to-main-content",
+        "navbar",
+        "mission-heading",
+        "featured-cta-rectangle",
+        "featured-grid",
+        "stat-list",
+        "featured-layered-image",
+        "our-mission",
+        "footer-nav"
       ]
     }
   ]

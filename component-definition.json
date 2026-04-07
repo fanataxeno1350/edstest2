@@ -83,60 +83,169 @@
       "id": "blocks",
       "components": [
         {
-          "title": "Cards",
-          "id": "cards",
+          "title": "Featured-Cta-Rectangle",
+          "id": "featured-cta-rectangle",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Cards",
-                  "filter": "cards"
+                  "filter": "featured-cta-rectangle",
+                  "model": "featured-cta-rectangle",
+                  "name": "Featured-Cta-Rectangle"
                 }
               }
             }
           }
         },
         {
-          "title": "Card",
-          "id": "card",
+          "title": "Featured-Grid",
+          "id": "featured-grid",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "featured-grid",
+                  "model": "featured-grid",
+                  "name": "Featured-Grid"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Featured-Grid-Item",
+          "id": "featured-grid-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Card",
-                  "model": "card"
+                  "model": "featured-grid-item",
+                  "name": "Featured-Grid-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Columns",
-          "id": "columns",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/columns/v1/columns",
-                "template": {
-                  "columns": "2",
-                  "rows": "1"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Fragment",
-          "id": "fragment",
+          "title": "Featured-Layered-Image",
+          "id": "featured-layered-image",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Fragment",
-                  "model": "fragment"
+                  "filter": "featured-layered-image",
+                  "model": "featured-layered-image",
+                  "name": "Featured-Layered-Image"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Featured-Column",
+          "id": "featured-column",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "featured-column",
+                  "name": "Featured-Column"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Nav",
+          "id": "footer-nav",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "footer-nav",
+                  "model": "footer-nav",
+                  "name": "Footer-Nav"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Nav-Section",
+          "id": "footer-nav-section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-nav-section",
+                  "name": "Footer-Nav-Section"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Nav-Link",
+          "id": "footer-nav-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-nav-link",
+                  "name": "Footer-Nav-Link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Button",
+          "id": "footer-button",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-button",
+                  "name": "Footer-Button"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Social-Link",
+          "id": "footer-social-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-social-link",
+                  "name": "Footer-Social-Link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Secondary-Link",
+          "id": "footer-secondary-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-secondary-link",
+                  "name": "Footer-Secondary-Link"
                 }
               }
             }
@@ -150,8 +259,150 @@
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Hero",
-                  "model": "hero"
+                  "filter": "hero",
+                  "model": "hero",
+                  "name": "Hero"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Mission-Heading",
+          "id": "mission-heading",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "mission-heading",
+                  "model": "mission-heading",
+                  "name": "Mission-Heading"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Navbar",
+          "id": "navbar",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "navbar",
+                  "model": "navbar",
+                  "name": "Navbar"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Navbar-Link-Group",
+          "id": "navbar-link-group",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "navbar-link-group",
+                  "name": "Navbar-Link-Group"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Navbar-Link",
+          "id": "navbar-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "navbar-link",
+                  "name": "Navbar-Link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Our-Mission",
+          "id": "our-mission",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "our-mission",
+                  "model": "our-mission",
+                  "name": "Our-Mission"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Skip-To-Main-Content",
+          "id": "skip-to-main-content",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "skip-to-main-content",
+                  "model": "skip-to-main-content",
+                  "name": "Skip-To-Main-Content"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Stat-List",
+          "id": "stat-list",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "stat-list",
+                  "model": "stat-list",
+                  "name": "Stat-List"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Stat",
+          "id": "stat",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "stat",
+                  "name": "Stat"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Svg-Symbols",
+          "id": "svg-symbols",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "svg-symbols",
+                  "model": "svg-symbols",
+                  "name": "Svg-Symbols"
                 }
               }
             }

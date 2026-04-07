@@ -15,28 +15,70 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "svg-symbols",
+      "skip-to-main-content",
+      "navbar",
+      "mission-heading",
+      "featured-cta-rectangle",
+      "featured-grid",
+      "stat-list",
+      "featured-layered-image",
+      "our-mission",
+      "footer-nav"
     ]
   },
   {
-    "id": "cards",
+    "id": "featured-cta-rectangle"
+  },
+  {
+    "id": "featured-grid",
     "components": [
-      "card"
+      "featured-grid-item"
     ]
   },
   {
-    "id": "columns",
+    "id": "featured-layered-image",
     "components": [
-      "column"
+      "featured-column"
     ]
   },
   {
-    "id": "column",
+    "id": "footer-nav",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "footer-nav-section",
+      "footer-button",
+      "footer-social-link",
+      "footer-secondary-link"
     ]
+  },
+  {
+    "id": "hero"
+  },
+  {
+    "id": "mission-heading"
+  },
+  {
+    "id": "navbar",
+    "components": [
+      "navbar-link-group",
+      "navbar-link"
+    ]
+  },
+  {
+    "id": "our-mission"
+  },
+  {
+    "id": "skip-to-main-content"
+  },
+  {
+    "id": "stat-list",
+    "components": [
+      "stat"
+    ]
+  },
+  {
+    "id": "svg-symbols"
   }
 ]

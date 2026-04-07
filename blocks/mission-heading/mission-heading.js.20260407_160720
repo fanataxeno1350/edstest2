@@ -1,0 +1,42 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow] = [...block.children];
+
+  const section = document.createElement('section');
+  section.classList.add('theme-light', 'theme-bg', 'theme-section-spacing', 'first:not-is-themed:mt-component');
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+
+  const gridFull = document.createElement('div');
+  gridFull.classList.add('grid-full');
+
+  const gridCentered = document.createElement('div');
+  gridCentered.classList.add('grid-centered-12', 'grid', 'grid-cols-subgrid', 'gap-grid-gutter');
+
+  const colSpanDiv = document.createElement('div');
+  colSpanDiv.classList.add('sm:col-span-14', 'md:col-span-12', 'xl:col-span-10');
+
+  const h2 = document.createElement('h2');
+  h2.classList.add('text-h2', 'theme-dark:text-foreground-td', 'theme-medium:text-foreground-tm', 'text-foreground', 'text-pretty');
+
+  // Move content from the heading cell into the h2
+  const headingCell = headingRow.firstElementChild;
+  if (headingCell) {
+    moveInstrumentation(headingCell, h2);
+    while (headingCell.firstChild) {
+      h2.append(headingCell.firstChild);
+    }
+  }
+
+  colSpanDiv.append(h2);
+  gridCentered.append(colSpanDiv);
+  gridFull.append(gridCentered);
+  container.append(gridFull);
+  section.append(container);
+
+  block.textContent = '';
+  block.append(section);
+}

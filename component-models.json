@@ -142,50 +142,273 @@
     ]
   },
   {
-    "id": "card",
+    "id": "featured-cta-rectangle",
     "fields": [
       {
         "component": "reference",
-        "valueType": "string",
-        "name": "image",
         "label": "Image",
-        "multi": false
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Image Alt Text",
+        "name": "image-alt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
         "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Primary Link",
+        "name": "primary-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Caption",
+        "name": "caption",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "columns",
+    "id": "featured-grid",
     "fields": [
       {
-        "component": "text",
-        "valueType": "number",
-        "name": "columns",
-        "value": "",
-        "label": "Columns"
-      },
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "rows",
-        "value": "",
-        "label": "Rows"
+        "component": "container",
+        "item": "featured-grid-item",
+        "label": "Items",
+        "name": "items"
       }
     ]
   },
   {
-    "id": "fragment",
+    "id": "featured-grid-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Image Alt Text",
+        "name": "image-alt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Caption",
+        "name": "caption",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Eyebrow",
+        "name": "eyebrow",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Subheading",
+        "name": "subheading",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "featured-layered-image",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image",
+        "name": "background-image",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Overlay Image",
+        "name": "overlay-image",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Image Caption",
+        "name": "image-caption",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "featured-column",
+        "label": "Columns",
+        "name": "columns"
+      }
+    ]
+  },
+  {
+    "id": "featured-column",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-nav",
+    "fields": [
+      {
+        "component": "container",
+        "item": "footer-nav-section",
+        "label": "Sections",
+        "name": "sections"
+      },
+      {
+        "component": "container",
+        "item": "footer-button",
+        "label": "Buttons",
+        "name": "buttons"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-link",
+        "label": "Social Links",
+        "name": "socialLinks"
+      },
+      {
+        "component": "container",
+        "item": "footer-secondary-link",
+        "label": "Secondary Links",
+        "name": "secondaryLinks"
+      },
+      {
+        "component": "richtext",
+        "label": "Address Block",
+        "name": "addressBlock",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Legal Text 1",
+        "name": "legalText1",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Legal Text 2",
+        "name": "legalText2",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-nav-section",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-nav-link",
+        "label": "Links",
+        "name": "links"
+      }
+    ]
+  },
+  {
+    "id": "footer-nav-link",
     "fields": [
       {
         "component": "aem-content",
-        "name": "reference",
-        "label": "Reference"
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-button",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Button Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Social Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-secondary-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Secondary Link",
+        "name": "link",
+        "valueType": "string"
       }
     ]
   },
@@ -194,25 +417,173 @@
     "fields": [
       {
         "component": "reference",
-        "valueType": "string",
-        "name": "image",
         "label": "Image",
-        "multi": false
+        "name": "image",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Alt",
-        "value": ""
+        "label": "Image Alt Text",
+        "name": "image-alt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Credit",
+        "name": "credit",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Headline Link",
+        "name": "headline-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Headline",
+        "name": "headline",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
+        "label": "Summary",
+        "name": "summary",
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "mission-heading",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "navbar",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "navbar-link-group",
+        "label": "Link Groups",
+        "name": "link-groups"
+      },
+      {
+        "component": "container",
+        "item": "navbar-link",
+        "label": "Primary Actions",
+        "name": "primary-actions"
+      },
+      {
+        "component": "text",
+        "label": "Search Placeholder",
+        "name": "search-placeholder",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "navbar-link-group",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "navbar-link",
+        "label": "Links",
+        "name": "links"
+      }
+    ]
+  },
+  {
+    "id": "navbar-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link URL",
+        "name": "href",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "our-mission",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "skip-to-main-content",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "stat-list",
+    "fields": [
+      {
+        "component": "container",
+        "item": "stat",
+        "label": "Stats",
+        "name": "stats"
+      }
+    ]
+  },
+  {
+    "id": "stat",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Value",
+        "name": "value",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "svg-symbols"
   }
 ]

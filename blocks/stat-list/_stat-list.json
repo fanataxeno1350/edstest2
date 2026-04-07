@@ -1,0 +1,79 @@
+{
+  "definitions": [
+    {
+      "title": "Stat-List",
+      "id": "stat-list",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "stat-list",
+              "model": "stat-list",
+              "name": "Stat-List"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Stat",
+      "id": "stat",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "stat",
+              "name": "Stat"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "stat-list",
+      "fields": [
+        {
+          "component": "container",
+          "item": "stat",
+          "label": "Stats",
+          "name": "stats"
+        }
+      ]
+    },
+    {
+      "id": "stat",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Value",
+          "name": "value",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "stat-list",
+      "components": [
+        "stat"
+      ]
+    }
+  ]
+}
