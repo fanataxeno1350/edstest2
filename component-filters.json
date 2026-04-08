@@ -63,9 +63,6 @@
     ]
   },
   {
-    "id": "social_feed_carousel"
-  },
-  {
     "id": "tranparent",
     "components": [
       "nav-item"

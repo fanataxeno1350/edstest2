@@ -34,9 +34,6 @@
   ],
   "models": [
     {
-      "id": "main-nav"
-    },
-    {
       "id": "nav-item",
       "fields": [
         {

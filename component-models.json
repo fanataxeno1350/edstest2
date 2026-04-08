@@ -386,9 +386,6 @@
     ]
   },
   {
-    "id": "main-nav"
-  },
-  {
     "id": "nav-item",
     "fields": [
       {
@@ -499,9 +496,6 @@
     ]
   },
   {
-    "id": "social_feed_carousel"
-  },
-  {
     "id": "tranparent",
     "fields": [
       {
@@ -558,9 +552,6 @@
         "valueType": "string"
       }
     ]
-  },
-  {
-    "id": "ts-cards-sec"
   },
   {
     "id": "ts-card",
