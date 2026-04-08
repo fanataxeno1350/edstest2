@@ -34,9 +34,6 @@
     ]
   },
   {
-    "id": "back-to-top"
-  },
-  {
     "id": "burger-navigation",
     "components": [
       "burger-navigation-item"
