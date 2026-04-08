@@ -142,75 +142,416 @@
     ]
   },
   {
-    "id": "card",
+    "id": "carousel-products-big",
+    "fields": [
+      {
+        "component": "container",
+        "item": "carousel-product",
+        "label": "Products",
+        "name": "products"
+      }
+    ]
+  },
+  {
+    "id": "carousel-product",
     "fields": [
       {
         "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
+        "label": "Background Image",
+        "name": "background-image",
+        "valueType": "string"
       },
       {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
+        "component": "text",
+        "label": "Background Color",
+        "name": "background-color",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Product Image",
+        "name": "product-image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Product Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Button Link",
+        "name": "button-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Button Label",
+        "name": "button-label",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "columns",
+    "id": "carousel-products",
     "fields": [
       {
-        "component": "text",
-        "valueType": "number",
-        "name": "columns",
-        "value": "",
-        "label": "Columns"
-      },
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "rows",
-        "value": "",
-        "label": "Rows"
+        "component": "container",
+        "item": "carousel-product",
+        "label": "Products",
+        "name": "products"
       }
     ]
   },
   {
-    "id": "fragment",
-    "fields": [
-      {
-        "component": "aem-content",
-        "name": "reference",
-        "label": "Reference"
-      }
-    ]
-  },
-  {
-    "id": "hero",
+    "id": "carousel-product",
     "fields": [
       {
         "component": "reference",
-        "valueType": "string",
-        "name": "image",
         "label": "Image",
-        "multi": false
+        "name": "image",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Alt",
-        "value": ""
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "cookie-banner",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Message",
+        "name": "message",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Privacy Policy Link",
+        "name": "privacy-policy-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Accept All Label",
+        "name": "accept-all-label",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Manage Preferences Icon",
+        "name": "manage-preferences-icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Manage Preferences Label",
+        "name": "manage-preferences-label",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Close Banner Icon",
+        "name": "close-banner-icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "crt-widget",
+    "fields": [
+      {
+        "component": "container",
+        "item": "crt-grid-post",
+        "label": "Crt Grid Posts",
+        "name": "posts"
+      }
+    ]
+  },
+  {
+    "id": "crt-grid-post",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Video",
+        "name": "video",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
         "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Fullname",
+        "name": "fullname",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "User Image",
+        "name": "userimage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Username",
+        "name": "username",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Date Link",
+        "name": "date-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Date",
+        "name": "date",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "featured-recipes",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "View All Link",
+        "name": "view-all-link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "recipe",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Footer Links",
+        "name": "links"
+      },
+      {
+        "component": "richtext",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Link Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "header",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "cta-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Text",
+        "name": "cta-text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Background Image",
+        "name": "background-image",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "menu-link",
+        "label": "Menu Links",
+        "name": "menu-links"
+      },
+      {
+        "component": "container",
+        "item": "social-icon",
+        "label": "Social Icons",
+        "name": "social-icons"
+      }
+    ]
+  },
+  {
+    "id": "menu-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-icon",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Social Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "home-hero",
+    "fields": [
+      {
+        "component": "container",
+        "item": "home-hero-item",
+        "label": "Hero Slides",
+        "name": "items"
+      }
+    ]
+  },
+  {
+    "id": "home-hero-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "logo-animation",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Glow Image",
+        "name": "glow-image",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logo-image",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Back Text",
+        "name": "back-text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Potato Image",
+        "name": "potato-image",
         "valueType": "string"
       }
     ]

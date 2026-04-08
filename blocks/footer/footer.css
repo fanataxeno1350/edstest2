@@ -1,0 +1,1092 @@
+#cmp-accordion { margin-top:15px !important }
+
+@-webkit-keyframes bounce{0%{-webkit-transform:scale(0)}100%{-webkit-transform:scale(1);opacity:0}}
+
+@keyframes bounce{0%{-webkit-transform:scale(0);transform:scale(0)}100%{-webkit-transform:scale(1);transform:scale(1);opacity:0}}
+
+.cmp-body *{box-sizing:border-box;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;-moz-user-select:none;-ms-user-select:none;user-select:none}
+
+@media(min-width:768px){.cmp-modal{max-width:720px}.cmp-modal__close{top:0;right:32px}.cmp-modal .cmp-modal__body{padding-top:32px}.cmp-modal .cmp-modal__header{padding:0 32px;flex-direction:row}.cmp-modal__logo{width:96px;height:96px;margin-bottom:0;margin-right:16px;min-width:96px}.cmp-modal .cmp-modal__title{font-size:30px;font-weight:600;line-height:42px;padding-right:24px}.cmp-modal .cmp-modal__sub-title{padding:16px 32px}.cmp-modal .cmp-modal__footer{display:flex}.cmp-modal .cmp-modal__footer .cmp-btn-wrapper,.cmp-modal .cmp-modal__footer .cmp-logo-wrapper{flex-grow:1}.cmp-modal .cmp-modal__footer .cmp-logo-wrapper{order:0;padding:0 16px;justify-content:flex-start}.cmp-modal .cmp-modal__footer .cmp-btn-wrapper{order:1;padding:0 16px;justify-content:flex-end}.cmp-modal .cmp-modal__footer .cmp-btn-wrapper .cmp-save-btn,.cmp-modal .cmp-modal__footer .cmp-btn-wrapper .cmp-decline-btn{width:auto;min-width:142px}.cmp-modal__footer .cmp-btn-wrapper{flex-direction:row}.cmp-modal__footer .cmp-btn-wrapper a+a{margin-top:0;margin-left:8px}}
+
+@media(min-width:768px){.cmp-tabs{display:flex;flex-wrap:wrap}.cmp-tabs>.cmp-tabs-filter-row{width:100%;margin:0 32px 24px;flex-direction:row}.cmp-tabs .cmp-tabs__nav{width:272px;padding-right:0;padding-left:32px}.cmp-tabs .cmp-tabs__nav .cmp-mobile-dropdown{display:none}.cmp-tabs .cmp-tabs__nav ul{display:block;position:static;background-color:transparent}.cmp-tabs .cmp-tabs__nav ul li.is-active a{color:#fff;background-color:#3974e6;color:var(--prefSelectorTextColor,#fff);background-color:var(--prefSelectorBgColor,#3974e6)}.cmp-tabs .cmp-tabs__nav ul li.is-active a svg{fill:#fff;fill:var(--prefSelectorTextColor,#fff)}.cmp-tabs .cmp-tabs__content{width:calc(100% - 272px);padding:3px 32px 3px 16px}.cmp-tabs.full-width .cmp-tabs__content{width:100%;padding-left:32px}}
+
+@media(min-width:768px){.cmp-horizontal-tabs .cmp-horizontal-tabs__nav{margin:0 32px}}
+
+@media(min-width:768px){.cmp-switch__label{top:3px;right:60px}}
+
+[data-atabs-orientation="vertical"] { display:flex;flex-wrap:wrap }
+
+.lang-ar .cmp-body *{font-family:Arial,Helvetica,sans-serif}
+
+@media(min-width:768px){.lang-ar .cmp-modal__logo{margin-left:16px;margin-right:0}.lang-ar .cmp-modal .cmp-modal__title{padding-right:0;padding-left:24px}.lang-ar .cmp-modal__close{left:32px}.lang-ar .cmp-tabs .cmp-tabs__nav{padding-left:0;padding-right:36px}.lang-ar .cmp-switch__label{right:auto;left:60px;top:6px}.lang-ar .cmp-modal .cmp-modal__header{padding:0 32px}.lang-ar .cmp-body.cmp-multi-level .cmp-modal .cmp-modal__logo{margin-right:0;margin-left:16px}.lang-ar .cmp-body.cmp-multi-level .cmp-modal .cmp-modal__title{padding-right:0;padding-left:24px}.lang-ar .cmp-body.cmp-multi-level button.cmp-modal__close{left:-8px}}
+
+.cmp-body.cmp-multi-level * :focus{outline-offset:2px;box-shadow:none !important;outline:1px solid var(--prefFocusRingColor,var(--prefButtonColor,#3974e6)) !important}
+
+@media(min-width:768px){.cmp-body:not(.cmp-multi-level) .accept-reject-all{margin:0 32px}.cmp-body.cmp-multi-level .cmp-modal{max-width:792px}.cmp-body.cmp-multi-level .cmp-modal__close{top:-8px;right:-8px}.cmp-body.cmp-multi-level .cmp-modal .cmp-modal__body{padding:40px}.cmp-body.cmp-multi-level .cmp-modal .cmp-modal__header{padding-top:0;flex-direction:row;justify-content:flex-start}.cmp-body.cmp-multi-level .cmp-modal .cmp-modal__header.without-logo .cmp-modal__title{padding:0;margin-left:0;border-left:0}.cmp-body.cmp-multi-level .cmp-modal .cmp-modal__logo{width:96px;height:96px;min-width:96px;margin-right:16px}.cmp-body.cmp-multi-level .cmp-modal .cmp-modal__title{font-size:32px;line-height:48px;padding-right:24px}.cmp-body.cmp-multi-level .cmp-modal .cmp-modal__footer{display:flex}.cmp-body.cmp-multi-level .cmp-modal .cmp-modal__footer .cmp-btn-wrapper,.cmp-body.cmp-multi-level .cmp-modal .cmp-modal__footer .cmp-logo-wrapper{flex-grow:1}.cmp-body.cmp-multi-level .cmp-modal .cmp-modal__footer .cmp-logo-wrapper{order:0;padding:0 16px;justify-content:flex-start}.cmp-body.cmp-multi-level .cmp-modal .cmp-modal__footer .cmp-btn-wrapper{order:1;padding:0 16px;justify-content:flex-end}.cmp-body.cmp-multi-level .cmp-modal .cmp-modal__footer .cmp-btn-wrapper .cmp-save-btn{width:auto;min-width:142px}}
+
+@media(min-width:768px){.cmp-body.cmp-multi-level .cmp-tabs{display:flex}.cmp-body.cmp-multi-level .cmp-tabs .cmp-tabs__nav{width:258px;padding-right:0;padding-left:36px}.cmp-body.cmp-multi-level .cmp-tabs .cmp-tabs__nav .cmp-mobile-dropdown{display:none}.cmp-body.cmp-multi-level .cmp-tabs .cmp-tabs__nav ul{display:block;position:static;background-color:transparent}.cmp-body.cmp-multi-level .cmp-tabs .cmp-tabs__nav ul li.is-active a{color:#fff;background-color:#1ca8dd}.cmp-body.cmp-multi-level .cmp-tabs .cmp-tabs__nav ul li.is-active a svg{fill:#fff}.cmp-body.cmp-multi-level .cmp-tabs .cmp-tabs__content{width:calc(100% - 272px);padding:3px 32px 0 24px}.cmp-body.cmp-multi-level .cmp-tabs.full-width .cmp-tabs__content{width:100%;padding-left:32px}}
+
+.cmp-body * a:focus-visible,.cmp-body * button:focus-visible,.cmp-body * button:focus-visible,.cc-window.cc-banner * a:focus-visible,.cc-window.cc-banner * h3:focus-visible,.cc-window.cc-banner * button:focus-visible{box-shadow:none !important;outline-width:1px !important}
+
+@media(min-width:768px) and (max-width:991px){.cc-banner .cc-compliance{display:block}}
+
+/* Domain Level Customised Custom CSS */
+
+
+html { font-family:Lays,sans-serif;font-weight:400 }
+
+:root{--scrollbar-width:calc(100vw - 100%)}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html{color:#fff;scroll-behavior:smooth;font-size:.833333vw;line-height:normal;display:block!important}
+
+@media (max-width:767px) { html{font-size:4.10256vw} }
+
+body{background:#fff;flex-direction:column;min-height:100vh;display:flex;overflow-x:hidden}
+
+div[data-sc-id][data-sc-type=SmartButton] { min-width:unset!important;max-width:unset!important;text-align:center!important;margin:0 auto!important;padding:0!important }
+
+div[data-sc-id] { margin-bottom:1.25rem!important }
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes Container-module-scss-module__KjkAOW__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes Container-module-scss-module__KjkAOW__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes Container-module-scss-module__KjkAOW__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes Container-module-scss-module__KjkAOW__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes Container-module-scss-module__KjkAOW__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes Container-module-scss-module__KjkAOW__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+.Container-module-scss-module__KjkAOW__container { max-width:108rem;margin:0 auto;position:relative }
+
+@media (max-width:767px) { .Container-module-scss-module__KjkAOW__container { padding:0 1.25rem } }
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes Footer-module-scss-module__EzUeIG__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes Footer-module-scss-module__EzUeIG__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes Footer-module-scss-module__EzUeIG__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes Footer-module-scss-module__EzUeIG__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes Footer-module-scss-module__EzUeIG__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes Footer-module-scss-module__EzUeIG__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+.Footer-module-scss-module__EzUeIG__footer { background-color:#f0ede1;padding:6.25rem 0;position:relative }
+
+@media (max-width:767px) { .Footer-module-scss-module__EzUeIG__footer { padding-bottom:3.125rem 0 } }
+
+.Footer-module-scss-module__EzUeIG__footerLinks { flex-wrap:wrap;justify-content:center;gap:1.5rem;margin:0 0 2rem;padding:0;list-style:none;display:flex }
+
+.Footer-module-scss-module__EzUeIG__footerLinks li a { color:#000;font-size:1.25rem;text-decoration:none;transition:color .3s }
+
+:is(.Footer-module-scss-module__EzUeIG__footerLinks li a:hover, .Footer-module-scss-module__EzUeIG__footerLinks li a.active) { text-decoration:underline }
+
+@media (max-width:767px) { .Footer-module-scss-module__EzUeIG__footerLinks { flex-direction:column;align-items:center;gap:1rem } }
+
+.Footer-module-scss-module__EzUeIG__footerLogo { text-align:center;margin:0 0 2rem }
+
+.Footer-module-scss-module__EzUeIG__footerLogo img { width:auto;height:7.8125rem }
+
+.Footer-module-scss-module__EzUeIG__copyright { text-align:center;color:#000;margin:1rem 0 0;font-size:1rem }
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes Header-module-scss-module__klcqGG__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes Header-module-scss-module__klcqGG__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes Header-module-scss-module__klcqGG__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes Header-module-scss-module__klcqGG__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes Header-module-scss-module__klcqGG__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes Header-module-scss-module__klcqGG__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@keyframes Header-module-scss-module__klcqGG__spin{0%{transform:translate(-50%,50%)rotate(0)}to{transform:translate(-50%,50%)rotate(360deg)}}
+
+@keyframes Header-module-scss-module__klcqGG__slideIn{0%{opacity:0;transform:translate(-1.25rem)}to{opacity:1;transform:translate(0)}}
+
+@keyframes Header-module-scss-module__klcqGG__fadeIn{0%{opacity:0}to{opacity:1}}
+
+@keyframes Header-module-scss-module__klcqGG__fadeInFromTop{0%{opacity:0;transform:translateY(-5rem)}to{opacity:1;transform:translateY(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes MainContent-module-scss-module__f_aYbG__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes MainContent-module-scss-module__f_aYbG__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes MainContent-module-scss-module__f_aYbG__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes MainContent-module-scss-module__f_aYbG__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes MainContent-module-scss-module__f_aYbG__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes MainContent-module-scss-module__f_aYbG__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes SemiCircularSection-module-scss-module__91UhQG__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes SemiCircularSection-module-scss-module__91UhQG__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes SemiCircularSection-module-scss-module__91UhQG__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes SemiCircularSection-module-scss-module__91UhQG__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes SemiCircularSection-module-scss-module__91UhQG__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes SemiCircularSection-module-scss-module__91UhQG__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes RecipeCard-module-scss-module__wi15tW__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes RecipeCard-module-scss-module__wi15tW__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes RecipeCard-module-scss-module__wi15tW__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes RecipeCard-module-scss-module__wi15tW__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes RecipeCard-module-scss-module__wi15tW__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes RecipeCard-module-scss-module__wi15tW__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes FeaturedRecipesGrid-module-scss-module__syHYjW__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes FeaturedRecipesGrid-module-scss-module__syHYjW__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes FeaturedRecipesGrid-module-scss-module__syHYjW__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes FeaturedRecipesGrid-module-scss-module__syHYjW__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes FeaturedRecipesGrid-module-scss-module__syHYjW__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes FeaturedRecipesGrid-module-scss-module__syHYjW__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes RecipeCategories-module-scss-module__p3Pmva__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes RecipeCategories-module-scss-module__p3Pmva__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes RecipeCategories-module-scss-module__p3Pmva__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes RecipeCategories-module-scss-module__p3Pmva__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes RecipeCategories-module-scss-module__p3Pmva__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes RecipeCategories-module-scss-module__p3Pmva__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes FeaturedRecipes-module-scss-module__6qef7W__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes FeaturedRecipes-module-scss-module__6qef7W__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes FeaturedRecipes-module-scss-module__6qef7W__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes FeaturedRecipes-module-scss-module__6qef7W__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes FeaturedRecipes-module-scss-module__6qef7W__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes FeaturedRecipes-module-scss-module__6qef7W__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@keyframes FeaturedRecipes-module-scss-module__6qef7W__recipeReveal{0%{opacity:0;transform:translateX(var(--anim-offset,80px))}to{opacity:1;transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes RecipeGrid-module-scss-module__f0zh0G__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes RecipeGrid-module-scss-module__f0zh0G__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes RecipeGrid-module-scss-module__f0zh0G__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes RecipeGrid-module-scss-module__f0zh0G__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes RecipeGrid-module-scss-module__f0zh0G__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes RecipeGrid-module-scss-module__f0zh0G__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes Thumbnail-module-scss-module___FbKVa__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes Thumbnail-module-scss-module___FbKVa__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes Thumbnail-module-scss-module___FbKVa__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes Thumbnail-module-scss-module___FbKVa__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes Thumbnail-module-scss-module___FbKVa__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes Thumbnail-module-scss-module___FbKVa__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@keyframes Thumbnail-module-scss-module___FbKVa__spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes CarouselProducts-module-scss-module__AOz4Ya__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes CarouselProducts-module-scss-module__AOz4Ya__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes CarouselProducts-module-scss-module__AOz4Ya__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes CarouselProducts-module-scss-module__AOz4Ya__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes CarouselProducts-module-scss-module__AOz4Ya__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes CarouselProducts-module-scss-module__AOz4Ya__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes HomeHero-module-scss-module__EGjjDa__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes HomeHero-module-scss-module__EGjjDa__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes HomeHero-module-scss-module__EGjjDa__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes HomeHero-module-scss-module__EGjjDa__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes HomeHero-module-scss-module__EGjjDa__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes HomeHero-module-scss-module__EGjjDa__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@keyframes HomeHero-module-scss-module__EGjjDa__fadeInFromTop{0%{opacity:0;transform:translateY(-5rem)}to{opacity:1;transform:translateY(0)}}
+
+@keyframes HomeHero-module-scss-module__EGjjDa__scrollBounce{0%,to{opacity:1;transform:translateY(0)}50%{opacity:.7;transform:translateY(.625rem)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes LogoAnimation-module-scss-module__40ZIiG__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes LogoAnimation-module-scss-module__40ZIiG__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes LogoAnimation-module-scss-module__40ZIiG__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes LogoAnimation-module-scss-module__40ZIiG__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes LogoAnimation-module-scss-module__40ZIiG__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes LogoAnimation-module-scss-module__40ZIiG__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@keyframes LogoAnimation-module-scss-module__40ZIiG__spin{0%{transform:translate(-50%,-50%)rotate(0)}to{transform:translate(-50%,-50%)rotate(360deg)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes NoFeaturedProducts-module-scss-module__-vrGPW__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes NoFeaturedProducts-module-scss-module__-vrGPW__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes NoFeaturedProducts-module-scss-module__-vrGPW__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes NoFeaturedProducts-module-scss-module__-vrGPW__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes NoFeaturedProducts-module-scss-module__-vrGPW__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes NoFeaturedProducts-module-scss-module__-vrGPW__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes page-module-scss-module__hnE0pa__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes page-module-scss-module__hnE0pa__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes page-module-scss-module__hnE0pa__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__hnE0pa__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__hnE0pa__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__hnE0pa__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes Button-module-scss-module__VLzsWq__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes Button-module-scss-module__VLzsWq__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes Button-module-scss-module__VLzsWq__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes Button-module-scss-module__VLzsWq__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes Button-module-scss-module__VLzsWq__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes Button-module-scss-module__VLzsWq__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes HungryForMore-module-scss-module__O8daDW__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes HungryForMore-module-scss-module__O8daDW__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes HungryForMore-module-scss-module__O8daDW__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes HungryForMore-module-scss-module__O8daDW__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes HungryForMore-module-scss-module__O8daDW__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes HungryForMore-module-scss-module__O8daDW__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes SocialIcons-module-scss-module__b5X5Xa__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes SocialIcons-module-scss-module__b5X5Xa__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes SocialIcons-module-scss-module__b5X5Xa__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes SocialIcons-module-scss-module__b5X5Xa__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes SocialIcons-module-scss-module__b5X5Xa__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes SocialIcons-module-scss-module__b5X5Xa__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes Social-module-scss-module__Jv7dDq__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes Social-module-scss-module__Jv7dDq__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes Social-module-scss-module__Jv7dDq__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes Social-module-scss-module__Jv7dDq__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes Social-module-scss-module__Jv7dDq__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes Social-module-scss-module__Jv7dDq__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes LoadingSpinner-module-scss-module__WzWVJq__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes LoadingSpinner-module-scss-module__WzWVJq__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes LoadingSpinner-module-scss-module__WzWVJq__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes LoadingSpinner-module-scss-module__WzWVJq__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes LoadingSpinner-module-scss-module__WzWVJq__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes LoadingSpinner-module-scss-module__WzWVJq__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@keyframes LoadingSpinner-module-scss-module__WzWVJq__spin{to{transform:rotate(360deg)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes page-module-scss-module__zaYFfG__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes page-module-scss-module__zaYFfG__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes page-module-scss-module__zaYFfG__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__zaYFfG__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__zaYFfG__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__zaYFfG__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes RecipeListWithLoadMore-module-scss-module__spiK4q__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes RecipeListWithLoadMore-module-scss-module__spiK4q__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes RecipeListWithLoadMore-module-scss-module__spiK4q__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes RecipeListWithLoadMore-module-scss-module__spiK4q__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes RecipeListWithLoadMore-module-scss-module__spiK4q__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes RecipeListWithLoadMore-module-scss-module__spiK4q__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes page-module-scss-module__qMg3fW__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes page-module-scss-module__qMg3fW__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes page-module-scss-module__qMg3fW__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__qMg3fW__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__qMg3fW__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__qMg3fW__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes ExpandableSection-module-scss-module__QEmorG__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes ExpandableSection-module-scss-module__QEmorG__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes ExpandableSection-module-scss-module__QEmorG__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes ExpandableSection-module-scss-module__QEmorG__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes ExpandableSection-module-scss-module__QEmorG__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes ExpandableSection-module-scss-module__QEmorG__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes ProductNavigation-module-scss-module__R3rFwa__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes ProductNavigation-module-scss-module__R3rFwa__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes ProductNavigation-module-scss-module__R3rFwa__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes ProductNavigation-module-scss-module__R3rFwa__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes ProductNavigation-module-scss-module__R3rFwa__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes ProductNavigation-module-scss-module__R3rFwa__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes page-module-scss-module__FJkmfa__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes page-module-scss-module__FJkmfa__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes page-module-scss-module__FJkmfa__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__FJkmfa__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__FJkmfa__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__FJkmfa__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes RelatedProducts-module-scss-module__R9t4Lq__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes RelatedProducts-module-scss-module__R9t4Lq__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes RelatedProducts-module-scss-module__R9t4Lq__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes RelatedProducts-module-scss-module__R9t4Lq__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes RelatedProducts-module-scss-module__R9t4Lq__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes RelatedProducts-module-scss-module__R9t4Lq__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes not-found-module-scss-module__ht7iTG__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes not-found-module-scss-module__ht7iTG__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes not-found-module-scss-module__ht7iTG__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes not-found-module-scss-module__ht7iTG__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes not-found-module-scss-module__ht7iTG__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes not-found-module-scss-module__ht7iTG__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@keyframes not-found-module-scss-module__ht7iTG__spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes page-module-scss-module__hD6fHG__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes page-module-scss-module__hD6fHG__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes page-module-scss-module__hD6fHG__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__hD6fHG__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__hD6fHG__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__hD6fHG__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+:root{--swiper-theme-color:#007aff}
+
+:host { z-index:1;margin-left:auto;margin-right:auto;display:block;position:relative }
+
+@keyframes swiper-preloader-spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+:root{--swiper-navigation-size:44px}
+
+@keyframes arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@keyframes gradientShift{0%{background-position:0%}50%{background-position:100%}to{background-position:0%}}
+
+@keyframes borderSpin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+@media (max-width:767px) { [class*=swiper-button-prev], [class*=swiper-button-next] { width:5rem;height:5rem }
+
+[class*=swiper-button-prev] svg, [class*=swiper-button-next] svg { width:1.25rem;height:1.25rem } }
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes ThumbnailBig-module-scss-module__2Nk34G__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes ThumbnailBig-module-scss-module__2Nk34G__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes ThumbnailBig-module-scss-module__2Nk34G__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes ThumbnailBig-module-scss-module__2Nk34G__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes ThumbnailBig-module-scss-module__2Nk34G__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes ThumbnailBig-module-scss-module__2Nk34G__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes CarouselProductsBig-module-scss-module__lT18Ua__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes CarouselProductsBig-module-scss-module__lT18Ua__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes CarouselProductsBig-module-scss-module__lT18Ua__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes CarouselProductsBig-module-scss-module__lT18Ua__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes CarouselProductsBig-module-scss-module__lT18Ua__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes CarouselProductsBig-module-scss-module__lT18Ua__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes CarouselRecipes-module-scss-module__JdxgSG__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes CarouselRecipes-module-scss-module__JdxgSG__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes CarouselRecipes-module-scss-module__JdxgSG__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes CarouselRecipes-module-scss-module__JdxgSG__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes CarouselRecipes-module-scss-module__JdxgSG__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes CarouselRecipes-module-scss-module__JdxgSG__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes FeaturedProducts-module-scss-module__OYqMwq__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes FeaturedProducts-module-scss-module__OYqMwq__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes FeaturedProducts-module-scss-module__OYqMwq__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes FeaturedProducts-module-scss-module__OYqMwq__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes FeaturedProducts-module-scss-module__OYqMwq__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes FeaturedProducts-module-scss-module__OYqMwq__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes RandomRecipes-module-scss-module__PCe18a__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes RandomRecipes-module-scss-module__PCe18a__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes RandomRecipes-module-scss-module__PCe18a__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes RandomRecipes-module-scss-module__PCe18a__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes RandomRecipes-module-scss-module__PCe18a__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes RandomRecipes-module-scss-module__PCe18a__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes page-module-scss-module__DBEGKG__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes page-module-scss-module__DBEGKG__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes page-module-scss-module__DBEGKG__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__DBEGKG__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__DBEGKG__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes page-module-scss-module__DBEGKG__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+@font-face{font-family:Lays;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLays.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:LaysExtraBold;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff2')format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2FLaysExtraBold.woff')format("woff");font-weight:400;font-style:normal;font-display:swap}
+
+@keyframes RecipeMetrics-module-scss-module__XAyx1q__arrowSlideIn{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(50px,25px)rotate(135deg)}41%{transform:translate(8px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes RecipeMetrics-module-scss-module__XAyx1q__arrowSlideOut{0%{transform:translate(29px,25px)rotate(135deg)}40%{transform:translate(8px,25px)rotate(135deg)}41%{transform:translate(50px,25px)rotate(135deg)}to{transform:translate(29px,25px)rotate(135deg)}}
+
+@keyframes RecipeMetrics-module-scss-module__XAyx1q__svgArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(150%)}41%{transform:translate(-150%)}to{transform:translate(0)}}
+
+@keyframes RecipeMetrics-module-scss-module__XAyx1q__svgArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(-150%)}41%{transform:translate(150%)}to{transform:translate(0)}}
+
+@keyframes RecipeMetrics-module-scss-module__XAyx1q__backArrowSlideIn{0%{transform:translate(0)}40%{transform:translate(-30px)}41%{transform:translate(30px)}to{transform:translate(0)}}
+
+@keyframes RecipeMetrics-module-scss-module__XAyx1q__backArrowSlideOut{0%{transform:translate(0)}40%{transform:translate(30px)}41%{transform:translate(-30px)}to{transform:translate(0)}}
+
+/* END CIMP-17021 */
+
+/* CIMP-17100 - fix SmartButton width */
+div[data-sc-id][data-sc-type="SmartButton"] { 
+  min-width: 220px !important;
+  max-width: 220px !important;
+ }
+
+/* END CIMP-17100 */
+
+/* CIMP-17100 - adjust SmartButton scale */
+div[data-sc-id][data-sc-type="SmartButton"] { 
+  scale: 0.80 !important;
+ }
+
+/* END CIMP-18071 */
+
+/*! api - Mon, 06 Apr 2026 23:36:19 GMT */
+@keyframes omBounce { from,20%,53%,to{animation-timing-function:cubic-bezier(0.215, 0.61, 0.355, 1);transform:translate3d(0, 0, 0)}40%,43%{animation-timing-function:cubic-bezier(0.755, 0.05, 0.855, 0.06);transform:translate3d(0, -30px, 0) scaleY(1.1)}70%{animation-timing-function:cubic-bezier(0.755, 0.05, 0.855, 0.06);transform:translate3d(0, -15px, 0) scaleY(1.05)}80%{transition-timing-function:cubic-bezier(0.215, 0.61, 0.355, 1);transform:translate3d(0, 0, 0) scaleY(0.95)}90%{transform:translate3d(0, -4px, 0) scaleY(1.02)} }
+
+@keyframes omBounceIn{from,20%,40%,60%,80%,to{animation-timing-function:cubic-bezier(0.215, 0.61, 0.355, 1)}0%{opacity:0;transform:scale3d(0.3, 0.3, 0.3)}20%{transform:scale3d(1.1, 1.1, 1.1)}40%{transform:scale3d(0.9, 0.9, 0.9)}60%{opacity:1;transform:scale3d(1.03, 1.03, 1.03)}80%{transform:scale3d(0.97, 0.97, 0.97)}to{opacity:1;transform:scale3d(1, 1, 1)}}
+
+@keyframes omBounceInDown{from,60%,75%,90%,to{animation-timing-function:cubic-bezier(0.215, 0.61, 0.355, 1)}0%{opacity:0;transform:translate3d(0, -3000px, 0) scaleY(3)}60%{opacity:1;transform:translate3d(0, 25px, 0) scaleY(0.9)}75%{transform:translate3d(0, -10px, 0) scaleY(0.95)}90%{transform:translate3d(0, 5px, 0) scaleY(0.985)}to{transform:translate3d(0, 0, 0)}}
+
+@keyframes omBounceInLeft{from,60%,75%,90%,to{animation-timing-function:cubic-bezier(0.215, 0.61, 0.355, 1)}0%{opacity:0;transform:translate3d(-3000px, 0, 0) scaleX(3)}60%{opacity:1;transform:translate3d(25px, 0, 0) scaleX(1)}75%{transform:translate3d(-10px, 0, 0) scaleX(0.98)}90%{transform:translate3d(5px, 0, 0) scaleX(0.995)}to{transform:translate3d(0, 0, 0)}}
+
+@keyframes omBounceInRight{from,60%,75%,90%,to{animation-timing-function:cubic-bezier(0.215, 0.61, 0.355, 1)}from{opacity:0;transform:translate3d(3000px, 0, 0) scaleX(3)}60%{opacity:1;transform:translate3d(-25px, 0, 0) scaleX(1)}75%{transform:translate3d(10px, 0, 0) scaleX(0.98)}90%{transform:translate3d(-5px, 0, 0) scaleX(0.995)}to{transform:translate3d(0, 0, 0)}}
+
+@keyframes omBounceInUp{from,60%,75%,90%,to{animation-timing-function:cubic-bezier(0.215, 0.61, 0.355, 1)}from{opacity:0;transform:translate3d(0, 3000px, 0) scaleY(5)}60%{opacity:1;transform:translate3d(0, -20px, 0) scaleY(0.9)}75%{transform:translate3d(0, 10px, 0) scaleY(0.95)}90%{transform:translate3d(0, -5px, 0) scaleY(0.985)}to{transform:translate3d(0, 0, 0)}}
+
+@keyframes omFlash{from,50%,to{opacity:1}25%,75%{opacity:0}}
+
+@keyframes omFlip{from{transform:perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 0) rotate3d(0, 1, 0, -360deg);animation-timing-function:ease-out}40%{transform:perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);animation-timing-function:ease-out}50%{transform:perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);animation-timing-function:ease-in}80%{transform:perspective(400px) scale3d(0.95, 0.95, 0.95) translate3d(0, 0, 0) rotate3d(0, 1, 0, 0deg);animation-timing-function:ease-in}to{transform:perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 0) rotate3d(0, 1, 0, 0deg);animation-timing-function:ease-in}}
+
+@keyframes omFlipInX{from{transform:perspective(400px) rotate3d(1, 0, 0, 90deg);animation-timing-function:ease-in;opacity:0}40%{transform:perspective(400px) rotate3d(1, 0, 0, -20deg);animation-timing-function:ease-in}60%{transform:perspective(400px) rotate3d(1, 0, 0, 10deg);opacity:1}80%{transform:perspective(400px) rotate3d(1, 0, 0, -5deg)}to{transform:perspective(400px)}}
+
+@keyframes omFlipInY{from{transform:perspective(400px) rotate3d(0, 1, 0, 90deg);animation-timing-function:ease-in;opacity:0}40%{transform:perspective(400px) rotate3d(0, 1, 0, -20deg);animation-timing-function:ease-in}60%{transform:perspective(400px) rotate3d(0, 1, 0, 10deg);opacity:1}80%{transform:perspective(400px) rotate3d(0, 1, 0, -5deg)}to{transform:perspective(400px)}}
+
+@keyframes omLightSpeedInRight{from{transform:translate3d(100%, 0, 0) skewX(-30deg);opacity:0}60%{transform:skewX(20deg);opacity:1}80%{transform:skewX(-5deg)}to{transform:translate3d(0, 0, 0)}}
+
+@keyframes omPulse{from{transform:scale3d(1, 1, 1)}50%{transform:scale3d(1.05, 1.05, 1.05)}to{transform:scale3d(1, 1, 1)}}
+
+@keyframes omRollIn{from{opacity:0;transform:translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg)}to{opacity:1;transform:translate3d(0, 0, 0)}}
+
+@keyframes omRotateIn{from{transform:rotate3d(0, 0, 1, -200deg);opacity:0}to{transform:translate3d(0, 0, 0);opacity:1}}
+
+@keyframes omRotateInDownLeft{from{transform:rotate3d(0, 0, 1, -45deg);opacity:0}to{transform:translate3d(0, 0, 0);opacity:1}}
+
+@keyframes omRotateInDownRight{from{transform:rotate3d(0, 0, 1, 45deg);opacity:0}to{transform:translate3d(0, 0, 0);opacity:1}}
+
+@keyframes omRotateInUpLeft{from{transform:rotate3d(0, 0, 1, 45deg);opacity:0}to{transform:translate3d(0, 0, 0);opacity:1}}
+
+@keyframes omRotateInUpRight{from{transform:rotate3d(0, 0, 1, -90deg);opacity:0}to{transform:translate3d(0, 0, 0);opacity:1}}
+
+@keyframes omRubberBand{from{transform:scale3d(1, 1, 1)}30%{transform:scale3d(1.25, 0.75, 1)}40%{transform:scale3d(0.75, 1.25, 1)}50%{transform:scale3d(1.15, 0.85, 1)}65%{transform:scale3d(0.95, 1.05, 1)}75%{transform:scale3d(1.05, 0.95, 1)}to{transform:scale3d(1, 1, 1)}}
+
+@keyframes omShake{from,to{transform:translate3d(0, 0, 0)}10%,30%,50%,70%,90%{transform:translate3d(-10px, 0, 0)}20%,40%,60%,80%{transform:translate3d(10px, 0, 0)}}
+
+@keyframes omSlideInDown{from{transform:translate3d(0, -100%, 0);visibility:visible}to{transform:translate3d(0, 0, 0)}}
+
+@keyframes omSlideInLeft{from{transform:translate3d(-100%, 0, 0);visibility:visible}to{transform:translate3d(0, 0, 0)}}
+
+@keyframes omSlideInRight{from{transform:translate3d(100%, 0, 0);visibility:visible}to{transform:translate3d(0, 0, 0)}}
+
+@keyframes omSwing{20%{transform:rotate3d(0, 0, 1, 15deg)}40%{transform:rotate3d(0, 0, 1, -10deg)}60%{transform:rotate3d(0, 0, 1, 5deg)}80%{transform:rotate3d(0, 0, 1, -5deg)}to{transform:rotate3d(0, 0, 1, 0deg)}}
+
+@keyframes omTada{from{transform:scale3d(1, 1, 1)}10%,20%{transform:scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg)}30%,50%,70%,90%{transform:scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg)}40%,60%,80%{transform:scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg)}to{transform:scale3d(1, 1, 1)}}
+
+@keyframes omWobble{from{transform:translate3d(0, 0, 0)}15%{transform:translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg)}30%{transform:translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg)}45%{transform:translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg)}60%{transform:translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg)}75%{transform:translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg)}to{transform:translate3d(0, 0, 0)}}
+
+html.om-mobile-position body{position:fixed !important}
+
+html.om-position-popup body{overflow:hidden !important}
+
+@keyframes fb_transform{0%{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+
+#fb-root #fb_dialog_ipad_overlay { background:#0006;inset:0;min-height:100%;position:absolute;width:100%;z-index:10000 }
+
+#fb_dialog_loader_close { float:left }
+
+#fb_dialog_loader_spinner { animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://connect.facebook.net/rsrc.php/v4/y2/r/onuUJj0tCqE.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px }
+
+@keyframes rotateSpinner{0%{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+/* Inlined from: https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css */
+/*!
+ *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
+ *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+ */@font-face{font-family:'FontAwesome';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fmaxcdn.bootstrapcdn.com%2Ffont-awesome%2F4.7.0%2Ffonts%2Ffontawesome-webfont.eot%3Fv%3D4.7.0');src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fmaxcdn.bootstrapcdn.com%2Ffont-awesome%2F4.7.0%2Ffonts%2Ffontawesome-webfont.eot%3F%23iefix%26v%3D4.7.0') format('embedded-opentype'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fmaxcdn.bootstrapcdn.com%2Ffont-awesome%2F4.7.0%2Ffonts%2Ffontawesome-webfont.woff2%3Fv%3D4.7.0') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fmaxcdn.bootstrapcdn.com%2Ffont-awesome%2F4.7.0%2Ffonts%2Ffontawesome-webfont.woff%3Fv%3D4.7.0') format('woff'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fmaxcdn.bootstrapcdn.com%2Ffont-awesome%2F4.7.0%2Ffonts%2Ffontawesome-webfont.ttf%3Fv%3D4.7.0') format('truetype'),url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');font-weight:normal;font-style:normal}
+
+@-webkit-keyframes fa-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(359deg);transform:rotate(359deg)}}
+
+@keyframes fa-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(359deg);transform:rotate(359deg)}}
+
+:root .fa-rotate-90,:root .fa-rotate-180,:root .fa-rotate-270,:root .fa-flip-horizontal,:root .fa-flip-vertical{filter:none}
+
+div[data-sc-id]:before, div[data-sc-type="SmartButton"][data-sc-id]:before, div[data-sc-id]:after, div[data-sc-type="SmartButton"][data-sc-id]:after { content:" ";display:table }
+
+div[data-sc-id]:after, div[data-sc-type="SmartButton"][data-sc-id]:after { clear:both }
+
+@font-face{font-family:"Poppins";src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fs3.us-west-2.amazonaws.com%2Fstatic.smartcommerce.co%2Ffonts%2FPoppins-Regular.woff2') format("truetype");font-weight:normal;font-style:normal}
+
+@font-face{font-family:"Poppins";src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fs3.us-west-2.amazonaws.com%2Fstatic.smartcommerce.co%2Ffonts%2FPoppins-Italic.woff2') format("truetype");font-weight:normal;font-style:italic}
+
+@font-face{font-family:"Poppins";src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fs3.us-west-2.amazonaws.com%2Fstatic.smartcommerce.co%2Ffonts%2FPoppins-Bold.woff2') format("truetype");font-weight:bold;font-style:normal}
+
+div[data-sc-id] a, div[data-sc-id] button, div[data-sc-id] li { cursor:pointer;list-style:none }
+
+div[data-sc-id] a:not([href]):not([tabindex]) { color:#1CABE3 }
+
+div[data-sc-id] a:not([href]):not([tabindex]):hover { text-decoration:underline;color:#1CABE3 }
+
+div[data-sc-type="dropdown"], div[data-sc-type="retailer-dropdown"] { position:relative;display:block;width:100%;font-family:"Source Sans Pro",sans-serif }
+
+div[data-sc-type="dropdown"] button::after, div[data-sc-type="retailer-dropdown"] button::after { display:inline-block;width:0;height:0;margin-left:.3em;vertical-align:middle;content:"";border-top:.3em solid;border-right:.3em solid transparent;border-left:.3em solid transparent }
+
+div[data-sc-type="dropdown"] ul, div[data-sc-type="retailer-dropdown"] ul { display:none;position:absolute;background-color:#f9f9f9;min-width:150px;width:150px;box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);z-index:1;margin:0;padding:0;border-radius:5px }
+
+div[data-sc-type="dropdown"] ul li, div[data-sc-type="retailer-dropdown"] ul li { color:black;text-decoration:none;border-bottom:1px solid #e8e8e8;display:block;float:left;width:100% }
+
+div[data-sc-type="dropdown"] ul li:hover, div[data-sc-type="retailer-dropdown"] ul li:hover { background-color:#d2d2d2 }
+
+div[data-sc-type="dropdown"] ul li a, div[data-sc-type="retailer-dropdown"] ul li a { display:block;float:left;width:100%;padding:5px;cursor:pointer }
+
+div[data-sc-type="dropdown"] ul li a:hover, div[data-sc-type="retailer-dropdown"] ul li a:hover { text-decoration:none }
+
+div[data-sc-type="dropdown"] ul li a img, div[data-sc-type="retailer-dropdown"] ul li a img { max-width:100px;margin:0 auto;display:block }
+
+div[data-sc-type="SmartButton"] { position:relative;display:block;width:100%;font-family:"Source Sans Pro",sans-serif !important }
+
+div[data-sc-type="SmartButton"] ul { display:none;position:absolute;background-color:#f9f9f9;box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);z-index:1;margin:0;padding:0;max-width:200px;border-radius:4px;width:100%;min-width:225px }
+
+div[data-sc-type="SmartButton"] ul li { color:black;text-decoration:none;display:block;width:100% }
+
+div[data-sc-type="SmartButton"] ul li:hover { background-color:#e5eaeb }
+
+div[data-sc-type="SmartButton"] ul li:last-child { border:none }
+
+div[data-sc-type="retailer-list"] ul { margin:0;padding:0 }
+
+div[data-sc-type="retailer-list"] ul li { padding:15px;list-style-type:none;max-width:150px }
+
+#wtb { position:absolute;background-color:#f8f9fa;min-width:200px;max-width:300px;margin-top:15px;border-radius:5px;padding:10px;z-index:999;left:50%;transform:translateX(-50%);width:max-content }
+
+#wtb:before { content:'';position:absolute;left:42%;top:-10px;width:0;height:0;border-left:20px solid transparent;border-right:20px solid transparent;border-bottom:20px solid #f8f9fa;clear:both }
+
+div[data-sc-id], div[data-sc-type="attributes-radio"] { min-width:300px;padding:10px }
+
+div[data-sc-id]>label, div[data-sc-type="attributes-radio"]>label { padding:5px;color:red;margin-bottom:0px }
+
+div[data-sc-id]>div, div[data-sc-type="attributes-radio"]>div { min-width:300px }
+
+div[data-sc-id]>div input[type="radio"], div[data-sc-type="attributes-radio"]>div input[type="radio"] { display:none }
+
+div[data-sc-id]>div input[type="radio"]+label, div[data-sc-type="attributes-radio"]>div input[type="radio"]+label { font-size:0.8rem;cursor:pointer;-webkit-transition:background-color 0.4s linear;-o-transition:background-color 0.4s linear;-moz-transition:background-color 0.4s linear;transition:background-color 0.4s linear;display:inline-block;font-weight:normal;line-height:1.25;text-align:center;white-space:nowrap;vertical-align:middle;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;padding:0.5rem 1rem;margin:0;font-size:1rem;border-radius:0.25rem }
+
+div[data-sc-id]>div select, div[data-sc-type="attributes-radio"]>div select { height:36px;min-width:150px;width:100%;padding:0.5rem 0.75rem;font-size:14px;line-height:1.25;color:#55595c;background-color:#fff;background-image:none;background-clip:padding-box;border:1px solid rgba(0,0,0,0.15);border-radius:0.25rem;-webkit-appearance:menulist !important;-moz-appearance:menulist !important;appearance:menulist !important }
+
+div[data-sc-id]>div select:focus, div[data-sc-type="attributes-radio"]>div select:focus { border:1px solid rgba(0,0,0,0.15) }
+
+div[data-sc-id] div[data-sc-type="retailer-carousel"], div[data-sc-type="attributes-radio"] div[data-sc-type="retailer-carousel"] { width:100%;clear:both }
+
+#sc-buy-now-canvas-menu-bar { position:relative;height:40px;color:white }
+
+#filters-block { padding:5px 0px 5px 10px;margin:5px 1px 5px 5px }
+
+#filters-block span { margin:2px;font-weight:bold }
+
+div[data-sc-sl-id] { height:500px }
+
+div[data-sc-id]:before, div[data-sc-id]:after { box-sizing:inherit }
+
+div[data-sc-type="attributes-select"], div[data-sc-type="retailer-carousel"], div[data-sc-id] { max-width:300px }
+
+div[data-sc-id], div[data-sc-type="retailer-carousel"] { width:100% }
+
+div[data-sc-id] img, div[data-sc-type="retailer-carousel"] img { min-height:50px;min-width:50px;width:initial }
+
+div[data-sc-id] img:hover, div[data-sc-type="retailer-carousel"] img:hover { cursor:pointer;border-radius:6px }
+
+div[data-sc-type="retailer-carousel"] { margin:auto }
+
+@font-face{font-family:"slick";src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Ffonts%2Fslick.eot');font-weight:normal;font-style:normal}
+
+#sc-login, #ec-login { position:fixed;top:0;left:0;right:0;bottom:0;display:-webkit-box;display:-webkit-flex;display:-moz-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row nowrap;-moz-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-webkit-box-pack:center;-ms-flex-pack:center;-webkit-justify-content:center;-moz-justify-content:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;-webkit-align-items:center;-moz-align-items:center;align-items:center;-webkit-align-content:center;-moz-align-content:center;-ms-flex-line-pack:center;align-content:center;color:black }
+
+#ec-login { width:100% !important;z-index:9999999;background-color:rgba(0,0,0,0.1) }
+
+#ec-login label { margin-top:20px;margin-left:42px }
+
+#ec-login button { max-width:400px;margin:auto;margin-bottom:50px }
+
+#sc-login { width:100% !important;z-index:9999998;background-color:rgba(0,0,0,0.5) }
+
+#sc-login #login-message { color:red;font-size:15px;padding-bottom:3px }
+
+#sc-login h3 { color:black }
+
+@media (min-width: 768px) { #sc-login body{background-size:cover;background-position:center;min-height:900px} }
+
+#sc-login #scSubmitLogin { max-width:350px;margin:auto;margin-top:25px;margin-bottom:17px }
+
+#confirmation-page { z-index:99999999;min-width:510px }
+
+#confirmation-page #form { padding-left:30px;padding-right:30px;min-height:430px;min-width:460px }
+
+#confirmation-page button { margin-bottom:20px;margin-top:35px }
+
+#confirmation-page h3 { color:#5CB85C;font-size:23px }
+
+#confirmation-page h3 img { color:#5CB85C;width:22px;height:22px;margin-bottom:7px;margin-right:5px;line-height:30px;vertical-align:middle }
+
+#toast-container { position:fixed;z-index:99999999999 }
+
+#toast-container *{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+
+#toast-container>div { position:relative;overflow:hidden;margin:0 0 6px;padding:15px 15px 15px 50px;width:300px;-moz-border-radius:3px 3px 3px 3px;-webkit-border-radius:3px 3px 3px 3px;border-radius:3px 3px 3px 3px;background-position:15px center;background-repeat:no-repeat;-moz-box-shadow:0 0 12px #999999;-webkit-box-shadow:0 0 12px #999999;box-shadow:0 0 12px #999999;color:#ffffff;opacity:0.8;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=80);filter:alpha(opacity=80) }
+
+#toast-container>div:hover { -moz-box-shadow:0 0 12px #000000;-webkit-box-shadow:0 0 12px #000000;box-shadow:0 0 12px #000000;opacity:1;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);filter:alpha(opacity=100);cursor:pointer }
+
+@media all and (max-width: 240px) { #toast-container>div { padding:8px 8px 8px 50px;width:11em } }
+
+@media all and (min-width: 241px) and (max-width: 480px) { #toast-container>div { padding:8px 8px 8px 50px;width:18em } }
+
+@media all and (min-width: 481px) and (max-width: 768px) { #toast-container>div { padding:15px 15px 15px 50px;width:25em } }
+
+div[data-sc-id] { max-width:330px;margin:0 auto;position:relative;margin-bottom:10px }
+
+@media screen and (max-width: 400px) { div[data-sc-id] { width:100% } }
+
+div[data-sc-id][data-sc-type="SmartButton"] { min-width:220px;max-width:220px;margin:0 auto;position:relative;margin-bottom:10px }
+
+@media screen and (max-width: 400px) { div[data-sc-id][data-sc-type="SmartButton"] { width:100% } }
+
+div[data-sc-id] #call-to-action { text-align:center;display:block }
+
+div[data-sc-id] #call-to-action { font-weight:800 }
+
+div[data-sc-id] select::-ms-expand { display:inline-block !important;width:15px;height:34px;padding:10px }
+
+div[data-sc-id] #infoBox { right:20px;display:none;margin-top:-15px;position:absolute;min-width:260px;background-color:white;border:1px solid #d8d8d8;padding:5px 10px;font-size:14px }
+
+div[data-sc-id] #infoBox:before { content:'';position:absolute;right:-7px;top:21px;width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-left:6px solid #eceeef;clear:both }
+
+div[data-sc-id] #wrong-cp-alert { display:none !important }
+
+/*!
+ * Font Awesome Free 5.0.8 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */.fa,.fas,.far,.fal,.fab{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:inline-block;font-style:normal;font-variant:normal;text-rendering:auto;line-height:1}
+
+@-webkit-keyframes fa-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
+
+@keyframes fa-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
+
+:root .fa-rotate-90,:root .fa-rotate-180,:root .fa-rotate-270,:root .fa-flip-horizontal,:root .fa-flip-vertical{-webkit-filter:none;filter:none}
+
+@font-face{font-family:'Font Awesome 5 Brands';font-style:normal;font-weight:normal;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Fwebfonts%2Ffa-brands-400.eot');src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Fwebfonts%2Ffa-brands-400.eot%3F%23iefix') format("embedded-opentype"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Fwebfonts%2Ffa-brands-400.woff2') format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Fwebfonts%2Ffa-brands-400.woff') format("woff"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Fwebfonts%2Ffa-brands-400.ttf') format("truetype"),url("../webfonts/fa-brands-400.svg#fontawesome") format("svg")}
+
+@font-face{font-family:'Font Awesome 5 Free';font-style:normal;font-weight:400;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Fwebfonts%2Ffa-regular-400.eot');src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Fwebfonts%2Ffa-regular-400.eot%3F%23iefix') format("embedded-opentype"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Fwebfonts%2Ffa-regular-400.woff2') format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Fwebfonts%2Ffa-regular-400.woff') format("woff"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.lays.com%2Fwebfonts%2Ffa-regular-400.ttf') format("truetype"),url("../webfonts/fa-regular-400.svg#fontawesome") format("svg")}
+
+div[data-sc-id][sc-loading="true"] { max-height:120px;overflow:hidden }
+
+@keyframes skeleton-loading{0%{background-color:#c2cfd6}100%{background-color:#f0f3f5}}
+
+@keyframes max-height-expanding-in-store-tab{0%{max-height:300px}50%{max-height:500px}100%{max-height:650px}}
+
+@keyframes max-height-expanding-online-tab{0%{max-height:450px}50%{max-height:500px}100%{max-height:1200px}}
+
+/*---------------------------------*/
+    /*Fully Customized Banner*/
+    #cookies { 
+      position: unset !important;
+     }
+
+.cc-banner * {
+      font-family: Arial,sans-serif;
+      text-shadow: none !important;
+      text-transform: none !important;
+      text-decoration: none;
+      font-weight: normal !important;
+      font-size: 16px !important;
+      text-align: left !important;
+    }
+
+.cc-link * {
+      font-family: Arial,sans-serif;
+      text-shadow: none !important;
+      text-transform: none !important;
+      text-decoration: none;
+      font-weight: normal !important;
+      font-size: 16px !important;
+      text-align: left !important;
+    }
+
+.cmp-body * {
+      font-family: Arial,sans-serif;
+      text-shadow: none !important;
+      text-transform: none !important;
+      text-decoration: none;
+      font-weight: normal !important;
+      text-align: left !important;
+    }

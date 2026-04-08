@@ -1,0 +1,85 @@
+{
+  "definitions": [
+    {
+      "title": "Featured-Recipes",
+      "id": "featured-recipes",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "featured-recipes",
+              "model": "featured-recipes",
+              "name": "Featured-Recipes"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Recipe",
+      "id": "recipe",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "recipe",
+              "name": "Recipe"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "featured-recipes",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "View All Link",
+          "name": "view-all-link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "recipe",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "featured-recipes",
+      "components": [
+        "recipe"
+      ]
+    }
+  ]
+}

@@ -83,75 +83,264 @@
       "id": "blocks",
       "components": [
         {
-          "title": "Cards",
-          "id": "cards",
+          "title": "Carousel-Products-Big",
+          "id": "carousel-products-big",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Cards",
-                  "filter": "cards"
+                  "filter": "carousel-products-big",
+                  "model": "carousel-products-big",
+                  "name": "Carousel-Products-Big"
                 }
               }
             }
           }
         },
         {
-          "title": "Card",
-          "id": "card",
+          "title": "Carousel-Product",
+          "id": "carousel-product",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Card",
-                  "model": "card"
+                  "model": "carousel-product",
+                  "name": "Carousel-Product"
                 }
               }
             }
           }
         },
         {
-          "title": "Columns",
-          "id": "columns",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/columns/v1/columns",
-                "template": {
-                  "columns": "2",
-                  "rows": "1"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Fragment",
-          "id": "fragment",
+          "title": "Carousel-Products",
+          "id": "carousel-products",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Fragment",
-                  "model": "fragment"
+                  "filter": "carousel-products",
+                  "model": "carousel-products",
+                  "name": "Carousel-Products"
                 }
               }
             }
           }
         },
         {
-          "title": "Hero",
-          "id": "hero",
+          "title": "Carousel-Product",
+          "id": "carousel-product",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "carousel-product",
+                  "name": "Carousel-Product"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Cookie-Banner",
+          "id": "cookie-banner",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Hero",
-                  "model": "hero"
+                  "filter": "cookie-banner",
+                  "model": "cookie-banner",
+                  "name": "Cookie-Banner"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Crt-Widget",
+          "id": "crt-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "crt-widget",
+                  "model": "crt-widget",
+                  "name": "Crt-Widget"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Crt-Grid-Post",
+          "id": "crt-grid-post",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "crt-grid-post",
+                  "name": "Crt-Grid-Post"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Featured-Recipes",
+          "id": "featured-recipes",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "featured-recipes",
+                  "model": "featured-recipes",
+                  "name": "Featured-Recipes"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Recipe",
+          "id": "recipe",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "recipe",
+                  "name": "Recipe"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer",
+          "id": "footer",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "footer",
+                  "model": "footer",
+                  "name": "Footer"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Link",
+          "id": "footer-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-link",
+                  "name": "Footer-Link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Header",
+          "id": "header",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "header",
+                  "model": "header",
+                  "name": "Header"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Menu Link",
+          "id": "menu-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "menu-link",
+                  "name": "Menu Link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Social Icon",
+          "id": "social-icon",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "social-icon",
+                  "name": "Social Icon"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Home-Hero",
+          "id": "home-hero",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "home-hero",
+                  "model": "home-hero",
+                  "name": "Home-Hero"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Home-Hero-Item",
+          "id": "home-hero-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "home-hero-item",
+                  "name": "Home-Hero-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Logo-Animation",
+          "id": "logo-animation",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "logo-animation",
+                  "model": "logo-animation",
+                  "name": "Logo-Animation"
                 }
               }
             }

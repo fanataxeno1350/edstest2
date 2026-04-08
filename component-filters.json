@@ -15,28 +15,66 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "cookie-banner",
+      "header",
+      "home-hero",
+      "carousel-products-big",
+      "carousel-products",
+      "featured-recipes",
+      "logo-animation",
+      "crt-widget",
+      "footer"
     ]
   },
   {
-    "id": "cards",
+    "id": "carousel-products-big",
     "components": [
-      "card"
+      "carousel-product"
     ]
   },
   {
-    "id": "columns",
+    "id": "carousel-products",
     "components": [
-      "column"
+      "carousel-product"
     ]
   },
   {
-    "id": "column",
+    "id": "cookie-banner"
+  },
+  {
+    "id": "crt-widget",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "crt-grid-post"
     ]
+  },
+  {
+    "id": "featured-recipes",
+    "components": [
+      "recipe"
+    ]
+  },
+  {
+    "id": "footer",
+    "components": [
+      "footer-link"
+    ]
+  },
+  {
+    "id": "header",
+    "components": [
+      "menu-link",
+      "social-icon"
+    ]
+  },
+  {
+    "id": "home-hero",
+    "components": [
+      "home-hero-item"
+    ]
+  },
+  {
+    "id": "logo-animation"
   }
 ]

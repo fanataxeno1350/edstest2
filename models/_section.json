@@ -51,7 +51,16 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "cookie-banner",
+        "header",
+        "home-hero",
+        "carousel-products-big",
+        "carousel-products",
+        "featured-recipes",
+        "logo-animation",
+        "crt-widget",
+        "footer"
       ]
     }
   ]

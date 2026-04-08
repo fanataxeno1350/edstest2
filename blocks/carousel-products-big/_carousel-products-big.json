@@ -1,0 +1,103 @@
+{
+  "definitions": [
+    {
+      "title": "Carousel-Products-Big",
+      "id": "carousel-products-big",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "carousel-products-big",
+              "model": "carousel-products-big",
+              "name": "Carousel-Products-Big"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Carousel-Product",
+      "id": "carousel-product",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "carousel-product",
+              "name": "Carousel-Product"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "carousel-products-big",
+      "fields": [
+        {
+          "component": "container",
+          "item": "carousel-product",
+          "label": "Products",
+          "name": "products"
+        }
+      ]
+    },
+    {
+      "id": "carousel-product",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Background Image",
+          "name": "background-image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Background Color",
+          "name": "background-color",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Product Image",
+          "name": "product-image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Product Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Button Link",
+          "name": "button-link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Button Label",
+          "name": "button-label",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "carousel-products-big",
+      "components": [
+        "carousel-product"
+      ]
+    }
+  ]
+}
