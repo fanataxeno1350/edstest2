@@ -15,28 +15,90 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "main-header",
+      "spotlight-home-wrap",
+      "quick-links-div",
+      "what-we-do-wrap",
+      "purpose-led-grid",
+      "spirit-of-rise",
+      "slides",
+      "work-with-us",
+      "faqs-section",
+      "organization-schema",
+      "footer-main"
     ]
   },
   {
-    "id": "cards",
+    "id": "faqs-section",
+    "components": [
+      "faq"
+    ]
+  },
+  {
+    "id": "footer-main",
+    "components": [
+      "footer-social",
+      "footer-link-block",
+      "footer-link",
+      "footer-secondary-link"
+    ]
+  },
+  {
+    "id": "main-header",
+    "components": [
+      "menu-item",
+      "logo"
+    ]
+  },
+  {
+    "id": "organization-schema",
+    "components": [
+      "sameas"
+    ]
+  },
+  {
+    "id": "purpose-led-grid",
+    "components": [
+      "purpose-led-card"
+    ]
+  },
+  {
+    "id": "quick-links-div",
+    "components": [
+      "quick-link"
+    ]
+  },
+  {
+    "id": "slides",
+    "components": [
+      "slide"
+    ]
+  },
+  {
+    "id": "spirit-of-rise",
     "components": [
       "card"
     ]
   },
   {
-    "id": "columns",
+    "id": "spotlight-home-wrap",
     "components": [
-      "column"
+      "slide",
+      "quick-link"
     ]
   },
   {
-    "id": "column",
+    "id": "what-we-do-wrap",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "business-vertical"
+    ]
+  },
+  {
+    "id": "work-with-us",
+    "components": [
+      "slides"
     ]
   }
 ]
