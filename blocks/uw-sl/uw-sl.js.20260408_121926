@@ -1,0 +1,93 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  block.setAttribute('role', 'region');
+  block.setAttribute('data-uw-rm-ignore', 'true');
+  block.setAttribute('data-uw-ignore-translate', 'true');
+  block.setAttribute('aria-label', 'Quick Accessibility Options');
+
+  [...block.children].forEach((row) => {
+    const button = document.createElement('button');
+    moveInstrumentation(row, button);
+    button.classList.add('uw-sl__item');
+    button.setAttribute('data-uw-rm-ignore', 'true');
+    button.setAttribute('data-uw-ignore-translate', 'true');
+    button.setAttribute('lang', 'en-US');
+
+    const leftSpan = document.createElement('span');
+    leftSpan.classList.add('uw-sl__item__left');
+    leftSpan.setAttribute('data-uw-ignore-translate', 'true');
+
+    const endIconSpan = document.createElement('span');
+    endIconSpan.classList.add('uw-sl__e-icon');
+
+    const cells = [...row.children];
+
+    // Content detection for cells
+    const iconCell = cells.find(cell => cell.querySelector('picture'));
+    const titleCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a'));
+    const endIconCell = cells.find(cell => cell !== iconCell && cell !== titleCell && cell.querySelector('picture')); // Assuming end icon is also a picture
+
+    if (iconCell) {
+      const imgSpan = document.createElement('span');
+      imgSpan.classList.add('uw-sl__item__img');
+      moveInstrumentation(iconCell, imgSpan);
+      while (iconCell.firstChild) imgSpan.append(iconCell.firstChild);
+      leftSpan.append(imgSpan);
+    }
+
+    if (titleCell) {
+      const titleSpan = document.createElement('span');
+      titleSpan.classList.add('uw-sl__item__title');
+      titleSpan.setAttribute('data-uw-ignore-s17', '');
+      titleSpan.setAttribute('data-uw-rm-ignore', 'true');
+      titleSpan.setAttribute('data-uw-ignore-translate', 'true');
+      moveInstrumentation(titleCell, titleSpan);
+      while (titleCell.firstChild) titleSpan.append(titleCell.firstChild);
+      leftSpan.append(titleSpan);
+    }
+
+    if (endIconCell) {
+      moveInstrumentation(endIconCell, endIconSpan);
+      while (endIconCell.firstChild) endIconSpan.append(endIconCell.firstChild);
+    }
+
+    button.append(leftSpan, endIconSpan);
+    row.replaceWith(button);
+
+    // Add event listener for the button
+    // The original HTML shows buttons with IDs like 'uw-skip-to-main', 'uw-enable-visibility', 'uw-open-accessibility'.
+    // The JS does not currently assign these IDs. Assuming the button's text content or a data attribute
+    // would determine its specific action, or that IDs would be added upstream.
+    // For this review, we'll add a generic click listener.
+    button.addEventListener('click', () => {
+      // Placeholder for button click logic.
+      // In a real scenario, this would dispatch a custom event,
+      // toggle a class, or call a specific function based on the button's purpose.
+      console.log('Button clicked:', button.textContent.trim());
+      // Example: if button is for "Skip to main content"
+      if (button.textContent.includes('Skip to main content')) {
+        const mainContent = document.querySelector('main'); // Or a more specific selector
+        if (mainContent) {
+          mainContent.focus();
+        }
+      }
+      // Example: if button is for "Enable accessibility for low vision"
+      if (button.textContent.includes('Enable accessibility for low vision')) {
+        document.body.classList.toggle('low-vision-mode');
+      }
+      // Example: if button is for "Open the accessibility menu"
+      if (button.textContent.includes('Open the accessibility menu')) {
+        // Logic to open a modal or toggle a menu
+        console.log('Opening accessibility menu');
+      }
+    });
+  });
+
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+}

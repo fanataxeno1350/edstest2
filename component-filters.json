@@ -15,28 +15,64 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "uw-sl",
+      "component-global-navigation",
+      "custom-slick-slider",
+      "counter-stats-cards",
+      "photo-lockup",
+      "component-three-column-tile",
+      "social-grid",
+      "global-footer"
     ]
   },
   {
-    "id": "cards",
+    "id": "component-global-navigation",
     "components": [
-      "card"
+      "nav-link",
+      "lang-link"
     ]
   },
   {
-    "id": "columns",
+    "id": "component-three-column-tile",
     "components": [
-      "column"
+      "tile"
     ]
   },
   {
-    "id": "column",
+    "id": "counter-stats-cards",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "stats-card"
+    ]
+  },
+  {
+    "id": "custom-slick-slider",
+    "components": [
+      "slide"
+    ]
+  },
+  {
+    "id": "global-footer",
+    "components": [
+      "social-link",
+      "footer-menu",
+      "be-link"
+    ]
+  },
+  {
+    "id": "photo-lockup"
+  },
+  {
+    "id": "social-grid",
+    "components": [
+      "social-grid-item"
+    ]
+  },
+  {
+    "id": "uw-sl",
+    "components": [
+      "uw-sl__item"
     ]
   }
 ]

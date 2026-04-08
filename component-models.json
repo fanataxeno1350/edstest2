@@ -142,75 +142,368 @@
     ]
   },
   {
-    "id": "card",
+    "id": "component-global-navigation",
     "fields": [
       {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
+        "component": "container",
+        "item": "nav-link",
+        "label": "Navigation Links",
+        "name": "nav-links"
       },
       {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
+        "component": "container",
+        "item": "lang-link",
+        "label": "Language Links",
+        "name": "lang-links"
+      }
+    ]
+  },
+  {
+    "id": "nav-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
         "label": "Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "columns",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "columns",
-        "value": "",
-        "label": "Columns"
-      },
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "rows",
-        "value": "",
-        "label": "Rows"
-      }
-    ]
-  },
-  {
-    "id": "fragment",
+    "id": "lang-link",
     "fields": [
       {
         "component": "aem-content",
-        "name": "reference",
-        "label": "Reference"
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Language",
+        "name": "language",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "hero",
+    "id": "component-three-column-tile",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "cta-link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "tile",
     "fields": [
       {
         "component": "reference",
-        "valueType": "string",
-        "name": "image",
         "label": "Image",
-        "multi": false
+        "name": "image",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Alt",
-        "value": ""
+        "label": "Flag",
+        "name": "flag",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "counter-stats-cards",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "stats-card",
+        "label": "Stats Cards",
+        "name": "stats-cards"
+      }
+    ]
+  },
+  {
+    "id": "stats-card",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Value",
+        "name": "value",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Value Suffix",
+        "name": "value-suffix",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "custom-slick-slider"
+  },
+  {
+    "id": "slide",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Video",
+        "name": "video",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Desktop Image",
+        "name": "desktop-image",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Image",
+        "name": "mobile-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "global-footer",
+    "fields": [
+      {
+        "component": "container",
+        "item": "social-link",
+        "label": "Social Links",
+        "name": "social-links"
+      },
+      {
+        "component": "container",
+        "item": "footer-menu",
+        "label": "Footer Menus",
+        "name": "footer-menus"
+      },
+      {
+        "component": "container",
+        "item": "be-link",
+        "label": "Also of Interest Links",
+        "name": "be-links"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
+        "label": "Legal",
+        "name": "legal",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "First Time Banner",
+        "name": "first-time-banner",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-menu",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Links",
+        "name": "links"
+      }
+    ]
+  },
+  {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
         "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "be-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "photo-lockup",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Body",
+        "name": "body",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-grid",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Body",
+        "name": "body",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "social-grid-item",
+        "label": "Social Items",
+        "name": "items"
+      }
+    ]
+  },
+  {
+    "id": "social-grid-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "uw-sl"
+  },
+  {
+    "id": "uw-sl__item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image Left",
+        "name": "img-left",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image Right",
+        "name": "img-right",
         "valueType": "string"
       }
     ]

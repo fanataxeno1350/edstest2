@@ -1,0 +1,189 @@
+{
+  "definitions": [
+    {
+      "title": "Global-Footer",
+      "id": "global-footer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "global-footer",
+              "model": "global-footer",
+              "name": "Global-Footer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Social-Link",
+      "id": "social-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "social-link",
+              "name": "Social-Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Menu",
+      "id": "footer-menu",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-menu",
+              "name": "Footer-Menu"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Link",
+      "id": "footer-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-link",
+              "name": "Footer-Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Be-Link",
+      "id": "be-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "be-link",
+              "name": "Be-Link"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "global-footer",
+      "fields": [
+        {
+          "component": "container",
+          "item": "social-link",
+          "label": "Social Links",
+          "name": "social-links"
+        },
+        {
+          "component": "container",
+          "item": "footer-menu",
+          "label": "Footer Menus",
+          "name": "footer-menus"
+        },
+        {
+          "component": "container",
+          "item": "be-link",
+          "label": "Also of Interest Links",
+          "name": "be-links"
+        },
+        {
+          "component": "richtext",
+          "label": "Legal",
+          "name": "legal",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "First Time Banner",
+          "name": "first-time-banner",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "social-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "URL",
+          "name": "url",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-menu",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "footer-link",
+          "label": "Links",
+          "name": "links"
+        }
+      ]
+    },
+    {
+      "id": "footer-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "URL",
+          "name": "url",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "be-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "URL",
+          "name": "url",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "global-footer",
+      "components": [
+        "social-link",
+        "footer-menu",
+        "be-link"
+      ]
+    }
+  ]
+}
