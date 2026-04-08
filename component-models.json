@@ -142,6 +142,86 @@
     ]
   },
   {
+    "id": "about-wrapper",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "reel-item",
+        "label": "Reel Items",
+        "name": "reel-items"
+      }
+    ]
+  },
+  {
+    "id": "reel-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Alt Text",
+        "name": "alt",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "cta",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "action",
+        "label": "Actions",
+        "name": "actions"
+      }
+    ]
+  },
+  {
+    "id": "action",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "faqs-section",
     "fields": [
       {
@@ -291,6 +371,91 @@
     ]
   },
   {
+    "id": "highlights",
+    "fields": [
+      {
+        "component": "container",
+        "item": "highlight",
+        "label": "Highlights",
+        "name": "items"
+      }
+    ]
+  },
+  {
+    "id": "highlight",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "image",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "intro-wrapper",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "action",
+        "label": "Actions",
+        "name": "actions"
+      },
+      {
+        "component": "aem-content",
+        "label": "About Link",
+        "name": "about-link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "action",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "main-header",
     "fields": [
       {
@@ -337,6 +502,52 @@
         "component": "aem-content",
         "label": "Link",
         "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "menu-overlay",
+    "fields": [
+      {
+        "component": "container",
+        "item": "menu-item",
+        "label": "Menu Items",
+        "name": "menuItems"
+      },
+      {
+        "component": "reference",
+        "label": "Close Icon",
+        "name": "closeIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Close Label",
+        "name": "closeLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "menu-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       }
     ]
@@ -418,6 +629,69 @@
     ]
   },
   {
+    "id": "pro-wrapper",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "CTA Text",
+        "name": "cta-text",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "pro-feature",
+        "label": "Pro Features",
+        "name": "pro-features"
+      },
+      {
+        "component": "container",
+        "item": "action",
+        "label": "Actions",
+        "name": "actions"
+      }
+    ]
+  },
+  {
+    "id": "pro-feature",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Feature Heading",
+        "name": "feature-heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Feature Description",
+        "name": "feature-description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "action",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "purpose-led-grid",
     "fields": [
       {
@@ -493,6 +767,63 @@
         "component": "text",
         "label": "Text",
         "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "site-footer",
+    "fields": [
+      {
+        "component": "container",
+        "item": "menu-list",
+        "label": "Menu List",
+        "name": "menu-list"
+      },
+      {
+        "component": "text",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "menu-list",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "site-header",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logo-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Logo Label",
+        "name": "logo-label",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Menu Icon",
+        "name": "menu-icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Menu Label",
+        "name": "menu-label",
         "valueType": "string"
       }
     ]

@@ -1,0 +1,91 @@
+{
+  "definitions": [
+    {
+      "title": "About-Wrapper",
+      "id": "about-wrapper",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "about-wrapper",
+              "model": "about-wrapper",
+              "name": "About-Wrapper"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Reel-Item",
+      "id": "reel-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "reel-item",
+              "name": "Reel-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "about-wrapper",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "reel-item",
+          "label": "Reel Items",
+          "name": "reel-items"
+        }
+      ]
+    },
+    {
+      "id": "reel-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Alt Text",
+          "name": "alt",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "about-wrapper",
+      "components": [
+        "reel-item"
+      ]
+    }
+  ]
+}

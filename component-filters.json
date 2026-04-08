@@ -27,7 +27,27 @@
       "work-with-us",
       "faqs-section",
       "organization-schema",
-      "footer-main"
+      "footer-main",
+      "site-header",
+      "menu-overlay",
+      "intro-wrapper",
+      "about-wrapper",
+      "highlights",
+      "pro-wrapper",
+      "cta",
+      "site-footer"
+    ]
+  },
+  {
+    "id": "about-wrapper",
+    "components": [
+      "reel-item"
+    ]
+  },
+  {
+    "id": "cta",
+    "components": [
+      "action"
     ]
   },
   {
@@ -46,6 +66,21 @@
     ]
   },
   {
+    "id": "highlights",
+    "components": [
+      "highlight"
+    ]
+  },
+  {
+    "id": "image"
+  },
+  {
+    "id": "intro-wrapper",
+    "components": [
+      "action"
+    ]
+  },
+  {
     "id": "main-header",
     "components": [
       "menu-item",
@@ -53,9 +88,22 @@
     ]
   },
   {
+    "id": "menu-overlay",
+    "components": [
+      "menu-item"
+    ]
+  },
+  {
     "id": "organization-schema",
     "components": [
       "sameas"
+    ]
+  },
+  {
+    "id": "pro-wrapper",
+    "components": [
+      "pro-feature",
+      "action"
     ]
   },
   {
@@ -69,6 +117,15 @@
     "components": [
       "quick-link"
     ]
+  },
+  {
+    "id": "site-footer",
+    "components": [
+      "menu-list"
+    ]
+  },
+  {
+    "id": "site-header"
   },
   {
     "id": "slides",

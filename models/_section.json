@@ -62,7 +62,15 @@
         "work-with-us",
         "faqs-section",
         "organization-schema",
-        "footer-main"
+        "footer-main",
+        "site-header",
+        "menu-overlay",
+        "intro-wrapper",
+        "about-wrapper",
+        "highlights",
+        "pro-wrapper",
+        "cta",
+        "site-footer"
       ]
     }
   ]
