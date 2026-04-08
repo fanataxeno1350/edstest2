@@ -1,0 +1,144 @@
+{
+  "definitions": [
+    {
+      "title": "Coffee-Profiler",
+      "id": "coffee-profiler",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "coffee-profiler",
+              "model": "coffee-profiler",
+              "name": "Coffee-Profiler"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Coffee-Profiler-Question",
+      "id": "coffee-profiler-question",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "coffee-profiler-question",
+              "name": "Coffee-Profiler-Question"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "coffee-profiler",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Intro",
+          "name": "intro",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Greeting Morning",
+          "name": "greeting-morning",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Greeting Afternoon",
+          "name": "greeting-afternoon",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Greeting Evening",
+          "name": "greeting-evening",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Greeting Night",
+          "name": "greeting-night",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Guide Text",
+          "name": "guide-text",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Background Image",
+          "name": "background-image",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Error Message",
+          "name": "error-message",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "coffee-profiler-question",
+          "label": "Questions",
+          "name": "questions"
+        }
+      ]
+    },
+    {
+      "id": "coffee-profiler-question",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Question Label",
+          "name": "question-label",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "coffee-profiler-option",
+          "label": "Options",
+          "name": "options"
+        }
+      ]
+    },
+    {
+      "id": "coffee-profiler-option",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Option Label",
+          "name": "option-label",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "coffee-profiler",
+      "components": [
+        "coffee-profiler-question"
+      ]
+    }
+  ]
+}

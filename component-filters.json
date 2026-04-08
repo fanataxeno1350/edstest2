@@ -15,28 +15,94 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "search-autocomplete",
+      "main-navigation",
+      "burger-navigation",
+      "toaster-signin",
+      "tooltip-signin-register",
+      "homepage-banner",
+      "home-page-description",
+      "sustainability-hub-recycle-section",
+      "recipe-home",
+      "sustainability-article-carousel",
+      "campaign-carousel",
+      "coffee-profiler",
+      "back-to-top",
+      "global-footer"
     ]
   },
   {
-    "id": "cards",
+    "id": "back-to-top"
+  },
+  {
+    "id": "burger-navigation",
     "components": [
-      "card"
+      "burger-navigation-item"
     ]
   },
   {
-    "id": "columns",
+    "id": "campaign-carousel",
     "components": [
-      "column"
+      "campaign-quotation",
+      "campaign-recipe-card",
+      "campaign-fact-card"
     ]
   },
   {
-    "id": "column",
+    "id": "coffee-profiler",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "coffee-profiler-question"
+    ]
+  },
+  {
+    "id": "global-footer",
+    "components": [
+      "footer-social-link",
+      "footer-site-link"
+    ]
+  },
+  {
+    "id": "home-page-description"
+  },
+  {
+    "id": "homepage-banner"
+  },
+  {
+    "id": "main-navigation",
+    "components": [
+      "main-navigation-item"
+    ]
+  },
+  {
+    "id": "recipe-home",
+    "components": [
+      "recipe-card"
+    ]
+  },
+  {
+    "id": "search-autocomplete",
+    "components": [
+      "search-suggestion"
+    ]
+  },
+  {
+    "id": "sustainability-article-carousel",
+    "components": [
+      "sustainability-card"
+    ]
+  },
+  {
+    "id": "sustainability-hub-recycle-section"
+  },
+  {
+    "id": "toaster-signin"
+  },
+  {
+    "id": "tooltip-signin-register",
+    "components": [
+      "tooltip-signin-register"
     ]
   }
 ]
