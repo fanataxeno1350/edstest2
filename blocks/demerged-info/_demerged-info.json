@@ -1,0 +1,50 @@
+{
+  "definitions": [
+    {
+      "title": "Demerged-Info",
+      "id": "demerged-info",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "demerged-info",
+              "model": "demerged-info",
+              "name": "Demerged-Info"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "demerged-info",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Main Text",
+          "name": "main-text",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Scrolling Text",
+          "name": "scrolling-text",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "demerged-info"
+    }
+  ]
+}

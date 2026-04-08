@@ -1,0 +1,97 @@
+{
+  "definitions": [
+    {
+      "title": "Movement-Matters",
+      "id": "movement-matters",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "movement-matters",
+              "model": "movement-matters",
+              "name": "Movement-Matters"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "M-Card-Blurb",
+      "id": "m-card-blurb",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "m-card-blurb",
+              "name": "M-Card-Blurb"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "movement-matters",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Additional Description",
+          "name": "additional-description",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "m-card-blurb",
+          "label": "M Card Blurb",
+          "name": "m-card-blurb"
+        }
+      ]
+    },
+    {
+      "id": "m-card-blurb",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "movement-matters",
+      "components": [
+        "m-card-blurb"
+      ]
+    }
+  ]
+}

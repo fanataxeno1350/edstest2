@@ -1,0 +1,103 @@
+{
+  "definitions": [
+    {
+      "title": "Hm-Eng-For-Evol",
+      "id": "hm-eng-for-evol",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "hm-eng-for-evol",
+              "model": "hm-eng-for-evol",
+              "name": "Hm-Eng-For-Evol"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Blurb",
+      "id": "blurb",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "blurb",
+              "name": "Blurb"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "hm-eng-for-evol",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "blurb",
+          "label": "Blurbs",
+          "name": "blurbs"
+        }
+      ]
+    },
+    {
+      "id": "blurb",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Image Alt",
+          "name": "imageAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "hm-eng-for-evol",
+      "components": [
+        "blurb"
+      ]
+    }
+  ]
+}

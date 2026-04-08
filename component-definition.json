@@ -83,75 +83,311 @@
       "id": "blocks",
       "components": [
         {
-          "title": "Cards",
-          "id": "cards",
+          "title": "Demerged-Info",
+          "id": "demerged-info",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Cards",
-                  "filter": "cards"
+                  "filter": "demerged-info",
+                  "model": "demerged-info",
+                  "name": "Demerged-Info"
                 }
               }
             }
           }
         },
         {
-          "title": "Card",
-          "id": "card",
+          "title": "Footer-Wrp",
+          "id": "footer-wrp",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "footer-wrp",
+                  "model": "footer-wrp",
+                  "name": "Footer-Wrp"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Link-Group",
+          "id": "footer-link-group",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Card",
-                  "model": "card"
+                  "model": "footer-link-group",
+                  "name": "Footer-Link-Group"
                 }
               }
             }
           }
         },
         {
-          "title": "Columns",
-          "id": "columns",
+          "title": "Footer-Link",
+          "id": "footer-link",
           "plugins": {
             "xwalk": {
               "page": {
-                "resourceType": "core/franklin/components/columns/v1/columns",
+                "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "columns": "2",
-                  "rows": "1"
+                  "model": "footer-link",
+                  "name": "Footer-Link"
                 }
               }
             }
           }
         },
         {
-          "title": "Fragment",
-          "id": "fragment",
+          "title": "Footer-Social-Link",
+          "id": "footer-social-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-social-link",
+                  "name": "Footer-Social-Link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Header-Full-Wrp",
+          "id": "header-full-wrp",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Fragment",
-                  "model": "fragment"
+                  "filter": "header-full-wrp",
+                  "model": "header-full-wrp",
+                  "name": "Header-Full-Wrp"
                 }
               }
             }
           }
         },
         {
-          "title": "Hero",
-          "id": "hero",
+          "title": "Header-Nav-Item",
+          "id": "header-nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "header-nav-item",
+                  "name": "Header-Nav-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Header-Subnav-Item",
+          "id": "header-subnav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "header-subnav-item",
+                  "name": "Header-Subnav-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Hm-Careers",
+          "id": "hm-careers",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Hero",
-                  "model": "hero"
+                  "filter": "hm-careers",
+                  "model": "hm-careers",
+                  "name": "Hm-Careers"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Hm-Eng-For-Evol",
+          "id": "hm-eng-for-evol",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "hm-eng-for-evol",
+                  "model": "hm-eng-for-evol",
+                  "name": "Hm-Eng-For-Evol"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Blurb",
+          "id": "blurb",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "blurb",
+                  "name": "Blurb"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Hm-Suatainability",
+          "id": "hm-suatainability",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "hm-suatainability",
+                  "model": "hm-suatainability",
+                  "name": "Hm-Suatainability"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Hm-Welcome",
+          "id": "hm-welcome",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "hm-welcome",
+                  "model": "hm-welcome",
+                  "name": "Hm-Welcome"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Home-Banner",
+          "id": "home-banner",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "home-banner",
+                  "model": "home-banner",
+                  "name": "Home-Banner"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Legacy-Banner-Slider",
+          "id": "legacy-banner-slider",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "legacy-banner-slider",
+                  "model": "legacy-banner-slider",
+                  "name": "Legacy-Banner-Slider"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Legacy-Banner-Slide",
+          "id": "legacy-banner-slide",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "legacy-banner-slide",
+                  "name": "Legacy-Banner-Slide"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Movement-Matters",
+          "id": "movement-matters",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "movement-matters",
+                  "model": "movement-matters",
+                  "name": "Movement-Matters"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "M-Card-Blurb",
+          "id": "m-card-blurb",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "m-card-blurb",
+                  "name": "M-Card-Blurb"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Systems-in-Motion",
+          "id": "systems-in-motion",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "systems-in-motion",
+                  "model": "systems-in-motion",
+                  "name": "Systems-in-Motion"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Motion-Card",
+          "id": "motion-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "motion-card",
+                  "name": "Motion-Card"
                 }
               }
             }

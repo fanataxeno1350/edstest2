@@ -15,28 +15,72 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "header-full-wrp",
+      "home-banner",
+      "hm-welcome",
+      "demerged-info",
+      "hm-eng-for-evol",
+      "systems-in-motion",
+      "movement-matters",
+      "legacy-banner-slider",
+      "hm-suatainability",
+      "hm-careers",
+      "footer-wrp"
     ]
   },
   {
-    "id": "cards",
+    "id": "demerged-info"
+  },
+  {
+    "id": "footer-wrp",
     "components": [
-      "card"
+      "footer-link-group",
+      "footer-link",
+      "footer-social-link"
     ]
   },
   {
-    "id": "columns",
+    "id": "header-full-wrp",
     "components": [
-      "column"
+      "header-nav-item"
     ]
   },
   {
-    "id": "column",
+    "id": "hm-careers"
+  },
+  {
+    "id": "hm-eng-for-evol",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "blurb"
+    ]
+  },
+  {
+    "id": "hm-suatainability"
+  },
+  {
+    "id": "hm-welcome"
+  },
+  {
+    "id": "home-banner"
+  },
+  {
+    "id": "legacy-banner-slider",
+    "components": [
+      "legacy-banner-slide"
+    ]
+  },
+  {
+    "id": "movement-matters",
+    "components": [
+      "m-card-blurb"
+    ]
+  },
+  {
+    "id": "systems-in-motion",
+    "components": [
+      "motion-card"
     ]
   }
 ]
