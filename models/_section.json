@@ -51,7 +51,17 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "tranparent",
+        "main-nav",
+        "press-release-carousel",
+        "image-with-text-over",
+        "ts-cards-sec",
+        "everyday-delicious",
+        "social_feed_carousel",
+        "careers-banner",
+        "main-search-bar",
+        "footer"
       ]
     }
   ]

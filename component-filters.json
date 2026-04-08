@@ -15,28 +15,66 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "tranparent",
+      "main-nav",
+      "press-release-carousel",
+      "image-with-text-over",
+      "ts-cards-sec",
+      "everyday-delicious",
+      "social_feed_carousel",
+      "careers-banner",
+      "main-search-bar",
+      "footer"
     ]
   },
   {
-    "id": "cards",
+    "id": "careers-banner"
+  },
+  {
+    "id": "everyday-delicious"
+  },
+  {
+    "id": "footer",
     "components": [
-      "card"
+      "footer-link-group",
+      "footer-link",
+      "footer-social-link",
+      "footer-more-site"
     ]
   },
   {
-    "id": "columns",
+    "id": "image-with-text-over"
+  },
+  {
+    "id": "main-nav",
     "components": [
-      "column"
+      "nav-item"
     ]
   },
   {
-    "id": "column",
+    "id": "main-search-bar"
+  },
+  {
+    "id": "press-release-carousel",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "press-release-carousel-item"
+    ]
+  },
+  {
+    "id": "social_feed_carousel"
+  },
+  {
+    "id": "tranparent",
+    "components": [
+      "nav-item"
+    ]
+  },
+  {
+    "id": "ts-cards-sec",
+    "components": [
+      "ts-card"
     ]
   }
 ]

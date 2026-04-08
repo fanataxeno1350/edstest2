@@ -1,0 +1,107 @@
+{
+  "definitions": [
+    {
+      "title": "Ts-Cards-Sec",
+      "id": "ts-cards-sec",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "ts-cards-sec",
+              "model": "ts-cards-sec",
+              "name": "Ts-Cards-Sec"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Ts-Card",
+      "id": "ts-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "ts-card",
+              "name": "Ts-Card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "ts-cards-sec"
+    },
+    {
+      "id": "ts-card",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Subheading",
+          "name": "subheading",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Press Releases Link",
+          "name": "press-releases-link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Press Releases Icon",
+          "name": "press-releases-icon",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Downloads Link",
+          "name": "downloads-link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Downloads Icon",
+          "name": "downloads-icon",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Bottom Icon",
+          "name": "bottom-icon",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "ts-cards-sec",
+      "components": [
+        "ts-card"
+      ]
+    }
+  ]
+}

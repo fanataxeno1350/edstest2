@@ -1,0 +1,129 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  block.classList.add('ts_cards_sec', 'mt-md-50-acrds');
+
+  const rowThar = document.createElement('div');
+  rowThar.classList.add('row-thar', 'mx-0-thar');
+
+  [...block.children].forEach((row) => {
+    const col = document.createElement('div');
+    moveInstrumentation(row, col);
+    col.classList.add('col', 'col-md-12', 'ts_cards', 'px-0-thar');
+
+    const iacInnerWrap = document.createElement('div');
+    iacInnerWrap.classList.add('iac-innerWrap');
+
+    let imageEl; // This will hold the optimized picture element
+    let imageLinkHref;
+    let headingEl;
+    let textEl;
+    let ctaLinkEl; // This will hold the <a> element for CTA
+    let ctaTextEl;
+    let ctaIconEl;
+
+    const cells = [...row.children];
+
+    // Content detection for cells based on BlockJson and typical content patterns
+    const imageCell = cells[0]; // Image (picture)
+    const imageLinkCell = cells[1]; // Image Link (a)
+    const headingCell = cells[2]; // Heading (text)
+    const textContentCell = cells[3]; // Text (richtext)
+    const ctaLinkCell = cells[4]; // CTA Link (a)
+    const ctaTextCell = cells[5]; // CTA Text (text)
+    const ctaIconCell = cells[6]; // CTA Icon (picture)
+
+    // Process Image
+    if (imageCell) {
+      const picture = imageCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        imageEl = optimizedPic;
+      }
+    }
+
+    // Process Image Link
+    if (imageLinkCell) {
+      const link = imageLinkCell.querySelector('a');
+      if (link) {
+        imageLinkHref = link.href;
+      }
+    }
+
+    // Assemble image and image link
+    if (imageEl) {
+      if (imageLinkHref) {
+        const a = document.createElement('a');
+        a.href = imageLinkHref;
+        // Instrumentation from the image link cell, not the image cell itself
+        moveInstrumentation(imageLinkCell, a);
+        a.append(imageEl);
+        iacInnerWrap.append(a);
+      } else {
+        iacInnerWrap.append(imageEl);
+      }
+    }
+
+    // Process Heading
+    if (headingCell) {
+      headingEl = document.createElement('h2');
+      moveInstrumentation(headingCell, headingEl);
+      while (headingCell.firstChild) headingEl.append(headingCell.firstChild);
+      iacInnerWrap.append(headingEl);
+    }
+
+    // Process Text
+    if (textContentCell) {
+      textEl = document.createElement('p');
+      moveInstrumentation(textContentCell, textEl);
+      while (textContentCell.firstChild) textEl.append(textContentCell.firstChild);
+    }
+
+    // Process CTA Link
+    if (ctaLinkCell) {
+      ctaLinkEl = ctaLinkCell.querySelector('a');
+    }
+
+    // Process CTA Text
+    if (ctaTextCell) {
+      ctaTextEl = document.createElement('span');
+      moveInstrumentation(ctaTextCell, ctaTextEl);
+      while (ctaTextCell.firstChild) ctaTextEl.append(ctaTextCell.firstChild);
+    }
+
+    // Process CTA Icon
+    if (ctaIconCell) {
+      const picture = ctaIconCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        ctaIconEl = optimizedPic;
+      }
+    }
+
+    col.append(iacInnerWrap);
+    if (textEl) col.append(textEl);
+
+    if (ctaLinkEl && (ctaTextEl || ctaIconEl)) {
+      const ctaWrapper = document.createElement('a');
+      ctaWrapper.href = ctaLinkEl.href;
+      if (ctaLinkEl.target) {
+        ctaWrapper.target = ctaLinkEl.target;
+      }
+      moveInstrumentation(ctaLinkEl.closest('div'), ctaWrapper);
+
+      if (ctaTextEl) ctaWrapper.append(ctaTextEl);
+      if (ctaIconEl) ctaWrapper.append(ctaIconEl);
+      col.append(ctaWrapper);
+    }
+
+    rowThar.append(col);
+  });
+
+  block.textContent = '';
+  block.append(rowThar);
+}

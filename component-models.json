@@ -142,75 +142,481 @@
     ]
   },
   {
-    "id": "card",
+    "id": "careers-banner",
     "fields": [
       {
         "component": "reference",
-        "valueType": "string",
-        "name": "image",
         "label": "Image",
-        "multi": false
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Image Alt",
+        "name": "image-alt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading Small",
+        "name": "heading-small",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading Large",
+        "name": "heading-large",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
+        "label": "Subtext",
+        "name": "subtext",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "columns",
+    "id": "everyday-delicious",
     "fields": [
       {
         "component": "text",
-        "valueType": "number",
-        "name": "columns",
-        "value": "",
-        "label": "Columns"
+        "label": "Eyebrow",
+        "name": "eyebrow",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "valueType": "number",
-        "name": "rows",
-        "value": "",
-        "label": "Rows"
-      }
-    ]
-  },
-  {
-    "id": "fragment",
-    "fields": [
-      {
-        "component": "aem-content",
-        "name": "reference",
-        "label": "Reference"
-      }
-    ]
-  },
-  {
-    "id": "hero",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Alt",
-        "value": ""
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA",
+        "name": "cta",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "CTA Image",
+        "name": "cta-image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Back To Top Icon",
+        "name": "back-to-top-icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Back To Top Label",
+        "name": "back-to-top-label",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link-group",
+        "label": "Footer Link Groups",
+        "name": "footer-link-groups"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-link",
+        "label": "Footer Social Links",
+        "name": "footer-social-links"
+      },
+      {
+        "component": "richtext",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Auxiliary Links",
+        "name": "auxiliary-links"
+      },
+      {
+        "component": "container",
+        "item": "footer-more-site",
+        "label": "More Sites",
+        "name": "more-sites"
+      }
+    ]
+  },
+  {
+    "id": "footer-link-group",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Links",
+        "name": "links"
+      }
+    ]
+  },
+  {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-more-site",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "image-with-text-over",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Subheading",
+        "name": "subheading",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "main-nav"
+  },
+  {
+    "id": "nav-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "main-search-bar",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Search Term",
+        "name": "search-term",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Placeholder",
+        "name": "placeholder",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Clear Label",
+        "name": "clear-label",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Close Icon",
+        "name": "close-icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Close Label",
+        "name": "close-label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "press-release-carousel",
+    "fields": [
+      {
+        "component": "container",
+        "item": "press-release-carousel-item",
+        "label": "Items",
+        "name": "items"
+      }
+    ]
+  },
+  {
+    "id": "press-release-carousel-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Category",
+        "name": "category",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Headline",
+        "name": "headline",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Date",
+        "name": "date",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social_feed_carousel"
+  },
+  {
+    "id": "tranparent",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Hero Large Image",
+        "name": "hero_large_image",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Hero Small Image",
+        "name": "hero_small_image",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logo_image",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "nav-item",
+        "label": "Navigation Items",
+        "name": "navigation_items"
+      }
+    ]
+  },
+  {
+    "id": "nav-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "ts-cards-sec"
+  },
+  {
+    "id": "ts-card",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Subheading",
+        "name": "subheading",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Press Releases Link",
+        "name": "press-releases-link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Press Releases Icon",
+        "name": "press-releases-icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Downloads Link",
+        "name": "downloads-link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Downloads Icon",
+        "name": "downloads-icon",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Bottom Icon",
+        "name": "bottom-icon",
         "valueType": "string"
       }
     ]
