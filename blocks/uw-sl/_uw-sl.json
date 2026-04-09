@@ -34,9 +34,6 @@
   ],
   "models": [
     {
-      "id": "uw-sl"
-    },
-    {
       "id": "uw-sl__item",
       "fields": [
         {

@@ -279,9 +279,6 @@
     ]
   },
   {
-    "id": "custom-slick-slider"
-  },
-  {
     "id": "slide",
     "fields": [
       {
@@ -481,9 +478,6 @@
         "valueType": "string"
       }
     ]
-  },
-  {
-    "id": "uw-sl"
   },
   {
     "id": "uw-sl__item",
