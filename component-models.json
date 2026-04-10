@@ -214,5 +214,35 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "rte-header",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Header Text"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "icon",
+        "label": "Header Icon"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Header Link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
   }
 ]
