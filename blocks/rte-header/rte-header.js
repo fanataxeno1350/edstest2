@@ -124,13 +124,20 @@ export default async function decorate(block) {
 
             // Add hover event listeners
             li.addEventListener('mouseenter', () => {
+                // Close all other dropdowns
+                document.querySelectorAll('.rte-header-dropdown.active').forEach((activeDropdown) => {
+                    if (activeDropdown !== dropdown) {
+                        activeDropdown.classList.remove('active');
+                    }
+                });
+                
                 // Calculate the header's bottom position for fixed dropdown
                 const headerRect = block.getBoundingClientRect();
                 dropdown.style.top = `${headerRect.bottom}px`;
                 dropdown.classList.add('active');
             });
 
-            dropdown.addEventListener('mouseleave', () => {
+            li.addEventListener('mouseleave', () => {
                 dropdown.classList.remove('active');
             });
         }
