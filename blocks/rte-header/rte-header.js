@@ -125,7 +125,11 @@ export default async function decorate(block) {
             // Add hover event listeners
             li.addEventListener('mouseenter', () => {
                 // Close all other dropdowns
-                dropdown.classList.remove('active');
+                document.querySelectorAll('.rte-header-dropdown.active').forEach((activeDropdown) => {
+                    if (activeDropdown !== dropdown) {
+                        activeDropdown.classList.remove('active');
+                    }
+                });
                 
                 // Calculate the header's bottom position for fixed dropdown
                 const headerRect = block.getBoundingClientRect();
