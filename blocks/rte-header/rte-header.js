@@ -21,9 +21,6 @@ export default async function decorate(block) {
         if (node.nodeType === Node.TEXT_NODE) {
           itemText = node.textContent.trim();
           if (itemText) break;
-        } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'UL') {
-          itemText = node.textContent.trim();
-          if (itemText) break;
         }
       }
 
@@ -44,10 +41,7 @@ export default async function decorate(block) {
 
   // Create header wrapper
   const headerWrapper = document.createElement('div');
-  headerWrapper.style.display = 'flex';
-  headerWrapper.style.alignItems = 'center';
-  headerWrapper.style.padding = '20px 40px';
-  headerWrapper.style.gap = '40px';
+  headerWrapper.className = 'rte-header-wrapper';
 
   // Add label with logo
   const labelContainer = document.createElement('div');
@@ -84,8 +78,9 @@ export default async function decorate(block) {
   const nav = document.createElement('ul');
   nav.className = 'rte-header-nav';
 
-  navItems.forEach((item) => {
+  navItems.forEach((item, index) => {
     const li = document.createElement('li');
+    li.className = 'rte-header-nav-item';
     
     const link = document.createElement('a');
     link.href = '#';
@@ -100,6 +95,7 @@ export default async function decorate(block) {
     if (item.children && item.children.length > 0) {
       const dropdown = document.createElement('div');
       dropdown.className = 'rte-header-dropdown';
+      dropdown.setAttribute('data-menu', index);
 
       item.children.forEach((child) => {
         const col = document.createElement('div');
@@ -125,6 +121,14 @@ export default async function decorate(block) {
       });
 
       li.appendChild(dropdown);
+      
+      // Add hover event listeners
+      li.addEventListener('mouseenter', () => {
+        dropdown.classList.add('active');
+      });
+      li.addEventListener('mouseleave', () => {
+        dropdown.classList.remove('active');
+      });
     }
 
     nav.appendChild(li);
