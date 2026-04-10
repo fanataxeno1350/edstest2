@@ -9,16 +9,45 @@ export default async function decorate(block) {
   const linkDiv = children[2];
   const textDiv = children[3];
 
+  // Function to parse nested list structure
+  function parseNestedList(element) {
+    const items = [];
+    const listItems = element.querySelectorAll(':scope > li');
+    
+    listItems.forEach((li) => {
+      // Get the text of the first node (the main item text)
+      let itemText = '';
+      for (let node of li.childNodes) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          itemText = node.textContent.trim();
+          if (itemText) break;
+        } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'UL') {
+          itemText = node.textContent.trim();
+          if (itemText) break;
+        }
+      }
+
+      const subUl = li.querySelector(':scope > ul');
+      const subItems = subUl ? parseNestedList(subUl) : [];
+      
+      items.push({
+        text: itemText,
+        children: subItems
+      });
+    });
+    
+    return items;
+  }
+
   // Clear the block
-  block.textContent = '';
+  block.innerHTML = '';
 
-  // Create header navigation structure
-  const headerNav = document.createElement('nav');
-  headerNav.className = 'rte-header';
-
-  // Create top bar with logo and branding
-  const topBar = document.createElement('div');
-  topBar.className = 'rte-header-topbar';
+  // Create header wrapper
+  const headerWrapper = document.createElement('div');
+  headerWrapper.style.display = 'flex';
+  headerWrapper.style.alignItems = 'center';
+  headerWrapper.style.padding = '20px 40px';
+  headerWrapper.style.gap = '40px';
 
   // Add label with logo
   const labelContainer = document.createElement('div');
@@ -40,38 +69,14 @@ export default async function decorate(block) {
     labelContainer.appendChild(label);
   }
 
-  topBar.appendChild(labelContainer);
+  headerWrapper.appendChild(labelContainer);
 
-  // Parse and create navigation from the richtext content
-  const navItems = [];
+  // Parse navigation items from the nested list structure
+  let navItems = [];
   if (textDiv) {
     const ul = textDiv.querySelector('ul');
     if (ul) {
-      const listItems = ul.querySelectorAll(':scope > li');
-      listItems.forEach((li) => {
-        const text = li.querySelector('a')?.href ? 
-          li.querySelector('a').textContent : 
-          li.childNodes[0].textContent.trim();
-        
-        const subUl = li.querySelector(':scope > ul');
-        const children = subUl ? subUl.querySelectorAll(':scope > li') : [];
-        
-        navItems.push({
-          text: text,
-          children: Array.from(children).map(child => {
-            const childText = child.childNodes[0].textContent.trim();
-            const grandchildUl = child.querySelector(':scope > ul');
-            const grandchildren = grandchildUl ? grandchildUl.querySelectorAll(':scope > li') : [];
-            
-            return {
-              text: childText,
-              children: Array.from(grandchildren).map(gc => ({
-                text: gc.textContent.trim()
-              }))
-            };
-          })
-        });
-      });
+      navItems = parseNestedList(ul);
     }
   }
 
@@ -87,13 +92,12 @@ export default async function decorate(block) {
     link.textContent = item.text;
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      // Toggle active state if needed
     });
     
     li.appendChild(link);
 
     // Create dropdown if children exist
-    if (item.children.length > 0) {
+    if (item.children && item.children.length > 0) {
       const dropdown = document.createElement('div');
       dropdown.className = 'rte-header-dropdown';
 
@@ -101,11 +105,13 @@ export default async function decorate(block) {
         const col = document.createElement('div');
         col.className = 'rte-header-dropdown-col';
 
+        // Add category title
         const title = document.createElement('strong');
         title.textContent = child.text;
         col.appendChild(title);
 
-        if (child.children.length > 0) {
+        // Add sub-items if they exist
+        if (child.children && child.children.length > 0) {
           const subList = document.createElement('ul');
           child.children.forEach((grandchild) => {
             const subLi = document.createElement('li');
@@ -124,14 +130,6 @@ export default async function decorate(block) {
     nav.appendChild(li);
   });
 
-  topBar.appendChild(nav);
-  headerNav.appendChild(topBar);
-  block.appendChild(headerNav);
-
-  // Hide the link element if needed
-  const linkElement = blockDiv => {
-    const link = blockDiv.querySelector('.rte-header-link');
-    if (link) link.style.display = 'none';
-  };
-  linkElement(block);
+  headerWrapper.appendChild(nav);
+  block.appendChild(headerWrapper);
 }
