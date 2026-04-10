@@ -130,9 +130,9 @@ export default async function decorate(block) {
                 dropdown.classList.add('active');
             });
 
-            // li.addEventListener('mouseleave', () => {
-            //     dropdown.classList.remove('active');
-            // });
+            dropdown.addEventListener('mouseleave', () => {
+                dropdown.classList.remove('active');
+            });
         }
 
         nav.appendChild(li);
