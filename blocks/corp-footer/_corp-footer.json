@@ -79,9 +79,6 @@
   ],
   "models": [
     {
-      "id": "corp-footer"
-    },
-    {
       "id": "link-column",
       "fields": [
         {

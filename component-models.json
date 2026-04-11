@@ -245,9 +245,6 @@
     ]
   },
   {
-    "id": "corp-footer"
-  },
-  {
     "id": "link-column",
     "fields": [
       {
@@ -540,9 +537,6 @@
         "valueType": "string"
       }
     ]
-  },
-  {
-    "id": "highlights"
   },
   {
     "id": "highlight-card",

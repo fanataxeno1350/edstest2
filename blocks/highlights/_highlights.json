@@ -34,9 +34,6 @@
   ],
   "models": [
     {
-      "id": "highlights"
-    },
-    {
       "id": "highlight-card",
       "fields": [
         {
