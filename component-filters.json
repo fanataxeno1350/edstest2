@@ -17,13 +17,64 @@
       "columns",
       "fragment",
       "---new--blocks-----",
-      "corp-header"
+      "corp-header-rte",
+      "corp-carousel",
+      "corporate-business-card",
+      "highlights",
+      "corp-slider",
+      "corp-our-values",
+      "corp-counter",
+      "corp-footer"
     ]
   },
   {
-    "id": "corp-header",
+    "id": "corp-carousel",
     "components": [
-      "link"
+      "carousel-slide"
+    ]
+  },
+  {
+    "id": "corp-counter",
+    "components": [
+      "counter-item",
+      "counter-button"
+    ]
+  },
+  {
+    "id": "corp-footer",
+    "components": [
+      "link-column",
+      "contact",
+      "columns",
+      "copy-right"
+    ]
+  },
+  {
+    "id": "corp-header-rte"
+  },
+  {
+    "id": "corp-our-values",
+    "components": [
+      "value",
+      "button"
+    ]
+  },
+  {
+    "id": "corp-slider",
+    "components": [
+      "corp-slider-item"
+    ]
+  },
+  {
+    "id": "corporate-business-card",
+    "components": [
+      "business-card-item"
+    ]
+  },
+  {
+    "id": "highlights",
+    "components": [
+      "highlight-card"
     ]
   }
 ]

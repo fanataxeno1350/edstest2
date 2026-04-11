@@ -1,0 +1,181 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, sliderTitleRow, ...itemRows] = [...block.children];
+
+  const rangeComponent = document.createElement('div');
+  rangeComponent.classList.add('range-component');
+
+  // Heading
+  const headingDiv = document.createElement('div');
+  headingDiv.classList.add('row');
+  const headingCol = document.createElement('div');
+  headingCol.classList.add('col-md12', 'col-sm-12', 'col-md-12', 'gallery-header');
+  const headingP = document.createElement('p');
+  const headingStrong = document.createElement('strong');
+  moveInstrumentation(headingRow.firstElementChild, headingStrong);
+  headingStrong.textContent = headingRow.firstElementChild.textContent.trim();
+  headingP.append(headingStrong);
+  headingCol.append(headingP);
+  headingDiv.append(headingCol);
+  rangeComponent.append(headingDiv);
+
+  // Slider Title
+  const sliderTitleDiv = document.createElement('div');
+  sliderTitleDiv.classList.add('slider-title');
+  const sliderTitleH4 = document.createElement('h4');
+  moveInstrumentation(sliderTitleRow.firstElementChild, sliderTitleH4);
+  sliderTitleH4.textContent = sliderTitleRow.firstElementChild.textContent.trim();
+  // Using a simple ID for the h4 as per original HTML structure
+  sliderTitleH4.id = sliderTitleH4.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+  sliderTitleDiv.append(sliderTitleH4);
+  rangeComponent.append(sliderTitleDiv);
+
+  // Helper to create carousel structure
+  const createCarousel = (id, isMobile = false) => {
+    const carousel = document.createElement('div');
+    carousel.id = id;
+    carousel.classList.add('carousel', 'slide');
+    if (isMobile) {
+      carousel.classList.add('d-sm-none');
+    } else {
+      carousel.classList.add('d-none', 'd-sm-block');
+    }
+
+    const carouselInner = document.createElement('div');
+    carouselInner.classList.add('carousel-inner');
+    carousel.append(carouselInner);
+
+    const itemsPerSlide = isMobile ? 2 : 4;
+    let slideIndex = 0;
+
+    for (let i = 0; i < itemRows.length; i += itemsPerSlide) {
+      const carouselItem = document.createElement('div');
+      carouselItem.classList.add('carousel-item');
+      if (slideIndex === 0) {
+        carouselItem.classList.add('active');
+      }
+      const rowDiv = document.createElement('div');
+      rowDiv.classList.add('row');
+
+      for (let j = 0; j < itemsPerSlide && (i + j) < itemRows.length; j++) {
+        const itemRow = itemRows[i + j];
+        const cells = [...itemRow.children];
+
+        // CRITICAL FIX: Replaced row.children[n] with content detection
+        const imageCell = cells.find(cell => cell.querySelector('picture'));
+        const altTextCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().length > 0); // Assuming alt text is plain text
+        const titleCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell !== altTextCell); // Assuming title is also plain text, distinct from alt
+        const linkCell = cells.find(cell => cell.querySelector('a'));
+
+        const colDiv = document.createElement('div');
+        colDiv.classList.add('col-6', 'col-sm-6');
+        if (!isMobile) {
+          colDiv.classList.add('col-lg-3');
+        }
+
+        const linkElement = linkCell ? linkCell.querySelector('a') : null;
+        const imageArea = document.createElement('a');
+        imageArea.classList.add('image-area');
+        if (linkElement) {
+          imageArea.href = linkElement.href;
+        }
+
+        const imageContainer = document.createElement('div');
+        imageContainer.classList.add('image-container');
+        imageContainer.setAttribute('target', '_self');
+
+        if (imageCell) {
+          const picture = imageCell.querySelector('picture');
+          if (picture) {
+            const img = picture.querySelector('img');
+            const altText = altTextCell ? altTextCell.textContent.trim() : '';
+            const optimizedPic = createOptimizedPicture(img.src, altText, false, [{ width: '750' }]);
+            moveInstrumentation(img, optimizedPic.querySelector('img'));
+            imageContainer.append(optimizedPic);
+            optimizedPic.querySelector('img').classList.add('img-fluid');
+          }
+        }
+        imageArea.append(imageContainer);
+
+        const imgTitle = document.createElement('h6');
+        imgTitle.classList.add('img-title');
+        if (titleCell) {
+          imgTitle.textContent = titleCell.textContent.trim();
+        }
+        imageArea.append(imgTitle);
+
+        moveInstrumentation(itemRow, imageArea); // Move instrumentation from the item row to the new imageArea link
+        colDiv.append(imageArea);
+        rowDiv.append(colDiv);
+      }
+      carouselItem.append(rowDiv);
+      carouselInner.append(carouselItem);
+      slideIndex++;
+    }
+
+    // Carousel controls
+    const prevButton = document.createElement('a');
+    prevButton.classList.add('carousel-control-prev');
+    prevButton.href = `#${id}`;
+    prevButton.setAttribute('role', 'button');
+    // prevButton.setAttribute('data-slide', 'prev'); // Removed data-slide as per EDS guidelines
+    const prevIcon = document.createElement('span');
+    prevIcon.classList.add('carousel-control-prev-icon');
+    prevIcon.setAttribute('aria-hidden', 'true');
+    const prevSrOnly = document.createElement('span');
+    prevSrOnly.classList.add('sr-only');
+    prevSrOnly.textContent = 'previous';
+    prevButton.append(prevIcon, prevSrOnly);
+
+    const nextButton = document.createElement('a');
+    nextButton.classList.add('carousel-control-next');
+    nextButton.href = `#${id}`;
+    nextButton.setAttribute('role', 'button');
+    // nextButton.setAttribute('data-slide', 'next'); // Removed data-slide as per EDS guidelines
+    const nextIcon = document.createElement('span');
+    nextIcon.classList.add('carousel-control-next-icon');
+    nextIcon.setAttribute('aria-hidden', 'true');
+    const nextSrOnly = document.createElement('span');
+    nextSrOnly.classList.add('sr-only');
+    nextSrOnly.textContent = 'next';
+    nextButton.append(nextIcon, nextSrOnly);
+
+    carousel.append(prevButton, nextButton);
+
+    // Add event listeners for carousel navigation
+    prevButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      const currentActive = carousel.querySelector('.carousel-item.active');
+      let prevElement = currentActive.previousElementSibling;
+      if (!prevElement) {
+        prevElement = carouselInner.lastElementChild; // Loop to end
+      }
+      currentActive.classList.remove('active');
+      prevElement.classList.add('active');
+    });
+
+    nextButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      const currentActive = carousel.querySelector('.carousel-item.active');
+      let nextElement = currentActive.nextElementSibling;
+      if (!nextElement) {
+        nextElement = carouselInner.firstElementChild; // Loop to start
+      }
+      currentActive.classList.remove('active');
+      nextElement.classList.add('active');
+    });
+
+    return carousel;
+  };
+
+  // Desktop Slider
+  rangeComponent.append(createCarousel('range-slider-arena-desktop', false));
+
+  // Mobile Slider
+  rangeComponent.append(createCarousel('range-slider-arena-mobile', true));
+
+  block.textContent = '';
+  block.append(rangeComponent);
+}
