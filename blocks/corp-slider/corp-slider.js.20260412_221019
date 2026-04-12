@@ -1,0 +1,258 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, sliderTitleRow, ...itemRows] = [...block.children];
+
+  const rangeComponent = document.createElement('div');
+  rangeComponent.classList.add('range-component');
+
+  // Heading
+  if (headingRow) {
+    const headerRow = document.createElement('div');
+    headerRow.classList.add('row');
+    const headerCol = document.createElement('div');
+    headerCol.classList.add('col-md12', 'col-sm-12', 'gallery-header'); // Removed duplicate col-md-12
+    const p = document.createElement('p');
+    const strong = document.createElement('strong');
+    // Use content detection for heading text
+    const headingTextElement = headingRow.querySelector('div');
+    if (headingTextElement) {
+      moveInstrumentation(headingTextElement, strong);
+      strong.textContent = headingTextElement.textContent.trim();
+    }
+    p.append(strong);
+    headerCol.append(p);
+    headerRow.append(headerCol);
+    rangeComponent.append(headerRow);
+  }
+
+  // Slider Title
+  if (sliderTitleRow) {
+    const sliderTitleDiv = document.createElement('div');
+    sliderTitleDiv.classList.add('slider-title');
+    const h4 = document.createElement('h4');
+    // Use content detection for slider title text
+    const sliderTitleTextElement = sliderTitleRow.querySelector('div');
+    if (sliderTitleTextElement) {
+      moveInstrumentation(sliderTitleTextElement, h4);
+      h4.textContent = sliderTitleTextElement.textContent.trim();
+    }
+    sliderTitleDiv.append(h4);
+    rangeComponent.append(sliderTitleDiv);
+  }
+
+  // Carousel for desktop
+  const desktopCarousel = document.createElement('div');
+  desktopCarousel.classList.add('carousel', 'slide', 'd-none', 'd-sm-block');
+  desktopCarousel.id = 'range-slider-arena-desktop';
+  desktopCarousel.setAttribute('data-ride', 'carousel');
+
+  const desktopCarouselInner = document.createElement('div');
+  desktopCarouselInner.classList.add('carousel-inner');
+  desktopCarousel.append(desktopCarouselInner);
+
+  // Carousel for mobile
+  const mobileCarousel = document.createElement('div');
+  mobileCarousel.classList.add('carousel', 'slide', 'd-sm-none');
+  mobileCarousel.id = 'range-slider-arena-mobile';
+  mobileCarousel.setAttribute('data-ride', 'carousel');
+
+  const mobileCarouselInner = document.createElement('div');
+  mobileCarouselInner.classList.add('carousel-inner');
+  mobileCarousel.append(mobileCarouselInner);
+
+  const itemsPerSlideDesktop = 4;
+  const itemsPerSlideMobile = 2;
+
+  let desktopSlideIndex = 0;
+  let mobileSlideIndex = 0;
+
+  let currentDesktopRow = null;
+  let currentMobileRow = null;
+
+  itemRows.forEach((row, index) => {
+    // Desktop carousel items
+    if (index % itemsPerSlideDesktop === 0) {
+      const carouselItem = document.createElement('div');
+      carouselItem.classList.add('carousel-item');
+      if (desktopSlideIndex === 0) carouselItem.classList.add('active');
+      currentDesktopRow = document.createElement('div');
+      currentDesktopRow.classList.add('row');
+      carouselItem.append(currentDesktopRow);
+      desktopCarouselInner.append(carouselItem);
+      desktopSlideIndex += 1;
+    }
+
+    // Mobile carousel items
+    if (index % itemsPerSlideMobile === 0) {
+      const carouselItem = document.createElement('div');
+      carouselItem.classList.add('carousel-item');
+      if (mobileSlideIndex === 0) carouselItem.classList.add('active');
+      currentMobileRow = document.createElement('div');
+      currentMobileRow.classList.add('row');
+      carouselItem.append(currentMobileRow);
+      mobileCarouselInner.append(carouselItem);
+      mobileSlideIndex += 1;
+    }
+
+    const itemColDesktop = document.createElement('div');
+    itemColDesktop.classList.add('col-6', 'col-sm-6', 'col-lg-3');
+    moveInstrumentation(row, itemColDesktop);
+
+    const itemColMobile = document.createElement('div');
+    itemColMobile.classList.add('col-6', 'col-sm-6', 'col-lg-3');
+    moveInstrumentation(row, itemColMobile); // Instrumentation moved to both desktop and mobile items
+
+    const linkElDesktop = document.createElement('a');
+    linkElDesktop.classList.add('image-area');
+
+    const linkElMobile = document.createElement('a');
+    linkElMobile.classList.add('image-area');
+
+    const imageContainerDesktop = document.createElement('div');
+    imageContainerDesktop.classList.add('image-container');
+    const imageContainerMobile = document.createElement('div');
+    imageContainerMobile.classList.add('image-container');
+
+    const titleElDesktop = document.createElement('h6');
+    titleElDesktop.classList.add('img-title');
+    const titleElMobile = document.createElement('h6');
+    titleElMobile.classList.add('img-title');
+
+    [...row.children].forEach((cell) => {
+      const picture = cell.querySelector('picture');
+      const link = cell.querySelector('a');
+
+      if (picture) {
+        const img = picture.querySelector('img');
+        if (img) {
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
+
+          const clonedOptimizedPicDesktop = optimizedPic.cloneNode(true);
+          const clonedOptimizedPicMobile = optimizedPic.cloneNode(true);
+
+          imageContainerDesktop.append(clonedOptimizedPicDesktop);
+          imageContainerMobile.append(clonedOptimizedPicMobile);
+
+          const newImgDesktop = clonedOptimizedPicDesktop.querySelector('img');
+          const newImgMobile = clonedOptimizedPicMobile.querySelector('img');
+          if (newImgDesktop) newImgDesktop.classList.add('img-fluid');
+          if (newImgMobile) newImgMobile.classList.add('img-fluid');
+        }
+      } else if (link) {
+        linkElDesktop.href = link.href;
+        linkElMobile.href = link.href;
+      } else { // Title
+        titleElDesktop.textContent = cell.textContent.trim();
+        titleElMobile.textContent = cell.textContent.trim();
+      }
+    });
+
+    linkElDesktop.append(imageContainerDesktop, titleElDesktop);
+    itemColDesktop.append(linkElDesktop);
+    currentDesktopRow.append(itemColDesktop);
+
+    linkElMobile.append(imageContainerMobile, titleElMobile);
+    itemColMobile.append(linkElMobile);
+    currentMobileRow.append(itemColMobile);
+  });
+
+  // Add carousel controls for desktop
+  const desktopPrevControl = document.createElement('a');
+  desktopPrevControl.classList.add('carousel-control-prev');
+  desktopPrevControl.href = `#${desktopCarousel.id}`;
+  desktopPrevControl.setAttribute('role', 'button');
+  desktopPrevControl.setAttribute('data-slide', 'prev'); // Added data-slide attribute
+  const desktopPrevIcon = document.createElement('span');
+  desktopPrevIcon.classList.add('carousel-control-prev-icon');
+  desktopPrevIcon.setAttribute('aria-hidden', 'true');
+  const desktopPrevSrOnly = document.createElement('span');
+  desktopPrevSrOnly.classList.add('sr-only');
+  desktopPrevSrOnly.textContent = 'previous';
+  desktopPrevControl.append(desktopPrevIcon, desktopPrevSrOnly);
+  desktopCarousel.append(desktopPrevControl);
+
+  const desktopNextControl = document.createElement('a');
+  desktopNextControl.classList.add('carousel-control-next');
+  desktopNextControl.href = `#${desktopCarousel.id}`;
+  desktopNextControl.setAttribute('role', 'button');
+  desktopNextControl.setAttribute('data-slide', 'next'); // Added data-slide attribute
+  const desktopNextIcon = document.createElement('span');
+  desktopNextIcon.classList.add('carousel-control-next-icon');
+  desktopNextIcon.setAttribute('aria-hidden', 'true');
+  const desktopNextSrOnly = document.createElement('span');
+  desktopNextSrOnly.classList.add('sr-only');
+  desktopNextSrOnly.textContent = 'next';
+  desktopNextControl.append(desktopNextIcon, desktopNextSrOnly);
+  desktopCarousel.append(desktopNextControl);
+
+  // Add carousel controls for mobile
+  const mobilePrevControl = document.createElement('a');
+  mobilePrevControl.classList.add('carousel-control-prev');
+  mobilePrevControl.href = `#${mobileCarousel.id}`;
+  mobilePrevControl.setAttribute('role', 'button');
+  mobilePrevControl.setAttribute('data-slide', 'prev'); // Added data-slide attribute
+  const mobilePrevIcon = document.createElement('span');
+  mobilePrevIcon.classList.add('carousel-control-prev-icon');
+  mobilePrevIcon.setAttribute('aria-hidden', 'true');
+  const mobilePrevSrOnly = document.createElement('span');
+  mobilePrevSrOnly.classList.add('sr-only');
+  mobilePrevSrOnly.textContent = 'previous';
+  mobilePrevControl.append(mobilePrevIcon, mobilePrevSrOnly);
+  mobileCarousel.append(mobilePrevControl);
+
+  const mobileNextControl = document.createElement('a');
+  mobileNextControl.classList.add('carousel-control-next');
+  mobileNextControl.href = `#${mobileCarousel.id}`;
+  mobileNextControl.setAttribute('role', 'button');
+  mobileNextControl.setAttribute('data-slide', 'next'); // Added data-slide attribute
+  const mobileNextIcon = document.createElement('span');
+  mobileNextIcon.classList.add('carousel-control-next-icon');
+  mobileNextIcon.setAttribute('aria-hidden', 'true');
+  const mobileNextSrOnly = document.createElement('span');
+  mobileNextSrOnly.classList.add('sr-only');
+  mobileNextSrOnly.textContent = 'next';
+  mobileNextControl.append(mobileNextIcon, mobileNextSrOnly);
+  mobileCarousel.append(mobileNextControl);
+
+  rangeComponent.append(desktopCarousel, mobileCarousel);
+
+  // Event listeners for desktop carousel
+  desktopPrevControl.addEventListener('click', (e) => {
+    e.preventDefault();
+    const activeItem = desktopCarouselInner.querySelector('.carousel-item.active');
+    const prevItem = activeItem.previousElementSibling || desktopCarouselInner.lastElementChild;
+    if (activeItem) activeItem.classList.remove('active');
+    if (prevItem) prevItem.classList.add('active');
+  });
+
+  desktopNextControl.addEventListener('click', (e) => {
+    e.preventDefault();
+    const activeItem = desktopCarouselInner.querySelector('.carousel-item.active');
+    const nextItem = activeItem.nextElementSibling || desktopCarouselInner.firstElementChild;
+    if (activeItem) activeItem.classList.remove('active');
+    if (nextItem) nextItem.classList.add('active');
+  });
+
+  // Event listeners for mobile carousel
+  mobilePrevControl.addEventListener('click', (e) => {
+    e.preventDefault();
+    const activeItem = mobileCarouselInner.querySelector('.carousel-item.active');
+    const prevItem = activeItem.previousElementSibling || mobileCarouselInner.lastElementChild;
+    if (activeItem) activeItem.classList.remove('active');
+    if (prevItem) prevItem.classList.add('active');
+  });
+
+  mobileNextControl.addEventListener('click', (e) => {
+    e.preventDefault();
+    const activeItem = mobileCarouselInner.querySelector('.carousel-item.active');
+    const nextItem = activeItem.nextElementSibling || mobileCarouselInner.firstElementChild;
+    if (activeItem) activeItem.classList.remove('active');
+    if (nextItem) nextItem.classList.add('active');
+  });
+
+  block.textContent = '';
+  block.append(rangeComponent);
+}

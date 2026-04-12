@@ -51,7 +51,15 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "corp-header-rte",
+        "corp-carousel",
+        "corporate-business-card",
+        "highlights",
+        "corp-slider",
+        "corp-our-values",
+        "corp-counter",
+        "corp-footer"
       ]
     }
   ]
