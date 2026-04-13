@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Product-Category-Item",
-      "id": "product-category-item",
+      "title": "Category",
+      "id": "category",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "product-category-item",
-              "name": "Product-Category-Item"
+              "model": "category",
+              "name": "Category"
             }
           }
         }
@@ -45,20 +45,26 @@
         {
           "component": "text",
           "label": "Sub Title",
-          "name": "subTitle",
+          "name": "sub-title",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "product-category-item",
+          "item": "category",
           "label": "Categories",
           "name": "categories"
         }
       ]
     },
     {
-      "id": "product-category-item",
+      "id": "category",
       "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
         {
           "component": "reference",
           "label": "Image",
@@ -70,12 +76,6 @@
           "label": "Name",
           "name": "name",
           "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
         }
       ]
     }
@@ -84,7 +84,7 @@
     {
       "id": "product-category-listing",
       "components": [
-        "product-category-item"
+        "category"
       ]
     }
   ]

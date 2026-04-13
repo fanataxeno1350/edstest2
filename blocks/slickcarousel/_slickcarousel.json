@@ -1,23 +1,23 @@
 {
   "definitions": [
     {
-      "title": "Carousel",
-      "id": "carousel",
+      "title": "Slickcarousel",
+      "id": "slickcarousel",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "carousel",
-              "model": "carousel",
-              "name": "Carousel"
+              "filter": "slickcarousel",
+              "model": "slickcarousel",
+              "name": "Slickcarousel"
             }
           }
         }
       }
     },
     {
-      "title": "Carousel-Item",
+      "title": "Carousel Item",
       "id": "carousel-item",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "carousel-item",
-              "name": "Carousel-Item"
+              "name": "Carousel Item"
             }
           }
         }
@@ -34,12 +34,12 @@
   ],
   "models": [
     {
-      "id": "carousel",
+      "id": "slickcarousel",
       "fields": [
         {
           "component": "container",
           "item": "carousel-item",
-          "label": "Items",
+          "label": "Carousel Items",
           "name": "items"
         }
       ]
@@ -49,8 +49,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Video Embed",
-          "name": "videoEmbed",
+          "label": "Background Image Desktop",
+          "name": "backgroundImageDesktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Background Image Mobile",
+          "name": "backgroundImageMobile",
           "valueType": "string"
         },
         {
@@ -60,9 +66,21 @@
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Description",
           "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Text",
+          "name": "ctaText",
           "valueType": "string"
         }
       ]
@@ -70,7 +88,7 @@
   ],
   "filters": [
     {
-      "id": "carousel",
+      "id": "slickcarousel",
       "components": [
         "carousel-item"
       ]

@@ -17,7 +17,7 @@
       }
     },
     {
-      "title": "Carousel-Item",
+      "title": "Carousel Item",
       "id": "carousel-item",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "carousel-item",
-              "name": "Carousel-Item"
+              "name": "Carousel Item"
             }
           }
         }
@@ -39,7 +39,7 @@
         {
           "component": "container",
           "item": "carousel-item",
-          "label": "Items",
+          "label": "Carousel Items",
           "name": "items"
         }
       ]
@@ -49,8 +49,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Video Embed",
-          "name": "videoEmbed",
+          "label": "Logo",
+          "name": "logo",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Logo Alt Text",
+          "name": "logoAlt",
           "valueType": "string"
         },
         {
@@ -61,8 +67,32 @@
         },
         {
           "component": "text",
-          "label": "Description",
-          "name": "description",
+          "label": "Subtitle",
+          "name": "subtitle",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Image Desktop",
+          "name": "imageDesktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Image Mobile",
+          "name": "imageMobile",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Text",
+          "name": "ctaText",
           "valueType": "string"
         }
       ]

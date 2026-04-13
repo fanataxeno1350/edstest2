@@ -30,21 +30,6 @@
           }
         }
       }
-    },
-    {
-      "title": "Recipe-Category-Tab",
-      "id": "recipe-category-tab",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "recipe-category-tab",
-              "name": "Recipe-Category-Tab"
-            }
-          }
-        }
-      }
     }
   ],
   "models": [
@@ -65,7 +50,7 @@
         },
         {
           "component": "container",
-          "item": "recipe-category-tab",
+          "item": "tab",
           "label": "Tabs",
           "name": "tabs"
         },
@@ -73,12 +58,23 @@
           "component": "container",
           "item": "recipe-card",
           "label": "Recipe Cards",
-          "name": "cards"
+          "name": "recipeCards"
         },
         {
           "component": "text",
-          "label": "CTA Text",
-          "name": "cta",
+          "label": "Button Label",
+          "name": "button-label",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "tab",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         }
       ]
@@ -88,7 +84,7 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Recipe Link",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         },
@@ -123,25 +119,14 @@
           "valueType": "string"
         }
       ]
-    },
-    {
-      "id": "recipe-category-tab",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Tab Title",
-          "name": "tabTitle",
-          "valueType": "string"
-        }
-      ]
     }
   ],
   "filters": [
     {
       "id": "recipe-group",
       "components": [
-        "recipe-card",
-        "recipe-category-tab"
+        "tab",
+        "recipe-card"
       ]
     }
   ]

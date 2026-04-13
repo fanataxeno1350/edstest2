@@ -59,7 +59,14 @@
         "recipe-group",
         "ourcommunity-teasercarousel",
         "footer-social-media",
-        "footer"
+        "footer",
+        "header-rte",
+        "search",
+        "aashirvaad-video-teaser",
+        "popular-products",
+        "cta-text",
+        "slickcarousel",
+        "social-follow"
       ]
     }
   ]

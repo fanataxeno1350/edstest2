@@ -1,0 +1,247 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const carouselContainer = document.createElement('div');
+  carouselContainer.classList.add('cmp-carousel__container', 'slick-initialized', 'slick-slider', 'slick-dotted');
+  carouselContainer.setAttribute('aria-atomic', 'false');
+
+  const slickList = document.createElement('div');
+  slickList.classList.add('slick-list', 'draggable');
+
+  const slickTrack = document.createElement('div');
+  slickTrack.classList.add('slick-track');
+  slickTrack.style.opacity = '1';
+
+  const items = [...block.children];
+  items.forEach((row, index) => {
+    const itemDiv = document.createElement('div');
+    moveInstrumentation(row, itemDiv);
+    itemDiv.classList.add('cmp-carousel__item', 'slick-slide');
+    itemDiv.setAttribute('role', 'tabpanel');
+    itemDiv.setAttribute('aria-roledescription', 'slide');
+    itemDiv.setAttribute('aria-label', `Slide ${index + 1} of ${items.length}`);
+    itemDiv.setAttribute('data-slick-index', index);
+    itemDiv.setAttribute('aria-hidden', index !== 0);
+    itemDiv.setAttribute('tabindex', index === 0 ? '0' : '-1');
+
+    if (index === 0) {
+      itemDiv.classList.add('cmp-carousel__item--active', 'slick-current', 'slick-active');
+      itemDiv.setAttribute('aria-selected', 'true');
+    }
+
+    const bannerDiv = document.createElement('div');
+    bannerDiv.classList.add('banner', 'cmp-banner--logo');
+
+    const cmpBannerDiv = document.createElement('div');
+    cmpBannerDiv.classList.add('cmp-banner');
+
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add('cmp-banner__content');
+
+    const cells = [...row.children];
+
+    // Read cells by content detection based on BlockJson model
+    const logoPictureCell = cells.find(cell => cell.querySelector('picture') && cell.textContent.trim() === ''); // Assuming logo cell only contains picture
+    const logoAltCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().toLowerCase().includes('alt text')); // Heuristic for alt text
+    const titleCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().toLowerCase().includes('title value')); // Heuristic for title
+    const subtitleCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().toLowerCase().includes('subtitle value')); // Heuristic for subtitle
+    const imageDesktopCell = cells.find(cell => cell.querySelector('picture') && cell.textContent.trim().toLowerCase().includes('image desktop')); // Heuristic for desktop image
+    const imageMobileCell = cells.find(cell => cell.querySelector('picture') && cell.textContent.trim().toLowerCase().includes('image mobile')); // Heuristic for mobile image
+    const ctaLinkCell = cells.find(cell => cell.querySelector('a'));
+    const ctaTextCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().toLowerCase().includes('cta text value')); // Heuristic for cta text
+
+    const logoPicture = logoPictureCell?.querySelector('picture');
+    const logoAlt = logoAltCell?.textContent.trim();
+    const title = titleCell?.textContent.trim();
+    const subtitle = subtitleCell?.textContent.trim();
+    const imageDesktop = imageDesktopCell?.querySelector('picture');
+    const imageMobile = imageMobileCell?.querySelector('picture');
+    const ctaLink = ctaLinkCell?.querySelector('a');
+    const ctaText = ctaTextCell?.textContent.trim();
+
+
+    if (logoPicture) {
+      const logoItemDiv = document.createElement('div');
+      logoItemDiv.classList.add('cmp-banner__item-logo');
+      const logoImg = logoPicture.querySelector('img');
+      if (logoImg) {
+        const optimizedLogo = createOptimizedPicture(logoImg.src, logoAlt || logoImg.alt, false, [{ width: '100' }]);
+        moveInstrumentation(logoImg, optimizedLogo.querySelector('img'));
+        logoItemDiv.append(optimizedLogo);
+      }
+      contentDiv.append(logoItemDiv);
+    }
+
+    if (title) {
+      const titleH2 = document.createElement('h2');
+      titleH2.classList.add('cmp-banner__title');
+      titleH2.textContent = title;
+      contentDiv.append(titleH2);
+    }
+
+    if (subtitle) {
+      const subtitleH3 = document.createElement('h3');
+      subtitleH3.classList.add('cmp-banner__sub-title');
+      subtitleH3.textContent = subtitle;
+      contentDiv.append(subtitleH3);
+    }
+
+    if (imageDesktop || imageMobile) {
+      const pictureEl = document.createElement('picture');
+      pictureEl.classList.add('w-100', 'd-block');
+
+      if (imageMobile) {
+        const mobileImg = imageMobile.querySelector('img');
+        if (mobileImg) {
+          const sourceMobile = document.createElement('source');
+          sourceMobile.setAttribute('media', '(max-width: 600px)');
+          sourceMobile.setAttribute('srcset', mobileImg.src);
+          pictureEl.append(sourceMobile);
+        }
+      }
+
+      if (imageDesktop) {
+        const desktopImg = imageDesktop.querySelector('img');
+        if (desktopImg) {
+          const imgEl = document.createElement('img');
+          imgEl.src = desktopImg.src;
+          imgEl.alt = desktopImg.alt;
+          imgEl.classList.add('cmp-banner__image', 'w-100', 'd-block');
+          imgEl.setAttribute('data-desktop-src', desktopImg.src);
+          if (imageMobile) { // If mobile image exists, add mobile-src for desktop img
+            imgEl.setAttribute('data-mobile-src', imageMobile.querySelector('img').src);
+          }
+          const optimizedImg = createOptimizedPicture(imgEl.src, imgEl.alt, false, [{ width: '1366' }]);
+          moveInstrumentation(desktopImg, optimizedImg.querySelector('img'));
+          pictureEl.append(optimizedImg.querySelector('img')); // Append the img from optimized picture
+        }
+      }
+      contentDiv.append(pictureEl);
+    }
+
+    if (ctaLink && ctaText) {
+      const buttonWrapper = document.createElement('div');
+      buttonWrapper.classList.add('null', 'button', 'cmp-button--primary-anchor');
+
+      const ctaAnchor = document.createElement('a');
+      ctaAnchor.classList.add('cmp-button');
+      ctaAnchor.href = ctaLink.href;
+      ctaAnchor.setAttribute('data-request', 'true');
+      ctaAnchor.setAttribute('tabindex', index === 0 ? '0' : '-1');
+
+      const ctaSpan = document.createElement('span');
+      ctaSpan.classList.add('cmp-button__text');
+      ctaSpan.textContent = ctaText;
+
+      ctaAnchor.append(ctaSpan);
+      buttonWrapper.append(ctaAnchor);
+      contentDiv.append(buttonWrapper);
+    }
+
+    cmpBannerDiv.append(contentDiv);
+    bannerDiv.append(cmpBannerDiv);
+    itemDiv.append(bannerDiv);
+    slickTrack.append(itemDiv);
+  });
+
+  slickList.append(slickTrack);
+  carouselContainer.append(slickList);
+
+  const prevButton = document.createElement('button');
+  prevButton.classList.add('slick-prev', 'slick-arrow', 'slick-disabled');
+  prevButton.setAttribute('aria-label', 'Previous');
+  prevButton.setAttribute('type', 'button');
+  prevButton.setAttribute('aria-disabled', 'true');
+  prevButton.textContent = 'Previous';
+
+  const nextButton = document.createElement('button');
+  nextButton.classList.add('slick-next', 'slick-arrow');
+  nextButton.setAttribute('aria-label', 'Next');
+  nextButton.setAttribute('type', 'button');
+  nextButton.setAttribute('aria-disabled', 'false');
+  nextButton.textContent = 'Next';
+
+  const slickDots = document.createElement('ul');
+  slickDots.classList.add('slick-dots');
+  slickDots.setAttribute('role', 'tablist');
+
+  items.forEach((_, index) => {
+    const dotLi = document.createElement('li');
+    dotLi.setAttribute('role', 'presentation');
+    if (index === 0) {
+      dotLi.classList.add('slick-active');
+    }
+
+    const dotButton = document.createElement('button');
+    dotButton.setAttribute('type', 'button');
+    dotButton.setAttribute('role', 'tab');
+    dotButton.setAttribute('id', `slick-slide-control0${index}`);
+    dotButton.setAttribute('aria-controls', `slick-slide0${index}`);
+    dotButton.setAttribute('aria-label', `${index + 1} of ${items.length}`);
+    dotButton.setAttribute('tabindex', index === 0 ? '0' : '-1');
+    dotButton.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+    dotButton.textContent = (index + 1).toString();
+    dotLi.append(dotButton);
+    slickDots.append(dotLi);
+  });
+
+  carouselContainer.prepend(prevButton);
+  carouselContainer.append(nextButton, slickDots);
+
+  block.textContent = '';
+  block.classList.add('cmp-carousel');
+  block.append(carouselContainer);
+
+  let currentIndex = 0;
+
+  const updateCarousel = () => {
+    slickTrack.style.transform = `translate3d(-${currentIndex * 100}%, 0px, 0px)`;
+
+    [...slickTrack.children].forEach((item, idx) => {
+      item.classList.toggle('cmp-carousel__item--active', idx === currentIndex);
+      item.classList.toggle('slick-current', idx === currentIndex);
+      item.classList.toggle('slick-active', idx === currentIndex);
+      item.setAttribute('aria-hidden', idx !== currentIndex);
+      item.setAttribute('tabindex', idx === currentIndex ? '0' : '-1');
+    });
+
+    [...slickDots.children].forEach((dotLi, idx) => {
+      dotLi.classList.toggle('slick-active', idx === currentIndex);
+      dotLi.querySelector('button').setAttribute('aria-selected', idx === currentIndex ? 'true' : 'false');
+      dotLi.querySelector('button').setAttribute('tabindex', idx === currentIndex ? '0' : '-1');
+    });
+
+    prevButton.classList.toggle('slick-disabled', currentIndex === 0);
+    prevButton.setAttribute('aria-disabled', currentIndex === 0);
+    nextButton.classList.toggle('slick-disabled', currentIndex === items.length - 1);
+    nextButton.setAttribute('aria-disabled', currentIndex === items.length - 1);
+  };
+
+  prevButton.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateCarousel();
+    }
+  });
+
+  nextButton.addEventListener('click', () => {
+    if (currentIndex < items.length - 1) {
+      currentIndex++;
+      updateCarousel();
+    }
+  });
+
+  slickDots.addEventListener('click', (event) => {
+    const targetButton = event.target.closest('button[role="tab"]');
+    if (targetButton) {
+      const dotIndex = [...slickDots.children].findIndex(li => li.contains(targetButton));
+      if (dotIndex !== -1 && dotIndex !== currentIndex) {
+        currentIndex = dotIndex;
+        updateCarousel();
+      }
+    }
+  });
+
+  updateCarousel(); // Initial state
+}

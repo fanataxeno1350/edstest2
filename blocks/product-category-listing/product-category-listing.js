@@ -2,86 +2,98 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Corrected destructuring: titleRow, subTitleRow, categoriesContainerRow, then all subsequent rows are categoryRows
-  const [titleRow, subTitleRow, categoriesContainerRow, ...categoryRows] = [...block.children];
+  const [titleRow, subTitleRow, ...categoryRows] = [...block.children];
 
-  block.innerHTML = '';
-  block.classList.add('cmp-product-category-listing');
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('cmp-product-category-listing');
 
-  const headerDiv = document.createElement('div');
-  headerDiv.classList.add('cmp-product-category-listing__header');
-  block.append(headerDiv);
+  const header = document.createElement('div');
+  header.classList.add('cmp-product-category-listing__header');
 
-  if (titleRow && titleRow.firstElementChild) {
-    const titleEl = document.createElement('h1');
-    moveInstrumentation(titleRow.firstElementChild, titleEl);
-    titleEl.classList.add('cmp-product-category-listing__title');
-    titleEl.append(...titleRow.firstElementChild.childNodes);
-    headerDiv.append(titleEl);
+  if (titleRow) {
+    const title = document.createElement('h1');
+    title.classList.add('cmp-product-category-listing__title');
+    moveInstrumentation(titleRow.firstElementChild, title);
+    title.textContent = titleRow.firstElementChild?.textContent || '';
+    header.append(title);
   }
 
-  if (subTitleRow && subTitleRow.firstElementChild) {
-    const subTitleEl = document.createElement('div');
-    moveInstrumentation(subTitleRow.firstElementChild, subTitleEl);
-    subTitleEl.classList.add('cmp-product-category-listing__subTitle', 'desc-2');
-    subTitleEl.append(...subTitleRow.firstElementChild.childNodes);
-    headerDiv.append(subTitleEl);
+  if (subTitleRow) {
+    const subTitle = document.createElement('div');
+    subTitle.classList.add('cmp-product-category-listing__subTitle', 'desc-2');
+    moveInstrumentation(subTitleRow.firstElementChild, subTitle);
+    subTitle.textContent = subTitleRow.firstElementChild?.textContent || '';
+    header.append(subTitle);
   }
 
-  const contentDiv = document.createElement('div');
-  contentDiv.classList.add('cmp-product-category-listing__content');
-  block.append(contentDiv);
+  wrapper.append(header);
+
+  const content = document.createElement('div');
+  content.classList.add('cmp-product-category-listing__content');
 
   categoryRows.forEach((row) => {
-    // Each category item row has 3 cells: link, image, name
-    const [linkCell, imageCell, nameCell] = [...row.children];
+    const categoryItemWrapper = document.createElement('div');
+    categoryItemWrapper.classList.add('cmp-categorylist', 'cmp-categorylist--anchor');
+    moveInstrumentation(row, categoryItemWrapper);
 
-    const categoryListDiv = document.createElement('div');
-    categoryListDiv.classList.add('cmp-categorylist', 'cmp-categorylist--anchor');
-    moveInstrumentation(row, categoryListDiv);
+    const link = document.createElement('a');
+    link.classList.add('cmp-categorylist__item');
+    
+    let imageEl = null;
+    let nameText = '';
+    let linkHref = '';
+    let linkTitle = '';
 
-    const anchorEl = document.createElement('a');
-    anchorEl.classList.add('cmp-categorylist__item');
-    if (linkCell) {
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        anchorEl.href = foundLink.href;
-        anchorEl.title = foundLink.textContent.trim();
-        moveInstrumentation(linkCell, anchorEl);
+    [...row.children].forEach((cell) => {
+      if (cell.querySelector('picture')) {
+        imageEl = cell.querySelector('img');
+      } else if (cell.querySelector('a')) {
+        const a = cell.querySelector('a');
+        linkHref = a.href;
+        linkTitle = a.textContent.trim();
+      } else {
+        nameText = cell.textContent.trim();
       }
-    }
-    categoryListDiv.append(anchorEl);
+    });
 
-    if (imageCell) {
+    if (linkHref) {
+      link.href = linkHref;
+    }
+    if (linkTitle) {
+      link.title = linkTitle;
+    } else if (nameText) {
+      link.title = nameText;
+    }
+
+    if (imageEl) {
       const imageWrapper = document.createElement('span');
       imageWrapper.classList.add('cmp-categorylist__imagewrapper');
       const lazyImageContainer = document.createElement('div');
       lazyImageContainer.classList.add('lazy-image-container');
-      imageWrapper.append(lazyImageContainer);
 
-      const picture = imageCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          const optimizedImg = optimizedPic.querySelector('img');
-          optimizedImg.classList.add('cmp-categorylist__image', 'lazy-image', 'loaded');
-          moveInstrumentation(img, optimizedImg);
-          lazyImageContainer.append(optimizedPic);
-        }
-      }
-      anchorEl.append(imageWrapper);
+      const optimizedPic = createOptimizedPicture(imageEl.src, imageEl.alt, false, [{ width: '750' }]);
+      const newImg = optimizedPic.querySelector('img');
+      newImg.classList.add('cmp-categorylist__image', 'lazy-image', 'loaded');
+      moveInstrumentation(imageEl, newImg);
+      lazyImageContainer.append(optimizedPic);
+      imageWrapper.append(lazyImageContainer);
+      link.append(imageWrapper);
     }
 
-    if (nameCell) {
+    if (nameText) {
       const nameSpan = document.createElement('span');
       nameSpan.classList.add('cmp-categorylist__name');
-      nameSpan.setAttribute('data-title', nameCell.textContent.trim());
-      moveInstrumentation(nameCell, nameSpan);
-      nameSpan.append(...nameCell.childNodes);
-      anchorEl.append(nameSpan);
+      nameSpan.setAttribute('data-title', nameText);
+      nameSpan.textContent = nameText;
+      link.append(nameSpan);
     }
-
-    contentDiv.append(categoryListDiv);
+    
+    categoryItemWrapper.append(link);
+    content.append(categoryItemWrapper);
   });
+
+  wrapper.append(content);
+
+  block.textContent = '';
+  block.append(wrapper);
 }

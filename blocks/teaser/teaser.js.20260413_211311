@@ -1,0 +1,93 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [
+    backgroundImageDesktopRow,
+    backgroundImageMobileRow,
+    titleRow,
+    descriptionRow,
+    ctaLinkRow,
+    ctaTextRow,
+  ] = [...block.children];
+
+  // Extract content
+  const backgroundImageDesktop = backgroundImageDesktopRow?.querySelector('picture');
+  const backgroundImageMobile = backgroundImageMobileRow?.querySelector('picture');
+  const titleText = titleRow?.querySelector('div')?.textContent.trim();
+  const descriptionHtml = descriptionRow?.querySelector('div')?.innerHTML;
+  const ctaLinkElement = ctaLinkRow?.querySelector('a');
+  const ctaText = ctaTextRow?.querySelector('div')?.textContent.trim();
+
+  // Create main container
+  const cmpTeaser = document.createElement('div');
+  cmpTeaser.classList.add('cmp-teaser');
+  // Add block class from original HTML
+  block.classList.add('cmp-teaser--first-half-center-aligned');
+
+  // Set background images
+  if (backgroundImageDesktop) {
+    const desktopImg = backgroundImageDesktop.querySelector('img');
+    const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '2000' }]);
+    cmpTeaser.style.backgroundImage = `url(${optimizedDesktopPic.querySelector('img').src})`;
+    // For responsive background, we might need to handle this with CSS media queries
+    // or by setting data attributes if the original JS handled it.
+    // For now, setting desktop as default.
+  }
+
+  // Create content wrapper
+  const content = document.createElement('div');
+  content.classList.add('cmp-teaser__content');
+
+  // Add title
+  if (titleText) {
+    const title = document.createElement('h2');
+    title.classList.add('cmp-teaser__title');
+    title.textContent = titleText;
+    content.append(title);
+  }
+
+  // Add description
+  if (descriptionHtml) {
+    const description = document.createElement('div');
+    description.classList.add('cmp-teaser__description');
+    description.innerHTML = descriptionHtml;
+    content.append(description);
+  }
+
+  // Add CTA
+  if (ctaLinkElement && ctaText) {
+    const actionContainer = document.createElement('div');
+    actionContainer.classList.add('cmp-teaser__action-container');
+
+    const buttonDiv = document.createElement('div');
+    buttonDiv.classList.add('button', 'cmp-button--primary-anchor', 'cmp-button--primary-anchor-light');
+
+    const cta = document.createElement('a');
+    cta.classList.add('cmp-button');
+    cta.href = ctaLinkElement.href;
+    cta.setAttribute('data-request', 'true'); // From original HTML
+
+    const ctaSpan = document.createElement('span');
+    ctaSpan.classList.add('cmp-button__text');
+    ctaSpan.textContent = ctaText;
+
+    cta.append(ctaSpan);
+    buttonDiv.append(cta);
+    actionContainer.append(buttonDiv);
+    content.append(actionContainer);
+  }
+
+  cmpTeaser.append(content);
+
+  // Clear the original block content and append the new structure
+  block.textContent = '';
+  block.append(cmpTeaser);
+
+  // Optimize images (if any were created and appended directly, though for background this is handled above)
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+}

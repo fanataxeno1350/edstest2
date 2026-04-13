@@ -24,25 +24,25 @@
         {
           "component": "reference",
           "label": "Background Image Desktop",
-          "name": "backgroundImageDesktop",
+          "name": "background-image-desktop",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Background Image Mobile",
-          "name": "backgroundImageMobile",
+          "name": "background-image-mobile",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Teaser Link",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Text",
-          "name": "ctaText",
+          "label": "Button Text",
+          "name": "button-text",
           "valueType": "string"
         }
       ]

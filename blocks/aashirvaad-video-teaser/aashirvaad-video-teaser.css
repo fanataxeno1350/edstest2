@@ -2837,10 +2837,6 @@ h6 { font-family:Libre Baskerville,sans-serif;font-size:1.125rem;font-weight:700
 
 @media only screen and (max-width:1023px) { h6 { font-size:1rem } }
 
-.desc-2 { font-family:Poppins,sans-serif;font-size:1rem;font-weight:500 }
-
-@media only screen and (max-width:1023px) { .desc-2 { font-size:.875rem } }
-
 @media(max-width:572px){.text.image-list p{flex-wrap:wrap}}
 
 @media(max-width:572px){.text.image-list p img{width:calc(45% - 1pc)}}
@@ -2877,51 +2873,15 @@ body{padding-top:76px}
 
 .cmp-carousel .slick-dots-container *{box-sizing:border-box}
 
+.aashirvaad-video-teaser .video-cmp .video-container { border-radius:1.25rem;margin:0 auto;max-width:85.375rem;overflow:hidden;width:83% }
+
+.aashirvaad-video-teaser .video-cmp .video-container .youtube-video { height:21.25rem }
+
+.aashirvaad-video-teaser .video-cmp .video-container .youtube-video iframe { border:none }
+
+@media only screen and (max-width:1024px) { .aashirvaad-video-teaser .video-cmp .video-container { border-radius:0;justify-self:auto;width:100% } }
+
 @media only screen and (max-width:1023px) { body{padding-top:3.9375rem} }
-
-.cmp-categorylist { box-sizing:border-box;display:flex;font-family:Libre Baskerville,sans-serif;font-size:1.125rem;font-weight:700;justify-content:center }
-
-.cmp-categorylist .cmp-categorylist__item { align-items:center;color:#382312;display:inline-flex;flex-direction:column;text-decoration:none }
-
-.cmp-categorylist .cmp-categorylist__imagewrapper { align-items:center;display:flex;justify-content:center;position:relative }
-
-.cmp-categorylist .cmp-categorylist__imagewrapper:before { background:#e2d7cc;border-radius:50%;content:" ";height:13.5rem;transition:transform .3s ease-in-out;width:13.5rem }
-
-.cmp-categorylist .cmp-categorylist__imagewrapper:hover:before { transform:scale(.9) }
-
-.cmp-categorylist .cmp-categorylist__imagewrapper:hover .cmp-categorylist__image { transform:translateY(-10%) }
-
-.cmp-categorylist .cmp-categorylist__image { bottom:0;left:0;margin:auto;max-height:11.625rem;max-width:13.5rem;position:absolute;right:0;top:0;transition:transform .3s ease-in-out }
-
-@media only screen and (max-width:1023px) { .cmp-categorylist { font-size:1.125rem }
-
-.cmp-categorylist .cmp-categorylist__imagewrapper:before { height:10.875rem;width:10.875rem }
-
-.cmp-categorylist .cmp-categorylist__image { max-height:9.75rem;max-width:9.75rem } }
-
-.cmp-categorylist--anchor .cmp-categorylist__name { font-family:Libre Baskerville,sans-serif;margin-top:1.125rem;text-align:center }
-
-@media only screen and (max-width:1023px) { .cmp-categorylist--anchor .cmp-categorylist__name { margin-top:1rem } }
-
-.cmp-product-category-listing { margin:0 auto;max-width:85.375rem;padding:4rem 7.0625rem }
-
-@media only screen and (max-width:1023px) { .cmp-product-category-listing { padding:2rem 1rem } }
-
-.cmp-product-category-listing .cmp-product-category-listing__title { color:#343434;text-align:center }
-
-.cmp-product-category-listing .cmp-product-category-listing__subTitle { color:#382312;margin-top:1.25rem;text-align:center }
-
-@media only screen and (max-width:1023px) { .cmp-product-category-listing .cmp-product-category-listing__subTitle { margin-top:.75rem } }
-
-.cmp-product-category-listing .cmp-product-category-listing__content { align-items:center;display:flex;flex-wrap:wrap;gap:2.5rem 2rem;margin-top:3rem }
-
-@media only screen and (max-width:1023px) { .cmp-product-category-listing .cmp-product-category-listing__content { gap:2rem .625rem;justify-content:center;margin-top:1.5rem } }
-
-.cmp-product-category-listing .cmp-product-category-listing__content .cmp-categorylist { flex-basis:calc(33.33333% - 1.33333rem) }
-
-@media only screen and (max-width:1023px) { .cmp-product-category-listing .cmp-product-category-listing__content .cmp-categorylist { flex-basis:calc(50% - 0.3125rem) }
-
-.cmp-product-category-listing .cmp-product-category-listing__content .cmp-categorylist__name { -webkit-line-clamp:2;-webkit-box-orient:vertical;display:-webkit-box;overflow:hidden } }
 
 @media(min-width:576px){.video-lightbox__container .plyr__control--overlaid svg{height:4rem;width:4rem}}
 

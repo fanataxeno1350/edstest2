@@ -24,14 +24,27 @@
       "recipe-group",
       "ourcommunity-teasercarousel",
       "footer-social-media",
-      "footer"
+      "footer",
+      "header-rte",
+      "search",
+      "aashirvaad-video-teaser",
+      "popular-products",
+      "cta-text",
+      "slickcarousel",
+      "social-follow"
     ]
+  },
+  {
+    "id": "aashirvaad-video-teaser"
   },
   {
     "id": "carousel",
     "components": [
       "carousel-item"
     ]
+  },
+  {
+    "id": "cta-text"
   },
   {
     "id": "footer-social-media",
@@ -42,8 +55,13 @@
   {
     "id": "footer",
     "components": [
-      "footer-link",
-      "footer-social"
+      "social-link"
+    ]
+  },
+  {
+    "id": "header-rte",
+    "components": [
+      "social-link-item"
     ]
   },
   {
@@ -61,17 +79,38 @@
     ]
   },
   {
+    "id": "popular-products",
+    "components": [
+      "popular-product-item"
+    ]
+  },
+  {
     "id": "product-category-listing",
     "components": [
-      "category"
+      "product-category-item"
     ]
   },
   {
     "id": "recipe-group",
     "components": [
-      "tab",
-      "recipe-card"
+      "recipe-card",
+      "recipe-category-tab"
     ]
+  },
+  {
+    "id": "search",
+    "components": [
+      "search-result-item"
+    ]
+  },
+  {
+    "id": "slickcarousel",
+    "components": [
+      "carousel-item"
+    ]
+  },
+  {
+    "id": "social-follow"
   },
   {
     "id": "teaser"

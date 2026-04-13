@@ -34,25 +34,8 @@
   ],
   "models": [
     {
-      "id": "carousel",
-      "fields": [
-        {
-          "component": "container",
-          "item": "carousel-item",
-          "label": "Items",
-          "name": "items"
-        }
-      ]
-    },
-    {
       "id": "carousel-item",
       "fields": [
-        {
-          "component": "reference",
-          "label": "Video Embed",
-          "name": "videoEmbed",
-          "valueType": "string"
-        },
         {
           "component": "text",
           "label": "Title",
@@ -60,9 +43,15 @@
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Description",
-          "name": "description",
+          "name": "desc",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Video Iframe Src",
+          "name": "video-iframe-src",
           "valueType": "string"
         }
       ]
