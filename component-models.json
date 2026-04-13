@@ -352,14 +352,14 @@
       },
       {
         "component": "reference",
-        "label": "Secondary Logo",
-        "name": "secondaryLogo",
+        "label": "Engage Logo",
+        "name": "engageLogo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Secondary Logo Link",
-        "name": "secondaryLogoLink",
+        "label": "Engage Logo Link",
+        "name": "engageLogoLink",
         "valueType": "string"
       },
       {
@@ -370,21 +370,15 @@
       },
       {
         "component": "text",
-        "label": "Contact Heading",
-        "name": "contactHeading",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
         "label": "Language",
         "name": "language",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "user-account-link-item",
-        "label": "User Account Links",
-        "name": "userAccountLinks"
+        "item": "sign-in-link-item",
+        "label": "Sign In Links",
+        "name": "signInLinks"
       },
       {
         "component": "richtext",
@@ -412,7 +406,7 @@
     ]
   },
   {
-    "id": "user-account-link-item",
+    "id": "sign-in-link-item",
     "fields": [
       {
         "component": "reference",
@@ -428,8 +422,8 @@
       },
       {
         "component": "text",
-        "label": "Text",
-        "name": "text",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
