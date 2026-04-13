@@ -370,15 +370,21 @@
       },
       {
         "component": "text",
+        "label": "Contact Title",
+        "name": "contactTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
         "label": "Language",
         "name": "language",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "account-link-item",
-        "label": "Account Links",
-        "name": "accountLinks"
+        "item": "user-account-link-item",
+        "label": "User Account Links",
+        "name": "userAccountLinks"
       },
       {
         "component": "richtext",
@@ -406,7 +412,7 @@
     ]
   },
   {
-    "id": "account-link-item",
+    "id": "user-account-link-item",
     "fields": [
       {
         "component": "reference",

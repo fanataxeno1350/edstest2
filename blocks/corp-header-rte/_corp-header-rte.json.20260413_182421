@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "User-Account-Link-Item",
-      "id": "user-account-link-item",
+      "title": "Account-Link-Item",
+      "id": "account-link-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "user-account-link-item",
-              "name": "User-Account-Link-Item"
+              "model": "account-link-item",
+              "name": "Account-Link-Item"
             }
           }
         }
@@ -83,21 +83,15 @@
         },
         {
           "component": "text",
-          "label": "Contact Title",
-          "name": "contactTitle",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
           "label": "Language",
           "name": "language",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "user-account-link-item",
-          "label": "User Account Links",
-          "name": "userAccountLinks"
+          "item": "account-link-item",
+          "label": "Account Links",
+          "name": "accountLinks"
         },
         {
           "component": "richtext",
@@ -125,7 +119,7 @@
       ]
     },
     {
-      "id": "user-account-link-item",
+      "id": "account-link-item",
       "fields": [
         {
           "component": "reference",
@@ -153,7 +147,7 @@
       "id": "corp-header-rte",
       "components": [
         "contact-link-item",
-        "user-account-link-item"
+        "account-link-item"
       ]
     }
   ]

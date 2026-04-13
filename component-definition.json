@@ -252,15 +252,15 @@
           }
         },
         {
-          "title": "Account-Link-Item",
-          "id": "account-link-item",
+          "title": "User-Account-Link-Item",
+          "id": "user-account-link-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "account-link-item",
-                  "name": "Account-Link-Item"
+                  "model": "user-account-link-item",
+                  "name": "User-Account-Link-Item"
                 }
               }
             }
