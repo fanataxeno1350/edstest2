@@ -7,95 +7,98 @@ export default function decorate(block) {
   slideshowContainer.style.position = 'relative';
   slideshowContainer.id = 'carousel-main';
 
-  const dotContainer = document.createElement('div');
-  dotContainer.style.textAlign = 'center';
+  const dotsContainer = document.createElement('div');
+  dotsContainer.style.textAlign = 'center';
 
   let slideIndex = 0;
 
   [...block.children].forEach((row, index) => {
     const mySlides = document.createElement('div');
     mySlides.classList.add('mySlides');
-    if (index === 0) {
-      mySlides.style.display = 'block';
-    } else {
-      mySlides.style.display = 'none';
-    }
-    moveInstrumentation(row, mySlides);
+    mySlides.style.display = 'none';
 
     // Use content detection instead of row.children[n]
     const cells = [...row.children];
     const linkCell = cells.find(cell => cell.querySelector('a'));
-    const mobileImageCell = cells.find(cell => cell.querySelector('picture img[alt="Mobile Image"]'));
-    const desktopImageCell = cells.find(cell => cell.querySelector('picture img[alt="Desktop Image"]'));
+    const mobileImageCell = cells.find(cell => cell.querySelector('picture') && !cell.querySelector('a')); // Assuming mobile image is the first picture without a link
+    const desktopImageCell = cells.find(cell => cell.querySelector('picture') && cell !== mobileImageCell); // Assuming desktop image is the second picture
 
-    const anchor = document.createElement('a');
+    const linkEl = document.createElement('a');
     if (linkCell) {
       const originalLink = linkCell.querySelector('a');
       if (originalLink) {
-        anchor.href = originalLink.href;
-        anchor.target = originalLink.target;
+        linkEl.href = originalLink.href;
+        linkEl.target = originalLink.target;
       }
+      moveInstrumentation(linkCell, linkEl);
     }
 
     if (mobileImageCell) {
-      const mobilePicture = mobileImageCell.querySelector('picture');
-      const mobileImg = mobilePicture ? mobilePicture.querySelector('img') : null;
-      if (mobileImg) {
+      const picture = mobileImageCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        const mobileImg = document.createElement('img');
+        mobileImg.classList.add('generic-mobile'); // Class name from allowlist
+        mobileImg.alt = img?.alt || '';
+        mobileImg.src = img?.src || '';
         const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '750' }]);
-        optimizedMobilePic.querySelector('img').classList.add('generic-mobile');
-        anchor.append(optimizedMobilePic);
+        moveInstrumentation(mobileImageCell, optimizedMobilePic.querySelector('img'));
+        linkEl.append(optimizedMobilePic);
       }
     }
 
     if (desktopImageCell) {
-      const desktopPicture = desktopImageCell.querySelector('picture');
-      const desktopImg = desktopPicture ? desktopPicture.querySelector('img') : null;
-      if (desktopImg) {
+      const picture = desktopImageCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        const desktopImg = document.createElement('img');
+        desktopImg.classList.add('generic-desktop'); // Class name from allowlist
+        desktopImg.alt = img?.alt || '';
+        desktopImg.src = img?.src || '';
         const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '2000' }]);
-        optimizedDesktopPic.querySelector('img').classList.add('generic-desktop');
-        anchor.append(optimizedDesktopPic);
+        moveInstrumentation(desktopImageCell, optimizedDesktopPic.querySelector('img'));
+        linkEl.append(optimizedDesktopPic);
       }
     }
 
-    mySlides.append(anchor);
+    mySlides.append(linkEl);
     slideshowContainer.append(mySlides);
 
     const dot = document.createElement('span');
-    dot.classList.add('dot');
-    if (index === 0) {
-      dot.classList.add('active');
-    }
-    dot.addEventListener('click', () => currentSlide(index));
-    dotContainer.append(dot);
+    dot.classList.add('dot'); // Class name from allowlist
+    dot.addEventListener('click', () => currentSlide(index + 1));
+    dotsContainer.append(dot);
+
+    moveInstrumentation(row, mySlides);
   });
 
   const prevButton = document.createElement('a');
-  prevButton.classList.add('prev');
+  prevButton.classList.add('prev'); // Class name from allowlist
   prevButton.addEventListener('click', () => plusSlides(-1));
   slideshowContainer.append(prevButton);
 
   const nextButton = document.createElement('a');
-  nextButton.classList.add('next');
+  nextButton.classList.add('next'); // Class name from allowlist
   nextButton.addEventListener('click', () => plusSlides(1));
   slideshowContainer.append(nextButton);
 
   block.textContent = '';
-  block.append(slideshowContainer, dotContainer);
+  block.append(slideshowContainer, dotsContainer);
 
-  const slides = block.querySelectorAll('.mySlides');
-  const dots = block.querySelectorAll('.dot');
+  const slides = slideshowContainer.querySelectorAll('.mySlides');
+  const dots = dotsContainer.querySelectorAll('.dot');
 
   function showSlides(n) {
-    if (n > slides.length - 1) {
-      slideIndex = 0;
+    if (n > slides.length) {
+      slideIndex = 1;
     }
-    if (n < 0) {
-      slideIndex = slides.length - 1;
+    if (n < 1) {
+      slideIndex = slides.length;
     }
     slides.forEach((slide) => (slide.style.display = 'none'));
-    dots.forEach((dot) => dot.classList.remove('active'));
-    slides[slideIndex].style.display = 'block';
-    dots[slideIndex].classList.add('active');
+    dots.forEach((dot) => dot.classList.remove('active')); // Class name from allowlist
+    slides[slideIndex - 1].style.display = 'block';
+    dots[slideIndex - 1].classList.add('active'); // Class name from allowlist
   }
 
   function plusSlides(n) {
@@ -106,5 +109,7 @@ export default function decorate(block) {
     showSlides((slideIndex = n));
   }
 
-  showSlides(slideIndex);
+  if (slides.length > 0) {
+    showSlides(1);
+  }
 }

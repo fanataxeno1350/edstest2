@@ -192,20 +192,20 @@
       },
       {
         "component": "container",
-        "item": "counter",
+        "item": "counter-item",
         "label": "Counters",
         "name": "counters"
       },
       {
         "component": "container",
-        "item": "button",
+        "item": "button-item",
         "label": "Buttons",
         "name": "buttons"
       }
     ]
   },
   {
-    "id": "counter",
+    "id": "counter-item",
     "fields": [
       {
         "component": "reference",
@@ -215,31 +215,31 @@
       },
       {
         "component": "text",
-        "label": "Count Number",
-        "name": "countNumber",
+        "label": "Number",
+        "name": "number",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Count Label",
-        "name": "countLabel",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "button",
+    "id": "button-item",
     "fields": [
       {
         "component": "text",
         "label": "Button Text",
-        "name": "buttonText",
+        "name": "text",
         "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Button Link",
-        "name": "buttonLink",
+        "name": "link",
         "valueType": "string"
       }
     ]
@@ -255,27 +255,9 @@
       },
       {
         "component": "container",
-        "item": "contact-group",
-        "label": "Contact Groups",
-        "name": "contactGroups"
-      },
-      {
-        "component": "richtext",
-        "label": "Disclaimer Section",
-        "name": "disclaimer",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Copyright",
-        "name": "copyright",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "footer-link",
-        "label": "Footer Links",
-        "name": "footerLinks"
+        "item": "contact",
+        "label": "Contacts",
+        "name": "contacts"
       }
     ]
   },
@@ -290,31 +272,31 @@
       },
       {
         "component": "container",
-        "item": "footer-link",
+        "item": "link",
         "label": "Links",
         "name": "links"
       }
     ]
   },
   {
-    "id": "footer-link",
+    "id": "link",
     "fields": [
       {
-        "component": "text",
-        "label": "Label",
-        "name": "label",
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
         "valueType": "string"
       },
       {
-        "component": "aem-content",
-        "label": "Link URL",
-        "name": "href",
+        "component": "text",
+        "label": "Link Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "contact-group",
+    "id": "contact",
     "fields": [
       {
         "component": "text",
@@ -325,7 +307,7 @@
       {
         "component": "container",
         "item": "contact-icon",
-        "label": "Contact Icons",
+        "label": "Icons",
         "name": "icons"
       }
     ]
@@ -334,67 +316,21 @@
     "id": "contact-icon",
     "fields": [
       {
-        "component": "reference",
-        "label": "Icon Image",
-        "name": "icon",
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       },
       {
-        "component": "aem-content",
-        "label": "Icon Link",
-        "name": "link",
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "Alt Text",
-        "name": "alt",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "app-icon",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "App Icon Image",
-        "name": "icon",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "App Icon Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Alt Text",
-        "name": "alt",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "qr-code-icon",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "QR Code Image",
-        "name": "icon",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "QR Code Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Alt Text",
-        "name": "alt",
+        "name": "altText",
         "valueType": "string"
       }
     ]
@@ -515,14 +451,14 @@
       },
       {
         "component": "text",
-        "label": "Heading 1",
-        "name": "heading1",
+        "label": "Heading Top",
+        "name": "headingTop",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Heading 2",
-        "name": "heading2",
+        "label": "Heading Bottom",
+        "name": "headingBottom",
         "valueType": "string"
       },
       {
@@ -555,14 +491,14 @@
     "fields": [
       {
         "component": "aem-content",
-        "label": "Link",
+        "label": "Button Link",
         "name": "link",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
+        "label": "Button Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
@@ -572,8 +508,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Heading",
-        "name": "heading",
+        "label": "Main Heading",
+        "name": "mainHeading",
         "valueType": "string"
       },
       {
@@ -600,21 +536,15 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Image Alt Text",
-        "name": "alt",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Car Title",
-        "name": "title",
-        "valueType": "string"
-      },
-      {
         "component": "aem-content",
-        "label": "Car Link",
+        "label": "Link",
         "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
         "valueType": "string"
       }
     ]
@@ -683,8 +613,8 @@
       {
         "component": "container",
         "item": "highlight-card",
-        "label": "Cards",
-        "name": "cards"
+        "label": "Highlight Cards",
+        "name": "items"
       }
     ]
   },
@@ -699,26 +629,26 @@
       },
       {
         "component": "text",
-        "label": "Heading",
-        "name": "heading",
+        "label": "Top Description",
+        "name": "topDescription",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "label": "CTA Link",
+        "name": "ctaLink",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "CTA Title",
-        "name": "ctaTitle",
+        "label": "CTA Label",
+        "name": "ctaLabel",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Description",
-        "name": "description",
+        "label": "Bottom Description",
+        "name": "bottomDescription",
         "valueType": "string"
       }
     ]

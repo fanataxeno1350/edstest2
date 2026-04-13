@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Corp-Slider",
-      "id": "corp-slider",
+      "title": "Highlights",
+      "id": "highlights",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "corp-slider",
-              "model": "corp-slider",
-              "name": "Corp-Slider"
+              "filter": "highlights",
+              "model": "highlights",
+              "name": "Highlights"
             }
           }
         }
       }
     },
     {
-      "title": "Corp-Slider Item",
-      "id": "corp-slider-item",
+      "title": "Highlight Card",
+      "id": "highlight-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "corp-slider-item",
-              "name": "Corp-Slider Item"
+              "model": "highlight-card",
+              "name": "Highlight Card"
             }
           }
         }
@@ -34,35 +34,29 @@
   ],
   "models": [
     {
-      "id": "corp-slider",
+      "id": "highlights",
       "fields": [
         {
-          "component": "text",
-          "label": "Main Heading",
-          "name": "mainHeading",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Slider Title",
-          "name": "sliderTitle",
-          "valueType": "string"
-        },
-        {
           "component": "container",
-          "item": "corp-slider-item",
-          "label": "Slider Items",
-          "name": "items"
+          "item": "highlight-card",
+          "label": "Cards",
+          "name": "cards"
         }
       ]
     },
     {
-      "id": "corp-slider-item",
+      "id": "highlight-card",
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
@@ -73,8 +67,14 @@
         },
         {
           "component": "text",
-          "label": "Title",
-          "name": "title",
+          "label": "CTA Title",
+          "name": "ctaTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Description",
+          "name": "description",
           "valueType": "string"
         }
       ]
@@ -82,9 +82,9 @@
   ],
   "filters": [
     {
-      "id": "corp-slider",
+      "id": "highlights",
       "components": [
-        "corp-slider-item"
+        "highlight-card"
       ]
     }
   ]

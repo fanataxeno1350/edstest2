@@ -1,0 +1,153 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, sliderTitleRow, ...itemRows] = [...block.children];
+
+  const rangeComponent = document.createElement('div');
+  rangeComponent.classList.add('range-component');
+
+  // Heading
+  const headingDiv = document.createElement('div');
+  headingDiv.classList.add('row');
+  const headingCol = document.createElement('div');
+  headingCol.classList.add('col-md12', 'col-sm-12', 'col-md-12', 'gallery-header');
+  const headingP = document.createElement('p');
+  const headingStrong = document.createElement('strong');
+  moveInstrumentation(headingRow.firstElementChild, headingStrong);
+  headingStrong.textContent = headingRow.firstElementChild.textContent.trim();
+  headingP.append(headingStrong);
+  headingCol.append(headingP);
+  headingDiv.append(headingCol);
+  rangeComponent.append(headingDiv);
+
+  // Slider Title
+  const sliderTitleDiv = document.createElement('div');
+  sliderTitleDiv.classList.add('slider-title');
+  const sliderTitleH4 = document.createElement('h4');
+  moveInstrumentation(sliderTitleRow.firstElementChild, sliderTitleH4);
+  sliderTitleH4.id = sliderTitleRow.firstElementChild.textContent.trim().toLowerCase().replace(/\s/g, '-');
+  sliderTitleH4.textContent = sliderTitleRow.firstElementChild.textContent.trim();
+  sliderTitleDiv.append(sliderTitleH4);
+  rangeComponent.append(sliderTitleDiv);
+
+  const createSlider = (id, isMobile) => {
+    const carousel = document.createElement('div');
+    carousel.id = id;
+    carousel.classList.add('carousel', 'slide');
+    if (isMobile) {
+      carousel.classList.add('d-sm-none');
+    } else {
+      carousel.classList.add('d-none', 'd-sm-block');
+    }
+    carousel.setAttribute('data-ride', 'carousel');
+
+    const carouselInner = document.createElement('div');
+    carouselInner.classList.add('carousel-inner');
+    carousel.append(carouselInner);
+
+    const itemsPerSlide = isMobile ? 2 : 4;
+    for (let i = 0; i < itemRows.length; i += itemsPerSlide) {
+      const carouselItem = document.createElement('div');
+      carouselItem.classList.add('carousel-item');
+      if (i === 0) {
+        carouselItem.classList.add('active');
+      }
+
+      const row = document.createElement('div');
+      row.classList.add('row');
+      carouselItem.append(row);
+
+      for (let j = 0; j < itemsPerSlide; j++) {
+        const itemIndex = i + j;
+        if (itemIndex < itemRows.length) {
+          const itemRow = itemRows[itemIndex];
+          const cells = [...itemRow.children];
+
+          const col = document.createElement('div');
+          col.classList.add('col-6', 'col-sm-6');
+          if (!isMobile) {
+            col.classList.add('col-lg-3');
+          }
+
+          const linkEl = document.createElement('a');
+          linkEl.classList.add('image-area');
+
+          const foundLink = cells.find((cell) => cell.querySelector('a'))?.querySelector('a');
+          if (foundLink) {
+            linkEl.href = foundLink.href;
+          }
+
+          const imageContainer = document.createElement('div');
+          imageContainer.classList.add('image-container');
+          linkEl.append(imageContainer);
+
+          const pictureCell = cells.find((cell) => cell.querySelector('picture'));
+          if (pictureCell) {
+            const picture = pictureCell.querySelector('picture');
+            const img = picture ? picture.querySelector('img') : null;
+            if (img) {
+              const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+              moveInstrumentation(img, optimizedPic.querySelector('img'));
+              imageContainer.append(optimizedPic);
+              optimizedPic.querySelector('img').classList.add('img-fluid');
+            }
+          }
+
+          const titleCell = cells.find((cell) => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim() !== '');
+          if (titleCell) {
+            const h6 = document.createElement('h6');
+            h6.classList.add('img-title');
+            moveInstrumentation(titleCell, h6);
+            h6.textContent = titleCell.textContent.trim();
+            linkEl.append(h6);
+          }
+          col.append(linkEl);
+          row.append(col);
+        }
+      }
+      carouselInner.append(carouselItem);
+    }
+
+    // Add controls
+    const prevControl = document.createElement('a');
+    prevControl.classList.add('carousel-control-prev');
+    prevControl.href = `#${id}`;
+    prevControl.setAttribute('role', 'button');
+    prevControl.addEventListener('click', (e) => {
+      e.preventDefault();
+      const activeItem = carousel.querySelector('.carousel-item.active');
+      const prevItem = activeItem.previousElementSibling || carousel.querySelector('.carousel-inner').lastElementChild;
+      if (activeItem && prevItem) {
+        activeItem.classList.remove('active');
+        prevItem.classList.add('active');
+      }
+    });
+    prevControl.innerHTML = '<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">previous</span>';
+    carousel.append(prevControl);
+
+    const nextControl = document.createElement('a');
+    nextControl.classList.add('carousel-control-next');
+    nextControl.href = `#${id}`;
+    nextControl.setAttribute('role', 'button');
+    nextControl.addEventListener('click', (e) => {
+      e.preventDefault();
+      const activeItem = carousel.querySelector('.carousel-item.active');
+      const nextItem = activeItem.nextElementSibling || carousel.querySelector('.carousel-inner').firstElementChild;
+      if (activeItem && nextItem) {
+        activeItem.classList.remove('active');
+        nextItem.classList.add('active');
+      }
+    });
+    nextControl.innerHTML = '<span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">next</span>';
+    carousel.append(nextControl);
+
+    return carousel;
+  };
+
+  rangeComponent.append(createSlider('range-slider-arena-desktop', false));
+  rangeComponent.append(createSlider('range-slider-arena-mobile', true));
+
+  block.textContent = '';
+  block.append(rangeComponent);
+}

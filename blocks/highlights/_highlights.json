@@ -39,8 +39,8 @@
         {
           "component": "container",
           "item": "highlight-card",
-          "label": "Cards",
-          "name": "cards"
+          "label": "Highlight Cards",
+          "name": "items"
         }
       ]
     },
@@ -55,26 +55,26 @@
         },
         {
           "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Top Description",
+          "name": "topDescription",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Link",
-          "name": "link",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Title",
-          "name": "ctaTitle",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Description",
-          "name": "description",
+          "label": "Bottom Description",
+          "name": "bottomDescription",
           "valueType": "string"
         }
       ]

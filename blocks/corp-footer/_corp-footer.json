@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Contact-Group",
-      "id": "contact-group",
+      "title": "Contact",
+      "id": "contact",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "contact-group",
-              "name": "Contact-Group"
+              "model": "contact",
+              "name": "Contact"
             }
           }
         }
@@ -60,51 +60,6 @@
           }
         }
       }
-    },
-    {
-      "title": "App-Icon",
-      "id": "app-icon",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "app-icon",
-              "name": "App-Icon"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Qr-Code-Icon",
-      "id": "qr-code-icon",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "qr-code-icon",
-              "name": "Qr-Code-Icon"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Footer-Link",
-      "id": "footer-link",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footer-link",
-              "name": "Footer-Link"
-            }
-          }
-        }
-      }
     }
   ],
   "models": [
@@ -119,27 +74,9 @@
         },
         {
           "component": "container",
-          "item": "contact-group",
-          "label": "Contact Groups",
-          "name": "contactGroups"
-        },
-        {
-          "component": "richtext",
-          "label": "Disclaimer Section",
-          "name": "disclaimer",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Copyright",
-          "name": "copyright",
-          "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "footer-link",
-          "label": "Footer Links",
-          "name": "footerLinks"
+          "item": "contact",
+          "label": "Contacts",
+          "name": "contacts"
         }
       ]
     },
@@ -154,31 +91,31 @@
         },
         {
           "component": "container",
-          "item": "footer-link",
+          "item": "link",
           "label": "Links",
           "name": "links"
         }
       ]
     },
     {
-      "id": "footer-link",
+      "id": "link",
       "fields": [
         {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
+          "component": "aem-content",
+          "label": "URL",
+          "name": "url",
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Link URL",
-          "name": "href",
+          "component": "text",
+          "label": "Link Text",
+          "name": "text",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "contact-group",
+      "id": "contact",
       "fields": [
         {
           "component": "text",
@@ -189,7 +126,7 @@
         {
           "component": "container",
           "item": "contact-icon",
-          "label": "Contact Icons",
+          "label": "Icons",
           "name": "icons"
         }
       ]
@@ -198,67 +135,21 @@
       "id": "contact-icon",
       "fields": [
         {
-          "component": "reference",
-          "label": "Icon Image",
-          "name": "icon",
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Icon Link",
-          "name": "link",
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Alt Text",
-          "name": "alt",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "app-icon",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "App Icon Image",
-          "name": "icon",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "App Icon Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Alt Text",
-          "name": "alt",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "qr-code-icon",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "QR Code Image",
-          "name": "icon",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "QR Code Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Alt Text",
-          "name": "alt",
+          "name": "altText",
           "valueType": "string"
         }
       ]
@@ -269,11 +160,7 @@
       "id": "corp-footer",
       "components": [
         "link-column",
-        "contact-group",
-        "contact-icon",
-        "app-icon",
-        "qr-code-icon",
-        "footer-link"
+        "contact"
       ]
     }
   ]

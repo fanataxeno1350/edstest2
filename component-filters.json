@@ -36,19 +36,15 @@
   {
     "id": "corp-counter",
     "components": [
-      "counter",
-      "button"
+      "counter-item",
+      "button-item"
     ]
   },
   {
     "id": "corp-footer",
     "components": [
       "link-column",
-      "contact-group",
-      "contact-icon",
-      "app-icon",
-      "qr-code-icon",
-      "footer-link"
+      "contact"
     ]
   },
   {

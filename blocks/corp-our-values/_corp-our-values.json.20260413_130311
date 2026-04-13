@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Corp-Counter",
-      "id": "corp-counter",
+      "title": "Corp-Our-Values",
+      "id": "corp-our-values",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "corp-counter",
-              "model": "corp-counter",
-              "name": "Corp-Counter"
+              "filter": "corp-our-values",
+              "model": "corp-our-values",
+              "name": "Corp-Our-Values"
             }
           }
         }
       }
     },
     {
-      "title": "Counter-Item",
-      "id": "counter-item",
+      "title": "Value-Item",
+      "id": "value-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "counter-item",
-              "name": "Counter-Item"
+              "model": "value-item",
+              "name": "Value-Item"
             }
           }
         }
@@ -49,25 +49,31 @@
   ],
   "models": [
     {
-      "id": "corp-counter",
+      "id": "corp-our-values",
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image Mobile",
-          "name": "backgroundImageMobile",
+          "label": "Background Image",
+          "name": "backgroundImage",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Background Image Desktop",
-          "name": "backgroundImageDesktop",
+          "component": "text",
+          "label": "Heading 1",
+          "name": "heading1",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Heading 2",
+          "name": "heading2",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "counter-item",
-          "label": "Counters",
-          "name": "counters"
+          "item": "value-item",
+          "label": "Values",
+          "name": "values"
         },
         {
           "component": "container",
@@ -78,18 +84,23 @@
       ]
     },
     {
-      "id": "counter-item",
+      "id": "value-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image",
-          "name": "backgroundImage",
+          "label": "Icon",
+          "name": "icon",
           "valueType": "string"
-        },
+        }
+      ]
+    },
+    {
+      "id": "button-item",
+      "fields": [
         {
-          "component": "text",
-          "label": "Number",
-          "name": "number",
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
@@ -99,30 +110,13 @@
           "valueType": "string"
         }
       ]
-    },
-    {
-      "id": "button-item",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Button Text",
-          "name": "text",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Button Link",
-          "name": "link",
-          "valueType": "string"
-        }
-      ]
     }
   ],
   "filters": [
     {
-      "id": "corp-counter",
+      "id": "corp-our-values",
       "components": [
-        "counter-item",
+        "value-item",
         "button-item"
       ]
     }

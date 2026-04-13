@@ -2861,22 +2861,22 @@ width: 100%;
   }
  }
 
-@keyframes atNodeInserted508 {from {opacity:0.99} to {opacity:1}}
+@keyframes atNodeInserted382 {from {opacity:0.99} to {opacity:1}}
 
-@-moz-keyframes atNodeInserted508 {from {opacity:0.99} to {opacity:1}}
+@-moz-keyframes atNodeInserted382 {from {opacity:0.99} to {opacity:1}}
 
-@-webkit-keyframes atNodeInserted508 {from {opacity:0.99} to {opacity:1}}
+@-webkit-keyframes atNodeInserted382 {from {opacity:0.99} to {opacity:1}}
 
-@-ms-keyframes atNodeInserted508 {from {opacity:0.99} to {opacity:1}}
+@-ms-keyframes atNodeInserted382 {from {opacity:0.99} to {opacity:1}}
 
-@-o-keyframes atNodeInserted508 {from {opacity:0.99} to {opacity:1}}
+@-o-keyframes atNodeInserted382 {from {opacity:0.99} to {opacity:1}}
 
 #chat-icon { 
-animation-duration:0.001s;animation-name:atNodeInserted508;
--moz-animation-duration:0.001s;-moz-animation-name:atNodeInserted508;
--webkit-animation-duration:0.001s;-webkit-animation-name:atNodeInserted508;
--ms-animation-duration:0.001s;-ms-animation-name:atNodeInserted508;
--o-animation-duration:0.001s;-o-animation-name:atNodeInserted508;
+animation-duration:0.001s;animation-name:atNodeInserted382;
+-moz-animation-duration:0.001s;-moz-animation-name:atNodeInserted382;
+-webkit-animation-duration:0.001s;-webkit-animation-name:atNodeInserted382;
+-ms-animation-duration:0.001s;-ms-animation-name:atNodeInserted382;
+-o-animation-duration:0.001s;-o-animation-name:atNodeInserted382;
  }
 
 @font-face {

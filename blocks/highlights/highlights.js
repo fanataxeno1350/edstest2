@@ -7,8 +7,7 @@ export default function decorate(block) {
 
   [...block.children].forEach((row, index) => {
     const highlightCard = document.createElement('div');
-    highlightCard.classList.add('highlight__card', `gradient${index + 1}`);
-    moveInstrumentation(row, highlightCard);
+    highlightCard.classList.add('highlight__card', `gradient${(index % 5) + 1}`); // Gradients are gradient1 to gradient5
 
     const highlightContent = document.createElement('div');
     highlightContent.classList.add('highlight__content');
@@ -22,97 +21,101 @@ export default function decorate(block) {
     highlightContainer.classList.add('highlight-container');
     highlightInfo.append(highlightContainer);
 
+    const cells = [...row.children];
+
+    // Icon (cell with a picture)
+    const iconCell = cells.find((cell) => cell.querySelector('picture'));
     const highlightTop = document.createElement('div');
     highlightTop.classList.add('highlight__top');
+    const iconSpan = document.createElement('span');
+    iconSpan.classList.add('highlightIcon');
+    if (iconCell) {
+      const picture = iconCell.querySelector('picture');
+      if (picture) {
+        moveInstrumentation(picture, iconSpan);
+        iconSpan.append(picture);
+      }
+    }
+    highlightTop.append(iconSpan);
     highlightContainer.append(highlightTop);
 
-    const highlightIconSpan = document.createElement('span');
-    highlightIconSpan.classList.add('highlightIcon');
-    highlightTop.append(highlightIconSpan);
-
-    const highlightTopDescription = document.createElement('div');
-    highlightTopDescription.classList.add('highlight__top__description');
-    highlightTop.append(highlightTopDescription);
-
-    // Based on BlockJson:
-    // cell[0]: field="icon"
-    // cell[1]: field="heading"
-    // cell[2]: field="link"
-    // cell[3]: field="ctaTitle"
-    // cell[4]: field="description"
-
-    const cells = [...row.children];
-    const iconCell = cells[0];
-    const headingCell = cells[1];
-    const linkCell = cells[2];
-    const ctaTitleCell = cells[3];
-    const descriptionCell = cells[4];
-
-    if (iconCell) {
-      // Move the picture element into the highlightIcon span
-      while (iconCell.firstChild) highlightIconSpan.append(iconCell.firstChild);
+    // Top Description (cell with text content, not a picture or a link, and not the CTA label)
+    const topDescriptionCell = cells.find((cell) =>
+      !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim() !== '' && cell.textContent.trim() !== cells.find(c => c.querySelector('a'))?.textContent.trim()
+    );
+    const topDescriptionDiv = document.createElement('div');
+    topDescriptionDiv.classList.add('highlight__top__description');
+    const h3 = document.createElement('h3');
+    if (topDescriptionCell) {
+      moveInstrumentation(topDescriptionCell, h3);
+      h3.textContent = topDescriptionCell.textContent.trim();
     }
+    topDescriptionDiv.append(h3);
+    highlightTop.append(topDescriptionDiv);
 
-    if (headingCell) {
-      const h3 = document.createElement('h3');
-      moveInstrumentation(headingCell, h3);
-      while (headingCell.firstChild) h3.append(headingCell.firstChild);
-      highlightTopDescription.append(h3);
+    // CTA Link (cell with an anchor tag)
+    const ctaLinkCell = cells.find((cell) => cell.querySelector('a'));
+    // CTA Label (cell with text content, not a picture or a link, and is distinct from topDescription)
+    const ctaLabelCell = cells.find((cell) =>
+      !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim() !== '' && cell !== topDescriptionCell
+    );
+    // Bottom Description (remaining text cell, if any)
+    const bottomDescriptionCell = cells.find((cell) =>
+      !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim() !== '' && cell !== topDescriptionCell && cell !== ctaLabelCell
+    );
+
+    const ctaLink = ctaLinkCell ? ctaLinkCell.querySelector('a') : null;
+    const bottomSection = document.createElement('a');
+    bottomSection.classList.add('bottom-section');
+    if (ctaLink) {
+      bottomSection.href = ctaLink.href;
+      if (ctaLink.target) bottomSection.target = ctaLink.target;
+      if (ctaLink.rel) bottomSection.rel = ctaLink.rel;
     }
-
-    if (linkCell && ctaTitleCell && descriptionCell) {
-      const foundLink = linkCell.querySelector('a');
-      const anchor = document.createElement('a');
-      anchor.classList.add('bottom-section');
-      if (foundLink) {
-        anchor.href = foundLink.href;
-        if (foundLink.target) anchor.target = foundLink.target;
-        if (foundLink.rel) anchor.rel = foundLink.rel;
-        // Check for data-modal, data-redirect, data-href attributes from original HTML
-        if (foundLink.dataset.modal) anchor.dataset.modal = foundLink.dataset.modal;
-        if (foundLink.dataset.redirect) anchor.dataset.redirect = foundLink.dataset.redirect;
-        if (foundLink.dataset.href) anchor.dataset.href = foundLink.dataset.href;
-      }
-      moveInstrumentation(linkCell, anchor);
-
-      const separator = document.createElement('span');
-      separator.classList.add('separator');
-      anchor.append(separator);
-
-      const bottomContent = document.createElement('div');
-      bottomContent.classList.add('bottom__content');
-      anchor.append(bottomContent);
-
-      const btmTitle = document.createElement('div');
-      btmTitle.classList.add('btm-title');
-      bottomContent.append(btmTitle);
-
-      const h4 = document.createElement('h4');
-      h4.classList.add('h-title');
-      moveInstrumentation(ctaTitleCell, h4);
-      while (ctaTitleCell.firstChild) h4.append(ctaTitleCell.firstChild);
-      btmTitle.append(h4);
-
-      const arrowLink = document.createElement('span');
-      arrowLink.classList.add('arrow-link');
-      btmTitle.append(arrowLink);
-
-      const highlightBottomDescription = document.createElement('div');
-      highlightBottomDescription.classList.add('highlight__bottom__description', 'g-xl-2');
-      bottomContent.append(highlightBottomDescription);
-
-      const p = document.createElement('p');
-      moveInstrumentation(descriptionCell, p);
-      while (descriptionCell.firstChild) p.append(descriptionCell.firstChild);
-      highlightBottomDescription.append(p);
-
-      const backgroundOverlay = document.createElement('div');
-      backgroundOverlay.classList.add('background-overlay');
-      anchor.append(backgroundOverlay);
-
-      highlightContainer.append(anchor);
+    if (ctaLinkCell) {
+      moveInstrumentation(ctaLinkCell, bottomSection);
     }
+    highlightContainer.append(bottomSection);
 
+    const separator = document.createElement('span');
+    separator.classList.add('separator');
+    bottomSection.append(separator);
+
+    const bottomContent = document.createElement('div');
+    bottomContent.classList.add('bottom__content');
+    bottomSection.append(bottomContent);
+
+    const btmTitle = document.createElement('div');
+    btmTitle.classList.add('btm-title');
+    bottomContent.append(btmTitle);
+
+    const h4 = document.createElement('h4');
+    h4.classList.add('h-title');
+    if (ctaLabelCell) {
+      moveInstrumentation(ctaLabelCell, h4);
+      h4.textContent = ctaLabelCell.textContent.trim();
+    }
+    btmTitle.append(h4);
+
+    const arrowLink = document.createElement('span');
+    arrowLink.classList.add('arrow-link');
+    btmTitle.append(arrowLink);
+
+    const bottomDescriptionDiv = document.createElement('div');
+    bottomDescriptionDiv.classList.add('highlight__bottom__description', 'g-xl-2');
+    const p = document.createElement('p');
+    if (bottomDescriptionCell) {
+      moveInstrumentation(bottomDescriptionCell, p);
+      p.textContent = bottomDescriptionCell.textContent.trim();
+    }
+    bottomDescriptionDiv.append(p);
+    bottomContent.append(bottomDescriptionDiv);
+
+    const backgroundOverlay = document.createElement('div');
+    backgroundOverlay.classList.add('background-overlay');
+    bottomSection.append(backgroundOverlay);
+
+    moveInstrumentation(row, highlightCard);
     highlightItemsContainer.append(highlightCard);
   });
 

@@ -38,7 +38,7 @@
       "fields": [
         {
           "component": "text",
-          "label": "Business Card Title",
+          "label": "Title",
           "name": "title",
           "valueType": "string"
         },
@@ -55,14 +55,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Desk Poster Image",
-          "name": "videoPosterDesk",
+          "label": "Video Poster Desktop",
+          "name": "videoPosterDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Poster Image",
-          "name": "videoPosterMob",
+          "label": "Video Poster Mobile",
+          "name": "videoPosterMobile",
           "valueType": "string"
         },
         {
@@ -73,8 +73,8 @@
         },
         {
           "component": "text",
-          "label": "Title",
-          "name": "title",
+          "label": "Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
@@ -87,6 +87,12 @@
           "component": "aem-content",
           "label": "CTA Link",
           "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Text",
+          "name": "ctaText",
           "valueType": "string"
         }
       ]

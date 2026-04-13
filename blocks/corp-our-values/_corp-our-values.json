@@ -59,14 +59,14 @@
         },
         {
           "component": "text",
-          "label": "Heading 1",
-          "name": "heading1",
+          "label": "Heading Top",
+          "name": "headingTop",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Heading 2",
-          "name": "heading2",
+          "label": "Heading Bottom",
+          "name": "headingBottom",
           "valueType": "string"
         },
         {
@@ -99,14 +99,14 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Button Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Label",
-          "name": "label",
+          "label": "Button Text",
+          "name": "text",
           "valueType": "string"
         }
       ]
