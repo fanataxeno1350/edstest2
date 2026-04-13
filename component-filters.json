@@ -30,7 +30,7 @@
   {
     "id": "corp-carousel",
     "components": [
-      "carousel-slide"
+      "slide"
     ]
   },
   {
