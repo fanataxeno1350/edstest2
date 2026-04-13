@@ -17,13 +17,84 @@
       "columns",
       "fragment",
       "---new--blocks-----",
-      "main-header-rte"
+      "main-header-rte",
+      "spotlight-home-wrap",
+      "quick-links",
+      "what-we-do-wrap",
+      "purpose-led-grid",
+      "spirit-of-rise",
+      "latest-stories",
+      "work-with-us",
+      "faqs-section",
+      "organisationschema",
+      "footer-main-rte"
+    ]
+  },
+  {
+    "id": "faqs-section",
+    "components": [
+      "faq"
+    ]
+  },
+  {
+    "id": "footer-main-rte",
+    "components": [
+      "social-link-item"
+    ]
+  },
+  {
+    "id": "latest-stories",
+    "components": [
+      "story-item"
     ]
   },
   {
     "id": "main-header-rte",
     "components": [
       "search-suggestion-item"
+    ]
+  },
+  {
+    "id": "organisationschema",
+    "components": [
+      "organisationschema-link"
+    ]
+  },
+  {
+    "id": "purpose-led-grid",
+    "components": [
+      "purpose-led-grid-item"
+    ]
+  },
+  {
+    "id": "quick-links",
+    "components": [
+      "quick-link-item"
+    ]
+  },
+  {
+    "id": "spirit-of-rise",
+    "components": [
+      "spirit-of-rise-card"
+    ]
+  },
+  {
+    "id": "spotlight-home-wrap",
+    "components": [
+      "spotlight-slide",
+      "quick-link"
+    ]
+  },
+  {
+    "id": "what-we-do-wrap",
+    "components": [
+      "business-vertical"
+    ]
+  },
+  {
+    "id": "work-with-us",
+    "components": [
+      "work-with-us-item"
     ]
   }
 ]

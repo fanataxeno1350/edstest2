@@ -52,7 +52,17 @@
         "columns",
         "fragment",
         "---new--blocks-----",
-        "main-header-rte"
+        "main-header-rte",
+        "spotlight-home-wrap",
+        "quick-links",
+        "what-we-do-wrap",
+        "purpose-led-grid",
+        "spirit-of-rise",
+        "latest-stories",
+        "work-with-us",
+        "faqs-section",
+        "organisationschema",
+        "footer-main-rte"
       ]
     }
   ]
