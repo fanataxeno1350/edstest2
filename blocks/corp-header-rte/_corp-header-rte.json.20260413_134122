@@ -83,6 +83,18 @@
         },
         {
           "component": "text",
+          "label": "Primary Telephone",
+          "name": "primaryTelephone",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Secondary Telephone",
+          "name": "secondaryTelephone",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
           "label": "Language",
           "name": "language",
           "valueType": "string"
