@@ -376,9 +376,9 @@
       },
       {
         "component": "container",
-        "item": "user-account-link-item",
-        "label": "User Account Links",
-        "name": "userAccountLinks"
+        "item": "account-link-item",
+        "label": "Account Links",
+        "name": "accountLinks"
       },
       {
         "component": "richtext",
@@ -406,7 +406,7 @@
     ]
   },
   {
-    "id": "user-account-link-item",
+    "id": "account-link-item",
     "fields": [
       {
         "component": "reference",
