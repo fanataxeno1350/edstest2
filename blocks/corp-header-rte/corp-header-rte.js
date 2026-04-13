@@ -8,21 +8,23 @@ export default function decorate(block) {
     engageLogoRow,
     engageLogoLinkRow,
     languageRow,
-    textRow,
+    textRow, // Navigation Hierarchy (richtext)
     ...itemRows
   ] = [...block.children];
 
-  // Use content detection instead of index access for item rows
-  const contactLinkItems = itemRows.filter((row) => row.children.length === 2);
-  const userAccountLinkItems = itemRows.filter((row) => row.children.length === 3);
+  const headerWrapper = document.createElement('header');
+  headerWrapper.classList.add('corp-header-wrapper', 'header-scroll', 'header-scroll-threshold', 'corp-header-block', 'header-wrapper', 'sticky', 'show');
+  moveInstrumentation(block, headerWrapper);
 
-  block.textContent = '';
-  block.classList.add('corp-header', 'block');
+  const corpHeader = document.createElement('div');
+  corpHeader.classList.add('corp-header', 'block');
+  headerWrapper.append(corpHeader);
 
   const navbarArena = document.createElement('div');
   navbarArena.classList.add('navbar', 'navbar-arena', 'g-container');
+  corpHeader.append(navbarArena);
 
-  // Hamburger menu
+  // Nav Hamburger
   const navHamburger = document.createElement('div');
   navHamburger.classList.add('nav-hamburger');
   const hamburgerButton = document.createElement('button');
@@ -46,29 +48,32 @@ export default function decorate(block) {
 
   const logoLink = document.createElement('a');
   logoLink.classList.add('logo__picture');
-  const foundLogoLink = logoLinkRow.querySelector('a');
-  if (foundLogoLink) {
-    logoLink.href = foundLogoLink.href;
+  const logoHref = logoLinkRow?.querySelector('a')?.href;
+  if (logoHref) {
+    logoLink.href = logoHref;
   }
   logoLink.setAttribute('data-logo-name', 'Arena');
 
-  const logoPicture = logoRow.querySelector('picture');
+  const logoPicture = logoRow?.querySelector('picture');
   if (logoPicture) {
-    moveInstrumentation(logoRow.firstElementChild, logoLink);
-    logoLink.append(logoPicture);
+    const img = logoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    logoLink.append(optimizedPic);
   }
   logoSpan.append(logoLink);
   logoBlock.append(logoSpan);
   logoWrapper.append(logoBlock);
   navbarArena.append(logoWrapper);
 
-  // Navigation Links
+  // Links section
   const linksDiv = document.createElement('div');
   linksDiv.classList.add('links');
+  navbarArena.append(linksDiv);
 
   function parseNavTree(ul) {
     return [...ul.querySelectorAll(':scope > li')].map((li) => {
-      const label = li.querySelector(':scope > p')?.textContent?.trim() ?? '';
+      const label = li.querySelector(':scope > p')?.textContent?.trim() ?? li.querySelector(':scope > a')?.textContent?.trim() ?? '';
       const childUl = li.querySelector(':scope > ul');
       return { label, children: childUl ? parseNavTree(childUl) : [] };
     });
@@ -85,77 +90,104 @@ export default function decorate(block) {
     linkTitle.classList.add('link-title');
     const span = document.createElement('span');
 
-    const link = document.createElement('a');
-    link.textContent = item.label;
-    if (item.label.toLowerCase() === 'home' || item.label.toLowerCase() === 'service' || item.label.toLowerCase() === 'important customer info') {
-      link.classList.add('button');
-      link.href = '#'; // Placeholder, actual href should be from model if available
-    }
-
-    span.append(link);
-    linkTitle.append(span);
-
     if (item.children && item.children.length > 0) {
-      if (isDesktop) {
-        const desktopPanel = document.createElement('div');
-        desktopPanel.classList.add('desktop-panel', 'panel', item.label.toLowerCase().replace(/\s/g, '-'));
-        const linkGrid = document.createElement('div');
-        linkGrid.classList.add('link-grid', 'block');
-        const linkContainerSection = document.createElement('div');
-        linkContainerSection.classList.add('link-container-section');
-        const linkGridColumn = document.createElement('div');
-        linkGridColumn.classList.add('link-grid-column', 'link-column-vertical'); // Assuming vertical for desktop
+      span.textContent = item.label;
+      linkTitle.append(span);
 
-        const ul = document.createElement('ul');
-        ul.classList.add('content', 'links-container', 'accordian-content');
-        item.children.forEach((child) => {
-          const li = document.createElement('li');
-          const childLink = document.createElement('a');
-          childLink.textContent = child.label;
-          childLink.href = '#'; // Placeholder
-          li.append(childLink);
-          ul.append(li);
-        });
-        linkGridColumn.append(ul);
-        linkContainerSection.append(linkGridColumn);
-        linkGrid.append(linkContainerSection);
-        desktopPanel.append(linkGrid);
-        linksDiv.append(desktopPanel);
+      const panel = document.createElement('div');
+      panel.classList.add('desktop-panel', 'panel', item.label.toLowerCase().replace(/\s/g, '-'));
+      const linkGridBlock = document.createElement('div');
+      linkGridBlock.classList.add('link-grid', 'block');
+      const linkContainerSection = document.createElement('div');
+      linkContainerSection.classList.add('link-container-section');
+      const linkGridColumn = document.createElement('div');
+      linkGridColumn.classList.add('link-grid-column', 'link-column-vertical'); // Default to vertical
+
+      // Check if any child has children to determine column layout
+      const hasGrandchildren = item.children.some(child => child.children && child.children.length > 0);
+      if (item.label.toLowerCase() === 'sales' && !hasGrandchildren) {
+        linkGridColumn.classList.remove('link-column-vertical');
+        linkGridColumn.classList.add('link-column-horizontal');
       }
+
+      const ul = document.createElement('ul');
+      ul.classList.add('content', 'links-container', 'accordian-content');
+
+      item.children.forEach((child) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        // Placeholder, actual link from model is not available here, but we can try to find it in the original HTML if needed
+        // For now, use a generic href or try to extract from original HTML if it exists in the parsed structure
+        a.href = '#';
+        a.textContent = child.label;
+        li.append(a);
+        ul.append(li);
+      });
+
+      linkGridColumn.append(ul);
+      linkContainerSection.append(linkGridColumn);
+      linkGridBlock.append(linkContainerSection);
+      panel.append(linkGridBlock);
+      linksDiv.append(panel);
+
+      if (isDesktop) {
+        linkTitle.addEventListener('click', () => {
+          // Close other open panels
+          linksDiv.querySelectorAll('.desktop-panel.panel:not(.hidden)').forEach((p) => {
+            if (p !== panel) {
+              p.classList.add('hidden');
+            }
+          });
+          // Toggle current panel
+          panel.classList.toggle('hidden');
+        });
+        panel.classList.add('hidden'); // Initially hide panels
+      }
+    } else {
+      const a = document.createElement('a');
+      a.classList.add('button');
+      // Placeholder, actual link from model is not available here
+      a.href = '#';
+      a.textContent = item.label;
+      span.append(a);
+      linkTitle.append(span);
     }
     return linkTitle;
   }
 
   navItems.forEach((item) => {
-    linksDiv.append(createNavItem(item, true));
+    linksDiv.append(createNavItem(item));
   });
 
-  // Engage Logo
-  const engageLinkTitle = document.createElement('div');
-  engageLinkTitle.classList.add('link-title');
-  const engageSpan = document.createElement('span');
-  const engageLink = document.createElement('a');
-  engageLink.classList.add('logo__picture');
-  const foundEngageLink = engageLogoLinkRow.querySelector('a');
-  if (foundEngageLink) {
-    engageLink.href = foundEngageLink.href;
+  // Engage Logo Link
+  const engageLogoLinkTitle = document.createElement('div');
+  engageLogoLinkTitle.classList.add('link-title');
+  const engageLogoSpan = document.createElement('span');
+  const engageLogoAnchor = document.createElement('a');
+  engageLogoAnchor.classList.add('logo__picture');
+  const engageHref = engageLogoLinkRow?.querySelector('a')?.href;
+  if (engageHref) {
+    engageLogoAnchor.href = engageHref;
   }
-  engageLink.setAttribute('data-logo-name', 'Maruti Suzuki');
-  const engagePicture = engageLogoRow.querySelector('picture');
-  if (engagePicture) {
-    moveInstrumentation(engageLogoRow.firstElementChild, engageLink);
-    engageLink.append(engagePicture);
-  }
-  engageSpan.append(engageLink);
-  engageLinkTitle.append(engageSpan);
-  linksDiv.append(engageLinkTitle);
+  engageLogoAnchor.setAttribute('data-logo-name', 'Maruti Suzuki');
 
-  navbarArena.append(linksDiv);
+  const engageLogoPicture = engageLogoRow?.querySelector('picture');
+  if (engageLogoPicture) {
+    const img = engageLogoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '79' }]); // Use 79 as width from original HTML
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    engageLogoAnchor.append(optimizedPic);
+  }
+  engageLogoSpan.append(engageLogoAnchor);
+  engageLogoLinkTitle.append(engageLogoSpan);
+  linksDiv.append(engageLogoLinkTitle);
+
 
   // Right section
   const rightDiv = document.createElement('div');
   rightDiv.classList.add('right');
   rightDiv.id = 'nav-right';
+  navbarArena.append(rightDiv);
 
   // Contact Wrapper
   const contactWrapper = document.createElement('div');
@@ -176,69 +208,94 @@ export default function decorate(block) {
   const contactIconsDiv = document.createElement('div');
   contactIconsDiv.classList.add('user__contact__icons', 'hidden');
 
+  // Filter for contact-link-item (2 cells: icon, link)
+  const contactLinkItems = itemRows.filter(row => {
+    const cells = [...row.children];
+    return cells.length === 2 && cells[0].querySelector('picture') && cells[1].querySelector('a');
+  });
+
   contactLinkItems.forEach((row) => {
     const cells = [...row.children];
     const iconCell = cells.find(cell => cell.querySelector('picture'));
     const linkCell = cells.find(cell => cell.querySelector('a'));
 
-    const contactLink = document.createElement('a');
-    contactLink.classList.add('user__contact--icon');
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      contactLink.href = foundLink.href;
-    }
-    const srOnlySpan = document.createElement('span');
-    srOnlySpan.classList.add('sr-only');
-    const iconImg = iconCell.querySelector('img');
-    if (iconImg) {
-      const clonedImg = iconImg.cloneNode(true);
-      contactLink.append(srOnlySpan, clonedImg);
-    }
+    if (iconCell && linkCell) {
+      const a = document.createElement('a');
+      a.href = linkCell.querySelector('a').href;
+      a.classList.add('user__contact--icon');
+      const srOnlySpan = document.createElement('span');
+      srOnlySpan.classList.add('sr-only');
 
-    if (foundLink && foundLink.href.startsWith('tel:')) {
-      contactLink.classList.add('phone');
-      srOnlySpan.textContent = 'phone';
-      // Original HTML has an onclick for this specific link, replicate that behavior
-      contactLink.addEventListener('click', (event) => {
-        event.preventDefault();
-        contactBlock.querySelector('.contact-toggle-box').classList.toggle('hidden');
-      });
-    } else if (foundLink && foundLink.href.startsWith('https://wa.me/')) {
-      contactLink.classList.add('whatsapp');
-      contactLink.setAttribute('target', '_blank');
-      contactLink.setAttribute('rel', 'noopener noreferrer');
-      srOnlySpan.textContent = 'whatsapp';
-    } else if (foundLink && foundLink.href.startsWith('mailto:')) {
-      contactLink.classList.add('email');
-      srOnlySpan.textContent = 'email';
+      const img = iconCell.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: 'auto' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      a.append(srOnlySpan, optimizedPic);
+
+      if (a.href.includes('wa.me')) {
+        a.classList.add('whatsapp');
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+        srOnlySpan.textContent = 'whatsapp';
+      } else if (a.href.startsWith('mailto:')) {
+        a.classList.add('email');
+        srOnlySpan.textContent = 'email';
+      } else if (a.href.startsWith('tel:')) {
+        a.classList.add('phone');
+        srOnlySpan.textContent = 'phone';
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          contactWrpArena.querySelector('.contact-toggle-box').classList.toggle('hidden');
+        });
+      } else {
+        a.classList.add('phone'); // Default to phone if not whatsapp or mailto
+        srOnlySpan.textContent = 'phone';
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          contactWrpArena.querySelector('.contact-toggle-box').classList.toggle('hidden');
+        });
+      }
+      contactIconsDiv.append(a);
     }
-    contactIconsDiv.append(contactLink);
   });
 
   const contactToggleBox = document.createElement('div');
   contactToggleBox.classList.add('hidden', 'contact-toggle-box');
-  const callContainer = document.createElement('div');
-  callContainer.classList.add('user__contact__icon-call_container');
-  const primaryTel = document.createElement('a');
-  primaryTel.classList.add('primary-telephone');
-  primaryTel.href = 'tel:18001021800'; // Hardcoded from original HTML
-  primaryTel.textContent = '1800 102 1800';
-  const secondaryTel = document.createElement('a');
-  secondaryTel.classList.add('secondary-telephone');
-  secondaryTel.href = 'tel:';
-  callContainer.append(primaryTel, secondaryTel);
-  contactToggleBox.append(callContainer);
+  const contactCallContainer = document.createElement('div');
+  contactCallContainer.classList.add('user__contact__icon-call_container');
 
+  // Assuming the first contact link item with a 'tel:' href is the primary telephone
+  const primaryTelLinkRow = contactLinkItems.find(row => row.querySelector('a')?.href.startsWith('tel:'));
+  if (primaryTelLinkRow) {
+    const primaryTelAnchor = document.createElement('a');
+    primaryTelAnchor.classList.add('primary-telephone');
+    const link = primaryTelLinkRow.querySelector('a');
+    primaryTelAnchor.href = link.href;
+    primaryTelAnchor.textContent = link.textContent.trim();
+    contactCallContainer.append(primaryTelAnchor);
+  }
+
+  const secondaryTelAnchor = document.createElement('a');
+  secondaryTelAnchor.classList.add('secondary-telephone');
+  secondaryTelAnchor.href = '#'; // No secondary telephone in model
+  contactCallContainer.append(secondaryTelAnchor);
+  contactToggleBox.append(contactCallContainer);
 
   contactWrpArena.append(contactIconsDiv, contactToggleBox);
   contactBlock.append(contactWrpArena);
   contactWrapper.append(contactBlock);
   rightDiv.append(contactWrapper);
 
+  // Add event listener for contact icon to toggle contact details
+  contactIconPhone.addEventListener('click', () => {
+    contactIconsDiv.classList.toggle('hidden');
+    contactToggleBox.classList.toggle('hidden');
+  });
+
+
   // Language
   const languageDiv = document.createElement('div');
   languageDiv.classList.add('language');
-  languageDiv.textContent = languageRow.textContent.trim();
+  languageDiv.textContent = languageRow?.querySelector('div')?.textContent.trim() ?? '';
   rightDiv.append(languageDiv);
 
   // Sign-in Wrapper
@@ -251,44 +308,54 @@ export default function decorate(block) {
   const userAccount = document.createElement('div');
   userAccount.classList.add('user__account');
 
+  // Filter for user-account-link-item (3 cells: icon, link, label)
+  const userAccountLinkItems = itemRows.filter(row => {
+    const cells = [...row.children];
+    return cells.length === 3 && cells[0].querySelector('picture') && cells[1].querySelector('a') && cells[2].textContent.trim();
+  });
+
   userAccountLinkItems.forEach((row) => {
     const cells = [...row.children];
     const iconCell = cells.find(cell => cell.querySelector('picture'));
     const linkCell = cells.find(cell => cell.querySelector('a'));
-    const labelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a'));
+    const labelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a')); // Assuming label is the text cell
 
-    const accountLink = document.createElement('a');
-    accountLink.classList.add('user__account--link');
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      accountLink.href = foundLink.href;
-      accountLink.setAttribute('target', '_self');
-      // Ensure class names match original HTML, remove extra spaces
-      accountLink.classList.add(...labelCell.textContent.toLowerCase().trim().split(' '));
-    }
+    if (iconCell && linkCell && labelCell) {
+      const a = document.createElement('a');
+      a.classList.add('user__account--link');
+      a.href = linkCell.querySelector('a').href;
+      a.textContent = labelCell.textContent.trim();
 
-    const listIconSpan = document.createElement('span');
-    listIconSpan.classList.add('user__account__list-icon');
-    const iconImg = iconCell.querySelector('img');
-    if (iconImg) {
-      const clonedImg = iconImg.cloneNode(true);
-      listIconSpan.append(clonedImg);
+      const iconSpan = document.createElement('span');
+      iconSpan.classList.add('user__account__list-icon');
+      const img = iconCell.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: 'auto' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      iconSpan.append(optimizedPic);
+      a.prepend(iconSpan);
+
+      if (a.textContent.toLowerCase() === 'reach us') {
+        a.classList.add('reach', 'us');
+        a.setAttribute('target', '_self');
+      } else if (a.textContent.toLowerCase() === 'profile') {
+        a.classList.add('profile');
+        a.setAttribute('target', '_self');
+      }
+      userAccount.append(a);
     }
-    accountLink.append(listIconSpan, labelCell.textContent.trim());
-    userAccount.append(accountLink);
   });
 
-  // Sign In button
+  // Sign-in Button
   const signInBtnDiv = document.createElement('div');
   signInBtnDiv.classList.add('user__account--link', 'sign-in-btn');
   const signInIconSpan = document.createElement('span');
   signInIconSpan.classList.add('user__account__list-icon');
   const signInImg = document.createElement('img');
-  // Read src from original HTML if present, otherwise use placeholder
-  signInImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775897422912.svg+xml';
+  signInImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775897422912.svg+xml'; // From original HTML
   signInImg.setAttribute('loading', 'lazy');
   signInImg.alt = 'Sign-in';
   signInIconSpan.append(signInImg);
+
   const signInButton = document.createElement('button');
   signInButton.setAttribute('type', 'button');
   signInButton.setAttribute('data-sign-out-text', 'Sign Out');
@@ -301,8 +368,8 @@ export default function decorate(block) {
   signInWrapper.append(signInBlock);
   rightDiv.append(signInWrapper);
 
-  navbarArena.append(rightDiv);
-  block.append(navbarArena);
+  block.textContent = '';
+  block.append(headerWrapper);
 
   // Mobile Menu
   const mobileMenu = document.createElement('div');
@@ -313,61 +380,76 @@ export default function decorate(block) {
   menuHeader.classList.add('menu-header');
   const backArrow = document.createElement('div');
   backArrow.classList.add('back-arrow');
-  const menuTitleSpan = document.createElement('span');
-  menuTitleSpan.classList.add('menu-title');
-  menuTitleSpan.textContent = 'Menu';
+  const menuTitle = document.createElement('span');
+  menuTitle.classList.add('menu-title');
+  menuTitle.textContent = 'Menu';
   const closeIcon = document.createElement('span');
   closeIcon.classList.add('close-icon');
-  menuHeader.append(backArrow, menuTitleSpan, closeIcon);
+  menuHeader.append(backArrow, menuTitle, closeIcon);
   mobileMenu.append(menuHeader);
 
   const menuList = document.createElement('ul');
   menuList.classList.add('menu-list');
+  mobileMenu.append(menuList);
 
   function createMobileNavItem(item, index) {
     const li = document.createElement('li');
     li.id = `menu-item-${index}`;
-    li.classList.add('nav-link', ...item.label.toLowerCase().replace(/\s/g, '-').split(' '));
+    li.classList.add('nav-link');
 
     const span = document.createElement('span');
     span.classList.add('menu-title');
-    const link = document.createElement('a');
-    link.textContent = item.label;
-    if (item.label.toLowerCase() === 'home' || item.label.toLowerCase() === 'service' || item.label.toLowerCase() === 'important customer info') {
-      link.classList.add('button');
-      link.href = '#'; // Placeholder
-    }
-    span.append(link);
-    li.append(span);
 
     if (item.children && item.children.length > 0) {
-      li.classList.add('accordion');
+      li.classList.add('accordion', item.label.toLowerCase().replace(/\s/g, '-'));
+      span.textContent = item.label;
+      li.append(span);
+
       const panel = document.createElement('div');
       panel.classList.add('panel');
       const linkContainerSection = document.createElement('div');
       linkContainerSection.classList.add('link-container-section');
       const linkGridColumn = document.createElement('div');
-      linkGridColumn.classList.add('link-grid-column', 'link-column-vertical'); // Assuming vertical for mobile
+      linkGridColumn.classList.add('link-grid-column', 'link-column-vertical');
+
+      const hasGrandchildren = item.children.some(child => child.children && child.children.length > 0);
+      if (item.label.toLowerCase() === 'sales' && !hasGrandchildren) {
+        linkGridColumn.classList.remove('link-column-vertical');
+        linkGridColumn.classList.add('link-column-horizontal');
+      }
 
       const ul = document.createElement('ul');
       ul.classList.add('content', 'links-container', 'accordian-content');
+
       item.children.forEach((child) => {
         const childLi = document.createElement('li');
-        const childLink = document.createElement('a');
-        childLink.textContent = child.label;
-        childLink.href = '#'; // Placeholder
-        childLi.append(childLink);
+        const a = document.createElement('a');
+        a.href = '#'; // Placeholder
+        a.textContent = child.label;
+        childLi.append(a);
         ul.append(childLi);
       });
+
       linkGridColumn.append(ul);
       linkContainerSection.append(linkGridColumn);
       panel.append(linkContainerSection);
+      // Append panel to mobileMenu, not li, for correct accordion behavior
       mobileMenu.append(panel);
 
       li.addEventListener('click', () => {
         li.classList.toggle('active');
-        panel.classList.toggle('active');
+        panel.classList.toggle('hidden');
       });
+      panel.classList.add('hidden'); // Initially hide panels
+    } else {
+      li.classList.add(item.label.toLowerCase().replace(/\s/g, '-'));
+      const a = document.createElement('a');
+      a.classList.add('button');
+      a.href = '#'; // Placeholder
+      a.textContent = item.label;
+      a.title = item.label.toLowerCase().replace(/\s/g, '-');
+      span.append(a);
+      li.append(span);
     }
     return li;
   }
@@ -376,23 +458,24 @@ export default function decorate(block) {
     menuList.append(createMobileNavItem(item, index));
   });
 
-  // Mobile Engage Logo
+  // Mobile Engage Logo Link
   const mobileEngageLi = document.createElement('li');
   mobileEngageLi.classList.add('nav-link');
   const mobileEngageSpan = document.createElement('span');
   mobileEngageSpan.classList.add('menu-title');
-  const mobileEngageLink = document.createElement('a');
-  mobileEngageLink.classList.add('logo__picture');
-  const foundMobileEngageLink = engageLogoLinkRow.querySelector('a');
-  if (foundMobileEngageLink) {
-    mobileEngageLink.href = foundMobileEngageLink.href;
+  const mobileEngageAnchor = document.createElement('a');
+  mobileEngageAnchor.classList.add('logo__picture');
+  if (engageHref) {
+    mobileEngageAnchor.href = engageHref;
   }
-  mobileEngageLink.setAttribute('data-logo-name', 'Maruti Suzuki');
-  const mobileEngagePicture = engageLogoRow.querySelector('picture');
-  if (mobileEngagePicture) {
-    mobileEngageLink.append(mobileEngagePicture.cloneNode(true));
+  mobileEngageAnchor.setAttribute('data-logo-name', 'Maruti Suzuki');
+  if (engageLogoPicture) {
+    const img = engageLogoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '79' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    mobileEngageAnchor.append(optimizedPic);
   }
-  mobileEngageSpan.append(mobileEngageLink);
+  mobileEngageSpan.append(mobileEngageAnchor);
   mobileEngageLi.append(mobileEngageSpan);
   menuList.append(mobileEngageLi);
 
@@ -404,39 +487,45 @@ export default function decorate(block) {
     const linkCell = cells.find(cell => cell.querySelector('a'));
     const labelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a'));
 
-    const li = document.createElement('li');
-    const accountLink = document.createElement('a');
-    accountLink.classList.add('user__account--link');
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      accountLink.href = foundLink.href;
-      accountLink.setAttribute('target', '_self');
-      accountLink.classList.add(...labelCell.textContent.toLowerCase().trim().split(' '));
-    }
+    if (iconCell && linkCell && labelCell) {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.classList.add('user__account--link');
+      // The original HTML has class names like 'reach us' and 'profile' based on textContent,
+      // so we should apply them here based on the labelCell's textContent.
+      const labelText = labelCell.textContent.trim().toLowerCase();
+      if (labelText === 'reach us') {
+        a.classList.add('reach', 'us');
+      } else if (labelText === 'profile') {
+        a.classList.add('profile');
+      }
+      a.href = linkCell.querySelector('a').href;
+      a.setAttribute('target', '_self');
 
-    const listIconSpan = document.createElement('span');
-    listIconSpan.classList.add('user__account__list-icon');
-    const iconImg = iconCell.querySelector('img');
-    if (iconImg) {
-      const clonedImg = iconImg.cloneNode(true);
-      listIconSpan.append(clonedImg);
+      const iconSpan = document.createElement('span');
+      iconSpan.classList.add('user__account__list-icon');
+      const img = iconCell.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: 'auto' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      iconSpan.append(optimizedPic);
+      a.append(iconSpan, labelCell.textContent.trim());
+      li.append(a);
+      menuList.append(li);
     }
-    accountLink.append(listIconSpan, labelCell.textContent.trim());
-    li.append(accountLink);
-    menuList.append(li);
   });
 
-  // Mobile Sign In button
+  // Mobile Sign-in Button
   const mobileSignInLi = document.createElement('li');
   const mobileSignInBtnDiv = document.createElement('div');
   mobileSignInBtnDiv.classList.add('user__account--link', 'sign-in-btn');
   const mobileSignInIconSpan = document.createElement('span');
   mobileSignInIconSpan.classList.add('user__account__list-icon');
   const mobileSignInImg = document.createElement('img');
-  mobileSignInImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775897422912.svg+xml'; // Read from original HTML if present
+  mobileSignInImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775897422912.svg+xml'; // From original HTML
   mobileSignInImg.setAttribute('loading', 'lazy');
   mobileSignInImg.alt = 'Sign-in';
   mobileSignInIconSpan.append(mobileSignInImg);
+
   const mobileSignInButton = document.createElement('button');
   mobileSignInButton.setAttribute('type', 'button');
   mobileSignInButton.setAttribute('data-sign-out-text', 'Sign Out');
@@ -445,34 +534,16 @@ export default function decorate(block) {
   mobileSignInLi.append(mobileSignInBtnDiv);
   menuList.append(mobileSignInLi);
 
-  mobileMenu.append(menuList);
   block.append(mobileMenu);
 
   // Event Listeners for mobile menu
   hamburgerButton.addEventListener('click', () => {
     mobileMenu.classList.toggle('hidden');
-    document.body.classList.toggle('menu-open');
+    document.body.classList.toggle('no-scroll');
   });
 
   closeIcon.addEventListener('click', () => {
     mobileMenu.classList.add('hidden');
-    document.body.classList.remove('menu-open');
-  });
-
-  // Event listener for the contact icon phone to toggle the contact-toggle-box
-  contactIconPhone.addEventListener('click', () => {
-    contactToggleBox.classList.toggle('hidden');
-  });
-
-  // Event listener for the sign-in button to toggle the sign-in-wrapper
-  signInBtnDiv.addEventListener('click', () => {
-    signInWrapper.classList.toggle('hidden');
-  });
-
-  // Optimize images
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
+    document.body.classList.remove('no-scroll');
   });
 }
