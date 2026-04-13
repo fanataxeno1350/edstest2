@@ -16,7 +16,14 @@
       "cards",
       "columns",
       "fragment",
-      "---new--blocks-----"
+      "---new--blocks-----",
+      "main-header-rte"
+    ]
+  },
+  {
+    "id": "main-header-rte",
+    "components": [
+      "search-suggestion-item"
     ]
   }
 ]
