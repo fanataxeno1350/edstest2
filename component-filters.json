@@ -51,7 +51,7 @@
     "id": "corp-header-rte",
     "components": [
       "contact-link-item",
-      "account-link-item"
+      "user-account-link-item"
     ]
   },
   {
