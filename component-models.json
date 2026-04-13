@@ -376,9 +376,9 @@
       },
       {
         "component": "container",
-        "item": "sign-in-link-item",
-        "label": "Sign In Links",
-        "name": "signInLinks"
+        "item": "account-link-item",
+        "label": "Account Links",
+        "name": "accountLinks"
       },
       {
         "component": "richtext",
@@ -406,7 +406,7 @@
     ]
   },
   {
-    "id": "sign-in-link-item",
+    "id": "account-link-item",
     "fields": [
       {
         "component": "reference",
