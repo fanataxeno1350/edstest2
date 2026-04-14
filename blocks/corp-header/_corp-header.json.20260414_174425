@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Corp-Header",
+      "title": "Corp Header",
       "id": "corp-header",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "corp-header",
               "model": "corp-header",
-              "name": "Corp-Header"
+              "name": "Corp Header"
             }
           }
         }
       }
     },
     {
-      "title": "Navigation-Item",
+      "title": "Navigation Item",
       "id": "navigation-item",
       "plugins": {
         "xwalk": {
@@ -25,14 +25,14 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "navigation-item",
-              "name": "Navigation-Item"
+              "name": "Navigation Item"
             }
           }
         }
       }
     },
     {
-      "title": "Contact-Link-Item",
+      "title": "Contact Link Item",
       "id": "contact-link-item",
       "plugins": {
         "xwalk": {
@@ -40,14 +40,14 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "contact-link-item",
-              "name": "Contact-Link-Item"
+              "name": "Contact Link Item"
             }
           }
         }
       }
     },
     {
-      "title": "Sign-In-Link-Item",
+      "title": "Sign In Link Item",
       "id": "sign-in-link-item",
       "plugins": {
         "xwalk": {
@@ -55,7 +55,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "sign-in-link-item",
-              "name": "Sign-In-Link-Item"
+              "name": "Sign In Link Item"
             }
           }
         }
@@ -75,20 +75,20 @@
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logoLink",
+          "name": "logo-link",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "navigation-item",
           "label": "Navigation Menu",
-          "name": "navigationMenu"
+          "name": "navigation-menu"
         },
         {
           "component": "container",
           "item": "contact-link-item",
           "label": "Contact Links",
-          "name": "contactLinks"
+          "name": "contact-links"
         },
         {
           "component": "text",
@@ -100,7 +100,7 @@
           "component": "container",
           "item": "sign-in-link-item",
           "label": "Sign In Links",
-          "name": "signInLinks"
+          "name": "sign-in-links"
         }
       ]
     },
