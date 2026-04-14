@@ -475,20 +475,20 @@
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logoLink",
+        "name": "logo-link",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "navigation-item",
         "label": "Navigation Menu",
-        "name": "navigationMenu"
+        "name": "navigation-menu"
       },
       {
         "component": "container",
         "item": "contact-link-item",
         "label": "Contact Links",
-        "name": "contactLinks"
+        "name": "contact-links"
       },
       {
         "component": "text",
@@ -500,7 +500,7 @@
         "component": "container",
         "item": "sign-in-link-item",
         "label": "Sign In Links",
-        "name": "signInLinks"
+        "name": "sign-in-links"
       }
     ]
   },

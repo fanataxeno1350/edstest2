@@ -47,7 +47,7 @@
       }
     },
     {
-      "title": "Sign In Link Item",
+      "title": "Sign-In Link Item",
       "id": "sign-in-link-item",
       "plugins": {
         "xwalk": {
@@ -55,7 +55,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "sign-in-link-item",
-              "name": "Sign In Link Item"
+              "name": "Sign-In Link Item"
             }
           }
         }
@@ -75,20 +75,20 @@
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logo-link",
+          "name": "logoLink",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "navigation-item",
           "label": "Navigation Menu",
-          "name": "navigation-menu"
+          "name": "navigationMenu"
         },
         {
           "component": "container",
           "item": "contact-link-item",
           "label": "Contact Links",
-          "name": "contact-links"
+          "name": "contactLinks"
         },
         {
           "component": "text",
@@ -100,7 +100,7 @@
           "component": "container",
           "item": "sign-in-link-item",
           "label": "Sign In Links",
-          "name": "sign-in-links"
+          "name": "signInLinks"
         }
       ]
     },
