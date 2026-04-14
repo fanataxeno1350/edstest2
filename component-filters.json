@@ -48,10 +48,11 @@
     ]
   },
   {
-    "id": "corp-header-rte",
+    "id": "corp-header",
     "components": [
+      "navigation-item",
       "contact-link-item",
-      "user-account-link-item"
+      "sign-in-link-item"
     ]
   },
   {

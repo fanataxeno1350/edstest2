@@ -336,7 +336,7 @@
     ]
   },
   {
-    "id": "corp-header-rte",
+    "id": "corp-header",
     "fields": [
       {
         "component": "reference",
@@ -352,15 +352,21 @@
       },
       {
         "component": "reference",
-        "label": "Secondary Logo",
-        "name": "secondaryLogo",
+        "label": "Engage Logo",
+        "name": "engageLogo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Secondary Logo Link",
-        "name": "secondaryLogoLink",
+        "label": "Engage Logo Link",
+        "name": "engageLogoLink",
         "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "navigation-item",
+        "label": "Navigation Menu",
+        "name": "navigationMenu"
       },
       {
         "component": "container",
@@ -376,14 +382,31 @@
       },
       {
         "component": "container",
-        "item": "user-account-link-item",
-        "label": "User Account Links",
-        "name": "userAccountLinks"
+        "item": "sign-in-link-item",
+        "label": "Sign In Links",
+        "name": "signInLinks"
+      }
+    ]
+  },
+  {
+    "id": "navigation-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Menu Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Menu Link",
+        "name": "link",
+        "valueType": "string"
       },
       {
         "component": "richtext",
         "label": "Navigation Hierarchy",
-        "name": "text",
+        "name": "hierarchy-tree",
         "valueType": "string"
       }
     ]
@@ -402,11 +425,17 @@
         "label": "Link",
         "name": "link",
         "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "user-account-link-item",
+    "id": "sign-in-link-item",
     "fields": [
       {
         "component": "reference",
@@ -424,6 +453,12 @@
         "component": "text",
         "label": "Label",
         "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
         "valueType": "string"
       }
     ]
