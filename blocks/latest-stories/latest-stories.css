@@ -956,6 +956,168 @@ body .rotate-div{display:flex;} }
 
 .eapps-twitter-feed-color-scheme--dark .eapps-twitter-feed-posts-show-more:hover { background-color:#303131 }
 
+.eui-popover { opacity:0;visibility:hidden }
+
+.eui-popover-content { position:absolute;bottom:100%;right:0;padding-bottom:11px;width:192px;z-index:6 }
+
+.eui-popover-content-inner { position:relative;background:#fff;border-radius:4px;box-shadow:0 4px 16px rgba(0,0,0,0.2) }
+
+.eui-popover-content-item { display:flex;align-items:center;color:#17191a;font-size:13px;font-weight:400;line-height:1;border-top:1px solid #e5e6e7;padding:12px 0;cursor:pointer;transition:all .2s ease;position:relative;text-align:left }
+
+.eui-popover-content-item:first-child { border:none }
+
+.eui-popover-content-item:hover { background:#fafafa;border-radius:4px }
+
+.eui-popover-content-item-icon { height:100%;width:12px;float:left;align-items:center;justify-content:center;display:inline-flex;margin-left:12px }
+
+.eui-popover-content-item-title { display:inline-block;margin-left:12px }
+
+.eui-popover-left .eui-popover-content-inner:before { right:40px;left:auto;margin-left:auto }
+
+.eapps-twitter-feed-posts-item { box-sizing:border-box;opacity:0;width:100%;padding:4px;position:relative }
+
+.eapps-twitter-feed-small .eapps-twitter-feed-posts-item { width:100% }
+
+.eapps-twitter-feed-posts-item-inner { padding:16px;background-color:#fff }
+
+.eapps-twitter-feed-color-scheme--dark .eapps-twitter-feed-posts-item-inner { background-color:#1e1e1e }
+
+.eapps-twitter-feed-posts-item-show { opacity:1 }
+
+.eapps-twitter-feed-posts-item:last-child { margin-bottom:0 }
+
+.eapps-twitter-feed-posts-item-user { display:flex;align-items:center }
+
+.eapps-twitter-feed-posts-item-user a { text-decoration:none;color:currentColor }
+
+.eapps-twitter-feed-posts-item-user a:hover { text-decoration:underline }
+
+.eapps-twitter-feed-posts-item-user-image { position:absolute;width:100% }
+
+.eapps-twitter-feed-posts-item-user-image-container { position:relative;width:40px;height:40px;min-width:40px;border-radius:50%;overflow:hidden;border:1px solid rgba(17,17,17,0.1) }
+
+.eapps-twitter-feed-posts-item-user-name { margin-left:10px;color:#14171a;font-size:14px;line-height:16px;white-space:nowrap;display:flex;flex-direction:column;max-width:80% }
+
+.eapps-twitter-feed-color-scheme--dark .eapps-twitter-feed-posts-item-user-name { color:#e1e1e1 }
+
+.eapps-twitter-feed-posts-item .eapps-twitter-feed-posts-item-user .eapps-twitter-feed-posts-item-user-name a { box-shadow:none;color:currentColor }
+
+.eapps-twitter-feed-posts-item-user-name a:hover { color:currentColor }
+
+.eapps-twitter-feed-posts-item-user-name a span { font-weight:700;overflow:hidden;text-overflow:ellipsis }
+
+.eapps-twitter-feed-posts-item-user-name a { display:flex;align-items:center }
+
+.eapps-twitter-feed-posts-item-user-name-verified { margin-left:4px }
+
+.eapps-twitter-feed-posts-item-user-screen-name { color:#657786;font-size:12px;line-height:18px;display:flex;margin-top:2px }
+
+.eapps-twitter-feed-color-scheme--dark .eapps-twitter-feed-posts-item-user-screen-name { color:rgba(225,225,225,0.7) }
+
+.eapps-twitter-feed-posts-item-user-date { color:#657786;font-size:12px;line-height:18px;position:relative;white-space:nowrap;margin-left:12px }
+
+.eapps-twitter-feed-color-scheme--dark .eapps-twitter-feed-posts-item-user-date { color:rgba(225,225,225,0.7) }
+
+.eapps-twitter-feed-posts-item-user-date:before { content:"";width:2px;height:2px;background-color:#657786;position:absolute;left:-6px;top:50%;transform:translateY(-50%) }
+
+.eapps-twitter-feed-color-scheme--dark .eapps-twitter-feed-posts-item-user-date:before { background-color:rgba(225,225,225,0.7) }
+
+.eapps-twitter-feed-posts-item-user-post { margin-left:auto;transition:.3s ease all;position:absolute;top:16px;right:16px }
+
+.eapps-twitter-feed-post-x-icon-hide .eapps-twitter-feed-posts-item-user-post { display:none }
+
+.eapps-twitter-feed-posts-item-user-post:hover { opacity:1 }
+
+.eapps-twitter-feed-posts-item-text { color:#14171a;font-size:14px;line-height:20px;margin:12px 0 }
+
+.eapps-twitter-feed-color-scheme--dark .eapps-twitter-feed-posts-item-text { color:#e1e1e1 }
+
+.eapps-twitter-feed-posts-item-text a { color:#1da1f2;text-decoration:none }
+
+.eapps-twitter-feed-posts-item-inner .eapps-twitter-feed-posts-item-text a { box-shadow:none }
+
+.eapps-twitter-feed-posts-item-text a:hover { text-decoration:underline }
+
+.eapps-twitter-feed-posts-item-media { margin:-1px;height:0;padding-bottom:0;position:relative;border-radius:10px;overflow:hidden;background:#fafafa }
+
+.eapps-twitter-feed-posts-item-media-show .eapps-twitter-feed-posts-item-media { margin-top:12px }
+
+.eapps-twitter-feed-posts-item-media-visible { padding-bottom:56.25% }
+
+.eapps-twitter-feed-posts-item-media-item { overflow:hidden;box-sizing:border-box;position:relative;cursor:pointer }
+
+.eapps-twitter-feed-posts-item-media-item-image { width:100%;height:100%;opacity:1;object-fit:cover }
+
+.eapps-twitter-feed-posts-item-media-items-1 .eapps-twitter-feed-posts-item-media { width:100%;height:auto;padding-bottom:0 }
+
+.eapps-twitter-feed-posts-item-media-items-1 .eapps-twitter-feed-posts-item-media-item-image { display:block }
+
+.eapps-twitter-feed-posts-item-media-items-3 .eapps-twitter-feed-posts-item-media-item:nth-child(1) { width:calc(50% - 1px);height:auto;position:absolute;top:0;bottom:0;left:0;right:auto }
+
+.eapps-twitter-feed-posts-item-media-items-3 .eapps-twitter-feed-posts-item-media-item:nth-child(2) { width:calc(50% - 1px);height:calc(50% - 1px);position:absolute;top:0;bottom:auto;left:auto;right:0 }
+
+.eapps-twitter-feed-posts-item-media-items-3 .eapps-twitter-feed-posts-item-media-item:nth-child(3) { width:calc(50% - 1px);height:calc(50% - 1px);position:absolute;top:auto;bottom:0;left:auto;right:0 }
+
+.eapps-twitter-feed-posts-item-link { width:100%;min-height:40px;border:1px solid #e1e8ed;border-radius:10px;overflow:hidden;position:relative }
+
+.eapps-twitter-feed-posts-item-link-hide { display:none }
+
+.eapps-twitter-feed-posts-item-link-loader { position:absolute;animation:loader-1-1 4.8s linear infinite;display:block;height:20px;width:20px;color:#e1e8ed }
+
+.eapps-twitter-feed-posts-item-link-loader-container { display:flex;justify-content:center;align-items:center;position:absolute;left:0;top:0;right:0;bottom:0;border-radius:4px }
+
+.eapps-twitter-feed-posts-item-link-loader-inner, .eapps-twitter-feed-posts-item-link-loader-inner:after { display:block;position:absolute;top:0;left:0;bottom:0;right:0;width:100%;height:100%;box-sizing:border-box;border-radius:50%;content:"" }
+
+.eapps-twitter-feed-posts-item-link-loader-inner { clip:rect(0,20px,20px,10px);animation:loader-1-2 1.2s linear infinite }
+
+.eapps-twitter-feed-posts-item-link-loader-inner:after { clip:rect(0,20px,20px,10px);border:3px solid currentColor;animation:loader-1-3 1.2s cubic-bezier(.77,0,.175,1) infinite }
+
+.eapps-twitter-feed-posts-item-actions { margin-top:12px;display:flex }
+
+.eapps-twitter-feed-post-reply-hide.eapps-twitter-feed-post-repost-hide.eapps-twitter-feed-post-like-hide.eapps-twitter-feed-post-share-button-hide .eapps-twitter-feed-posts-item-actions { margin-top:0 }
+
+.eapps-twitter-feed-posts-item-actions-item { display:flex;margin-right:24px;align-items:center;color:#657786;font-size:12px;font-weight:700;line-height:16px;text-transform:uppercase }
+
+.eapps-twitter-feed-color-scheme--dark .eapps-twitter-feed-posts-item-actions-item { color:#e1e1e1 }
+
+.eapps-twitter-feed-posts-item-actions-item-icon, .eapps-twitter-feed-posts-item-actions-item-text { transition:all .2s ease;pointer-events:none }
+
+.eapps-twitter-feed-post-reply-hide .eapps-twitter-feed-posts-item-actions-item-comments { display:none }
+
+.eapps-twitter-feed-posts-item-actions-item-repost { text-decoration:none }
+
+.eapps-twitter-feed-post-repost-hide .eapps-twitter-feed-posts-item-actions-item-repost { display:none }
+
+.eapps-twitter-feed-posts-item-actions-item-repost:hover .eapps-twitter-feed-posts-item-actions-item-text { color:#17bf64 !important }
+
+.eapps-twitter-feed-posts-item-actions-item-likes { text-decoration:none }
+
+.eapps-twitter-feed-post-like-hide .eapps-twitter-feed-posts-item-actions-item-likes { display:none }
+
+.eapps-twitter-feed-posts-item-actions-item-likes:hover .eapps-twitter-feed-posts-item-actions-item-text { color:#e0235e !important }
+
+.eapps-twitter-feed-posts-item-actions-item-share { cursor:pointer;position:relative }
+
+.eapps-twitter-feed-post-share-button-hide .eapps-twitter-feed-posts-item-actions-item-share { display:none }
+
+.eapps-twitter-feed-posts-item-actions-item-share .eui-popover-content-item-title { text-transform:none }
+
+.eapps-twitter-feed-posts-item-actions-item-share:hover { text-decoration:none }
+
+.eapps-twitter-feed-posts-item-actions-item-share:hover .eapps-twitter-feed-posts-item-actions-item-text { color:#32a0c2 !important;text-decoration:none }
+
+.eapps-twitter-feed-posts-item-actions-item-icon { display:flex;justify-content:center;align-items:center;position:relative }
+
+.eapps-twitter-feed-posts-item-actions-item-text { margin-left:6px }
+
+.eapps-twitter-feed-posts-item-actions-item-share .eapps-twitter-feed-posts-item-actions-item-text { color:#657786;text-transform:none;text-decoration:none }
+
+.eapps-twitter-feed-color-scheme--dark .eapps-twitter-feed-posts-item-actions-item-share .eapps-twitter-feed-posts-item-actions-item-text { color:#e1e1e1 }
+
+.eapps-twitter-feed-posts-item-actions-item:last-child { margin-left:auto;margin-right:0 }
+
+.eapps-twitter-feed-posts-item-date { display:none }
+
 #eapps-twitter-feed-1 .eapps-twitter-feed-container { 
         max-width: 100%;
      }
@@ -964,6 +1126,15 @@ body .rotate-div{display:flex;} }
         border-color: rgb(255, 255, 255);
         background-color: rgb(255, 255, 255);
         color: #000;
+     }
+
+#eapps-twitter-feed-1 .eapps-twitter-feed-posts-item-text a { 
+        border-color: rgb(255, 255, 255);
+        color: rgb(255, 255, 255);
+     }
+
+#eapps-twitter-feed-1 .eapps-twitter-feed-posts-item-actions-item-share:hover .eapps-twitter-feed-posts-item-actions-item-text { 
+        color: rgb(255, 255, 255);
      }
 
 #eapps-twitter-feed-1 .eapps-twitter-feed-posts-container, #eapps-twitter-feed-1 .eapps-twitter-feed-container, .eapps-twitter-feed, .eapps-twitter-feed-inner {  height: 100%;  }

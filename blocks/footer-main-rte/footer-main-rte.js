@@ -2,249 +2,269 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [logoRow, logoLinkRow, textRow, ...socialLinkRows] = [...block.children];
+  const children = [...block.children];
 
-  // Create the main footer structure
-  const footerMain = document.createElement('footer');
-  footerMain.classList.add('footer-main');
+  const [logoRow, logoLinkRow, navHierarchyRow, copyrightRow, ...socialLinkRows] = children;
 
   const container = document.createElement('div');
   container.classList.add('container');
-  footerMain.append(container);
 
-  // --- Footer Header (Logo and Social Links) ---
-  const footerHeaderRow = document.createElement('div');
-  footerHeaderRow.classList.add('row', 'footer-header');
-  container.append(footerHeaderRow);
+  const footerHeader = document.createElement('div');
+  footerHeader.classList.add('row', 'footer-header');
 
   const logoCol = document.createElement('div');
   logoCol.classList.add('col-md-6', 'col-12', 'justify-content-between', 'd-flex');
-  footerHeaderRow.append(logoCol);
 
   const logoDiv = document.createElement('div');
   logoDiv.classList.add('logo');
-  logoCol.append(logoDiv);
 
   const logoLink = document.createElement('a');
-  const authoredLogoLink = logoLinkRow.querySelector('a');
-  if (authoredLogoLink) {
-    logoLink.href = authoredLogoLink.href;
-    moveInstrumentation(logoLinkRow, logoLink);
+  const originalLogoLink = logoLinkRow.querySelector('a');
+  if (originalLogoLink) {
+    logoLink.href = originalLogoLink.href;
+    moveInstrumentation(originalLogoLink, logoLink);
   }
 
   const logoPicture = logoRow.querySelector('picture');
   if (logoPicture) {
     const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    logoLink.append(optimizedPic);
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
+      optimizedPic.querySelector('img').classList.add('hiddenlogo1');
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      logoLink.append(optimizedPic);
+    }
   }
   logoDiv.append(logoLink);
+  logoCol.append(logoDiv);
+  footerHeader.append(logoCol);
 
   const socialCol = document.createElement('div');
   socialCol.classList.add('col-md-6', 'col-12', 'footer-social-wrap-center');
-  footerHeaderRow.append(socialCol);
 
   const socialUl = document.createElement('ul');
   socialUl.classList.add('social-wrap');
-  socialCol.append(socialUl);
 
   socialLinkRows.forEach((row) => {
     const li = document.createElement('li');
     moveInstrumentation(row, li);
 
-    const cells = [...row.children];
-    const iconCell = cells.find((cell) => cell.querySelector('picture'));
-    const linkCell = cells.find((cell) => cell.querySelector('a'));
+    const iconCell = row.querySelector('picture');
+    const linkCell = row.querySelector('a');
 
     if (iconCell && linkCell) {
       const link = document.createElement('a');
-      const authoredLink = linkCell.querySelector('a');
-      if (authoredLink) {
-        link.href = authoredLink.href;
-        link.target = '_blank'; // Assuming social links open in new tab
-      }
+      link.href = linkCell.href;
+      link.target = '_blank'; // Assuming social links open in new tab
 
-      const iconPicture = iconCell.querySelector('picture');
-      if (iconPicture) {
-        const img = iconPicture.querySelector('img');
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '30' }]); // Adjust width as needed
+      const img = iconCell.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '40' }]); // Adjust width as needed
         moveInstrumentation(img, optimizedPic.querySelector('img'));
         link.append(optimizedPic);
       }
       li.append(link);
 
-      // Add specific classes based on content if needed, e.g., 'fb', 'tw'
-      // This would require more sophisticated content detection or specific model fields
-      // For now, just add a generic class if no specific one can be inferred.
-      if (link.href.includes('facebook')) li.classList.add('fb');
-      if (link.href.includes('twitter')) li.classList.add('tw');
-      if (link.href.includes('instagram')) li.classList.add('inst');
-      if (link.href.includes('youtube')) li.classList.add('yt');
-      if (link.href.includes('linkedin')) li.classList.add('in');
+      // Add specific classes for social icons if detectable (e.g., from alt text or href)
+      const iconName = img?.alt?.toLowerCase();
+      if (iconName?.includes('facebook')) li.classList.add('fb');
+      else if (iconName?.includes('twitter')) li.classList.add('tw');
+      else if (iconName?.includes('instagram')) li.classList.add('inst');
+      else if (iconName?.includes('youtube')) li.classList.add('yt');
+      else if (iconName?.includes('linkedin')) li.classList.add('in');
     }
     socialUl.append(li);
   });
+  socialCol.append(socialUl);
+  footerHeader.append(socialCol);
+  container.append(footerHeader);
 
-  // --- Footer Menu (Navigation Hierarchy) ---
-  const footerMenuRow = document.createElement('div');
-  footerMenuRow.classList.add('row', 'footer-menu-box');
-  container.append(footerMenuRow);
+  // Navigation Hierarchy
+  function parseNavTree(ul) {
+    return [...ul.querySelectorAll(':scope > li')].map((li) => {
+      let labelElement = null;
+      let linkHref = null;
+      const children = [];
+
+      for (const node of li.childNodes) {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          if (node.tagName === 'A') {
+            labelElement = node.cloneNode(true); // Keep the link structure
+            linkHref = node.href;
+          } else if (node.tagName === 'UL') {
+            children.push(...parseNavTree(node));
+          } else if (node.tagName !== 'UL') { // Handle other elements like <span> or <p> if they exist
+            if (!labelElement) { // If no link, just get text content
+              labelElement = document.createElement('span');
+              labelElement.innerHTML = node.outerHTML;
+            }
+          }
+        } else if (node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== '') {
+          if (!labelElement) { // If no link or other element, just get text content
+            labelElement = document.createElement('span');
+            labelElement.textContent = node.textContent.trim();
+          }
+        }
+      }
+
+      // If no explicit label element was found, but there's text content in the li, create a span
+      if (!labelElement && li.textContent.trim() !== '') {
+        labelElement = document.createElement('span');
+        labelElement.textContent = li.textContent.trim().split('\n')[0]; // Take first line as label
+      }
+
+      return { labelElement, linkHref, children };
+    });
+  }
+
+  function renderNavItems(items, parentContainer, isRoot = false) {
+    items.forEach((item) => {
+      const li = document.createElement('li');
+      const labelContent = item.labelElement || document.createElement('span'); // Fallback if labelElement is null
+
+      if (item.children.length > 0) {
+        // Parent item with children
+        const headDiv = document.createElement('div');
+        headDiv.classList.add('head');
+
+        const spanWrapper = document.createElement('span');
+        if (item.linkHref) {
+          const link = document.createElement('a');
+          link.href = item.linkHref;
+          link.innerHTML = labelContent.innerHTML; // Use innerHTML to preserve any nested structure like <img>
+          spanWrapper.append(link);
+        } else {
+          spanWrapper.append(labelContent);
+        }
+
+        const toggle = document.createElement('small');
+        toggle.setAttribute('data-once', 'footerMobileInner');
+        toggle.setAttribute('aria-expanded', 'false');
+
+        const submenu = document.createElement('ul');
+        submenu.classList.add('footer-inner-list');
+
+        renderNavItems(item.children, submenu); // RECURSIVE call
+
+        toggle.addEventListener('click', () => {
+          const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', !isOpen);
+          submenu.classList.toggle('show');
+        });
+
+        spanWrapper.append(toggle);
+        headDiv.append(spanWrapper); // Append spanWrapper to headDiv
+        li.append(headDiv, submenu); // Append headDiv and submenu to li
+        li.classList.add('link-blocks'); // Apply link-blocks to the parent li
+      } else {
+        // Leaf item
+        if (item.linkHref) {
+          const link = document.createElement('a');
+          link.href = item.linkHref;
+          link.innerHTML = labelContent.innerHTML;
+          li.append(link);
+        } else {
+          li.append(labelContent);
+        }
+      }
+      parentContainer.append(li);
+    });
+  }
+
+  const footerMenuBox = document.createElement('div');
+  footerMenuBox.classList.add('row', 'footer-menu-box');
 
   const footerMenuCol = document.createElement('div');
   footerMenuCol.classList.add('col');
-  footerMenuRow.append(footerMenuCol);
 
   const footerMenu = document.createElement('div');
   footerMenu.classList.add('footer-menu');
-  footerMenuCol.append(footerMenu);
 
-  function parseNavTree(ul) {
-    return [...ul.querySelectorAll(':scope > li')].map((li) => {
-      let labelHtml = '';
-      for (const node of li.childNodes) {
-        if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'UL') {
-          // Skip nested ULs when extracting label
-          continue;
-        }
-        labelHtml += node.outerHTML || node.textContent;
-      }
-      labelHtml = labelHtml.trim();
-
-      const childUl = li.querySelector(':scope > ul');
-      return { label: labelHtml, children: childUl ? parseNavTree(childUl) : [] };
-    });
-  }
-
-  function renderNavItems(items, parentContainer, depth = 0) {
-    items.forEach((item) => {
-      const linkBlocks = document.createElement('div');
-      linkBlocks.classList.add('link-blocks');
-
-      const head = document.createElement('div');
-      head.classList.add('head');
-      linkBlocks.append(head);
-
-      const span = document.createElement('span');
-      head.append(span);
-
-      // Use a temp div to parse the label HTML, which might contain an <a> tag
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = item.label;
-      const linkInLabel = tempDiv.querySelector('a');
-
-      if (linkInLabel) {
-        const a = document.createElement('a');
-        a.href = linkInLabel.href;
-        a.textContent = linkInLabel.textContent;
-        if (linkInLabel.target) a.target = linkInLabel.target;
-        span.append(a);
-      } else {
-        span.textContent = item.label;
-      }
-
-      if (item.children.length > 0) {
-        const smallToggle = document.createElement('small');
-        smallToggle.setAttribute('data-once', 'footerMobileInner'); // From original HTML
-        span.append(smallToggle);
-
-        const ul = document.createElement('ul');
-        ul.classList.add('footer-inner-list'); // From original HTML
-
-        // RECURSIVE rendering for children
-        renderNavItems(item.children, ul, depth + 1);
-        head.append(ul);
-
-        // Add toggle behavior for the head span
-        smallToggle.addEventListener('click', () => {
-          ul.classList.toggle('show'); // Or a class that shows/hides the submenu
-          smallToggle.classList.toggle('active'); // Example: add an active class to the toggle
-        });
-      }
-      parentContainer.append(linkBlocks);
-    });
-  }
-
-  const textCell = textRow?.querySelector('div');
+  const textCell = navHierarchyRow?.querySelector('div');
   const temp = document.createElement('div');
   temp.innerHTML = textCell?.innerHTML ?? '';
   const rootUl = temp.querySelector('ul');
   const navItems = rootUl ? parseNavTree(rootUl) : [];
 
-  renderNavItems(navItems, footerMenu);
+  const navContainer = document.createElement('div'); // This will hold the top-level link-blocks
+  navItems.forEach(item => {
+    const linkBlock = document.createElement('div');
+    linkBlock.classList.add('link-blocks');
 
+    const headDiv = document.createElement('div');
+    headDiv.classList.add('head');
 
-  // --- Copyright Section ---
-  const copyrightRow = document.createElement('div');
-  copyrightRow.classList.add('row', 'align-items-lg-end', 'copyright-wrap');
-  container.append(copyrightRow);
+    const spanWrapper = document.createElement('span');
+    if (item.linkHref) {
+      const labelLink = document.createElement('a');
+      labelLink.href = item.linkHref;
+      labelLink.innerHTML = item.labelElement.innerHTML;
+      spanWrapper.append(labelLink);
+    } else {
+      spanWrapper.append(item.labelElement);
+    }
+
+    if (item.children.length > 0) {
+      const toggle = document.createElement('small');
+      toggle.setAttribute('data-once', 'footerMobileInner');
+      toggle.setAttribute('aria-expanded', 'false');
+
+      const submenu = document.createElement('ul');
+      submenu.classList.add('footer-inner-list');
+      renderNavItems(item.children, submenu);
+
+      toggle.addEventListener('click', () => {
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', !isOpen);
+        submenu.classList.toggle('show');
+      });
+      spanWrapper.append(toggle);
+      headDiv.append(spanWrapper, submenu); // Append submenu directly to headDiv
+    } else {
+      headDiv.append(spanWrapper);
+    }
+    linkBlock.append(headDiv);
+    footerMenu.append(linkBlock);
+  });
+
+  footerMenuCol.append(footerMenu);
+  footerMenuBox.append(footerMenuCol);
+  container.append(footerMenuBox);
+
+  // Copyright section
+  const copyrightWrap = document.createElement('div');
+  copyrightWrap.classList.add('row', 'align-items-lg-end', 'copyright-wrap');
 
   const secondaryNavCol = document.createElement('div');
   secondaryNavCol.classList.add('col-12', 'col-lg-6');
-  copyrightRow.append(secondaryNavCol);
-
-  const secondaryNavUl = document.createElement('ul');
-  secondaryNavUl.classList.add('secondary-nav');
-  secondaryNavCol.append(secondaryNavUl);
-
-  // Extract secondary nav links from the original HTML structure if available
-  // Assuming the secondary nav links are part of the original HTML and not dynamic from EDS
-  const originalSecondaryNav = document.querySelector('.secondary-nav');
-  if (originalSecondaryNav) {
-    [...originalSecondaryNav.children].forEach((originalLi) => {
-      const li = document.createElement('li');
-      const a = originalLi.querySelector('a');
-      if (a) {
-        const newA = document.createElement('a');
-        newA.href = a.href;
-        newA.textContent = a.textContent;
-        if (a.target) newA.target = a.target;
-        li.append(newA);
-      } else {
-        li.textContent = originalLi.textContent;
-      }
-      secondaryNavUl.append(li);
-    });
-  } else {
-    // Fallback to hardcoded if not found in original HTML (though it should be)
-    const secondaryLinks = [
-      { label: 'Terms of use', href: 'https://www.mahindra.com/terms-of-use' },
-      { label: 'Disclaimer', href: 'https://www.mahindra.com/disclaimer' },
-      { label: 'Privacy Policy', href: 'https://www.mahindra.com/privacy-policy' },
-      { label: 'Sitemap', href: 'https://www.mahindra.com/sitemap' },
-      { label: 'Contact Us', href: 'https://www.mahindra.com/contact-us' },
-    ];
-
-    secondaryLinks.forEach((item) => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.href = item.href;
-      a.textContent = item.label;
-      li.append(a);
-      secondaryNavUl.append(li);
-    });
+  // The EDS block structure doesn't provide explicit fields for secondary nav links,
+  // so we'll omit them for now as per the prompt's focus on provided fields.
+  // If they were in the richtext, we'd parse them.
+  // Based on ORIGINAL HTML, secondary nav is a separate <ul> within this col.
+  const originalSecondaryNavUl = copyrightRow.querySelector('ul.secondary-nav');
+  if (originalSecondaryNavUl) {
+    const secondaryNavUl = originalSecondaryNavUl.cloneNode(true);
+    secondaryNavCol.append(secondaryNavUl);
   }
 
 
   const copyrightTextCol = document.createElement('div');
   copyrightTextCol.classList.add('col-12', 'col-lg-6', 'copyright-text');
-  // Extract copyright text from original HTML if available, otherwise use hardcoded
-  const originalCopyrightText = document.querySelector('.copyright-text');
-  if (originalCopyrightText) {
-    copyrightTextCol.innerHTML = originalCopyrightText.innerHTML;
-  } else {
-    copyrightTextCol.textContent = 'Copyright© 2026 Mahindra&Mahindra Ltd. All Rights Reserved.'; // Hardcoded from original HTML
+  const copyrightDiv = copyrightRow.querySelector('div');
+  if (copyrightDiv) {
+    moveInstrumentation(copyrightDiv, copyrightTextCol);
+    // Ensure only the text content is taken, not the secondary nav if it was accidentally parsed here
+    const pTag = copyrightDiv.querySelector('p');
+    if (pTag) {
+      copyrightTextCol.innerHTML = pTag.innerHTML;
+    } else {
+      copyrightTextCol.innerHTML = copyrightDiv.innerHTML;
+    }
   }
-  copyrightRow.append(copyrightTextCol);
-
-
-  // Optimize images
-  footerMain.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
+  copyrightWrap.append(secondaryNavCol, copyrightTextCol);
+  container.append(copyrightWrap);
 
   block.textContent = '';
-  block.append(footerMain);
+  block.classList.add('footer-main'); // Add the main footer class to the block itself
+  block.append(container);
 }

@@ -59,12 +59,6 @@
           "label": "Navigation Hierarchy",
           "name": "text",
           "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Copyright Text",
-          "name": "copyright",
-          "valueType": "string"
         }
       ]
     },

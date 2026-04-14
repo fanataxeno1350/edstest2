@@ -2,126 +2,92 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [headingRow, descriptionRow, ...itemRows] = [...block.children];
+  const [headingRow, descriptionRow, ...cardRows] = [...block.children];
+
+  const container = document.createElement('div');
+  container.classList.add('container');
 
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
 
   // Heading
-  if (headingRow) {
-    const headingCell = headingRow.querySelector('div');
-    if (headingCell) {
-      const h2 = document.createElement('h2');
-      h2.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-      h2.setAttribute('data-aos-easing', 'ease-in-out');
-      h2.setAttribute('data-aos', 'fade-up');
-      h2.setAttribute('data-aos-delay', '200');
-      moveInstrumentation(headingCell, h2);
-      h2.innerHTML = headingCell.innerHTML;
-      sectionHeader.append(h2);
-    }
-  }
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  moveInstrumentation(headingRow.firstElementChild, heading);
+  heading.innerHTML = headingRow.firstElementChild.innerHTML;
+  sectionHeader.append(heading);
 
   // Description
-  if (descriptionRow) {
-    const descriptionCell = descriptionRow.querySelector('div');
-    if (descriptionCell) {
-      const p = document.createElement('p');
-      p.classList.add('aos-init', 'aos-animate');
-      p.setAttribute('data-aos', 'fade-up');
-      p.setAttribute('data-aos-offset', '100');
-      p.setAttribute('data-aos-duration', '650');
-      p.setAttribute('data-aos-easing', 'ease-in-out');
-      moveInstrumentation(descriptionCell, p);
-      p.innerHTML = descriptionCell.innerHTML;
-      sectionHeader.append(p);
-    }
-  }
+  const description = document.createElement('p');
+  description.classList.add('aos-init', 'aos-animate');
+  moveInstrumentation(descriptionRow.firstElementChild, description);
+  description.innerHTML = descriptionRow.firstElementChild.innerHTML;
+  sectionHeader.append(description);
 
-  const gridContainer = document.createElement('div');
-  gridContainer.classList.add('row', 'g-4', 'purpose-led-grid', 'pt-3');
+  container.append(sectionHeader);
 
-  itemRows.forEach((row) => {
+  // Grid
+  const gridRow = document.createElement('div');
+  gridRow.classList.add('row', 'g-4', 'purpose-led-grid', 'pt-3');
+
+  cardRows.forEach((row) => {
+    const cells = [...row.children]; // Convert HTMLCollection to array for easier content detection
+
     const col = document.createElement('div');
     col.classList.add('col-md-6', 'aos-init', 'aos-animate');
-    col.setAttribute('data-aos-easing', 'ease-in-out');
-    col.setAttribute('data-aos', 'fade-up');
-    col.setAttribute('data-aos-delay', '700');
     moveInstrumentation(row, col);
 
-    const cells = [...row.children];
-    const imageCell = cells.find((cell) => cell.querySelector('picture'));
-    const linkCell = cells.find((cell) => cell.querySelector('a'));
-    const altTextCell = cells.find((cell) => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim() !== '' && !cell.querySelector('ul'));
-    const textCell = cells.find((cell) => cell.querySelector('ul')); // Richtext for the nav tree
+    // Find the link cell
+    const linkCell = cells.find(cell => cell.querySelector('a'));
+    const cardLinkEl = linkCell?.querySelector('a');
 
-    if (linkCell) {
-      const link = linkCell.querySelector('a');
-      const cardWrap = document.createElement('a');
-      cardWrap.classList.add('card-wrap');
-      cardWrap.href = link?.href || '#';
-      cardWrap.target = '_blank'; // Original HTML uses target="_blank"
-      moveInstrumentation(linkCell, cardWrap);
-
-      if (imageCell) {
-        const cardImage = document.createElement('div');
-        cardImage.classList.add('card-image');
-        const picture = imageCell.querySelector('picture');
-        if (picture) {
-          const img = picture.querySelector('img');
-          // Use img.alt as fallback for altTextCell if it's empty
-          const altText = altTextCell?.textContent.trim() || img.alt;
-          const optimizedPic = createOptimizedPicture(img.src, altText, false, [{ width: '576' }], [{ media: '(max-width: 576px)', width: '576' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          cardImage.append(optimizedPic);
-        }
-        cardWrap.append(cardImage);
-      }
-
-      if (textCell) {
-        const cardText = document.createElement('div');
-        cardText.classList.add('card-text');
-
-        // The original HTML only shows <p class="desc"> within card-text.
-        // It does not show a nested navigation tree.
-        // Therefore, we will extract the text content from the first <li> of the root <ul>
-        // and render it as a simple <p> tag, preserving line breaks.
-        const temp = document.createElement('div');
-        temp.innerHTML = textCell?.innerHTML ?? '';
-        const rootUl = temp.querySelector('ul');
-
-        if (rootUl) {
-          const firstLi = rootUl.querySelector(':scope > li');
-          if (firstLi) {
-            let label = '';
-            for (const node of firstLi.childNodes) {
-              if (node.nodeType === Node.TEXT_NODE) {
-                label += node.textContent.trim();
-              } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'UL') {
-                label += node.textContent.trim();
-              }
-            }
-            label = label.trim();
-            const p = document.createElement('p');
-            p.classList.add('desc');
-            p.innerHTML = label.replace(/\n/g, '<br>'); // Preserve line breaks
-            cardText.append(p);
-          }
-        } else {
-          // Fallback if no list is parsed, or if it's just plain text
-          const p = document.createElement('p');
-          p.classList.add('desc');
-          moveInstrumentation(textCell, p);
-          p.innerHTML = textCell.innerHTML; // Copy original content if not a list
-          cardText.append(p);
-        }
-        cardWrap.append(cardText);
-      }
-      col.append(cardWrap);
+    const cardWrap = document.createElement('a');
+    cardWrap.classList.add('card-wrap');
+    if (cardLinkEl) {
+      cardWrap.href = cardLinkEl.href;
+      cardWrap.target = '_blank'; // Assuming target="_blank" from original HTML
     }
-    gridContainer.append(col);
+
+    const cardImageDiv = document.createElement('div');
+    cardImageDiv.classList.add('card-image');
+
+    // Find the image cell
+    const imageCell = cells.find(cell => cell.querySelector('picture'));
+    if (imageCell && imageCell.querySelector('picture')) {
+      const picture = imageCell.querySelector('picture');
+      const img = picture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      cardImageDiv.append(optimizedPic);
+    }
+
+    const cardTextDiv = document.createElement('div');
+    cardTextDiv.classList.add('card-text');
+
+    // Find the text cell (which contains the UL)
+    const textCell = cells.find(cell => cell.querySelector('ul'));
+    if (textCell) {
+      const p = document.createElement('p');
+      p.classList.add('desc');
+      // The RTE content is a UL, we need to extract the text content and preserve line breaks
+      // Use innerHTML and then textContent to get all text, then replace UL/LI structure with line breaks
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = textCell.innerHTML;
+
+      // Replace <li> with its text content followed by a newline, and <ul> with its content
+      // This is a simplified approach to get text content with line breaks for the <p> tag
+      let textContent = tempDiv.textContent || '';
+      // Clean up multiple newlines and trim
+      p.textContent = textContent.replace(/\s*\n\s*/g, '\n').trim();
+      cardTextDiv.append(p);
+    }
+
+    cardWrap.append(cardImageDiv, cardTextDiv);
+    col.append(cardWrap);
+    gridRow.append(col);
   });
 
+  container.append(gridRow);
   block.textContent = '';
-  block.append(sectionHeader, gridContainer);
+  block.append(container);
 }

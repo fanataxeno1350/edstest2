@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "What-We-Do-Wrap",
-      "id": "what-we-do-wrap",
+      "title": "Purpose-Led-Grid",
+      "id": "purpose-led-grid",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "what-we-do-wrap",
-              "model": "what-we-do-wrap",
-              "name": "What-We-Do-Wrap"
+              "filter": "purpose-led-grid",
+              "model": "purpose-led-grid",
+              "name": "Purpose-Led-Grid"
             }
           }
         }
       }
     },
     {
-      "title": "Business-Vertical",
-      "id": "business-vertical",
+      "title": "Purpose-Led-Grid-Item",
+      "id": "purpose-led-grid-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "business-vertical",
-              "name": "Business-Vertical"
+              "model": "purpose-led-grid-item",
+              "name": "Purpose-Led-Grid-Item"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "what-we-do-wrap",
+      "id": "purpose-led-grid",
       "fields": [
         {
           "component": "text",
@@ -50,14 +50,14 @@
         },
         {
           "component": "container",
-          "item": "business-vertical",
-          "label": "Business Verticals",
-          "name": "businessVerticals"
+          "item": "purpose-led-grid-item",
+          "label": "Cards",
+          "name": "items"
         }
       ]
     },
     {
-      "id": "business-vertical",
+      "id": "purpose-led-grid-item",
       "fields": [
         {
           "component": "reference",
@@ -67,14 +67,8 @@
         },
         {
           "component": "text",
-          "label": "Title",
-          "name": "title",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Icon",
-          "name": "icon",
+          "label": "Alt Text",
+          "name": "altText",
           "valueType": "string"
         },
         {
@@ -82,15 +76,21 @@
           "label": "Link",
           "name": "link",
           "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
         }
       ]
     }
   ],
   "filters": [
     {
-      "id": "what-we-do-wrap",
+      "id": "purpose-led-grid",
       "components": [
-        "business-vertical"
+        "purpose-led-grid-item"
       ]
     }
   ]

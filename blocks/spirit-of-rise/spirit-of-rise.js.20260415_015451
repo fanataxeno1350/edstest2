@@ -1,0 +1,94 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, subheadingRow, ...cardRows] = [...block.children];
+
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  moveInstrumentation(headingRow.firstElementChild, heading);
+  heading.textContent = headingRow.firstElementChild?.textContent.trim() || '';
+  sectionHeader.append(heading);
+
+  const subheading = document.createElement('p');
+  subheading.classList.add('aos-init', 'aos-animate');
+  moveInstrumentation(subheadingRow.firstElementChild, subheading);
+  subheading.textContent = subheadingRow.firstElementChild?.textContent.trim() || '';
+  sectionHeader.append(subheading);
+
+  const performanceDriven = document.createElement('div');
+  performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+
+  const performaceDrivenCards = document.createElement('div');
+  performaceDrivenCards.classList.add('performace-driven-cards');
+
+  cardRows.forEach((row) => {
+    const cells = [...row.children];
+    let imageCell;
+    let linkCell;
+    let textCell;
+
+    cells.forEach((cell) => {
+      if (cell.querySelector('picture')) {
+        imageCell = cell;
+      } else if (cell.querySelector('a')) {
+        linkCell = cell;
+      } else {
+        textCell = cell;
+      }
+    });
+
+    const linkEl = document.createElement('a');
+    linkEl.classList.add('performace-driven-cards-link');
+    moveInstrumentation(linkCell, linkEl);
+    const originalLink = linkCell.querySelector('a');
+    if (originalLink) {
+      linkEl.href = originalLink.href;
+      if (originalLink.target) linkEl.target = originalLink.target;
+    }
+
+    const cardWrapper = document.createElement('div');
+    cardWrapper.classList.add('performace-driven-card-wrapper');
+
+    if (imageCell) {
+      const cardImage = document.createElement('div');
+      cardImage.classList.add('card-image');
+      moveInstrumentation(imageCell, cardImage);
+      while (imageCell.firstChild) cardImage.append(imageCell.firstChild);
+      cardWrapper.append(cardImage);
+    }
+
+    if (textCell) {
+      const performaceDrivenHomeBoxCard = document.createElement('div');
+      performaceDrivenHomeBoxCard.classList.add('performace-driven-home-box-card');
+
+      const desc = document.createElement('p');
+      desc.classList.add('desc');
+      moveInstrumentation(textCell, desc);
+      while (textCell.firstChild) desc.append(textCell.firstChild);
+      performaceDrivenHomeBoxCard.append(desc);
+      cardWrapper.append(performaceDrivenHomeBoxCard);
+    }
+
+    linkEl.append(cardWrapper);
+    performaceDrivenCards.append(linkEl);
+  });
+
+  container.append(performaceDrivenCards);
+  performanceDriven.append(container);
+
+  block.textContent = '';
+  block.append(sectionHeader, performanceDriven);
+
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+}

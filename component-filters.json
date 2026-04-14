@@ -57,14 +57,13 @@
   {
     "id": "latest-stories",
     "components": [
-      "twitter-embed-item",
-      "story-item"
+      "story"
     ]
   },
   {
     "id": "main-header-rte",
     "components": [
-      "search-suggestion-item"
+      "search-image"
     ]
   },
   {
@@ -91,7 +90,7 @@
   {
     "id": "purpose-led-grid",
     "components": [
-      "purpose-led-grid-item"
+      "purpose-led-card"
     ]
   },
   {
@@ -103,26 +102,26 @@
   {
     "id": "spirit-of-rise",
     "components": [
-      "performace-driven-card"
+      "spirit-of-rise-card"
     ]
   },
   {
     "id": "spotlight-home-wrap",
     "components": [
       "spotlight-slide",
-      "quick-link-item"
+      "quick-link"
     ]
   },
   {
     "id": "what-we-do-wrap",
     "components": [
-      "business-vertical-item"
+      "business-vertical"
     ]
   },
   {
     "id": "work-with-us",
     "components": [
-      "work-with-us-slide"
+      "work-with-us-item"
     ]
   }
 ]

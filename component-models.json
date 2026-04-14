@@ -201,6 +201,12 @@
         "label": "Navigation Hierarchy",
         "name": "text",
         "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Copyright Text",
+        "name": "copyright",
+        "valueType": "string"
       }
     ]
   },
@@ -359,23 +365,14 @@
       },
       {
         "component": "container",
-        "item": "twitter-embed-item",
-        "label": "Twitter Feed",
-        "name": "twitterFeed"
-      },
-      {
-        "component": "container",
-        "item": "story-item",
+        "item": "story",
         "label": "Stories",
         "name": "stories"
       }
     ]
   },
   {
-    "id": "twitter-embed-item"
-  },
-  {
-    "id": "story-item",
+    "id": "story",
     "fields": [
       {
         "component": "reference",
@@ -397,12 +394,12 @@
       },
       {
         "component": "aem-content",
-        "label": "Read More Link",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       },
       {
-        "component": "date-time",
+        "component": "text",
         "label": "Date",
         "name": "date",
         "valueType": "string"
@@ -427,49 +424,25 @@
       {
         "component": "reference",
         "label": "80th Year Logo",
-        "name": "yearLogo",
+        "name": "year80Logo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "80th Year Logo Link",
-        "name": "yearLogoLink",
+        "name": "year80LogoLink",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "search-suggestion-item",
-        "label": "Popular Search Suggestions",
-        "name": "searchSuggestionsPopular"
-      },
-      {
-        "component": "container",
-        "item": "search-suggestion-item",
-        "label": "Recommended Search Suggestions",
-        "name": "searchSuggestionsRecommended"
+        "item": "search-image",
+        "label": "Search Images",
+        "name": "searchImages"
       },
       {
         "component": "aem-content",
         "label": "Contact Link",
         "name": "contactLink",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Press Release Link",
-        "name": "pressReleaseLink",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Media Resources Link",
-        "name": "mediaResourcesLink",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "In The News Link",
-        "name": "inTheNewsLink",
         "valueType": "string"
       },
       {
@@ -481,12 +454,12 @@
     ]
   },
   {
-    "id": "search-suggestion-item",
+    "id": "search-image",
     "fields": [
       {
-        "component": "text",
-        "label": "Suggestion",
-        "name": "suggestion",
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
         "valueType": "string"
       }
     ]
@@ -769,14 +742,14 @@
       },
       {
         "component": "container",
-        "item": "purpose-led-grid-item",
+        "item": "purpose-led-card",
         "label": "Cards",
-        "name": "items"
+        "name": "cards"
       }
     ]
   },
   {
-    "id": "purpose-led-grid-item",
+    "id": "purpose-led-card",
     "fields": [
       {
         "component": "reference",
@@ -785,14 +758,8 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Alt Text",
-        "name": "altText",
-        "valueType": "string"
-      },
-      {
         "component": "aem-content",
-        "label": "Link",
+        "label": "Card Link",
         "name": "link",
         "valueType": "string"
       },
@@ -842,21 +809,21 @@
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Description",
         "name": "description",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "performace-driven-card",
+        "item": "spirit-of-rise-card",
         "label": "Cards",
         "name": "cards"
       }
     ]
   },
   {
-    "id": "performace-driven-card",
+    "id": "spirit-of-rise-card",
     "fields": [
       {
         "component": "reference",
@@ -866,13 +833,13 @@
       },
       {
         "component": "aem-content",
-        "label": "Card Link",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Card Description",
+        "component": "richtext",
+        "label": "Description",
         "name": "description",
         "valueType": "string"
       }
@@ -889,9 +856,21 @@
       },
       {
         "component": "container",
-        "item": "quick-link-item",
+        "item": "quick-link",
         "label": "Quick Links",
         "name": "quickLinks"
+      },
+      {
+        "component": "reference",
+        "label": "Previous Button Icon",
+        "name": "prevButtonIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Next Button Icon",
+        "name": "nextButtonIcon",
+        "valueType": "string"
       }
     ]
   },
@@ -900,25 +879,25 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Main Image",
-        "name": "mainImage",
+        "label": "Image",
+        "name": "image",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "Image Alt Text",
-        "name": "altText",
+        "name": "imageAlt",
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Heading",
         "name": "heading",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Subheading",
+        "component": "richtext",
+        "label": "Subheading / Small Text",
         "name": "subheading",
         "valueType": "string"
       },
@@ -933,17 +912,11 @@
         "label": "CTA Link",
         "name": "ctaLink",
         "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "CTA Label",
-        "name": "ctaLabel",
-        "valueType": "string"
       }
     ]
   },
   {
-    "id": "quick-link-item",
+    "id": "quick-link",
     "fields": [
       {
         "component": "aem-content",
@@ -953,8 +926,8 @@
       },
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
+        "label": "Link Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
@@ -969,21 +942,21 @@
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Description",
         "name": "description",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "business-vertical-item",
+        "item": "business-vertical",
         "label": "Business Verticals",
         "name": "businessVerticals"
       }
     ]
   },
   {
-    "id": "business-vertical-item",
+    "id": "business-vertical",
     "fields": [
       {
         "component": "reference",
@@ -1022,31 +995,19 @@
       },
       {
         "component": "container",
-        "item": "work-with-us-slide",
-        "label": "Slides",
-        "name": "slides"
+        "item": "work-with-us-item",
+        "label": "Items",
+        "name": "items"
       }
     ]
   },
   {
-    "id": "work-with-us-slide",
+    "id": "work-with-us-item",
     "fields": [
       {
         "component": "reference",
         "label": "Image",
         "name": "image",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Image Alt Text",
-        "name": "imageAlt",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Image Title",
-        "name": "imageTitle",
         "valueType": "string"
       },
       {
@@ -1064,13 +1025,7 @@
       {
         "component": "aem-content",
         "label": "CTA Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "CTA Label",
-        "name": "linkLabel",
+        "name": "ctaLink",
         "valueType": "string"
       }
     ]

@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Purpose-Led-Grid-Item",
-      "id": "purpose-led-grid-item",
+      "title": "Purpose-Led-Card",
+      "id": "purpose-led-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "purpose-led-grid-item",
-              "name": "Purpose-Led-Grid-Item"
+              "model": "purpose-led-card",
+              "name": "Purpose-Led-Card"
             }
           }
         }
@@ -50,14 +50,14 @@
         },
         {
           "component": "container",
-          "item": "purpose-led-grid-item",
+          "item": "purpose-led-card",
           "label": "Cards",
-          "name": "items"
+          "name": "cards"
         }
       ]
     },
     {
-      "id": "purpose-led-grid-item",
+      "id": "purpose-led-card",
       "fields": [
         {
           "component": "reference",
@@ -66,14 +66,8 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Alt Text",
-          "name": "altText",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Card Link",
           "name": "link",
           "valueType": "string"
         },
@@ -90,7 +84,7 @@
     {
       "id": "purpose-led-grid",
       "components": [
-        "purpose-led-grid-item"
+        "purpose-led-card"
       ]
     }
   ]

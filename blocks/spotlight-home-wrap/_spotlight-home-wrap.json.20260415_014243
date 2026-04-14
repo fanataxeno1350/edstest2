@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Quick-Link",
-      "id": "quick-link",
+      "title": "Quick-Link-Item",
+      "id": "quick-link-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "quick-link",
-              "name": "Quick-Link"
+              "model": "quick-link-item",
+              "name": "Quick-Link-Item"
             }
           }
         }
@@ -59,21 +59,9 @@
         },
         {
           "component": "container",
-          "item": "quick-link",
+          "item": "quick-link-item",
           "label": "Quick Links",
           "name": "quickLinks"
-        },
-        {
-          "component": "reference",
-          "label": "Previous Button Icon",
-          "name": "prevButtonIcon",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Next Button Icon",
-          "name": "nextButtonIcon",
-          "valueType": "string"
         }
       ]
     },
@@ -82,25 +70,25 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image",
+          "label": "Main Image",
+          "name": "mainImage",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Image Alt Text",
-          "name": "imageAlt",
+          "name": "altText",
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Heading",
           "name": "heading",
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Subheading / Small Text",
+          "component": "text",
+          "label": "Subheading",
           "name": "subheading",
           "valueType": "string"
         },
@@ -115,11 +103,17 @@
           "label": "CTA Link",
           "name": "ctaLink",
           "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
+          "valueType": "string"
         }
       ]
     },
     {
-      "id": "quick-link",
+      "id": "quick-link-item",
       "fields": [
         {
           "component": "aem-content",
@@ -129,8 +123,8 @@
         },
         {
           "component": "text",
-          "label": "Link Text",
-          "name": "text",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         }
       ]
@@ -141,7 +135,7 @@
       "id": "spotlight-home-wrap",
       "components": [
         "spotlight-slide",
-        "quick-link"
+        "quick-link-item"
       ]
     }
   ]

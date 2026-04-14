@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Search-Image",
-      "id": "search-image",
+      "title": "Search-Suggestion-Item",
+      "id": "search-suggestion-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "search-image",
-              "name": "Search-Image"
+              "model": "search-suggestion-item",
+              "name": "Search-Suggestion-Item"
             }
           }
         }
@@ -51,25 +51,49 @@
         {
           "component": "reference",
           "label": "80th Year Logo",
-          "name": "year80Logo",
+          "name": "yearLogo",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "80th Year Logo Link",
-          "name": "year80LogoLink",
+          "name": "yearLogoLink",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "search-image",
-          "label": "Search Images",
-          "name": "searchImages"
+          "item": "search-suggestion-item",
+          "label": "Popular Search Suggestions",
+          "name": "searchSuggestionsPopular"
+        },
+        {
+          "component": "container",
+          "item": "search-suggestion-item",
+          "label": "Recommended Search Suggestions",
+          "name": "searchSuggestionsRecommended"
         },
         {
           "component": "aem-content",
           "label": "Contact Link",
           "name": "contactLink",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Press Release Link",
+          "name": "pressReleaseLink",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Media Resources Link",
+          "name": "mediaResourcesLink",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "In The News Link",
+          "name": "inTheNewsLink",
           "valueType": "string"
         },
         {
@@ -81,12 +105,12 @@
       ]
     },
     {
-      "id": "search-image",
+      "id": "search-suggestion-item",
       "fields": [
         {
-          "component": "reference",
-          "label": "Image",
-          "name": "image",
+          "component": "text",
+          "label": "Suggestion",
+          "name": "suggestion",
           "valueType": "string"
         }
       ]
@@ -96,7 +120,7 @@
     {
       "id": "main-header-rte",
       "components": [
-        "search-image"
+        "search-suggestion-item"
       ]
     }
   ]
