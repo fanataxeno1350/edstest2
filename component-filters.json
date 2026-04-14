@@ -24,7 +24,8 @@
       "corp-slider",
       "corp-our-values",
       "corp-counter",
-      "corp-footer"
+      "corp-footer",
+      "corp-header"
     ]
   },
   {
@@ -45,6 +46,14 @@
     "components": [
       "link-column",
       "contact"
+    ]
+  },
+  {
+    "id": "corp-header",
+    "components": [
+      "navigation-item",
+      "contact-link-item",
+      "sign-in-link-item"
     ]
   },
   {
