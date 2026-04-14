@@ -646,13 +646,13 @@ progress { vertical-align:baseline }
 
 *{margin:0;padding:0;box-sizing:border-box;-webkit-box-sizing:border-box;}
 
-@font-face{font-family:'Georama';src:url('http://localhost:3000/asset-proxy?url=http%3A%2F%2Fmahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FGeorama-Regular.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=http%3A%2F%2Fmahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FGeorama-Regular.woff') format('woff');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'Georama';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.mahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FGeorama-Regular.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.mahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FGeorama-Regular.woff') format('woff');font-weight:400;font-style:normal;font-display:swap;}
 
-@font-face{font-family:'Georama-medium';src:url('http://localhost:3000/asset-proxy?url=http%3A%2F%2Fmahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FGeorama-Medium.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=http%3A%2F%2Fmahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FGeorama-Medium.woff') format('woff');font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:'Georama-medium';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.mahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FGeorama-Medium.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.mahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FGeorama-Medium.woff') format('woff');font-weight:500;font-style:normal;font-display:swap;}
 
-@font-face{font-family:quantum-rise-medium;src:url('http://localhost:3000/asset-proxy?url=http%3A%2F%2Fmahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FQuantumRise-Medium.woff2') format("woff2"),url('http://localhost:3000/asset-proxy?url=http%3A%2F%2Fmahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FQuantumRise-Medium.woff') format("woff");font-style:normal;font-weight:400;font-display:swap;}
+@font-face{font-family:quantum-rise-medium;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.mahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FQuantumRise-Medium.woff2') format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.mahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FQuantumRise-Medium.woff') format("woff");font-style:normal;font-weight:400;font-display:swap;}
 
-@font-face{font-family:quantum-rise-regular;src:url('http://localhost:3000/asset-proxy?url=http%3A%2F%2Fmahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FQuantumRise-Regular.woff2') format("woff2"),url('http://localhost:3000/asset-proxy?url=http%3A%2F%2Fmahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FQuantumRise-Regular.woff') format("woff");font-style:normal;font-weight:400;font-display:swap;}
+@font-face{font-family:quantum-rise-regular;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.mahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FQuantumRise-Regular.woff2') format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.mahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FQuantumRise-Regular.woff') format("woff");font-style:normal;font-weight:400;font-display:swap;}
 
 :root{--bs-font-sans-serif:"Georama","Roboto",sans-serif;--bs-font-monospace:"quantum-rise-regular",monospace;}
 

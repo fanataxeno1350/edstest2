@@ -17,7 +17,7 @@
       }
     },
     {
-      "title": "Spotlight-Slide",
+      "title": "Spotlight Slide",
       "id": "spotlight-slide",
       "plugins": {
         "xwalk": {
@@ -25,22 +25,22 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "spotlight-slide",
-              "name": "Spotlight-Slide"
+              "name": "Spotlight Slide"
             }
           }
         }
       }
     },
     {
-      "title": "Quick-Link-Item",
-      "id": "quick-link-item",
+      "title": "Quick Link",
+      "id": "quick-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "quick-link-item",
-              "name": "Quick-Link-Item"
+              "model": "quick-link",
+              "name": "Quick Link"
             }
           }
         }
@@ -52,6 +52,18 @@
       "id": "spotlight-home-wrap",
       "fields": [
         {
+          "component": "reference",
+          "label": "Previous Arrow Icon",
+          "name": "prevArrowIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Next Arrow Icon",
+          "name": "nextArrowIcon",
+          "valueType": "string"
+        },
+        {
           "component": "container",
           "item": "spotlight-slide",
           "label": "Slides",
@@ -59,7 +71,7 @@
         },
         {
           "component": "container",
-          "item": "quick-link-item",
+          "item": "quick-link",
           "label": "Quick Links",
           "name": "quickLinks"
         }
@@ -70,14 +82,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Main Image",
-          "name": "mainImage",
+          "label": "Background Image",
+          "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Image Alt Text",
-          "name": "altText",
+          "name": "imageAlt",
           "valueType": "string"
         },
         {
@@ -113,17 +125,17 @@
       ]
     },
     {
-      "id": "quick-link-item",
+      "id": "quick-link",
       "fields": [
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Quick Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Label",
+          "label": "Link Label",
           "name": "label",
           "valueType": "string"
         }
@@ -135,7 +147,7 @@
       "id": "spotlight-home-wrap",
       "components": [
         "spotlight-slide",
-        "quick-link-item"
+        "quick-link"
       ]
     }
   ]

@@ -62,7 +62,10 @@
         "work-with-us",
         "faqs-section",
         "organisationschema",
-        "footer-main-rte"
+        "footer-main-rte",
+        "main-header",
+        "org-schema",
+        "footer-main"
       ]
     }
   ]

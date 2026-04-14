@@ -2,112 +2,112 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [headingRow, ...itemRows] = [...block.children];
+  const [headingRow, ...slideRows] = [...block.children];
 
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
-  moveInstrumentation(headingRow, sectionHeader);
 
-  const heading = document.createElement('h2');
-  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  while (headingRow.firstElementChild) heading.append(headingRow.firstElementChild);
-  sectionHeader.append(heading);
+  const headingCell = [...headingRow.children].find((c) => c.textContent.trim());
+  if (headingCell) {
+    const h2 = document.createElement('h2');
+    h2.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+    moveInstrumentation(headingCell, h2);
+    h2.innerHTML = headingCell.innerHTML;
+    sectionHeader.append(h2);
+  }
 
-  const positionRelative = document.createElement('div');
-  positionRelative.classList.add('position-relative', 'aos-init', 'aos-animate');
+  const positionRelativeDiv = document.createElement('div');
+  positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
 
-  const container = document.createElement('div');
-  container.classList.add('container');
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
 
-  const gridLayout = document.createElement('div');
-  gridLayout.classList.add('grid-layout');
+  const gridLayoutDiv = document.createElement('div');
+  gridLayoutDiv.classList.add('grid-layout');
 
-  itemRows.forEach((row) => {
-    const slides = document.createElement('div');
-    slides.classList.add('slides');
-    moveInstrumentation(row, slides);
+  slideRows.forEach((row) => {
+    const cells = [...row.children];
 
-    const wrap = document.createElement('div');
-    wrap.classList.add('wrap');
+    const slideDiv = document.createElement('div');
+    slideDiv.classList.add('slides');
 
-    let imageCell;
-    let titleCell;
-    let descriptionCell;
-    let ctaLinkCell;
+    const wrapDiv = document.createElement('div');
+    wrapDiv.classList.add('wrap');
 
-    [...row.children].forEach((cell) => {
-      if (cell.querySelector('picture')) {
-        imageCell = cell;
-      } else if (cell.querySelector('a')) {
-        ctaLinkCell = cell;
-      } else if (cell.textContent.trim() !== '' && !titleCell) { // First non-empty text cell is title
-        titleCell = cell;
-      } else if (cell.textContent.trim() !== '') { // Second non-empty text cell is description
-        descriptionCell = cell;
-      }
-    });
+    const imageCell = cells.find((c) => c.querySelector('picture'));
+    // Find imageAltCell and imageTitleCell by their position relative to imageCell
+    // Assuming the order is image, imageAlt, imageTitle, title, description, link, linkLabel
+    const imageAltCell = cells[cells.indexOf(imageCell) + 1];
+    const imageTitleCell = cells[cells.indexOf(imageCell) + 2];
+    const titleCell = cells[cells.indexOf(imageCell) + 3];
+    const descriptionCell = cells.find((c) => c.querySelector('p'));
+    const linkCell = cells.find((c) => c.querySelector('a'));
+    const linkLabelCell = cells[cells.indexOf(linkCell) + 1]; // Assuming linkLabel is right after link
 
     if (imageCell) {
-      const imageWrap = document.createElement('div');
-      imageWrap.classList.add('image-wrap');
+      const imageWrapDiv = document.createElement('div');
+      imageWrapDiv.classList.add('image-wrap');
       const picture = imageCell.querySelector('picture');
       if (picture) {
         const img = picture.querySelector('img');
         if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          picture.replaceWith(optimizedPic);
+          const altText = imageAltCell?.textContent.trim() || img.alt;
+          const titleText = imageTitleCell?.textContent.trim() || img.title;
+          const optimizedPic = createOptimizedPicture(img.src, altText, false, [{ width: '750' }]);
           optimizedPic.querySelector('img').classList.add('img-fluid');
-          imageWrap.append(optimizedPic);
+          optimizedPic.querySelector('img').alt = altText;
+          optimizedPic.querySelector('img').title = titleText;
+          moveInstrumentation(imageCell, optimizedPic);
+          imageWrapDiv.append(optimizedPic);
         }
       }
-      wrap.append(imageWrap);
+      wrapDiv.append(imageWrapDiv);
     }
 
-    const contentWrap = document.createElement('div');
-    contentWrap.classList.add('content-wrap');
+    const contentWrapDiv = document.createElement('div');
+    contentWrapDiv.classList.add('content-wrap');
 
     const innerSectionHeader = document.createElement('div');
     innerSectionHeader.classList.add('section-header');
 
     if (titleCell) {
-      const title = document.createElement('h3');
-      title.classList.add('heading', 'font-regular');
-      moveInstrumentation(titleCell, title);
-      while (titleCell.firstChild) title.append(titleCell.firstChild);
-      innerSectionHeader.append(title);
+      const h3 = document.createElement('h3');
+      h3.classList.add('heading', 'font-regular');
+      moveInstrumentation(titleCell, h3);
+      h3.innerHTML = titleCell.innerHTML;
+      innerSectionHeader.append(h3);
     }
 
     if (descriptionCell) {
-      const description = document.createElement('p');
-      description.classList.add('text-size-body');
-      moveInstrumentation(descriptionCell, description);
-      while (descriptionCell.firstChild) description.append(descriptionCell.firstChild);
-      innerSectionHeader.append(description);
+      const p = document.createElement('p');
+      p.classList.add('text-size-body');
+      moveInstrumentation(descriptionCell, p);
+      p.innerHTML = descriptionCell.innerHTML;
+      innerSectionHeader.append(p);
     }
 
-    if (ctaLinkCell) {
-      const ctaLink = document.createElement('a');
-      ctaLink.classList.add('btn', 'btn-primary', 'stretched-link');
-      const originalLink = ctaLinkCell.querySelector('a');
+    if (linkCell && linkLabelCell) {
+      const a = document.createElement('a');
+      a.classList.add('btn', 'btn-primary', 'stretched-link');
+      const originalLink = linkCell.querySelector('a');
       if (originalLink) {
-        ctaLink.href = originalLink.href;
-        ctaLink.textContent = originalLink.textContent;
+        a.href = originalLink.href;
       }
-      moveInstrumentation(ctaLinkCell, ctaLink);
-      innerSectionHeader.append(ctaLink);
+      moveInstrumentation(linkCell, a);
+      a.textContent = linkLabelCell.textContent.trim();
+      innerSectionHeader.append(a);
     }
 
-    contentWrap.append(innerSectionHeader);
-    wrap.append(contentWrap);
-    slides.append(wrap);
-    gridLayout.append(slides);
+    contentWrapDiv.append(innerSectionHeader);
+    wrapDiv.append(contentWrapDiv);
+    slideDiv.append(wrapDiv);
+    gridLayoutDiv.append(slideDiv);
   });
 
-  container.append(gridLayout);
-  positionRelative.append(container);
+  containerDiv.append(gridLayoutDiv);
+  positionRelativeDiv.append(containerDiv);
 
   block.textContent = '';
-  block.classList.add('pb-0'); // Add section classes to block itself as it's the root element
-  block.append(sectionHeader, positionRelative);
+  block.classList.add('section', 'pb-0'); // Add section and pb-0 classes to the block itself
+  block.append(sectionHeader, positionRelativeDiv);
 }

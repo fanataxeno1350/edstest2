@@ -17,6 +17,21 @@
       }
     },
     {
+      "title": "Twitter-Embed-Item",
+      "id": "twitter-embed-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "twitter-embed-item",
+              "name": "Twitter-Embed-Item"
+            }
+          }
+        }
+      }
+    },
+    {
       "title": "Story-Item",
       "id": "story-item",
       "plugins": {
@@ -44,11 +59,20 @@
         },
         {
           "component": "container",
+          "item": "twitter-embed-item",
+          "label": "Twitter Feed",
+          "name": "twitterFeed"
+        },
+        {
+          "component": "container",
           "item": "story-item",
           "label": "Stories",
           "name": "stories"
         }
       ]
+    },
+    {
+      "id": "twitter-embed-item"
     },
     {
       "id": "story-item",
@@ -73,12 +97,12 @@
         },
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Read More Link",
           "name": "link",
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "date-time",
           "label": "Date",
           "name": "date",
           "valueType": "string"
@@ -90,6 +114,7 @@
     {
       "id": "latest-stories",
       "components": [
+        "twitter-embed-item",
         "story-item"
       ]
     }

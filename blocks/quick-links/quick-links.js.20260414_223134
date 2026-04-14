@@ -16,20 +16,19 @@ export default function decorate(block) {
     const li = document.createElement('li');
     moveInstrumentation(row, li);
 
-    const labelCell = [...row.children].find(c => !c.querySelector('a'));
-    const linkCell = [...row.children].find(c => c.querySelector('a'));
-
-    if (labelCell && linkCell) {
-      const linkElement = linkCell.querySelector('a');
-      if (linkElement) {
-        const a = document.createElement('a');
-        a.href = linkElement.href;
-        a.target = '_blank';
-        a.classList.add('with-full-underline');
-        a.textContent = labelCell.textContent.trim();
-        moveInstrumentation(linkCell, a);
-        li.append(a);
+    // Content detection for the link cell
+    const linkCell = [...row.children].find((cell) => cell.querySelector('a'));
+    if (linkCell) {
+      const originalLink = linkCell.querySelector('a');
+      const newLink = document.createElement('a');
+      newLink.href = originalLink.href;
+      newLink.textContent = originalLink.textContent;
+      // Copy target attribute if present
+      if (originalLink.target) {
+        newLink.target = originalLink.target;
       }
+      newLink.classList.add('with-full-underline');
+      li.append(newLink);
     }
     ul.append(li);
   });

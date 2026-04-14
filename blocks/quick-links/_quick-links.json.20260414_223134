@@ -48,14 +48,8 @@
       "id": "quick-link-item",
       "fields": [
         {
-          "component": "text",
-          "label": "Link Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
-          "label": "Link URL",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         }

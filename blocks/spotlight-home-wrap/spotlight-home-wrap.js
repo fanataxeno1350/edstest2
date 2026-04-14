@@ -2,155 +2,107 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [prevArrowIconRow, nextArrowIconRow, ...itemRows] = [...block.children];
+  const allRows = [...block.children];
 
-  const section = document.createElement('section');
-  section.classList.add('section', 'spotlight-home-wrap', 'm-0', 'p-0');
-  moveInstrumentation(block, section);
+  // Filter rows based on the number of children to distinguish slide items from quick link items
+  const slideRows = allRows.filter((row) => row.children.length === 7);
+  const quickLinkRows = allRows.filter((row) => row.children.length === 2);
 
   const beamSlider = document.createElement('div');
-  beamSlider.classList.add('beam-slider', 'main-slider', 'loading1', 'beam-slider-multi');
-  section.append(beamSlider);
+  beamSlider.classList.add('beam-slider', 'main-slider', 'loading1', 'beam-slider-multi', 'swiper-initialized', 'swiper-horizontal', 'swiper-watch-progress', 'swiper-backface-hidden');
 
   const swiperWrapper = document.createElement('div');
   swiperWrapper.classList.add('swiper-wrapper');
-  beamSlider.append(swiperWrapper);
+  swiperWrapper.setAttribute('aria-live', 'off');
 
-  const quickLinksParentDiv = document.createElement('div');
-  quickLinksParentDiv.classList.add('mt-0', 'pt-1', 'pb-1', 'm-none1', 'bottom-0', 'w-100', 'quick-links-parents-div', 'position-relative');
-  section.append(quickLinksParentDiv);
-
-  const container = document.createElement('div');
-  container.classList.add('container');
-  quickLinksParentDiv.append(container);
-
-  const quickLinksUl = document.createElement('ul');
-  quickLinksUl.classList.add('quick-links-div');
-  container.append(quickLinksUl);
-
-  const slides = [];
-  const quickLinks = [];
-
-  itemRows.forEach((row) => {
+  slideRows.forEach((row, index) => {
     const cells = [...row.children];
-    if (cells.length === 7 && cells[0].querySelector('picture')) {
-      // This is a spotlight-slide item
-      slides.push(row);
-    } else if (cells.length === 2 && cells[0].querySelector('a')) {
-      // This is a quick-link item
-      quickLinks.push(row);
-    }
-  });
 
-  slides.forEach((row) => {
-    const slideDiv = document.createElement('div');
-    slideDiv.classList.add('swiper-slide', 'nogradient');
-    moveInstrumentation(row, slideDiv);
+    // Use content detection for cells where possible, or fall back to index if structure is strict
+    const mainImageCell = cells.find((c) => c.querySelector('picture'));
+    const altTextCell = cells.find((c) => !c.querySelector('picture') && !c.querySelector('a') && c.textContent.trim().length > 0 && c.textContent.trim() === row.children[1].textContent.trim()); // Assuming altText is the second cell and plain text
+    const headingCell = cells.find((c) => !c.querySelector('picture') && !c.querySelector('a') && c.textContent.trim().length > 0 && c.textContent.trim() === row.children[2].textContent.trim()); // Assuming heading is the third cell and plain text
+    const subheadingCell = cells.find((c) => !c.querySelector('picture') && !c.querySelector('a') && c.textContent.trim().length > 0 && c.textContent.trim() === row.children[3].textContent.trim()); // Assuming subheading is the fourth cell and plain text
+    const descriptionCell = cells.find((c) => c.querySelector('p') && c.textContent.trim() === row.children[4].textContent.trim()); // Description is richtext with <p>
+    const ctaLinkCell = cells.find((c) => c.querySelector('a') && c.textContent.trim() === row.children[5].textContent.trim()); // CTA Link has an <a>
+    const ctaLabelCell = cells.find((c) => !c.querySelector('picture') && !c.querySelector('a') && c.textContent.trim().length > 0 && c.textContent.trim() === row.children[6].textContent.trim()); // CTA Label is plain text
+
+    const swiperSlide = document.createElement('div');
+    swiperSlide.classList.add('swiper-slide', 'nogradient');
+    swiperSlide.setAttribute('role', 'group');
+    swiperSlide.setAttribute('aria-label', `${index + 1} / ${slideRows.length}`);
+    swiperSlide.setAttribute('data-swiper-slide-index', index);
 
     const slideBgImg = document.createElement('div');
     slideBgImg.classList.add('slide-bgimg');
-    slideDiv.append(slideBgImg);
-
-    const mobContent = document.createElement('div');
-    mobContent.classList.add('mob-content-home-spotlight');
-    slideDiv.append(mobContent);
-
-    const contentDiv = document.createElement('div');
-    contentDiv.classList.add('content', 'text-center', 'text-lg-start');
-    mobContent.append(contentDiv);
-
-    const cells = [...row.children];
-    const imageCell = cells[0];
-    const imageAltCell = cells[1];
-    const headingCell = cells[2];
-    const subheadingCell = cells[3];
-    const descriptionCell = cells[4];
-    const ctaLinkCell = cells[5];
-    // const ctaLabelCell = cells[6]; // Not directly rendered as a separate element
-
-    // Image
-    const picture = imageCell?.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1903' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        slideBgImg.append(optimizedPic);
+    if (mainImageCell) {
+      const picture = mainImageCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        if (img) {
+          const optimizedPic = createOptimizedPicture(img.src, altTextCell?.textContent || img.alt, false, [{ width: '1903' }]);
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
+          slideBgImg.append(optimizedPic);
+        }
       }
     }
 
-    // Subheading
-    const subheadingText = subheadingCell?.textContent?.trim();
-    if (subheadingText) {
-      const subheading = document.createElement('small');
-      subheading.style.fontWeight = 'bold';
-      subheading.textContent = subheadingText;
-      contentDiv.append(subheading); // Append first, then heading
+    const mobContentHomeSpotlight = document.createElement('div');
+    mobContentHomeSpotlight.classList.add('mob-content-home-spotlight');
+
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add('content', 'text-center', 'text-lg-start');
+
+    if (subheadingCell?.textContent.trim()) {
+      const small = document.createElement('small');
+      small.style.fontWeight = 'bold';
+      small.textContent = subheadingCell.textContent.trim();
+      moveInstrumentation(subheadingCell, small);
+      contentDiv.append(small);
     }
 
-    // Heading
-    const headingText = headingCell?.textContent?.trim();
-    if (headingText) {
-      const heading = document.createElement('h2');
-      heading.classList.add('heading', 'font-medium', 'font-size-tb');
-      heading.textContent = headingText;
-      contentDiv.append(heading);
+    if (headingCell?.textContent.trim()) {
+      const h2 = document.createElement('h2');
+      h2.classList.add('heading', 'font-medium', 'font-size-tb');
+      h2.innerHTML = headingCell.innerHTML; // Use innerHTML for richtext
+      moveInstrumentation(headingCell, h2);
+      contentDiv.append(h2);
     }
 
-    // Description
-    if (descriptionCell) {
-      const description = document.createElement('p');
-      moveInstrumentation(descriptionCell, description);
-      while (descriptionCell.firstChild) description.append(descriptionCell.firstChild);
-      contentDiv.append(description);
+    if (descriptionCell?.textContent.trim()) {
+      const p = document.createElement('p');
+      p.innerHTML = descriptionCell.innerHTML; // Use innerHTML for richtext
+      moveInstrumentation(descriptionCell, p);
+      contentDiv.append(p);
     }
 
-    // CTA Link
     const ctaLink = ctaLinkCell?.querySelector('a');
-    if (ctaLink) {
-      const ctaBtn = document.createElement('a');
-      ctaBtn.classList.add('btn', 'btn-primary');
-      ctaBtn.href = ctaLink.href;
-      moveInstrumentation(ctaLink, ctaBtn);
-      ctaBtn.textContent = ctaLink.textContent;
-      contentDiv.append(ctaBtn);
+    if (ctaLink && ctaLabelCell?.textContent.trim()) {
+      const a = document.createElement('a');
+      a.href = ctaLink.href;
+      a.classList.add('btn', 'btn-primary');
+      a.textContent = ctaLabelCell.textContent.trim();
+      moveInstrumentation(ctaLinkCell, a);
+      moveInstrumentation(ctaLabelCell, a);
+      contentDiv.append(a);
     }
-    swiperWrapper.append(slideDiv);
+
+    mobContentHomeSpotlight.append(contentDiv);
+    swiperSlide.append(slideBgImg, mobContentHomeSpotlight);
+    moveInstrumentation(row, swiperSlide);
+    swiperWrapper.append(swiperSlide);
   });
 
-  quickLinks.forEach((row) => {
-    const li = document.createElement('li');
-    moveInstrumentation(row, li);
+  beamSlider.append(swiperWrapper);
 
-    const cells = [...row.children];
-    const linkCell = cells[0];
-    const labelCell = cells[1]; // The label is often the text content of the link itself
-
-    const link = linkCell?.querySelector('a');
-    if (link) {
-      const quickLinkA = document.createElement('a');
-      quickLinkA.classList.add('with-full-underline');
-      quickLinkA.href = link.href;
-      moveInstrumentation(link, quickLinkA);
-      quickLinkA.textContent = labelCell?.textContent?.trim() || link.textContent; // Use label cell if available, otherwise link text
-      li.append(quickLinkA);
-    }
-    quickLinksUl.append(li);
-  });
-
+  // Swiper navigation buttons
   const prevButton = document.createElement('div');
   prevButton.classList.add('swiper-button-prev', 'slide-home-btn', 'swiper-button-white');
   prevButton.setAttribute('tabindex', '0');
   prevButton.setAttribute('role', 'button');
   prevButton.setAttribute('aria-label', 'Previous slide');
-  moveInstrumentation(prevArrowIconRow, prevButton);
-  const prevIcon = prevArrowIconRow.querySelector('img');
-  if (prevIcon) {
-    const prevImg = document.createElement('img');
-    prevImg.src = prevIcon.src;
-    prevImg.alt = prevIcon.alt || 'Previous Arrow Icon';
-    prevButton.append(prevImg);
-  }
+  // Corrected image path to match ORIGINAL HTML
+  prevButton.innerHTML = '<img alt="svg file" src="/content/dam/aemigrate/uploaded-folder/image/1776185160953.svg+xml"/>';
   beamSlider.append(prevButton);
 
   const nextButton = document.createElement('div');
@@ -158,41 +110,80 @@ export default function decorate(block) {
   nextButton.setAttribute('tabindex', '0');
   nextButton.setAttribute('role', 'button');
   nextButton.setAttribute('aria-label', 'Next slide');
-  moveInstrumentation(nextArrowIconRow, nextButton);
-  const nextIcon = nextArrowIconRow.querySelector('img');
-  if (nextIcon) {
-    const nextImg = document.createElement('img');
-    nextImg.src = nextIcon.src;
-    nextImg.alt = nextIcon.alt || 'Next Arrow Icon';
-    nextButton.append(nextImg);
-  }
+  // Corrected image path to match ORIGINAL HTML
+  nextButton.innerHTML = '<img alt="svg file" src="/content/dam/aemigrate/uploaded-folder/image/1776185160953.svg+xml"/>';
   beamSlider.append(nextButton);
 
-  const swiperPagination = document.createElement('div');
-  swiperPagination.classList.add('swiper-pagination', 'bullet-bottom');
-  beamSlider.append(swiperPagination);
+  const pagination = document.createElement('div');
+  pagination.classList.add('swiper-pagination', 'bullet-bottom');
+  beamSlider.append(pagination);
+
+  const swiperNotification = document.createElement('span');
+  swiperNotification.classList.add('swiper-notification');
+  swiperNotification.setAttribute('aria-live', 'assertive');
+  swiperNotification.setAttribute('aria-atomic', 'true');
+  beamSlider.append(swiperNotification);
+
+  const quickLinksParentDiv = document.createElement('div');
+  quickLinksParentDiv.classList.add('mt-0', 'pt-1', 'pb-1', 'm-none1', 'bottom-0', 'w-100', 'quick-links-parents-div', 'position-relative');
+
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container', 'aos-init', 'aos-animate');
+  containerDiv.setAttribute('data-aos', 'fade-up');
+  containerDiv.setAttribute('data-aos-offset', '-100');
+  containerDiv.setAttribute('data-aos-duration', '650');
+  containerDiv.setAttribute('data-aos-easing', 'ease-in-out');
+
+  const quickLinksUl = document.createElement('ul');
+  quickLinksUl.classList.add('quick-links-div');
+
+  quickLinkRows.forEach((row) => {
+    const cells = [...row.children];
+    // Use content detection for quick link cells
+    const linkCell = cells.find((c) => c.querySelector('a'));
+    const labelCell = cells.find((c) => !c.querySelector('a') && c.textContent.trim().length > 0);
+
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.classList.add('with-full-underline');
+    const foundLink = linkCell?.querySelector('a');
+    if (foundLink) {
+      a.href = foundLink.href;
+    }
+    a.textContent = labelCell?.textContent || '';
+    moveInstrumentation(linkCell, a);
+    moveInstrumentation(labelCell, a);
+    li.append(a);
+    moveInstrumentation(row, li);
+    quickLinksUl.append(li);
+  });
+
+  containerDiv.append(quickLinksUl);
+  quickLinksParentDiv.append(containerDiv);
 
   block.textContent = '';
-  block.append(section);
+  block.append(beamSlider, quickLinksParentDiv);
 
-  // Add event listeners for navigation (assuming a Swiper-like functionality)
-  // This part would typically involve initializing a Swiper instance,
-  // but for a purely JS-driven approach without a library:
+  // Initialize Swiper (minimal implementation for functionality)
   let currentIndex = 0;
+  const slides = swiperWrapper.querySelectorAll('.swiper-slide');
   const totalSlides = slides.length;
 
-  function updateSlideVisibility() {
-    swiperWrapper.querySelectorAll('.swiper-slide').forEach((slide, index) => {
-      if (index === currentIndex) {
+  const updateSlider = () => {
+    slides.forEach((slide, i) => {
+      slide.style.transform = `translateX(-${currentIndex * 100}%)`;
+      slide.classList.remove('swiper-slide-active', 'swiper-slide-prev', 'swiper-slide-next', 'swiper-slide-visible', 'swiper-slide-fully-visible');
+      if (i === currentIndex) {
         slide.classList.add('swiper-slide-active', 'swiper-slide-visible', 'swiper-slide-fully-visible');
-        slide.style.display = 'block'; // Or adjust transform for actual slider
-      } else {
-        slide.classList.remove('swiper-slide-active', 'swiper-slide-visible', 'swiper-slide-fully-visible');
-        slide.style.display = 'none'; // Or adjust transform for actual slider
+      } else if (i === (currentIndex - 1 + totalSlides) % totalSlides) {
+        slide.classList.add('swiper-slide-prev');
+      } else if (i === (currentIndex + 1) % totalSlides) {
+        slide.classList.add('swiper-slide-next');
       }
     });
-    // Update pagination dots (simplified)
-    swiperPagination.innerHTML = '';
+
+    // Update pagination
+    pagination.innerHTML = '';
     for (let i = 0; i < totalSlides; i += 1) {
       const bullet = document.createElement('span');
       bullet.classList.add('swiper-pagination-bullet');
@@ -201,24 +192,21 @@ export default function decorate(block) {
       }
       bullet.addEventListener('click', () => {
         currentIndex = i;
-        updateSlideVisibility();
+        updateSlider();
       });
-      swiperPagination.append(bullet);
+      pagination.append(bullet);
     }
-  }
+  };
 
   prevButton.addEventListener('click', () => {
     currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-    updateSlideVisibility();
+    updateSlider();
   });
 
   nextButton.addEventListener('click', () => {
     currentIndex = (currentIndex + 1) % totalSlides;
-    updateSlideVisibility();
+    updateSlider();
   });
 
-  // Initial display
-  if (totalSlides > 0) {
-    updateSlideVisibility();
-  }
+  updateSlider(); // Initial display
 }

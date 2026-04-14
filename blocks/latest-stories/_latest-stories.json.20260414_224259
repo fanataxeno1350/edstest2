@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Spirit-of-Rise",
-      "id": "spirit-of-rise",
+      "title": "Latest-Stories",
+      "id": "latest-stories",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "spirit-of-rise",
-              "model": "spirit-of-rise",
-              "name": "Spirit-of-Rise"
+              "filter": "latest-stories",
+              "model": "latest-stories",
+              "name": "Latest-Stories"
             }
           }
         }
       }
     },
     {
-      "title": "Performace-Driven-Card",
-      "id": "performace-driven-card",
+      "title": "Story-Item",
+      "id": "story-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "performace-driven-card",
-              "name": "Performace-Driven-Card"
+              "model": "story-item",
+              "name": "Story-Item"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "spirit-of-rise",
+      "id": "latest-stories",
       "fields": [
         {
           "component": "text",
@@ -43,21 +43,15 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Description",
-          "name": "description",
-          "valueType": "string"
-        },
-        {
           "component": "container",
-          "item": "performace-driven-card",
-          "label": "Cards",
-          "name": "cards"
+          "item": "story-item",
+          "label": "Stories",
+          "name": "stories"
         }
       ]
     },
     {
-      "id": "performace-driven-card",
+      "id": "story-item",
       "fields": [
         {
           "component": "reference",
@@ -66,15 +60,27 @@
           "valueType": "string"
         },
         {
+          "component": "text",
+          "label": "Category",
+          "name": "category",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
+        },
+        {
           "component": "aem-content",
-          "label": "Card Link",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Card Description",
-          "name": "description",
+          "label": "Date",
+          "name": "date",
           "valueType": "string"
         }
       ]
@@ -82,9 +88,9 @@
   ],
   "filters": [
     {
-      "id": "spirit-of-rise",
+      "id": "latest-stories",
       "components": [
-        "performace-driven-card"
+        "story-item"
       ]
     }
   ]
