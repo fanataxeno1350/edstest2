@@ -2,39 +2,21 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const rows = [...block.children];
+  const [logoRow, logoLinkRow, languageRow, ...itemRows] = [...block.children];
 
-  // Fixed fields: logo, logoLink, language (3 rows)
-  const [logoRow, logoLinkRow, languageRow] = rows.slice(0, 3);
-  // All remaining rows are navigation/contact/sign-in items
-  const itemRows = rows.slice(3);
+  // Separate item types
+  const navigationItems = itemRows.filter(row => row.children.length === 3);
+  const contactItems = itemRows.filter(row => row.children.length === 3 && row.children[0]?.querySelector('picture'));
+  const signInItems = itemRows.filter(row => row.children.length === 4);
 
-  const navigationItems = itemRows.filter(row => {
-    const cells = [...row.children];
-    // Navigation-item: 3 cells (label, link, hierarchy-tree)
-    return cells.length === 3 && cells[0]?.textContent.trim() && cells[1]?.querySelector('a');
-  });
-
-  const contactItems = itemRows.filter(row => {
-    const cells = [...row.children];
-    // Contact-link-item: 3 cells (icon image, link, hierarchy-tree)
-    return cells.length === 3 && cells[0]?.querySelector('picture') && cells[1]?.querySelector('a');
-  });
-
-  const signInItems = itemRows.filter(row => {
-    const cells = [...row.children];
-    // Sign-in-link-item: 4 cells (icon image, link, label text, hierarchy-tree)
-    return cells.length === 4 && cells[0]?.querySelector('picture') && cells[1]?.querySelector('a') && cells[2]?.textContent.trim();
-  });
-
-  block.textContent = ''; // Clear the block content
+  block.textContent = '';
 
   const navbar = document.createElement('div');
   navbar.classList.add('navbar', 'navbar-arena', 'g-container');
 
-  // Hamburger button
-  const hamburgerWrapper = document.createElement('div');
-  hamburgerWrapper.classList.add('nav-hamburger');
+  // Hamburger menu
+  const hamburger = document.createElement('div');
+  hamburger.classList.add('nav-hamburger');
   const hamburgerButton = document.createElement('button');
   hamburgerButton.setAttribute('type', 'button');
   hamburgerButton.setAttribute('aria-controls', 'nav');
@@ -43,216 +25,254 @@ export default function decorate(block) {
   const hamburgerIcon = document.createElement('span');
   hamburgerIcon.classList.add('nav-hamburger-icon');
   hamburgerButton.appendChild(hamburgerIcon);
-  hamburgerWrapper.appendChild(hamburgerButton);
-  navbar.appendChild(hamburgerWrapper);
+  hamburger.appendChild(hamburgerButton);
+  navbar.appendChild(hamburger);
 
-  // Logo section
-  const logoSection = document.createElement('div');
-  logoSection.classList.add('logo-wrapper');
-  const logoPicture = logoRow.querySelector('picture');
+  // Logo Section
+  const logoWrapper = document.createElement('div');
+  logoWrapper.classList.add('logo-wrapper');
+  const logoBlock = document.createElement('div');
+  logoBlock.classList.add('logo', 'block');
+  const arenaSpan = document.createElement('span');
+  arenaSpan.classList.add('arena');
+  const logoLink = document.createElement('a');
+  logoLink.classList.add('logo__picture');
+  logoLink.href = logoLinkRow.children[0]?.querySelector('a')?.href || '/';
+  logoLink.setAttribute('data-logo-name', 'Arena');
+
+  const logoPicture = logoRow.children[0]?.querySelector('picture')?.cloneNode(true);
   if (logoPicture) {
-    const logoAnchor = document.createElement('a');
-    logoAnchor.classList.add('logo__picture');
-    const foundLogoLink = logoLinkRow?.querySelector('a');
-    if (foundLogoLink) {
-      logoAnchor.href = foundLogoLink.href;
-    } else {
-      logoAnchor.href = '/'; // Default to home if no link
-    }
-    moveInstrumentation(logoRow, logoAnchor);
-    logoAnchor.appendChild(logoPicture.cloneNode(true));
-    logoSection.appendChild(logoAnchor);
+    logoLink.appendChild(logoPicture);
   }
-  navbar.appendChild(logoSection);
+  arenaSpan.appendChild(logoLink);
+  logoBlock.appendChild(arenaSpan);
+  logoWrapper.appendChild(logoBlock);
+  navbar.appendChild(logoWrapper);
 
-  // Links container (for navigation items)
+  // Links Container (Desktop Navigation)
   const linksContainer = document.createElement('div');
   linksContainer.classList.add('links');
   navbar.appendChild(linksContainer);
 
-  navigationItems.forEach(row => {
-    const [labelCell, linkCell, hierarchyCell] = [...row.children];
+  navigationItems.forEach((row, index) => {
+    const [labelCell, linkCell, hierarchyTreeCell] = [...row.children];
 
     const linkTitle = document.createElement('div');
     linkTitle.classList.add('link-title');
-    moveInstrumentation(row, linkTitle);
-
-    const triggerSpan = document.createElement('span');
-    const triggerA = document.createElement('a');
-    const foundLink = linkCell?.querySelector('a');
-    if (foundLink) triggerA.href = foundLink.href;
-    triggerA.textContent = labelCell?.textContent?.trim() || '';
-    triggerA.classList.add('button');
-    triggerSpan.appendChild(triggerA);
-    linkTitle.appendChild(triggerSpan);
+    const labelSpan = document.createElement('span');
+    const linkAnchor = linkCell?.querySelector('a')?.cloneNode(true) || document.createElement('a');
+    linkAnchor.textContent = labelCell?.textContent?.trim();
+    if (!linkAnchor.href) {
+      linkAnchor.href = '#'; // Default if no link provided
+      linkAnchor.addEventListener('click', (e) => e.preventDefault());
+    }
+    labelSpan.appendChild(linkAnchor);
+    linkTitle.appendChild(labelSpan);
     linksContainer.appendChild(linkTitle);
 
-    const hierarchyUL = hierarchyCell?.querySelector('ul');
-    if (hierarchyUL) {
-      // Create desktop panel for dropdown
+    const hasMenu = hierarchyTreeCell?.querySelector('ul');
+    if (hasMenu) {
       const panel = document.createElement('div');
-      const panelLabel = labelCell?.textContent?.trim().toLowerCase().replace(/\s+/g, '-') || 'dropdown';
-      panel.classList.add('desktop-panel', 'panel', panelLabel);
+      panel.classList.add('desktop-panel', 'panel');
+      panel.classList.add(labelCell.textContent?.trim().toLowerCase().replace(/\s/g, '-') || `nav-panel-${index}`);
 
-      // Build grid structure for nested <ul>
-      const gridWrapper = document.createElement('div');
-      gridWrapper.classList.add('link-grid', 'block');
+      const linkGridBlock = document.createElement('div');
+      linkGridBlock.classList.add('link-grid', 'block');
+      const linkContainerSection = document.createElement('div');
+      linkContainerSection.classList.add('link-container-section');
+      linkGridBlock.appendChild(linkContainerSection);
 
-      const columnSection = document.createElement('div');
-      columnSection.classList.add('link-container-section');
+      // Clone and wrap the ULs from the hierarchy-tree
+      const uls = hierarchyTreeCell.querySelectorAll('ul');
+      uls.forEach(ul => {
+        const column = document.createElement('div');
+        column.classList.add('link-grid-column', 'link-column-vertical');
+        const clonedUl = ul.cloneNode(true);
+        clonedUl.classList.add('content', 'links-container', 'accordian-content');
+        column.appendChild(clonedUl);
+        linkContainerSection.appendChild(column);
+      });
 
-      const column = document.createElement('div');
-      column.classList.add('link-grid-column', 'link-column-vertical');
-
-      // Move the authored <ul> directly into the column (preserves all nested <a> elements)
-      column.appendChild(hierarchyUL.cloneNode(true));
-
-      columnSection.appendChild(column);
-      gridWrapper.appendChild(columnSection);
-      panel.appendChild(gridWrapper);
+      panel.appendChild(linkGridBlock);
       linksContainer.appendChild(panel);
 
-      // Add click toggle for panel visibility
-      triggerA.addEventListener('click', (e) => {
-        e.preventDefault();
-        panel.classList.toggle('visible');
+      // Add hover/click behavior for desktop
+      let hoverTimeout;
+      linkTitle.addEventListener('mouseenter', () => {
+        clearTimeout(hoverTimeout);
+        document.querySelectorAll('.desktop-panel.visible').forEach(p => p.classList.remove('visible'));
+        panel.classList.add('visible');
+      });
+      linkTitle.addEventListener('mouseleave', () => {
+        hoverTimeout = setTimeout(() => {
+          panel.classList.remove('visible');
+        }, 200); // Small delay to allow moving between linkTitle and panel
+      });
+      panel.addEventListener('mouseenter', () => {
+        clearTimeout(hoverTimeout);
+        panel.classList.add('visible');
+      });
+      panel.addEventListener('mouseleave', () => {
+        hoverTimeout = setTimeout(() => {
+          panel.classList.remove('visible');
+        }, 200);
       });
     }
   });
 
-  // Right section (contact, language, sign-in)
+  // Right section (Contact, Language, Sign-in)
   const rightSection = document.createElement('div');
-  rightSection.id = 'nav-right';
   rightSection.classList.add('right');
+  rightSection.id = 'nav-right';
+  navbar.appendChild(rightSection);
 
-  // Contact icons
+  // Contact Wrapper
   if (contactItems.length > 0) {
     const contactWrapper = document.createElement('div');
     contactWrapper.classList.add('contact-wrapper');
     const contactBlock = document.createElement('div');
     contactBlock.classList.add('contact', 'block');
-    contactWrapper.appendChild(contactBlock);
-
     const contactWrpArena = document.createElement('div');
     contactWrpArena.classList.add('contact_wrp_arena', 'user__contact', 'header');
-    contactBlock.appendChild(contactWrpArena);
-
     const contactTitle = document.createElement('h4');
     contactTitle.classList.add('user__contact-title');
     contactTitle.textContent = 'Contact Us';
-    contactWrpArena.appendChild(contactTitle);
-
     const contactIconPhone = document.createElement('span');
     contactIconPhone.classList.add('user__contact-title', 'icon-phone');
     contactIconPhone.setAttribute('aria-label', 'Contact Us');
+    contactWrpArena.appendChild(contactTitle);
     contactWrpArena.appendChild(contactIconPhone);
 
     const userContactIcons = document.createElement('div');
     userContactIcons.classList.add('user__contact__icons', 'hidden');
-    contactWrpArena.appendChild(userContactIcons);
-
-    contactItems.forEach(row => {
-      const [iconCell, linkCell] = [...row.children]; // hierarchy-tree is not used for rendering contact links
-      const contactLink = document.createElement('a');
-      const foundLink = linkCell?.querySelector('a');
-      if (foundLink) contactLink.href = foundLink.href;
-
-      const icon = iconCell?.querySelector('picture');
-      if (icon) {
-        const img = icon.querySelector('img');
-        if (img) {
-          const iconClone = img.cloneNode(true);
-          iconClone.classList.add('user__contact--icon');
-          // Determine specific class based on alt text or content
-          if (iconClone.alt.toLowerCase().includes('phone')) {
-            contactLink.classList.add('phone');
-          } else if (iconClone.alt.toLowerCase().includes('whatsapp')) {
-            contactLink.classList.add('whatsapp');
-            contactLink.setAttribute('target', '_blank');
-            contactLink.setAttribute('rel', 'noopener noreferrer');
-          } else if (iconClone.alt.toLowerCase().includes('email')) {
-            contactLink.classList.add('email');
-          }
-          const srOnly = document.createElement('span');
-          srOnly.classList.add('sr-only');
-          srOnly.textContent = iconClone.alt;
-          contactLink.appendChild(srOnly);
-          contactLink.appendChild(iconClone);
-        }
-      }
-      userContactIcons.appendChild(contactLink);
-    });
 
     const contactToggleBox = document.createElement('div');
     contactToggleBox.classList.add('hidden', 'contact-toggle-box');
-    contactWrpArena.appendChild(contactToggleBox);
+    const userContactIconCallContainer = document.createElement('div');
+    userContactIconCallContainer.classList.add('user__contact__icon-call_container');
+    contactToggleBox.appendChild(userContactIconCallContainer);
 
-    const iconCallContainer = document.createElement('div');
-    iconCallContainer.classList.add('user__contact__icon-call_container');
-    contactToggleBox.appendChild(iconCallContainer);
+    contactItems.forEach(row => {
+      const [iconCell, linkCell] = [...row.children];
+      const iconImg = iconCell?.querySelector('picture')?.cloneNode(true);
+      const linkA = linkCell?.querySelector('a')?.cloneNode(true);
 
-    // Add event listener to toggle contact icons visibility
-    contactIconPhone.addEventListener('click', () => {
-      userContactIcons.classList.toggle('hidden');
-      contactToggleBox.classList.toggle('hidden');
+      if (linkA && iconImg) {
+        const iconWrapper = document.createElement('a');
+        iconWrapper.classList.add('user__contact--icon');
+        iconWrapper.href = linkA.href;
+
+        const linkText = linkA.textContent?.trim().toLowerCase();
+        if (linkText.includes('phone') || linkA.href.startsWith('tel:')) {
+          iconWrapper.classList.add('phone');
+          iconWrapper.addEventListener('click', (e) => {
+            e.preventDefault();
+            contactToggleBox.classList.toggle('hidden');
+          });
+          const srOnly = document.createElement('span');
+          srOnly.classList.add('sr-only');
+          srOnly.textContent = 'phone';
+          iconWrapper.appendChild(srOnly);
+          iconWrapper.appendChild(iconImg);
+
+          const primaryTelephone = document.createElement('a');
+          primaryTelephone.classList.add('primary-telephone');
+          primaryTelephone.href = linkA.href;
+          primaryTelephone.textContent = linkA.textContent?.trim();
+          userContactIconCallContainer.appendChild(primaryTelephone);
+
+        } else if (linkText.includes('whatsapp') || linkA.href.includes('wa.me')) {
+          iconWrapper.classList.add('whatsapp');
+          iconWrapper.target = '_blank';
+          iconWrapper.rel = 'noopener noreferrer';
+          const srOnly = document.createElement('span');
+          srOnly.classList.add('sr-only');
+          srOnly.textContent = 'whatsapp';
+          iconWrapper.appendChild(srOnly);
+          iconWrapper.appendChild(iconImg);
+        } else if (linkText.includes('email') || linkA.href.startsWith('mailto:')) {
+          iconWrapper.classList.add('email');
+          const srOnly = document.createElement('span');
+          srOnly.classList.add('sr-only');
+          srOnly.textContent = 'email';
+          iconWrapper.appendChild(srOnly);
+          iconWrapper.appendChild(iconImg);
+        }
+        userContactIcons.appendChild(iconWrapper);
+      }
     });
-
+    contactWrpArena.appendChild(userContactIcons);
+    contactWrpArena.appendChild(contactToggleBox);
+    contactBlock.appendChild(contactWrpArena);
+    contactWrapper.appendChild(contactBlock);
     rightSection.appendChild(contactWrapper);
   }
 
-  // Language selector
+  // Language
   const languageDiv = document.createElement('div');
   languageDiv.classList.add('language');
-  languageDiv.textContent = languageRow?.textContent?.trim() || 'EN';
+  languageDiv.textContent = languageRow?.children[0]?.textContent?.trim() || 'EN';
   rightSection.appendChild(languageDiv);
 
-  // Sign-in section
+  // Sign-in Wrapper
   if (signInItems.length > 0) {
     const signInWrapper = document.createElement('div');
-    signInWrapper.classList.add('sign-in-wrapper'); // Original HTML has 'hidden' class, but we'll manage visibility with JS if needed
+    signInWrapper.classList.add('sign-in-wrapper', 'hidden'); // Hidden by default
     const signInBlock = document.createElement('div');
     signInBlock.classList.add('sign-in', 'block');
-    signInWrapper.appendChild(signInBlock);
-
     const userDropdown = document.createElement('div');
     userDropdown.classList.add('user__dropdown');
-    signInBlock.appendChild(userDropdown);
-
     const userAccount = document.createElement('div');
     userAccount.classList.add('user__account');
-    userDropdown.appendChild(userAccount);
 
     signInItems.forEach(row => {
-      const [iconCell, linkCell, labelCell] = [...row.children]; // hierarchy-tree is not used for rendering sign-in links
-      const signInLink = document.createElement('a');
-      signInLink.classList.add('user__account--link');
-      const foundLink = linkCell?.querySelector('a');
-      if (foundLink) signInLink.href = foundLink.href;
-      signInLink.textContent = labelCell?.textContent?.trim(); // Set text content from label cell
+      const [iconCell, linkCell, labelCell] = [...row.children];
+      const iconImg = iconCell?.querySelector('picture')?.cloneNode(true);
+      const linkA = linkCell?.querySelector('a')?.cloneNode(true);
+      const labelText = labelCell?.textContent?.trim();
 
-      const icon = iconCell?.querySelector('picture');
-      if (icon) {
-        const img = icon.querySelector('img');
-        if (img) {
-          const iconSpan = document.createElement('span');
-          iconSpan.classList.add('user__account__list-icon');
-          const iconClone = img.cloneNode(true);
-          iconSpan.appendChild(iconClone);
-          signInLink.prepend(iconSpan);
+      if (linkA && iconImg) {
+        const accountLink = document.createElement('a');
+        accountLink.classList.add('user__account--link');
+        accountLink.href = linkA.href;
+        accountLink.textContent = labelText;
+        accountLink.target = linkA.target;
+        accountLink.rel = linkA.rel;
+
+        const listIconSpan = document.createElement('span');
+        listIconSpan.classList.add('user__account__list-icon');
+        listIconSpan.appendChild(iconImg);
+        accountLink.prepend(listIconSpan);
+
+        if (labelText?.toLowerCase() === 'sign in') {
+          const signInBtnDiv = document.createElement('div');
+          signInBtnDiv.classList.add('user__account--link', 'sign-in-btn');
+          const signInButton = document.createElement('button');
+          signInButton.setAttribute('type', 'button');
+          signInButton.setAttribute('data-sign-out-text', 'Sign Out');
+          signInButton.textContent = 'Sign In';
+          signInBtnDiv.appendChild(listIconSpan.cloneNode(true)); // Re-use icon
+          signInBtnDiv.appendChild(signInButton);
+          userAccount.appendChild(signInBtnDiv);
+        } else {
+          userAccount.appendChild(accountLink);
         }
       }
-      userAccount.appendChild(signInLink);
     });
+
+    userDropdown.appendChild(userAccount);
+    signInBlock.appendChild(userDropdown);
+    signInWrapper.appendChild(signInBlock);
     rightSection.appendChild(signInWrapper);
   }
 
-  navbar.appendChild(rightSection);
   block.appendChild(navbar);
 
-  // Mobile menu
+  // Mobile Menu
   const mobileMenu = document.createElement('div');
   mobileMenu.id = 'menu';
-  mobileMenu.classList.add('menu', 'hidden', 'menu-arena'); // Initially hidden
+  mobileMenu.classList.add('menu', 'hidden', 'menu-arena');
+  block.appendChild(mobileMenu);
 
   const menuHeader = document.createElement('div');
   menuHeader.classList.add('menu-header');
@@ -273,92 +293,105 @@ export default function decorate(block) {
   mobileMenu.appendChild(menuList);
 
   navigationItems.forEach((row, index) => {
-    const [labelCell, linkCell, hierarchyCell] = [...row.children];
+    const [labelCell, linkCell, hierarchyTreeCell] = [...row.children];
+    const hasMenu = hierarchyTreeCell?.querySelector('ul');
+
     const li = document.createElement('li');
     li.id = `menu-item-${index}`;
     li.classList.add('nav-link');
-
-    const menuTitleSpan = document.createElement('span');
-    menuTitleSpan.classList.add('menu-title');
-
-    const hierarchyUL = hierarchyCell?.querySelector('ul');
-    if (hierarchyUL) {
+    if (hasMenu) {
       li.classList.add('accordion');
-      const labelText = labelCell?.textContent?.trim() || '';
-      menuTitleSpan.textContent = labelText; // For accordion, text is direct
-      li.appendChild(menuTitleSpan);
+    }
+    li.classList.add(labelCell.textContent?.trim().toLowerCase().replace(/\s/g, '-') || `nav-item-${index}`);
 
+    const spanTitle = document.createElement('span');
+    spanTitle.classList.add('menu-title');
+    const linkAnchor = linkCell?.querySelector('a')?.cloneNode(true) || document.createElement('a');
+    linkAnchor.textContent = labelCell?.textContent?.trim();
+    if (!linkAnchor.href) {
+      linkAnchor.href = '#';
+    }
+    spanTitle.appendChild(linkAnchor);
+    li.appendChild(spanTitle);
+    menuList.appendChild(li);
+
+    if (hasMenu) {
       const panel = document.createElement('div');
       panel.classList.add('panel');
-
       const linkContainerSection = document.createElement('div');
       linkContainerSection.classList.add('link-container-section');
       panel.appendChild(linkContainerSection);
 
-      const linkGridColumn = document.createElement('div');
-      linkGridColumn.classList.add('link-grid-column', 'link-column-vertical');
-      linkContainerSection.appendChild(linkGridColumn);
-
-      const clonedUL = hierarchyUL.cloneNode(true);
-      clonedUL.classList.add('content', 'links-container', 'accordian-content'); // Add classes from original HTML
-      linkGridColumn.appendChild(clonedUL);
-      li.appendChild(panel);
-
-      menuTitleSpan.addEventListener('click', () => {
-        li.classList.toggle('active');
-        panel.classList.toggle('active');
+      const uls = hierarchyTreeCell.querySelectorAll('ul');
+      uls.forEach(ul => {
+        const column = document.createElement('div');
+        column.classList.add('link-grid-column', 'link-column-vertical');
+        const clonedUl = ul.cloneNode(true);
+        clonedUl.classList.add('content', 'links-container', 'accordian-content');
+        column.appendChild(clonedUl);
+        linkContainerSection.appendChild(column);
       });
-    } else {
-      const anchor = document.createElement('a');
-      const foundLink = linkCell?.querySelector('a');
-      if (foundLink) anchor.href = foundLink.href;
-      anchor.textContent = labelCell?.textContent?.trim() || '';
-      anchor.classList.add('button'); // Add button class if present in original HTML
-      menuTitleSpan.appendChild(anchor);
-      li.appendChild(menuTitleSpan);
+      menuList.appendChild(panel);
+
+      li.addEventListener('click', () => {
+        li.classList.toggle('active');
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = `${panel.scrollHeight}px`;
+        }
+      });
     }
-    menuList.appendChild(li);
   });
 
-  // Append sign-in links to mobile menu as well
+  // Mobile Sign-in links
   signInItems.forEach(row => {
     const [iconCell, linkCell, labelCell] = [...row.children];
-    const li = document.createElement('li');
+    const iconImg = iconCell?.querySelector('picture')?.cloneNode(true);
+    const linkA = linkCell?.querySelector('a')?.cloneNode(true);
+    const labelText = labelCell?.textContent?.trim();
 
-    const signInLink = document.createElement('a');
-    signInLink.classList.add('user__account--link'); // Use class from original HTML
-    const foundLink = linkCell?.querySelector('a');
-    if (foundLink) signInLink.href = foundLink.href;
-    signInLink.textContent = labelCell?.textContent?.trim();
+    if (linkA && iconImg) {
+      const li = document.createElement('li');
+      const accountLink = document.createElement('a');
+      accountLink.classList.add('user__account--link');
+      accountLink.href = linkA.href;
+      accountLink.textContent = labelText;
+      accountLink.target = linkA.target;
+      accountLink.rel = linkA.rel;
 
-    const icon = iconCell?.querySelector('picture');
-    if (icon) {
-      const img = icon.querySelector('img');
-      if (img) {
-        const iconSpan = document.createElement('span');
-        iconSpan.classList.add('user__account__list-icon');
-        const iconClone = img.cloneNode(true);
-        iconSpan.appendChild(iconClone);
-        signInLink.prepend(iconSpan);
+      const listIconSpan = document.createElement('span');
+      listIconSpan.classList.add('user__account__list-icon');
+      listIconSpan.appendChild(iconImg);
+      accountLink.prepend(listIconSpan);
+
+      if (labelText?.toLowerCase() === 'sign in') {
+        const signInBtnDiv = document.createElement('div');
+        signInBtnDiv.classList.add('user__account--link', 'sign-in-btn');
+        const signInButton = document.createElement('button');
+        signInButton.setAttribute('type', 'button');
+        signInButton.setAttribute('data-sign-out-text', 'Sign Out');
+        signInButton.textContent = 'Sign In';
+        signInBtnDiv.appendChild(listIconSpan.cloneNode(true));
+        signInBtnDiv.appendChild(signInButton);
+        li.appendChild(signInBtnDiv);
+      } else {
+        li.appendChild(accountLink);
       }
+      menuList.appendChild(li);
     }
-    li.appendChild(signInLink);
-    menuList.appendChild(li);
   });
 
-  block.appendChild(mobileMenu);
 
-  // Hamburger menu toggle logic
+  // Hamburger toggle functionality
   hamburgerButton.addEventListener('click', () => {
     mobileMenu.classList.toggle('hidden');
-    hamburgerButton.classList.toggle('active'); // Toggle 'active' class on button
-    hamburgerButton.setAttribute('aria-expanded', mobileMenu.classList.contains('hidden') ? 'false' : 'true');
+    document.documentElement.classList.toggle('no-scroll');
   });
 
   closeIcon.addEventListener('click', () => {
     mobileMenu.classList.add('hidden');
-    hamburgerButton.classList.remove('active');
-    hamburgerButton.setAttribute('aria-expanded', 'false');
+    document.documentElement.classList.remove('no-scroll');
   });
 
   // Optimize images
