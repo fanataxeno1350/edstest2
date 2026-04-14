@@ -2,14 +2,12 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Destructure root rows based on BlockJson model
   const [logoRow, logoLinkRow, languageRow, ...itemRows] = [...block.children];
 
-  // Create main header container
-  const navbarArena = document.createElement('div');
-  navbarArena.classList.add('navbar', 'navbar-arena', 'g-container');
+  const headerWrapper = document.createElement('div');
+  headerWrapper.classList.add('navbar', 'navbar-arena', 'g-container');
 
-  // Hamburger menu
+  // Nav Hamburger
   const navHamburger = document.createElement('div');
   navHamburger.classList.add('nav-hamburger');
   const hamburgerButton = document.createElement('button');
@@ -21,309 +19,292 @@ export default function decorate(block) {
   hamburgerIcon.classList.add('nav-hamburger-icon');
   hamburgerButton.append(hamburgerIcon);
   navHamburger.append(hamburgerButton);
-  navbarArena.append(navHamburger);
+  headerWrapper.append(navHamburger);
 
   // Logo
   const logoWrapper = document.createElement('div');
   logoWrapper.classList.add('logo-wrapper');
   const logoBlock = document.createElement('div');
-  logoBlock.classList.add('logo', 'block'); // Add block class for instrumentation
-  moveInstrumentation(logoRow, logoBlock);
-
-  const logoSpan = document.createElement('span');
-  logoSpan.classList.add('arena');
-
-  const logoLink = document.createElement('a');
-  logoLink.classList.add('logo__picture');
-  const logoHref = logoLinkRow.querySelector('a')?.href || '#';
-  logoLink.href = logoHref;
-  moveInstrumentation(logoLinkRow, logoLink);
+  logoBlock.classList.add('logo', 'block'); // Add 'block' class
+  const arenaSpan = document.createElement('span');
+  arenaSpan.classList.add('arena');
 
   const logoPicture = logoRow.querySelector('picture');
-  if (logoPicture) {
-    logoLink.append(logoPicture);
+  const logoLink = logoLinkRow.querySelector('a');
+
+  if (logoPicture && logoLink) {
+    const logoAnchor = document.createElement('a');
+    logoAnchor.classList.add('logo__picture');
+    logoAnchor.href = logoLink.href;
+    logoAnchor.setAttribute('data-logo-name', 'Arena'); // From original HTML
+
+    const optimizedPic = createOptimizedPicture(logoPicture.querySelector('img').src, logoPicture.querySelector('img').alt, false, [{ width: '750' }]);
+    moveInstrumentation(logoPicture.querySelector('img'), optimizedPic.querySelector('img'));
+    logoAnchor.append(optimizedPic);
+    arenaSpan.append(logoAnchor);
+  } else if (logoPicture) {
+    const optimizedPic = createOptimizedPicture(logoPicture.querySelector('img').src, logoPicture.querySelector('img').alt, false, [{ width: '750' }]);
+    moveInstrumentation(logoPicture.querySelector('img'), optimizedPic.querySelector('img'));
+    arenaSpan.append(optimizedPic);
   }
-  logoSpan.append(logoLink);
-  logoBlock.append(logoSpan);
+  logoBlock.append(arenaSpan);
   logoWrapper.append(logoBlock);
-  navbarArena.append(logoWrapper);
+  headerWrapper.append(logoWrapper);
 
-  // Navigation Links, Contact Links, Sign-in Links
-  const linksContainer = document.createElement('div');
-  linksContainer.classList.add('links');
+  // Navigation and Contact Links
+  const linksDiv = document.createElement('div');
+  linksDiv.classList.add('links');
 
-  const rightSection = document.createElement('div');
-  rightSection.classList.add('right');
-  rightSection.id = 'nav-right';
-
-  const menuList = document.createElement('ul');
-  menuList.classList.add('menu-list');
-
-  // Filter item rows based on their structure (number of cells and content)
-  const navItems = itemRows.filter((row) => {
+  // Content detection for different item types
+  const navigationItems = itemRows.filter((row) => {
     const cells = [...row.children];
-    return cells.length === 3 && cells.some(c => c.querySelector('ul')) && cells.some(c => !c.querySelector('ul') && !c.querySelector('a'));
+    return cells.length === 3 && cells.some(cell => cell.querySelector('ul')) && !cells.some(cell => cell.querySelector('picture'));
   });
   const contactItems = itemRows.filter((row) => {
     const cells = [...row.children];
-    return cells.length === 3 && cells.some(c => c.querySelector('picture'));
+    return cells.length === 3 && cells.some(cell => cell.querySelector('picture')) && cells.some(cell => cell.querySelector('ul'));
   });
   const signInItems = itemRows.filter((row) => {
     const cells = [...row.children];
-    return cells.length === 4 && cells.some(c => c.querySelector('picture')) && cells.some(c => c.querySelector('a'));
+    return cells.length === 4 && cells.some(cell => cell.querySelector('ul'));
   });
 
-  navItems.forEach((row, index) => {
-    const cells = [...row.children];
-    const labelCell = cells.find((c) => !c.querySelector('ul') && !c.querySelector('a'));
-    const linkCell = cells.find((c) => c.querySelector('a') && !c.querySelector('ul'));
-    const hierarchyCell = cells.find((c) => c.querySelector('ul'));
+  navigationItems.forEach((row) => {
+    const labelCell = [...row.children].find((cell) => !cell.querySelector('a') && !cell.querySelector('ul'));
+    const linkCell = [...row.children].find((cell) => cell.querySelector('a') && !cell.querySelector('ul'));
+    const hierarchyCell = [...row.children].find((cell) => cell.querySelector('ul'));
 
-    const label = labelCell?.textContent.trim() || '';
-    const href = linkCell?.querySelector('a')?.href || '#';
-
-    const listItem = document.createElement('li');
-    listItem.id = `menu-item-${index}`;
-    listItem.classList.add('nav-link', label.toLowerCase().replace(/\s/g, '-'));
-    moveInstrumentation(row, listItem);
-
-    const menuTitleSpan = document.createElement('span');
-    menuTitleSpan.classList.add('menu-title');
-
-    if (hierarchyCell) {
-      listItem.classList.add('accordion');
-      menuTitleSpan.textContent = label;
-      listItem.append(menuTitleSpan);
-
-      const panelDiv = document.createElement('div');
-      panelDiv.classList.add('panel');
-      const linkContainerSection = document.createElement('div');
-      linkContainerSection.classList.add('link-container-section');
-
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = hierarchyCell.innerHTML;
-      moveInstrumentation(hierarchyCell, tempDiv); // Instrumentation for the richtext cell
-
-      // Apply classes to nested elements from ORIGINAL HTML
-      tempDiv.querySelectorAll('ul').forEach((ul) => {
-        ul.classList.add('content', 'links-container', 'accordian-content');
-        const columnDiv = document.createElement('div');
-        columnDiv.classList.add('link-grid-column', 'link-column-vertical');
-        // Move children from ul to columnDiv
-        while (ul.firstChild) {
-          columnDiv.append(ul.firstChild);
-        }
-        ul.append(columnDiv); // Put columnDiv inside ul
-        linkContainerSection.append(ul); // Append ul (which now contains columnDiv) to linkContainerSection
-      });
-
-      // Move all children from tempDiv to linkContainerSection
-      while (tempDiv.firstChild) {
-        linkContainerSection.append(tempDiv.firstChild);
+    if (labelCell) {
+      const linkTitle = document.createElement('div');
+      linkTitle.classList.add('link-title');
+      const span = document.createElement('span');
+      if (linkCell) {
+        const link = document.createElement('a');
+        link.href = linkCell.querySelector('a').href;
+        link.textContent = labelCell.textContent;
+        link.classList.add('button'); // From original HTML
+        span.append(link);
+      } else {
+        span.textContent = labelCell.textContent;
       }
+      linkTitle.append(span);
+      linksDiv.append(linkTitle);
 
-      panelDiv.append(linkContainerSection);
-      listItem.append(panelDiv);
+      if (hierarchyCell) {
+        const desktopPanel = document.createElement('div');
+        desktopPanel.classList.add('desktop-panel', 'panel', labelCell.textContent.toLowerCase().replace(/\s/g, '-')); // Class from original HTML
 
-      // Desktop panel for hover
-      const desktopPanel = document.createElement('div');
-      desktopPanel.classList.add('desktop-panel', 'panel', label.toLowerCase().replace(/\s/g, '-'));
-      // Clone the entire panelDiv content for the desktop panel
-      const clonedPanelContent = panelDiv.cloneNode(true);
-      desktopPanel.append(clonedPanelContent);
-      linksContainer.append(createLinkTitle(label, href, desktopPanel));
-    } else if (label) {
-      const link = document.createElement('a');
-      link.href = href;
-      link.title = label.toLowerCase();
-      link.classList.add('button');
-      link.textContent = label;
-      menuTitleSpan.append(link);
-      listItem.append(menuTitleSpan);
-      linksContainer.append(createLinkTitle(label, href));
+        const linkGrid = document.createElement('div');
+        linkGrid.classList.add('link-grid', 'block');
+        const linkContainerSection = document.createElement('div');
+        linkContainerSection.classList.add('link-container-section');
+
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = hierarchyCell.innerHTML;
+
+        const topLevelUls = [...tempDiv.children].filter((el) => el.tagName === 'UL');
+
+        topLevelUls.forEach((ul) => {
+          const linkGridColumn = document.createElement('div');
+          linkGridColumn.classList.add('link-grid-column', 'link-column-vertical');
+
+          // Apply classes to the nested structure from ORIGINAL HTML
+          ul.classList.add('content', 'links-container', 'accordian-content');
+          ul.querySelectorAll('a').forEach((a) => {
+            // No specific class for <a> in original HTML within these lists, but we can add 'button' if needed
+            // a.classList.add('button'); // Example if needed
+          });
+          ul.querySelectorAll('li').forEach((li) => {
+            // No specific class for <li> in original HTML within these lists
+          });
+
+          linkGridColumn.append(ul);
+          linkContainerSection.append(linkGridColumn);
+        });
+
+        moveInstrumentation(hierarchyCell, tempDiv);
+        linkGrid.append(linkContainerSection);
+        desktopPanel.append(linkGrid);
+        linksDiv.append(desktopPanel);
+      }
     }
-    menuList.append(listItem);
   });
 
-  navbarArena.append(linksContainer);
+  headerWrapper.append(linksDiv);
+
+  // Right section (Contact, Language, Sign-in)
+  const rightDiv = document.createElement('div');
+  rightDiv.classList.add('right');
+  rightDiv.id = 'nav-right';
 
   // Contact Links
   const contactWrapper = document.createElement('div');
   contactWrapper.classList.add('contact-wrapper');
   const contactBlock = document.createElement('div');
-  contactBlock.classList.add('contact', 'block', 'contact_wrp_arena', 'user__contact', 'header');
-  contactWrapper.append(contactBlock);
-  rightSection.append(contactWrapper);
-
+  contactBlock.classList.add('contact', 'block');
+  const contactWrpArena = document.createElement('div');
+  contactWrpArena.classList.add('contact_wrp_arena', 'user__contact', 'header');
   const contactTitle = document.createElement('h4');
   contactTitle.classList.add('user__contact-title');
   contactTitle.textContent = 'Contact Us';
-  contactBlock.append(contactTitle);
-
-  const contactIconPhone = document.createElement('span');
-  contactIconPhone.classList.add('user__contact-title', 'icon-phone');
-  contactIconPhone.setAttribute('aria-label', 'Contact Us');
-  contactBlock.append(contactIconPhone);
+  const contactTitleIcon = document.createElement('span');
+  contactTitleIcon.classList.add('user__contact-title', 'icon-phone');
+  contactTitleIcon.setAttribute('aria-label', 'Contact Us');
+  contactWrpArena.append(contactTitle, contactTitleIcon);
 
   const contactIconsDiv = document.createElement('div');
   contactIconsDiv.classList.add('user__contact__icons', 'hidden');
-  contactBlock.append(contactIconsDiv);
+
+  contactItems.forEach((row) => {
+    const iconCell = [...row.children].find((cell) => cell.querySelector('picture'));
+    const linkCell = [...row.children].find((cell) => cell.querySelector('a') && !cell.querySelector('ul'));
+
+    if (iconCell && linkCell) {
+      const iconAnchor = document.createElement('a');
+      iconAnchor.classList.add('user__contact--icon');
+      iconAnchor.href = linkCell.querySelector('a').href;
+
+      const iconImg = iconCell.querySelector('img');
+      if (iconImg) {
+        const srOnlySpan = document.createElement('span');
+        srOnlySpan.classList.add('sr-only');
+        srOnlySpan.textContent = iconImg.alt; // Use alt text for screen readers
+        iconAnchor.append(srOnlySpan);
+
+        const optimizedPic = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '32' }]);
+        moveInstrumentation(iconImg, optimizedPic.querySelector('img'));
+        iconAnchor.append(optimizedPic);
+      }
+
+      // Determine specific class based on link type (simplified for example)
+      if (iconAnchor.href.includes('tel:')) {
+        iconAnchor.classList.add('phone');
+        // Add event listener for phone icon to toggle contact details
+        iconAnchor.addEventListener('click', (e) => {
+          e.preventDefault();
+          contactWrpArena.querySelector('.contact-toggle-box').classList.toggle('hidden');
+        });
+      } else if (iconAnchor.href.includes('wa.me')) {
+        iconAnchor.classList.add('whatsapp');
+        iconAnchor.setAttribute('target', '_blank');
+        iconAnchor.setAttribute('rel', 'noopener noreferrer');
+      } else if (iconAnchor.href.includes('mailto:')) {
+        iconAnchor.classList.add('email');
+      }
+      contactIconsDiv.append(iconAnchor);
+    }
+  });
+
+  contactWrpArena.append(contactIconsDiv);
 
   const contactToggleBox = document.createElement('div');
   contactToggleBox.classList.add('hidden', 'contact-toggle-box');
-  contactBlock.append(contactToggleBox);
+  const callContainer = document.createElement('div');
+  callContainer.classList.add('user__contact__icon-call_container');
+  const primaryTelLink = document.createElement('a');
+  primaryTelLink.classList.add('primary-telephone');
+  primaryTelLink.href = 'tel:18001021800'; // Hardcoded from original HTML
+  primaryTelLink.textContent = '1800 102 1800';
+  const secondaryTelLink = document.createElement('a');
+  secondaryTelLink.classList.add('secondary-telephone');
+  secondaryTelLink.href = 'tel:';
+  callContainer.append(primaryTelLink, secondaryTelLink);
+  contactToggleBox.append(callContainer);
+  contactWrpArena.append(contactToggleBox);
 
-  const contactCallContainer = document.createElement('div');
-  contactCallContainer.classList.add('user__contact__icon-call_container');
-  contactToggleBox.append(contactCallContainer);
-
-  let primaryPhoneLink = document.createElement('a');
-  primaryPhoneLink.classList.add('primary-telephone');
-  primaryPhoneLink.href = 'tel:';
-  contactCallContainer.append(primaryPhoneLink);
-
-  let secondaryPhoneLink = document.createElement('a');
-  secondaryPhoneLink.classList.add('secondary-telephone');
-  secondaryPhoneLink.href = 'tel:';
-  contactCallContainer.append(secondaryPhoneLink);
-
-  contactItems.forEach((row) => {
-    const cells = [...row.children];
-    const iconCell = cells.find((c) => c.querySelector('picture'));
-    const linkCell = cells.find((c) => c.querySelector('a') && !c.querySelector('ul'));
-    // The BlockJson model for contact-link-item has a richtext field, but it's not used for phone numbers directly.
-    // Phone numbers are expected to be in the 'link' field.
-
-    const link = linkCell?.querySelector('a');
-    const href = link?.href || '#';
-    const linkText = link?.textContent.trim() || '';
-    const iconPicture = iconCell?.querySelector('picture');
-
-    if (linkText.includes('1800') && link.href.startsWith('tel:')) {
-      primaryPhoneLink.href = link.href;
-      primaryPhoneLink.textContent = linkText;
-    } else if (link.href.startsWith('tel:')) {
-      secondaryPhoneLink.href = link.href;
-      secondaryPhoneLink.textContent = linkText;
-    }
-
-    if (iconPicture && link) {
-      const contactIconAnchor = document.createElement('a');
-      contactIconAnchor.classList.add('user__contact--icon');
-      contactIconAnchor.href = href;
-      contactIconAnchor.target = '_blank';
-      contactIconAnchor.rel = 'noopener noreferrer';
-
-      const srOnlySpan = document.createElement('span');
-      srOnlySpan.classList.add('sr-only');
-
-      const iconImg = iconPicture.querySelector('img');
-      if (iconImg) {
-        const optimizedIcon = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '30' }]);
-        moveInstrumentation(iconImg, optimizedIcon.querySelector('img'));
-        contactIconAnchor.append(optimizedIcon);
-        srOnlySpan.textContent = iconImg.alt;
-        contactIconAnchor.prepend(srOnlySpan);
-
-        if (iconImg.alt.toLowerCase().includes('phone')) {
-          contactIconAnchor.classList.add('phone');
-          contactIconAnchor.addEventListener('click', (e) => {
-            e.preventDefault();
-            contactToggleBox.classList.toggle('hidden');
-          });
-        } else if (iconImg.alt.toLowerCase().includes('whatsapp')) {
-          contactIconAnchor.classList.add('whatsapp');
-        } else if (iconImg.alt.toLowerCase().includes('email')) {
-          contactIconAnchor.classList.add('email');
-        }
-        contactIconsDiv.append(contactIconAnchor);
-      }
-    }
-  });
+  contactBlock.append(contactWrpArena);
+  contactWrapper.append(contactBlock);
+  rightDiv.append(contactWrapper);
 
   // Language
   const languageDiv = document.createElement('div');
   languageDiv.classList.add('language');
   languageDiv.textContent = languageRow.textContent.trim();
-  moveInstrumentation(languageRow, languageDiv);
-  rightSection.append(languageDiv);
+  rightDiv.append(languageDiv);
 
-  // Sign-in Links
+  // Sign In Links
   const signInWrapper = document.createElement('div');
-  signInWrapper.classList.add('sign-in-wrapper', 'hidden'); // Original HTML has this as hidden
+  signInWrapper.classList.add('sign-in-wrapper', 'hidden');
   const signInBlock = document.createElement('div');
   signInBlock.classList.add('sign-in', 'block');
-  signInWrapper.append(signInBlock);
-  rightSection.append(signInWrapper);
-
   const userDropdown = document.createElement('div');
   userDropdown.classList.add('user__dropdown');
-  signInBlock.append(userDropdown);
-
   const userAccount = document.createElement('div');
   userAccount.classList.add('user__account');
-  userDropdown.append(userAccount);
 
   signInItems.forEach((row) => {
-    const cells = [...row.children];
-    const iconCell = cells.find((c) => c.querySelector('picture'));
-    const linkCell = cells.find((c) => c.querySelector('a') && !c.querySelector('ul'));
-    const labelCell = cells.find((c) => !c.querySelector('picture') && !c.querySelector('a') && !c.querySelector('ul'));
-    // The BlockJson model for sign-in-link-item also has a richtext field, but it's not used for these simple links.
+    const iconCell = [...row.children].find((cell) => cell.querySelector('picture'));
+    const linkCell = [...row.children].find((cell) => cell.querySelector('a') && !cell.querySelector('ul'));
+    const labelCell = [...row.children].find((cell) => !cell.querySelector('a') && !cell.querySelector('ul') && !cell.querySelector('picture'));
 
-    const link = linkCell?.querySelector('a');
-    const href = link?.href || '#';
-    const label = labelCell?.textContent.trim() || '';
-    const iconPicture = iconCell?.querySelector('picture');
+    if (linkCell && labelCell) {
+      const accountLink = document.createElement('a');
+      accountLink.classList.add('user__account--link');
+      accountLink.href = linkCell.querySelector('a').href;
+      accountLink.textContent = labelCell.textContent;
 
-    const userAccountLink = document.createElement('a');
-    userAccountLink.classList.add('user__account--link', label.toLowerCase().replace(/\s/g, '-'));
-    userAccountLink.href = href;
-    userAccountLink.target = '_self';
-    moveInstrumentation(row, userAccountLink); // Instrumentation for the whole row
-
-    const listIconSpan = document.createElement('span');
-    listIconSpan.classList.add('user__account__list-icon');
-    if (iconPicture) {
-      const iconImg = iconPicture.querySelector('img');
-      if (iconImg) {
-        const optimizedIcon = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '30' }]);
-        moveInstrumentation(iconImg, optimizedIcon.querySelector('img'));
-        listIconSpan.append(optimizedIcon);
+      if (labelCell.textContent.toLowerCase().includes('reach us')) {
+        accountLink.classList.add('reach', 'us');
+      } else if (labelCell.textContent.toLowerCase().includes('profile')) {
+        accountLink.classList.add('profile');
       }
-    }
-    userAccountLink.append(listIconSpan);
-    userAccountLink.append(label); // Append label text
 
-    userAccount.append(userAccountLink);
+      if (iconCell) {
+        const iconSpan = document.createElement('span');
+        iconSpan.classList.add('user__account__list-icon');
+        const iconImg = iconCell.querySelector('img');
+        if (iconImg) {
+          const optimizedPic = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '32' }]);
+          moveInstrumentation(iconImg, optimizedPic.querySelector('img'));
+          iconSpan.append(optimizedPic);
+        }
+        accountLink.prepend(iconSpan);
+      }
+      userAccount.append(accountLink);
+    } else if (labelCell && labelCell.textContent.toLowerCase().includes('sign in')) {
+      const signInBtnDiv = document.createElement('div');
+      signInBtnDiv.classList.add('user__account--link', 'sign-in-btn');
+      if (iconCell) {
+        const iconSpan = document.createElement('span');
+        iconSpan.classList.add('user__account__list-icon');
+        const iconImg = iconCell.querySelector('img');
+        if (iconImg) {
+          const optimizedPic = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '32' }]);
+          moveInstrumentation(iconImg, optimizedPic.querySelector('img'));
+          iconSpan.append(optimizedPic);
+        }
+        signInBtnDiv.append(iconSpan);
+      }
+      const signInButton = document.createElement('button');
+      signInButton.setAttribute('type', 'button');
+      signInButton.setAttribute('data-sign-out-text', 'Sign Out'); // From original HTML
+      signInButton.textContent = 'Sign In';
+      signInBtnDiv.append(signInButton);
+      userAccount.append(signInBtnDiv);
+    }
   });
 
-  // Sign In button (if needed, extracted from original HTML)
-  const signInButtonContainer = document.createElement('div');
-  signInButtonContainer.classList.add('user__account--link', 'sign-in-btn');
-  const signInButtonIconSpan = document.createElement('span');
-  signInButtonIconSpan.classList.add('user__account__list-icon');
-  const signInButtonIconImg = document.createElement('img');
-  signInButtonIconImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776063821632.svg+xml';
-  signInButtonIconImg.loading = 'lazy';
-  signInButtonIconImg.alt = 'Sign-in';
-  signInButtonIconSpan.append(signInButtonIconImg);
-  signInButtonContainer.append(signInButtonIconSpan);
+  userDropdown.append(userAccount);
+  signInBlock.append(userDropdown);
+  signInWrapper.append(signInBlock);
+  rightDiv.append(signInWrapper);
 
-  const signInButton = document.createElement('button');
-  signInButton.setAttribute('type', 'button');
-  signInButton.setAttribute('data-sign-out-text', 'Sign Out');
-  signInButton.textContent = 'Sign In';
-  signInButtonContainer.append(signInButton);
-  userAccount.append(signInButtonContainer);
+  headerWrapper.append(rightDiv);
 
+  block.textContent = '';
+  block.append(headerWrapper);
 
-  navbarArena.append(rightSection);
+  // Image optimization for all pictures in the block
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 
-  // Mobile Menu container
-  const mobileMenu = document.createElement('div');
-  mobileMenu.id = 'menu';
-  mobileMenu.classList.add('menu', 'hidden', 'menu-arena');
+  // Hamburger menu toggle logic
+  const menu = document.createElement('div');
+  menu.id = 'menu';
+  menu.classList.add('menu', 'hidden', 'menu-arena');
 
   const menuHeader = document.createElement('div');
   menuHeader.classList.add('menu-header');
@@ -335,69 +316,147 @@ export default function decorate(block) {
   const closeIcon = document.createElement('span');
   closeIcon.classList.add('close-icon');
   menuHeader.append(backArrow, menuTitle, closeIcon);
-  mobileMenu.append(menuHeader);
-  mobileMenu.append(menuList); // Append the constructed menu list
+  menu.append(menuHeader);
 
-  block.textContent = '';
-  block.append(navbarArena, mobileMenu);
+  const menuList = document.createElement('ul');
+  menuList.classList.add('menu-list');
+
+  navigationItems.forEach((row, index) => {
+    const labelCell = [...row.children].find((cell) => !cell.querySelector('a') && !cell.querySelector('ul'));
+    const linkCell = [...row.children].find((cell) => cell.querySelector('a') && !cell.querySelector('ul'));
+    const hierarchyCell = [...row.children].find((cell) => cell.querySelector('ul'));
+
+    if (labelCell) {
+      const listItem = document.createElement('li');
+      listItem.id = `menu-item-${index}`;
+      listItem.classList.add('nav-link');
+
+      const spanTitle = document.createElement('span');
+      spanTitle.classList.add('menu-title');
+
+      if (linkCell) {
+        const link = document.createElement('a');
+        link.href = linkCell.querySelector('a').href;
+        link.textContent = labelCell.textContent;
+        link.classList.add('button'); // From original HTML
+        spanTitle.append(link);
+        listItem.classList.add(labelCell.textContent.toLowerCase().replace(/\s/g, '-'));
+      } else {
+        spanTitle.textContent = labelCell.textContent;
+        listItem.classList.add('accordion', labelCell.textContent.toLowerCase().replace(/\s/g, '-'));
+      }
+      listItem.append(spanTitle);
+      menuList.append(listItem);
+
+      if (hierarchyCell) {
+        const panelDiv = document.createElement('div');
+        panelDiv.classList.add('panel');
+        const linkContainerSection = document.createElement('div');
+        linkContainerSection.classList.add('link-container-section');
+
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = hierarchyCell.innerHTML;
+
+        const topLevelUls = [...tempDiv.children].filter((el) => el.tagName === 'UL');
+
+        topLevelUls.forEach((ul) => {
+          const linkGridColumn = document.createElement('div');
+          linkGridColumn.classList.add('link-grid-column', 'link-column-vertical');
+
+          // Apply classes to the nested structure from ORIGINAL HTML
+          ul.classList.add('content', 'links-container', 'accordian-content');
+          ul.querySelectorAll('a').forEach((a) => {
+            // No specific class for <a> in original HTML within these lists, but we can add 'button' if needed
+            // a.classList.add('button'); // Example if needed
+          });
+          ul.querySelectorAll('li').forEach((li) => {
+            // No specific class for <li> in original HTML within these lists
+          });
+
+          linkGridColumn.append(ul);
+          linkContainerSection.append(linkGridColumn);
+        });
+
+        moveInstrumentation(hierarchyCell, tempDiv);
+        panelDiv.append(linkContainerSection);
+        menuList.append(panelDiv);
+
+        listItem.addEventListener('click', () => {
+          listItem.classList.toggle('active');
+          panelDiv.classList.toggle('active');
+        });
+      }
+    }
+  });
+
+  // Append sign-in links to the mobile menu list
+  signInItems.forEach((row) => {
+    const iconCell = [...row.children].find((cell) => cell.querySelector('picture'));
+    const linkCell = [...row.children].find((cell) => cell.querySelector('a') && !cell.querySelector('ul'));
+    const labelCell = [...row.children].find((cell) => !cell.querySelector('a') && !cell.querySelector('ul') && !cell.querySelector('picture'));
+
+    if (linkCell && labelCell) {
+      const listItem = document.createElement('li');
+      const accountLink = document.createElement('a');
+      accountLink.classList.add('user__account--link');
+      accountLink.href = linkCell.querySelector('a').href;
+      accountLink.textContent = labelCell.textContent;
+
+      if (labelCell.textContent.toLowerCase().includes('reach us')) {
+        accountLink.classList.add('reach', 'us');
+      } else if (labelCell.textContent.toLowerCase().includes('profile')) {
+        accountLink.classList.add('profile');
+      }
+
+      if (iconCell) {
+        const iconSpan = document.createElement('span');
+        iconSpan.classList.add('user__account__list-icon');
+        const iconImg = iconCell.querySelector('img');
+        if (iconImg) {
+          const optimizedPic = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '32' }]);
+          moveInstrumentation(iconImg, optimizedPic.querySelector('img'));
+          iconSpan.append(optimizedPic);
+        }
+        accountLink.prepend(iconSpan);
+      }
+      listItem.append(accountLink);
+      menuList.append(listItem);
+    } else if (labelCell && labelCell.textContent.toLowerCase().includes('sign in')) {
+      const listItem = document.createElement('li');
+      const signInBtnDiv = document.createElement('div');
+      signInBtnDiv.classList.add('user__account--link', 'sign-in-btn');
+      if (iconCell) {
+        const iconSpan = document.createElement('span');
+        iconSpan.classList.add('user__account__list-icon');
+        const iconImg = iconCell.querySelector('img');
+        if (iconImg) {
+          const optimizedPic = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '32' }]);
+          moveInstrumentation(iconImg, optimizedPic.querySelector('img'));
+          iconSpan.append(optimizedPic);
+        }
+        signInBtnDiv.append(iconSpan);
+      }
+      const signInButton = document.createElement('button');
+      signInButton.setAttribute('type', 'button');
+      signInButton.setAttribute('data-sign-out-text', 'Sign Out'); // From original HTML
+      signInButton.textContent = 'Sign In';
+      signInBtnDiv.append(signInButton);
+      listItem.append(signInBtnDiv);
+      menuList.append(listItem);
+    }
+  });
+
+  menu.append(menuList);
+  block.append(menu);
 
   // Event Listeners for mobile menu
   hamburgerButton.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
+    menu.classList.toggle('hidden');
     document.body.classList.toggle('no-scroll');
   });
 
   closeIcon.addEventListener('click', () => {
-    mobileMenu.classList.add('hidden');
+    menu.classList.add('hidden');
     document.body.classList.remove('no-scroll');
   });
-
-  // Accordion functionality for mobile menu
-  mobileMenu.querySelectorAll('li.accordion > .menu-title').forEach((title) => {
-    title.addEventListener('click', () => {
-      const parentLi = title.closest('li.accordion');
-      // The panel is a sibling of the li, not necessarily the next one.
-      // Find the panel associated with this accordion item.
-      const panel = parentLi.nextElementSibling;
-      if (panel && panel.classList.contains('panel')) {
-        parentLi.classList.toggle('active');
-        panel.classList.toggle('hidden');
-      }
-    });
-  });
-
-  // Image optimization
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
-}
-
-function createLinkTitle(label, href = '#', panel = null) {
-  const linkTitle = document.createElement('div');
-  linkTitle.classList.add('link-title');
-  const span = document.createElement('span');
-  if (panel) {
-    span.textContent = label;
-    linkTitle.classList.add(label.toLowerCase().replace(/\s/g, '-'));
-    linkTitle.addEventListener('mouseenter', () => {
-      panel.classList.add('show');
-    });
-    linkTitle.addEventListener('mouseleave', () => {
-      panel.classList.remove('show');
-    });
-  } else {
-    const link = document.createElement('a');
-    link.href = href;
-    link.title = label.toLowerCase();
-    link.classList.add('button');
-    link.textContent = label;
-    span.append(link);
-  }
-  linkTitle.append(span);
-  if (panel) {
-    linkTitle.append(panel);
-  }
-  return linkTitle;
 }
