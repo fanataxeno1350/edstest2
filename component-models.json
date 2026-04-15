@@ -636,7 +636,7 @@
       {
         "component": "container",
         "item": "purpose-led-card",
-        "label": "Purpose Led Cards",
+        "label": "Cards",
         "name": "cards"
       }
     ]
@@ -646,7 +646,7 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Card Image",
+        "label": "Image",
         "name": "image",
         "valueType": "string"
       },
@@ -681,24 +681,24 @@
       },
       {
         "component": "text",
-        "label": "Subheading",
-        "name": "subheading",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "spirit-of-rise-card",
-        "label": "Cards",
+        "item": "performance-driven-card",
+        "label": "Performance Driven Cards",
         "name": "cards"
       }
     ]
   },
   {
-    "id": "spirit-of-rise-card",
+    "id": "performance-driven-card",
     "fields": [
       {
         "component": "reference",
-        "label": "Image",
+        "label": "Card Image",
         "name": "image",
         "valueType": "string"
       },
@@ -709,8 +709,8 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
-        "label": "Description",
+        "component": "text",
+        "label": "Card Description",
         "name": "description",
         "valueType": "string"
       }
@@ -895,38 +895,44 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Image",
+        "label": "Slide Image",
         "name": "image",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "Image Alt Text",
-        "name": "alt",
+        "name": "imageAlt",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Slide Title",
-        "name": "title",
+        "label": "Image Title",
+        "name": "imageTitle",
         "valueType": "string"
       },
       {
-        "component": "richtext",
-        "label": "Description",
+        "component": "text",
+        "label": "Slide Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Slide Description",
         "name": "description",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Button Link",
-        "name": "link",
+        "label": "CTA Link",
+        "name": "ctaLink",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Button Label",
-        "name": "linkLabel",
+        "label": "CTA Label",
+        "name": "ctaLabel",
         "valueType": "string"
       }
     ]

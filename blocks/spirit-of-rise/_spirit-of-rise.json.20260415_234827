@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Purpose-Led-Grid",
-      "id": "purpose-led-grid",
+      "title": "Spirit-of-Rise",
+      "id": "spirit-of-rise",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "purpose-led-grid",
-              "model": "purpose-led-grid",
-              "name": "Purpose-Led-Grid"
+              "filter": "spirit-of-rise",
+              "model": "spirit-of-rise",
+              "name": "Spirit-of-Rise"
             }
           }
         }
       }
     },
     {
-      "title": "Purpose-Led-Card",
-      "id": "purpose-led-card",
+      "title": "Spirit-of-Rise-Card",
+      "id": "spirit-of-rise-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "purpose-led-card",
-              "name": "Purpose-Led-Card"
+              "model": "spirit-of-rise-card",
+              "name": "Spirit-of-Rise-Card"
             }
           }
         }
@@ -34,18 +34,30 @@
   ],
   "models": [
     {
-      "id": "purpose-led-grid",
+      "id": "spirit-of-rise",
       "fields": [
         {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
           "component": "container",
-          "item": "purpose-led-card",
+          "item": "spirit-of-rise-card",
           "label": "Cards",
           "name": "cards"
         }
       ]
     },
     {
-      "id": "purpose-led-card",
+      "id": "spirit-of-rise-card",
       "fields": [
         {
           "component": "reference",
@@ -54,21 +66,15 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Image Alt Text",
-          "name": "alt",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
-          "label": "Card Link",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Description",
-          "name": "description",
+          "name": "desc",
           "valueType": "string"
         }
       ]
@@ -76,9 +82,9 @@
   ],
   "filters": [
     {
-      "id": "purpose-led-grid",
+      "id": "spirit-of-rise",
       "components": [
-        "purpose-led-card"
+        "spirit-of-rise-card"
       ]
     }
   ]

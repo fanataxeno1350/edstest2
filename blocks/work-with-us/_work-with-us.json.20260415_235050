@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Purpose-Led-Grid",
-      "id": "purpose-led-grid",
+      "title": "Work-With-Us",
+      "id": "work-with-us",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "purpose-led-grid",
-              "model": "purpose-led-grid",
-              "name": "Purpose-Led-Grid"
+              "filter": "work-with-us",
+              "model": "work-with-us",
+              "name": "Work-With-Us"
             }
           }
         }
       }
     },
     {
-      "title": "Purpose-Led-Card",
-      "id": "purpose-led-card",
+      "title": "Work-With-Us-Slide",
+      "id": "work-with-us-slide",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "purpose-led-card",
-              "name": "Purpose-Led-Card"
+              "model": "work-with-us-slide",
+              "name": "Work-With-Us-Slide"
             }
           }
         }
@@ -34,18 +34,24 @@
   ],
   "models": [
     {
-      "id": "purpose-led-grid",
+      "id": "work-with-us",
       "fields": [
         {
+          "component": "text",
+          "label": "Section Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
           "component": "container",
-          "item": "purpose-led-card",
-          "label": "Cards",
-          "name": "cards"
+          "item": "work-with-us-slide",
+          "label": "Slides",
+          "name": "slides"
         }
       ]
     },
     {
-      "id": "purpose-led-card",
+      "id": "work-with-us-slide",
       "fields": [
         {
           "component": "reference",
@@ -60,9 +66,9 @@
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Card Link",
-          "name": "link",
+          "component": "text",
+          "label": "Slide Title",
+          "name": "title",
           "valueType": "string"
         },
         {
@@ -70,15 +76,27 @@
           "label": "Description",
           "name": "description",
           "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Button Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Button Label",
+          "name": "linkLabel",
+          "valueType": "string"
         }
       ]
     }
   ],
   "filters": [
     {
-      "id": "purpose-led-grid",
+      "id": "work-with-us",
       "components": [
-        "purpose-led-card"
+        "work-with-us-slide"
       ]
     }
   ]

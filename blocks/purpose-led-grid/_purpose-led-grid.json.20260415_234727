@@ -39,7 +39,7 @@
         {
           "component": "container",
           "item": "purpose-led-card",
-          "label": "Cards",
+          "label": "Purpose Led Cards",
           "name": "cards"
         }
       ]
@@ -49,7 +49,7 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
+          "label": "Card Image",
           "name": "image",
           "valueType": "string"
         },

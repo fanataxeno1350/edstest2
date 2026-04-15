@@ -328,7 +328,7 @@
           }
         },
         {
-          "title": "Spirit-Of-Rise",
+          "title": "Spirit-of-Rise",
           "id": "spirit-of-rise",
           "plugins": {
             "xwalk": {
@@ -337,22 +337,22 @@
                 "template": {
                   "filter": "spirit-of-rise",
                   "model": "spirit-of-rise",
-                  "name": "Spirit-Of-Rise"
+                  "name": "Spirit-of-Rise"
                 }
               }
             }
           }
         },
         {
-          "title": "Spirit-Of-Rise-Card",
-          "id": "spirit-of-rise-card",
+          "title": "Performance-Driven-Card",
+          "id": "performance-driven-card",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "spirit-of-rise-card",
-                  "name": "Spirit-Of-Rise-Card"
+                  "model": "performance-driven-card",
+                  "name": "Performance-Driven-Card"
                 }
               }
             }

@@ -2,25 +2,30 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  block.classList.add('row', 'g-4', 'pt-3');
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('row', 'g-4', 'purpose-led-grid', 'pt-3');
 
   [...block.children].forEach((row) => {
+    // cell[0]: field="image" label="Image" type=reference
+    // cell[1]: field="alt" label="Image Alt Text" type=text
+    // cell[2]: field="link" label="Card Link" type=aem-content
+    // cell[3]: field="description" label="Description" type=richtext
     const [imageCell, altTextCell, linkCell, descriptionCell] = [...row.children];
 
-    const colDiv = document.createElement('div');
-    colDiv.classList.add('col-md-6', 'aos-init', 'aos-animate');
-    colDiv.setAttribute('data-aos-easing', 'ease-in-out');
-    colDiv.setAttribute('data-aos', 'fade-up');
-    colDiv.setAttribute('data-aos-delay', '700');
-    moveInstrumentation(row, colDiv);
+    const col = document.createElement('div');
+    col.classList.add('col-md-6', 'aos-init', 'aos-animate');
+    col.setAttribute('data-aos-easing', 'ease-in-out');
+    col.setAttribute('data-aos', 'fade-up');
+    col.setAttribute('data-aos-delay', '700');
 
-    const cardWrap = document.createElement('a');
-    cardWrap.classList.add('card-wrap');
+    const cardLink = document.createElement('a');
+    cardLink.classList.add('card-wrap');
     const foundLink = linkCell.querySelector('a');
     if (foundLink) {
-      cardWrap.href = foundLink.href;
-      cardWrap.target = '_blank'; // Original HTML has target="_blank"
+      cardLink.href = foundLink.href;
+      cardLink.target = '_blank'; // Original HTML has target="_blank"
     }
+    moveInstrumentation(row, cardLink);
 
     const cardImageDiv = document.createElement('div');
     cardImageDiv.classList.add('card-image');
@@ -29,19 +34,10 @@ export default function decorate(block) {
     if (picture) {
       const img = picture.querySelector('img');
       if (img) {
-        // Breakpoints derived from original HTML's <source media="(max-width: 576px)">
-        const optimizedPic = createOptimizedPicture(
-          img.src,
-          altTextCell.textContent.trim() || img.alt, // Use authored alt text or fallback to img.alt
-          false,
-          [{ media: '(max-width: 576px)', width: '576' }, { width: '750' }],
-        );
-        // Ensure img-fluid class is added to the <img> inside the new <picture>
-        const newImg = optimizedPic.querySelector('img');
-        if (newImg) {
-          newImg.classList.add('img-fluid');
-          moveInstrumentation(img, newImg); // Move instrumentation from original img to new img
-        }
+        const altText = altTextCell.textContent.trim();
+        const optimizedPic = createOptimizedPicture(img.src, altText, false, [{ width: '576', media: '(max-width: 576px)' }, { width: '750' }]);
+        optimizedPic.querySelector('img').classList.add('img-fluid'); // Apply img-fluid class
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
         cardImageDiv.append(optimizedPic);
       }
     }
@@ -54,9 +50,11 @@ export default function decorate(block) {
     descriptionP.innerHTML = descriptionCell.innerHTML;
 
     cardTextDiv.append(descriptionP);
-    cardWrap.append(cardImageDiv, cardTextDiv);
-    colDiv.append(cardWrap);
-    block.append(colDiv);
-    row.remove(); // Remove the original row after processing
+    cardLink.append(cardImageDiv, cardTextDiv);
+    col.append(cardLink);
+    wrapper.append(col);
   });
+
+  block.innerHTML = '';
+  block.append(wrapper);
 }

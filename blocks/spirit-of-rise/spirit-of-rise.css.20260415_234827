@@ -692,6 +692,10 @@ body .rotate-div{display:flex;} }
 
 @media (max-width:834px) { .section-header p { font-size:0.875rem; } }
 
+.section.grey-bg { background:#F7F5EF; }
+
+.grey-bg { background:#F7F5EF; }
+
 .heading { font-size:2.25rem;text-transform:uppercase; }
 
 @media (max-width:834px) { .heading { font-size:1.25rem; } }
