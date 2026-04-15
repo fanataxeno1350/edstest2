@@ -140,5 +140,677 @@
         ]
       }
     ]
+  },
+  {
+    "id": "faqs-section",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "faq-item",
+        "label": "FAQs",
+        "name": "faqs"
+      }
+    ]
+  },
+  {
+    "id": "faq-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Question",
+        "name": "question",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Answer",
+        "name": "answer",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-main",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logoLink",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-link",
+        "label": "Social Links",
+        "name": "socialLinks"
+      },
+      {
+        "component": "container",
+        "item": "footer-menu-block",
+        "label": "Footer Menus",
+        "name": "footerMenus"
+      },
+      {
+        "component": "container",
+        "item": "footer-secondary-nav-item",
+        "label": "Secondary Navigation",
+        "name": "secondaryNav"
+      },
+      {
+        "component": "text",
+        "label": "Copyright Text",
+        "name": "copyrightText",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-link",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-menu-block",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Menu Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Menu Title Link",
+        "name": "titleLink",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-menu-item",
+        "label": "Menu Items",
+        "name": "menuItems"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-menu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Item Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Item Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-secondary-nav-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "latest-stories",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "story-item",
+        "label": "Stories",
+        "name": "stories"
+      },
+      {
+        "component": "container",
+        "item": "twitter-feed-embed",
+        "label": "Twitter Feed Embed",
+        "name": "twitterFeed"
+      }
+    ]
+  },
+  {
+    "id": "story-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Category",
+        "name": "category",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Date",
+        "name": "date",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "twitter-feed-embed"
+  },
+  {
+    "id": "main-header",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logoLink",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "navigation-item",
+        "label": "Navigation Menu",
+        "name": "navigationMenu"
+      },
+      {
+        "component": "container",
+        "item": "contact-link-item",
+        "label": "Contact Links",
+        "name": "contactLinks"
+      },
+      {
+        "component": "container",
+        "item": "search-link-item",
+        "label": "Search Links",
+        "name": "searchLinks"
+      },
+      {
+        "component": "container",
+        "item": "logo-item",
+        "label": "Additional Logos",
+        "name": "additionalLogos"
+      }
+    ]
+  },
+  {
+    "id": "navigation-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Menu Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Menu Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "contact-link-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "search-link-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon 1",
+        "name": "icon1",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon 2",
+        "name": "icon2",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "logo-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logoLink",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "organization-block",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Organization Name",
+        "name": "name",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Website URL",
+        "name": "url",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Street Address",
+        "name": "street-address",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Address Locality",
+        "name": "address-locality",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Address Region",
+        "name": "address-region",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Postal Code",
+        "name": "postal-code",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Address Country",
+        "name": "address-country",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Area Served",
+        "name": "area-served",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "social-link-item",
+        "label": "Social Links",
+        "name": "socialLinks"
+      }
+    ]
+  },
+  {
+    "id": "social-link-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Social Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "quick-links",
+    "fields": [
+      {
+        "component": "container",
+        "item": "quick-link-item",
+        "label": "Quick Links",
+        "name": "links"
+      }
+    ]
+  },
+  {
+    "id": "quick-link-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link URL",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "spirit-of-rise",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "performace-driven-card",
+        "label": "Cards",
+        "name": "cards"
+      }
+    ]
+  },
+  {
+    "id": "performace-driven-card",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Card Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "spotlight-home-wrap",
+    "fields": [
+      {
+        "component": "container",
+        "item": "spotlight-slide-item",
+        "label": "Slides",
+        "name": "slides"
+      },
+      {
+        "component": "container",
+        "item": "quick-link-item",
+        "label": "Quick Links",
+        "name": "quickLinks"
+      }
+    ]
+  },
+  {
+    "id": "spotlight-slide-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Slide Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Image Alt Text",
+        "name": "alt",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Subheading",
+        "name": "subheading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "quick-link-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link URL",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "what-we-do-wrap",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "business-vertical-item",
+        "label": "Business Verticals",
+        "name": "businessVerticals"
+      }
+    ]
+  },
+  {
+    "id": "business-vertical-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "work-with-us",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "work-with-us-slide",
+        "label": "Slides",
+        "name": "slides"
+      }
+    ]
+  },
+  {
+    "id": "work-with-us-slide",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
   }
 ]
