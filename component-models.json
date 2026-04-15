@@ -192,19 +192,19 @@
       },
       {
         "component": "container",
-        "item": "footer-social-link",
+        "item": "social-link-item",
         "label": "Social Links",
         "name": "socialLinks"
       },
       {
         "component": "container",
-        "item": "footer-menu-block",
-        "label": "Footer Menus",
-        "name": "footerMenus"
+        "item": "footer-navigation-item",
+        "label": "Footer Navigation",
+        "name": "footerNavigation"
       },
       {
         "component": "container",
-        "item": "footer-secondary-nav-item",
+        "item": "secondary-nav-item",
         "label": "Secondary Navigation",
         "name": "secondaryNav"
       },
@@ -217,63 +217,34 @@
     ]
   },
   {
-    "id": "footer-social-link",
+    "id": "social-link-item",
     "fields": [
       {
         "component": "reference",
-        "label": "Icon",
+        "label": "Social Icon",
         "name": "icon",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
+        "label": "Social Link",
         "name": "link",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-menu-block",
+    "id": "footer-navigation-item",
     "fields": [
       {
         "component": "text",
-        "label": "Menu Title",
-        "name": "title",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Menu Title Link",
-        "name": "titleLink",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "footer-menu-item",
-        "label": "Menu Items",
-        "name": "menuItems"
-      },
-      {
-        "component": "richtext",
-        "label": "Navigation Hierarchy",
-        "name": "hierarchy-tree",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footer-menu-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Item Label",
+        "label": "Menu Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Item Link",
+        "label": "Menu Link",
         "name": "link",
         "valueType": "string"
       },
@@ -286,17 +257,17 @@
     ]
   },
   {
-    "id": "footer-secondary-nav-item",
+    "id": "secondary-nav-item",
     "fields": [
       {
         "component": "text",
-        "label": "Label",
+        "label": "Menu Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
+        "label": "Menu Link",
         "name": "link",
         "valueType": "string"
       },
