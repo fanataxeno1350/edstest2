@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "What We Do Wrap",
+      "title": "What-We-Do-Wrap",
       "id": "what-we-do-wrap",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "what-we-do-wrap",
               "model": "what-we-do-wrap",
-              "name": "What We Do Wrap"
+              "name": "What-We-Do-Wrap"
             }
           }
         }
       }
     },
     {
-      "title": "Business Vertical Item",
+      "title": "Business-Vertical-Item",
       "id": "business-vertical-item",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "business-vertical-item",
-              "name": "Business Vertical Item"
+              "name": "Business-Vertical-Item"
             }
           }
         }
@@ -73,13 +73,13 @@
         },
         {
           "component": "reference",
-          "label": "Title Icon",
-          "name": "titleIcon",
+          "label": "Icon",
+          "name": "icon",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Business Link",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         }

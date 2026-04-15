@@ -2,276 +2,318 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const children = [...block.children];
-  const headingRow = children.shift();
-  const headingText = headingRow.querySelector('div')?.textContent.trim();
+  const [headingRow, ...itemRows] = [...block.children];
 
+  // Section wrapper
+  const section = document.createElement('section');
+  section.classList.add('section', 'grey-bg', 'latest-stories', 'home-stories');
+  moveInstrumentation(block, section);
+
+  // Section header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.textContent = headingText;
+  heading.setAttribute('data-aos', 'fade-up');
+  heading.setAttribute('data-aos-offset', '100');
+  heading.setAttribute('data-aos-duration', '650');
+  heading.setAttribute('data-aos-easing', 'ease-in-out');
+  moveInstrumentation(headingRow, heading);
+  heading.textContent = headingRow.firstElementChild.textContent.trim();
   sectionHeader.append(heading);
+  section.append(sectionHeader);
 
+  // Container for stories and twitter feed
   const container = document.createElement('div');
   container.classList.add('container', 'aos-init', 'aos-animate');
+  container.setAttribute('data-aos', 'fade-up');
+  container.setAttribute('data-aos-offset', '100');
+  container.setAttribute('data-aos-duration', '650');
+  container.setAttribute('data-aos-easing', 'ease-in-out');
 
-  const flickitySliderMobileWrap = document.createElement('div');
-  flickitySliderMobileWrap.classList.add('flickity-slider-mobile-wrap', 'grid-layout');
-  flickitySliderMobileWrap.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "watchCSS": true, "adaptiveHeight": true }');
+  const flickityWrap = document.createElement('div');
+  flickityWrap.classList.add('flickity-slider-mobile-wrap', 'grid-layout');
+  flickityWrap.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "watchCSS": true, "adaptiveHeight": true }');
 
-  const twitterSlides = document.createElement('div');
-  twitterSlides.classList.add('slides');
+  const slidesContainer = document.createElement('div');
+  slidesContainer.classList.add('slides');
 
-  const twitterFeedContainer = document.createElement('div');
-  twitterFeedContainer.classList.add('elfsight-app-81878be6-2fc1-4ba6-b776-5fb962097235', 'eapps-twitter-feed', 'eapps-twitter-feed-source-user', 'eapps-twitter-feed-color-scheme--dark');
-  twitterFeedContainer.setAttribute('data-elfsight-app-lazy', '');
-  twitterFeedContainer.id = 'eapps-twitter-feed-1';
+  const twitterFeedItems = itemRows.filter((row) => [...row.children].length === 10);
+  const storyItems = itemRows.filter((row) => [...row.children].length === 5);
 
-  const eappsTwitterFeedContainer = document.createElement('div');
-  eappsTwitterFeedContainer.classList.add('eapps-twitter-feed-container', 'eapps-twitter-feed-post-x-icon-hide', 'eapps-twitter-feed-post-reply-hide', 'eapps-twitter-feed-post-repost-hide', 'eapps-twitter-feed-post-like-hide', 'eapps-twitter-feed-post-share-button-hide', 'eapps-twitter-feed-small', 'eapps-twitter-feed-hide-header');
-  eappsTwitterFeedContainer.setAttribute('eapps-link', 'app');
+  // Twitter Feed
+  if (twitterFeedItems.length > 0) {
+    const twitterFeedWrapper = document.createElement('div');
+    twitterFeedWrapper.classList.add('elfsight-app-81878be6-2fc1-4ba6-b776-5fb962097235', 'eapps-twitter-feed', 'eapps-twitter-feed-source-user', 'eapps-twitter-feed-color-scheme--dark');
+    twitterFeedWrapper.setAttribute('data-elfsight-app-lazy', '');
+    twitterFeedWrapper.id = 'eapps-twitter-feed-1';
 
-  const eappsTwitterFeedInner = document.createElement('div');
-  eappsTwitterFeedInner.classList.add('eapps-twitter-feed-inner');
+    const feedContainer = document.createElement('div');
+    feedContainer.classList.add('eapps-twitter-feed-container', 'eapps-twitter-feed-post-x-icon-hide', 'eapps-twitter-feed-post-reply-hide', 'eapps-twitter-feed-post-repost-hide', 'eapps-twitter-feed-post-like-hide', 'eapps-twitter-feed-post-share-button-hide', 'eapps-twitter-feed-small', 'eapps-twitter-feed-hide-header');
+    feedContainer.setAttribute('eapps-link', 'app');
 
-  const eappsTwitterFeedPosts = document.createElement('div');
-  eappsTwitterFeedPosts.classList.add('eapps-twitter-feed-posts');
-  eappsTwitterFeedPosts.setAttribute('eapps-link', 'posts');
-  eappsTwitterFeedPosts.style.maxHeight = 'none';
+    const feedInner = document.createElement('div');
+    feedInner.classList.add('eapps-twitter-feed-inner');
 
-  const eappsTwitterFeedPostsContainer = document.createElement('div');
-  eappsTwitterFeedPostsContainer.classList.add('eapps-twitter-feed-posts-container');
-  eappsTwitterFeedPostsContainer.setAttribute('eapps-link', 'postsContainer');
-  eappsTwitterFeedPostsContainer.style.maxHeight = 'none';
+    const postsDiv = document.createElement('div');
+    postsDiv.classList.add('eapps-twitter-feed-posts');
+    postsDiv.setAttribute('eapps-link', 'posts');
+    postsDiv.style.maxHeight = 'none';
 
-  const eappsTwitterFeedPostsInner = document.createElement('div');
-  eappsTwitterFeedPostsInner.classList.add('eapps-twitter-feed-posts-inner', 'shuffle');
-  eappsTwitterFeedPostsInner.setAttribute('eapps-link', 'posts');
-  eappsTwitterFeedPostsInner.style.cssText = 'position: relative; overflow: hidden; height: 4643.24px; transition: height 100ms cubic-bezier(0.4, 0, 0.2, 1);';
+    const postsContainer = document.createElement('div');
+    postsContainer.classList.add('eapps-twitter-feed-posts-container');
+    postsContainer.setAttribute('eapps-link', 'postsContainer');
+    postsContainer.style.maxHeight = 'none';
 
-  const storyCardsSlides = document.createElement('div');
-  storyCardsSlides.classList.add('slides');
+    const postsInner = document.createElement('div');
+    postsInner.classList.add('eapps-twitter-feed-posts-inner', 'shuffle');
+    postsInner.setAttribute('eapps-link', 'posts');
+    postsInner.style.cssText = 'position: relative; overflow: hidden; height: 4643.24px; transition: height 100ms cubic-bezier(0.4, 0, 0.2, 1);';
 
-  children.forEach((row) => {
-    const cells = [...row.children];
-    if (cells.length === 11) { // Twitter Feed Item
-      const [
-        profileBannerCell,
-        profileImageCell,
-        displayNameCell,
-        screenNameCell,
-        profileLinkCell,
-        postDateCell,
-        postTextCell,
-        mediaItemsCell, // This is a container field, its items appear as separate rows, so we don't directly use this cell
-        postLinkCell,
-        repostsCell,
-        likesCell,
-      ] = cells;
+    twitterFeedItems.forEach((row) => {
+      const [userImageCell, userNameCell, userScreenNameCell, isVerifiedCell, tweetLinkCell, tweetTextCell, mediaCell, repostCountCell, likeCountCell, tweetDateCell] = [...row.children];
 
-      const item = document.createElement('div');
-      item.classList.add('eapps-twitter-feed-posts-item', 'eapps-twitter-feed-posts-item-media-items-1', 'eapps-twitter-feed-posts-item-media-show', 'eapps-twitter-feed-posts-item-show', 'shuffle-item', 'shuffle-item--visible');
-      item.style.cssText = 'position: absolute; top: 0px; visibility: visible; will-change: transform; left: 0px; opacity: 1; transition-duration: 100ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-property: transform, opacity;';
+      const postItem = document.createElement('div');
+      postItem.classList.add('eapps-twitter-feed-posts-item', 'eapps-twitter-feed-posts-item-media-items-1', 'eapps-twitter-feed-posts-item-media-show', 'eapps-twitter-feed-posts-item-show', 'shuffle-item', 'shuffle-item--visible');
+      postItem.style.cssText = 'position: absolute; top: 0px; visibility: visible; will-change: transform; left: 0px; opacity: 1; transition-duration: 100ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-property: transform, opacity;';
+      moveInstrumentation(row, postItem);
 
-      const itemInner = document.createElement('div');
-      itemInner.classList.add('eapps-twitter-feed-posts-item-inner');
+      const postItemInner = document.createElement('div');
+      postItemInner.classList.add('eapps-twitter-feed-posts-item-inner');
 
       const userDiv = document.createElement('div');
       userDiv.classList.add('eapps-twitter-feed-posts-item-user');
 
-      const profileLink = document.createElement('a');
-      profileLink.rel = 'nofollow';
-      profileLink.target = '_blank';
-      profileLink.href = profileLinkCell.querySelector('a')?.href || '#';
+      const tweetLinkAnchor = tweetLinkCell.querySelector('a');
+      const tweetHref = tweetLinkAnchor ? tweetLinkAnchor.href : '#';
+      const tweetId = tweetHref.split('/').pop(); // Extract tweet ID from URL
 
-      const profileImageContainer = document.createElement('div');
-      profileImageContainer.classList.add('eapps-twitter-feed-posts-item-user-image-container');
-      const profileImage = document.createElement('img');
-      profileImage.classList.add('eapps-twitter-feed-posts-item-user-image');
-      const profilePicture = profileImageCell.querySelector('picture');
-      if (profilePicture) {
-        const img = profilePicture.querySelector('img');
-        if (img) {
-          profileImage.src = img.src;
-          profileImage.alt = img.alt;
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          profilePicture.replaceWith(optimizedPic);
-        }
+      const userLink = document.createElement('a');
+      userLink.rel = 'nofollow';
+      userLink.target = '_blank';
+      userLink.href = tweetHref;
+
+      const userImageContainer = document.createElement('div');
+      userImageContainer.classList.add('eapps-twitter-feed-posts-item-user-image-container');
+      const userImage = userImageCell.querySelector('img');
+      if (userImage) {
+        const userImgEl = document.createElement('img');
+        userImgEl.classList.add('eapps-twitter-feed-posts-item-user-image');
+        userImgEl.src = userImage.src;
+        userImgEl.alt = userImage.alt;
+        userImageContainer.append(userImgEl);
       }
-      profileLink.append(profileImageContainer);
-      profileImageContainer.append(profileImage);
+      userLink.append(userImageContainer);
+      userDiv.append(userLink);
 
       const userNameDiv = document.createElement('div');
       userNameDiv.classList.add('eapps-twitter-feed-posts-item-user-name');
-      const displayNameLink = document.createElement('a');
-      displayNameLink.rel = 'nofollow';
-      displayNameLink.target = '_blank';
-      displayNameLink.href = profileLinkCell.querySelector('a')?.href || '#';
-      const displayNameSpan = document.createElement('span');
-      displayNameSpan.textContent = displayNameCell.textContent.trim();
-      displayNameLink.append(displayNameSpan);
-      userNameDiv.append(displayNameLink);
+      const userNameLink = document.createElement('a');
+      userNameLink.rel = 'nofollow';
+      userNameLink.target = '_blank';
+      userNameLink.href = tweetHref;
+      const userNameSpan = document.createElement('span');
+      userNameSpan.textContent = userNameCell.textContent.trim();
+      userNameLink.append(userNameSpan);
 
-      const screenNameDiv = document.createElement('div');
-      screenNameDiv.classList.add('eapps-twitter-feed-posts-item-user-screen-name');
-      const screenNameLink = document.createElement('a');
-      screenNameLink.rel = 'nofollow';
-      screenNameLink.target = '_blank';
-      screenNameLink.href = profileLinkCell.querySelector('a')?.href || '#';
-      const screenNameSpan = document.createElement('span');
-      screenNameSpan.textContent = screenNameCell.textContent.trim();
-      screenNameLink.append(screenNameSpan);
-      screenNameDiv.append(screenNameLink);
-
-      const postDateSpan = document.createElement('span');
-      postDateSpan.classList.add('eapps-twitter-feed-posts-item-user-date');
-      postDateSpan.textContent = postDateCell.textContent.trim();
-      screenNameDiv.append(postDateSpan);
-      userNameDiv.append(screenNameDiv);
-
-      userDiv.append(profileLink, userNameDiv);
-
-      const postTextDiv = document.createElement('div');
-      postTextDiv.classList.add('eapps-twitter-feed-posts-item-text');
-      postTextDiv.innerHTML = postTextCell.innerHTML;
-
-      const mediaDiv = document.createElement('div');
-      mediaDiv.classList.add('eapps-twitter-feed-posts-item-media', 'eapps-twitter-feed-posts-item-media-visible');
-      mediaDiv.setAttribute('eapps-link', 'media');
-      const mediaItemDiv = document.createElement('div');
-      mediaItemDiv.classList.add('eapps-twitter-feed-posts-item-media-item-type-image', 'eapps-twitter-feed-posts-item-media-item');
-      const mediaImage = document.createElement('img');
-      mediaImage.classList.add('eapps-twitter-feed-posts-item-media-item-image');
-      mediaImage.setAttribute('eapps-link', 'picture');
-      const mediaPicture = profileBannerCell.querySelector('picture'); // Assuming profileBanner is the media image for the post
-      if (mediaPicture) {
-        const img = mediaPicture.querySelector('img');
-        if (img) {
-          mediaImage.src = img.src;
-          mediaImage.alt = img.alt;
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          mediaPicture.replaceWith(optimizedPic);
-        }
+      if (isVerifiedCell.textContent.trim() === 'true') {
+        const verifiedSpan = document.createElement('span');
+        verifiedSpan.classList.add('eapps-twitter-feed-posts-item-user-name-verified');
+        verifiedSpan.title = 'Verified account';
+        const verifiedImg = document.createElement('img');
+        verifiedImg.alt = 'svg file';
+        // The original HTML uses a specific SVG for verified icon, but we should not hardcode paths.
+        // If the model does not provide a field for this icon, we cannot render it.
+        // For now, we'll leave it as a placeholder.
+        verifiedSpan.append(verifiedImg); // No direct source in block for this SVG
+        userNameLink.append(verifiedSpan);
       }
-      mediaItemDiv.append(mediaImage);
-      mediaDiv.append(mediaItemDiv);
+      userNameDiv.append(userNameLink);
+
+      const userScreenNameDiv = document.createElement('div');
+      userScreenNameDiv.classList.add('eapps-twitter-feed-posts-item-user-screen-name');
+      const userScreenNameLink = document.createElement('a');
+      userScreenNameLink.rel = 'nofollow';
+      userScreenNameLink.target = '_blank';
+      userScreenNameLink.href = tweetHref;
+      userScreenNameLink.textContent = userScreenNameCell.textContent.trim();
+      userScreenNameDiv.append(userScreenNameLink);
+
+      const userDateSpan = document.createElement('span');
+      userDateSpan.classList.add('eapps-twitter-feed-posts-item-user-date');
+      userDateSpan.textContent = tweetDateCell.textContent.trim();
+      userScreenNameDiv.append(userDateSpan);
+
+      userNameDiv.append(userScreenNameDiv);
+      userDiv.append(userNameDiv);
+
+      const userPostDiv = document.createElement('div');
+      userPostDiv.classList.add('eapps-twitter-feed-posts-item-user-post');
+      const userPostLink = document.createElement('a');
+      userPostLink.rel = 'nofollow';
+      userPostLink.href = tweetHref;
+      userPostLink.target = '_blank';
+      userPostLink.title = 'View on X';
+      const userPostImg = document.createElement('img');
+      userPostImg.alt = 'svg file';
+      // No direct source in block for this SVG
+      userPostLink.append(userPostImg);
+      userPostDiv.append(userPostLink);
+      userDiv.append(userPostDiv);
+      postItemInner.append(userDiv);
+
+      const tweetTextDiv = document.createElement('div');
+      tweetTextDiv.classList.add('eapps-twitter-feed-posts-item-text');
+      tweetTextDiv.innerHTML = tweetTextCell.innerHTML;
+      postItemInner.append(tweetTextDiv);
+
+      const tweetMediaDiv = document.createElement('div');
+      tweetMediaDiv.classList.add('eapps-twitter-feed-posts-item-media', 'eapps-twitter-feed-posts-item-media-visible');
+      tweetMediaDiv.setAttribute('eapps-link', 'media');
+
+      // Assuming media cell might contain an image directly or as a child of a div
+      const mediaImage = mediaCell.querySelector('picture > img');
+      if (mediaImage) {
+        const mediaItemDiv = document.createElement('div');
+        mediaItemDiv.classList.add('eapps-twitter-feed-posts-item-media-item-type-image', 'eapps-twitter-feed-posts-item-media-item');
+        const mediaImgEl = document.createElement('img');
+        mediaImgEl.classList.add('eapps-twitter-feed-posts-item-media-item-image');
+        mediaImgEl.setAttribute('eapps-link', 'picture');
+        mediaImgEl.src = mediaImage.src;
+        mediaImgEl.alt = mediaImage.alt;
+        mediaItemDiv.append(mediaImgEl);
+        tweetMediaDiv.append(mediaItemDiv);
+      }
+      postItemInner.append(tweetMediaDiv);
 
       const actionsDiv = document.createElement('div');
       actionsDiv.classList.add('eapps-twitter-feed-posts-item-actions');
 
-      const repostsLink = document.createElement('a');
-      repostsLink.rel = 'nofollow';
-      repostsLink.href = postLinkCell.querySelector('a')?.href || '#';
-      repostsLink.title = 'Repost';
-      repostsLink.classList.add('eapps-twitter-feed-posts-item-actions-item', 'eapps-twitter-feed-posts-item-actions-item-repost');
-      const repostsText = document.createElement('div');
-      repostsText.classList.add('eapps-twitter-feed-posts-item-actions-item-text');
-      repostsText.textContent = repostsCell.textContent.trim();
-      repostsLink.append(repostsText);
+      const repostLink = document.createElement('a');
+      repostLink.rel = 'nofollow';
+      repostLink.href = `https://x.com/intent/retweet?tweet_id=${tweetId}&related=${userNameCell.textContent.trim()}`;
+      repostLink.title = 'Repost';
+      repostLink.classList.add('eapps-twitter-feed-posts-item-actions-item', 'eapps-twitter-feed-posts-item-actions-item-repost');
+      const repostIconDiv = document.createElement('div');
+      repostIconDiv.classList.add('eapps-twitter-feed-posts-item-actions-item-icon');
+      const repostImg = document.createElement('img');
+      repostImg.alt = 'svg file';
+      repostIconDiv.append(repostImg); // No direct source in block for this SVG
+      repostLink.append(repostIconDiv);
+      const repostTextDiv = document.createElement('div');
+      repostTextDiv.classList.add('eapps-twitter-feed-posts-item-actions-item-text');
+      repostTextDiv.textContent = repostCountCell.textContent.trim();
+      repostLink.append(repostTextDiv);
+      actionsDiv.append(repostLink);
 
-      const likesLink = document.createElement('a');
-      likesLink.rel = 'nofollow';
-      likesLink.href = postLinkCell.querySelector('a')?.href || '#';
-      likesLink.title = 'Like';
-      likesLink.classList.add('eapps-twitter-feed-posts-item-actions-item', 'eapps-twitter-feed-posts-item-actions-item-likes');
-      const likesText = document.createElement('div');
-      likesText.classList.add('eapps-twitter-feed-posts-item-actions-item-text');
-      likesText.textContent = likesCell.textContent.trim();
-      likesLink.append(likesText);
+      const likeLink = document.createElement('a');
+      likeLink.rel = 'nofollow';
+      likeLink.href = `https://x.com/intent/like?tweet_id=${tweetId}&related=${userNameCell.textContent.trim()}`;
+      likeLink.title = 'Like';
+      likeLink.classList.add('eapps-twitter-feed-posts-item-actions-item', 'eapps-twitter-feed-posts-item-actions-item-likes');
+      const likeIconDiv = document.createElement('div');
+      likeIconDiv.classList.add('eapps-twitter-feed-posts-item-actions-item-icon');
+      const likeImg = document.createElement('img');
+      likeImg.alt = 'svg file';
+      likeIconDiv.append(likeImg); // No direct source in block for this SVG
+      likeLink.append(likeIconDiv);
+      const likeTextDiv = document.createElement('div');
+      likeTextDiv.classList.add('eapps-twitter-feed-posts-item-actions-item-text');
+      likeTextDiv.textContent = likeCountCell.textContent.trim();
+      likeLink.append(likeTextDiv);
+      actionsDiv.append(likeLink);
 
-      actionsDiv.append(repostsLink, likesLink);
+      postItemInner.append(actionsDiv);
 
-      itemInner.append(userDiv, postTextDiv, mediaDiv, actionsDiv);
+      const postDateDiv = document.createElement('div');
+      postDateDiv.classList.add('eapps-twitter-feed-posts-item-date');
+      postDateDiv.textContent = tweetDateCell.textContent.trim();
+      postItemInner.append(postDateDiv);
 
-      const postItemDate = document.createElement('div');
-      postItemDate.classList.add('eapps-twitter-feed-posts-item-date');
-      postItemDate.textContent = postDateCell.textContent.trim();
-      item.append(itemInner, postItemDate);
+      postItem.append(postItemInner);
+      postsInner.append(postItem);
+    });
 
-      eappsTwitterFeedPostsInner.append(item);
-      moveInstrumentation(row, item);
-    } else if (cells.length === 5) { // Story Card Item
-      const [
-        imageCell,
-        categoryCell,
-        descriptionCell,
-        linkCell,
-        dateCell,
-      ] = cells;
+    postsContainer.append(postsInner);
+    postsDiv.append(postsContainer);
+    feedInner.append(postsDiv);
+    feedContainer.append(feedInner);
+    twitterFeedWrapper.append(feedContainer);
+    slidesContainer.append(twitterFeedWrapper);
+  }
 
-      const wrap = document.createElement('div');
-      wrap.classList.add('wrap');
+  // Story Items
+  storyItems.forEach((row) => {
+    const [imageCell, categoryCell, textCell, readMoreLinkCell, dateCell] = [...row.children];
 
-      const imageWrap = document.createElement('div');
-      imageWrap.classList.add('image-wrap');
-      const img = document.createElement('img');
-      img.classList.add('thumb-img', 'img-fluid');
-      img.loading = 'lazy';
-      const picture = imageCell.querySelector('picture');
-      if (picture) {
-        const source = picture.querySelector('source');
-        const originalImg = picture.querySelector('img');
-        if (originalImg) {
-          img.src = originalImg.src;
-          img.alt = originalImg.alt;
-          if (source) {
-            img.setAttribute('data-img-horizontal', source.srcset);
-            img.setAttribute('data-img-vertical', source.srcset);
-          }
-          const optimizedPic = createOptimizedPicture(originalImg.src, originalImg.alt, false, [{ width: '750' }]);
-          moveInstrumentation(originalImg, optimizedPic.querySelector('img'));
-          picture.replaceWith(optimizedPic);
-        }
-      }
-      imageWrap.append(img);
+    const slideDiv = document.createElement('div');
+    slideDiv.classList.add('slides');
+    moveInstrumentation(row, slideDiv);
 
-      const contentWrap = document.createElement('div');
-      contentWrap.classList.add('content-wrap');
+    const wrapDiv = document.createElement('div');
+    wrapDiv.classList.add('wrap');
 
-      const category = document.createElement('div');
-      category.classList.add('category');
-      category.textContent = categoryCell.textContent.trim();
-
-      const text = document.createElement('div');
-      text.classList.add('text');
-      text.textContent = descriptionCell.textContent.trim();
-
-      const readMoreLink = document.createElement('a');
-      readMoreLink.classList.add('btn', 'btn-link');
-      readMoreLink.textContent = 'Read more';
-      readMoreLink.href = linkCell.querySelector('a')?.href || '#';
-
-      const date = document.createElement('div');
-      date.classList.add('date');
-      const time = document.createElement('time');
-      time.setAttribute('datetime', dateCell.textContent.trim()); // Assuming date is in a parseable format
-      time.textContent = dateCell.textContent.trim();
-      date.append(time);
-
-      contentWrap.append(category, text, readMoreLink, date);
-      wrap.append(imageWrap, contentWrap);
-
-      const storyCardSlideItem = document.createElement('div');
-      storyCardSlideItem.classList.add('slides'); // This class is correct per original HTML for individual story card slides
-      storyCardSlideItem.append(wrap);
-      storyCardsSlides.append(storyCardSlideItem);
-      moveInstrumentation(row, storyCardSlideItem);
+    const imageWrapDiv = document.createElement('div');
+    imageWrapDiv.classList.add('image-wrap');
+    const image = imageCell.querySelector('picture > img');
+    if (image) {
+      const imgEl = document.createElement('img');
+      imgEl.src = image.src;
+      imgEl.alt = image.alt;
+      imgEl.classList.add('thumb-img', 'img-fluid');
+      imgEl.loading = 'lazy';
+      // Original HTML has data-img-horizontal and data-img-vertical, but these are not in EDS model.
+      // If needed, these would need to be added to the model.
+      imageWrapDiv.append(imgEl);
     }
+    wrapDiv.append(imageWrapDiv);
+
+    const contentWrapDiv = document.createElement('div');
+    contentWrapDiv.classList.add('content-wrap');
+
+    const categoryDiv = document.createElement('div');
+    categoryDiv.classList.add('category');
+    categoryDiv.textContent = categoryCell.textContent.trim();
+    contentWrapDiv.append(categoryDiv);
+
+    const textDiv = document.createElement('div');
+    textDiv.classList.add('text');
+    textDiv.textContent = textCell.textContent.trim();
+    contentWrapDiv.append(textDiv);
+
+    const readMoreLink = readMoreLinkCell.querySelector('a');
+    if (readMoreLink) {
+      const linkEl = document.createElement('a');
+      linkEl.href = readMoreLink.href;
+      linkEl.classList.add('btn', 'btn-link');
+      linkEl.textContent = 'Read more';
+      contentWrapDiv.append(linkEl);
+    }
+
+    const dateDiv = document.createElement('div');
+    dateDiv.classList.add('date');
+    const timeEl = document.createElement('time');
+    timeEl.datetime = dateCell.textContent.trim(); // Assuming dateCell content is a valid datetime string
+    timeEl.textContent = dateCell.textContent.trim();
+    dateDiv.append(timeEl);
+    contentWrapDiv.append(dateDiv);
+
+    wrapDiv.append(contentWrapDiv);
+    slideDiv.append(wrapDiv);
+    slidesContainer.append(slideDiv);
   });
 
-  eappsTwitterFeedPostsContainer.append(eappsTwitterFeedPostsInner);
-  eappsTwitterFeedPosts.append(eappsTwitterFeedPostsContainer);
-  eappsTwitterFeedInner.append(eappsTwitterFeedPosts);
-  eappsTwitterFeedContainer.append(eappsTwitterFeedInner);
-  twitterSlides.append(twitterFeedContainer);
+  flickityWrap.append(slidesContainer);
+  container.append(flickityWrap);
+  section.append(container);
 
-  flickitySliderMobileWrap.append(twitterSlides, storyCardsSlides);
-  container.append(flickitySliderMobileWrap);
+  // Image optimization
+  section.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 
-  block.innerHTML = '';
-  block.classList.add('latest-stories', 'home-stories');
-  block.prepend(sectionHeader, container);
+  block.textContent = '';
+  block.append(section);
 }

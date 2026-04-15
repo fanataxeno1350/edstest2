@@ -1,538 +1,614 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-function transformNestedLists(rootUl) {
-  rootUl.querySelectorAll('li').forEach((li) => {
-    const nested = li.querySelector(':scope > ul');
-    const anchor = li.querySelector(':scope > a');
-
-    // Add classes from ORIGINAL HTML for <li> and <a> elements
-    li.classList.add('top-level-li'); // Assuming this is a common class for top-level LIs in hierarchy
-    if (anchor) {
-      // No specific class for anchor in hierarchy-tree, but if it had one, it would be added here
-    }
-
-    if (!anchor) {
-      const textNode = [...li.childNodes].find(
-        (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
-      );
-      if (textNode) {
-        const span = document.createElement('span');
-        span.textContent = textNode.textContent.trim();
-        textNode.remove();
-        li.prepend(span);
-      }
-    }
-
-    if (nested) {
-      nested.remove();
-      const subWrap = document.createElement('div');
-      subWrap.classList.add('has-sub-child'); // Class from ORIGINAL HTML
-      subWrap.append(nested);
-      li.append(subWrap);
-      const trigger = li.querySelector(':scope > a, :scope > span');
-      if (trigger) {
-        // Add span for icon if not present, based on ORIGINAL HTML pattern
-        if (!li.querySelector(':scope > span')) {
-          const iconSpan = document.createElement('span');
-          // Assuming a default icon if not explicitly provided in the model
-          const img = document.createElement('img');
-          img.alt = 'svg file';
-          img.src = '/content/dam/aemigrate/uploaded-folder/image/1776279681211.svg+xml'; // Example default icon
-          iconSpan.appendChild(img);
-          li.appendChild(iconSpan);
-        }
-
-        trigger.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          li.classList.toggle('active');
-          subWrap.classList.toggle('active');
-        });
-      }
-    }
-  });
-}
-
 export default function decorate(block) {
-  const rows = [...block.children];
+  const children = [...block.children];
 
-  const header = document.createElement('header');
-  header.classList.add('main-header'); // Do not add state classes like 'nav-up' initially
+  const [
+    mainLogoRow,
+    mainLogoLinkRow,
+    anniversaryLogoRow,
+    anniversaryLogoLinkRow,
+    ...itemRows
+  ] = children;
+
+  block.classList.add('with-marquee', 'solid'); // 'nav-up' is a scroll state class, do not add initially
 
   const container = document.createElement('div');
   container.classList.add('container');
-  header.appendChild(container);
+  block.append(container);
 
   const wrap = document.createElement('div');
   wrap.classList.add('wrap');
-  container.appendChild(wrap);
+  container.append(wrap);
 
   // Logo
-  const logoRow = rows[0];
-  const logoLinkRow = rows[1];
-  const logoCell = logoRow.querySelector('div');
-  const logoLinkCell = logoLinkRow.querySelector('div');
-
   const logoDiv = document.createElement('div');
   logoDiv.classList.add('logo');
-  const logoAnchor = document.createElement('a');
-  const foundLogoLink = logoLinkCell?.querySelector('a');
-  if (foundLogoLink) logoAnchor.href = foundLogoLink.href;
-  const logoPicture = logoCell?.querySelector('picture');
-  if (logoPicture) {
-    const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    logoAnchor.append(optimizedPic);
+  wrap.append(logoDiv);
+
+  const mainLogoLink = document.createElement('a');
+  const mainLogoAnchor = mainLogoLinkRow.querySelector('a');
+  if (mainLogoAnchor) {
+    mainLogoLink.href = mainLogoAnchor.href;
   }
-  moveInstrumentation(logoRow, logoAnchor);
-  moveInstrumentation(logoLinkRow, logoAnchor);
-  logoDiv.appendChild(logoAnchor);
-  wrap.appendChild(logoDiv);
+  moveInstrumentation(mainLogoLinkRow, mainLogoLink);
+  logoDiv.append(mainLogoLink);
+
+  const mainLogoPicture = mainLogoRow.querySelector('picture');
+  if (mainLogoPicture) {
+    const mainLogoImg = mainLogoPicture.querySelector('img');
+    const optimizedMainLogo = createOptimizedPicture(mainLogoImg.src, mainLogoImg.alt, false, [{ width: '200' }]);
+    optimizedMainLogo.querySelector('img').classList.add('hiddenlogo1');
+    mainLogoLink.append(optimizedMainLogo);
+    moveInstrumentation(mainLogoRow, optimizedMainLogo);
+  }
 
   // Hamburger
   const hamburgerDiv = document.createElement('div');
   hamburgerDiv.classList.add('hamburger');
   hamburgerDiv.setAttribute('data-once', 'hamburger-click nav-close-search');
+  wrap.append(hamburgerDiv);
+
   const hamburgerUl = document.createElement('ul');
   for (let i = 0; i < 3; i += 1) {
-    hamburgerUl.appendChild(document.createElement('li'));
+    hamburgerUl.append(document.createElement('li'));
   }
-  hamburgerDiv.appendChild(hamburgerUl);
-  wrap.appendChild(hamburgerDiv);
+  hamburgerDiv.append(hamburgerUl);
 
-  // Main Nav
+  // Main Navigation
   const nav = document.createElement('nav');
   nav.classList.add('main-nav');
   nav.setAttribute('data-once', 'initSubChildToggle');
+  wrap.append(nav);
+
   const navUl = document.createElement('ul');
   navUl.setAttribute('itemscope', '');
   navUl.setAttribute('itemtype', 'http://www.schema.org/SiteNavigationElement');
-  nav.appendChild(navUl);
-  wrap.appendChild(nav);
+  nav.append(navUl);
 
-  // Year Logo
-  const yearLogoRow = rows[2];
-  const yearLogoLinkRow = rows[3];
-  const yearLogoCell = yearLogoRow.querySelector('div');
-  const yearLogoLinkCell = yearLogoLinkRow.querySelector('div');
-
-  const yearLogoDiv = document.createElement('div');
-  yearLogoDiv.classList.add('logo', 'year-80-logo');
-  const yearLogoAnchor = document.createElement('a');
-  const foundYearLogoLink = yearLogoLinkCell?.querySelector('a');
-  if (foundYearLogoLink) yearLogoAnchor.href = foundYearLogoLink.href;
-  const yearLogoPicture = yearLogoCell?.querySelector('picture');
-  if (yearLogoPicture) {
-    const img = yearLogoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '74' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    optimizedPic.querySelector('img').classList.add('hiddenlogo1', 'years-80');
-    yearLogoAnchor.append(optimizedPic);
-  }
-  moveInstrumentation(yearLogoRow, yearLogoAnchor);
-  moveInstrumentation(yearLogoLinkRow, yearLogoAnchor);
-  yearLogoDiv.appendChild(yearLogoAnchor);
-  wrap.appendChild(yearLogoDiv);
-
-  // Separate fixed fields from item rows
-  const itemRows = rows.slice(4);
-
+  // Separate item rows by structure
   const navigationItems = itemRows.filter((row) => row.children.length === 7);
-  const iconNavItems = itemRows.filter((row) => row.children.length === 4 && row.querySelector('picture'));
-  const searchItems = itemRows.filter((row) => row.children.length === 8);
-  const pressReleaseItems = itemRows.filter((row) => row.children.length === 4 && !row.querySelector('picture'));
+  const pressReleaseItems = itemRows.filter((row) => row.children.length === 4);
+  const contactLinkItems = itemRows.filter((row) => row.children.length === 3);
+  const searchTokenItems = itemRows.filter((row) => row.children.length === 1);
 
   // Navigation Menu Items
   navigationItems.forEach((row) => {
-    const [labelCell, linkCell, iconCell, hierarchyCell, headingCell, descriptionCell, subDescriptionCell] = [...row.children];
+    const [labelCell, linkCell, iconCell, hierarchyTreeCell, leftHeadingCell, leftDescCell, leftSubDescCell] = [...row.children];
 
     const li = document.createElement('li');
     li.classList.add('has-child', 'hover-red');
     li.setAttribute('itemprop', 'name');
     li.setAttribute('data-once', 'nav-close-search');
+    moveInstrumentation(row, li);
 
     const anchor = document.createElement('a');
     anchor.setAttribute('itemprop', 'url');
-    const foundLink = linkCell?.querySelector('a');
-    if (foundLink) anchor.href = foundLink.href;
-    anchor.textContent = labelCell?.textContent.trim() || '';
-    moveInstrumentation(linkCell, anchor);
-    li.appendChild(anchor);
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      anchor.href = foundLink.href;
+    }
+    anchor.textContent = labelCell.textContent.trim();
+    li.append(anchor);
 
     const iconSpan = document.createElement('span');
-    const iconPicture = iconCell?.querySelector('picture');
+    const iconPicture = iconCell.querySelector('picture');
     if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '20' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      iconSpan.appendChild(optimizedPic);
+      const iconImg = iconPicture.querySelector('img');
+      const optimizedIcon = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '24' }]);
+      iconSpan.append(optimizedIcon);
+      moveInstrumentation(iconCell, optimizedIcon);
     }
-    li.appendChild(iconSpan);
+    li.append(iconSpan);
 
     const megaMenu = document.createElement('div');
     megaMenu.classList.add('mega-menu');
+    li.append(megaMenu);
+
     const megaMenuWrap = document.createElement('div');
     megaMenuWrap.classList.add('wrap', 'container');
-    megaMenu.appendChild(megaMenuWrap);
+    megaMenu.append(megaMenuWrap);
+
     const centerDiv = document.createElement('div');
     centerDiv.classList.add('center-div');
-    megaMenuWrap.appendChild(centerDiv);
+    megaMenuWrap.append(centerDiv);
 
     const leftDiv = document.createElement('div');
     leftDiv.classList.add('left-div');
-    centerDiv.appendChild(leftDiv);
+    centerDiv.append(leftDiv);
 
-    const heading = document.createElement('h4');
-    heading.classList.add('left-div-heading');
+    const leftHeading = document.createElement('h4');
+    leftHeading.classList.add('left-div-heading');
     const headingAnchor = document.createElement('a');
-    headingAnchor.textContent = headingCell?.textContent.trim() || '';
-    heading.appendChild(headingAnchor);
-    leftDiv.appendChild(heading);
+    headingAnchor.textContent = leftHeadingCell.textContent.trim();
+    leftHeading.append(headingAnchor);
+    leftDiv.append(leftHeading);
 
-    const description = document.createElement('p');
-    description.classList.add('left-div-desc');
-    description.textContent = descriptionCell?.textContent.trim() || '';
-    leftDiv.appendChild(description);
+    if (leftDescCell.textContent.trim()) {
+      const leftDesc = document.createElement('p');
+      leftDesc.classList.add('left-div-desc');
+      leftDesc.textContent = leftDescCell.textContent.trim();
+      leftDiv.append(leftDesc);
+    }
 
-    const subDescription = document.createElement('p');
-    subDescription.classList.add('left-div-subdesc');
-    subDescription.textContent = subDescriptionCell?.textContent.trim() || '';
-    leftDiv.appendChild(subDescription);
+    if (leftSubDescCell.textContent.trim()) {
+      const leftSubDesc = document.createElement('p');
+      leftSubDesc.classList.add('left-div-subdesc');
+      leftSubDesc.textContent = leftSubDescCell.textContent.trim();
+      leftDiv.append(leftSubDesc);
+    }
 
     const subNavWrap = document.createElement('div');
-    subNavWrap.classList.add('sub-nav-wrap', 'about-us-sub-nav');
-    centerDiv.appendChild(subNavWrap);
+    subNavWrap.classList.add('sub-nav-wrap');
+    if (labelCell.textContent.trim().toLowerCase() === 'who we are') {
+      subNavWrap.classList.add('about-us-sub-nav');
+    } else if (labelCell.textContent.trim().toLowerCase() === 'what we do') {
+      subNavWrap.classList.add('what-we-do');
+    } else if (labelCell.textContent.trim().toLowerCase() === 'investor relations') {
+      leftDiv.classList.add('ir-left-div');
+      subNavWrap.classList.add('element-block');
+    } else if (labelCell.textContent.trim().toLowerCase() === 'newsroom') {
+      leftDiv.classList.add('newsroom-left-div');
+    } else if (labelCell.textContent.trim().toLowerCase() === 'careers') {
+      leftDiv.classList.add('career-left-div');
+      subNavWrap.classList.add('careers-div');
+    }
+    centerDiv.append(subNavWrap);
 
-    // Handle hierarchy-tree richtext
-    const hierarchyContent = hierarchyCell?.innerHTML || '';
-    if (hierarchyContent) {
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = hierarchyContent;
-      moveInstrumentation(hierarchyCell, tempDiv); // Instrument the original cell to the temp div
+    // Handle hierarchy-tree richtext field
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = hierarchyTreeCell.innerHTML;
+    moveInstrumentation(hierarchyTreeCell, tempDiv); // Instrument the original cell to the tempDiv
 
-      // Apply classes to nested elements as per ORIGINAL HTML
-      tempDiv.querySelectorAll('ul').forEach(ul => ul.classList.add('sub-nav-wrap-one-link')); // Example from ORIGINAL HTML
-      tempDiv.querySelectorAll('li').forEach(liItem => {
-        liItem.classList.add('top-level-li'); // Example from ORIGINAL HTML
-        const liAnchor = liItem.querySelector('a');
-        if (liAnchor) {
-          // No specific class for anchor in hierarchy-tree in ORIGINAL HTML, but if there was, it would be added here
+    const hierarchyUl = tempDiv.querySelector('ul');
+    if (hierarchyUl) {
+      // Apply classes from ORIGINAL HTML to nested elements
+      hierarchyUl.querySelectorAll('li').forEach(liElement => {
+        // Example: liElement.classList.add('nav-menu-item', 'list-item'); // Add classes as per original HTML if needed
+        const anchorElement = liElement.querySelector('a');
+        if (anchorElement) {
+          // Example: anchorElement.classList.add('nav-link'); // Add classes as per original HTML if needed
         }
       });
 
-      // Transform nested lists
-      tempDiv.querySelectorAll('ul').forEach(transformNestedLists);
-
-      // Append children from tempDiv to subNavWrap
-      while (tempDiv.firstChild) {
-        subNavWrap.appendChild(tempDiv.firstChild);
-      }
-    }
-    li.appendChild(megaMenu);
-    navUl.appendChild(li);
-    moveInstrumentation(row, li);
-  });
-
-  // Icon Nav Items (Mobile and Desktop)
-  const mobileIconNav = document.createElement('div');
-  mobileIconNav.classList.add('icon-nav', 'mobile-menus-icon');
-  const mobileIconUl = document.createElement('ul');
-  mobileIconNav.appendChild(mobileIconUl);
-
-  const desktopIconNav = document.createElement('div');
-  desktopIconNav.classList.add('icon-nav', 'desktop-menus-icon');
-  const desktopIconUl = document.createElement('ul');
-  desktopIconNav.appendChild(desktopIconUl);
-
-  iconNavItems.forEach((row) => {
-    const [iconCell, linkCell, labelCell, hierarchyCell] = [...row.children];
-
-    const li = document.createElement('li');
-    li.classList.add('mail'); // Assuming 'mail' class for icon nav items based on original HTML
-    const anchor = document.createElement('a');
-    const foundLink = linkCell?.querySelector('a');
-    if (foundLink) anchor.href = foundLink.href;
-
-    const iconPicture = iconCell?.querySelector('picture');
-    if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '20' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      anchor.appendChild(optimizedPic);
-    }
-    anchor.textContent = labelCell?.textContent.trim() || '';
-    moveInstrumentation(linkCell, anchor);
-    li.appendChild(anchor);
-
-    // Handle hierarchy-tree richtext
-    const hierarchyContent = hierarchyCell?.innerHTML || '';
-    if (hierarchyContent) {
-      const dropdown = document.createElement('div');
-      dropdown.classList.add('has-sub-child'); // Class from ORIGINAL HTML
-
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = hierarchyContent;
-      moveInstrumentation(hierarchyCell, tempDiv); // Instrument the original cell to the temp div
-
-      // Apply classes to nested elements as per ORIGINAL HTML
-      tempDiv.querySelectorAll('ul').forEach(ul => ul.classList.add('sub-nav-wrap-one-link')); // Example from ORIGINAL HTML
-      tempDiv.querySelectorAll('li').forEach(liItem => {
-        liItem.classList.add('top-level-li'); // Example from ORIGINAL HTML
-        const liAnchor = liItem.querySelector('a');
-        if (liAnchor) {
-          // No specific class for anchor in hierarchy-tree in ORIGINAL HTML, but if there was, it would be added here
+      if (labelCell.textContent.trim().toLowerCase() === 'investor relations') {
+        const subNavWrapOneLink = document.createElement('ul');
+        subNavWrapOneLink.classList.add('sub-nav-wrap-one-link');
+        const firstLi = hierarchyUl.querySelector('li');
+        if (firstLi) {
+          subNavWrapOneLink.append(firstLi);
         }
-      });
+        subNavWrap.append(subNavWrapOneLink);
 
-      // Transform nested lists
-      tempDiv.querySelectorAll('ul').forEach(transformNestedLists);
+        const innerSubNavWrapList = document.createElement('div');
+        innerSubNavWrapList.classList.add('inner-sub-nav-wrap-list');
+        subNavWrap.append(innerSubNavWrapList);
 
-      // Append children from tempDiv to dropdown
-      while (tempDiv.firstChild) {
-        dropdown.appendChild(tempDiv.firstChild);
+        // Ensure all remaining LIs are handled, not just the first two
+        const remainingLIs = [...hierarchyUl.children];
+        if (remainingLIs.length > 0) {
+          const ul1 = document.createElement('ul');
+          ul1.append(remainingLIs[0]);
+          innerSubNavWrapList.append(ul1);
+        }
+        if (remainingLIs.length > 1) {
+          const ul2 = document.createElement('ul');
+          ul2.append(remainingLIs[1]);
+          innerSubNavWrapList.append(ul2);
+        }
+        // If there are more than 2 remaining LIs, they are currently dropped.
+        // This logic needs to be adjusted based on the exact structure required for 'investor relations'.
+        // For now, assuming only the first two remaining LIs are needed.
+      } else {
+        // Move all children from tempDiv to subNavWrap
+        while (tempDiv.firstChild) {
+          subNavWrap.append(tempDiv.firstChild);
+        }
       }
-      li.appendChild(dropdown);
-
-      // Add click listener to toggle dropdown
-      anchor.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        li.classList.toggle('active');
-        dropdown.classList.toggle('active');
-      });
+      // transformNestedLists should be called on the actual UL element that was appended
+      // For 'investor relations', it's more complex, but for others, it's hierarchyUl
+      if (labelCell.textContent.trim().toLowerCase() !== 'investor relations') {
+        transformNestedLists(hierarchyUl);
+      } else {
+        // For investor relations, the structure is different, apply transform to the relevant Uls
+        const subNavWrapOneLinkUl = subNavWrap.querySelector('.sub-nav-wrap-one-link');
+        if (subNavWrapOneLinkUl) transformNestedLists(subNavWrapOneLinkUl);
+        const innerSubNavWrapLists = subNavWrap.querySelectorAll('.inner-sub-nav-wrap-list ul');
+        innerSubNavWrapLists.forEach(ul => transformNestedLists(ul));
+      }
     }
 
-    const liMobile = li.cloneNode(true);
-    const liDesktop = li.cloneNode(true);
-
-    mobileIconUl.appendChild(liMobile);
-    desktopIconUl.appendChild(liDesktop);
-    moveInstrumentation(row, li); // Instrumentation on the original row, not cloned elements
+    navUl.append(li);
   });
 
-  // Search Items
-  searchItems.forEach((row) => {
-    const [searchFormActionCell, searchInputNameCell, searchPlaceholderCell,
-      searchIconCell, submitLabelCell, submitIconCell, popularKeywordsCell, recommendedKeywordsCell] = [...row.children];
+  // Newsroom latest press releases
+  if (pressReleaseItems.length > 0) {
+    const newsroomLi = navUl.querySelector('li a[href*="newsroom"]')?.closest('li');
+    if (newsroomLi) {
+      const newsroomLeftDiv = newsroomLi.querySelector('.newsroom-left-div');
+      if (newsroomLeftDiv) {
+        const latestPressReleaseDiv = document.createElement('div');
+        latestPressReleaseDiv.classList.add('latest-two-press-release');
+        newsroomLeftDiv.append(latestPressReleaseDiv);
 
-    const li = document.createElement('li');
-    li.classList.add('search');
-    li.setAttribute('data-once', 'search-toggle search-stop-propagation');
+        pressReleaseItems.slice(0, 2).forEach((itemRow) => {
+          const [linkCell, titleCell, dateCell, categoryCell] = [...itemRow.children];
 
-    const searchTrigger = document.createElement('a');
-    searchTrigger.href = '#';
-    searchTrigger.setAttribute('data-once', 'search-stop-propagation');
+          const slidesDiv = document.createElement('div');
+          slidesDiv.classList.add('slides');
+          latestPressReleaseDiv.append(slidesDiv);
 
-    const searchIconPicture = searchIconCell?.querySelector('picture');
-    if (searchIconPicture) {
-      const img = searchIconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '20' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      searchTrigger.appendChild(optimizedPic);
+          const slidesWrap = document.createElement('div');
+          slidesWrap.classList.add('wrap');
+          slidesDiv.append(slidesWrap);
+
+          const contentDiv = document.createElement('div');
+          contentDiv.classList.add('content');
+          slidesWrap.append(contentDiv);
+
+          const descDiv = document.createElement('div');
+          descDiv.classList.add('desc');
+          contentDiv.append(descDiv);
+
+          const p = document.createElement('p');
+          const link = document.createElement('a');
+          const foundLink = linkCell.querySelector('a');
+          if (foundLink) {
+            link.href = foundLink.href;
+          }
+          link.textContent = titleCell.textContent.trim();
+          p.append(link);
+          descDiv.append(p);
+
+          const dateDiv = document.createElement('div');
+          dateDiv.classList.add('date');
+          const dateEm = document.createElement('em');
+          dateEm.textContent = dateCell.textContent.trim();
+          dateDiv.append(dateEm);
+          if (categoryCell.textContent.trim()) {
+            const categoryEm = document.createElement('em');
+            categoryEm.textContent = categoryCell.textContent.trim();
+            dateDiv.append(categoryEm);
+          }
+          descDiv.append(dateDiv);
+          moveInstrumentation(itemRow, slidesDiv);
+        });
+      }
     }
-    // The original HTML has two img tags for search icon, one for default, one for active.
-    // The current code only takes the first picture. If there's a second picture, it should be handled.
-    // For now, assuming the second picture is for the active state and will be toggled via CSS.
-    // If the model provides two distinct icons, this logic needs to be updated.
-    const searchSpan = document.createElement('span');
-    searchSpan.setAttribute('data-once', 'search-stop-propagation');
-    searchSpan.textContent = ' Search'; // Hardcoded from original HTML
-    searchTrigger.appendChild(searchSpan);
-    li.appendChild(searchTrigger);
+  });
+
+  // Icon Nav (Mobile and Desktop)
+  const createIconNav = (isMobile) => {
+    const iconNavDiv = document.createElement('div');
+    iconNavDiv.classList.add('icon-nav');
+    if (isMobile) {
+      iconNavDiv.classList.add('mobile-menus-icon');
+    } else {
+      iconNavDiv.classList.add('desktop-menus-icon');
+    }
+
+    const iconNavUl = document.createElement('ul');
+    iconNavDiv.append(iconNavUl);
+
+    // Contact Links
+    contactLinkItems.forEach((row) => {
+      const [linkCell, iconCell, labelCell] = [...row.children];
+      const li = document.createElement('li');
+      li.classList.add('mail');
+      moveInstrumentation(row, li);
+
+      const anchor = document.createElement('a');
+      const foundLink = linkCell.querySelector('a');
+      if (foundLink) {
+        anchor.href = foundLink.href;
+      }
+
+      if (iconCell.querySelector('picture')) {
+        const iconImg = iconCell.querySelector('picture img');
+        const optimizedIcon = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '24' }]);
+        optimizedIcon.querySelector('img').classList.add('svg-file'); // Add class from original HTML
+        anchor.append(optimizedIcon);
+        moveInstrumentation(iconCell, optimizedIcon);
+      }
+      if (isMobile) {
+        anchor.append(document.createTextNode(labelCell.textContent.trim()));
+      }
+      li.append(anchor);
+      iconNavUl.append(li);
+    });
+
+    // Search
+    const searchLi = document.createElement('li');
+    searchLi.classList.add('search');
+    searchLi.setAttribute('data-once', 'search-toggle search-stop-propagation');
+    iconNavUl.append(searchLi);
+
+    const searchAnchor = document.createElement('a');
+    searchAnchor.href = '#';
+    searchAnchor.setAttribute('data-once', 'search-stop-propagation');
+    searchLi.append(searchAnchor);
+
+    // Search icons (assuming two states, open/close)
+    const searchIcon1 = document.createElement('img');
+    searchIcon1.alt = 'svg file';
+    searchIcon1.src = '/content/dam/aemigrate/uploaded-folder/image/1776283229591.svg+xml';
+    searchAnchor.append(searchIcon1);
+
+    const searchIcon2 = document.createElement('img');
+    searchIcon2.alt = 'svg file';
+    searchIcon2.src = '/content/dam/aemigrate/uploaded-folder/image/1776283229639.svg+xml';
+    searchAnchor.append(searchIcon2);
+
+    if (isMobile) {
+      const searchSpan = document.createElement('span');
+      searchSpan.setAttribute('data-once', 'search-stop-propagation');
+      searchSpan.textContent = ' Search';
+      searchAnchor.append(searchSpan);
+    }
 
     const searchScreenWrap = document.createElement('div');
     searchScreenWrap.classList.add('search-screen-wrap');
     searchScreenWrap.setAttribute('data-once', 'search-stop-propagation');
-    const searchWrapInner = document.createElement('div');
-    searchWrapInner.classList.add('wrap');
-    searchWrapInner.setAttribute('data-once', 'search-stop-propagation');
-    searchScreenWrap.appendChild(searchWrapInner);
+    searchLi.append(searchScreenWrap);
+
+    const searchScreenWrapInner = document.createElement('div');
+    searchScreenWrapInner.classList.add('wrap');
+    searchScreenWrapInner.setAttribute('data-once', 'search-stop-propagation');
+    searchScreenWrap.append(searchScreenWrapInner);
 
     const searchForm = document.createElement('form');
-    const foundFormAction = searchFormActionCell?.querySelector('a');
-    if (foundFormAction) searchForm.action = foundFormAction.href;
+    searchForm.action = 'https://www.mahindra.com/search';
     searchForm.method = 'get';
     searchForm.id = 'search-block-form';
     searchForm.setAttribute('accept-charset', 'UTF-8');
     searchForm.setAttribute('data-drupal-form-fields', 'edit-keys');
     searchForm.setAttribute('data-once', 'search-stop-propagation');
-    searchWrapInner.appendChild(searchForm);
+    searchScreenWrapInner.append(searchForm);
 
     const searchInputWrap = document.createElement('div');
     searchInputWrap.classList.add('search-wrap');
     searchInputWrap.setAttribute('data-once', 'search-stop-propagation');
-    searchForm.appendChild(searchInputWrap);
+    searchForm.append(searchInputWrap);
 
-    const searchIconDiv = document.createElement('div');
-    searchIconDiv.classList.add('search-icon');
-    searchIconDiv.setAttribute('data-once', 'search-stop-propagation');
-    const searchIconImg = document.createElement('img');
-    // Assuming a specific search icon from original HTML
-    searchIconImg.alt = 'svg file';
-    searchIconImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776279681374.svg+xml';
-    searchIconDiv.appendChild(searchIconImg);
-    searchInputWrap.appendChild(searchIconDiv);
+    const searchInputIcon = document.createElement('div');
+    searchInputIcon.classList.add('search-icon');
+    searchInputIcon.setAttribute('data-once', 'search-stop-propagation');
+    const searchInputImg = document.createElement('img');
+    searchInputImg.alt = 'svg file';
+    searchInputImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776283229684.svg+xml';
+    searchInputIcon.append(searchInputImg);
+    searchInputWrap.append(searchInputIcon);
 
     const searchInput = document.createElement('input');
     searchInput.type = 'text';
     searchInput.classList.add('input-text', 'searchtext');
     searchInput.required = true;
-    searchInput.name = searchInputNameCell?.textContent.trim() || 'key';
+    searchInput.name = 'key';
     searchInput.id = 'searchInput';
     searchInput.autocomplete = 'off';
-    searchInput.placeholder = searchPlaceholderCell?.textContent.trim() || '';
     searchInput.setAttribute('data-once', 'search-stop-propagation');
-    searchInputWrap.appendChild(searchInput);
+    searchInputWrap.append(searchInput);
 
     const submitButton = document.createElement('button');
     submitButton.classList.add('submit-button');
     submitButton.setAttribute('data-once', 'search-stop-propagation');
-    const submitLabelDiv = document.createElement('div');
-    submitLabelDiv.classList.add('label');
-    submitLabelDiv.setAttribute('data-once', 'search-stop-propagation');
-    submitLabelDiv.textContent = submitLabelCell?.textContent.trim() || 'Submit';
-    submitButton.appendChild(submitLabelDiv);
+    searchInputWrap.append(submitButton);
 
-    const submitIconPicture = submitIconCell?.querySelector('picture');
-    if (submitIconPicture) {
-      const img = submitIconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '20' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      submitButton.appendChild(optimizedPic);
-    }
-    searchInputWrap.appendChild(submitButton);
+    const submitLabel = document.createElement('div');
+    submitLabel.classList.add('label');
+    submitLabel.setAttribute('data-once', 'search-stop-propagation');
+    submitLabel.textContent = ' Submit ';
+    submitButton.append(submitLabel);
 
+    const submitImg = document.createElement('img');
+    submitImg.alt = 'svg file';
+    submitImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776283229730.svg+xml';
+    submitButton.append(submitImg);
+
+    // Search Result Box (empty for now)
     const searchResultBox = document.createElement('div');
     searchResultBox.classList.add('searchResultBox');
     searchResultBox.style.display = 'none';
     searchResultBox.setAttribute('data-once', 'search-stop-propagation');
-    searchForm.appendChild(searchResultBox);
+    searchForm.append(searchResultBox);
 
-    const popularKeywordsWrap = document.createElement('div');
-    popularKeywordsWrap.classList.add('search-suggestions-wrap');
-    popularKeywordsWrap.setAttribute('data-once', 'search-stop-propagation');
-    const popularLabel = document.createElement('div');
-    popularLabel.classList.add('label');
-    popularLabel.setAttribute('data-once', 'search-stop-propagation');
-    popularLabel.textContent = 'Popular Keywords:';
-    popularKeywordsWrap.appendChild(popularLabel);
+    const swiperDiv = document.createElement('div');
+    swiperDiv.classList.add('swiper', 'scrollSwiper');
+    swiperDiv.setAttribute('data-once', 'search-stop-propagation');
+    searchResultBox.append(swiperDiv);
+
+    const swiperWrapper = document.createElement('div');
+    swiperWrapper.classList.add('swiper-wrapper');
+    swiperWrapper.setAttribute('data-once', 'search-stop-propagation');
+    swiperDiv.append(swiperWrapper);
+
+    const swiperSlide = document.createElement('div');
+    swiperSlide.classList.add('swiper-slide');
+    swiperSlide.setAttribute('data-once', 'search-stop-propagation');
+    swiperWrapper.append(swiperSlide);
+
+    const swiperScrollbar = document.createElement('div');
+    swiperScrollbar.classList.add('swiper-scrollbar');
+    swiperScrollbar.setAttribute('data-once', 'search-stop-propagation');
+    searchResultBox.append(swiperScrollbar);
+
+    // Popular Keywords
+    const popularKeywordsDiv = document.createElement('div');
+    popularKeywordsDiv.classList.add('search-suggestions-wrap');
+    popularKeywordsDiv.setAttribute('data-once', 'search-stop-propagation');
+    searchScreenWrapInner.append(popularKeywordsDiv);
+
+    const popularKeywordsLabel = document.createElement('div');
+    popularKeywordsLabel.classList.add('label');
+    popularKeywordsLabel.setAttribute('data-once', 'search-stop-propagation');
+    popularKeywordsLabel.textContent = 'Popular Keywords:';
+    popularKeywordsDiv.append(popularKeywordsLabel);
+
     const popularTokensWrap = document.createElement('div');
     popularTokensWrap.classList.add('tokens-wrap');
     popularTokensWrap.setAttribute('data-once', 'search-stop-propagation');
-    popularTokensWrap.innerHTML = popularKeywordsCell?.innerHTML || '';
-    popularKeywordsWrap.appendChild(popularTokensWrap);
-    searchWrapInner.appendChild(popularKeywordsWrap);
+    popularKeywordsDiv.append(popularTokensWrap);
 
-    const recommendedKeywordsWrap = document.createElement('div');
-    recommendedKeywordsWrap.classList.add('search-suggestions-wrap');
-    recommendedKeywordsWrap.setAttribute('data-once', 'search-stop-propagation');
+    const popularTokensUl = document.createElement('ul');
+    popularTokensUl.setAttribute('data-once', 'search-stop-propagation');
+    popularTokensWrap.append(popularTokensUl);
+
+    searchTokenItems.slice(0, Math.ceil(searchTokenItems.length / 2)).forEach((row) => {
+      const [tokenCell] = [...row.children];
+      const li = document.createElement('li');
+      li.setAttribute('data-once', 'search-stop-propagation');
+      li.textContent = tokenCell.textContent.trim();
+      popularTokensUl.append(li);
+      moveInstrumentation(row, li);
+    });
+
+    // Recommended for you
+    const recommendedDiv = document.createElement('div');
+    recommendedDiv.classList.add('search-suggestions-wrap');
+    recommendedDiv.setAttribute('data-once', 'search-stop-propagation');
+    searchScreenWrapInner.append(recommendedDiv);
+
     const recommendedLabel = document.createElement('div');
     recommendedLabel.classList.add('label');
     recommendedLabel.setAttribute('data-once', 'search-stop-propagation');
     recommendedLabel.textContent = 'Recommended for you:';
-    recommendedKeywordsWrap.appendChild(recommendedLabel);
+    recommendedDiv.append(recommendedLabel);
+
     const recommendedTokensWrap = document.createElement('div');
     recommendedTokensWrap.classList.add('tokens-wrap');
     recommendedTokensWrap.setAttribute('data-once', 'search-stop-propagation');
-    recommendedTokensWrap.innerHTML = recommendedKeywordsCell?.innerHTML || '';
-    recommendedKeywordsWrap.appendChild(recommendedTokensWrap);
-    searchWrapInner.appendChild(recommendedKeywordsWrap);
+    recommendedDiv.append(recommendedTokensWrap);
 
-    li.appendChild(searchScreenWrap);
+    const recommendedTokensUl = document.createElement('ul');
+    recommendedTokensUl.setAttribute('data-once', 'search-stop-propagation');
+    recommendedTokensWrap.append(recommendedTokensUl);
 
-    // Toggle search screen on trigger click
-    searchTrigger.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      searchScreenWrap.classList.toggle('active');
+    searchTokenItems.slice(Math.ceil(searchTokenItems.length / 2)).forEach((row) => {
+      const [tokenCell] = [...row.children];
+      const li = document.createElement('li');
+      li.setAttribute('data-once', 'search-stop-propagation');
+      li.textContent = tokenCell.textContent.trim();
+      recommendedTokensUl.append(li);
+      moveInstrumentation(row, li);
     });
 
-    // Close search on click outside
+    // Event listeners for search toggle
+    searchAnchor.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation(); // Prevents parent elements from also toggling
+      searchScreenWrap.classList.toggle('show');
+      block.classList.toggle('search-open'); // Add/remove a class to the header for styling
+      document.body.classList.toggle('no-scroll'); // Prevent scrolling when search is open
+    });
+
     searchScreenWrap.addEventListener('click', (e) => {
       if (e.target === searchScreenWrap) {
-        searchScreenWrap.classList.remove('active');
+        searchScreenWrap.classList.remove('show');
+        block.classList.remove('search-open');
+        document.body.classList.remove('no-scroll');
       }
     });
 
-    mobileIconUl.appendChild(li.cloneNode(true));
-    desktopIconUl.appendChild(li);
-    moveInstrumentation(row, li);
-  });
+    return iconNavDiv;
+  };
 
-  nav.appendChild(mobileIconNav);
-  nav.appendChild(desktopIconNav);
+  navUl.append(createIconNav(true)); // Mobile icon nav
+  nav.append(createIconNav(false)); // Desktop icon nav (outside main nav ul)
 
-  // Press Releases (inside newsroom mega menu)
-  const newsroomLi = navUl.querySelector('li[itemprop="name"] a[href*="newsroom"]')
-    ?.closest('li');
-  if (newsroomLi) {
-    // Find the existing .latest-two-press-release div within the newsroom mega menu
-    let latestPressReleaseDiv = newsroomLi.querySelector('.latest-two-press-release');
-    if (!latestPressReleaseDiv) {
-      // If it doesn't exist, create it and append it to the left-div of the newsroom mega menu
-      const newsroomLeftDiv = newsroomLi.querySelector('.left-div.newsroom-left-div');
-      if (newsroomLeftDiv) {
-        latestPressReleaseDiv = document.createElement('div');
-        latestPressReleaseDiv.classList.add('latest-two-press-release');
-        newsroomLeftDiv.appendChild(latestPressReleaseDiv);
-      }
-    }
+  // Anniversary Logo
+  const year80LogoDiv = document.createElement('div');
+  year80LogoDiv.classList.add('logo', 'year-80-logo');
+  wrap.append(year80LogoDiv);
 
-    if (latestPressReleaseDiv) {
-      latestPressReleaseDiv.innerHTML = ''; // Clear existing content
-      pressReleaseItems.forEach((row) => {
-        const [linkCell, titleCell, dateCell, categoryCell] = [...row.children];
+  const anniversaryLogoLink = document.createElement('a');
+  const anniversaryLogoAnchor = anniversaryLogoLinkRow.querySelector('a');
+  if (anniversaryLogoAnchor) {
+    anniversaryLogoLink.href = anniversaryLogoAnchor.href;
+  }
+  moveInstrumentation(anniversaryLogoLinkRow, anniversaryLogoLink);
+  year80LogoDiv.append(anniversaryLogoLink);
 
-        const slidesDiv = document.createElement('div');
-        slidesDiv.classList.add('slides');
-        const wrapDiv = document.createElement('div');
-        wrapDiv.classList.add('wrap');
-        slidesDiv.appendChild(wrapDiv);
-        const contentDiv = document.createElement('div');
-        contentDiv.classList.add('content');
-        wrapDiv.appendChild(contentDiv);
-        const descDiv = document.createElement('div');
-        descDiv.classList.add('desc');
-        contentDiv.appendChild(descDiv);
-
-        const p = document.createElement('p');
-        const anchor = document.createElement('a');
-        const foundLink = linkCell?.querySelector('a');
-        if (foundLink) anchor.href = foundLink.href;
-        anchor.textContent = titleCell?.textContent.trim() || '';
-        p.appendChild(anchor);
-        descDiv.appendChild(p);
-
-        const dateDiv = document.createElement('div');
-        dateDiv.classList.add('date');
-        const dateEm = document.createElement('em');
-        const time = document.createElement('time');
-        time.setAttribute('datetime', dateCell?.textContent.trim() || '');
-        time.textContent = dateCell?.textContent.trim() || '';
-        dateEm.appendChild(time);
-        dateDiv.appendChild(dateEm);
-        const categoryEm = document.createElement('em');
-        categoryEm.textContent = categoryCell?.textContent.trim() || '';
-        dateDiv.appendChild(categoryEm);
-        descDiv.appendChild(dateDiv);
-        latestPressReleaseDiv.appendChild(slidesDiv);
-        moveInstrumentation(row, slidesDiv);
-      });
-    }
+  const anniversaryLogoPicture = anniversaryLogoRow.querySelector('picture');
+  if (anniversaryLogoPicture) {
+    const anniversaryLogoImg = anniversaryLogoPicture.querySelector('img');
+    const optimizedAnniversaryLogo = createOptimizedPicture(anniversaryLogoImg.src, anniversaryLogoImg.alt, false, [{ width: '74' }]);
+    optimizedAnniversaryLogo.querySelector('img').classList.add('hiddenlogo1', 'years-80');
+    anniversaryLogoLink.append(optimizedAnniversaryLogo);
+    moveInstrumentation(anniversaryLogoRow, optimizedAnniversaryLogo);
   }
 
-  block.replaceWith(header);
+  // Hamburger click event
+  hamburgerDiv.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    hamburgerDiv.classList.toggle('active');
+    document.body.classList.toggle('no-scroll'); // Prevent scrolling when nav is open
+  });
 
-  // Hamburger click listener
-  const hamburger = header.querySelector('.hamburger');
-  if (hamburger) {
-    hamburger.addEventListener('click', () => {
-      header.classList.toggle('active');
-      nav.classList.toggle('active');
-      hamburger.classList.toggle('active');
-      document.body.classList.toggle('disable-scroll');
+  // Toggle mega-menu on click for mobile/tablet
+  navUl.querySelectorAll('li.has-child > a').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      // Only toggle if the target is the link itself, not a nested element
+      if (window.innerWidth <= 1200 && e.target === link) { // Adjust breakpoint as needed
+        e.preventDefault();
+        e.stopPropagation(); // Prevents parent elements from also toggling
+        const parentLi = link.closest('li.has-child');
+        if (parentLi) {
+          // Close other open mega-menus at the same level
+          navUl.querySelectorAll('li.has-child').forEach((otherLi) => {
+            if (otherLi !== parentLi) {
+              otherLi.classList.remove('active');
+              otherLi.querySelector('.mega-menu')?.classList.remove('active');
+            }
+          });
+          parentLi.classList.toggle('active');
+          parentLi.querySelector('.mega-menu')?.classList.toggle('active');
+        }
+      }
+    });
+  });
+
+  // Function to transform nested lists into accordions
+  function transformNestedLists(rootUl) {
+    rootUl.querySelectorAll('li').forEach((li) => {
+      const nested = li.querySelector(':scope > ul');
+      if (nested) {
+        nested.remove(); // Remove the original nested ul
+        const subWrap = document.createElement('div');
+        subWrap.classList.add('has-sub-child'); // Use class from original site CSS
+        subWrap.append(nested);
+        li.append(subWrap);
+
+        const trigger = li.querySelector(':scope > a') || li;
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation(); // Critical: prevents parent accordion from also toggling
+          li.classList.toggle('active');
+          subWrap.classList.toggle('active');
+        });
+
+        // Handle inner sub-children for 'What we do' section
+        if (li.closest('.what-we-do')) {
+          nested.querySelectorAll('li').forEach((innerLi) => {
+            const innerNested = innerLi.querySelector(':scope > ul');
+            if (innerNested) {
+              innerNested.remove();
+              const innerSubWrap = document.createElement('div');
+              innerSubWrap.classList.add('has-inner-sub-child'); // Use class from original site CSS
+              innerSubWrap.append(innerNested);
+              innerLi.append(innerSubWrap);
+
+              const innerTrigger = innerLi.querySelector(':scope > a') || innerLi;
+              innerTrigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                innerLi.classList.toggle('active-child'); // Use class from original site CSS
+                innerSubWrap.classList.toggle('active-child');
+              });
+            }
+          });
+        }
+      }
     });
   }
 }

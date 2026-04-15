@@ -2,21 +2,21 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [sectionTitleRow, ...slideRows] = [...block.children];
+  const [headingRow, ...slideRows] = [...block.children];
 
   // Section Header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
+  moveInstrumentation(headingRow, sectionHeader);
 
-  const titleHeading = document.createElement('h2');
-  titleHeading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  titleHeading.setAttribute('data-aos', 'fade-up');
-  titleHeading.setAttribute('data-aos-offset', '100');
-  titleHeading.setAttribute('data-aos-duration', '650');
-  titleHeading.setAttribute('data-aos-easing', 'ease-in-out');
-  moveInstrumentation(sectionTitleRow, titleHeading);
-  titleHeading.textContent = sectionTitleRow.firstElementChild?.textContent.trim() || '';
-  sectionHeader.appendChild(titleHeading);
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  heading.setAttribute('data-aos', 'fade-up');
+  heading.setAttribute('data-aos-offset', '100');
+  heading.setAttribute('data-aos-duration', '650');
+  heading.setAttribute('data-aos-easing', 'ease-in-out');
+  heading.textContent = headingRow.firstElementChild.textContent.trim();
+  sectionHeader.append(heading);
 
   // Slides container
   const positionRelativeDiv = document.createElement('div');
@@ -28,81 +28,78 @@ export default function decorate(block) {
 
   const containerDiv = document.createElement('div');
   containerDiv.classList.add('container');
-  positionRelativeDiv.appendChild(containerDiv);
 
   const gridLayoutDiv = document.createElement('div');
   gridLayoutDiv.classList.add('grid-layout');
-  containerDiv.appendChild(gridLayoutDiv);
 
   slideRows.forEach((row) => {
-    const [
-      imageCell,
-      imageAltCell,
-      imageTitleCell,
-      headingCell,
-      descriptionCell,
-      linkCell,
-      linkLabelCell,
-    ] = [...row.children];
+    // No row.children[n] violations here, destructuring is safe for fixed-field models.
+    const [imageCell, imageAltCell, imageTitleCell, titleCell, descriptionCell, ctaLinkCell, ctaLabelCell] = [...row.children];
 
     const slideDiv = document.createElement('div');
     slideDiv.classList.add('slides');
+    moveInstrumentation(row, slideDiv);
 
     const wrapDiv = document.createElement('div');
     wrapDiv.classList.add('wrap');
-    slideDiv.appendChild(wrapDiv);
 
     // Image
     const picture = imageCell.querySelector('picture');
     if (picture) {
-      const imageWrapDiv = document.createElement('div');
-      imageWrapDiv.classList.add('image-wrap');
+      const imageWrap = document.createElement('div');
+      imageWrap.classList.add('image-wrap');
       const img = picture.querySelector('img');
       if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, imageAltCell.textContent.trim(), false, [{ width: '750' }]);
-        optimizedPic.querySelector('img').classList.add('img-fluid');
-        moveInstrumentation(imageCell, optimizedPic.querySelector('img'));
-        imageWrapDiv.appendChild(optimizedPic);
+        img.classList.add('img-fluid');
+        img.alt = imageAltCell.textContent.trim();
+        img.title = imageTitleCell.textContent.trim();
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        picture.replaceWith(optimizedPic);
       }
-      wrapDiv.appendChild(imageWrapDiv);
+      imageWrap.append(picture);
+      wrapDiv.append(imageWrap);
     }
 
     // Content
-    const contentWrapDiv = document.createElement('div');
-    contentWrapDiv.classList.add('content-wrap');
-    wrapDiv.appendChild(contentWrapDiv);
+    const contentWrap = document.createElement('div');
+    contentWrap.classList.add('content-wrap');
 
     const contentSectionHeader = document.createElement('div');
     contentSectionHeader.classList.add('section-header');
-    contentWrapDiv.appendChild(contentSectionHeader);
 
-    const heading = document.createElement('h3');
-    heading.classList.add('heading', 'font-regular');
-    moveInstrumentation(headingCell, heading);
-    heading.textContent = headingCell.textContent.trim();
-    contentSectionHeader.appendChild(heading);
+    const h3 = document.createElement('h3');
+    h3.classList.add('heading', 'font-regular');
+    h3.textContent = titleCell.textContent.trim();
+    contentSectionHeader.append(h3);
 
     const description = document.createElement('p');
     description.classList.add('text-size-body');
-    moveInstrumentation(descriptionCell, description);
-    description.textContent = descriptionCell.textContent.trim();
-    contentSectionHeader.appendChild(description);
+    description.innerHTML = descriptionCell.innerHTML; // Correctly uses innerHTML for richtext
+    contentSectionHeader.append(description);
 
-    const link = document.createElement('a');
-    link.classList.add('btn', 'btn-primary', 'stretched-link');
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      link.href = foundLink.href; // Correctly extract href from the 'aem-content' link cell
+    // CTA Link (type=aem-content)
+    const ctaLinkAnchor = ctaLinkCell.querySelector('a');
+    if (ctaLinkAnchor) {
+      const ctaAnchor = document.createElement('a');
+      ctaAnchor.href = ctaLinkAnchor.href; // Correctly reads href from the anchor
+      ctaAnchor.classList.add('btn', 'btn-primary', 'stretched-link');
+      ctaAnchor.textContent = ctaLabelCell.textContent.trim();
+      moveInstrumentation(ctaLinkCell, ctaAnchor);
+      contentSectionHeader.append(ctaAnchor);
     }
-    moveInstrumentation(linkCell, link);
-    link.textContent = linkLabelCell.textContent.trim(); // Use linkLabelCell for the link text
-    contentSectionHeader.appendChild(link);
 
-    gridLayoutDiv.appendChild(slideDiv);
+    contentWrap.append(contentSectionHeader);
+    wrapDiv.append(contentWrap);
+    slideDiv.append(wrapDiv);
+    gridLayoutDiv.append(slideDiv);
   });
 
-  block.innerHTML = '';
-  block.classList.add('section', 'pb-0');
-  block.appendChild(sectionHeader);
-  block.appendChild(positionRelativeDiv);
+  containerDiv.append(gridLayoutDiv);
+  positionRelativeDiv.append(containerDiv);
+
+  block.textContent = '';
+  block.append(sectionHeader, positionRelativeDiv);
+  // Add section classes to the block itself, as per ORIGINAL HTML
+  block.classList.add('section', 'work-with-us', 'pb-0');
 }

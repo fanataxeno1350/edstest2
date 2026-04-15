@@ -1,0 +1,95 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const children = [...block.children];
+
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+
+  const performanceDriven = document.createElement('div');
+  performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+  const container = document.createElement('div');
+  container.classList.add('container');
+  const cardsWrapper = document.createElement('div');
+  cardsWrapper.classList.add('performace-driven-cards');
+  container.append(cardsWrapper);
+  performanceDriven.append(container);
+
+  let currentSectionHeading = null;
+  let currentSectionDescription = null;
+  let currentCards = [];
+
+  children.forEach((row) => {
+    const cells = [...row.children];
+
+    // Detect if it's a spirit-of-rise-section row
+    // A section row has 3 cells: heading (text), description (text), cards (container)
+    // The 'cards' cell will contain plain text "Cards value" as it's a container field.
+    // The first two cells will NOT contain a picture or link.
+    if (cells.length === 3 && !cells[0].querySelector('picture') && !cells[0].querySelector('a')) {
+      // This is a section row
+      const [headingCell, descriptionCell] = cells; // Destructure for clarity
+      currentSectionHeading = headingCell.textContent.trim();
+      currentSectionDescription = descriptionCell.textContent.trim();
+      currentCards = []; // Reset cards for the new section
+    } else if (cells.length === 3 && cells[0].querySelector('picture')) {
+      // This is a spirit-of-rise-card row
+      const [imageCell, linkCell, descriptionCell] = cells;
+
+      const cardLink = document.createElement('a');
+      cardLink.classList.add('performace-driven-cards-link');
+      const foundLink = linkCell.querySelector('a');
+      if (foundLink) {
+        cardLink.href = foundLink.href; // Correctly read href from aem-content cell
+        cardLink.target = '_blank'; // From original HTML
+      }
+      moveInstrumentation(row, cardLink); // Move instrumentation from row to the new link
+
+      const cardWrapper = document.createElement('div');
+      cardWrapper.classList.add('performace-driven-card-wrapper');
+
+      const cardImageDiv = document.createElement('div');
+      cardImageDiv.classList.add('card-image');
+      const picture = imageCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        if (img) {
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
+          cardImageDiv.append(optimizedPic);
+        }
+      }
+      cardWrapper.append(cardImageDiv);
+
+      const homeBoxCard = document.createElement('div');
+      homeBoxCard.classList.add('performace-driven-home-box-card');
+      const descP = document.createElement('p');
+      descP.classList.add('desc');
+      descP.textContent = descriptionCell.textContent.trim(); // Use textContent.trim() for text field
+      homeBoxCard.append(descP);
+      cardWrapper.append(homeBoxCard);
+      cardLink.append(cardWrapper);
+      currentCards.push(cardLink);
+    }
+  });
+
+  // After processing all rows, construct the block based on the last section and its cards
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  heading.textContent = currentSectionHeading;
+  sectionHeader.append(heading);
+
+  const description = document.createElement('p');
+  description.classList.add('aos-init', 'aos-animate');
+  description.textContent = currentSectionDescription;
+  sectionHeader.append(description);
+
+  currentCards.forEach((card) => {
+    cardsWrapper.append(card);
+  });
+
+  block.textContent = '';
+  block.append(sectionHeader);
+  block.append(performanceDriven);
+}

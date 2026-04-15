@@ -70,20 +70,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image",
+          "label": "Background Image",
+          "name": "backgroundImage",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Image Alt Text",
-          "name": "altText",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Small Text",
-          "name": "smallText",
+          "name": "imageAlt",
           "valueType": "string"
         },
         {
@@ -93,7 +87,13 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
+          "label": "Subheading",
+          "name": "subheading",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
           "label": "Description",
           "name": "description",
           "valueType": "string"

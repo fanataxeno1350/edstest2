@@ -2,10 +2,11 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const gridWrapper = document.createElement('div');
-  gridWrapper.classList.add('row', 'g-4', 'purpose-led-grid', 'pt-3');
+  const gridContainer = document.createElement('div');
+  gridContainer.classList.add('row', 'g-4', 'purpose-led-grid', 'pt-3');
+  moveInstrumentation(block, gridContainer);
 
-  [...block.children].forEach((row) => {
+  [...block.children].forEach((row, index) => {
     const [imageCell, altTextCell, linkCell, descriptionCell] = [...row.children];
 
     const colDiv = document.createElement('div');
@@ -13,15 +14,15 @@ export default function decorate(block) {
     colDiv.setAttribute('data-aos-easing', 'ease-in-out');
     colDiv.setAttribute('data-aos', 'fade-up');
     colDiv.setAttribute('data-aos-delay', '700');
+    moveInstrumentation(row, colDiv);
 
-    const cardWrap = document.createElement('a');
-    cardWrap.classList.add('card-wrap');
+    const cardLink = document.createElement('a');
+    cardLink.classList.add('card-wrap');
     const foundLink = linkCell.querySelector('a');
     if (foundLink) {
-      cardWrap.href = foundLink.href;
-      cardWrap.target = '_blank'; // Assuming target blank from original HTML
+      cardLink.href = foundLink.href;
+      cardLink.target = '_blank'; // Assuming target blank from original HTML
     }
-    moveInstrumentation(row, cardWrap); // Move instrumentation from row to cardWrap
 
     const cardImageDiv = document.createElement('div');
     cardImageDiv.classList.add('card-image');
@@ -30,8 +31,10 @@ export default function decorate(block) {
     if (picture) {
       const img = picture.querySelector('img');
       if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, altTextCell.textContent.trim(), false, [{ width: '576', media: '(max-width: 576px)' }, { width: '750' }]);
+        const altText = altTextCell.textContent.trim();
+        const optimizedPic = createOptimizedPicture(img.src, altText, false, [{ media: '(max-width: 576px)', width: '576' }, { width: '750' }]);
         optimizedPic.querySelector('img').classList.add('img-fluid');
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
         cardImageDiv.append(optimizedPic);
       }
     }
@@ -39,16 +42,16 @@ export default function decorate(block) {
     const cardTextDiv = document.createElement('div');
     cardTextDiv.classList.add('card-text');
 
-    const descriptionP = document.createElement('p');
-    descriptionP.classList.add('desc');
-    descriptionP.innerHTML = descriptionCell.innerHTML;
+    const descP = document.createElement('p');
+    descP.classList.add('desc');
+    descP.innerHTML = descriptionCell.innerHTML;
 
-    cardTextDiv.append(descriptionP);
-    cardWrap.append(cardImageDiv, cardTextDiv);
-    colDiv.append(cardWrap);
-    gridWrapper.append(colDiv);
+    cardTextDiv.append(descP);
+    cardLink.append(cardImageDiv, cardTextDiv);
+    colDiv.append(cardLink);
+    gridContainer.append(colDiv);
   });
 
-  block.innerHTML = '';
-  block.append(gridWrapper);
+  block.textContent = '';
+  block.append(gridContainer);
 }

@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Story-Card-Item",
-      "id": "story-card-item",
+      "title": "Story-Item",
+      "id": "story-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "story-card-item",
-              "name": "Story-Card-Item"
+              "model": "story-item",
+              "name": "Story-Item"
             }
           }
         }
@@ -65,9 +65,9 @@
         },
         {
           "component": "container",
-          "item": "story-card-item",
-          "label": "Story Cards",
-          "name": "storyCards"
+          "item": "story-item",
+          "label": "Stories",
+          "name": "stories"
         }
       ]
     },
@@ -76,89 +76,82 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Profile Banner",
-          "name": "profileBanner",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Profile Image",
-          "name": "profileImage",
+          "label": "User Image",
+          "name": "userImage",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Display Name",
-          "name": "displayName",
+          "label": "User Name",
+          "name": "userName",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Screen Name",
-          "name": "screenName",
+          "label": "User Screen Name",
+          "name": "userScreenName",
           "valueType": "string"
+        },
+        {
+          "component": "boolean",
+          "label": "Verified Account",
+          "name": "isVerified"
         },
         {
           "component": "aem-content",
-          "label": "Profile Link",
-          "name": "profileLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Post Date",
-          "name": "postDate",
+          "label": "Tweet Link",
+          "name": "tweetLink",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Post Text",
-          "name": "postText",
+          "label": "Tweet Text",
+          "name": "tweetText",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "twitter-media-item",
-          "label": "Media Items",
-          "name": "mediaItems"
+          "item": "tweet-media-item",
+          "label": "Tweet Media",
+          "name": "media"
         },
         {
-          "component": "aem-content",
-          "label": "Post Link",
-          "name": "postLink",
+          "component": "number",
+          "label": "Repost Count",
+          "name": "repostCount",
+          "valueType": "number"
+        },
+        {
+          "component": "number",
+          "label": "Like Count",
+          "name": "likeCount",
+          "valueType": "number"
+        },
+        {
+          "component": "text",
+          "label": "Tweet Date",
+          "name": "tweetDate",
           "valueType": "string"
-        },
-        {
-          "component": "number",
-          "label": "Reposts",
-          "name": "reposts",
-          "valueType": "number"
-        },
-        {
-          "component": "number",
-          "label": "Likes",
-          "name": "likes",
-          "valueType": "number"
         }
       ]
     },
     {
-      "id": "twitter-media-item",
+      "id": "tweet-media-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Media Image",
+          "label": "Tweet Image",
           "name": "image",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "story-card-item",
+      "id": "story-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
+          "label": "Story Image",
           "name": "image",
           "valueType": "string"
         },
@@ -170,18 +163,18 @@
         },
         {
           "component": "text",
-          "label": "Description",
-          "name": "description",
+          "label": "Story Text",
+          "name": "text",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Read More Link",
-          "name": "link",
+          "name": "readMoreLink",
           "valueType": "string"
         },
         {
-          "component": "date-time",
+          "component": "text",
           "label": "Date",
           "name": "date",
           "valueType": "string"
@@ -194,7 +187,7 @@
       "id": "latest-stories",
       "components": [
         "twitter-feed-item",
-        "story-card-item"
+        "story-item"
       ]
     }
   ]

@@ -4,27 +4,22 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [headingRow, descriptionRow, ...cardRows] = [...block.children];
 
-  const section = document.createElement('section');
-  section.classList.add('section', 'grey-bg', 'spirit-of-rise');
-  moveInstrumentation(block, section);
+  block.classList.add('section', 'grey-bg', 'spirit-of-rise');
 
   // Section Header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+  moveInstrumentation(headingRow, sectionHeader);
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.textContent = headingRow.firstElementChild.textContent.trim();
-  moveInstrumentation(headingRow, heading);
-  sectionHeader.appendChild(heading);
+  heading.textContent = headingRow.firstElementChild?.textContent.trim() || '';
+  sectionHeader.append(heading);
 
   const description = document.createElement('p');
   description.classList.add('aos-init', 'aos-animate');
-  description.textContent = descriptionRow.firstElementChild.textContent.trim();
-  moveInstrumentation(descriptionRow, description);
-  sectionHeader.appendChild(description);
-
-  section.appendChild(sectionHeader);
+  description.textContent = descriptionRow.firstElementChild?.textContent.trim() || '';
+  sectionHeader.append(description);
 
   // Performance Driven section
   const performanceDriven = document.createElement('div');
@@ -32,55 +27,65 @@ export default function decorate(block) {
 
   const container = document.createElement('div');
   container.classList.add('container');
-  performanceDriven.appendChild(container);
+  performanceDriven.append(container);
 
-  const cardsWrapper = document.createElement('div');
-  cardsWrapper.classList.add('performace-driven-cards');
-  container.appendChild(cardsWrapper);
+  const cardsContainer = document.createElement('div');
+  cardsContainer.classList.add('performace-driven-cards');
+  container.append(cardsContainer);
 
   cardRows.forEach((row) => {
-    const [imageCell, linkCell, descriptionCell] = [...row.children];
+    // Use content detection instead of fragile index access
+    const cells = [...row.children];
+    const imageCell = cells.find(cell => cell.querySelector('picture'));
+    const linkCell = cells.find(cell => cell.querySelector('a'));
+    const labelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a'));
 
     const cardLink = document.createElement('a');
     cardLink.classList.add('performace-driven-cards-link');
-    const foundLink = linkCell.querySelector('a');
+    const foundLink = linkCell?.querySelector('a'); // Use optional chaining
     if (foundLink) {
-      cardLink.href = foundLink.href;
-      cardLink.target = '_blank'; // Assuming target blank from original HTML
+      cardLink.href = foundLink.href; // Read href for aem-content type
+      cardLink.target = '_blank'; // Original HTML has target="_blank"
     }
     moveInstrumentation(row, cardLink);
 
     const cardWrapper = document.createElement('div');
     cardWrapper.classList.add('performace-driven-card-wrapper');
-    cardLink.appendChild(cardWrapper);
+    cardLink.append(cardWrapper);
 
     const cardImageDiv = document.createElement('div');
     cardImageDiv.classList.add('card-image');
-    const picture = imageCell.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        cardImageDiv.appendChild(optimizedPic);
+    if (imageCell) {
+      const picture = imageCell.querySelector('picture');
+      if (picture) {
+        // Optimize image
+        const img = picture.querySelector('img');
+        if (img) {
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '576', media: '(max-width: 576px)' }, { width: '750' }]);
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
+          cardImageDiv.append(optimizedPic);
+        } else {
+          cardImageDiv.append(picture);
+        }
       }
     }
-    cardWrapper.appendChild(cardImageDiv);
+    cardWrapper.append(cardImageDiv);
 
-    const homeBoxCard = document.createElement('div');
-    homeBoxCard.classList.add('performace-driven-home-box-card');
-    const descP = document.createElement('p');
-    descP.classList.add('desc');
-    // The description field is type=text, but the original HTML shows it contains <br> tags.
-    // To preserve these, we should use innerHTML instead of textContent.
-    descP.innerHTML = descriptionCell.innerHTML;
-    moveInstrumentation(descriptionCell, descP);
-    homeBoxCard.appendChild(descP);
-    cardWrapper.appendChild(homeBoxCard);
+    const cardBox = document.createElement('div');
+    cardBox.classList.add('performace-driven-home-box-card');
+    cardWrapper.append(cardBox);
 
-    cardsWrapper.appendChild(cardLink);
+    const desc = document.createElement('p');
+    desc.classList.add('desc');
+    // Ensure labelCell exists before accessing textContent
+    if (labelCell) {
+      desc.innerHTML = labelCell.textContent.trim().replace(/\n/g, '<br>'); // Preserve line breaks from original
+    }
+    cardBox.append(desc);
+
+    cardsContainer.append(cardLink);
   });
 
-  section.appendChild(performanceDriven);
-  block.replaceWith(section);
+  block.textContent = '';
+  block.append(sectionHeader, performanceDriven);
 }
