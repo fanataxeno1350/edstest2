@@ -390,7 +390,7 @@
       {
         "component": "aem-content",
         "label": "80th Year Logo Link",
-        "name": "year80LogoLink",
+        "name": "year-80-logoLink",
         "valueType": "string"
       },
       {
@@ -443,12 +443,6 @@
         "component": "aem-content",
         "label": "Link",
         "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Label",
-        "name": "label",
         "valueType": "string"
       }
     ]
