@@ -25,7 +25,8 @@
       "latest-stories",
       "work-with-us",
       "faqs-section",
-      "footer-main"
+      "footer-main",
+      "spotlight-home-wrap"
     ]
   },
   {
@@ -37,24 +38,24 @@
   {
     "id": "footer-main",
     "components": [
-      "social-link-item",
-      "footer-menu-block",
-      "footer-menu-link",
-      "secondary-nav-link"
+      "footer-social-item",
+      "footer-menu-item",
+      "footer-secondary-nav-item"
     ]
   },
   {
     "id": "latest-stories",
     "components": [
-      "social-feed-item",
-      "story-card"
+      "twitter-feed-item",
+      "story-item"
     ]
   },
   {
     "id": "main-header",
     "components": [
       "navigation-item",
-      "icon-nav-item",
+      "icon-link-item",
+      "search-item",
       "press-release-item"
     ]
   },
@@ -67,7 +68,14 @@
   {
     "id": "spirit-of-rise",
     "components": [
-      "performace-driven-card"
+      "spirit-of-rise-card"
+    ]
+  },
+  {
+    "id": "spotlight-home-wrap",
+    "components": [
+      "spotlight-slide",
+      "quick-link-item"
     ]
   },
   {

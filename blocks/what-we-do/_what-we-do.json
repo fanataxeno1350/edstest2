@@ -38,13 +38,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Heading",
+          "label": "Section Heading",
           "name": "heading",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Description",
+          "label": "Section Description",
           "name": "description",
           "valueType": "string"
         },
@@ -61,14 +61,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
+          "label": "Main Image",
           "name": "image",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Image Alt Text",
-          "name": "alt",
           "valueType": "string"
         },
         {

@@ -12,10 +12,9 @@ export default function decorate(block) {
   section.append(container);
 
   // Heading
-  // The first row is the heading. Find the cell containing the heading text.
-  const headingRow = children[0];
+  const headingRow = children.shift();
   if (headingRow) {
-    const headingCell = [...headingRow.children].find(cell => cell.textContent.trim() !== '');
+    const headingCell = [...headingRow.children].find((cell) => cell.textContent.trim()); // Content detection for heading cell
     const sectionHeader = document.createElement('div');
     sectionHeader.classList.add('section-header', 'text-center');
     const heading = document.createElement('h2');
@@ -27,66 +26,65 @@ export default function decorate(block) {
     container.append(sectionHeader);
   }
 
-  // FAQs Accordion
-  const accoDiv = document.createElement('div');
-  accoDiv.classList.add('acco-div');
-  container.append(accoDiv);
+  // FAQs
+  if (children.length > 0) {
+    const accoDiv = document.createElement('div');
+    accoDiv.classList.add('acco-div');
+    const ul = document.createElement('ul');
+    accoDiv.append(ul);
 
-  const ul = document.createElement('ul');
-  accoDiv.append(ul);
+    children.forEach((row, index) => {
+      const [questionCell, answerCell] = [...row.children];
 
-  // FAQ items start from the second row
-  const faqItems = children.slice(1);
+      const li = document.createElement('li');
+      li.classList.add('aos-init', 'aos-animate');
+      li.setAttribute('data-aos', 'fade-up');
+      if (index === 0) {
+        li.classList.add('active'); // First item is active by default
+      }
 
-  faqItems.forEach((row, index) => {
-    // Destructure cells for question and answer
-    const [questionCell, answerCell] = [...row.children];
+      const h2 = document.createElement('h2');
+      h2.setAttribute('data-once', 'faqsAccordion');
+      h2.textContent = questionCell?.textContent.trim() || '';
+      moveInstrumentation(questionCell, h2);
+      li.append(h2);
 
-    const li = document.createElement('li');
-    li.classList.add('aos-init', 'aos-animate');
-    li.setAttribute('data-aos', 'fade-up');
-    if (index === 0) {
-      li.classList.add('active'); // First item is active by default
-    }
+      const accoContentDiv = document.createElement('div');
+      accoContentDiv.classList.add('acco-content-div');
+      if (index === 0) {
+        accoContentDiv.classList.add('show');
+      }
+      accoContentDiv.innerHTML = answerCell?.innerHTML || '';
+      moveInstrumentation(answerCell, accoContentDiv);
+      li.append(accoContentDiv);
 
-    const h2 = document.createElement('h2');
-    h2.textContent = questionCell?.textContent.trim() || '';
-    h2.setAttribute('data-once', 'faqsAccordion');
-    moveInstrumentation(questionCell, h2);
-    li.append(h2);
+      h2.addEventListener('click', () => {
+        const isActive = li.classList.contains('active');
 
-    const accoContentDiv = document.createElement('div');
-    accoContentDiv.classList.add('acco-content-div');
-    if (index === 0) {
-      accoContentDiv.classList.add('show'); // First item content is shown by default
-    }
-    accoContentDiv.innerHTML = answerCell?.innerHTML || ''; // Use innerHTML for richtext
-    moveInstrumentation(answerCell, accoContentDiv);
-    li.append(accoContentDiv);
-
-    h2.addEventListener('click', () => {
-      const parentLi = h2.closest('li');
-      const content = parentLi.querySelector('.acco-content-div');
-
-      // Close all other open accordions
-      ul.querySelectorAll('li.active').forEach((activeLi) => {
-        if (activeLi !== parentLi) {
+        // Close all other active items
+        ul.querySelectorAll('li.active').forEach((activeLi) => {
           activeLi.classList.remove('active');
           activeLi.querySelector('.acco-content-div')?.classList.remove('show');
+        });
+
+        // Toggle current item
+        if (!isActive) {
+          li.classList.add('active');
+          accoContentDiv.classList.add('show');
         }
       });
 
-      // Toggle current accordion
-      parentLi.classList.toggle('active');
-      content.classList.toggle('show');
+      ul.append(li);
+      moveInstrumentation(row, li);
     });
 
-    ul.append(li);
-  });
+    container.append(accoDiv);
+  }
 
+  // Replace the block with the new section
   block.replaceWith(section);
 
-  // Image optimization (if any images were present, though not in this specific block)
+  // Image optimization (if any images were present, though none in this block)
   section.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));

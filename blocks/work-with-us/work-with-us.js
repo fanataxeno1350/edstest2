@@ -4,19 +4,25 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [headingRow, ...slideRows] = [...block.children];
 
+  const section = document.createElement('section');
+  section.classList.add('section', 'work-with-us', 'pb-0');
+  moveInstrumentation(block, section);
+
+  // Section Header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
-  moveInstrumentation(headingRow, sectionHeader);
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  // CHECK 0 FIX: Replaced direct children[0] access with content detection
-  const headingCell = [...headingRow.children].find((cell) => cell.textContent.trim());
-  heading.textContent = headingCell?.textContent.trim() || '';
+  heading.textContent = headingRow.firstElementChild.textContent.trim();
+  moveInstrumentation(headingRow.firstElementChild, heading);
   sectionHeader.append(heading);
+  section.append(sectionHeader);
+  headingRow.remove(); // Remove the original heading row
 
-  const positionRelative = document.createElement('div');
-  positionRelative.classList.add('position-relative', 'aos-init', 'aos-animate');
+  // Slides Container
+  const positionRelativeDiv = document.createElement('div');
+  positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
 
   const container = document.createElement('div');
   container.classList.add('container');
@@ -25,32 +31,34 @@ export default function decorate(block) {
   gridLayout.classList.add('grid-layout');
 
   slideRows.forEach((row) => {
-    // CHECK 0 FIX: Destructuring is acceptable here as per EDS guide for fixed-field item models
-    const [imageCell, altTextCell, titleCell, descriptionCell, linkCell] = [...row.children];
+    const [imageCell, titleCell, descriptionCell, ctaLinkCell, ctaLabelCell] = [...row.children];
 
-    const slidesDiv = document.createElement('div');
-    slidesDiv.classList.add('slides');
-    moveInstrumentation(row, slidesDiv);
+    const slideDiv = document.createElement('div');
+    slideDiv.classList.add('slides');
 
     const wrapDiv = document.createElement('div');
     wrapDiv.classList.add('wrap');
 
-    const imageWrap = document.createElement('div');
-    imageWrap.classList.add('image-wrap');
-
-    const picture = imageCell.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
+    // Image
+    if (imageCell && imageCell.querySelector('picture')) {
+      const imageWrapDiv = document.createElement('div');
+      imageWrapDiv.classList.add('image-wrap');
+      const picture = imageCell.querySelector('picture');
+      const img = picture ? picture.querySelector('img') : null;
       if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, altTextCell.textContent.trim(), false, [{ width: '750' }]);
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
         moveInstrumentation(img, optimizedPic.querySelector('img'));
-        imageWrap.append(optimizedPic);
+        picture.replaceWith(optimizedPic);
+        optimizedPic.querySelector('img').classList.add('img-fluid');
       }
-      wrapDiv.append(imageWrap); // Only append imageWrap if an image exists
+      moveInstrumentation(imageCell, imageWrapDiv);
+      imageWrapDiv.append(imageCell.firstElementChild);
+      wrapDiv.append(imageWrapDiv);
     }
 
-    const contentWrap = document.createElement('div');
-    contentWrap.classList.add('content-wrap');
+    // Content
+    const contentWrapDiv = document.createElement('div');
+    contentWrapDiv.classList.add('content-wrap');
 
     const contentSectionHeader = document.createElement('div');
     contentSectionHeader.classList.add('section-header');
@@ -58,36 +66,36 @@ export default function decorate(block) {
     const title = document.createElement('h3');
     title.classList.add('heading', 'font-regular');
     title.textContent = titleCell.textContent.trim();
+    moveInstrumentation(titleCell, title);
+    contentSectionHeader.append(title);
 
     const description = document.createElement('p');
     description.classList.add('text-size-body');
     description.textContent = descriptionCell.textContent.trim();
+    moveInstrumentation(descriptionCell, description);
+    contentSectionHeader.append(description);
 
-    const link = document.createElement('a');
-    link.classList.add('btn', 'btn-primary', 'stretched-link');
-    const foundLink = linkCell.querySelector('a');
+    const ctaLink = document.createElement('a');
+    ctaLink.classList.add('btn', 'btn-primary', 'stretched-link');
+    const foundLink = ctaLinkCell.querySelector('a');
     if (foundLink) {
-      link.href = foundLink.href;
-      // CHECK 1.5 FIX: Read link text from the <a> tag's textContent, not hardcoded
-      link.textContent = foundLink.textContent.trim();
-    } else {
-      // Fallback if no link found, though model implies it should always exist
-      link.href = '#';
-      link.textContent = 'Learn More';
+      ctaLink.href = foundLink.href; // Corrected: use href directly from the found <a> tag
     }
+    ctaLink.textContent = ctaLabelCell.textContent.trim();
+    moveInstrumentation(ctaLinkCell, ctaLink);
+    moveInstrumentation(ctaLabelCell, ctaLink);
+    contentSectionHeader.append(ctaLink);
 
-    contentSectionHeader.append(title, description, link);
-    contentWrap.append(contentSectionHeader);
-
-    wrapDiv.append(contentWrap); // Always append contentWrap
-    slidesDiv.append(wrapDiv);
-    gridLayout.append(slidesDiv);
+    contentWrapDiv.append(contentSectionHeader);
+    wrapDiv.append(contentWrapDiv);
+    slideDiv.append(wrapDiv);
+    gridLayout.append(slideDiv);
+    row.remove(); // Remove the original slide row
   });
 
   container.append(gridLayout);
-  positionRelative.append(container);
+  positionRelativeDiv.append(container);
+  section.append(positionRelativeDiv);
 
-  block.innerHTML = '';
-  block.classList.add('section', 'work-with-us', 'pb-0');
-  block.append(sectionHeader, positionRelative);
+  block.replaceWith(section);
 }

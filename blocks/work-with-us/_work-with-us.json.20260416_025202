@@ -61,7 +61,13 @@
         },
         {
           "component": "text",
-          "label": "Title",
+          "label": "Image Alt Text",
+          "name": "alt",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Slide Title",
           "name": "title",
           "valueType": "string"
         },
@@ -73,14 +79,8 @@
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]

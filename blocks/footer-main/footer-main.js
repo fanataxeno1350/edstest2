@@ -1,7 +1,7 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-function transformNestedLists(rootUl) {
+function transformNestedLists(rootUl, level = 0) {
   rootUl.querySelectorAll('li').forEach((li) => {
     const nested = li.querySelector(':scope > ul');
     const anchor = li.querySelector(':scope > a');
@@ -21,55 +21,46 @@ function transformNestedLists(rootUl) {
     if (nested) {
       nested.remove();
       const subWrap = document.createElement('div');
-      subWrap.classList.add('has-footer-sub-child'); // Use class from ORIGINAL HTML
+      if (level === 0) {
+        subWrap.classList.add('has-footer-sub-child');
+      } else {
+        subWrap.classList.add('has-footer-inner-sub-child');
+      }
       subWrap.append(nested);
       li.append(subWrap);
 
       const trigger = li.querySelector(':scope > a, :scope > span');
       if (trigger) {
-        trigger.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          li.classList.toggle('active');
-          subWrap.classList.toggle('active');
+        const small = document.createElement('small');
+        small.setAttribute('data-once', 'footerMobileInner');
+        trigger.after(small);
+
+        const imgSpan = document.createElement('span');
+        imgSpan.setAttribute('data-once', 'footerClickEvent');
+        if (level > 0) {
+          imgSpan.classList.add('innerFooterClickEvent');
+        }
+        const img = document.createElement('img');
+        img.alt = 'svg file';
+        // The original HTML has a hardcoded SVG path, but we must not hardcode paths.
+        // Since the model doesn't provide an icon for the toggle, we'll leave src empty.
+        // If an icon field were present, we'd use that.
+        img.src = ''; // Placeholder, as no icon field is in the model
+        imgSpan.append(img);
+        trigger.after(imgSpan);
+
+        // Add event listener for the toggle behavior
+        const toggleElements = [trigger, imgSpan]; // Both trigger and the image span should toggle
+        toggleElements.forEach(el => {
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            li.classList.toggle('active');
+            subWrap.classList.toggle('active');
+          });
         });
       }
-
-      // Recursively transform inner lists
-      nested.querySelectorAll('li').forEach((innerLi) => {
-        const innerNested = innerLi.querySelector(':scope > ul');
-        const innerAnchor = innerLi.querySelector(':scope > a');
-
-        if (!innerAnchor) {
-          const innerTextNode = [...innerLi.childNodes].find(
-            (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
-          );
-          if (innerTextNode) {
-            const span = document.createElement('span');
-            span.textContent = innerTextNode.textContent.trim();
-            innerTextNode.remove();
-            innerLi.prepend(span);
-          }
-        }
-
-        if (innerNested) {
-          innerNested.remove();
-          const innerSubWrap = document.createElement('div');
-          innerSubWrap.classList.add('has-footer-inner-sub-child'); // Use class from ORIGINAL HTML
-          innerSubWrap.append(innerNested);
-          innerLi.append(innerSubWrap);
-
-          const innerTrigger = innerLi.querySelector(':scope > a, :scope > span');
-          if (innerTrigger) {
-            innerTrigger.addEventListener('click', (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              innerLi.classList.toggle('active');
-              innerSubWrap.classList.toggle('active');
-            });
-          }
-        }
-      });
+      transformNestedLists(nested, level + 1);
     }
   });
 }
@@ -77,190 +68,235 @@ function transformNestedLists(rootUl) {
 export default function decorate(block) {
   const children = [...block.children];
 
-  // Destructure the known root fields
-  const logoRow = children[0];
-  const logoLinkRow = children[1];
-  const copyrightTextRow = children[2];
+  // The first three rows are fixed fields: logo, logoLink, copyrightText
+  // The remaining rows are item rows for socialLinks, footerMenu, secondaryNav
+  const [logoRow, logoLinkRow, copyrightTextRow, ...itemRows] = children;
 
-  // Remaining rows are item rows
-  const itemRows = children.slice(3);
-
-  block.innerHTML = '';
   const container = document.createElement('div');
   container.classList.add('container');
-  block.append(container);
 
   // Footer Header Section
   const footerHeader = document.createElement('div');
   footerHeader.classList.add('row', 'footer-header');
-  container.append(footerHeader);
-
-  const logoCol = document.createElement('div');
-  logoCol.classList.add('col-md-6', 'col-12', 'justify-content-between', 'd-flex');
-  footerHeader.append(logoCol);
 
   const logoWrapper = document.createElement('div');
-  logoWrapper.classList.add('logo');
-  logoCol.append(logoWrapper);
+  logoWrapper.classList.add('col-md-6', 'col-12', 'justify-content-between', 'd-flex');
+
+  const logoDiv = document.createElement('div');
+  logoDiv.classList.add('logo');
 
   const logoLink = document.createElement('a');
-  const foundLogoLink = logoLinkRow.querySelector('a');
+  const foundLogoLink = logoLinkRow?.querySelector('a');
   if (foundLogoLink) {
     logoLink.href = foundLogoLink.href;
-  }
-  moveInstrumentation(logoLinkRow, logoLink);
-  logoWrapper.append(logoLink);
-
-  const logoPicture = logoRow.querySelector('picture');
-  if (logoPicture) {
-    const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
-    optimizedPic.querySelector('img').classList.add('hiddenlogo1');
-    moveInstrumentation(logoRow, optimizedPic);
-    logoLink.append(optimizedPic);
+    moveInstrumentation(logoLinkRow, logoLink);
   }
 
-  const socialLinksCol = document.createElement('div');
-  socialLinksCol.classList.add('col-md-6', 'col-12', 'footer-social-wrap-center');
-  footerHeader.append(socialLinksCol);
+  const picture = logoRow?.querySelector('picture');
+  if (picture) {
+    const img = picture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
+      const optimizedImg = optimizedPic.querySelector('img');
+      optimizedImg.classList.add('hiddenlogo1');
+      optimizedImg.width = 200;
+      optimizedImg.height = 30;
+      optimizedImg.style.width = 'auto'; // This is from original HTML, not a hardcoded dimension by EDS
+      moveInstrumentation(img, optimizedImg);
+      logoLink.append(optimizedPic);
+    }
+  }
+  logoDiv.append(logoLink);
+  logoWrapper.append(logoDiv);
+  footerHeader.append(logoWrapper);
 
-  const socialWrap = document.createElement('ul');
-  socialWrap.classList.add('social-wrap');
-  socialLinksCol.append(socialWrap);
+  // Social Links
+  const socialLinksWrapper = document.createElement('div');
+  socialLinksWrapper.classList.add('col-md-6', 'col-12', 'footer-social-wrap-center');
 
-  // Social Link Items: 2 cells (icon, link)
-  const socialLinkItems = itemRows.filter((row) => {
+  const socialUl = document.createElement('ul');
+  socialUl.classList.add('social-wrap');
+
+  // Filter for social items: 2 cells, first cell contains a picture
+  const socialItems = itemRows.filter((row) => {
     const cells = [...row.children];
-    return cells.length === 2 && cells[0].querySelector('picture') && cells[1].querySelector('a');
+    return cells.length === 2 && cells[0].querySelector('picture');
   });
-  socialLinkItems.forEach((row) => {
-    const [iconCell, linkCell] = [...row.children];
 
+  socialItems.forEach((row) => {
+    const [iconCell, linkCell] = [...row.children];
     const li = document.createElement('li');
+
     const socialLink = document.createElement('a');
-    const foundLink = linkCell.querySelector('a');
+    const foundLink = linkCell?.querySelector('a');
     if (foundLink) {
       socialLink.href = foundLink.href;
-      socialLink.target = '_blank';
+      socialLink.target = '_blank'; // From original HTML
+      moveInstrumentation(linkCell, socialLink);
     }
-    moveInstrumentation(linkCell, socialLink);
 
-    const iconPicture = iconCell.querySelector('picture');
+    const iconPicture = iconCell?.querySelector('picture');
     if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '30' }]);
-      moveInstrumentation(iconCell, optimizedPic);
-      socialLink.append(optimizedPic);
+      const iconImg = iconPicture.querySelector('img');
+      if (iconImg) {
+        const optimizedIconPic = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '30' }]);
+        const optimizedIconImg = optimizedIconPic.querySelector('img');
+        optimizedIconImg.alt = 'svg file'; // From original HTML
+        moveInstrumentation(iconImg, optimizedIconImg);
+        socialLink.append(optimizedIconPic);
+      }
     }
     li.append(socialLink);
-    socialWrap.append(li);
+    socialUl.append(li);
+    moveInstrumentation(row, li);
   });
 
-  // Footer Menu Box Section
+  socialLinksWrapper.append(socialUl);
+  footerHeader.append(socialLinksWrapper);
+  container.append(footerHeader);
+
+  // Footer Menu Section
   const footerMenuBox = document.createElement('div');
   footerMenuBox.classList.add('row', 'footer-menu-box');
-  container.append(footerMenuBox);
 
   const footerMenuCol = document.createElement('div');
   footerMenuCol.classList.add('col');
-  footerMenuBox.append(footerMenuCol);
 
   const footerMenu = document.createElement('div');
   footerMenu.classList.add('footer-menu');
-  footerMenuCol.append(footerMenu);
 
-  // Footer Menu Blocks: 4 cells (blockTitle, blockTitleLink, menuLinks (container), hierarchy-tree)
-  const footerMenuBlocks = itemRows.filter((row) => {
+  // Filter for menu items: 3 cells, second cell contains an anchor, third cell contains a UL (hierarchy-tree)
+  const menuItems = itemRows.filter((row) => {
     const cells = [...row.children];
-    return cells.length === 4 && cells[3].querySelector('ul'); // hierarchy-tree is a richtext with ul
+    return cells.length === 3 && cells[1].querySelector('a') && cells[2].querySelector('ul');
   });
-  footerMenuBlocks.forEach((row) => {
-    const [blockTitleCell, blockTitleLinkCell, , hierarchyCell] = [...row.children]; // menuLinks cell is a container, not directly used here
 
+  menuItems.forEach((row) => {
+    const [sectionLabelCell, sectionLinkCell, hierarchyCell] = [...row.children];
     const linkBlocks = document.createElement('div');
     linkBlocks.classList.add('link-blocks');
-    footerMenu.append(linkBlocks);
 
     const head = document.createElement('div');
     head.classList.add('head');
-    linkBlocks.append(head);
 
     const span = document.createElement('span');
-    head.append(span);
-
-    const titleLink = document.createElement('a');
-    const foundBlockTitleLink = blockTitleLinkCell.querySelector('a');
-    if (foundBlockTitleLink) {
-      titleLink.href = foundBlockTitleLink.href;
+    const sectionLink = document.createElement('a');
+    const foundSectionLink = sectionLinkCell?.querySelector('a');
+    if (foundSectionLink) {
+      sectionLink.href = foundSectionLink.href;
+      moveInstrumentation(sectionLinkCell, sectionLink);
     }
-    titleLink.textContent = blockTitleCell.textContent.trim();
-    moveInstrumentation(blockTitleLinkCell, titleLink);
-    span.append(titleLink);
+    sectionLink.textContent = sectionLabelCell?.textContent.trim() || '';
+    span.append(sectionLink);
 
-    const small = document.createElement('small');
-    small.setAttribute('data-once', 'footerMobileInner');
-    span.append(small);
+    // Handle hierarchy-tree richtext field
+    const hierarchyTempDiv = document.createElement('div');
+    if (hierarchyCell) {
+      moveInstrumentation(hierarchyCell, hierarchyTempDiv);
+      hierarchyTempDiv.innerHTML = hierarchyCell.innerHTML; // Preserve full HTML structure
+    }
 
-    // Handle hierarchy-tree richtext
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = hierarchyCell.innerHTML;
-    moveInstrumentation(hierarchyCell, tempDiv);
-
-    const hierarchyRoot = tempDiv.querySelector('ul');
+    const hierarchyRoot = hierarchyTempDiv.querySelector('ul');
     if (hierarchyRoot) {
-      hierarchyRoot.classList.add('footer-inner-list');
-      head.append(hierarchyRoot);
-      transformNestedLists(hierarchyRoot);
+      // Apply classes from original HTML to nested elements if needed
+      hierarchyRoot.querySelectorAll('a').forEach(a => {
+        // Add any specific classes from original HTML if applicable, e.g., a.classList.add('nav-link');
+      });
+      hierarchyRoot.querySelectorAll('li').forEach(li => {
+        // Add any specific classes from original HTML if applicable, e.g., li.classList.add('nav-item');
+      });
+
+      const small = document.createElement('small');
+      small.setAttribute('data-once', 'footerMobileInner');
+      span.append(small);
+
+      const footerInnerList = document.createElement('ul');
+      footerInnerList.classList.add('footer-inner-list');
+
+      // Move children from hierarchyRoot to footerInnerList
+      while (hierarchyRoot.firstChild) {
+        footerInnerList.append(hierarchyRoot.firstChild);
+      }
+
+      transformNestedLists(footerInnerList);
+      head.append(span, footerInnerList);
+    } else {
+      head.append(span);
     }
+
+    linkBlocks.append(head);
+    footerMenu.append(linkBlocks);
+    moveInstrumentation(row, linkBlocks);
   });
 
-  // Copyright Section
+  footerMenuCol.append(footerMenu);
+  footerMenuBox.append(footerMenuCol);
+  container.append(footerMenuBox);
+
+  // Copyright and Secondary Nav
   const copyrightWrap = document.createElement('div');
   copyrightWrap.classList.add('row', 'align-items-lg-end', 'copyright-wrap');
-  container.append(copyrightWrap);
 
   const secondaryNavCol = document.createElement('div');
   secondaryNavCol.classList.add('col-12', 'col-lg-6');
-  copyrightWrap.append(secondaryNavCol);
 
-  const secondaryNav = document.createElement('ul');
-  secondaryNav.classList.add('secondary-nav');
-  secondaryNavCol.append(secondaryNav);
+  const secondaryNavUl = document.createElement('ul');
+  secondaryNavUl.classList.add('secondary-nav');
 
-  // Secondary Nav Links: 3 cells (label, link, hierarchy-tree)
-  // Differentiate from footer-menu-link (also 3 cells) by checking if it's NOT a footer-menu-block
-  const secondaryNavLinks = itemRows.filter((row) => {
+  // Filter for secondary nav items: 3 cells, no picture, no second cell with an anchor (distinguishes from menu items)
+  // The third cell is 'hierarchy-tree' but for secondary nav, it's often flat or not used for display.
+  // The model shows it as 'hierarchy-tree', but the original HTML shows a flat list for secondary-nav.
+  // We'll prioritize the original HTML's flat structure for secondary-nav if the hierarchy-tree is empty or not a UL.
+  const secondaryNavItems = itemRows.filter((row) => {
     const cells = [...row.children];
-    // A secondary-nav-link has 3 cells, the first is text, the second is an anchor, and the third is a richtext (ul)
-    // It should NOT be a footer-menu-block (which has 4 cells)
-    return cells.length === 3 && !cells[0].querySelector('picture') && cells[1].querySelector('a') && cells[2].querySelector('ul');
+    return cells.length === 3 && !cells[0].querySelector('picture') && !cells[1].querySelector('a');
   });
 
-  secondaryNavLinks.forEach((row) => {
-    const [labelCell, linkCell] = [...row.children]; // The third cell (hierarchy-tree) is not used for secondary nav links
-
+  secondaryNavItems.forEach((row) => {
+    const [labelCell, linkCell, hierarchyCell] = [...row.children]; // hierarchyCell is present but might be empty or flat
     const li = document.createElement('li');
-    const link = document.createElement('a');
-    const foundLink = linkCell.querySelector('a');
+    const secondaryLink = document.createElement('a');
+    const foundLink = linkCell?.querySelector('a');
     if (foundLink) {
-      link.href = foundLink.href;
+      secondaryLink.href = foundLink.href;
+      moveInstrumentation(linkCell, secondaryLink);
     }
-    link.textContent = labelCell.textContent.trim();
-    moveInstrumentation(linkCell, link);
-    li.append(link);
-    secondaryNav.append(li);
+    secondaryLink.textContent = labelCell?.textContent.trim() || '';
+    li.append(secondaryLink);
+
+    // If hierarchyCell for secondary nav contains a UL, handle it, otherwise, it's a simple link
+    const hierarchyTempDiv = document.createElement('div');
+    if (hierarchyCell) {
+      moveInstrumentation(hierarchyCell, hierarchyTempDiv);
+      hierarchyTempDiv.innerHTML = hierarchyCell.innerHTML;
+    }
+    const hierarchyRoot = hierarchyTempDiv.querySelector('ul');
+    if (hierarchyRoot) {
+      // For secondary nav, the original HTML shows a flat list, so we'll append the items directly
+      // or apply transformNestedLists if the structure is truly nested and needs toggles.
+      // Based on the original HTML, secondary-nav is flat.
+      while (hierarchyRoot.firstChild) {
+        li.append(hierarchyRoot.firstChild); // Append nested items directly to the li if present
+      }
+    }
+
+    secondaryNavUl.append(li);
+    moveInstrumentation(row, li);
   });
+
+  secondaryNavCol.append(secondaryNavUl);
+  copyrightWrap.append(secondaryNavCol);
 
   const copyrightTextCol = document.createElement('div');
   copyrightTextCol.classList.add('col-12', 'col-lg-6', 'copyright-text');
-  copyrightTextCol.textContent = copyrightTextRow.textContent.trim();
-  moveInstrumentation(copyrightTextRow, copyrightTextCol);
+  if (copyrightTextRow) {
+    moveInstrumentation(copyrightTextRow, copyrightTextCol);
+    // Use innerHTML for richtext field
+    copyrightTextCol.innerHTML = copyrightTextRow.innerHTML;
+  }
   copyrightWrap.append(copyrightTextCol);
+  container.append(copyrightWrap);
 
-  // Image optimization for all images in the block
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
+  block.innerHTML = '';
+  block.append(container);
 }

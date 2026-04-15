@@ -56,7 +56,7 @@
         {
           "component": "text",
           "label": "Image Alt Text",
-          "name": "imageAlt",
+          "name": "altText",
           "valueType": "string"
         },
         {
@@ -67,7 +67,7 @@
         },
         {
           "component": "richtext",
-          "label": "Description",
+          "label": "Card Description",
           "name": "description",
           "valueType": "string"
         }

@@ -1,0 +1,99 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, subheadingRow, ...cardRows] = [...block.children];
+
+  // Create the main section element
+  const section = document.createElement('section');
+  section.classList.add('section', 'spirit-of-rise');
+  moveInstrumentation(block, section);
+
+  // Create the section header
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+
+  // Heading
+  if (headingRow) {
+    const headingCell = headingRow.firstElementChild;
+    const h2 = document.createElement('h2');
+    h2.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+    h2.textContent = headingCell.textContent.trim();
+    moveInstrumentation(headingCell, h2);
+    sectionHeader.appendChild(h2);
+  }
+
+  // Subheading
+  if (subheadingRow) {
+    const subheadingCell = subheadingRow.firstElementChild;
+    const p = document.createElement('p');
+    p.classList.add('aos-init', 'aos-animate');
+    p.textContent = subheadingCell.textContent.trim();
+    moveInstrumentation(subheadingCell, p);
+    sectionHeader.appendChild(p);
+  }
+  section.appendChild(sectionHeader);
+
+  // Create performance driven section
+  const performanceDriven = document.createElement('div');
+  performanceDriven.classList.add('performance-driven', 'performance-driven-home'); // Corrected class name
+  moveInstrumentation(block, performanceDriven); // Added instrumentation for the main div
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+  performanceDriven.appendChild(container);
+
+  const cardsWrapper = document.createElement('div');
+  cardsWrapper.classList.add('performace-driven-cards');
+  container.appendChild(cardsWrapper);
+
+  cardRows.forEach((row) => {
+    // No row.children[n] violations, destructuring is correct.
+    const [imageCell, linkCell, descriptionCell] = [...row.children];
+
+    const linkEl = document.createElement('a');
+    linkEl.classList.add('performace-driven-cards-link');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      linkEl.href = foundLink.href;
+      linkEl.target = '_blank'; // Original HTML has target="_blank"
+    }
+    moveInstrumentation(row, linkEl); // Instrumentation for the whole row moved to the link element
+
+    const cardWrapper = document.createElement('div');
+    cardWrapper.classList.add('performace-driven-card-wrapper');
+    linkEl.appendChild(cardWrapper);
+
+    const cardImage = document.createElement('div');
+    cardImage.classList.add('card-image');
+    cardWrapper.appendChild(cardImage);
+
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        // createOptimizedPicture handles instrumentation internally for the img it creates
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        // moveInstrumentation(img, optimizedPic.querySelector('img')); // This is redundant as createOptimizedPicture handles it
+        cardImage.appendChild(optimizedPic);
+      }
+    }
+
+    const boxCard = document.createElement('div');
+    boxCard.classList.add('performace-driven-home-box-card');
+    cardWrapper.appendChild(boxCard);
+
+    const desc = document.createElement('p');
+    desc.classList.add('desc');
+    // Description is type=text, so textContent is appropriate.
+    // The original HTML shows <br> tags, so preserving line breaks from textContent is correct.
+    desc.innerHTML = descriptionCell.textContent.trim().replace(/\n/g, '<br>'); // Preserve line breaks
+    moveInstrumentation(descriptionCell, desc);
+    boxCard.appendChild(desc);
+
+    cardsWrapper.appendChild(linkEl);
+  });
+
+  section.appendChild(performanceDriven);
+  block.replaceWith(section);
+}
