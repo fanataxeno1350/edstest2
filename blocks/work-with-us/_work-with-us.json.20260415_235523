@@ -38,7 +38,7 @@
       "fields": [
         {
           "component": "text",
-          "label": "Block Heading",
+          "label": "Section Heading",
           "name": "heading",
           "valueType": "string"
         },
@@ -55,19 +55,31 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
+          "label": "Slide Image",
           "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Slide Title",
-          "name": "title",
+          "label": "Image Alt Text",
+          "name": "imageAlt",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Description",
+          "label": "Image Title",
+          "name": "imageTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Slide Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Slide Description",
           "name": "description",
           "valueType": "string"
         },

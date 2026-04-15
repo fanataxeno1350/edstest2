@@ -687,31 +687,37 @@
       },
       {
         "component": "container",
-        "item": "performance-driven-card",
-        "label": "Performance Driven Cards",
+        "item": "spirit-of-rise-card",
+        "label": "Cards",
         "name": "cards"
       }
     ]
   },
   {
-    "id": "performance-driven-card",
+    "id": "spirit-of-rise-card",
     "fields": [
       {
         "component": "reference",
-        "label": "Card Image",
+        "label": "Image",
         "name": "image",
         "valueType": "string"
       },
       {
+        "component": "reference",
+        "label": "Mobile Image",
+        "name": "mobileImage",
+        "valueType": "string"
+      },
+      {
         "component": "aem-content",
-        "label": "Card Link",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Card Description",
-        "name": "description",
+        "name": "cardDescription",
         "valueType": "string"
       }
     ]
@@ -878,7 +884,7 @@
     "fields": [
       {
         "component": "text",
-        "label": "Section Heading",
+        "label": "Block Heading",
         "name": "heading",
         "valueType": "string"
       },
@@ -895,31 +901,19 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Slide Image",
+        "label": "Image",
         "name": "image",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Image Alt Text",
-        "name": "imageAlt",
+        "label": "Slide Title",
+        "name": "title",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Image Title",
-        "name": "imageTitle",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Slide Heading",
-        "name": "heading",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Slide Description",
+        "label": "Description",
         "name": "description",
         "valueType": "string"
       },

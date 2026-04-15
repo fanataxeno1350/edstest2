@@ -1,0 +1,81 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, subheadingRow, ...cardRows] = [...block.children];
+
+  // Section header
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  heading.textContent = headingRow.firstElementChild.textContent.trim();
+  moveInstrumentation(headingRow, heading);
+  sectionHeader.appendChild(heading);
+
+  const subheading = document.createElement('p');
+  subheading.classList.add('aos-init', 'aos-animate');
+  subheading.textContent = subheadingRow.firstElementChild.textContent.trim();
+  moveInstrumentation(subheadingRow, subheading);
+  sectionHeader.appendChild(subheading);
+
+  // Performance driven section
+  const performanceDriven = document.createElement('div');
+  performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+  performanceDriven.appendChild(container);
+
+  const cardsWrapper = document.createElement('div');
+  cardsWrapper.classList.add('performace-driven-cards'); // Corrected class name
+  container.appendChild(cardsWrapper);
+
+  cardRows.forEach((row) => {
+    const [imageCell, linkCell, descriptionCell] = [...row.children];
+
+    const linkEl = document.createElement('a');
+    linkEl.classList.add('performace-driven-cards-link');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      linkEl.href = foundLink.href;
+      linkEl.target = '_blank'; // Assuming target blank from original HTML
+    }
+    moveInstrumentation(linkCell, linkEl);
+
+    const cardWrapper = document.createElement('div');
+    cardWrapper.classList.add('performace-driven-card-wrapper');
+    linkEl.appendChild(cardWrapper);
+    moveInstrumentation(row, cardWrapper);
+
+    const cardImage = document.createElement('div');
+    cardImage.classList.add('card-image');
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      cardImage.appendChild(optimizedPic);
+    }
+    cardWrapper.appendChild(cardImage);
+    moveInstrumentation(imageCell, cardImage);
+
+    const homeBoxCard = document.createElement('div');
+    homeBoxCard.classList.add('performace-driven-home-box-card'); // Corrected class name
+    cardWrapper.appendChild(homeBoxCard);
+
+    const description = document.createElement('p');
+    description.classList.add('desc');
+    description.textContent = descriptionCell.textContent.trim(); // Changed to textContent.trim() as per Block JSON
+    homeBoxCard.appendChild(description);
+    moveInstrumentation(descriptionCell, description);
+
+    cardsWrapper.appendChild(linkEl);
+  });
+
+  block.innerHTML = '';
+  block.classList.add('section', 'spirit-of-rise'); // Add section class to the block itself
+  block.appendChild(sectionHeader);
+  block.appendChild(performanceDriven);
+}

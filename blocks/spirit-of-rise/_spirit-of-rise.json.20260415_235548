@@ -44,8 +44,8 @@
         },
         {
           "component": "text",
-          "label": "Description",
-          "name": "description",
+          "label": "Subheading",
+          "name": "subheading",
           "valueType": "string"
         },
         {
@@ -61,26 +61,20 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
+          "label": "Card Image",
           "name": "image",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Mobile Image",
-          "name": "mobileImage",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Card Link",
           "name": "link",
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Card Description",
-          "name": "cardDescription",
+          "name": "description",
           "valueType": "string"
         }
       ]

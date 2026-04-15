@@ -4,39 +4,43 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [headingRow, ...slideRows] = [...block.children];
 
-  // Section Header
+  // Section header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
   moveInstrumentation(headingRow, sectionHeader);
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.textContent = headingRow.firstElementChild?.textContent.trim() || '';
+  // Add data-aos attributes from original HTML
+  heading.setAttribute('data-aos', 'fade-up');
+  heading.setAttribute('data-aos-offset', '100');
+  heading.setAttribute('data-aos-duration', '650');
+  heading.setAttribute('data-aos-easing', 'ease-in-out');
+  heading.textContent = headingRow.children[0].textContent.trim(); // Corrected to children[0] for consistency
   sectionHeader.appendChild(heading);
 
   block.innerHTML = ''; // Clear block content
-  block.classList.add('pb-0'); // Add section class from original HTML
+  block.classList.add('pb-0'); // Add block-level class
+  block.prepend(sectionHeader);
 
-  const sectionWrapper = document.createElement('div');
-  sectionWrapper.classList.add('position-relative', 'aos-init', 'aos-animate');
+  const positionRelativeDiv = document.createElement('div');
+  positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
+  // Add data-aos attributes from original HTML
+  positionRelativeDiv.setAttribute('data-aos', 'fade-up');
+  positionRelativeDiv.setAttribute('data-aos-offset', '100');
+  positionRelativeDiv.setAttribute('data-aos-duration', '650');
+  positionRelativeDiv.setAttribute('data-aos-easing', 'ease-in-out');
 
-  const container = document.createElement('div');
-  container.classList.add('container');
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
+  positionRelativeDiv.appendChild(containerDiv);
 
-  const gridLayout = document.createElement('div');
-  gridLayout.classList.add('grid-layout');
+  const gridLayoutDiv = document.createElement('div');
+  gridLayoutDiv.classList.add('grid-layout');
+  containerDiv.appendChild(gridLayoutDiv);
 
   slideRows.forEach((row) => {
-    // All cells are present and in a fixed order, so destructuring is appropriate.
-    const [
-      imageCell,
-      imageAltCell,
-      imageTitleCell, // Not used in current rendering logic, but read for completeness
-      slideHeadingCell,
-      descriptionCell,
-      ctaLinkCell,
-      ctaLabelCell,
-    ] = [...row.children];
+    const [imageCell, titleCell, descriptionCell, ctaLinkCell, ctaLabelCell] = [...row.children];
 
     const slideDiv = document.createElement('div');
     slideDiv.classList.add('slides');
@@ -44,64 +48,54 @@ export default function decorate(block) {
 
     const wrapDiv = document.createElement('div');
     wrapDiv.classList.add('wrap');
+    slideDiv.appendChild(wrapDiv);
 
-    // Image
     const picture = imageCell.querySelector('picture');
     if (picture) {
-      const imageWrap = document.createElement('div');
-      imageWrap.classList.add('image-wrap');
+      const imageWrapDiv = document.createElement('div');
+      imageWrapDiv.classList.add('image-wrap');
+      imageWrapDiv.appendChild(picture);
+      wrapDiv.appendChild(imageWrapDiv);
 
+      // Optimize image
       const img = picture.querySelector('img');
       if (img) {
-        const optimizedPic = createOptimizedPicture(
-          img.src,
-          imageAltCell?.textContent.trim() || img.alt,
-          false,
-          [{ width: '750' }],
-        );
-        // The original img element might have instrumentation, move it to the new img
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
         moveInstrumentation(img, optimizedPic.querySelector('img'));
-        imageWrap.appendChild(optimizedPic);
-        wrapDiv.appendChild(imageWrap);
+        picture.replaceWith(optimizedPic);
+        optimizedPic.querySelector('img').classList.add('img-fluid');
       }
     }
 
-    // Content
-    const contentWrap = document.createElement('div');
-    contentWrap.classList.add('content-wrap');
+    const contentWrapDiv = document.createElement('div');
+    contentWrapDiv.classList.add('content-wrap');
+    wrapDiv.appendChild(contentWrapDiv);
 
-    const contentSectionHeader = document.createElement('div');
-    contentSectionHeader.classList.add('section-header');
+    const slideSectionHeader = document.createElement('div');
+    slideSectionHeader.classList.add('section-header');
+    contentWrapDiv.appendChild(slideSectionHeader);
 
-    const slideHeading = document.createElement('h3');
-    slideHeading.classList.add('heading', 'font-regular');
-    slideHeading.textContent = slideHeadingCell?.textContent.trim() || '';
-    contentSectionHeader.appendChild(slideHeading);
+    const title = document.createElement('h3');
+    title.classList.add('heading', 'font-regular');
+    title.textContent = titleCell.textContent.trim();
+    slideSectionHeader.appendChild(title);
 
     const description = document.createElement('p');
     description.classList.add('text-size-body');
-    description.textContent = descriptionCell?.textContent.trim() || '';
-    contentSectionHeader.appendChild(description);
+    description.textContent = descriptionCell.textContent.trim();
+    slideSectionHeader.appendChild(description);
 
-    // CTA Link - Correctly read href from the <a> tag within the aem-content cell
-    const ctaLinkElement = ctaLinkCell.querySelector('a');
-    if (ctaLinkElement) {
-      const ctaAnchor = document.createElement('a');
-      ctaAnchor.classList.add('btn', 'btn-primary', 'stretched-link');
-      ctaAnchor.href = ctaLinkElement.href; // Read href, not textContent
-      ctaAnchor.textContent = ctaLabelCell?.textContent.trim() || '';
-      contentSectionHeader.appendChild(ctaAnchor);
+    const ctaLink = document.createElement('a');
+    ctaLink.classList.add('btn', 'btn-primary', 'stretched-link');
+    const foundLink = ctaLinkCell.querySelector('a');
+    if (foundLink) {
+      ctaLink.href = foundLink.href;
     }
+    ctaLink.textContent = ctaLabelCell.textContent.trim();
+    slideSectionHeader.appendChild(ctaLink);
 
-    contentWrap.appendChild(contentSectionHeader);
-    wrapDiv.appendChild(contentWrap);
-    slideDiv.appendChild(wrapDiv);
-    gridLayout.appendChild(slideDiv);
+    gridLayoutDiv.appendChild(slideDiv);
   });
 
-  container.appendChild(gridLayout);
-  sectionWrapper.appendChild(container);
-
-  block.appendChild(sectionHeader);
-  block.appendChild(sectionWrapper);
+  block.appendChild(positionRelativeDiv);
 }
