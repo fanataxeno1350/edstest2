@@ -53,13 +53,13 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Logo",
+          "label": "Main Logo",
           "name": "logo",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Logo Link",
+          "label": "Main Logo Link",
           "name": "logoLink",
           "valueType": "string"
         },
@@ -72,7 +72,7 @@
         {
           "component": "aem-content",
           "label": "80th Year Logo Link",
-          "name": "year80LogoLink",
+          "name": "year-80-logo-link",
           "valueType": "string"
         },
         {

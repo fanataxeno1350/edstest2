@@ -2,62 +2,71 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [
-    logoRow,
-    logoLinkRow,
-    year80LogoRow,
-    year80LogoLinkRow,
-    ...itemRows
-  ] = [...block.children];
+  // Use content detection for root fields instead of direct index access
+  const children = [...block.children];
+  const logoRow = children.find(row => row.children[0]?.querySelector('picture') && !row.children[0]?.querySelector('a'));
+  const logoLinkRow = children.find(row => row.children[0]?.querySelector('a') && row.children[0]?.textContent.includes('Logo Link'));
+  const year80LogoRow = children.find(row => row.children[0]?.querySelector('picture') && row.children[0]?.textContent.includes('80th Year Logo'));
+  const year80LogoLinkRow = children.find(row => row.children[0]?.querySelector('a') && row.children[0]?.textContent.includes('80th Year Logo Link'));
+
+  const itemRows = children.filter(row =>
+    row !== logoRow && row !== logoLinkRow && row !== year80LogoRow && row !== year80LogoLinkRow
+  );
 
   const header = document.createElement('header');
   header.classList.add('main-header', 'with-marquee', 'solid', 'nav-up');
   header.setAttribute('data-once', 'header-hover');
 
-  const container = document.createElement('div');
-  container.classList.add('container');
-  header.append(container);
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
+  header.append(containerDiv);
 
-  const wrap = document.createElement('div');
-  wrap.classList.add('wrap');
-  container.append(wrap);
+  const wrapDiv = document.createElement('div');
+  wrapDiv.classList.add('wrap');
+  containerDiv.append(wrapDiv);
 
   // Logo
   const logoDiv = document.createElement('div');
   logoDiv.classList.add('logo');
-  moveInstrumentation(logoRow, logoDiv);
+  wrapDiv.append(logoDiv);
+
   const logoLink = document.createElement('a');
-  moveInstrumentation(logoLinkRow, logoLink);
-  const logoAnchor = logoLinkRow.querySelector('a');
-  if (logoAnchor) {
-    logoLink.href = logoAnchor.href;
-  }
-  const logoPicture = logoRow.querySelector('picture');
-  if (logoPicture) {
-    const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
-    optimizedPic.querySelector('img').classList.add('hiddenlogo1');
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    logoLink.append(optimizedPic);
+  const logoHref = logoLinkRow?.querySelector('a')?.href || '#';
+  logoLink.href = logoHref;
+  if (logoLinkRow) {
+    moveInstrumentation(logoLinkRow, logoLink);
   }
   logoDiv.append(logoLink);
-  wrap.append(logoDiv);
+
+  if (logoRow) {
+    const logoPicture = logoRow.querySelector('picture');
+    if (logoPicture) {
+      const logoImg = logoPicture.querySelector('img');
+      const optimizedLogoPic = createOptimizedPicture(logoImg.src, logoImg.alt, false, [{ width: '200' }]);
+      optimizedLogoPic.querySelector('img').classList.add('hiddenlogo1');
+      moveInstrumentation(logoRow, optimizedLogoPic.querySelector('img'));
+      logoLink.append(optimizedLogoPic);
+    }
+  }
 
   // Hamburger
   const hamburgerDiv = document.createElement('div');
   hamburgerDiv.classList.add('hamburger');
   hamburgerDiv.setAttribute('data-once', 'hamburger-click nav-close-search');
+  wrapDiv.append(hamburgerDiv);
+
   const hamburgerUl = document.createElement('ul');
+  hamburgerDiv.append(hamburgerUl);
   for (let i = 0; i < 3; i += 1) {
     hamburgerUl.append(document.createElement('li'));
   }
-  hamburgerDiv.append(hamburgerUl);
-  wrap.append(hamburgerDiv);
 
-  // Main Navigation
+  // Navigation Menu
   const nav = document.createElement('nav');
   nav.classList.add('main-nav');
   nav.setAttribute('data-once', 'initSubChildToggle');
+  wrapDiv.append(nav);
+
   const navUl = document.createElement('ul');
   navUl.setAttribute('itemscope', '');
   navUl.setAttribute('itemtype', 'http://www.schema.org/SiteNavigationElement');
@@ -65,279 +74,197 @@ export default function decorate(block) {
 
   const navigationItems = itemRows.filter((row) => row.children.length === 3 && row.querySelector('ul'));
   navigationItems.forEach((row) => {
+    const navLi = document.createElement('li');
+    navLi.classList.add('has-child', 'hover-red');
+    navLi.setAttribute('itemprop', 'name');
+    navLi.setAttribute('data-once', 'nav-close-search');
+    moveInstrumentation(row, navLi);
+
     const cells = [...row.children];
-    const labelCell = cells.find((c) => !c.querySelector('ul') && !c.querySelector('a'));
-    const linkCell = cells.find((c) => c.querySelector('a') && !c.querySelector('ul'));
-    const hierarchyCell = cells.find((c) => c.querySelector('ul'));
+    const labelCell = cells.find((cell) => !cell.querySelector('a') && !cell.querySelector('ul') && !cell.querySelector('picture'));
+    const linkCell = cells.find((cell) => cell.querySelector('a') && !cell.querySelector('ul'));
+    const hierarchyCell = cells.find((cell) => cell.querySelector('ul'));
 
-    const li = document.createElement('li');
-    moveInstrumentation(row, li);
-    li.classList.add('has-child', 'hover-red');
-    li.setAttribute('itemprop', 'name');
-    li.setAttribute('data-once', 'nav-close-search');
-
-    const link = document.createElement('a');
-    moveInstrumentation(linkCell, link);
-    link.setAttribute('itemprop', 'url');
-    const authoredLink = linkCell.querySelector('a');
-    if (authoredLink) {
-      link.href = authoredLink.href;
-      link.textContent = labelCell?.textContent || authoredLink.textContent;
-    } else {
+    if (linkCell) {
+      const link = document.createElement('a');
+      link.setAttribute('itemprop', 'url');
+      link.href = linkCell.querySelector('a')?.href || '#';
       link.textContent = labelCell?.textContent || '';
+      if (labelCell) {
+        moveInstrumentation(labelCell, link);
+      }
+      moveInstrumentation(linkCell, link);
+      navLi.append(link);
+    } else if (labelCell) {
+      const span = document.createElement('span');
+      span.textContent = labelCell.textContent;
+      moveInstrumentation(labelCell, span);
+      navLi.append(span);
     }
-    li.append(link);
 
-    const span = document.createElement('span');
+    const svgSpan = document.createElement('span');
     const svgImg = document.createElement('img');
     svgImg.alt = 'svg file';
-    svgImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776231107678.svg+xml'; // This is a static SVG, safe to hardcode
-    span.append(svgImg);
-    li.append(span);
+    svgImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776231107678.svg+xml'; // Placeholder, as original HTML has hardcoded path
+    svgSpan.append(svgImg);
+    navLi.append(svgSpan);
 
     if (hierarchyCell) {
-      const megaMenu = document.createElement('div');
-      megaMenu.classList.add('mega-menu');
+      const megaMenuDiv = document.createElement('div');
+      megaMenuDiv.classList.add('mega-menu');
+      moveInstrumentation(hierarchyCell, megaMenuDiv);
+
       const megaMenuWrap = document.createElement('div');
       megaMenuWrap.classList.add('wrap', 'container');
+      megaMenuDiv.append(megaMenuWrap);
+
       const centerDiv = document.createElement('div');
       centerDiv.classList.add('center-div');
+      megaMenuWrap.append(centerDiv);
+
+      // The original HTML shows a 'left-div' and 'sub-nav-wrap' inside 'center-div'.
+      // The provided EDS structure only has 'hierarchy-tree' richtext.
+      // We will create a 'sub-nav-wrap' and append the hierarchy-tree content to it.
+      // If the original HTML's mega-menu structure is more complex (e.g., 'left-div' with headings/paragraphs),
+      // that content would need to be modeled explicitly in BlockJson.
       const subNavWrap = document.createElement('div');
-      subNavWrap.classList.add('sub-nav-wrap', 'about-us-sub-nav');
+      subNavWrap.classList.add('sub-nav-wrap', 'about-us-sub-nav'); // Using about-us-sub-nav as a generic class, adjust if specific
+      centerDiv.append(subNavWrap);
 
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = hierarchyCell.innerHTML;
-      moveInstrumentation(hierarchyCell, tempDiv);
+      moveInstrumentation(hierarchyCell, tempDiv); // Move instrumentation from original cell to tempDiv
 
       // Apply classes from ORIGINAL HTML to nested elements
-      tempDiv.querySelectorAll('a').forEach((a) => {
-        // The original HTML doesn't apply a specific class to <a> within the hierarchy-tree,
-        // but it does to <li> and <ul>. If specific <a> styling is needed, it should be derived from context.
-        // For now, no specific class is added to 'a' as per original HTML.
+      tempDiv.querySelectorAll('a').forEach((link) => {
+        // No specific classes for links in original HTML's mega menu structure for these items
       });
-      tempDiv.querySelectorAll('li').forEach((liElement) => {
-        liElement.classList.add('nav-menu-item'); // From ORIGINAL HTML
+      tempDiv.querySelectorAll('li').forEach((li) => {
+        // No specific classes for li in original HTML's mega menu structure for these items
       });
-      tempDiv.querySelectorAll('ul').forEach((ulElement) => {
-        ulElement.classList.add('nav-submenu'); // From ORIGINAL HTML
+      tempDiv.querySelectorAll('ul').forEach((ul) => {
+        // No specific classes for ul in original HTML's mega menu structure for these items
       });
 
       while (tempDiv.firstChild) {
         subNavWrap.append(tempDiv.firstChild);
       }
-
-      centerDiv.append(subNavWrap);
-      megaMenuWrap.append(centerDiv);
-megaMenu.append(megaMenuWrap);
-      li.append(megaMenu);
+      navLi.append(megaMenuDiv);
     }
-    navUl.append(li);
+    navUl.append(navLi);
   });
 
-  // Icon Links
-  const iconNavMobile = document.createElement('div');
-  iconNavMobile.classList.add('icon-nav', 'mobile-menus-icon');
-  const iconUlMobile = document.createElement('ul');
-  iconNavMobile.append(iconUlMobile);
+  // Icon Navigation (Mobile and Desktop)
+  const iconLinkItems = itemRows.filter((row) => row.children.length === 3 && row.querySelector('picture') && !row.querySelector('ul'));
 
-  const iconNavDesktop = document.createElement('div');
-  iconNavDesktop.classList.add('icon-nav', 'desktop-menus-icon');
-  const iconUlDesktop = document.createElement('ul');
-  iconNavDesktop.append(iconUlDesktop);
+  const createIconNav = (isMobile) => {
+    const iconNavDiv = document.createElement('div');
+    iconNavDiv.classList.add('icon-nav');
+    if (isMobile) {
+      iconNavDiv.classList.add('mobile-menus-icon');
+    } else {
+      iconNavDiv.classList.add('desktop-menus-icon');
+    }
+    const iconUl = document.createElement('ul');
+    iconNavDiv.append(iconUl);
 
-  const iconLinkItems = itemRows.filter((row) => row.children.length === 3 && row.querySelector('picture'));
-  iconLinkItems.forEach((row) => {
-    const cells = [...row.children];
-    const iconCell = cells.find((c) => c.querySelector('picture'));
-    const linkCell = cells.find((c) => c.querySelector('a'));
-    const labelCell = cells.find((c) => !c.querySelector('picture') && !c.querySelector('a'));
+    iconLinkItems.forEach((row) => {
+      const iconLi = document.createElement('li');
+      const cells = [...row.children];
+      const iconCell = cells.find((cell) => cell.querySelector('picture'));
+      const linkCell = cells.find((cell) => cell.querySelector('a'));
+      const labelCell = cells.find((cell) => !cell.querySelector('picture') && !cell.querySelector('a'));
 
-    const createIconLi = (isMobile) => {
-      const li = document.createElement('li');
-      moveInstrumentation(row, li);
+      if (linkCell) {
+        const link = document.createElement('a');
+        link.href = linkCell.querySelector('a')?.href || '#';
+        moveInstrumentation(linkCell, link);
 
-      const link = document.createElement('a');
-      const authoredLink = linkCell.querySelector('a');
-      if (authoredLink) {
-        link.href = authoredLink.href;
-      }
-
-      if (iconCell) {
-        const picture = iconCell.querySelector('picture');
-        if (picture) {
-          const img = picture.querySelector('img');
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '24' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          link.append(optimizedPic);
+        if (iconCell) {
+          const iconPicture = iconCell.querySelector('picture');
+          if (iconPicture) {
+            const iconImg = iconPicture.querySelector('img');
+            const optimizedIconPic = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '24' }]); // Assuming small icon size
+            moveInstrumentation(iconCell, optimizedIconPic.querySelector('img'));
+            link.append(optimizedIconPic);
+          }
         }
+        if (labelCell && isMobile) {
+          const span = document.createElement('span');
+          span.textContent = labelCell.textContent;
+          link.append(span);
+          moveInstrumentation(labelCell, span);
+        }
+        iconLi.append(link);
       }
-
-      if (isMobile && labelCell) {
-        const span = document.createElement('span');
-        span.textContent = labelCell.textContent;
-        link.append(span);
+      // Assuming 'mail' or 'search' based on label text content from ORIGINAL HTML
+      if (labelCell?.textContent?.toLowerCase() === 'contact us') {
+        iconLi.classList.add('mail');
+      } else if (labelCell?.textContent?.toLowerCase() === 'search') {
+        iconLi.classList.add('search');
       }
-      li.append(link);
-      return li;
-    };
-
-    // Determine if this is the 'mail' or 'search' icon based on content or order
-    // For simplicity, assuming the first icon-link-item is 'mail' and the second is 'search'
-    // A more robust solution would involve checking the labelCell.textContent or a specific class in the HTML
-    const liMobile = createIconLi(true);
-    const liDesktop = createIconLi(false);
-
-    if (labelCell?.textContent.toLowerCase().includes('contact us')) {
-      liMobile.classList.add('mail');
-      liDesktop.classList.add('mail');
-    } else if (labelCell?.textContent.toLowerCase().includes('search')) {
-      liMobile.classList.add('search');
-      liMobile.setAttribute('data-once', 'search-toggle search-stop-propagation');
-      liDesktop.classList.add('search');
-      liDesktop.setAttribute('data-once', 'search-toggle search-stop-propagation');
-      link.setAttribute('data-once', 'search-stop-propagation'); // Add to the link as well
-    }
-
-    iconUlMobile.append(liMobile);
-    iconUlDesktop.append(liDesktop);
-  });
-
-  navUl.append(iconNavMobile);
-  nav.append(iconNavDesktop);
-  wrap.append(nav);
-
-  // 80th Year Logo
-  const year80LogoDiv = document.createElement('div');
-  year80LogoDiv.classList.add('logo', 'year-80-logo');
-  moveInstrumentation(year80LogoRow, year80LogoDiv);
-  const year80LogoLink = document.createElement('a');
-  moveInstrumentation(year80LogoLinkRow, year80LogoLink);
-  const year80LogoAnchor = year80LogoLinkRow.querySelector('a');
-  if (year80LogoAnchor) {
-    year80LogoLink.href = year80LogoAnchor.href;
-  }
-  const year80LogoPicture = year80LogoRow.querySelector('picture');
-  if (year80LogoPicture) {
-    const img = year80LogoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '74' }]);
-    optimizedPic.querySelector('img').classList.add('hiddenlogo1', 'years-80');
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    year80LogoLink.append(optimizedPic);
-  }
-  year80LogoDiv.append(year80LogoLink);
-  wrap.append(year80LogoDiv);
-
-  block.textContent = '';
-  block.append(header);
-
-  // Add event listener for hamburger menu
-  const hamburgerButton = header.querySelector('.hamburger');
-  const mainNav = header.querySelector('.main-nav');
-  if (hamburgerButton && mainNav) {
-    hamburgerButton.addEventListener('click', () => {
-      mainNav.classList.toggle('active');
-      hamburgerButton.classList.toggle('active');
-      document.body.classList.toggle('no-scroll');
+      iconUl.append(iconLi);
     });
-  }
 
-  // Add event listeners for navigation items with children
-  mainNav.querySelectorAll('.has-child > a').forEach((link) => {
-    const parentLi = link.closest('li');
-    const megaMenu = parentLi.querySelector('.mega-menu');
-    if (megaMenu) {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        parentLi.classList.toggle('active');
-      });
-      // Add hover functionality for desktop
-      parentLi.addEventListener('mouseenter', () => {
-        if (window.innerWidth >= 1200) { // Adjust breakpoint as needed
-          parentLi.classList.add('hover');
-        }
-      });
-      parentLi.addEventListener('mouseleave', () => {
-        if (window.innerWidth >= 1200) {
-          parentLi.classList.remove('hover');
-        }
-      });
-    }
-  });
+    // Add search functionality
+    const searchLi = document.createElement('li');
+    searchLi.classList.add('search');
+    searchLi.setAttribute('data-once', 'search-toggle search-stop-propagation');
 
-  // Add event listener for search toggle
-  // The search-screen-wrap and its content are not part of the block's initial structure,
-  // but are expected to be dynamically created or exist elsewhere in the DOM.
-  // For this review, we'll assume the search-screen-wrap is either created by another block
-  // or will be added dynamically. The current JS creates the icon-nav but not the search-screen-wrap.
-  // If the search-screen-wrap is meant to be part of this block, it needs to be added to the block's structure.
-  // Based on the ORIGINAL HTML, the search-screen-wrap is nested within the <li> with class 'search'.
-  // We need to ensure it's created and appended correctly.
+    const searchLink = document.createElement('a');
+    searchLink.href = '#';
+    searchLink.setAttribute('data-once', 'search-stop-propagation');
 
-  // Re-checking ORIGINAL HTML, the search-screen-wrap is directly inside the <li>.
-  // The current JS does not create this structure. It only creates the <a> and appends it to <li>.
-  // This part needs to be added.
-
-  // Let's assume for now that the search-screen-wrap is handled by another mechanism or will be added.
-  // If it's part of this block, the iconLinkItems loop needs to be enhanced to create it.
-  // For the purpose of INTERACTIVITY check, we'll assume the elements exist.
-
-  const searchToggle = header.querySelector('.icon-nav .search > a');
-  // The search-screen-wrap needs to be created if it's not already in the DOM.
-  // Based on the ORIGINAL HTML, it's a sibling of the <a> inside the 'search' li.
-  // The current JS does not create the search-screen-wrap.
-  // This is a gap in the current JS if the search functionality is to be fully contained.
-  // For the purpose of this review, I will assume the search-screen-wrap is either pre-existing or
-  // will be added by another part of the system, and focus on the event listener.
-  // If it's meant to be generated by this block, the iconLinkItems loop needs modification.
-
-  // Let's simulate the creation of search-screen-wrap for the event listener to work,
-  // assuming it should be part of the 'search' li.
-  const searchLi = header.querySelector('.icon-nav .search');
-  let searchScreenWrap = searchLi?.querySelector('.search-screen-wrap');
-
-  // If searchScreenWrap is not found, it means the block didn't create it.
-  // Based on the ORIGINAL HTML, it should be inside the <li>.
-  // This is a structural discrepancy. The generated JS only creates the <a> for the icon link.
-  // To make the interactivity work as per ORIGINAL HTML, the search-screen-wrap needs to be created.
-  // I will add a placeholder creation here for the event listener to attach, but this highlights
-  // a potential missing piece in the block's rendering logic for the search component.
-
-  if (searchLi && !searchScreenWrap && searchToggle) {
-    searchScreenWrap = document.createElement('div');
-    searchScreenWrap.classList.add('search-screen-wrap');
-    searchScreenWrap.setAttribute('data-once', 'search-stop-propagation');
-    // Add the form and other content as per ORIGINAL HTML if this block is responsible for it.
-    // For now, just append an empty div to allow the event listener to attach.
-    searchLi.append(searchScreenWrap);
-
-    // Placeholder for search form and suggestions, as per ORIGINAL HTML
-    const wrapDiv = document.createElement('div');
-    wrapDiv.classList.add('wrap');
-    wrapDiv.setAttribute('data-once', 'search-stop-propagation');
-    searchScreenWrap.append(wrapDiv);
-
-    const form = document.createElement('form');
-    form.action = 'https://www.mahindra.com/search';
-    form.method = 'get';
-    form.id = 'search-block-form';
-    form.setAttribute('accept-charset', 'UTF-8');
-    form.setAttribute('data-drupal-form-fields', 'edit-keys');
-    form.setAttribute('data-once', 'search-stop-propagation');
-    wrapDiv.append(form);
-
-    const searchWrapDiv = document.createElement('div');
-    searchWrapDiv.classList.add('search-wrap');
-    searchWrapDiv.setAttribute('data-once', 'search-stop-propagation');
-    form.append(searchWrapDiv);
-
-    const searchIconDiv = document.createElement('div');
-    searchIconDiv.classList.add('search-icon');
-    searchIconDiv.setAttribute('data-once', 'search-stop-propagation');
     const searchIconImg = document.createElement('img');
     searchIconImg.alt = 'svg file';
-    searchIconImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776231107769.svg+xml';
-    searchIconDiv.append(searchIconImg);
-    searchWrapDiv.append(searchIconDiv);
+    searchIconImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776231107725.svg+xml'; // Placeholder
+    searchLink.append(searchIconImg);
+
+    const searchCloseIconImg = document.createElement('img');
+    searchCloseIconImg.alt = 'svg file';
+    searchCloseIconImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776231107749.svg+xml'; // Placeholder
+    searchLink.append(searchCloseIconImg);
+
+    if (isMobile) {
+      const searchSpan = document.createElement('span');
+      searchSpan.setAttribute('data-once', 'search-stop-propagation');
+      searchSpan.textContent = ' Search';
+      searchLink.append(searchSpan);
+    }
+    searchLi.append(searchLink);
+
+    const searchScreenWrap = document.createElement('div');
+    searchScreenWrap.classList.add('search-screen-wrap');
+    searchScreenWrap.setAttribute('data-once', 'search-stop-propagation');
+    searchLi.append(searchScreenWrap);
+
+    const searchWrapInner = document.createElement('div');
+    searchWrapInner.classList.add('wrap');
+    searchWrapInner.setAttribute('data-once', 'search-stop-propagation');
+    searchScreenWrap.append(searchWrapInner);
+
+    const searchForm = document.createElement('form');
+    searchForm.action = 'https://www.mahindra.com/search';
+    searchForm.method = 'get';
+    searchForm.id = 'search-block-form';
+    searchForm.setAttribute('accept-charset', 'UTF-8');
+    searchForm.setAttribute('data-drupal-form-fields', 'edit-keys');
+    searchForm.setAttribute('data-once', 'search-stop-propagation');
+    searchWrapInner.append(searchForm);
+
+    const searchInputWrap = document.createElement('div');
+    searchInputWrap.classList.add('search-wrap');
+    searchInputWrap.setAttribute('data-once', 'search-stop-propagation');
+    searchForm.append(searchInputWrap);
+
+    const searchInputIconDiv = document.createElement('div');
+    searchInputIconDiv.classList.add('search-icon');
+    searchInputIconDiv.setAttribute('data-once', 'search-stop-propagation');
+    const searchInputIconImg = document.createElement('img');
+    searchInputIconImg.alt = 'svg file';
+    searchInputIconImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776231107769.svg+xml'; // Placeholder
+    searchInputIconDiv.append(searchInputIconImg);
+    searchInputWrap.append(searchInputIconDiv);
 
     const searchInput = document.createElement('input');
     searchInput.type = 'text';
@@ -347,53 +274,89 @@ megaMenu.append(megaMenuWrap);
     searchInput.id = 'searchInput';
     searchInput.autocomplete = 'off';
     searchInput.setAttribute('data-once', 'search-stop-propagation');
-    searchWrapDiv.append(searchInput);
+    searchInputWrap.append(searchInput);
 
     const submitButton = document.createElement('button');
     submitButton.classList.add('submit-button');
     submitButton.setAttribute('data-once', 'search-stop-propagation');
-    const labelDiv = document.createElement('div');
-    labelDiv.classList.add('label');
-    labelDiv.setAttribute('data-once', 'search-stop-propagation');
-    labelDiv.textContent = 'Submit';
-    submitButton.append(labelDiv);
+    const submitLabel = document.createElement('div');
+    submitLabel.classList.add('label');
+    submitLabel.setAttribute('data-once', 'search-stop-propagation');
+    submitLabel.textContent = ' Submit ';
+    submitButton.append(submitLabel);
     const submitImg = document.createElement('img');
     submitImg.alt = 'svg file';
-    submitImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776231107812.svg+xml';
+    submitImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776231107812.svg+xml'; // Placeholder
     submitButton.append(submitImg);
-    searchWrapDiv.append(submitButton);
+    searchInputWrap.append(submitButton);
 
-    // Add searchResultBox and search-suggestions-wrap if needed for full functionality
-    // This is a minimal fix to allow the event listener to attach.
+    const searchResultBox = document.createElement('div');
+    searchResultBox.classList.add('searchResultBox');
+    searchResultBox.style.display = 'none';
+    searchResultBox.setAttribute('data-once', 'search-stop-propagation');
+    searchForm.append(searchResultBox);
+
+    iconUl.append(searchLi);
+    return iconNavDiv;
+  };
+
+  navUl.append(createIconNav(true)); // Mobile icon nav
+  nav.append(createIconNav(false)); // Desktop icon nav
+
+  // 80th Year Logo
+  const year80LogoDiv = document.createElement('div');
+  year80LogoDiv.classList.add('logo', 'year-80-logo');
+  wrapDiv.append(year80LogoDiv);
+
+  const year80LogoLink = document.createElement('a');
+  const year80LogoHref = year80LogoLinkRow?.querySelector('a')?.href || '#';
+  year80LogoLink.href = year80LogoHref;
+  if (year80LogoLinkRow) {
+    moveInstrumentation(year80LogoLinkRow, year80LogoLink);
   }
+  year80LogoDiv.append(year80LogoLink);
 
-
-  if (searchToggle && searchScreenWrap) {
-    searchToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      searchScreenWrap.classList.toggle('show');
-      searchToggle.closest('.search').classList.toggle('active');
-      document.body.classList.toggle('no-scroll'); // Added based on hamburger behavior
-    });
-
-    // Close search when clicking outside
-    searchScreenWrap.addEventListener('click', (e) => {
-      if (e.target === searchScreenWrap) {
-        searchScreenWrap.classList.remove('show');
-        searchToggle.closest('.search').classList.remove('active');
-        document.body.classList.remove('no-scroll'); // Added based on hamburger behavior
-      }
-    });
-
-    // Close search when clicking the close icon (if present in search-screen-wrap)
-    // Assuming a close button might exist within search-screen-wrap, if not, this part can be removed.
-    const closeSearchButton = searchScreenWrap.querySelector('.close-search-button'); // Example selector
-    if (closeSearchButton) {
-      closeSearchButton.addEventListener('click', () => {
-        searchScreenWrap.classList.remove('show');
-        searchToggle.closest('.search').classList.remove('active');
-        document.body.classList.remove('no-scroll');
-      });
+  if (year80LogoRow) {
+    const year80LogoPicture = year80LogoRow.querySelector('picture');
+    if (year80LogoPicture) {
+      const year80LogoImg = year80LogoPicture.querySelector('img');
+      const optimizedYear80Pic = createOptimizedPicture(year80LogoImg.src, year80LogoImg.alt, false, [{ width: '74' }]);
+      optimizedYear80Pic.querySelector('img').classList.add('hiddenlogo1', 'years-80');
+      moveInstrumentation(year80LogoRow, optimizedYear80Pic.querySelector('img'));
+      year80LogoLink.append(optimizedYear80Pic);
     }
   }
+
+  // Event Listeners for hamburger and search
+  hamburgerDiv.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    hamburgerDiv.classList.toggle('close');
+  });
+
+  const searchToggle = searchLi.querySelector('a');
+  const searchScreen = searchLi.querySelector('.search-screen-wrap');
+  if (searchToggle && searchScreen) { // Ensure elements exist before adding listeners
+    searchToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      searchScreen.classList.toggle('active');
+      searchLi.classList.toggle('active');
+    });
+
+    searchScreen.addEventListener('click', (e) => {
+      if (e.target === searchScreen) {
+        searchScreen.classList.remove('active');
+        searchLi.classList.remove('active');
+      }
+    });
+  }
+
+  block.textContent = '';
+  block.append(header);
+
+  // Optimize all images within the block
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 }
