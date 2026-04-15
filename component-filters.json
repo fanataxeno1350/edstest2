@@ -25,7 +25,6 @@
       "latest-stories",
       "work-with-us",
       "faqs-section",
-      "organization-schema",
       "footer-main"
     ]
   },
@@ -40,56 +39,48 @@
     "components": [
       "social-link-item",
       "footer-menu-block",
-      "footer-link-item",
-      "secondary-nav-item"
+      "footer-menu-link",
+      "secondary-nav-link"
     ]
   },
   {
     "id": "latest-stories",
     "components": [
-      "twitter-feed-item",
-      "story-item"
+      "social-feed-item",
+      "story-card"
     ]
   },
   {
     "id": "main-header",
     "components": [
       "navigation-item",
-      "press-release-item",
-      "contact-link-item",
-      "search-token-item"
-    ]
-  },
-  {
-    "id": "organization-schema",
-    "components": [
-      "address-item",
-      "aem-content"
+      "icon-nav-item",
+      "press-release-item"
     ]
   },
   {
     "id": "purpose-led-grid",
     "components": [
-      "purpose-card"
+      "purpose-led-card"
     ]
   },
   {
     "id": "spirit-of-rise",
     "components": [
-      "spirit-of-rise-card"
+      "performace-driven-card"
     ]
   },
   {
     "id": "spotlight-home",
     "components": [
       "spotlight-slide",
-      "spotlight-quick-link"
+      "quick-link-item"
     ]
   },
   {
     "id": "what-we-do-wrap",
     "components": [
-      "business-vertical-item"
+      "business-vertical"
     ]
   },
   {
