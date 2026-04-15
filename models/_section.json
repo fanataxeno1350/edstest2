@@ -51,21 +51,7 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----",
-        "main-header-rte",
-        "spotlight-home-wrap",
-        "quick-links",
-        "what-we-do-wrap",
-        "purpose-led-grid",
-        "spirit-of-rise",
-        "latest-stories",
-        "work-with-us",
-        "faqs-section",
-        "organisationschema",
-        "footer-main-rte",
-        "main-header",
-        "org-schema",
-        "footer-main"
+        "---new--blocks-----"
       ]
     }
   ]
