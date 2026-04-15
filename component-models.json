@@ -378,32 +378,32 @@
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logoLink",
+        "name": "logo-link",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "80th Year Logo",
+        "label": "80 Year Logo",
         "name": "year-80-logo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "80th Year Logo Link",
-        "name": "year-80-logoLink",
+        "label": "80 Year Logo Link",
+        "name": "year-80-logo-link",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "navigation-item",
         "label": "Navigation Menu",
-        "name": "navigationMenu"
+        "name": "navigation-menu"
       },
       {
         "component": "container",
-        "item": "icon-link-item",
-        "label": "Icon Links",
-        "name": "iconLinks"
+        "item": "icon-nav-item",
+        "label": "Icon Navigation",
+        "name": "icon-nav"
       }
     ]
   },
@@ -423,15 +423,93 @@
         "valueType": "string"
       },
       {
+        "component": "reference",
+        "label": "Menu Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
         "component": "richtext",
         "label": "Navigation Hierarchy",
         "name": "hierarchy-tree",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Left Div Heading",
+        "name": "left-div-heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Left Div Description",
+        "name": "left-div-desc",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Left Div Subdescription",
+        "name": "left-div-subdesc",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Left Div List",
+        "name": "left-div-list",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Investor Relations Heading",
+        "name": "ir-left-heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Investor Relations Description",
+        "name": "ir-left-desc",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Investor Relations List",
+        "name": "ir-left-list",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Newsroom Heading",
+        "name": "newsroom-heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Latest Press Releases",
+        "name": "latest-press-releases",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Career Heading",
+        "name": "career-heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Career Description",
+        "name": "career-desc",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Career Subdescription",
+        "name": "career-subdesc",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "icon-link-item",
+    "id": "icon-nav-item",
     "fields": [
       {
         "component": "reference",
@@ -443,6 +521,18 @@
         "component": "aem-content",
         "label": "Link",
         "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
         "valueType": "string"
       }
     ]

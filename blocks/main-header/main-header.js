@@ -2,19 +2,15 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Use content detection for root rows instead of index access
-  const rootRows = [...block.children];
+  const [
+    logoRow,
+    logoLinkRow,
+    year80LogoRow,
+    year80LogoLinkRow,
+    ...itemRows
+  ] = [...block.children];
 
-  const logoRow = rootRows.find(row => row.querySelector('picture') && !row.nextElementSibling?.querySelector('a'));
-  const logoLinkRow = rootRows.find(row => row.querySelector('a') && row.previousElementSibling?.querySelector('picture') && !row.nextElementSibling?.querySelector('picture'));
-  const year80LogoRow = rootRows.find(row => row.querySelector('picture') && row.nextElementSibling?.querySelector('a') && row.nextElementSibling?.nextElementSibling?.querySelector('div:first-child:not(:has(picture)):not(:has(a))'));
-  const year80LogoLinkRow = rootRows.find(row => row.querySelector('a') && row.previousElementSibling?.querySelector('picture') && row.nextElementSibling?.querySelector('div:first-child:not(:has(picture)):not(:has(a))'));
-
-  const itemRows = rootRows.filter(row =>
-    ![logoRow, logoLinkRow, year80LogoRow, year80LogoLinkRow].includes(row)
-  );
-
-  block.textContent = ''; // Clear the block content
+  block.textContent = '';
 
   const header = document.createElement('header');
   header.classList.add('main-header', 'with-marquee', 'solid', 'nav-up');
@@ -32,34 +28,34 @@ export default function decorate(block) {
   const logoDiv = document.createElement('div');
   logoDiv.classList.add('logo');
   const logoLink = document.createElement('a');
-  const logoHref = logoLinkRow?.querySelector('a')?.href || '#';
-  logoLink.href = logoHref;
-  if (logoLinkRow) moveInstrumentation(logoLinkRow, logoLink);
-
-  const logoPicture = logoRow?.querySelector('picture');
+  const logoLinkEl = logoLinkRow.querySelector('a');
+  if (logoLinkEl) {
+    logoLink.href = logoLinkEl.href;
+  }
+  const logoPicture = logoRow.querySelector('picture');
   if (logoPicture) {
     const img = logoPicture.querySelector('img');
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
-    optimizedPic.querySelector('img').classList.add('hiddenlogo1');
-    moveInstrumentation(logoPicture, optimizedPic.querySelector('img'));
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
     logoLink.append(optimizedPic);
   }
-  if (logoRow) moveInstrumentation(logoRow, logoDiv);
+  moveInstrumentation(logoRow, logoDiv);
+  moveInstrumentation(logoLinkRow, logoLink);
   logoDiv.append(logoLink);
   wrap.append(logoDiv);
 
   // Hamburger
-  const hamburgerDiv = document.createElement('div');
-  hamburgerDiv.classList.add('hamburger');
-  hamburgerDiv.setAttribute('data-once', 'hamburger-click nav-close-search');
+  const hamburger = document.createElement('div');
+  hamburger.classList.add('hamburger');
+  hamburger.setAttribute('data-once', 'hamburger-click nav-close-search');
   const hamburgerUl = document.createElement('ul');
   for (let i = 0; i < 3; i += 1) {
     hamburgerUl.append(document.createElement('li'));
   }
-  hamburgerDiv.append(hamburgerUl);
-  wrap.append(hamburgerDiv);
+  hamburger.append(hamburgerUl);
+  wrap.append(hamburger);
 
-  // Navigation Menu
+  // Navigation
   const nav = document.createElement('nav');
   nav.classList.add('main-nav');
   nav.setAttribute('data-once', 'initSubChildToggle');
@@ -67,162 +63,228 @@ export default function decorate(block) {
   navUl.setAttribute('itemscope', '');
   navUl.setAttribute('itemtype', 'http://www.schema.org/SiteNavigationElement');
   nav.append(navUl);
+  wrap.append(nav);
 
-  const navigationItems = itemRows.filter(row => row.children.length === 3);
-  const iconLinkItems = itemRows.filter(row => row.children.length === 2);
+  const navigationItems = itemRows.filter((row) => row.children.length === 16);
+  const iconNavItems = itemRows.filter((row) => row.children.length === 4);
 
   navigationItems.forEach((row) => {
     const cells = [...row.children];
-    const labelCell = cells.find(c => !c.querySelector('a') && !c.querySelector('ul'));
-    const linkCell = cells.find(c => c.querySelector('a') && !c.querySelector('ul'));
-    const hierarchyCell = cells.find(c => c.querySelector('ul'));
+    // Use content detection for all cells instead of index access
+    const labelCell = cells.find((c) => !c.querySelector('a') && !c.querySelector('picture') && !c.querySelector('ul') && !c.textContent.includes('Left Div Heading') && !c.textContent.includes('Investor Relations Heading') && !c.textContent.includes('Newsroom Heading') && !c.textContent.includes('Career Heading'));
+    const linkCell = cells.find((c) => c.querySelector('a') && !c.querySelector('ul'));
+    const iconCell = cells.find((c) => c.querySelector('picture'));
+    const hierarchyTreeCell = cells.find((c) => c.querySelector('ul'));
+
+    // Find other cells based on their content or position relative to known elements
+    const leftDivHeadingCell = cells.find((c) => c.textContent.trim().toLowerCase().includes('left div heading'));
+    const leftDivDescCell = cells.find((c) => c.textContent.trim().toLowerCase().includes('left div description'));
+    const leftDivSubdescCell = cells.find((c) => c.textContent.trim().toLowerCase().includes('left div subdescription'));
+    const leftDivListCell = cells.find((c) => c.textContent.trim().toLowerCase().includes('left div list'));
+
+    const irLeftHeadingCell = cells.find((c) => c.textContent.trim().toLowerCase().includes('investor relations heading'));
+    const irLeftDescCell = cells.find((c) => c.textContent.trim().toLowerCase().includes('investor relations description'));
+    const irLeftListCell = cells.find((c) => c.textContent.trim().toLowerCase().includes('investor relations list'));
+
+    const newsroomHeadingCell = cells.find((c) => c.textContent.trim().toLowerCase().includes('newsroom heading'));
+    const latestPressReleasesCell = cells.find((c) => c.textContent.trim().toLowerCase().includes('latest press releases'));
+
+    const careerHeadingCell = cells.find((c) => c.textContent.trim().toLowerCase().includes('career heading'));
+    const careerDescCell = cells.find((c) => c.textContent.trim().toLowerCase().includes('career description'));
+    const careerSubdescCell = cells.find((c) => c.textContent.trim().toLowerCase().includes('career subdescription'));
 
     const li = document.createElement('li');
     li.classList.add('has-child', 'hover-red');
     li.setAttribute('itemprop', 'name');
     li.setAttribute('data-once', 'nav-close-search');
-    moveInstrumentation(row, li);
 
-    const link = document.createElement('a');
-    link.setAttribute('itemprop', 'url');
-    link.href = linkCell?.querySelector('a')?.href || '#';
-    link.textContent = labelCell?.textContent || '';
-    if (linkCell) moveInstrumentation(linkCell, link);
-    if (labelCell) moveInstrumentation(labelCell, link);
-    li.append(link);
+    const anchor = document.createElement('a');
+    anchor.setAttribute('itemprop', 'url');
+    if (linkCell && linkCell.querySelector('a')) {
+      anchor.href = linkCell.querySelector('a').href;
+    }
+    if (labelCell) {
+      anchor.textContent = labelCell.textContent;
+    }
+    li.append(anchor);
 
-    // Placeholder for SVG icon, as in original HTML
-    const span = document.createElement('span');
-    const svgImg = document.createElement('img');
-    svgImg.alt = 'svg file';
-    svgImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776231107678.svg+xml';
-    span.append(svgImg);
-    li.append(span);
+    if (iconCell && iconCell.querySelector('picture')) {
+      const img = iconCell.querySelector('img');
+      const span = document.createElement('span');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '24' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      span.append(optimizedPic);
+      li.append(span);
+    }
 
-    if (hierarchyCell) {
-      const megaMenu = document.createElement('div');
-      megaMenu.classList.add('mega-menu');
-      const megaMenuWrap = document.createElement('div');
-      megaMenuWrap.classList.add('wrap', 'container');
-      const centerDiv = document.createElement('div');
-      centerDiv.classList.add('center-div');
-      const subNavWrap = document.createElement('div');
-      // Add specific class if needed, e.g., 'about-us-sub-nav' - this needs content detection
-      // For now, add the base class.
-      subNavWrap.classList.add('sub-nav-wrap');
+    const megaMenu = document.createElement('div');
+    megaMenu.classList.add('mega-menu');
+    const megaMenuWrap = document.createElement('div');
+    megaMenuWrap.classList.add('wrap', 'container');
+    megaMenu.append(megaMenuWrap);
+    const centerDiv = document.createElement('div');
+    centerDiv.classList.add('center-div');
+    megaMenuWrap.append(centerDiv);
 
+    // Left Div content
+    const leftDiv = document.createElement('div');
+    leftDiv.classList.add('left-div');
+
+    if (leftDivHeadingCell && leftDivHeadingCell.textContent.trim()) {
+      const h4 = document.createElement('h4');
+      h4.classList.add('left-div-heading');
+      const h4Link = document.createElement('a');
+      h4Link.textContent = leftDivHeadingCell.textContent.replace('Left Div Heading', '').trim(); // Remove field name
+      h4.append(h4Link);
+      leftDiv.append(h4);
+    }
+
+    if (leftDivDescCell && leftDivDescCell.textContent.trim()) {
+      const p = document.createElement('p');
+      p.classList.add('left-div-desc');
+      p.textContent = leftDivDescCell.textContent.replace('Left Div Description', '').trim(); // Remove field name
+      leftDiv.append(p);
+    }
+
+    if (leftDivSubdescCell && leftDivSubdescCell.textContent.trim()) {
+      const p = document.createElement('p');
+      p.classList.add('left-div-subdesc');
+      p.textContent = leftDivSubdescCell.textContent.replace('Left Div Subdescription', '').trim(); // Remove field name
+      leftDiv.append(p);
+    }
+
+    if (leftDivListCell && leftDivListCell.innerHTML.trim()) {
       const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = hierarchyCell.innerHTML;
-      moveInstrumentation(hierarchyCell, tempDiv);
+      tempDiv.innerHTML = leftDivListCell.innerHTML;
+      tempDiv.querySelectorAll('li').forEach((item) => item.classList.add('list-text-red'));
+      moveInstrumentation(leftDivListCell, tempDiv);
+      while (tempDiv.firstChild) {
+        leftDiv.append(tempDiv.firstChild);
+      }
+    }
 
-      // Apply classes to nested elements based on ORIGINAL HTML patterns
-      // This is a complex part and requires careful mapping from original HTML
-      // For the given example, we see 'top-level-li', 'first-level-li', 'has-sub-child', 'active', 'has-inner-sub-child', 'active-child'
-      // These classes are applied based on the structure and content, which is hard to replicate generically.
-      // For now, we apply basic classes. If the original HTML has specific classes based on content,
-      // more advanced logic would be needed.
-      tempDiv.querySelectorAll('ul').forEach((ulEl) => {
-        // No specific classes for inner ULs in the provided original HTML example
-      });
-      tempDiv.querySelectorAll('li').forEach((liEl) => {
-        // Example: if a li contains another ul, it might be 'has-sub-child'
-        if (liEl.querySelector('ul')) {
-          liEl.classList.add('top-level-li'); // Example, adjust based on actual content
+    if (irLeftHeadingCell && irLeftHeadingCell.textContent.trim()) {
+      leftDiv.classList.add('ir-left-div');
+      const h4 = document.createElement('h4');
+      h4.classList.add('left-div-heading');
+      const h4Link = document.createElement('a');
+      h4Link.textContent = irLeftHeadingCell.textContent.replace('Investor Relations Heading', '').trim(); // Remove field name
+      h4.append(h4Link);
+      leftDiv.append(h4);
+    }
+
+    if (irLeftDescCell && irLeftDescCell.textContent.trim()) {
+      const p = document.createElement('p');
+      p.textContent = irLeftDescCell.textContent.replace('Investor Relations Description', '').trim(); // Remove field name
+      leftDiv.append(p);
+    }
+
+    if (irLeftListCell && irLeftListCell.innerHTML.trim()) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = irLeftListCell.innerHTML;
+      tempDiv.querySelectorAll('li').forEach((item) => item.classList.add('list-text-red'));
+      moveInstrumentation(irLeftListCell, tempDiv);
+      while (tempDiv.firstChild) {
+        leftDiv.append(tempDiv.firstChild);
+      }
+    }
+
+    if (newsroomHeadingCell && newsroomHeadingCell.textContent.trim()) {
+      leftDiv.classList.add('newsroom-left-div');
+      const h4 = document.createElement('h4');
+      h4.classList.add('left-div-heading');
+      const h4Link = document.createElement('a');
+      h4Link.textContent = newsroomHeadingCell.textContent.replace('Newsroom Heading', '').trim(); // Remove field name
+      h4.append(h4Link);
+      leftDiv.append(h4);
+    }
+
+    if (latestPressReleasesCell && latestPressReleasesCell.innerHTML.trim()) {
+      const latestPressDiv = document.createElement('div');
+      latestPressDiv.classList.add('latest-two-press-release');
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = latestPressReleasesCell.innerHTML;
+      moveInstrumentation(latestPressReleasesCell, tempDiv);
+      while (tempDiv.firstChild) {
+        latestPressDiv.append(tempDiv.firstChild);
+      }
+      leftDiv.append(latestPressDiv);
+    }
+
+    if (careerHeadingCell && careerHeadingCell.textContent.trim()) {
+      leftDiv.classList.add('career-left-div');
+      const h4 = document.createElement('h4');
+      h4.classList.add('left-div-heading');
+      const h4Link = document.createElement('a');
+      h4Link.textContent = careerHeadingCell.textContent.replace('Career Heading', '').trim(); // Remove field name
+      h4.append(h4Link);
+      leftDiv.append(h4);
+    }
+
+    if (careerDescCell && careerDescCell.textContent.trim()) {
+      const p = document.createElement('p');
+      p.classList.add('left-div-desc');
+      p.textContent = careerDescCell.textContent.replace('Career Description', '').trim(); // Remove field name
+      leftDiv.append(p);
+    }
+
+    if (careerSubdescCell && careerSubdescCell.textContent.trim()) {
+      const p = document.createElement('p');
+      p.classList.add('left-div-subdesc');
+      p.textContent = careerSubdescCell.textContent.replace('Career Subdescription', '').trim(); // Remove field name
+      leftDiv.append(p);
+    }
+
+    centerDiv.append(leftDiv);
+
+    // Sub-navigation wrap
+    const subNavWrap = document.createElement('div');
+    subNavWrap.classList.add('sub-nav-wrap');
+
+    if (hierarchyTreeCell) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = hierarchyTreeCell.innerHTML;
+
+      tempDiv.querySelectorAll('a').forEach((link) => {
+        if (!link.closest('ul ul')) { // Top-level links
+          link.closest('li').classList.add('top-level-li');
+          const span = document.createElement('span');
+          const img = document.createElement('img');
+          img.alt = 'svg file';
+          img.src = '/icons/chev-down.svg'; // Placeholder, replace if icon is from model
+          span.append(img);
+          link.after(span);
+        } else if (link.closest('ul ul') && !link.closest('ul ul ul')) { // First-level sub-links
+          link.closest('li').classList.add('first-level-li');
+          const span = document.createElement('span');
+          const img = document.createElement('img');
+          img.alt = 'svg file';
+          img.src = '/icons/chev-down.svg'; // Placeholder, replace if icon is from model
+          span.append(img);
+          link.after(span);
         }
       });
-      tempDiv.querySelectorAll('a').forEach((aEl) => {
-        // No specific classes for links inside hierarchy-tree in the provided original HTML example
+
+      tempDiv.querySelectorAll('li').forEach((item) => {
+        if (item.querySelector('ul')) {
+          item.classList.add('has-sub-child');
+          const subUl = item.querySelector('ul');
+          const subDiv = document.createElement('div');
+          subDiv.classList.add('has-inner-sub-child');
+          moveInstrumentation(subUl, subDiv);
+          while (subUl.firstChild) {
+            subDiv.append(subUl.firstChild);
+          }
+          subUl.replaceWith(subDiv);
+        }
       });
 
-      // If the navigation item is "Who We Are", add 'about-us-sub-nav'
-      if (link.textContent.toLowerCase() === 'who we are') {
+      if (labelCell && labelCell.textContent.includes('Who We Are')) {
         subNavWrap.classList.add('about-us-sub-nav');
-        // Add left-div content for "Who We Are"
-        const leftDiv = document.createElement('div');
-        leftDiv.classList.add('left-div');
-        const h4 = document.createElement('h4');
-        h4.classList.add('left-div-heading');
-        const h4Link = document.createElement('a');
-        h4Link.textContent = 'Our Purpose';
-        h4.append(h4Link);
-        const p1 = document.createElement('p');
-        p1.classList.add('left-div-desc');
-        p1.textContent = 'Drive positive change in the lives of our communities. Only when we enable others to rise will we rise.';
-        const p2 = document.createElement('p');
-        p2.classList.add('left-div-subdesc');
-        p2.textContent = '#TogetherWeRise';
-        leftDiv.append(h4, p1, p2);
-        centerDiv.append(leftDiv);
-      } else if (link.textContent.toLowerCase() === 'what we do') {
+      } else if (labelCell && labelCell.textContent.includes('What we do')) {
         subNavWrap.classList.add('what-we-do');
-        const leftDiv = document.createElement('div');
-        leftDiv.classList.add('left-div');
-        const h4 = document.createElement('h4');
-        h4.classList.add('left-div-heading');
-        const h4Link = document.createElement('a');
-        h4Link.textContent = 'Key Facts';
-        h4.append(h4Link);
-        const ul = document.createElement('ul');
-        ['20+ Industries', '100+ Countries', '324K+ Employees'].forEach(text => {
-          const liText = document.createElement('li');
-          liText.classList.add('list-text-red');
-          const [value, label] = text.split(' ');
-          liText.innerHTML = `${value} <span>${label}</span>`;
-          ul.append(liText);
-        });
-        leftDiv.append(h4, ul);
-        centerDiv.append(leftDiv);
-      } else if (link.textContent.toLowerCase() === 'investor relations') {
-        const leftDiv = document.createElement('div');
-        leftDiv.classList.add('left-div', 'ir-left-div');
-        const h4 = document.createElement('h4');
-        h4.classList.add('left-div-heading');
-        const h4Link = document.createElement('a');
-        h4Link.textContent = 'Investor Relations';
-        h4.append(h4Link);
-        const p = document.createElement('p');
-        p.textContent = 'Group Highlights - Q3 F26';
-        const ul = document.createElement('ul');
-        ['20.1% Consolidated ROE (Annualized)', 'Rs 52,100 cr Revenue', 'Rs 4,675 cr PAT'].forEach(text => {
-          const liText = document.createElement('li');
-          liText.classList.add('list-text-red');
-          const parts = text.split(' ');
-          const value = parts.shift();
-          liText.innerHTML = `${value} <span>${parts.join(' ')}</span>`;
-          ul.append(liText);
-        });
-        leftDiv.append(h4, p, ul);
-        centerDiv.append(leftDiv);
-
-        // Specific structure for investor relations
-        const innerSubNavWrapList = document.createElement('div');
-        innerSubNavWrapList.classList.add('inner-sub-nav-wrap-list');
-        const ul1 = document.createElement('ul');
-        const li1 = document.createElement('li');
-        const a1 = document.createElement('a');
-        a1.href = 'https://www.mahindra.com/investor-relations/reports';
-        a1.textContent = 'Reports';
-        li1.append(a1);
-        const li2 = document.createElement('li');
-        const a2 = document.createElement('a');
-        a2.href = 'https://www.mahindra.com/investor-relations/policies-and-documents';
-        a2.textContent = 'Policies';
-        li2.append(a2);
-        ul1.append(li1, li2);
-
-        const ul2 = document.createElement('ul');
-        const li3 = document.createElement('li');
-        const a3 = document.createElement('a');
-        a3.href = 'https://www.mahindra.com/investor-relations/regulatory-filings';
-        a3.textContent = 'Regulatory Filings';
-        li3.append(a3);
-        const li4 = document.createElement('li');
-        const a4 = document.createElement('a');
-        a4.href = 'https://www.mahindra.com/investor-relations/sustainability';
-        a4.textContent = 'Sustainability';
-        li4.append(a4);
-        ul2.append(li3, li4);
-
+      } else if (labelCell && labelCell.textContent.includes('Investor Relations')) {
+        subNavWrap.classList.add('element-block');
         const ulOneLink = document.createElement('ul');
         ulOneLink.classList.add('sub-nav-wrap-one-link');
         const liOneLink = document.createElement('li');
@@ -232,202 +294,223 @@ export default function decorate(block) {
         aOneLink.textContent = 'Disclosures Under Regulation 46 And 62 Of SEBI (LODR)';
         liOneLink.append(aOneLink);
         ulOneLink.append(liOneLink);
+        subNavWrap.append(ulOneLink);
 
-        subNavWrap.classList.add('element-block');
-        subNavWrap.append(ulOneLink, innerSubNavWrapList);
+        const innerSubNavWrapList = document.createElement('div');
+        innerSubNavWrapList.classList.add('inner-sub-nav-wrap-list');
+        const ul1 = document.createElement('ul');
+        const ul2 = document.createElement('ul');
+
+        const allLis = [...tempDiv.querySelectorAll('li')];
+        allLis.slice(0, Math.ceil(allLis.length / 2)).forEach((item) => ul1.append(item));
+        allLis.slice(Math.ceil(allLis.length / 2)).forEach((item) => ul2.append(item));
+
         innerSubNavWrapList.append(ul1, ul2);
-
-      } else if (link.textContent.toLowerCase() === 'newsroom') {
-        const leftDiv = document.createElement('div');
-        leftDiv.classList.add('left-div', 'newsroom-left-div');
-        const h4 = document.createElement('h4');
-        h4.classList.add('left-div-heading');
-        const h4Link = document.createElement('a');
-        h4Link.textContent = 'Newsroom';
-        h4.append(h4Link);
-        const latestTwoPressRelease = document.createElement('div');
-        latestTwoPressRelease.classList.add('latest-two-press-release');
-        // This part is dynamic and would require more complex logic to extract from the original HTML
-        // For now, we'll leave it as a placeholder or simplified structure.
-        leftDiv.append(h4, latestTwoPressRelease);
-        centerDiv.append(leftDiv);
-      } else if (link.textContent.toLowerCase() === 'careers') {
-        const leftDiv = document.createElement('div');
-        leftDiv.classList.add('left-div', 'career-left-div');
-        const h4 = document.createElement('h4');
-        h4.classList.add('left-div-heading');
-        const h4Link = document.createElement('a');
-        h4Link.textContent = 'careers';
-        h4.append(h4Link);
-        const p1 = document.createElement('p');
-        p1.classList.add('left-div-desc');
-        p1.textContent = 'Committed to elevate the lives of communities, guided by our core behaviours and values.';
-        const p2 = document.createElement('p');
-        p2.classList.add('left-div-subdesc');
-        p2.textContent = 'Bold. Agile. Collaborative.';
-        leftDiv.append(h4, p1, p2);
-        centerDiv.append(leftDiv);
+        subNavWrap.append(innerSubNavWrapList);
+      } else if (labelCell && labelCell.textContent.includes('careers')) {
         subNavWrap.classList.add('careers-div');
+        moveInstrumentation(hierarchyTreeCell, tempDiv);
+        while (tempDiv.firstChild) {
+          subNavWrap.append(tempDiv.firstChild);
+        }
+      } else {
+        moveInstrumentation(hierarchyTreeCell, tempDiv);
+        while (tempDiv.firstChild) {
+          subNavWrap.append(tempDiv.firstChild);
+        }
       }
-
-      while (tempDiv.firstChild) {
-        subNavWrap.append(tempDiv.firstChild);
-      }
-      centerDiv.append(subNavWrap);
-      megaMenuWrap.append(centerDiv);
-      megaMenu.append(megaMenuWrap);
-      li.append(megaMenu);
     }
+    centerDiv.append(subNavWrap);
+    li.append(megaMenu);
     navUl.append(li);
+    moveInstrumentation(row, li);
   });
 
-  // Icon Links (mobile-menus-icon and desktop-menus-icon)
+  // Icon Navigation (Mobile)
   const mobileIconNav = document.createElement('div');
   mobileIconNav.classList.add('icon-nav', 'mobile-menus-icon');
-  const mobileIconUl = document.createElement('ul');
-  mobileIconNav.append(mobileIconUl);
+  const mobileIconNavUl = document.createElement('ul');
+  mobileIconNav.append(mobileIconNavUl);
+  navUl.append(mobileIconNav);
 
-  const desktopIconNav = document.createElement('div');
-  desktopIconNav.classList.add('icon-nav', 'desktop-menus-icon');
-  const desktopIconUl = document.createElement('ul');
-  desktopIconNav.append(desktopIconUl);
-
-  iconLinkItems.forEach((row) => {
+  iconNavItems.forEach((row) => {
     const cells = [...row.children];
-    const iconCell = cells.find(c => c.querySelector('picture'));
-    const linkCell = cells.find(c => c.querySelector('a'));
+    const iconCell = cells.find((c) => c.querySelector('picture'));
+    const linkCell = cells.find((c) => c.querySelector('a'));
+    const labelCell = cells.find((c) => !c.querySelector('picture') && !c.querySelector('a') && !c.querySelector('ul'));
+    const hierarchyTreeCell = cells.find((c) => c.querySelector('ul'));
 
     const li = document.createElement('li');
+    const anchor = document.createElement('a');
+    if (linkCell && linkCell.querySelector('a')) {
+      anchor.href = linkCell.querySelector('a').href;
+    }
+
+    if (iconCell && iconCell.querySelector('picture')) {
+      const img = iconCell.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '24' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      anchor.append(optimizedPic);
+    }
+    if (labelCell) {
+      anchor.append(document.createTextNode(` ${labelCell.textContent}`));
+    }
+    li.append(anchor);
+
+    if (hierarchyTreeCell) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = hierarchyTreeCell.innerHTML;
+      tempDiv.querySelectorAll('a').forEach((link) => {
+        // No specific class for nav-menu-link in ORIGINAL HTML for icon-nav-item
+        // link.classList.add('nav-menu-link');
+      });
+      tempDiv.querySelectorAll('li').forEach((item) => {
+        // No specific class for nav-menu-item in ORIGINAL HTML for icon-nav-item
+        // item.classList.add('nav-menu-item');
+      });
+      tempDiv.querySelectorAll('ul').forEach((ul) => {
+        // No specific class for nav-submenu in ORIGINAL HTML for icon-nav-item
+        // ul.classList.add('nav-submenu');
+      });
+      moveInstrumentation(hierarchyTreeCell, tempDiv);
+      while (tempDiv.firstChild) {
+        li.append(tempDiv.firstChild);
+      }
+    }
+
+    mobileIconNavUl.append(li);
     moveInstrumentation(row, li);
-
-    const link = document.createElement('a');
-    link.href = linkCell?.querySelector('a')?.href || '#';
-    if (linkCell) moveInstrumentation(linkCell, link);
-
-    if (iconCell) {
-      const iconPicture = iconCell.querySelector('picture');
-      if (iconPicture) {
-        const img = iconPicture.querySelector('img');
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '30' }]); // Adjust width as needed
-        moveInstrumentation(iconPicture, optimizedPic.querySelector('img'));
-        link.append(optimizedPic);
-      }
-    }
-    // Add text content if available, e.g., for "Contact Us"
-    if (linkCell && linkCell.textContent && !link.querySelector('img')) {
-      link.textContent = linkCell.textContent;
-    }
-
-    li.append(link);
-
-    // Determine specific classes based on content, e.g., 'mail', 'search'
-    if (link.href.includes('contact-us')) {
-      li.classList.add('mail');
-      // For mobile, the original HTML has "Contact Us" text, not an icon.
-      // For desktop, it has an icon.
-      // This logic needs to be handled carefully.
-      // If the link has an image, it's likely for desktop. If it has text content, it's for mobile.
-      if (!link.querySelector('img')) {
-        link.textContent = 'Contact Us'; // Ensure text for mobile if icon is missing
-      }
-    } else if (link.href === '#') { // Assuming search link is '#'
-      li.classList.add('search');
-      li.setAttribute('data-once', 'search-toggle search-stop-propagation');
-      link.setAttribute('data-once', 'search-stop-propagation');
-      // Add search icon and text span if they exist in original HTML
-      const searchImg1 = document.createElement('img');
-      searchImg1.alt = 'svg file';
-      searchImg1.src = '/content/dam/aemigrate/uploaded-folder/image/1776231107725.svg+xml';
-      const searchImg2 = document.createElement('img');
-      searchImg2.alt = 'svg file';
-      searchImg2.src = '/content/dam/aemigrate/uploaded-folder/image/1776231107749.svg+xml';
-      const searchSpan = document.createElement('span');
-      searchSpan.setAttribute('data-once', 'search-stop-propagation');
-      searchSpan.textContent = ' Search';
-      link.append(searchImg1, searchImg2, searchSpan);
-
-      // Add search screen wrap for search functionality
-      const searchScreenWrap = document.createElement('div');
-      searchScreenWrap.classList.add('search-screen-wrap');
-      searchScreenWrap.setAttribute('data-once', 'search-stop-propagation');
-      // ... populate search screen wrap with form and suggestions as per original HTML
-      const searchWrapInner = document.createElement('div');
-      searchWrapInner.classList.add('wrap');
-      searchWrapInner.setAttribute('data-once', 'search-stop-propagation');
-      searchScreenWrap.append(searchWrapInner);
-      li.append(searchScreenWrap);
-
-      // Implement search toggle
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        searchScreenWrap.classList.toggle('show'); // Assuming 'show' class controls visibility
-      });
-      searchScreenWrap.addEventListener('click', (e) => {
-        if (e.target === searchScreenWrap) {
-          searchScreenWrap.classList.remove('show');
-        }
-      });
-    }
-
-    // Clone for mobile, but adjust content if needed (e.g., text vs icon for contact us)
-    const mobileLi = li.cloneNode(true);
-    if (mobileLi.classList.contains('mail') && mobileLi.querySelector('a img')) {
-      // If it's a mail icon link for mobile, and it has an image, remove the image and add text
-      mobileLi.querySelector('a img').remove();
-      mobileLi.querySelector('a').textContent = 'Contact Us';
-    }
-    mobileIconUl.append(mobileLi);
-
-    // For desktop, ensure the correct icon is present for mail if it was text for mobile
-    if (li.classList.contains('mail') && !li.querySelector('a img')) {
-      const desktopMailImg = document.createElement('img');
-      desktopMailImg.alt = 'svg file';
-      desktopMailImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776231107856.svg+xml';
-      li.querySelector('a').textContent = ''; // Clear text content
-      li.querySelector('a').append(desktopMailImg);
-    }
-    desktopIconUl.append(li); // Append original for desktop
   });
 
-  navUl.append(mobileIconNav);
+  // Icon Navigation (Desktop)
+  const desktopIconNav = document.createElement('div');
+  desktopIconNav.classList.add('icon-nav', 'desktop-menus-icon');
+  const desktopIconNavUl = document.createElement('ul');
+  desktopIconNav.append(desktopIconNavUl);
   nav.append(desktopIconNav);
-  wrap.append(nav);
 
-  // 80th Year Logo
+  iconNavItems.forEach((row) => {
+    const cells = [...row.children];
+    const iconCell = cells.find((c) => c.querySelector('picture'));
+    const linkCell = cells.find((c) => c.querySelector('a'));
+    const labelCell = cells.find((c) => !c.querySelector('picture') && !c.querySelector('a') && !c.querySelector('ul'));
+    const hierarchyTreeCell = cells.find((c) => c.querySelector('ul'));
+
+    const li = document.createElement('li');
+    const anchor = document.createElement('a');
+    if (linkCell && linkCell.querySelector('a')) {
+      anchor.href = linkCell.querySelector('a').href;
+    }
+
+    if (iconCell && iconCell.querySelector('picture')) {
+      const img = iconCell.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '24' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      anchor.append(optimizedPic);
+    }
+    if (labelCell) {
+      anchor.append(document.createTextNode(` ${labelCell.textContent}`));
+    }
+    li.append(anchor);
+
+    if (hierarchyTreeCell) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = hierarchyTreeCell.innerHTML;
+      tempDiv.querySelectorAll('a').forEach((link) => {
+        // No specific class for nav-menu-link in ORIGINAL HTML for icon-nav-item
+        // link.classList.add('nav-menu-link');
+      });
+      tempDiv.querySelectorAll('li').forEach((item) => {
+        // No specific class for nav-menu-item in ORIGINAL HTML for icon-nav-item
+        // item.classList.add('nav-menu-item');
+      });
+      tempDiv.querySelectorAll('ul').forEach((ul) => {
+        // No specific class for nav-submenu in ORIGINAL HTML for icon-nav-item
+        // ul.classList.add('nav-submenu');
+      });
+      moveInstrumentation(hierarchyTreeCell, tempDiv);
+      while (tempDiv.firstChild) {
+        li.append(tempDiv.firstChild);
+      }
+    }
+
+    desktopIconNavUl.append(li);
+    moveInstrumentation(row, li);
+  });
+
+  // 80 Year Logo
   const year80LogoDiv = document.createElement('div');
   year80LogoDiv.classList.add('logo', 'year-80-logo');
   const year80LogoLink = document.createElement('a');
-  const year80LogoHref = year80LogoLinkRow?.querySelector('a')?.href || '#';
-  year80LogoLink.href = year80LogoHref;
-  if (year80LogoLinkRow) moveInstrumentation(year80LogoLinkRow, year80LogoLink);
-
-  const year80LogoPicture = year80LogoRow?.querySelector('picture');
+  const year80LogoLinkEl = year80LogoLinkRow.querySelector('a');
+  if (year80LogoLinkEl) {
+    year80LogoLink.href = year80LogoLinkEl.href;
+  }
+  const year80LogoPicture = year80LogoRow.querySelector('picture');
   if (year80LogoPicture) {
     const img = year80LogoPicture.querySelector('img');
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '74' }]);
-    optimizedPic.querySelector('img').classList.add('hiddenlogo1', 'years-80');
-    moveInstrumentation(year80LogoPicture, optimizedPic.querySelector('img'));
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
     year80LogoLink.append(optimizedPic);
   }
-  if (year80LogoRow) moveInstrumentation(year80LogoRow, year80LogoDiv);
+  moveInstrumentation(year80LogoRow, year80LogoDiv);
+  moveInstrumentation(year80LogoLinkRow, year80LogoLink);
   year80LogoDiv.append(year80LogoLink);
   wrap.append(year80LogoDiv);
 
   block.append(header);
 
-  // Hamburger menu toggle
-  hamburgerDiv.addEventListener('click', () => {
-    nav.classList.toggle('active'); // Assuming 'active' class shows/hides the nav
-    hamburgerDiv.classList.toggle('active'); // Toggle hamburger state
+  // Add event listener for hamburger menu
+  hamburger.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    hamburger.classList.toggle('close');
   });
 
-  // Image optimization for all pictures in the block
-  block.querySelectorAll('picture > img').forEach((img) => {
-    // Only optimize if not already handled by specific logic (e.g., logo)
-    if (!img.closest('.logo') && !img.closest('.icon-nav')) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      img.closest('picture').replaceWith(optimizedPic);
+  // Add event listeners for mega menu toggling on desktop
+  navUl.querySelectorAll('.has-child').forEach((menuItem) => {
+    menuItem.addEventListener('mouseenter', () => {
+      menuItem.classList.add('active');
+    });
+    menuItem.addEventListener('mouseleave', () => {
+      menuItem.classList.remove('active');
+    });
+  });
+
+  // Add event listeners for sub-menu toggling on mobile
+  navUl.querySelectorAll('.has-sub-child > span').forEach((span) => {
+    span.addEventListener('click', () => {
+      span.closest('.has-sub-child').classList.toggle('active');
+    });
+  });
+
+  // Add event listeners for search toggle
+  const searchToggleElements = document.querySelectorAll('[data-once*="search-toggle"]');
+  searchToggleElements.forEach((searchToggle) => {
+    searchToggle.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation(); // Stop propagation to prevent immediate closing
+      const searchScreenWrap = searchToggle.closest('li').querySelector('.search-screen-wrap');
+      if (searchScreenWrap) {
+        searchScreenWrap.classList.toggle('active');
+        searchToggle.closest('li').classList.toggle('active'); // Toggle active class on parent li
+      }
+    });
+  });
+
+  // Close search when clicking outside
+  document.addEventListener('click', (event) => {
+    const searchScreenWrap = document.querySelector('.search-screen-wrap');
+    const searchToggle = document.querySelector('[data-once*="search-toggle"]');
+    if (searchScreenWrap && searchToggle && !searchScreenWrap.contains(event.target) && !searchToggle.contains(event.target)) {
+      searchScreenWrap.classList.remove('active');
+      searchToggle.closest('li').classList.remove('active');
     }
+  });
+
+  // Add event listeners for sub-child toggling (for desktop mega menu hierarchy)
+  navUl.querySelectorAll('.top-level-li > span, .first-level-li > span').forEach((span) => {
+    span.addEventListener('click', () => {
+      span.closest('li').classList.toggle('active');
+    });
   });
 }

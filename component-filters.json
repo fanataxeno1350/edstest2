@@ -55,7 +55,7 @@
     "id": "main-header",
     "components": [
       "navigation-item",
-      "icon-link-item"
+      "icon-nav-item"
     ]
   },
   {
