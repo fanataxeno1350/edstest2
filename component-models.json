@@ -371,14 +371,26 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Logo",
+        "label": "Main Logo",
         "name": "logo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Logo Link",
+        "label": "Main Logo Link",
         "name": "logoLink",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "80th Year Logo",
+        "name": "year-80-logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "80th Year Logo Link",
+        "name": "year-80-logo-link",
         "valueType": "string"
       },
       {
@@ -389,21 +401,9 @@
       },
       {
         "component": "container",
-        "item": "contact-link-item",
-        "label": "Contact Links",
-        "name": "contactLinks"
-      },
-      {
-        "component": "container",
-        "item": "search-link-item",
-        "label": "Search Links",
-        "name": "searchLinks"
-      },
-      {
-        "component": "container",
-        "item": "logo-item",
-        "label": "Additional Logos",
-        "name": "additionalLogos"
+        "item": "icon-link-item",
+        "label": "Icon Links",
+        "name": "iconLinks"
       }
     ]
   },
@@ -431,52 +431,24 @@
     ]
   },
   {
-    "id": "contact-link-item",
+    "id": "icon-link-item",
     "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
       {
         "component": "aem-content",
         "label": "Link",
         "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "search-link-item",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Icon 1",
-        "name": "icon1",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Icon 2",
-        "name": "icon2",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "Label",
         "name": "label",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "logo-item",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Logo",
-        "name": "logo",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Logo Link",
-        "name": "logoLink",
         "valueType": "string"
       }
     ]
