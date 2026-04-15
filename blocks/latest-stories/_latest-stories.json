@@ -105,9 +105,6 @@
           "valueType": "string"
         }
       ]
-    },
-    {
-      "id": "twitter-feed-embed"
     }
   ],
   "filters": [
