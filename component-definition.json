@@ -130,45 +130,45 @@
           }
         },
         {
-          "title": "Footer-Social-Link",
-          "id": "footer-social-link",
+          "title": "Footer-Social-Item",
+          "id": "footer-social-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-social-link",
-                  "name": "Footer-Social-Link"
+                  "model": "footer-social-item",
+                  "name": "Footer-Social-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer-Navigation-Block",
-          "id": "footer-navigation-block",
+          "title": "Footer-Menu-Block",
+          "id": "footer-menu-block",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-navigation-block",
-                  "name": "Footer-Navigation-Block"
+                  "model": "footer-menu-block",
+                  "name": "Footer-Menu-Block"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer-Navigation-Item",
-          "id": "footer-navigation-item",
+          "title": "Footer-Menu-Item",
+          "id": "footer-menu-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-navigation-item",
-                  "name": "Footer-Navigation-Item"
+                  "model": "footer-menu-item",
+                  "name": "Footer-Menu-Item"
                 }
               }
             }
@@ -359,15 +359,15 @@
           }
         },
         {
-          "title": "Purpose-Card",
-          "id": "purpose-card",
+          "title": "Purpose-Led-Card",
+          "id": "purpose-led-card",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "purpose-card",
-                  "name": "Purpose-Card"
+                  "model": "purpose-led-card",
+                  "name": "Purpose-Led-Card"
                 }
               }
             }
@@ -482,7 +482,7 @@
           }
         },
         {
-          "title": "What-We-Do-Wrap",
+          "title": "What We Do Wrap",
           "id": "what-we-do-wrap",
           "plugins": {
             "xwalk": {
@@ -491,14 +491,14 @@
                 "template": {
                   "filter": "what-we-do-wrap",
                   "model": "what-we-do-wrap",
-                  "name": "What-We-Do-Wrap"
+                  "name": "What We Do Wrap"
                 }
               }
             }
           }
         },
         {
-          "title": "Business-Vertical-Item",
+          "title": "Business Vertical Item",
           "id": "business-vertical-item",
           "plugins": {
             "xwalk": {
@@ -506,7 +506,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "business-vertical-item",
-                  "name": "Business-Vertical-Item"
+                  "name": "Business Vertical Item"
                 }
               }
             }
@@ -529,15 +529,15 @@
           }
         },
         {
-          "title": "Work-With-Us-Item",
-          "id": "work-with-us-item",
+          "title": "Work-With-Us-Slide",
+          "id": "work-with-us-slide",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "work-with-us-item",
-                  "name": "Work-With-Us-Item"
+                  "model": "work-with-us-slide",
+                  "name": "Work-With-Us-Slide"
                 }
               }
             }

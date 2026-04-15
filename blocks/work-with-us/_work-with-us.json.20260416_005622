@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Work-With-Us-Slide",
-      "id": "work-with-us-slide",
+      "title": "Work-With-Us-Item",
+      "id": "work-with-us-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "work-with-us-slide",
-              "name": "Work-With-Us-Slide"
+              "model": "work-with-us-item",
+              "name": "Work-With-Us-Item"
             }
           }
         }
@@ -44,14 +44,14 @@
         },
         {
           "component": "container",
-          "item": "work-with-us-slide",
-          "label": "Slides",
-          "name": "slides"
+          "item": "work-with-us-item",
+          "label": "Work With Us Items",
+          "name": "items"
         }
       ]
     },
     {
-      "id": "work-with-us-slide",
+      "id": "work-with-us-item",
       "fields": [
         {
           "component": "reference",
@@ -73,26 +73,26 @@
         },
         {
           "component": "text",
-          "label": "Slide Heading",
+          "label": "Item Heading",
           "name": "heading",
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Description",
+          "component": "richtext",
+          "label": "Item Description",
           "name": "description",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Slide Link",
-          "name": "link",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Link Label",
-          "name": "linkLabel",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         }
       ]
@@ -102,7 +102,7 @@
     {
       "id": "work-with-us",
       "components": [
-        "work-with-us-slide"
+        "work-with-us-item"
       ]
     }
   ]

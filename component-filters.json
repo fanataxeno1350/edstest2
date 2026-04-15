@@ -39,9 +39,9 @@
   {
     "id": "footer-main",
     "components": [
-      "footer-social-link",
-      "footer-navigation-block",
-      "footer-navigation-item",
+      "footer-social-item",
+      "footer-menu-block",
+      "footer-menu-item",
       "footer-secondary-nav-item"
     ]
   },
@@ -70,7 +70,7 @@
   {
     "id": "purpose-led-grid",
     "components": [
-      "purpose-card"
+      "purpose-led-card"
     ]
   },
   {
@@ -101,7 +101,7 @@
   {
     "id": "work-with-us",
     "components": [
-      "work-with-us-item"
+      "work-with-us-slide"
     ]
   }
 ]
