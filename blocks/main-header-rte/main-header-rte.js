@@ -5,44 +5,57 @@ export default function decorate(block) {
   const [
     logoRow,
     logoLinkRow,
-    year80LogoRow,
-    year80LogoLinkRow,
-    contactLinkRow,
-    textRow,
-    ...searchImageRows
+    anniversaryLogoRow,
+    anniversaryLogoLinkRow,
+    contactIconMobileRow,
+    contactLinkMobileRow,
+    contactIconDesktopRow,
+    contactLinkDesktopRow,
+    searchIcon1Row,
+    searchIcon2Row,
+    searchIconInputRow,
+    searchButtonIconRow,
+    popularKeywordsContainerRow, // This is the container row for popular keywords
+    recommendedKeywordsContainerRow, // This is the container row for recommended keywords
+    navigationHierarchyRow,
   ] = [...block.children];
 
-  // --- Logo ---
+  // Extract popular and recommended keywords from their respective container rows
+  const popularKeywords = [...popularKeywordsContainerRow.children].map(cell => cell.textContent.trim());
+  const recommendedKeywords = [...recommendedKeywordsContainerRow.children].map(cell => cell.textContent.trim());
+
+  const header = document.createElement('header');
+  header.classList.add('main-header', 'with-marquee', 'solid', 'nav-up');
+  header.setAttribute('data-once', 'header-hover');
+
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
+  header.append(containerDiv);
+
+  const wrapDiv = document.createElement('div');
+  wrapDiv.classList.add('wrap');
+  containerDiv.append(wrapDiv);
+
+  // Logo
   const logoDiv = document.createElement('div');
   logoDiv.classList.add('logo');
   const logoLink = document.createElement('a');
-  logoLink.href = logoLinkRow.querySelector('a')?.href || '#';
-  moveInstrumentation(logoLinkRow, logoLink);
-  const logoPicture = logoRow.querySelector('picture');
+  logoLink.href = logoLinkRow?.querySelector('a')?.href || '#';
+  const logoPicture = logoRow?.querySelector('picture');
   if (logoPicture) {
-    const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    logoLink.append(optimizedPic);
+    const logoImg = logoPicture.querySelector('img');
+    const optimizedLogoPic = createOptimizedPicture(logoImg.src, logoImg.alt, false, [{ width: '200' }]);
+    moveInstrumentation(logoImg, optimizedLogoPic.querySelector('img'));
+    optimizedLogoPic.querySelector('img').classList.add('hiddenlogo1');
+    optimizedLogoPic.querySelector('img').width = '200';
+    optimizedLogoPic.querySelector('img').height = '30'; // Set a default height
+    optimizedLogoPic.querySelector('img').style.width = 'auto';
+    logoLink.append(optimizedLogoPic);
   }
   logoDiv.append(logoLink);
+  wrapDiv.append(logoDiv);
 
-  // --- 80th Year Logo ---
-  const year80LogoDiv = document.createElement('div');
-  year80LogoDiv.classList.add('logo', 'year-80-logo');
-  const year80LogoLink = document.createElement('a');
-  year80LogoLink.href = year80LogoLinkRow.querySelector('a')?.href || '#';
-  moveInstrumentation(year80LogoLinkRow, year80LogoLink);
-  const year80LogoPicture = year80LogoRow.querySelector('picture');
-  if (year80LogoPicture) {
-    const img = year80LogoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '74' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    year80LogoLink.append(optimizedPic);
-  }
-  year80LogoDiv.append(year80LogoLink);
-
-  // --- Hamburger ---
+  // Hamburger
   const hamburgerDiv = document.createElement('div');
   hamburgerDiv.classList.add('hamburger');
   hamburgerDiv.setAttribute('data-once', 'hamburger-click nav-close-search');
@@ -51,159 +64,175 @@ export default function decorate(block) {
     hamburgerUl.append(document.createElement('li'));
   }
   hamburgerDiv.append(hamburgerUl);
+  wrapDiv.append(hamburgerDiv);
 
-  // --- Navigation Hierarchy (RTE) ---
+  // Navigation
+  const nav = document.createElement('nav');
+  nav.classList.add('main-nav');
+  nav.setAttribute('data-once', 'initSubChildToggle');
+  wrapDiv.append(nav);
+
+  const navUl = document.createElement('ul');
+  navUl.setAttribute('itemscope', '');
+  navUl.setAttribute('itemtype', 'http://www.schema.org/SiteNavigationElement');
+  nav.append(navUl);
+
   function parseNavTree(ul) {
     return [...ul.querySelectorAll(':scope > li')].map((li) => {
       let label = '';
-      let linkHref = '#'; // Default placeholder
+      let link = null;
       for (const node of li.childNodes) {
         if (node.nodeType === Node.TEXT_NODE) {
           label += node.textContent.trim();
-        } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'A') {
-          label += node.textContent.trim();
-          linkHref = node.href; // Capture the link if it exists
-        } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'UL') {
-          // Exclude ULs, but include other elements like <span> if they contain text
-          label += node.textContent.trim();
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          if (node.tagName === 'A') {
+            link = node;
+            label += node.textContent.trim();
+          } else if (node.tagName !== 'UL') { // Skip <ul> children when extracting label text
+            label += node.textContent.trim();
+          }
         }
       }
       label = label.trim();
 
       const childUl = li.querySelector(':scope > ul');
-      return { label, href: linkHref, children: childUl ? parseNavTree(childUl) : [] };
+      return { label, link, children: childUl ? parseNavTree(childUl) : [] };
     });
   }
 
   function renderNavItems(items, parentContainer) {
     items.forEach((item) => {
       const li = document.createElement('li');
-      li.classList.add('has-child', 'hover-red'); // Assuming all top-level items can be parents or styled as such
       li.setAttribute('itemprop', 'name');
       li.setAttribute('data-once', 'nav-close-search');
 
-      const itemLink = document.createElement('a');
-      itemLink.setAttribute('itemprop', 'url');
-      itemLink.textContent = item.label;
-      itemLink.href = item.href;
+      let itemContent;
+      if (item.link) {
+        const a = document.createElement('a');
+        a.href = item.link.href;
+        a.textContent = item.label;
+        a.setAttribute('itemprop', 'url');
+        itemContent = a;
+      } else {
+        const span = document.createElement('span');
+        span.textContent = item.label;
+        itemContent = span;
+      }
+      li.append(itemContent);
 
       if (item.children.length > 0) {
+        li.classList.add('has-child', 'hover-red'); // Only add these classes if it has children
         const toggleSpan = document.createElement('span');
         const toggleImg = document.createElement('img');
         toggleImg.alt = 'svg file';
-        toggleImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776196685801.svg+xml';
+        toggleImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776196685801.svg+xml'; // Example SVG, adjust if needed
         toggleSpan.append(toggleImg);
+        li.append(toggleSpan);
 
         const megaMenu = document.createElement('div');
         megaMenu.classList.add('mega-menu');
         const megaMenuWrap = document.createElement('div');
         megaMenuWrap.classList.add('wrap', 'container');
-        const centerDiv = document.createElement('div');
-        centerDiv.classList.add('center-div');
+        const megaMenuCenter = document.createElement('div');
+        megaMenuCenter.classList.add('center-div');
+
         const subNavWrap = document.createElement('div');
-        subNavWrap.classList.add('sub-nav-wrap'); // Dynamic class based on content, e.g., about-us-sub-nav
+        subNavWrap.classList.add('sub-nav-wrap');
+        const submenuUl = document.createElement('ul');
+        renderNavItems(item.children, submenuUl); // RECURSIVE CALL
+        subNavWrap.append(submenuUl);
 
-        const childUl = document.createElement('ul');
-        renderNavItems(item.children, childUl); // RECURSIVE CALL
-
-        subNavWrap.append(childUl);
-        centerDiv.append(subNavWrap);
-        megaMenuWrap.append(centerDiv);
+        megaMenuCenter.append(subNavWrap);
+        megaMenuWrap.append(megaMenuCenter);
         megaMenu.append(megaMenuWrap);
+        li.append(megaMenu);
 
-        li.append(itemLink, toggleSpan, megaMenu);
-
-        // Add event listener for toggle behavior
-        itemLink.addEventListener('click', (e) => {
-          e.preventDefault(); // Prevent default link navigation
-          megaMenu.classList.toggle('show'); // Example class for showing/hiding
+        // Add toggle behavior for the span containing the SVG
+        toggleSpan.addEventListener('click', () => {
           li.classList.toggle('active'); // Example class for active state
+          megaMenu.classList.toggle('show'); // Example class to show/hide
         });
-        toggleSpan.addEventListener('click', (e) => {
-          e.preventDefault();
-          megaMenu.classList.toggle('show');
-          li.classList.toggle('active');
-        });
-      } else {
-        // Leaf item: just the link
-        li.append(itemLink);
       }
+
       parentContainer.append(li);
     });
   }
 
-  const textCell = textRow?.querySelector('div');
+  const textCell = navigationHierarchyRow?.querySelector('div');
   const temp = document.createElement('div');
   temp.innerHTML = textCell?.innerHTML ?? '';
   const rootUl = temp.querySelector('ul');
   const navItems = rootUl ? parseNavTree(rootUl) : [];
+  renderNavItems(navItems, navUl);
 
-  const nav = document.createElement('nav');
-  nav.classList.add('main-nav');
-  nav.setAttribute('data-once', 'initSubChildToggle');
-  const navUl = document.createElement('ul');
-  navUl.setAttribute('itemscope', '');
-  navUl.setAttribute('itemtype', 'http://www.schema.org/SiteNavigationElement');
-  renderNavItems(navItems, navUl); // Renders ALL nested levels
-  nav.append(navUl);
-
-  // --- Contact Link (mobile and desktop) ---
+  // Mobile and Desktop Icons
   const mobileIconNav = document.createElement('div');
   mobileIconNav.classList.add('icon-nav', 'mobile-menus-icon');
-  const mobileUl = document.createElement('ul');
+  const mobileIconUl = document.createElement('ul');
+  mobileIconNav.append(mobileIconUl);
+
   const mobileMailLi = document.createElement('li');
   mobileMailLi.classList.add('mail');
-  const mobileContactLink = document.createElement('a');
-  mobileContactLink.href = contactLinkRow.querySelector('a')?.href || '#';
-  mobileContactLink.textContent = 'Contact Us';
-  moveInstrumentation(contactLinkRow, mobileContactLink);
-  mobileMailLi.append(mobileContactLink);
-  mobileUl.append(mobileMailLi);
-  mobileIconNav.append(mobileUl);
-  // Append to main nav ul for consistent structure
-  // The original HTML places this inside the main nav ul, but as a direct child of ul, not li.
-  // We'll append it to the nav element itself, as a sibling to the main nav ul,
-  // to better reflect the structure while keeping the main nav items separate.
-  // If it MUST be inside the ul, it would need to be a li.
-  // For now, placing it after the main nav ul.
-  nav.append(mobileIconNav);
+  const mobileMailLink = document.createElement('a');
+  mobileMailLink.href = contactLinkMobileRow?.querySelector('a')?.href || '#';
+  mobileMailLink.textContent = 'Contact Us';
+  mobileMailLi.append(mobileMailLink);
+  mobileIconUl.append(mobileMailLi);
 
-  const desktopIconNav = document.createElement('div');
-  desktopIconNav.classList.add('icon-nav', 'desktop-menus-icon');
-  const desktopUl = document.createElement('ul');
-  const desktopMailLi = document.createElement('li');
-  desktopMailLi.classList.add('mail');
-  const desktopContactLink = document.createElement('a');
-  desktopContactLink.href = contactLinkRow.querySelector('a')?.href || '#';
-  const mailImg = document.createElement('img');
-  mailImg.alt = 'svg file';
-  mailImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776196686240.svg+xml';
-  desktopContactLink.append(mailImg);
-  moveInstrumentation(contactLinkRow, desktopContactLink);
-  desktopMailLi.append(desktopContactLink);
-  desktopUl.append(desktopMailLi);
-  desktopIconNav.append(desktopUl);
-  nav.append(desktopIconNav); // Append to nav element
-
-  // --- Search Images (mobile and desktop) ---
   const mobileSearchLi = document.createElement('li');
   mobileSearchLi.classList.add('search');
   mobileSearchLi.setAttribute('data-once', 'search-toggle search-stop-propagation');
   const mobileSearchLink = document.createElement('a');
   mobileSearchLink.href = '#';
   mobileSearchLink.setAttribute('data-once', 'search-stop-propagation');
-  const mobileSearchImg1 = document.createElement('img');
-  mobileSearchImg1.alt = 'svg file';
-  mobileSearchImg1.src = '/content/dam/aemigrate/uploaded-folder/image/1776196685935.svg+xml';
-  const mobileSearchImg2 = document.createElement('img');
-  mobileSearchImg2.alt = 'svg file';
-  mobileSearchImg2.src = '/content/dam/aemigrate/uploaded-folder/image/1776196685983.svg+xml';
+
+  const mobileSearchImg1 = searchIcon1Row?.querySelector('img');
+  if (mobileSearchImg1) {
+    const optimizedSearchPic1 = createOptimizedPicture(mobileSearchImg1.src, mobileSearchImg1.alt, false, [{ width: '24' }]);
+    moveInstrumentation(mobileSearchImg1, optimizedSearchPic1.querySelector('img'));
+    mobileSearchLink.append(optimizedSearchPic1);
+  }
+
+  const mobileSearchImg2 = searchIcon2Row?.querySelector('img');
+  if (mobileSearchImg2) {
+    const optimizedSearchPic2 = createOptimizedPicture(mobileSearchImg2.src, mobileSearchImg2.alt, false, [{ width: '24' }]);
+    moveInstrumentation(mobileSearchImg2, optimizedSearchPic2.querySelector('img'));
+    mobileSearchLink.append(optimizedSearchPic2);
+  }
+
   const mobileSearchSpan = document.createElement('span');
   mobileSearchSpan.setAttribute('data-once', 'search-stop-propagation');
   mobileSearchSpan.textContent = ' Search';
-  mobileSearchLink.append(mobileSearchImg1, mobileSearchImg2, mobileSearchSpan);
+  mobileSearchLink.append(mobileSearchSpan);
   mobileSearchLi.append(mobileSearchLink);
-  mobileUl.append(mobileSearchLi); // Append to the mobile icon nav ul
+
+  const searchScreenWrapMobile = createSearchScreen(
+    searchIconInputRow,
+    searchButtonIconRow,
+    popularKeywords,
+    recommendedKeywords,
+  );
+  mobileSearchLi.append(searchScreenWrapMobile);
+  mobileIconUl.append(mobileSearchLi);
+  navUl.append(mobileIconNav);
+
+  const desktopIconNav = document.createElement('div');
+  desktopIconNav.classList.add('icon-nav', 'desktop-menus-icon');
+  const desktopIconUl = document.createElement('ul');
+  desktopIconNav.append(desktopIconUl);
+
+  const desktopMailLi = document.createElement('li');
+  desktopMailLi.classList.add('mail');
+  const desktopMailLink = document.createElement('a');
+  desktopMailLink.href = contactLinkDesktopRow?.querySelector('a')?.href || '#';
+  const desktopMailImg = contactIconDesktopRow?.querySelector('img');
+  if (desktopMailImg) {
+    const optimizedDesktopMailPic = createOptimizedPicture(desktopMailImg.src, desktopMailImg.alt, false, [{ width: '24' }]);
+    moveInstrumentation(desktopMailImg, optimizedDesktopMailPic.querySelector('img'));
+    desktopMailLink.append(optimizedDesktopMailPic);
+  }
+  desktopMailLi.append(desktopMailLink);
+  desktopIconUl.append(desktopMailLi);
 
   const desktopSearchLi = document.createElement('li');
   desktopSearchLi.classList.add('search');
@@ -211,173 +240,223 @@ export default function decorate(block) {
   const desktopSearchLink = document.createElement('a');
   desktopSearchLink.href = '#';
   desktopSearchLink.setAttribute('data-once', 'search-stop-propagation');
-  const desktopSearchImg1 = document.createElement('img');
-  desktopSearchImg1.alt = 'svg file';
-  desktopSearchImg1.src = '/content/dam/aemigrate/uploaded-folder/image/1776196685935.svg+xml';
-  const desktopSearchImg2 = document.createElement('img');
-  desktopSearchImg2.alt = 'svg file';
-  desktopSearchImg2.src = '/content/dam/aemigrate/uploaded-folder/image/1776196685983.svg+xml';
-  desktopSearchLink.append(desktopSearchImg1, desktopSearchImg2);
+
+  const desktopSearchImg1 = searchIcon1Row?.querySelector('img');
+  if (desktopSearchImg1) {
+    const optimizedDesktopSearchPic1 = createOptimizedPicture(desktopSearchImg1.src, desktopSearchImg1.alt, false, [{ width: '24' }]);
+    moveInstrumentation(desktopSearchImg1, optimizedDesktopSearchPic1.querySelector('img'));
+    desktopSearchLink.append(optimizedDesktopSearchPic1);
+  }
+
+  const desktopSearchImg2 = searchIcon2Row?.querySelector('img');
+  if (desktopSearchImg2) {
+    const optimizedDesktopSearchPic2 = createOptimizedPicture(desktopSearchImg2.src, desktopSearchImg2.alt, false, [{ width: '24' }]);
+    moveInstrumentation(desktopSearchImg2, optimizedDesktopSearchPic2.querySelector('img'));
+    desktopSearchLink.append(optimizedDesktopSearchPic2);
+  }
   desktopSearchLi.append(desktopSearchLink);
-  desktopUl.append(desktopSearchLi); // Append to the desktop icon nav ul
 
-  // --- Search Screen Wrap (shared structure) ---
-  const createSearchScreen = () => {
-    const searchScreenWrap = document.createElement('div');
-    searchScreenWrap.classList.add('search-screen-wrap');
-    searchScreenWrap.setAttribute('data-once', 'search-stop-propagation');
-    const searchWrap = document.createElement('div');
-    searchWrap.classList.add('wrap');
-    searchWrap.setAttribute('data-once', 'search-stop-propagation');
-    const searchForm = document.createElement('form');
-    searchForm.action = 'https://www.mahindra.com/search';
-    searchForm.method = 'get';
-    searchForm.id = 'search-block-form';
-    searchForm.setAttribute('accept-charset', 'UTF-8');
-    searchForm.setAttribute('data-drupal-form-fields', 'edit-keys');
-    searchForm.setAttribute('data-once', 'search-stop-propagation');
+  const searchScreenWrapDesktop = createSearchScreen(
+    searchIconInputRow,
+    searchButtonIconRow,
+    popularKeywords,
+    recommendedKeywords,
+  );
+  desktopSearchLi.append(searchScreenWrapDesktop);
+  desktopIconUl.append(desktopSearchLi);
+  nav.append(desktopIconNav);
 
-    const searchInputWrap = document.createElement('div');
-    searchInputWrap.classList.add('search-wrap');
-    searchInputWrap.setAttribute('data-once', 'search-stop-propagation');
-    const searchIconDiv = document.createElement('div');
-    searchIconDiv.classList.add('search-icon');
-    searchIconDiv.setAttribute('data-once', 'search-stop-propagation');
-    const searchIconImg = document.createElement('img');
-    searchIconImg.alt = 'svg file';
-    searchIconImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776196686037.svg+xml';
-    searchIconDiv.append(searchIconImg);
-    const searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.classList.add('input-text', 'searchtext');
-    searchInput.required = true;
-    searchInput.name = 'key';
-    searchInput.id = 'searchInput';
-    searchInput.autocomplete = 'off';
-    searchInput.setAttribute('data-once', 'search-stop-propagation');
-    const submitButton = document.createElement('button');
-    submitButton.classList.add('submit-button');
-    submitButton.setAttribute('data-once', 'search-stop-propagation');
-    const submitLabel = document.createElement('div');
-    submitLabel.classList.add('label');
-    submitLabel.setAttribute('data-once', 'search-stop-propagation');
-    submitLabel.textContent = ' Submit ';
-    const submitImg = document.createElement('img');
-    submitImg.alt = 'svg file';
-    submitImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776196686179.svg+xml';
-    submitButton.append(submitLabel, submitImg);
-    searchInputWrap.append(searchIconDiv, searchInput, submitButton);
-    searchForm.append(searchInputWrap);
+  // Anniversary Logo
+  const anniversaryLogoDiv = document.createElement('div');
+  anniversaryLogoDiv.classList.add('logo', 'year-80-logo');
+  const anniversaryLogoLink = document.createElement('a');
+  anniversaryLogoLink.href = anniversaryLogoLinkRow?.querySelector('a')?.href || '#';
+  const anniversaryLogoPicture = anniversaryLogoRow?.querySelector('picture');
+  if (anniversaryLogoPicture) {
+    const anniversaryLogoImg = anniversaryLogoPicture.querySelector('img');
+    const optimizedAnniversaryPic = createOptimizedPicture(anniversaryLogoImg.src, anniversaryLogoImg.alt, false, [{ width: '74' }]);
+    moveInstrumentation(anniversaryLogoImg, optimizedAnniversaryPic.querySelector('img'));
+    optimizedAnniversaryPic.querySelector('img').classList.add('hiddenlogo1', 'years-80');
+    optimizedAnniversaryPic.querySelector('img').width = '74';
+    optimizedAnniversaryPic.querySelector('img').height = '60';
+    anniversaryLogoLink.append(optimizedAnniversaryPic);
+  }
+  anniversaryLogoDiv.append(anniversaryLogoLink);
+  wrapDiv.append(anniversaryLogoDiv);
 
-    const searchResultBox = document.createElement('div');
-    searchResultBox.classList.add('searchResultBox');
-    searchResultBox.style.display = 'none';
-    searchResultBox.setAttribute('data-once', 'search-stop-propagation');
-    const swiper = document.createElement('div');
-    swiper.classList.add('swiper', 'scrollSwiper');
-    swiper.setAttribute('data-once', 'search-stop-propagation');
-    const swiperWrapper = document.createElement('div');
-    swiperWrapper.classList.add('swiper-wrapper');
-    swiperWrapper.setAttribute('data-once', 'search-stop-propagation');
-    const swiperSlide = document.createElement('div');
-    swiperSlide.classList.add('swiper-slide');
-    swiperSlide.setAttribute('data-once', 'search-stop-propagation');
-    swiperWrapper.append(swiperSlide);
-    swiper.append(swiperWrapper);
-    const swiperScrollbar = document.createElement('div');
-    swiperScrollbar.classList.add('swiper-scrollbar');
-    swiperScrollbar.setAttribute('data-once', 'search-stop-propagation');
-    searchResultBox.append(swiper, swiperScrollbar);
-    searchForm.append(searchResultBox);
-
-    const createSuggestions = (label, keywords) => {
-      const suggestionsWrap = document.createElement('div');
-      suggestionsWrap.classList.add('search-suggestions-wrap');
-      suggestionsWrap.setAttribute('data-once', 'search-stop-propagation');
-      const labelDiv = document.createElement('div');
-      labelDiv.classList.add('label');
-      labelDiv.setAttribute('data-once', 'search-stop-propagation');
-      labelDiv.textContent = label;
-      const tokensWrap = document.createElement('div');
-      tokensWrap.classList.add('tokens-wrap');
-      tokensWrap.setAttribute('data-once', 'search-stop-propagation');
-      const tokensUl = document.createElement('ul');
-      tokensUl.setAttribute('data-once', 'search-stop-propagation');
-      keywords.forEach((keyword) => {
-        const li = document.createElement('li');
-        li.setAttribute('data-once', 'search-stop-propagation');
-        li.textContent = keyword;
-        tokensUl.append(li);
-      });
-      tokensWrap.append(tokensUl);
-      suggestionsWrap.append(labelDiv, tokensWrap);
-      return suggestionsWrap;
-    };
-
-    searchWrap.append(
-      searchForm,
-      createSuggestions('Popular Keywords:', ['Business', 'FY 21', 'Brands', 'XUV700', 'Global', 'Nanhi Kali']),
-      createSuggestions('Recommended for you:', ['Annual Report 2021 - 2022', 'Leadership Announcement', 'Latest Press Release', 'Brand Guidelines']),
-    );
-    searchScreenWrap.append(searchWrap);
-
-    return searchScreenWrap;
-  };
-
-  const searchScreen = createSearchScreen();
-  mobileSearchLi.append(searchScreen);
-  // Clone for desktop, event listeners will be separate
-  const desktopSearchScreen = createSearchScreen();
-  desktopSearchLi.append(desktopSearchScreen);
-
-  // Toggle search screen visibility
-  const toggleSearch = (e, targetSearchScreen) => {
-    e.preventDefault();
-    e.stopPropagation(); // Stop propagation to prevent immediate closing from document click
-    targetSearchScreen.classList.toggle('show');
-  };
-
-  mobileSearchLink.addEventListener('click', (e) => toggleSearch(e, searchScreen));
-  desktopSearchLink.addEventListener('click', (e) => toggleSearch(e, desktopSearchScreen));
-
-  // Close on outside click for both search screens
-  document.addEventListener('click', (e) => {
-    if (!searchScreen.contains(e.target) && searchScreen.classList.contains('show')) {
-      searchScreen.classList.remove('show');
-    }
-    if (!desktopSearchScreen.contains(e.target) && desktopSearchScreen.classList.contains('show')) {
-      desktopSearchScreen.classList.remove('show');
-    }
+  // Add event listeners for search toggles
+  const searchToggles = header.querySelectorAll('.search > a');
+  searchToggles.forEach((toggle) => {
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation(); // Prevent immediate closing from document click
+      const searchScreen = toggle.nextElementSibling;
+      if (searchScreen) {
+        searchScreen.classList.toggle('show'); // Use 'show' class for visibility
+      }
+    });
   });
 
-  // --- Main Header Container ---
-  const containerDiv = document.createElement('div');
-  containerDiv.classList.add('container');
-  const wrapDiv = document.createElement('div');
-  wrapDiv.classList.add('wrap');
+  // Close search when clicking outside
+  document.addEventListener('click', (e) => {
+    header.querySelectorAll('.search-screen-wrap').forEach((screen) => {
+      if (!screen.contains(e.target) && !e.target.closest('.search > a')) {
+        screen.classList.remove('show');
+      }
+    });
+  });
 
-  wrapDiv.append(logoDiv, hamburgerDiv, nav, year80LogoDiv);
-  containerDiv.append(wrapDiv);
+  // Hamburger menu toggle
+  hamburgerDiv.addEventListener('click', () => {
+    nav.classList.toggle('active'); // Assuming 'active' class shows/hides the mobile nav
+    hamburgerDiv.classList.toggle('active'); // Toggle hamburger icon state
+    document.body.classList.toggle('no-scroll'); // Prevent scrolling when mobile nav is open
+  });
 
   block.textContent = '';
-  block.classList.add('main-header', 'with-marquee', 'solid', 'nav-up');
-  block.setAttribute('data-once', 'header-hover');
-  block.append(containerDiv);
+  block.append(header);
+}
 
-  // Optimize images in searchImageRows
-  searchImageRows.forEach((row) => {
-    const img = row.querySelector('picture > img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      img.closest('picture').replaceWith(optimizedPic);
-    }
-  });
+function createSearchScreen(searchIconInputRow, searchButtonIconRow, popularKeywords, recommendedKeywords) {
+  const searchScreenWrap = document.createElement('div');
+  searchScreenWrap.classList.add('search-screen-wrap');
+  searchScreenWrap.setAttribute('data-once', 'search-stop-propagation');
 
-  // Optimize existing images
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
+  const wrap = document.createElement('div');
+  wrap.classList.add('wrap');
+  wrap.setAttribute('data-once', 'search-stop-propagation');
+  searchScreenWrap.append(wrap);
+
+  const form = document.createElement('form');
+  form.action = 'https://www.mahindra.com/search';
+  form.method = 'get';
+  form.id = 'search-block-form';
+  form.setAttribute('accept-charset', 'UTF-8');
+  form.setAttribute('data-drupal-form-fields', 'edit-keys');
+  form.setAttribute('data-once', 'search-stop-propagation');
+  wrap.append(form);
+
+  const searchWrap = document.createElement('div');
+  searchWrap.classList.add('search-wrap');
+  searchWrap.setAttribute('data-once', 'search-stop-propagation');
+  form.append(searchWrap);
+
+  const searchIconDiv = document.createElement('div');
+  searchIconDiv.classList.add('search-icon');
+  searchIconDiv.setAttribute('data-once', 'search-stop-propagation');
+  const searchInputImg = searchIconInputRow?.querySelector('img');
+  if (searchInputImg) {
+    const optimizedSearchInputPic = createOptimizedPicture(searchInputImg.src, searchInputImg.alt, false, [{ width: '24' }]);
+    moveInstrumentation(searchInputImg, optimizedSearchInputPic.querySelector('img'));
+    searchIconDiv.append(optimizedSearchInputPic);
+  }
+  searchWrap.append(searchIconDiv);
+
+  const inputText = document.createElement('input');
+  inputText.type = 'text';
+  inputText.classList.add('input-text', 'searchtext');
+  inputText.required = true;
+  inputText.name = 'key';
+  inputText.id = 'searchInput';
+  inputText.autocomplete = 'off';
+  inputText.setAttribute('data-once', 'search-stop-propagation');
+  searchWrap.append(inputText);
+
+  const submitButton = document.createElement('button');
+  submitButton.type = 'submit';
+  submitButton.classList.add('submit-button');
+  submitButton.setAttribute('data-once', 'search-stop-propagation');
+  searchWrap.append(submitButton);
+
+  const submitLabel = document.createElement('div');
+  submitLabel.classList.add('label');
+  submitLabel.setAttribute('data-once', 'search-stop-propagation');
+  submitLabel.textContent = ' Submit ';
+  submitButton.append(submitLabel);
+
+  const searchButtonImg = searchButtonIconRow?.querySelector('img');
+  if (searchButtonImg) {
+    const optimizedSearchButtonPic = createOptimizedPicture(searchButtonImg.src, searchButtonImg.alt, false, [{ width: '24' }]);
+    moveInstrumentation(searchButtonImg, optimizedSearchButtonPic.querySelector('img'));
+    submitButton.append(optimizedSearchButtonPic);
+  }
+
+  const searchResultBox = document.createElement('div');
+  searchResultBox.classList.add('searchResultBox');
+  searchResultBox.style.display = 'none';
+  searchResultBox.setAttribute('data-once', 'search-stop-propagation');
+  form.append(searchResultBox);
+
+  // Swiper structure (empty for now, as dynamic content)
+  const swiperDiv = document.createElement('div');
+  swiperDiv.classList.add('swiper', 'scrollSwiper');
+  swiperDiv.setAttribute('data-once', 'search-stop-propagation');
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('swiper-wrapper');
+  swiperWrapper.setAttribute('data-once', 'search-stop-propagation');
+  const swiperSlide = document.createElement('div');
+  swiperSlide.classList.add('swiper-slide');
+  swiperSlide.setAttribute('data-once', 'search-stop-propagation');
+  swiperWrapper.append(swiperSlide);
+  swiperDiv.append(swiperWrapper);
+  searchResultBox.append(swiperDiv);
+
+  const swiperScrollbar = document.createElement('div');
+  swiperScrollbar.classList.add('swiper-scrollbar');
+  swiperScrollbar.setAttribute('data-once', 'search-stop-propagation');
+  searchResultBox.append(swiperScrollbar);
+
+  // Popular Keywords
+  if (popularKeywords.length > 0) {
+    const popularKeywordsWrap = document.createElement('div');
+    popularKeywordsWrap.classList.add('search-suggestions-wrap');
+    popularKeywordsWrap.setAttribute('data-once', 'search-stop-propagation');
+    const popularLabel = document.createElement('div');
+    popularLabel.classList.add('label');
+    popularLabel.setAttribute('data-once', 'search-stop-propagation');
+    popularLabel.textContent = 'Popular Keywords:';
+    popularKeywordsWrap.append(popularLabel);
+    const popularTokensWrap = document.createElement('div');
+    popularTokensWrap.classList.add('tokens-wrap');
+    popularTokensWrap.setAttribute('data-once', 'search-stop-propagation');
+    const popularUl = document.createElement('ul');
+    popularUl.setAttribute('data-once', 'search-stop-propagation');
+    popularKeywords.forEach((keyword) => {
+      const li = document.createElement('li');
+      li.setAttribute('data-once', 'search-stop-propagation');
+      li.textContent = keyword;
+      popularUl.append(li);
+    });
+    popularTokensWrap.append(popularUl);
+    popularKeywordsWrap.append(popularTokensWrap);
+    wrap.append(popularKeywordsWrap);
+  }
+
+  // Recommended Keywords
+  if (recommendedKeywords.length > 0) {
+    const recommendedKeywordsWrap = document.createElement('div');
+    recommendedKeywordsWrap.classList.add('search-suggestions-wrap');
+    recommendedKeywordsWrap.setAttribute('data-once', 'search-stop-propagation');
+    const recommendedLabel = document.createElement('div');
+    recommendedLabel.classList.add('label');
+    recommendedLabel.setAttribute('data-once', 'search-stop-propagation');
+    recommendedLabel.textContent = 'Recommended for you:';
+    recommendedKeywordsWrap.append(recommendedLabel);
+    const recommendedTokensWrap = document.createElement('div');
+    recommendedTokensWrap.classList.add('tokens-wrap');
+    recommendedTokensWrap.setAttribute('data-once', 'search-stop-propagation');
+    const recommendedUl = document.createElement('ul');
+    recommendedUl.setAttribute('data-once', 'search-stop-propagation');
+    recommendedKeywords.forEach((keyword) => {
+      const li = document.createElement('li');
+      li.setAttribute('data-once', 'search-stop-propagation');
+      li.textContent = keyword;
+      recommendedUl.append(li);
+    });
+    recommendedTokensWrap.append(recommendedUl);
+    recommendedKeywordsWrap.append(recommendedTokensWrap);
+    wrap.append(recommendedKeywordsWrap);
+  }
+
+  return searchScreenWrap;
 }

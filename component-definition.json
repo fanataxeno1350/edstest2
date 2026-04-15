@@ -268,15 +268,15 @@
           }
         },
         {
-          "title": "Search-Image",
-          "id": "search-image",
+          "title": "Search-Suggestion",
+          "id": "search-suggestion-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "search-image",
-                  "name": "Search-Image"
+                  "model": "search-suggestion-item",
+                  "name": "Search-Suggestion"
                 }
               }
             }

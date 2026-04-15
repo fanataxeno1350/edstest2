@@ -63,7 +63,7 @@
   {
     "id": "main-header-rte",
     "components": [
-      "search-image"
+      "search-suggestion-item"
     ]
   },
   {

@@ -423,27 +423,75 @@
       },
       {
         "component": "reference",
-        "label": "80th Year Logo",
-        "name": "year80Logo",
+        "label": "Anniversary Logo",
+        "name": "anniversaryLogo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "80th Year Logo Link",
-        "name": "year80LogoLink",
+        "label": "Anniversary Logo Link",
+        "name": "anniversaryLogoLink",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Contact Icon (Mobile)",
+        "name": "contactIconMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Contact Link (Mobile)",
+        "name": "contactLinkMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Contact Icon (Desktop)",
+        "name": "contactIconDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Contact Link (Desktop)",
+        "name": "contactLinkDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Search Icon 1",
+        "name": "searchIcon1",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Search Icon 2",
+        "name": "searchIcon2",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Search Input Icon",
+        "name": "searchIconInput",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Search Button Icon",
+        "name": "searchButtonIcon",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "search-image",
-        "label": "Search Images",
-        "name": "searchImages"
+        "item": "search-suggestion-item",
+        "label": "Popular Keywords",
+        "name": "popularKeywords"
       },
       {
-        "component": "aem-content",
-        "label": "Contact Link",
-        "name": "contactLink",
-        "valueType": "string"
+        "component": "container",
+        "item": "search-suggestion-item",
+        "label": "Recommended Keywords",
+        "name": "recommendedKeywords"
       },
       {
         "component": "richtext",
@@ -454,12 +502,12 @@
     ]
   },
   {
-    "id": "search-image",
+    "id": "search-suggestion-item",
     "fields": [
       {
-        "component": "reference",
-        "label": "Image",
-        "name": "image",
+        "component": "text",
+        "label": "Suggestion",
+        "name": "suggestion",
         "valueType": "string"
       }
     ]
