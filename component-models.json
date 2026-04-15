@@ -198,9 +198,9 @@
       },
       {
         "component": "container",
-        "item": "footer-navigation-item",
-        "label": "Footer Navigation",
-        "name": "footerNavigation"
+        "item": "footer-navigation-section",
+        "label": "Footer Navigation Sections",
+        "name": "footerNavigationSections"
       },
       {
         "component": "container",
@@ -209,7 +209,7 @@
         "name": "secondaryNav"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Copyright Text",
         "name": "copyrightText",
         "valueType": "string"
@@ -221,14 +221,43 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Social Icon",
+        "label": "Icon",
         "name": "icon",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Social Link",
+        "label": "Link",
         "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-navigation-section",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Section Title",
+        "name": "sectionTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Section Link",
+        "name": "sectionLink",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-navigation-item",
+        "label": "Section Items",
+        "name": "items"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
         "valueType": "string"
       }
     ]
@@ -238,13 +267,13 @@
     "fields": [
       {
         "component": "text",
-        "label": "Menu Label",
+        "label": "Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Menu Link",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       },
@@ -261,13 +290,13 @@
     "fields": [
       {
         "component": "text",
-        "label": "Menu Label",
+        "label": "Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Menu Link",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       },

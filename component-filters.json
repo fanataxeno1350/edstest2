@@ -39,6 +39,7 @@
     "id": "footer-main",
     "components": [
       "social-link-item",
+      "footer-navigation-section",
       "footer-navigation-item",
       "secondary-nav-item"
     ]

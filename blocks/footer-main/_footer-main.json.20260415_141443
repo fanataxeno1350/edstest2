@@ -32,21 +32,6 @@
       }
     },
     {
-      "title": "Footer-Navigation-Section",
-      "id": "footer-navigation-section",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footer-navigation-section",
-              "name": "Footer-Navigation-Section"
-            }
-          }
-        }
-      }
-    },
-    {
       "title": "Footer-Navigation-Item",
       "id": "footer-navigation-item",
       "plugins": {
@@ -101,9 +86,9 @@
         },
         {
           "component": "container",
-          "item": "footer-navigation-section",
-          "label": "Footer Navigation Sections",
-          "name": "footerNavigationSections"
+          "item": "footer-navigation-item",
+          "label": "Footer Navigation",
+          "name": "footerNavigation"
         },
         {
           "component": "container",
@@ -112,7 +97,7 @@
           "name": "secondaryNav"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Copyright Text",
           "name": "copyrightText",
           "valueType": "string"
@@ -124,43 +109,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Icon",
+          "label": "Social Icon",
           "name": "icon",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Social Link",
           "name": "link",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "footer-navigation-section",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Section Title",
-          "name": "sectionTitle",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Section Link",
-          "name": "sectionLink",
-          "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "footer-navigation-item",
-          "label": "Section Items",
-          "name": "items"
-        },
-        {
-          "component": "richtext",
-          "label": "Navigation Hierarchy",
-          "name": "hierarchy-tree",
           "valueType": "string"
         }
       ]
@@ -170,13 +126,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Label",
+          "label": "Menu Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Menu Link",
           "name": "link",
           "valueType": "string"
         },
@@ -193,13 +149,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Label",
+          "label": "Menu Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Menu Link",
           "name": "link",
           "valueType": "string"
         },
@@ -217,7 +173,6 @@
       "id": "footer-main",
       "components": [
         "social-link-item",
-        "footer-navigation-section",
         "footer-navigation-item",
         "secondary-nav-item"
       ]

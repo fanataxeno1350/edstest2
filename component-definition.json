@@ -145,6 +145,21 @@
           }
         },
         {
+          "title": "Footer-Navigation-Section",
+          "id": "footer-navigation-section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-navigation-section",
+                  "name": "Footer-Navigation-Section"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Footer-Navigation-Item",
           "id": "footer-navigation-item",
           "plugins": {
