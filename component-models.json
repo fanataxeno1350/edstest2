@@ -371,14 +371,26 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Main Logo",
-        "name": "mainLogo",
+        "label": "Logo",
+        "name": "logo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Main Logo Link",
-        "name": "mainLogoLink",
+        "label": "Logo Link",
+        "name": "logoLink",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "80th Year Logo",
+        "name": "secondary-logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "80th Year Logo Link",
+        "name": "secondaryLogoLink",
         "valueType": "string"
       },
       {
@@ -389,21 +401,9 @@
       },
       {
         "component": "container",
-        "item": "contact-link-item",
-        "label": "Contact Links",
-        "name": "contactLinks"
-      },
-      {
-        "component": "container",
-        "item": "search-link-item",
-        "label": "Search Links",
-        "name": "searchLinks"
-      },
-      {
-        "component": "container",
-        "item": "logo-item",
-        "label": "Year Logos",
-        "name": "yearLogos"
+        "item": "icon-nav-item",
+        "label": "Icon Nav",
+        "name": "iconNav"
       }
     ]
   },
@@ -437,29 +437,47 @@
       {
         "component": "text",
         "label": "Left Div Heading",
-        "name": "leftDivHeading",
+        "name": "left-div-heading",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "Left Div Description",
-        "name": "leftDivDesc",
+        "name": "left-div-desc",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Left Div Subdescription",
-        "name": "leftDivSubdesc",
+        "label": "Left Div Sub Description",
+        "name": "left-div-subdesc",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Left Div List",
+        "name": "left-div-list",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Mega Menu Content",
+        "name": "mega-menu-content",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "contact-link-item",
+    "id": "icon-nav-item",
     "fields": [
       {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
         "component": "aem-content",
-        "label": "Contact Link",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       },
@@ -468,51 +486,11 @@
         "label": "Label",
         "name": "label",
         "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "search-link-item",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "Search Link",
-        "name": "link",
-        "valueType": "string"
       },
       {
-        "component": "reference",
-        "label": "Search Icon 1",
-        "name": "searchIcon1",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Search Icon 2",
-        "name": "searchIcon2",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Label",
-        "name": "label",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "logo-item",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Logo Image",
-        "name": "logo",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Logo Link",
-        "name": "logoLink",
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
         "valueType": "string"
       }
     ]

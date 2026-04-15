@@ -32,15 +32,45 @@
       }
     },
     {
-      "title": "Icon-Nav-Item",
-      "id": "icon-nav-item",
+      "title": "Contact-Link-Item",
+      "id": "contact-link-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "icon-nav-item",
-              "name": "Icon-Nav-Item"
+              "model": "contact-link-item",
+              "name": "Contact-Link-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Search-Link-Item",
+      "id": "search-link-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "search-link-item",
+              "name": "Search-Link-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Logo-Item",
+      "id": "logo-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "logo-item",
+              "name": "Logo-Item"
             }
           }
         }
@@ -53,26 +83,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Logo",
-          "name": "logo",
+          "label": "Main Logo",
+          "name": "mainLogo",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Logo Link",
-          "name": "logoLink",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "80th Year Logo",
-          "name": "secondary-logo",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "80th Year Logo Link",
-          "name": "secondaryLogoLink",
+          "label": "Main Logo Link",
+          "name": "mainLogoLink",
           "valueType": "string"
         },
         {
@@ -83,9 +101,21 @@
         },
         {
           "component": "container",
-          "item": "icon-nav-item",
-          "label": "Icon Nav",
-          "name": "iconNav"
+          "item": "contact-link-item",
+          "label": "Contact Links",
+          "name": "contactLinks"
+        },
+        {
+          "component": "container",
+          "item": "search-link-item",
+          "label": "Search Links",
+          "name": "searchLinks"
+        },
+        {
+          "component": "container",
+          "item": "logo-item",
+          "label": "Year Logos",
+          "name": "yearLogos"
         }
       ]
     },
@@ -119,47 +149,29 @@
         {
           "component": "text",
           "label": "Left Div Heading",
-          "name": "left-div-heading",
+          "name": "leftDivHeading",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Left Div Description",
-          "name": "left-div-desc",
+          "name": "leftDivDesc",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Left Div Sub Description",
-          "name": "left-div-subdesc",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Left Div List",
-          "name": "left-div-list",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Mega Menu Content",
-          "name": "mega-menu-content",
+          "label": "Left Div Subdescription",
+          "name": "leftDivSubdesc",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "icon-nav-item",
+      "id": "contact-link-item",
       "fields": [
         {
-          "component": "reference",
-          "label": "Icon",
-          "name": "icon",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Contact Link",
           "name": "link",
           "valueType": "string"
         },
@@ -168,11 +180,51 @@
           "label": "Label",
           "name": "label",
           "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "search-link-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Search Link",
+          "name": "link",
+          "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Navigation Hierarchy",
-          "name": "hierarchy-tree",
+          "component": "reference",
+          "label": "Search Icon 1",
+          "name": "searchIcon1",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Search Icon 2",
+          "name": "searchIcon2",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "logo-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo Image",
+          "name": "logo",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logoLink",
           "valueType": "string"
         }
       ]
@@ -183,7 +235,9 @@
       "id": "main-header",
       "components": [
         "navigation-item",
-        "icon-nav-item"
+        "contact-link-item",
+        "search-link-item",
+        "logo-item"
       ]
     }
   ]

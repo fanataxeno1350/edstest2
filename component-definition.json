@@ -267,45 +267,15 @@
           }
         },
         {
-          "title": "Contact-Link-Item",
-          "id": "contact-link-item",
+          "title": "Icon-Nav-Item",
+          "id": "icon-nav-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "contact-link-item",
-                  "name": "Contact-Link-Item"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Search-Link-Item",
-          "id": "search-link-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "search-link-item",
-                  "name": "Search-Link-Item"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Logo-Item",
-          "id": "logo-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "logo-item",
-                  "name": "Logo-Item"
+                  "model": "icon-nav-item",
+                  "name": "Icon-Nav-Item"
                 }
               }
             }
