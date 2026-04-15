@@ -55,7 +55,9 @@
     "id": "main-header",
     "components": [
       "navigation-item",
-      "icon-nav-item"
+      "press-release-item",
+      "contact-link-item",
+      "search-link-item"
     ]
   },
   {

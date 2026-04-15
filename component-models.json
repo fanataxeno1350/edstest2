@@ -383,14 +383,14 @@
       },
       {
         "component": "reference",
-        "label": "80th Year Logo",
-        "name": "secondary-logo",
+        "label": "Anniversary Logo",
+        "name": "anniversary-logo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "80th Year Logo Link",
-        "name": "secondaryLogoLink",
+        "label": "Anniversary Logo Link",
+        "name": "anniversaryLogoLink",
         "valueType": "string"
       },
       {
@@ -401,9 +401,21 @@
       },
       {
         "component": "container",
-        "item": "icon-nav-item",
-        "label": "Icon Nav",
-        "name": "iconNav"
+        "item": "press-release-item",
+        "label": "Press Releases",
+        "name": "pressReleases"
+      },
+      {
+        "component": "container",
+        "item": "contact-link-item",
+        "label": "Contact Links",
+        "name": "contactLinks"
+      },
+      {
+        "component": "container",
+        "item": "search-link-item",
+        "label": "Search Links",
+        "name": "searchLinks"
       }
     ]
   },
@@ -436,38 +448,55 @@
       },
       {
         "component": "text",
-        "label": "Left Div Heading",
-        "name": "left-div-heading",
+        "label": "Left Heading",
+        "name": "leftHeading",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Left Div Description",
-        "name": "left-div-desc",
+        "label": "Left Description",
+        "name": "leftDesc",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Left Div Sub Description",
-        "name": "left-div-subdesc",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Left Div List",
-        "name": "left-div-list",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Mega Menu Content",
-        "name": "mega-menu-content",
+        "label": "Left Subdescription",
+        "name": "leftSubdesc",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "icon-nav-item",
+    "id": "press-release-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Press Release Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Press Release Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "date-time",
+        "label": "Date",
+        "name": "date",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Category",
+        "name": "category",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "contact-link-item",
     "fields": [
       {
         "component": "reference",
@@ -486,11 +515,28 @@
         "label": "Label",
         "name": "label",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "search-link-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "First Icon",
+        "name": "icon1",
+        "valueType": "string"
       },
       {
-        "component": "richtext",
-        "label": "Navigation Hierarchy",
-        "name": "hierarchy-tree",
+        "component": "reference",
+        "label": "Second Icon",
+        "name": "icon2",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
