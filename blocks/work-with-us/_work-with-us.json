@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Work-With-Us-Slide",
-      "id": "work-with-us-slide",
+      "title": "Work-With-Us-Item",
+      "id": "work-with-us-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "work-with-us-slide",
-              "name": "Work-With-Us-Slide"
+              "model": "work-with-us-item",
+              "name": "Work-With-Us-Item"
             }
           }
         }
@@ -38,20 +38,20 @@
       "fields": [
         {
           "component": "text",
-          "label": "Block Heading",
-          "name": "heading",
+          "label": "Section Title",
+          "name": "title",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "work-with-us-slide",
-          "label": "Slides",
-          "name": "slides"
+          "item": "work-with-us-item",
+          "label": "Work With Us Items",
+          "name": "items"
         }
       ]
     },
     {
-      "id": "work-with-us-slide",
+      "id": "work-with-us-item",
       "fields": [
         {
           "component": "reference",
@@ -61,13 +61,25 @@
         },
         {
           "component": "text",
-          "label": "Slide Title",
-          "name": "title",
+          "label": "Image Alt Text",
+          "name": "imageAlt",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Description",
+          "label": "Image Title",
+          "name": "imageTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Item Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Item Description",
           "name": "description",
           "valueType": "string"
         },
@@ -90,7 +102,7 @@
     {
       "id": "work-with-us",
       "components": [
-        "work-with-us-slide"
+        "work-with-us-item"
       ]
     }
   ]

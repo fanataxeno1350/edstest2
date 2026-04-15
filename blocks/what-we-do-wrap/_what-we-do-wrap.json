@@ -61,13 +61,25 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Main Image",
+          "label": "Image",
           "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Title",
+          "label": "Image Alt Text",
+          "name": "imageAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Image Title",
+          "name": "imageTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Business Title",
           "name": "title",
           "valueType": "string"
         },
@@ -79,7 +91,7 @@
         },
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Business Link",
           "name": "link",
           "valueType": "string"
         }

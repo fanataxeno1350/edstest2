@@ -5,26 +5,26 @@ export default function decorate(block) {
   const [headingRow, descriptionRow, ...itemRows] = [...block.children];
 
   block.innerHTML = '';
-  block.classList.add('section', 'what-we-do-wrap'); // Added 'what-we-do-wrap' class from original HTML
+  block.classList.add('section', 'what-we-do-wrap');
 
-  const container = document.createElement('div');
-  container.classList.add('container');
-  block.append(container);
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
+  block.append(containerDiv);
 
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
   moveInstrumentation(headingRow, sectionHeader);
-  container.append(sectionHeader);
+  containerDiv.append(sectionHeader);
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.textContent = headingRow.firstElementChild.textContent.trim();
+  heading.textContent = headingRow ? headingRow.firstElementChild.textContent.trim() : '';
   sectionHeader.append(heading);
 
   const description = document.createElement('p');
   description.classList.add('aos-init', 'aos-animate');
+  description.textContent = descriptionRow ? descriptionRow.firstElementChild.textContent.trim() : '';
   moveInstrumentation(descriptionRow, description);
-  description.textContent = descriptionRow.firstElementChild.textContent.trim();
   sectionHeader.append(description);
 
   const ourBusinessVerticals = document.createElement('div');
@@ -40,7 +40,7 @@ export default function decorate(block) {
   desktopRow.classList.add('row', 'row-cols-lg-3', 'row-cols-1', 'g-3');
   desktopContainer.append(desktopRow);
 
-  // Mobile view (slider)
+  // Mobile view
   const mobileContainer = document.createElement('div');
   mobileContainer.classList.add('container', 'd-lg-none', 'd-block', 'aos-init', 'aos-animate');
   ourBusinessVerticals.append(mobileContainer);
@@ -50,97 +50,94 @@ export default function decorate(block) {
   mobileSlider.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "adaptiveHeight": true }');
   mobileContainer.append(mobileSlider);
 
-  const mobileSlides = document.createElement('div');
-  mobileSlides.classList.add('flickity-viewport');
-  mobileSlider.append(mobileSlides);
+  const flickityViewport = document.createElement('div');
+  flickityViewport.classList.add('flickity-viewport');
+  mobileSlider.append(flickityViewport);
 
-  const mobileSliderInner = document.createElement('div');
-  mobileSliderInner.classList.add('flickity-slider');
-  mobileSlides.append(mobileSliderInner);
+  const flickitySlider = document.createElement('div');
+  flickitySlider.classList.add('flickity-slider');
+  flickityViewport.append(flickitySlider);
 
-  const mobileSlideGroups = [];
-  let currentMobileSlideGroup = null;
+  const mobileSlides = [];
+  let currentMobileSlide = document.createElement('div');
+  currentMobileSlide.classList.add('slides');
+  flickitySlider.append(currentMobileSlide);
+  mobileSlides.push(currentMobileSlide);
+
+  let currentMobileRow = document.createElement('div');
+  currentMobileRow.classList.add('row', 'row-cols-1', 'gy-3');
+  currentMobileSlide.append(currentMobileRow);
 
   itemRows.forEach((row, index) => {
-    // Use content detection instead of index access for robustness
     const cells = [...row.children];
+    // Use content detection for cells instead of index access
     const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const titleCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a'));
-    const iconCell = cells.find(cell => cell.querySelector('picture') && cell !== imageCell); // Find the other picture cell
+    const imageAltCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().includes('Alt Text'));
+    const imageTitleCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().includes('Title'));
+    const titleCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().length > 0 && !cell.textContent.trim().includes('Alt Text') && !cell.textContent.trim().includes('Title'));
+    const iconCell = cells.find(cell => cell.querySelector('picture') && cell !== imageCell);
     const linkCell = cells.find(cell => cell.querySelector('a'));
 
     // Desktop item
-    const col = document.createElement('div');
-    col.classList.add('col', 'aos-init', 'aos-animate');
-    col.setAttribute('data-aos', 'fade-up');
-    col.setAttribute('data-aos-delay', `${(index % 3) * 300 + 100}`);
-    desktopRow.append(col);
+    const desktopCol = document.createElement('div');
+    desktopCol.classList.add('col', 'aos-init', 'aos-animate');
+    desktopCol.setAttribute('data-aos', 'fade-up');
+    desktopCol.setAttribute('data-aos-delay', `${100 + (index % 3) * 300}`); // Stagger delay
+    desktopRow.append(desktopCol);
 
     const wrap = document.createElement('div');
     wrap.classList.add('wrap');
-    col.append(wrap);
+    desktopCol.append(wrap);
 
     const imageDiv = document.createElement('div');
     imageDiv.classList.add('image');
-    wrap.append(imageDiv);
-
-    if (imageCell) {
-      const picture = imageCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        imageDiv.append(optimizedPic);
-      }
+    const picture = imageCell ? imageCell.querySelector('picture') : null;
+    if (picture) {
+      const img = picture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 992px)', width: '376' }, { media: '(min-width: 450px)', width: '376' }, { width: '376' }]);
+      moveInstrumentation(picture, optimizedPic.querySelector('img'));
+      imageDiv.append(optimizedPic);
     }
+    wrap.append(imageDiv);
 
     const titleDiv = document.createElement('div');
     titleDiv.classList.add('title');
-    if (titleCell) {
-      titleDiv.textContent = titleCell.textContent.trim();
+    titleDiv.textContent = titleCell ? titleCell.textContent.trim() : '';
+    const iconPicture = iconCell ? iconCell.querySelector('picture') : null;
+    if (iconPicture) {
+      const iconImg = iconPicture.querySelector('img');
+      const optimizedIcon = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '10' }]);
+      moveInstrumentation(iconPicture, optimizedIcon.querySelector('img'));
+      titleDiv.append(optimizedIcon);
     }
     wrap.append(titleDiv);
 
-    if (iconCell) {
-      const iconPicture = iconCell.querySelector('picture');
-      if (iconPicture) {
-        const iconImg = iconPicture.querySelector('img');
-        const optimizedIcon = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '10' }]);
-        moveInstrumentation(iconImg, optimizedIcon.querySelector('img'));
-        titleDiv.append(optimizedIcon);
-      }
+    const anchor = document.createElement('a');
+    anchor.classList.add('stretched-link');
+    const foundLink = linkCell ? linkCell.querySelector('a') : null;
+    if (foundLink) {
+      anchor.href = foundLink.href; // Read href for aem-content type
+      anchor.setAttribute('aria-label', `Learn more about ${titleCell ? titleCell.textContent.trim() : ''}`);
     }
+    moveInstrumentation(row, anchor);
+    wrap.append(anchor);
 
-    const link = document.createElement('a');
-    link.classList.add('stretched-link');
-    if (linkCell) {
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        link.href = foundLink.href;
-        link.setAttribute('aria-label', `Learn more about ${titleCell ? titleCell.textContent.trim() : 'item'}`);
-      }
-      moveInstrumentation(linkCell, link);
-    }
-    wrap.append(link);
+    // Mobile item (3 items per slide)
+    if (index > 0 && index % 3 === 0) {
+      currentMobileSlide = document.createElement('div');
+      currentMobileSlide.classList.add('slides');
+      currentMobileSlide.setAttribute('aria-hidden', 'true');
+      flickitySlider.append(currentMobileSlide);
+      mobileSlides.push(currentMobileSlide);
 
-    // Mobile item (grouped into slides of 3)
-    if (index % 3 === 0) {
-      currentMobileSlideGroup = document.createElement('div');
-      currentMobileSlideGroup.classList.add('slides');
-      if (index === 0) {
-        currentMobileSlideGroup.classList.add('is-selected');
-      }
-      mobileSlideGroups.push(currentMobileSlideGroup);
-      mobileSliderInner.append(currentMobileSlideGroup);
-
-      const mobileRow = document.createElement('div');
-      mobileRow.classList.add('row', 'row-cols-1', 'gy-3');
-      currentMobileSlideGroup.append(mobileRow);
+      currentMobileRow = document.createElement('div');
+      currentMobileRow.classList.add('row', 'row-cols-1', 'gy-3');
+      currentMobileSlide.append(currentMobileRow);
     }
 
     const mobileCol = document.createElement('div');
     mobileCol.classList.add('col');
-    currentMobileSlideGroup.querySelector('.row').append(mobileCol);
+    currentMobileRow.append(mobileCol);
 
     const mobileWrap = document.createElement('div');
     mobileWrap.classList.add('wrap');
@@ -148,59 +145,82 @@ export default function decorate(block) {
 
     const mobileImageDiv = document.createElement('div');
     mobileImageDiv.classList.add('image');
-    mobileWrap.append(mobileImageDiv);
-
-    if (imageCell) {
-      const mobilePicture = imageCell.querySelector('picture');
-      if (mobilePicture) {
-        const mobileImg = mobilePicture.querySelector('img');
-        const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '750' }]);
-        mobileImageDiv.append(optimizedMobilePic);
-      }
+    const mobilePicture = imageCell ? imageCell.querySelector('picture') : null;
+    if (mobilePicture) {
+      const mobileImg = mobilePicture.querySelector('img');
+      const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ media: '(min-width: 992px)', width: '376' }, { media: '(min-width: 450px)', width: '376' }, { width: '376' }]);
+      moveInstrumentation(mobilePicture, optimizedMobilePic.querySelector('img'));
+      mobileImageDiv.append(optimizedMobilePic);
     }
+    mobileWrap.append(mobileImageDiv);
 
     const mobileTitleDiv = document.createElement('div');
     mobileTitleDiv.classList.add('title');
-    if (titleCell) {
-      mobileTitleDiv.textContent = titleCell.textContent.trim();
+    mobileTitleDiv.textContent = titleCell ? titleCell.textContent.trim() : '';
+    const mobileIconPicture = iconCell ? iconCell.querySelector('picture') : null;
+    if (mobileIconPicture) {
+      const mobileIconImg = mobileIconPicture.querySelector('img');
+      const optimizedMobileIcon = createOptimizedPicture(mobileIconImg.src, mobileIconImg.alt, false, [{ width: '10' }]);
+      moveInstrumentation(mobileIconPicture, optimizedMobileIcon.querySelector('img'));
+      mobileTitleDiv.append(optimizedMobileIcon);
     }
     mobileWrap.append(mobileTitleDiv);
 
-    if (iconCell) {
-      const mobileIconPicture = iconCell.querySelector('picture');
-      if (mobileIconPicture) {
-        const mobileIconImg = mobileIconPicture.querySelector('img');
-        const optimizedMobileIcon = createOptimizedPicture(mobileIconImg.src, mobileIconImg.alt, false, [{ width: '10' }]);
-        mobileTitleDiv.append(optimizedMobileIcon);
-      }
+    const mobileAnchor = document.createElement('a');
+    mobileAnchor.classList.add('stretched-link');
+    if (foundLink) {
+      mobileAnchor.href = foundLink.href;
+      mobileAnchor.setAttribute('aria-label', `Learn more about ${titleCell ? titleCell.textContent.trim() : ''}`);
     }
-
-    const mobileLink = document.createElement('a');
-    mobileLink.classList.add('stretched-link');
-    if (linkCell) {
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        mobileLink.href = foundLink.href;
-        mobileLink.setAttribute('aria-label', `Learn more about ${titleCell ? titleCell.textContent.trim() : 'item'}`);
-      }
-    }
-    mobileWrap.append(mobileLink);
+    mobileWrap.append(mobileAnchor);
   });
 
-  if (mobileSlideGroups.length > 1) {
-    const pageDots = document.createElement('ol');
-    pageDots.classList.add('flickity-page-dots');
-    mobileSlider.append(pageDots);
+  const pageDots = document.createElement('ol');
+  pageDots.classList.add('flickity-page-dots');
+  mobileSlider.append(pageDots);
 
-    mobileSlideGroups.forEach((_, i) => {
-      const dot = document.createElement('li');
-      dot.classList.add('dot');
-      dot.setAttribute('aria-label', `Page dot ${i + 1}`);
-      if (i === 0) {
-        dot.classList.add('is-selected');
-        dot.setAttribute('aria-current', 'step');
-      }
-      pageDots.append(dot);
+  mobileSlides.forEach((slide, i) => {
+    const dot = document.createElement('li');
+    dot.classList.add('dot');
+    dot.setAttribute('aria-label', `Page dot ${i + 1}`);
+    if (i === 0) {
+      dot.classList.add('is-selected');
+      dot.setAttribute('aria-current', 'step');
+    }
+    dot.addEventListener('click', () => {
+      // Simulate Flickity dot click behavior
+      mobileSlides.forEach((s) => s.classList.remove('is-selected'));
+      mobileSlides.forEach((s) => s.setAttribute('aria-hidden', 'true'));
+      pageDots.querySelectorAll('.dot').forEach((d) => {
+        d.classList.remove('is-selected');
+        d.removeAttribute('aria-current');
+      });
+
+      slide.classList.add('is-selected');
+      slide.removeAttribute('aria-hidden');
+      dot.classList.add('is-selected');
+      dot.setAttribute('aria-current', 'step');
+      // In a real Flickity setup, you'd call flickityInstance.select(i) here.
+      // For this EDS block, we only simulate the class changes.
+      flickitySlider.style.transform = `translateX(-${i * 100}%)`; // Basic slide simulation
     });
-  }
+    pageDots.append(dot);
+  });
+
+  // Flickity initialization (simplified, as EDS doesn't load Bootstrap JS)
+  // This part would typically be handled by a separate script loading Flickity.
+  // For EDS, we only render the structure. If Flickity is needed, it must be
+  // loaded as a library and initialized explicitly.
+  // Example:
+  // if (typeof Flickity !== 'undefined') {
+  //   new Flickity(mobileSlider, {
+  //     wrapAround: false,
+  //     lazyLoad: true,
+  //     pageDots: true,
+  //     prevNextButtons: false,
+  //     imagesLoaded: true,
+  //     cellAlign: 'left',
+  //     adaptiveHeight: true,
+  //   });
+  // }
 }

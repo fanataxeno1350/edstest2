@@ -17,60 +17,60 @@
       }
     },
     {
-      "title": "Footer-Social-Item",
-      "id": "footer-social-item",
+      "title": "Footer-Social-Link",
+      "id": "footer-social-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-social-item",
-              "name": "Footer-Social-Item"
+              "model": "footer-social-link",
+              "name": "Footer-Social-Link"
             }
           }
         }
       }
     },
     {
-      "title": "Footer-Menu-Block",
-      "id": "footer-menu-block",
+      "title": "Footer-Navigation-Block",
+      "id": "footer-navigation-block",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-menu-block",
-              "name": "Footer-Menu-Block"
+              "model": "footer-navigation-block",
+              "name": "Footer-Navigation-Block"
             }
           }
         }
       }
     },
     {
-      "title": "Footer-Menu-Item",
-      "id": "footer-menu-item",
+      "title": "Footer-Navigation-Item",
+      "id": "footer-navigation-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-menu-item",
-              "name": "Footer-Menu-Item"
+              "model": "footer-navigation-item",
+              "name": "Footer-Navigation-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Secondary-Nav-Item",
-      "id": "secondary-nav-item",
+      "title": "Footer-Secondary-Nav-Item",
+      "id": "footer-secondary-nav-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "secondary-nav-item",
-              "name": "Secondary-Nav-Item"
+              "model": "footer-secondary-nav-item",
+              "name": "Footer-Secondary-Nav-Item"
             }
           }
         }
@@ -90,37 +90,37 @@
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logo-link",
+          "name": "logoLink",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "footer-social-item",
+          "item": "footer-social-link",
           "label": "Social Links",
-          "name": "social-links"
+          "name": "socialLinks"
         },
         {
           "component": "container",
-          "item": "footer-menu-block",
-          "label": "Footer Menu Blocks",
-          "name": "footer-menu-blocks"
+          "item": "footer-navigation-block",
+          "label": "Footer Navigation Blocks",
+          "name": "footerNavigationBlocks"
         },
         {
           "component": "container",
-          "item": "secondary-nav-item",
+          "item": "footer-secondary-nav-item",
           "label": "Secondary Navigation",
-          "name": "secondary-nav"
+          "name": "secondaryNav"
         },
         {
           "component": "text",
           "label": "Copyright Text",
-          "name": "copyright",
+          "name": "copyrightText",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "footer-social-item",
+      "id": "footer-social-link",
       "fields": [
         {
           "component": "reference",
@@ -137,25 +137,25 @@
       ]
     },
     {
-      "id": "footer-menu-block",
+      "id": "footer-navigation-block",
       "fields": [
         {
           "component": "text",
-          "label": "Menu Block Title",
-          "name": "block-title",
+          "label": "Block Title",
+          "name": "blockTitle",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Menu Block Title Link",
-          "name": "block-title-link",
+          "label": "Block Title Link",
+          "name": "blockTitleLink",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "footer-menu-item",
-          "label": "Menu Items",
-          "name": "menu-items"
+          "item": "footer-navigation-item",
+          "label": "Navigation Items",
+          "name": "navigationItems"
         },
         {
           "component": "richtext",
@@ -166,40 +166,40 @@
       ]
     },
     {
-      "id": "footer-menu-item",
+      "id": "footer-navigation-item",
       "fields": [
         {
           "component": "text",
-          "label": "Menu Label",
+          "label": "Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Menu Link",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Menu Hierarchy",
+          "label": "Navigation Hierarchy",
           "name": "hierarchy-tree",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "secondary-nav-item",
+      "id": "footer-secondary-nav-item",
       "fields": [
         {
           "component": "text",
-          "label": "Secondary Nav Label",
+          "label": "Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Secondary Nav Link",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         },
@@ -216,10 +216,10 @@
     {
       "id": "footer-main",
       "components": [
-        "footer-social-item",
-        "footer-menu-block",
-        "footer-menu-item",
-        "secondary-nav-item"
+        "footer-social-link",
+        "footer-navigation-block",
+        "footer-navigation-item",
+        "footer-secondary-nav-item"
       ]
     }
   ]

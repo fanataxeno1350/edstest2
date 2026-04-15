@@ -2,59 +2,68 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const wrapper = document.createElement('div');
-  wrapper.classList.add('row', 'g-4', 'purpose-led-grid', 'pt-3');
+  const cardsContainer = document.createElement('div');
+  cardsContainer.classList.add('row', 'g-4', 'purpose-led-grid', 'pt-3');
 
-  [...block.children].forEach((row) => {
-    // cell[0]: field="image" label="Image" type=reference
-    // cell[1]: field="alt" label="Image Alt Text" type=text
-    // cell[2]: field="link" label="Card Link" type=aem-content
-    // cell[3]: field="description" label="Description" type=richtext
-    const [imageCell, altTextCell, linkCell, descriptionCell] = [...row.children];
+  [...block.children].forEach((row, i) => {
+    const cells = [...row.children];
 
-    const col = document.createElement('div');
-    col.classList.add('col-md-6', 'aos-init', 'aos-animate');
-    col.setAttribute('data-aos-easing', 'ease-in-out');
-    col.setAttribute('data-aos', 'fade-up');
-    col.setAttribute('data-aos-delay', '700');
+    // Find cells based on content type, as per EDS BLOCK STRUCTURE and BlockJson
+    // cell[0]: field="link" type=aem-content
+    const linkCell = cells[0];
+    // cell[1]: field="image" type=reference
+    const imageCell = cells[1];
+    // cell[2]: field="alt" type=text
+    const altCell = cells[2];
+    // cell[3]: field="description" type=richtext
+    const descriptionCell = cells[3];
 
-    const cardLink = document.createElement('a');
-    cardLink.classList.add('card-wrap');
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      cardLink.href = foundLink.href;
-      cardLink.target = '_blank'; // Original HTML has target="_blank"
+    const colDiv = document.createElement('div');
+    colDiv.classList.add('col-md-6', 'aos-init', 'aos-animate');
+    colDiv.setAttribute('data-aos-easing', 'ease-in-out');
+    colDiv.setAttribute('data-aos', 'fade-up');
+    colDiv.setAttribute('data-aos-delay', `${700 + i * 100}`); // Stagger delay
+
+    const cardWrap = document.createElement('a');
+    cardWrap.classList.add('card-wrap');
+    const link = linkCell.querySelector('a');
+    if (link) {
+      cardWrap.href = link.href;
+      cardWrap.target = '_blank'; // Assuming target blank from original HTML
     }
-    moveInstrumentation(row, cardLink);
 
     const cardImageDiv = document.createElement('div');
     cardImageDiv.classList.add('card-image');
-
     const picture = imageCell.querySelector('picture');
     if (picture) {
       const img = picture.querySelector('img');
       if (img) {
-        const altText = altTextCell.textContent.trim();
+        const altText = altCell.textContent.trim(); // Read alt text from text cell
         const optimizedPic = createOptimizedPicture(img.src, altText, false, [{ width: '576', media: '(max-width: 576px)' }, { width: '750' }]);
-        optimizedPic.querySelector('img').classList.add('img-fluid'); // Apply img-fluid class
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        moveInstrumentation(picture, optimizedPic.querySelector('img'));
         cardImageDiv.append(optimizedPic);
+        // Add img-fluid class to the actual img inside the optimized picture
+        const newImg = optimizedPic.querySelector('img');
+        if (newImg) {
+          newImg.classList.add('img-fluid');
+        }
       }
     }
+    cardWrap.append(cardImageDiv);
 
     const cardTextDiv = document.createElement('div');
     cardTextDiv.classList.add('card-text');
+    const descP = document.createElement('p');
+    descP.classList.add('desc');
+    descP.innerHTML = descriptionCell.innerHTML; // Use innerHTML for richtext
+    cardTextDiv.append(descP);
+    cardWrap.append(cardTextDiv);
 
-    const descriptionP = document.createElement('p');
-    descriptionP.classList.add('desc');
-    descriptionP.innerHTML = descriptionCell.innerHTML;
-
-    cardTextDiv.append(descriptionP);
-    cardLink.append(cardImageDiv, cardTextDiv);
-    col.append(cardLink);
-    wrapper.append(col);
+    moveInstrumentation(row, cardWrap);
+    colDiv.append(cardWrap);
+    cardsContainer.append(colDiv);
   });
 
   block.innerHTML = '';
-  block.append(wrapper);
+  block.append(cardsContainer);
 }

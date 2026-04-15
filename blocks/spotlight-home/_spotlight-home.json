@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Spotlight Home",
+      "title": "Spotlight-Home",
       "id": "spotlight-home",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "spotlight-home",
               "model": "spotlight-home",
-              "name": "Spotlight Home"
+              "name": "Spotlight-Home"
             }
           }
         }
       }
     },
     {
-      "title": "Spotlight Slide",
+      "title": "Spotlight-Slide",
       "id": "spotlight-slide",
       "plugins": {
         "xwalk": {
@@ -25,22 +25,22 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "spotlight-slide",
-              "name": "Spotlight Slide"
+              "name": "Spotlight-Slide"
             }
           }
         }
       }
     },
     {
-      "title": "Quick Link",
-      "id": "quick-link",
+      "title": "Spotlight-Quick-Link",
+      "id": "spotlight-quick-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "quick-link",
-              "name": "Quick Link"
+              "model": "spotlight-quick-link",
+              "name": "Spotlight-Quick-Link"
             }
           }
         }
@@ -58,20 +58,8 @@
           "name": "slides"
         },
         {
-          "component": "reference",
-          "label": "Slider Previous Icon",
-          "name": "sliderPrevIcon",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Slider Next Icon",
-          "name": "sliderNextIcon",
-          "valueType": "string"
-        },
-        {
           "component": "container",
-          "item": "quick-link",
+          "item": "spotlight-quick-link",
           "label": "Quick Links",
           "name": "quickLinks"
         }
@@ -82,20 +70,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Image",
-          "name": "desktopImage",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Tablet Image",
-          "name": "tabletImage",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Mobile Image",
-          "name": "mobileImage",
+          "label": "Image",
+          "name": "image",
           "valueType": "string"
         },
         {
@@ -106,18 +82,18 @@
         },
         {
           "component": "text",
-          "label": "Headline",
-          "name": "headline",
+          "label": "Small Text",
+          "name": "smallText",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Subheadline",
-          "name": "subheadline",
+          "label": "Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Description",
           "name": "description",
           "valueType": "string"
@@ -137,17 +113,17 @@
       ]
     },
     {
-      "id": "quick-link",
+      "id": "spotlight-quick-link",
       "fields": [
         {
           "component": "text",
-          "label": "Link Label",
+          "label": "Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Link URL",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         }
@@ -159,7 +135,7 @@
       "id": "spotlight-home",
       "components": [
         "spotlight-slide",
-        "quick-link"
+        "spotlight-quick-link"
       ]
     }
   ]
