@@ -63,7 +63,7 @@
         {
           "component": "richtext",
           "label": "Copyright Text",
-          "name": "copyrightText",
+          "name": "copyright",
           "valueType": "string"
         }
       ]

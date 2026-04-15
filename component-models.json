@@ -205,7 +205,7 @@
       {
         "component": "richtext",
         "label": "Copyright Text",
-        "name": "copyright",
+        "name": "copyrightText",
         "valueType": "string"
       }
     ]
