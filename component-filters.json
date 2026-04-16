@@ -15,28 +15,45 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "prd-header",
+      "menu-mobile-popup",
+      "big-box",
+      "site-footer"
     ]
   },
   {
-    "id": "cards",
+    "id": "big-box",
     "components": [
-      "card"
+      "cart-box-item"
     ]
   },
   {
-    "id": "columns",
+    "id": "menu-mobile-popup",
     "components": [
-      "column"
+      "navigation-item"
     ]
   },
   {
-    "id": "column",
+    "id": "prd-header",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "banner-image",
+      "logo-image",
+      "navigation-item",
+      "simple-link",
+      "book-icons-item",
+      "social-link-item"
+    ]
+  },
+  {
+    "id": "site-footer",
+    "components": [
+      "footer-social-link",
+      "footer-menu-card",
+      "footer-menu-item",
+      "footer-bottom-link",
+      "footer-wallpaper-link"
     ]
   }
 ]

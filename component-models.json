@@ -142,75 +142,428 @@
     ]
   },
   {
-    "id": "card",
+    "id": "big-box",
+    "fields": [
+      {
+        "component": "container",
+        "item": "cart-box-item",
+        "label": "Cart Items",
+        "name": "cartItems"
+      }
+    ]
+  },
+  {
+    "id": "cart-box-item",
     "fields": [
       {
         "component": "reference",
-        "valueType": "string",
-        "name": "image",
         "label": "Image",
-        "multi": false
+        "name": "image",
+        "valueType": "string"
       },
       {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
+        "component": "aem-content",
+        "label": "Image Link",
+        "name": "imageLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "View All Link",
+        "name": "viewAllLink",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "columns",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "columns",
-        "value": "",
-        "label": "Columns"
-      },
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "rows",
-        "value": "",
-        "label": "Rows"
-      }
-    ]
-  },
-  {
-    "id": "fragment",
-    "fields": [
-      {
-        "component": "aem-content",
-        "name": "reference",
-        "label": "Reference"
-      }
-    ]
-  },
-  {
-    "id": "hero",
+    "id": "menu-mobile-popup",
     "fields": [
       {
         "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
+        "label": "Close Icon",
+        "name": "close-icon",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Alt",
-        "value": ""
+        "label": "Close Label",
+        "name": "close-label",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "navigation-item",
+        "label": "Menu Items",
+        "name": "menuItems"
+      }
+    ]
+  },
+  {
+    "id": "navigation-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Menu Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Menu Link",
+        "name": "link",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "prd-header",
+    "fields": [
+      {
+        "component": "container",
+        "item": "banner-image",
+        "label": "Banner Images",
+        "name": "bannerImages"
+      },
+      {
+        "component": "container",
+        "item": "logo-image",
+        "label": "Logo Images",
+        "name": "logoImages"
+      },
+      {
+        "component": "container",
+        "item": "navigation-item",
+        "label": "Main Navigation",
+        "name": "mainNavigation"
+      },
+      {
+        "component": "container",
+        "item": "simple-link",
+        "label": "Simple Links",
+        "name": "simpleLinks"
+      },
+      {
+        "component": "container",
+        "item": "book-icons-item",
+        "label": "Book Icons",
+        "name": "bookIcons"
+      },
+      {
+        "component": "container",
+        "item": "social-link-item",
+        "label": "Social Links",
+        "name": "socialLinks"
+      }
+    ]
+  },
+  {
+    "id": "banner-image",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Banner Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Alt Text",
+        "name": "alt",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "logo-image",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Alt Text",
+        "name": "alt",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "navigation-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Menu Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Menu Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Menu Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "simple-link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "book-icons-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Book Icon Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Book Icon Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-link-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Social Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Social Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "site-footer",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Cookie Policy Title",
+        "name": "cookie-policy-title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Cookie Policy Description",
+        "name": "cookie-policy-description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Cookie Policy Button Label",
+        "name": "cookie-policy-button-label",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-link",
+        "label": "Footer Social Links",
+        "name": "footer-social-links"
+      },
+      {
+        "component": "reference",
+        "label": "Footer SEP Image",
+        "name": "footer-sep-image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Footer SEP Link",
+        "name": "footer-sep-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-wallpaper-link",
+        "label": "Footer Wallpaper Links",
+        "name": "footer-wallpaper-links"
+      },
+      {
+        "component": "container",
+        "item": "footer-menu-card",
+        "label": "Footer Menu Cards",
+        "name": "footer-menu-cards"
+      },
+      {
+        "component": "richtext",
+        "label": "Copyright Text",
+        "name": "copyright-text",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-bottom-link",
+        "label": "Footer Bottom Links",
+        "name": "footer-bottom-links"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-link",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Social Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Social Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Alt Text",
+        "name": "alt-text",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-menu-card",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Card Title",
+        "name": "card-title",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Card Title Link",
+        "name": "card-title-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-menu-item",
+        "label": "Footer Menu Items",
+        "name": "footer-menu-items"
+      }
+    ]
+  },
+  {
+    "id": "footer-menu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Menu Item Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Menu Item Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-bottom-link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Bottom Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Bottom Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-wallpaper-link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Wallpaper Version Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Wallpaper Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Wallpaper Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
