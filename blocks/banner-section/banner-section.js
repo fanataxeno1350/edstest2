@@ -2,18 +2,9 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [
-    bannerImageDesktopRow,
-    bannerImageMobileRow,
-    ...ctaItemRows
-  ] = [...block.children];
+  const [desktopImageRow, mobileImageRow, ...ctaRows] = [...block.children];
 
-  block.innerHTML = ''; // Clear the block content
-
-  const section = document.createElement('section');
-  section.classList.add('banner-section');
-  moveInstrumentation(block, section);
-
+  // Create the main wrapper div
   const wrapper = document.createElement('div');
   wrapper.classList.add(
     'position-relative',
@@ -24,38 +15,40 @@ export default function decorate(block) {
     'justify-content-center',
   );
 
-  // Banner Image (Desktop)
-  const desktopPictureCell = bannerImageDesktopRow?.firstElementChild;
-  const desktopPicture = desktopPictureCell?.querySelector('picture');
-  if (desktopPicture) {
-    const desktopImg = desktopPicture.querySelector('img');
-    const optimizedDesktopPic = createOptimizedPicture(
-      desktopImg.src,
-      desktopImg.alt,
-      false,
-      [{ width: '1920' }],
-    );
-    optimizedDesktopPic.classList.add('d-block', 'w-100', 'h-100');
-    optimizedDesktopPic.querySelector('img').classList.add('w-100', 'h-100', 'object-fit-cover', 'banner-media', 'd-block');
-    moveInstrumentation(desktopPicture, optimizedDesktopPic.querySelector('img'));
-    wrapper.appendChild(optimizedDesktopPic);
+  // Handle images
+  const picture = document.createElement('picture');
+  picture.classList.add('d-block', 'w-100', 'h-100');
+
+  const desktopImg = desktopImageRow?.querySelector('img');
+  const mobileImg = mobileImageRow?.querySelector('img');
+
+  if (mobileImg) {
+    const sourceMobile = document.createElement('source');
+    sourceMobile.media = '(max-width:600px)';
+    sourceMobile.srcset = mobileImg.src;
+    picture.appendChild(sourceMobile);
   }
 
-  // Banner Image (Mobile) - as a source for the desktop picture
-  const mobilePictureCell = bannerImageMobileRow?.firstElementChild;
-  const mobilePicture = mobilePictureCell?.querySelector('picture');
-  if (mobilePicture && desktopPicture) {
-    const mobileImg = mobilePicture.querySelector('img');
-    const source = document.createElement('source');
-    source.media = '(max-width:600px)';
-    source.srcset = mobileImg.src; // Use original mobile image src for mobile source
-    desktopPicture.prepend(source); // Add mobile source to the desktop picture
+  if (desktopImg) {
+    const sourceDesktop = document.createElement('source');
+    sourceDesktop.srcset = desktopImg.src;
+    picture.appendChild(sourceDesktop);
+
+    const img = createOptimizedPicture(desktopImg.src, desktopImg.alt, true, [{ width: '750' }]).querySelector('img');
+    img.classList.add('w-100', 'h-100', 'object-fit-cover', 'banner-media', 'd-block');
+    img.setAttribute('loading', 'eager');
+    img.setAttribute('fetchpriority', 'high');
+    picture.appendChild(img);
+    moveInstrumentation(desktopImageRow, picture);
   }
 
   const overlayDiv = document.createElement('div');
   overlayDiv.classList.add('position-absolute', 'start-0', 'bottom-0', 'w-100', 'h-100');
+
+  wrapper.appendChild(picture);
   wrapper.appendChild(overlayDiv);
 
+  // Create banner content div
   const bannerContent = document.createElement('div');
   bannerContent.classList.add('position-absolute', 'banner-content');
 
@@ -75,22 +68,13 @@ export default function decorate(block) {
   );
 
   const ctaSpan = document.createElement('span');
-  ctaSpan.classList.add(
-    'text-capitalize',
-    'mt-6',
-    'mt-md-3',
-    'mt-lg-9',
-    'mb-7',
-  );
+  ctaSpan.classList.add('text-capitalize', 'mt-6', 'mt-md-3', 'mt-lg-9', 'mb-7');
 
-  ctaItemRows.forEach((row) => {
-    const cells = [...row.children];
-    // Find the link cell (aem-content) and label cell (text) using content detection
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    const labelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture'));
+  ctaRows.forEach((row) => {
+    const [labelCell, linkCell] = [...row.children];
 
-    const foundLink = linkCell?.querySelector('a');
-    const labelText = labelCell?.textContent.trim();
+    const foundLink = linkCell.querySelector('a');
+    const labelText = labelCell.textContent.trim();
 
     if (foundLink && labelText) {
       const anchor = document.createElement('a');
@@ -120,15 +104,16 @@ export default function decorate(block) {
       labelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
       labelSpan.textContent = labelText;
       anchor.appendChild(labelSpan);
-
-      moveInstrumentation(row, anchor);
       ctaSpan.appendChild(anchor);
+      moveInstrumentation(row, anchor);
     }
   });
 
   container.appendChild(ctaSpan);
   bannerContent.appendChild(container);
   wrapper.appendChild(bannerContent);
-  section.appendChild(wrapper);
-  block.appendChild(section);
+
+  block.innerHTML = '';
+  block.classList.add('banner-section');
+  block.appendChild(wrapper);
 }

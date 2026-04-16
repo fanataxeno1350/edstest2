@@ -26,13 +26,14 @@
       "card-carousel",
       "stay-social",
       "buy-now-card",
-      "footer-brand"
+      "footer-brand",
+      "footer"
     ]
   },
   {
     "id": "banner-section",
     "components": [
-      "banner-cta-item"
+      "banner-cta"
     ]
   },
   {
@@ -53,19 +54,24 @@
     ]
   },
   {
+    "id": "footer",
+    "components": [
+      "footer-navigation-item",
+      "footer-social-link-item"
+    ]
+  },
+  {
     "id": "header-comp",
     "components": [
-      "navigation-item",
-      "sub-navigation-item",
-      "search-icon-item"
+      "navigation-item"
     ]
   },
   {
     "id": "product-selection-component",
     "components": [
       "product-item",
-      "ghee-section",
-      "milk-section"
+      "right-ghee-section",
+      "right-milk-section"
     ]
   },
   {
@@ -74,7 +80,8 @@
   {
     "id": "stay-social",
     "components": [
-      "stay-social-card"
+      "stay-social-card",
+      "stay-social-cta"
     ]
   },
   {

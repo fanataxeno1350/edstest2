@@ -4,7 +4,7 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   block.classList.add('pt-3', 'pt-sm-3');
 
-  // Image optimization for any images within the block
+  // Image optimization (if any images were present in the block, though this block is empty)
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));

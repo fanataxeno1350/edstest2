@@ -51,8 +51,8 @@
         {
           "component": "container",
           "item": "navigation-item",
-          "label": "Navigation Menu",
-          "name": "navigation-menu"
+          "label": "Navigation Items",
+          "name": "navigation-items"
         }
       ]
     },

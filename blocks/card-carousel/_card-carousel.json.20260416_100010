@@ -38,20 +38,20 @@
       "fields": [
         {
           "component": "text",
-          "label": "Title",
+          "label": "Carousel Title",
           "name": "title",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Subtitle",
+          "label": "Carousel Subtitle",
           "name": "subtitle",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "product-card",
-          "label": "Cards",
+          "label": "Product Cards",
           "name": "cards"
         }
       ]
@@ -61,7 +61,7 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Main Image",
+          "label": "Main Product Image",
           "name": "mainImage",
           "valueType": "string"
         },
@@ -73,14 +73,14 @@
         },
         {
           "component": "reference",
-          "label": "Product Image",
-          "name": "productImage",
+          "label": "Card Decorative Image",
+          "name": "cardImage",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Product Link",
-          "name": "productLink",
+          "label": "Card Image Link",
+          "name": "cardImageLink",
           "valueType": "string"
         },
         {

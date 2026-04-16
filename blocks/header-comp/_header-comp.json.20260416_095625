@@ -30,6 +30,36 @@
           }
         }
       }
+    },
+    {
+      "title": "Sub-Navigation-Item",
+      "id": "sub-navigation-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "sub-navigation-item",
+              "name": "Sub-Navigation-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Search-Icon-Item",
+      "id": "search-icon-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "search-icon-item",
+              "name": "Search-Icon-Item"
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
@@ -45,14 +75,20 @@
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logo-link",
+          "name": "logoLink",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "navigation-item",
           "label": "Navigation Menu",
-          "name": "navigation-menu"
+          "name": "navigationMenu"
+        },
+        {
+          "component": "container",
+          "item": "search-icon-item",
+          "label": "Search Icons",
+          "name": "searchIcons"
         }
       ]
     },
@@ -84,13 +120,55 @@
           "valueType": "string"
         }
       ]
+    },
+    {
+      "id": "sub-navigation-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Submenu Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Submenu Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Navigation Hierarchy",
+          "name": "hierarchy-tree",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "search-icon-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Search Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Search Label",
+          "name": "label",
+          "valueType": "string"
+        }
+      ]
     }
   ],
   "filters": [
     {
       "id": "header-comp",
       "components": [
-        "navigation-item"
+        "navigation-item",
+        "sub-navigation-item",
+        "search-icon-item"
       ]
     }
   ]

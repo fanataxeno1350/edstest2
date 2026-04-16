@@ -51,7 +51,7 @@
         {
           "component": "container",
           "item": "text-banner-cta",
-          "label": "CTAs",
+          "label": "CTA Buttons",
           "name": "ctas"
         }
       ]

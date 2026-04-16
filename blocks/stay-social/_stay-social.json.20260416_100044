@@ -30,21 +30,6 @@
           }
         }
       }
-    },
-    {
-      "title": "Stay-Social-Cta",
-      "id": "stay-social-cta",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "stay-social-cta",
-              "name": "Stay-Social-Cta"
-            }
-          }
-        }
-      }
     }
   ],
   "models": [
@@ -66,14 +51,20 @@
         {
           "component": "container",
           "item": "stay-social-card",
-          "label": "Cards",
+          "label": "Social Cards",
           "name": "cards"
         },
         {
-          "component": "container",
-          "item": "stay-social-cta",
-          "label": "Call to Action",
-          "name": "cta"
+          "component": "text",
+          "label": "CTA Label",
+          "name": "cta-label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "cta-link",
+          "valueType": "string"
         }
       ]
     },
@@ -88,24 +79,7 @@
         },
         {
           "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "stay-social-cta",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Link",
+          "label": "Card Link",
           "name": "link",
           "valueType": "string"
         }
@@ -116,8 +90,7 @@
     {
       "id": "stay-social",
       "components": [
-        "stay-social-card",
-        "stay-social-cta"
+        "stay-social-card"
       ]
     }
   ]

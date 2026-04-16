@@ -146,26 +146,26 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Banner Image (Desktop)",
-        "name": "bannerImageDesktop",
+        "label": "Desktop Image",
+        "name": "desktopImage",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Banner Image (Mobile)",
-        "name": "bannerImageMobile",
+        "label": "Mobile Image",
+        "name": "mobileImage",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "banner-cta-item",
-        "label": "CTA Items",
-        "name": "ctaItems"
+        "item": "banner-cta",
+        "label": "CTAs",
+        "name": "ctas"
       }
     ]
   },
   {
-    "id": "banner-cta-item",
+    "id": "banner-cta",
     "fields": [
       {
         "component": "text",
@@ -189,20 +189,20 @@
     "fields": [
       {
         "component": "text",
-        "label": "Carousel Title",
+        "label": "Title",
         "name": "title",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Carousel Subtitle",
+        "label": "Subtitle",
         "name": "subtitle",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "product-card",
-        "label": "Product Cards",
+        "label": "Cards",
         "name": "cards"
       }
     ]
@@ -218,7 +218,7 @@
       },
       {
         "component": "richtext",
-        "label": "Card Title/Description",
+        "label": "Card Title & Description",
         "name": "cardTitle",
         "valueType": "string"
       },
@@ -353,6 +353,87 @@
     ]
   },
   {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Primary Logo",
+        "name": "primaryLogo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Primary Logo Link",
+        "name": "primaryLogoLink",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Secondary Logo",
+        "name": "secondaryLogo",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-navigation-item",
+        "label": "Footer Navigation Items",
+        "name": "navigationItems"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-link-item",
+        "label": "Footer Social Links",
+        "name": "socialLinks"
+      },
+      {
+        "component": "text",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-navigation-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Navigation Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Navigation Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-link-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Social Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Social Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "header-comp",
     "fields": [
       {
@@ -364,20 +445,14 @@
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logoLink",
+        "name": "logo-link",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "navigation-item",
         "label": "Navigation Menu",
-        "name": "navigationMenu"
-      },
-      {
-        "component": "container",
-        "item": "search-icon-item",
-        "label": "Search Icons",
-        "name": "searchIcons"
+        "name": "navigation-menu"
       }
     ]
   },
@@ -411,46 +486,6 @@
     ]
   },
   {
-    "id": "sub-navigation-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Submenu Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Submenu Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Navigation Hierarchy",
-        "name": "hierarchy-tree",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "search-icon-item",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Search Icon",
-        "name": "icon",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Search Label",
-        "name": "label",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "product-selection-component",
     "fields": [
       {
@@ -467,15 +502,15 @@
       },
       {
         "component": "container",
-        "item": "ghee-section",
-        "label": "Ghee Section",
-        "name": "gheeSection"
+        "item": "right-ghee-section",
+        "label": "Right Ghee Sections",
+        "name": "rightGheeSections"
       },
       {
         "component": "container",
-        "item": "milk-section",
-        "label": "Milk Section",
-        "name": "milkSection"
+        "item": "right-milk-section",
+        "label": "Right Milk Sections",
+        "name": "rightMilkSections"
       }
     ]
   },
@@ -490,6 +525,12 @@
       },
       {
         "component": "text",
+        "label": "Image Alt Text",
+        "name": "alt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
         "label": "Product Label",
         "name": "label",
         "valueType": "string"
@@ -497,24 +538,24 @@
     ]
   },
   {
-    "id": "ghee-section",
+    "id": "right-ghee-section",
     "fields": [
       {
         "component": "reference",
-        "label": "Desktop Background Image",
-        "name": "desktopBackgroundImage",
+        "label": "Background Image Desktop",
+        "name": "backgroundImageDesktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Mobile Background Image",
-        "name": "mobileBackgroundImage",
+        "label": "Background Image Mobile",
+        "name": "backgroundImageMobile",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Main Text",
-        "name": "mainText",
+        "component": "richtext",
+        "label": "Headline",
+        "name": "headline",
         "valueType": "string"
       },
       {
@@ -525,8 +566,20 @@
       },
       {
         "component": "aem-content",
-        "label": "Download Report Link",
+        "label": "Download Link",
         "name": "downloadLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Download Link Label",
+        "name": "downloadLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Tick Icon (After Download)",
+        "name": "tickIcon",
         "valueType": "string"
       },
       {
@@ -534,45 +587,39 @@
         "label": "After Download Text",
         "name": "afterDownloadText",
         "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "After Download Icon",
-        "name": "afterDownloadIcon",
-        "valueType": "string"
       }
     ]
   },
   {
-    "id": "milk-section",
+    "id": "right-milk-section",
     "fields": [
       {
         "component": "reference",
-        "label": "Desktop Background Image",
-        "name": "desktopBackgroundImage",
+        "label": "Background Image Desktop",
+        "name": "backgroundImageDesktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Mobile Background Image",
-        "name": "mobileBackgroundImage",
+        "label": "Background Image Mobile",
+        "name": "backgroundImageMobile",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Main Text",
-        "name": "mainText",
+        "label": "Headline",
+        "name": "headline",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Section Icon",
-        "name": "icon",
+        "label": "SVG Icon",
+        "name": "svgIcon",
         "valueType": "string"
       },
       {
-        "component": "aem-content",
-        "label": "Whatsapp Link",
+        "component": "richtext",
+        "label": "Whatsapp Link HTML",
         "name": "whatsappLink",
         "valueType": "string"
       }
@@ -599,20 +646,14 @@
       {
         "component": "container",
         "item": "stay-social-card",
-        "label": "Social Cards",
+        "label": "Cards",
         "name": "cards"
       },
       {
-        "component": "text",
-        "label": "CTA Label",
-        "name": "cta-label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "CTA Link",
-        "name": "cta-link",
-        "valueType": "string"
+        "component": "container",
+        "item": "stay-social-cta",
+        "label": "Call to Action",
+        "name": "cta"
       }
     ]
   },
@@ -627,7 +668,24 @@
       },
       {
         "component": "aem-content",
-        "label": "Card Link",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "stay-social-cta",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       }
@@ -651,7 +709,7 @@
       {
         "component": "container",
         "item": "text-banner-cta",
-        "label": "CTAs",
+        "label": "CTA Buttons",
         "name": "ctas"
       }
     ]

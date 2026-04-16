@@ -32,30 +32,30 @@
       }
     },
     {
-      "title": "Right-Ghee-Section",
-      "id": "right-ghee-section",
+      "title": "Ghee-Section",
+      "id": "ghee-section",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "right-ghee-section",
-              "name": "Right-Ghee-Section"
+              "model": "ghee-section",
+              "name": "Ghee-Section"
             }
           }
         }
       }
     },
     {
-      "title": "Right-Milk-Section",
-      "id": "right-milk-section",
+      "title": "Milk-Section",
+      "id": "milk-section",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "right-milk-section",
-              "name": "Right-Milk-Section"
+              "model": "milk-section",
+              "name": "Milk-Section"
             }
           }
         }
@@ -80,15 +80,15 @@
         },
         {
           "component": "container",
-          "item": "right-ghee-section",
-          "label": "Right Ghee Sections",
-          "name": "rightGheeSections"
+          "item": "ghee-section",
+          "label": "Ghee Section",
+          "name": "gheeSection"
         },
         {
           "component": "container",
-          "item": "right-milk-section",
-          "label": "Right Milk Sections",
-          "name": "rightMilkSections"
+          "item": "milk-section",
+          "label": "Milk Section",
+          "name": "milkSection"
         }
       ]
     },
@@ -103,12 +103,6 @@
         },
         {
           "component": "text",
-          "label": "Image Alt Text",
-          "name": "alt",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
           "label": "Product Label",
           "name": "label",
           "valueType": "string"
@@ -116,24 +110,24 @@
       ]
     },
     {
-      "id": "right-ghee-section",
+      "id": "ghee-section",
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image Desktop",
-          "name": "backgroundImageDesktop",
+          "label": "Desktop Background Image",
+          "name": "desktopBackgroundImage",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Background Image Mobile",
-          "name": "backgroundImageMobile",
+          "label": "Mobile Background Image",
+          "name": "mobileBackgroundImage",
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Headline",
-          "name": "headline",
+          "component": "text",
+          "label": "Main Text",
+          "name": "mainText",
           "valueType": "string"
         },
         {
@@ -144,20 +138,8 @@
         },
         {
           "component": "aem-content",
-          "label": "Download Link",
+          "label": "Download Report Link",
           "name": "downloadLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Download Link Label",
-          "name": "downloadLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Tick Icon (After Download)",
-          "name": "tickIcon",
           "valueType": "string"
         },
         {
@@ -165,39 +147,45 @@
           "label": "After Download Text",
           "name": "afterDownloadText",
           "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "After Download Icon",
+          "name": "afterDownloadIcon",
+          "valueType": "string"
         }
       ]
     },
     {
-      "id": "right-milk-section",
+      "id": "milk-section",
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image Desktop",
-          "name": "backgroundImageDesktop",
+          "label": "Desktop Background Image",
+          "name": "desktopBackgroundImage",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Background Image Mobile",
-          "name": "backgroundImageMobile",
+          "label": "Mobile Background Image",
+          "name": "mobileBackgroundImage",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Headline",
-          "name": "headline",
+          "label": "Main Text",
+          "name": "mainText",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "SVG Icon",
-          "name": "svgIcon",
+          "label": "Section Icon",
+          "name": "icon",
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Whatsapp Link HTML",
+          "component": "aem-content",
+          "label": "Whatsapp Link",
           "name": "whatsappLink",
           "valueType": "string"
         }
@@ -209,8 +197,8 @@
       "id": "product-selection-component",
       "components": [
         "product-item",
-        "right-ghee-section",
-        "right-milk-section"
+        "ghee-section",
+        "milk-section"
       ]
     }
   ]

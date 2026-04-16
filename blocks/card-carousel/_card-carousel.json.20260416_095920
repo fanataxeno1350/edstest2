@@ -38,20 +38,20 @@
       "fields": [
         {
           "component": "text",
-          "label": "Title",
+          "label": "Carousel Title",
           "name": "title",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Subtitle",
+          "label": "Carousel Subtitle",
           "name": "subtitle",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "product-card",
-          "label": "Cards",
+          "label": "Product Cards",
           "name": "cards"
         }
       ]
@@ -67,7 +67,7 @@
         },
         {
           "component": "richtext",
-          "label": "Card Title \u0026 Description",
+          "label": "Card Title/Description",
           "name": "cardTitle",
           "valueType": "string"
         },
