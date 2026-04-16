@@ -268,15 +268,15 @@
           }
         },
         {
-          "title": "Header-Navigation-Item",
-          "id": "header-navigation-item",
+          "title": "Navigation-Item",
+          "id": "navigation-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "header-navigation-item",
-                  "name": "Header-Navigation-Item"
+                  "model": "navigation-item",
+                  "name": "Navigation-Item"
                 }
               }
             }

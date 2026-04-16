@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Navigation-Item",
-      "id": "navigation-item",
+      "title": "Header-Navigation-Item",
+      "id": "header-navigation-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "navigation-item",
-              "name": "Navigation-Item"
+              "model": "header-navigation-item",
+              "name": "Header-Navigation-Item"
             }
           }
         }
@@ -45,23 +45,29 @@
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logoLink",
+          "name": "logo-link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Search Icon",
+          "name": "search-icon",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "navigation-item",
+          "item": "header-navigation-item",
           "label": "Navigation Menu",
-          "name": "navigationMenu"
+          "name": "navigation-menu"
         }
       ]
     },
     {
-      "id": "navigation-item",
+      "id": "header-navigation-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Menu Icon",
+          "label": "Item Icon",
           "name": "icon",
           "valueType": "string"
         },
@@ -90,7 +96,7 @@
     {
       "id": "header-comp",
       "components": [
-        "navigation-item"
+        "header-navigation-item"
       ]
     }
   ]
