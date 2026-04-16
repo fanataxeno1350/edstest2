@@ -51,7 +51,18 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "corp-header",
+        "shortcut-bar",
+        "al-home-top",
+        "gallery",
+        "trending-products",
+        "newsroom-carousel",
+        "other-services",
+        "inovative-banner",
+        "core-values",
+        "enquiry-box",
+        "footer-sec"
       ]
     }
   ]

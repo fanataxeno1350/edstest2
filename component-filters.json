@@ -15,28 +15,93 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "corp-header",
+      "shortcut-bar",
+      "al-home-top",
+      "gallery",
+      "trending-products",
+      "newsroom-carousel",
+      "other-services",
+      "inovative-banner",
+      "core-values",
+      "enquiry-box",
+      "footer-sec"
     ]
   },
   {
-    "id": "cards",
+    "id": "al-home-top",
     "components": [
-      "card"
+      "banner-item"
     ]
   },
   {
-    "id": "columns",
+    "id": "core-values",
     "components": [
-      "column"
+      "core-value-item"
     ]
   },
   {
-    "id": "column",
+    "id": "corp-header",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "navigation-item",
+      "submenu-category",
+      "submenu-product"
+    ]
+  },
+  {
+    "id": "enquiry-box"
+  },
+  {
+    "id": "footer-sec",
+    "components": [
+      "social-icon-item",
+      "checkbox-item",
+      "footer-menu-section",
+      "footer-menu-item"
+    ]
+  },
+  {
+    "id": "gallery",
+    "components": [
+      "gallery-item"
+    ]
+  },
+  {
+    "id": "inovative-banner",
+    "components": [
+      "future-card",
+      "future-plant-image",
+      "manufacturing-card",
+      "future-list-item"
+    ]
+  },
+  {
+    "id": "newsroom-carousel",
+    "components": [
+      "newsroom-carousel-item",
+      "newsroom-carousel-dot"
+    ]
+  },
+  {
+    "id": "other-services",
+    "components": [
+      "service-card"
+    ]
+  },
+  {
+    "id": "shortcut-bar",
+    "components": [
+      "shortcut-icon-item",
+      "social-icon-item"
+    ]
+  },
+  {
+    "id": "trending-products",
+    "components": [
+      "trending-product-tab",
+      "trending-product-card"
     ]
   }
 ]

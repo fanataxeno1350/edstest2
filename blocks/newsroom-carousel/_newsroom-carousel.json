@@ -1,0 +1,154 @@
+{
+  "definitions": [
+    {
+      "title": "Newsroom Carousel",
+      "id": "newsroom-carousel",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "newsroom-carousel",
+              "model": "newsroom-carousel",
+              "name": "Newsroom Carousel"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Newsroom Carousel Item",
+      "id": "newsroom-carousel-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "newsroom-carousel-item",
+              "name": "Newsroom Carousel Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Newsroom Carousel Dot",
+      "id": "newsroom-carousel-dot",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "newsroom-carousel-dot",
+              "name": "Newsroom Carousel Dot"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "newsroom-carousel",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Carousel Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Title Link",
+          "name": "titleLink",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "newsroom-carousel-item",
+          "label": "Carousel Items",
+          "name": "carouselItems"
+        },
+        {
+          "component": "container",
+          "item": "newsroom-carousel-dot",
+          "label": "Carousel Dots",
+          "name": "carouselDots"
+        }
+      ]
+    },
+    {
+      "id": "newsroom-carousel-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Image Alt Text",
+          "name": "imageAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Publish Date",
+          "name": "date",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Headline",
+          "name": "headline",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Read More Link",
+          "name": "readMoreLink",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Read More Icon",
+          "name": "readMoreIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Navigation Hierarchy",
+          "name": "hierarchy-tree",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "newsroom-carousel-dot",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Dot Icon",
+          "name": "dotIcon",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "newsroom-carousel",
+      "components": [
+        "newsroom-carousel-item",
+        "newsroom-carousel-dot"
+      ]
+    }
+  ]
+}
