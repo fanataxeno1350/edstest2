@@ -27,7 +27,8 @@
       "inovative-banner",
       "core-values",
       "enquiry-box",
-      "footer-sec"
+      "footer-sec",
+      "main-navigation"
     ]
   },
   {
@@ -75,6 +76,14 @@
       "future-plant-image",
       "manufacturing-card",
       "future-list-item"
+    ]
+  },
+  {
+    "id": "main-navigation",
+    "components": [
+      "navigation-item",
+      "submenu-item",
+      "deep-side-menu-item"
     ]
   },
   {
