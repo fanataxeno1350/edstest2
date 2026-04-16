@@ -17,84 +17,72 @@
       "columns",
       "fragment",
       "---new--blocks-----",
-      "main-header",
-      "spotlight-home",
-      "what-we-do-wrap",
-      "purpose-led-grid",
-      "spirit-of-rise",
-      "latest-stories",
-      "work-with-us",
-      "faqs-section",
-      "footer-main",
-      "spotlight-home-wrap"
+      "header-comp",
+      "banner-section",
+      "space-adder",
+      "text-banner",
+      "w-100",
+      "product-selection-component",
+      "card-carousel",
+      "stay-social",
+      "buy-now-card",
+      "footer-brand"
     ]
   },
   {
-    "id": "faqs-section",
+    "id": "banner-section",
     "components": [
-      "faq-item"
+      "banner-cta-item"
     ]
   },
   {
-    "id": "footer-main",
+    "id": "buy-now-card"
+  },
+  {
+    "id": "card-carousel",
     "components": [
-      "footer-social-item",
-      "footer-menu-item",
-      "footer-secondary-nav-item"
+      "product-card"
     ]
   },
   {
-    "id": "latest-stories",
+    "id": "footer-brand",
     "components": [
-      "twitter-feed-item",
-      "story-item"
+      "footer-navigation-item",
+      "footer-secondary-link-item",
+      "footer-social-link-item"
     ]
   },
   {
-    "id": "main-header",
+    "id": "header-comp",
     "components": [
       "navigation-item",
-      "icon-link-item",
-      "search-item",
-      "press-release-item"
+      "sub-menu-item"
     ]
   },
   {
-    "id": "purpose-led-grid",
+    "id": "product-selection-component",
     "components": [
-      "purpose-led-card"
+      "product-item",
+      "ghee-section",
+      "milk-section"
     ]
   },
   {
-    "id": "spirit-of-rise",
+    "id": "space-adder"
+  },
+  {
+    "id": "stay-social",
     "components": [
-      "spirit-of-rise-card"
+      "stay-social-card"
     ]
   },
   {
-    "id": "spotlight-home-wrap",
+    "id": "text-banner",
     "components": [
-      "spotlight-slide",
-      "quick-link-item"
+      "text-banner-cta"
     ]
   },
   {
-    "id": "spotlight-home",
-    "components": [
-      "spotlight-slide",
-      "quick-link-item"
-    ]
-  },
-  {
-    "id": "what-we-do-wrap",
-    "components": [
-      "business-vertical"
-    ]
-  },
-  {
-    "id": "work-with-us",
-    "components": [
-      "work-with-us-slide"
-    ]
+    "id": "w-100"
   }
 ]

@@ -1,0 +1,270 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [titleRow, subtitleRow, ...cardRows] = [...block.children];
+
+  const container = document.createElement('div');
+  container.classList.add('container', 'gx-8', 'gx-sm-0');
+  moveInstrumentation(block, container);
+
+  const title = document.createElement('h2');
+  title.classList.add(
+    'card-carousel__title',
+    'font-24',
+    'leading-28',
+    'font-sm-40',
+    'leading-sm-50',
+    'text-dark-gray-100',
+    'text-center',
+    'font-baskerville',
+  );
+  moveInstrumentation(titleRow.firstElementChild, title);
+  title.textContent = titleRow.firstElementChild.textContent.trim();
+  container.appendChild(title);
+
+  const subtitle = document.createElement('p');
+  subtitle.classList.add(
+    'card-carousel__subtitle',
+    'font-default',
+    'leading-24',
+    'font-sm-18',
+    'leading-sm-32',
+    'text-dark-gray-100',
+    'text-center',
+    'mt-4',
+    'fw-medium',
+  );
+  moveInstrumentation(subtitleRow.firstElementChild, subtitle);
+  subtitle.textContent = subtitleRow.firstElementChild.textContent.trim();
+  container.appendChild(subtitle);
+
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('card-carousel__swiper', 'swiper', 'container', 'gx-0');
+
+  const swiperContainer = document.createElement('div');
+  swiperContainer.classList.add('card-carousel__swiper--container', 'mt-8', 'mt-sm-10');
+
+  const productCardsContainer = document.createElement('div');
+  productCardsContainer.classList.add(
+    'product-cards__card-container',
+    'mx-4',
+    'mx-sm-0',
+    'overflow-hidden',
+    'add-margin',
+  );
+
+  const swiperSlideWrapper = document.createElement('div');
+  swiperSlideWrapper.classList.add('swiper-wrapper', 'slide-in-anim');
+
+  cardRows.forEach((row) => {
+    const [
+      cardThumbCell,
+      cardTitleCell,
+      productImageCell,
+      productLinkCell,
+      ctaLinkCell,
+      ctaLabelCell,
+    ] = [...row.children];
+
+    const card = document.createElement('div');
+    card.classList.add('product-cards__card', 'swiper-slide', 'd-flex', 'flex-column', 'cursor-pointer');
+    moveInstrumentation(row, card);
+
+    const media = document.createElement('div');
+    media.classList.add('product-cards__card-media', 'position-relative');
+
+    const ratioWrapper = document.createElement('div');
+    ratioWrapper.classList.add('ratio', 'ratio-3x4', 'position-relative', 'product-cards__card-video-wrapper');
+
+    const cardThumbPicture = cardThumbCell.querySelector('picture');
+    if (cardThumbPicture) {
+      const img = cardThumbPicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      optimizedPic.querySelector('img').classList.add('product-cards__card-thumb', 'object-fit-cover');
+      moveInstrumentation(cardThumbPicture, optimizedPic);
+      ratioWrapper.appendChild(optimizedPic);
+    }
+
+    const cardGradient = document.createElement('div');
+    cardGradient.classList.add('card-gradient', 'position-absolute', 'top-0', 'bottom-0', 'start-0', 'end-0');
+    ratioWrapper.appendChild(cardGradient);
+    media.appendChild(ratioWrapper);
+
+    const cardTitle = document.createElement('div');
+    cardTitle.classList.add(
+      'product-cards__card-title',
+      'position-absolute',
+      'top-0',
+      'text-white',
+      'px-5',
+      'pt-4',
+      'text-cream-100',
+      'leading-32',
+    );
+    moveInstrumentation(cardTitleCell, cardTitle);
+    cardTitle.innerHTML = cardTitleCell.innerHTML;
+    media.appendChild(cardTitle);
+
+    const cardImgWrapper = document.createElement('div');
+    cardImgWrapper.classList.add(
+      'product-cards__card-img',
+      'pt-lg-8',
+      'pt-sm-6',
+      'pt-8',
+      'pb-3',
+      'bg-cream-300',
+      'position-absolute',
+      'start-50',
+      'top-100',
+      'rounded-top-circle',
+    );
+
+    const ratio1x1 = document.createElement('div');
+    ratio1x1.classList.add('ratio', 'ratio-1x1');
+
+    const productLink = productLinkCell.querySelector('a');
+    const productAnchor = document.createElement('a');
+    productAnchor.classList.add('cta-analytics');
+    if (productLink) productAnchor.href = productLink.href;
+
+    const productImagePicture = productImageCell.querySelector('picture');
+    if (productImagePicture) {
+      const img = productImagePicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      optimizedPic.querySelector('img').classList.add('w-100', 'h-100', 'object-fit-contain');
+      moveInstrumentation(productImagePicture, optimizedPic);
+      productAnchor.appendChild(optimizedPic);
+    }
+    ratio1x1.appendChild(productAnchor);
+    cardImgWrapper.appendChild(ratio1x1);
+    media.appendChild(cardImgWrapper);
+    card.appendChild(media);
+
+    const ctaWrapper = document.createElement('div');
+    ctaWrapper.classList.add('mt-6', 'align-self-center');
+
+    const ctaLink = ctaLinkCell.querySelector('a');
+    const ctaAnchor = document.createElement('a');
+    ctaAnchor.classList.add(
+      'cta-analytics',
+      'svasti-cta',
+      'w-fit',
+      'text-decoration-none',
+      'd-flex',
+      'align-items-center',
+      'primary',
+      'px-8',
+      'pb-3',
+      'text-cream-100',
+      'border',
+      'border-2',
+      'border-red-100',
+      'border-maroon-100-hover',
+      'border-red-300-active',
+      'bg-red-100',
+      'bg-maroon-100-hover',
+      'bg-red-300-active',
+    );
+    if (ctaLink) ctaAnchor.href = ctaLink.href;
+    moveInstrumentation(ctaLabelCell, ctaAnchor);
+    ctaAnchor.textContent = ctaLabelCell.textContent.trim();
+    ctaWrapper.appendChild(ctaAnchor);
+    card.appendChild(ctaWrapper);
+
+    swiperSlideWrapper.appendChild(card);
+  });
+
+  productCardsContainer.appendChild(swiperSlideWrapper);
+  swiperContainer.appendChild(productCardsContainer);
+
+  const prevButton = document.createElement('button');
+  prevButton.classList.add(
+    'card-carousel__swiper--prev',
+    'card-carousel__navigation',
+    'cursor-pointer',
+    'rounded-circle',
+    'bg-transparent',
+    'text-red-100',
+    'text-maroon-600-hover',
+    'justify-content-center',
+    'align-items-center',
+    'position-absolute',
+    'd-none',
+    'd-sm-flex',
+    'opacity-30',
+  );
+  prevButton.disabled = true;
+  const prevImg = document.createElement('img');
+  prevImg.alt = 'svg file';
+  prevImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776310800302.svg+xml';
+  prevButton.appendChild(prevImg);
+  swiperContainer.appendChild(prevButton);
+
+  const nextButton = document.createElement('button');
+  nextButton.classList.add(
+    'card-carousel__swiper--next',
+    'card-carousel__navigation',
+    'cursor-pointer',
+    'rounded-circle',
+    'bg-transparent',
+    'text-red-100',
+    'text-maroon-600-hover',
+    'justify-content-center',
+    'align-items-center',
+    'position-absolute',
+    'end-0',
+    'd-none',
+    'd-sm-flex',
+  );
+  const nextImg = document.createElement('img');
+  nextImg.alt = 'svg file';
+  nextImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776310800302.svg+xml';
+  nextButton.appendChild(nextImg);
+  swiperContainer.appendChild(nextButton);
+
+  const pagination = document.createElement('div');
+  pagination.classList.add(
+    'card-carousel__swiper--pagination',
+    'mt-10',
+    'cursor-pointer',
+    'position-relative',
+    'swiper-pagination-clickable',
+    'swiper-pagination-bullets',
+    'swiper-pagination-horizontal',
+    'mx-auto',
+    'w-fit',
+  );
+  swiperContainer.appendChild(pagination);
+
+  swiperWrapper.appendChild(swiperContainer);
+  block.innerHTML = '';
+  block.appendChild(container);
+  block.appendChild(swiperWrapper);
+
+  // Initialize Swiper after all elements are in the DOM
+  import('swiper').then((SwiperModule) => {
+    const Swiper = SwiperModule.default;
+    const swiper = new Swiper(swiperWrapper, {
+      slidesPerView: 'auto',
+      spaceBetween: 32,
+      loop: false,
+      navigation: {
+        nextEl: nextButton,
+        prevEl: prevButton,
+      },
+      pagination: {
+        el: pagination,
+        clickable: true,
+      },
+    });
+
+    // Update button states
+    swiper.on('slideChange', () => {
+      prevButton.disabled = swiper.isBeginning;
+      nextButton.disabled = swiper.isEnd;
+      prevButton.classList.toggle('opacity-30', swiper.isBeginning);
+      nextButton.classList.toggle('opacity-30', swiper.isEnd);
+    });
+  });
+}

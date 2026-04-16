@@ -52,16 +52,16 @@
         "columns",
         "fragment",
         "---new--blocks-----",
-        "main-header",
-        "spotlight-home",
-        "what-we-do-wrap",
-        "purpose-led-grid",
-        "spirit-of-rise",
-        "latest-stories",
-        "work-with-us",
-        "faqs-section",
-        "footer-main",
-        "spotlight-home-wrap"
+        "header-comp",
+        "banner-section",
+        "space-adder",
+        "text-banner",
+        "w-100",
+        "product-selection-component",
+        "card-carousel",
+        "stay-social",
+        "buy-now-card",
+        "footer-brand"
       ]
     }
   ]
