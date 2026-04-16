@@ -32,45 +32,15 @@
       }
     },
     {
-      "title": "Sub-Menu-Item",
-      "id": "sub-menu-item",
+      "title": "Sub-Navigation-Item",
+      "id": "sub-navigation-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "sub-menu-item",
-              "name": "Sub-Menu-Item"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Search-Icon",
-      "id": "search-icon",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "search-icon",
-              "name": "Search-Icon"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Global-Search-Icon",
-      "id": "global-search-icon",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "global-search-icon",
-              "name": "Global-Search-Icon"
+              "model": "sub-navigation-item",
+              "name": "Sub-Navigation-Item"
             }
           }
         }
@@ -90,26 +60,14 @@
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logo-link",
+          "name": "logoLink",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "navigation-item",
           "label": "Navigation Menu",
-          "name": "navigation-menu"
-        },
-        {
-          "component": "container",
-          "item": "search-icon",
-          "label": "Search Icons",
-          "name": "search-icons"
-        },
-        {
-          "component": "container",
-          "item": "global-search-icon",
-          "label": "Global Search Icons",
-          "name": "global-search-icons"
+          "name": "navigationMenu"
         }
       ]
     },
@@ -118,7 +76,7 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Icon",
+          "label": "Menu Icon",
           "name": "icon",
           "valueType": "string"
         },
@@ -139,56 +97,22 @@
           "label": "Navigation Hierarchy",
           "name": "hierarchy-tree",
           "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "sub-menu-item",
-          "label": "Sub Menu Items",
-          "name": "sub-menu-items"
         }
       ]
     },
     {
-      "id": "sub-menu-item",
+      "id": "sub-navigation-item",
       "fields": [
         {
           "component": "text",
-          "label": "Sub Menu Label",
+          "label": "Submenu Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Sub Menu Link",
+          "label": "Submenu Link",
           "name": "link",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "search-icon",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Search Icon",
-          "name": "icon",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Search Label",
-          "name": "label",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "global-search-icon",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Global Search Icon",
-          "name": "icon",
           "valueType": "string"
         }
       ]
@@ -199,8 +123,7 @@
       "id": "header-comp",
       "components": [
         "navigation-item",
-        "search-icon",
-        "global-search-icon"
+        "sub-navigation-item"
       ]
     }
   ]

@@ -442,14 +442,26 @@
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logoLink",
+        "name": "logo-link",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "navigation-item",
         "label": "Navigation Menu",
-        "name": "navigationMenu"
+        "name": "navigation-menu"
+      },
+      {
+        "component": "container",
+        "item": "search-icon",
+        "label": "Search Icons",
+        "name": "search-icons"
+      },
+      {
+        "component": "container",
+        "item": "global-search-icon",
+        "label": "Global Search Icons",
+        "name": "global-search-icons"
       }
     ]
   },
@@ -458,7 +470,7 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Menu Icon",
+        "label": "Icon",
         "name": "icon",
         "valueType": "string"
       },
@@ -479,22 +491,56 @@
         "label": "Navigation Hierarchy",
         "name": "hierarchy-tree",
         "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "sub-menu-item",
+        "label": "Sub Menu Items",
+        "name": "sub-menu-items"
       }
     ]
   },
   {
-    "id": "sub-navigation-item",
+    "id": "sub-menu-item",
     "fields": [
       {
         "component": "text",
-        "label": "Submenu Label",
+        "label": "Sub Menu Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Submenu Link",
+        "label": "Sub Menu Link",
         "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "search-icon",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Search Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Search Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "global-search-icon",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Global Search Icon",
+        "name": "icon",
         "valueType": "string"
       }
     ]
