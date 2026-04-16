@@ -483,6 +483,23 @@
     ]
   },
   {
+    "id": "sub-navigation-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Submenu Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Submenu Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "product-selection-component",
     "fields": [
       {

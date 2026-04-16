@@ -30,21 +30,6 @@
           }
         }
       }
-    },
-    {
-      "title": "Sub-Navigation-Item",
-      "id": "sub-navigation-item",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "sub-navigation-item",
-              "name": "Sub-Navigation-Item"
-            }
-          }
-        }
-      }
     }
   ],
   "models": [
@@ -99,31 +84,13 @@
           "valueType": "string"
         }
       ]
-    },
-    {
-      "id": "sub-navigation-item",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Submenu Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Submenu Link",
-          "name": "link",
-          "valueType": "string"
-        }
-      ]
     }
   ],
   "filters": [
     {
       "id": "header-comp",
       "components": [
-        "navigation-item",
-        "sub-navigation-item"
+        "navigation-item"
       ]
     }
   ]

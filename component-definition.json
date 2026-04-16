@@ -283,6 +283,21 @@
           }
         },
         {
+          "title": "Sub-Navigation-Item",
+          "id": "sub-navigation-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "sub-navigation-item",
+                  "name": "Sub-Navigation-Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Product-Selection-Component",
           "id": "product-selection-component",
           "plugins": {
