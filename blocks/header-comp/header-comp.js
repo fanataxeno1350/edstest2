@@ -4,8 +4,8 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 function transformNestedLists(rootUl) {
   rootUl.querySelectorAll('li').forEach((li) => {
     const nested = li.querySelector(':scope > ul');
+    // Handle label-only nodes
     const anchor = li.querySelector(':scope > a');
-
     if (!anchor) {
       const textNode = [...li.childNodes].find(
         (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
@@ -17,11 +17,10 @@ function transformNestedLists(rootUl) {
         li.prepend(span);
       }
     }
-
     if (nested) {
       nested.remove();
       const subWrap = document.createElement('div');
-      subWrap.classList.add('has-sub-child'); // This class is not in the allowlist. It should be defined in the original HTML or removed.
+      subWrap.classList.add('has-sub-child'); // Use original HTML class
       subWrap.append(nested);
       li.append(subWrap);
       const trigger = li.querySelector(':scope > a, :scope > span');
@@ -29,57 +28,82 @@ function transformNestedLists(rootUl) {
         trigger.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
-          li.classList.toggle('active'); // This class is not in the allowlist. It should be defined in the original HTML or removed.
-          subWrap.classList.toggle('active'); // This class is not in the allowlist. It should be defined in the original HTML or removed.
+          li.classList.toggle('active');
+          subWrap.classList.toggle('active');
         });
       }
-      transformNestedLists(nested); // Recursively transform nested lists
     }
   });
 }
 
 export default function decorate(block) {
-  const [logoRow, logoLinkRow, ...navItemRows] = [...block.children];
+  const [logoRow, logoLinkRow, searchIconRow, ...menuItemRows] = [...block.children];
 
-  // Create header section
-  const headerSection = document.createElement('section');
-  headerSection.classList.add('header-comp', 'bg-red-100', 'position-fixed', 'top-0', 'start-0', 'z-2', 'w-100');
+  block.innerHTML = '';
+  block.classList.add('bg-red-100', 'position-fixed', 'top-0', 'start-0', 'z-2', 'w-100');
 
-  const containerDiv = document.createElement('div');
-  containerDiv.classList.add('container', 'gx-8', 'gx-sm-0', 'd-flex', 'justify-content-between', 'align-items-start', 'align-items-md-center');
-  headerSection.append(containerDiv);
+  const container = document.createElement('div');
+  container.classList.add(
+    'container',
+    'gx-8',
+    'gx-sm-0',
+    'd-flex',
+    'justify-content-between',
+    'align-items-start',
+    'align-items-md-center',
+  );
 
-  // Create nav element
   const nav = document.createElement('nav');
   nav.classList.add('header-nav', 'navbar', 'position-static', 'navbar-expand-lg');
-  containerDiv.append(nav);
 
   const navWrapper = document.createElement('div');
-  navWrapper.classList.add('header-comp__wrapper', 'container-fluid', 'justify-content-start', 'gx-4', 'gx-md-0');
-  nav.append(navWrapper);
+  navWrapper.classList.add(
+    'header-comp__wrapper',
+    'container-fluid',
+    'justify-content-start',
+    'gx-4',
+    'gx-md-0',
+  );
 
-  // Hamburger button
   const hamburgerButton = document.createElement('button');
-  hamburgerButton.classList.add('border-0', 'shadow-none', 'navbar-toggler', 'header-comp__wrapper--hamburger', 'collapsed', 'p-0');
+  hamburgerButton.classList.add(
+    'border-0',
+    'shadow-none',
+    'navbar-toggler',
+    'header-comp__wrapper--hamburger',
+    'collapsed',
+    'p-0',
+  );
   hamburgerButton.type = 'button';
   hamburgerButton.setAttribute('aria-controls', 'navbarSupportedContent');
   hamburgerButton.setAttribute('aria-expanded', 'false');
   hamburgerButton.setAttribute('aria-label', 'Toggle navigation');
-  const hamburgerSpan = document.createElement('span');
-  hamburgerSpan.classList.add('navbar-toggler-icon', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center');
-  for (let i = 0; i < 3; i += 1) {
-    const lineSpan = document.createElement('span');
-    lineSpan.classList.add('d-block', 'bg-white');
-    hamburgerSpan.append(lineSpan);
-  }
-  hamburgerButton.append(hamburgerSpan);
-  navWrapper.append(hamburgerButton);
 
-  // Logo
-  const logoDiv = document.createElement('div');
-  logoDiv.classList.add('header-comp__wrapper--logo');
+  const togglerIcon = document.createElement('span');
+  togglerIcon.classList.add(
+    'navbar-toggler-icon',
+    'd-flex',
+    'flex-column',
+    'justify-content-center',
+    'align-items-center',
+  );
+  for (let i = 0; i < 3; i += 1) {
+    const span = document.createElement('span');
+    span.classList.add('d-block', 'bg-white');
+    togglerIcon.appendChild(span);
+  }
+  hamburgerButton.appendChild(togglerIcon);
+
+  const logoWrapper = document.createElement('div');
+  logoWrapper.classList.add('header-comp__wrapper--logo');
+
   const logoLink = document.createElement('a');
-  logoLink.classList.add('header-comp__wrapper--link', 'cta-analytics', 'navbar-brand', 'm-0');
+  logoLink.classList.add(
+    'header-comp__wrapper--link',
+    'cta-analytics',
+    'navbar-brand',
+    'm-0',
+  );
   logoLink.setAttribute('data-link-region', 'Header');
   logoLink.href = logoLinkRow.querySelector('a')?.href || '#';
 
@@ -87,163 +111,271 @@ export default function decorate(block) {
   if (logoPicture) {
     const logoImg = logoPicture.querySelector('img');
     if (logoImg) {
-      const optimizedPic = createOptimizedPicture(logoImg.src, logoImg.alt, false, [{ width: '100' }]);
-      moveInstrumentation(logoImg, optimizedPic.querySelector('img'));
-      logoLink.append(optimizedPic);
-      logoImg.classList.add('header-comp__wrapper--image', 'h-100');
+      const optimizedLogoPic = createOptimizedPicture(logoImg.src, logoImg.alt, false, [{ width: '750' }]);
+      optimizedLogoPic.classList.add('header-comp__wrapper--image', 'h-100');
+      moveInstrumentation(logoPicture, optimizedLogoPic);
+      logoLink.appendChild(optimizedLogoPic);
     }
   }
-  logoDiv.append(logoLink);
-  navWrapper.append(logoDiv);
+  logoWrapper.appendChild(logoLink);
 
-  // Navigation menus
-  const navCollapseDiv = document.createElement('div');
-  navCollapseDiv.classList.add('header-comp__wrapper--menus', 'collapse', 'navbar-collapse', 'z-3');
-  navCollapseDiv.id = 'navbarSupportedContent';
-  navWrapper.append(navCollapseDiv);
+  const navbarCollapse = document.createElement('div');
+  navbarCollapse.classList.add('header-comp__wrapper--menus', 'collapse', 'navbar-collapse', 'z-3');
+  navbarCollapse.id = 'navbarSupportedContent';
 
-  const navUl = document.createElement('ul');
-  navUl.classList.add('header-comp__wrapper--menus-groups', 'navbar-nav', 'me-auto', 'mb-2', 'mb-lg-0', 'w-100');
-  navCollapseDiv.append(navUl);
+  const menuList = document.createElement('ul');
+  menuList.classList.add(
+    'header-comp__wrapper--menus-groups',
+    'navbar-nav',
+    'me-auto',
+    'mb-2',
+    'mb-lg-0',
+    'w-100',
+  );
 
-  // Hamburger toggle functionality
-  hamburgerButton.addEventListener('click', () => {
-    navCollapseDiv.classList.toggle('collapse');
-    navCollapseDiv.classList.toggle('show'); // This class is not in the allowlist. It should be defined in the original HTML or removed.
-    hamburgerButton.classList.toggle('collapsed');
-  });
+  menuItemRows.forEach((row, index) => {
+    const [iconCell, labelCell, linkCell, hierarchyCell] = [...row.children];
 
-  navItemRows.forEach((row) => {
-    // Use content detection instead of index access
-    const cells = [...row.children];
-    const iconCell = cells.find(cell => cell.querySelector('picture'));
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    const hierarchyCell = cells.find(cell => cell.querySelector('ul'));
-    // Label cell is the one without picture, anchor, or ul
-    const labelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && !cell.querySelector('ul'));
+    const listItem = document.createElement('li');
+    listItem.classList.add(
+      'header-comp__wrapper--menu-item',
+      'h-100',
+      'd-flex',
+      'align-items-center',
+      'nav-item',
+      'p-4',
+      'p-lg-0',
+      'border-bottom-lg-0',
+      'border-lg-0',
+      'position-relative',
+    );
+    if (index % 2 === 0) {
+      listItem.classList.add('left-division');
+    } else {
+      listItem.classList.add('right-division');
+    }
 
-    const li = document.createElement('li');
-    li.classList.add('header-comp__wrapper--menu-item', 'h-100', 'd-flex', 'align-items-center', 'nav-item', 'p-4', 'p-lg-0', 'border-bottom-lg-0', 'border-lg-0', 'position-relative');
+    const menuLinkWrapper = document.createElement('div');
+    menuLinkWrapper.classList.add(
+      'header-comp__wrapper--menu-link',
+      'gap-6',
+      'gap-lg-1',
+      'position-relative',
+      'w-100',
+      'd-flex',
+      'align-items-center',
+      'nav-link',
+      'px-0',
+      'font-default',
+      'leading-28',
+      'leading-lg-26',
+      'text-header-list',
+      'text-lg-cream-100',
+    );
 
-    const menuLinkDiv = document.createElement('div');
-    menuLinkDiv.classList.add('header-comp__wrapper--menu-link', 'gap-6', 'gap-lg-1', 'position-relative', 'w-100', 'd-flex', 'align-items-center', 'nav-link', 'px-0', 'font-default', 'leading-28', 'leading-lg-26', 'text-header-list', 'text-lg-cream-100');
-
-    if (iconCell) {
-      const iconPicture = iconCell.querySelector('picture');
-      if (iconPicture) {
-        const iconImg = iconPicture.querySelector('img');
-        if (iconImg) {
-          const optimizedIcon = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '24' }]);
-          optimizedIcon.classList.add('header-comp__wrapper--menu-image', 'd-lg-none');
-          moveInstrumentation(iconImg, optimizedIcon.querySelector('img'));
-          menuLinkDiv.append(optimizedIcon);
-        }
+    const itemIconPicture = iconCell.querySelector('picture');
+    if (itemIconPicture) {
+      const itemIconImg = itemIconPicture.querySelector('img');
+      if (itemIconImg) {
+        const optimizedItemIconPic = createOptimizedPicture(itemIconImg.src, itemIconImg.alt, false, [{ width: '750' }]);
+        optimizedItemIconPic.classList.add('header-comp__wrapper--menu-image', 'd-lg-none');
+        moveInstrumentation(itemIconPicture, optimizedItemIconPic);
+        menuLinkWrapper.appendChild(optimizedItemIconPic);
       }
     }
 
-    const anchor = document.createElement('a');
-    anchor.classList.add('text-decoration-none', 'cta-analytics', 'header-comp__wrapper--link');
-    anchor.setAttribute('data-link-region', 'Header');
-    anchor.href = linkCell?.querySelector('a')?.href || '#';
+    const linkAnchor = document.createElement('a');
+    linkAnchor.classList.add('text-decoration-none', 'cta-analytics', 'header-comp__wrapper--link');
+    linkAnchor.setAttribute('data-link-region', 'Header');
+    linkAnchor.href = linkCell.querySelector('a')?.href || '#';
 
-    const spanLink = document.createElement('span');
-    spanLink.classList.add('link-span');
-    spanLink.textContent = labelCell?.textContent.trim() || '';
-    anchor.append(spanLink);
-    menuLinkDiv.append(anchor);
+    const linkSpan = document.createElement('span');
+    linkSpan.classList.add('link-span');
+    linkSpan.textContent = labelCell.textContent.trim();
+    linkAnchor.appendChild(linkSpan);
+    menuLinkWrapper.appendChild(linkAnchor);
 
-    if (hierarchyCell) {
-      li.classList.add('dropdown', 'show-nav', 'left-division'); // Add classes for dropdown behavior
-      menuLinkDiv.classList.add('dropdown-toggle');
-      menuLinkDiv.setAttribute('aria-expanded', 'false');
+    const hierarchyRoot = hierarchyCell.querySelector('ul');
+    if (hierarchyRoot) {
+      listItem.classList.add('dropdown', 'flex-column', 'show-nav');
+      menuLinkWrapper.classList.add('dropdown-toggle');
+      menuLinkWrapper.setAttribute('aria-expanded', 'false');
 
-      const toggleDropDown = document.createElement('span');
-      toggleDropDown.classList.add('toggle-drop-down', 'arrow-icon', 'd-flex', 'end-0', 'top-parent');
+      const toggleDropdown = document.createElement('span');
+      toggleDropdown.classList.add('toggle-drop-down', 'arrow-icon', 'd-flex', 'end-0', 'top-parent');
       const arrowIcon = document.createElement('img');
       arrowIcon.alt = 'svg file';
-      arrowIcon.src = '/icons/arrow-icon.svg'; // Placeholder for arrow icon
-      toggleDropDown.append(arrowIcon);
-      menuLinkDiv.append(toggleDropDown);
+      // Use the actual icon source from ORIGINAL HTML if available, otherwise keep placeholder
+      arrowIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1776313317979.svg+xml'; 
+      toggleDropdown.appendChild(arrowIcon);
+      menuLinkWrapper.appendChild(toggleDropdown);
 
       const subMenusDiv = document.createElement('div');
       subMenusDiv.classList.add('header-comp__sub-menus');
-      subMenusDiv.id = `navItem-${navUl.children.length}`;
 
-      const subMenuContainer = document.createElement('ul');
-      subMenuContainer.classList.add('header-comp__wrapper--sub-menu-group', 'w-auto', 'border-0', 'pb-lg-0', 'dropdown-menu', 'p-0');
-      const triParentDiv = document.createElement('div');
-      triParentDiv.classList.add('header-comp__sub-menu', 'tri-parent');
-      subMenuContainer.append(triParentDiv);
+      const subMenuContainer = document.createElement('div');
+      subMenuContainer.classList.add('xfpage', 'page', 'basicpage');
+      const subMenuGrid = document.createElement('div');
+      subMenuGrid.classList.add('aem-Grid', 'aem-Grid--12', 'aem-Grid--default--12');
+      const subMenuHeaderDiv = document.createElement('div');
+      subMenuHeaderDiv.classList.add('headerSubMenu', 'aem-GridColumn', 'aem-GridColumn--default--12');
 
-      // Move and transform the hierarchy list
-      // Use innerHTML to preserve nested structure
+      const subMenuGroup = document.createElement('ul');
+      subMenuGroup.classList.add('header-comp__wrapper--sub-menu-group', 'w-auto', 'border-0', 'pb-lg-0', 'dropdown-menu', 'p-0');
+      const subMenuTriParent = document.createElement('div');
+      subMenuTriParent.classList.add('header-comp__sub-menu', 'tri-parent');
+      subMenuGroup.appendChild(subMenuTriParent);
+
+      // Create a temporary div to parse the richtext HTML and apply classes
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = hierarchyCell.innerHTML;
-      const hierarchyRoot = tempDiv.querySelector('ul');
+      moveInstrumentation(hierarchyCell, tempDiv); // Move instrumentation from original cell to tempDiv
 
-      if (hierarchyRoot) {
-        // Apply classes to nested elements from ORIGINAL HTML
-        hierarchyRoot.querySelectorAll('li').forEach(item => {
-          item.classList.add('header-comp__wrapper--sub-menu-item', 'child-below');
-          const itemLink = item.querySelector('a');
-          if (itemLink) {
-            itemLink.classList.add('text-decoration-none', 'text-dark-gray-100');
-            const span = document.createElement('span');
-            span.classList.add('sub-link-span');
-            span.textContent = itemLink.textContent;
-            itemLink.textContent = '';
-            itemLink.prepend(span);
-          }
-        });
-        hierarchyRoot.querySelectorAll('ul').forEach(ul => {
-          ul.classList.add('header-comp__wrapper--sub-menu-group', 'w-auto', 'border-0', 'pb-lg-0', 'dropdown-menu', 'p-0');
-        });
+      // Apply classes to the nested elements from the ORIGINAL HTML structure
+      tempDiv.querySelectorAll('ul').forEach(ul => ul.classList.add('header-comp__wrapper--sub-menu-group', 'w-auto', 'border-0', 'pb-lg-0', 'dropdown-menu', 'p-0'));
+      tempDiv.querySelectorAll('li').forEach(li => li.classList.add('header-comp__wrapper--sub-menu-item'));
+      tempDiv.querySelectorAll('a').forEach(a => a.classList.add('text-decoration-none', 'text-dark-gray-100'));
 
-        // Move instrumentation for the hierarchy cell
-        moveInstrumentation(hierarchyCell, tempDiv);
+      transformNestedLists(tempDiv.querySelector('ul')); // Apply transformations to the parsed hierarchy
 
-        while (hierarchyRoot.firstChild) {
-          triParentDiv.append(hierarchyRoot.firstChild);
-        }
-        transformNestedLists(triParentDiv);
+      // Move children from tempDiv to subMenuTriParent
+      while (tempDiv.firstChild) {
+        subMenuTriParent.append(tempDiv.firstChild);
       }
 
-      subMenusDiv.append(subMenuContainer);
-      li.append(menuLinkDiv, subMenusDiv);
+      // Re-process the moved children to add specific classes and event listeners
+      [...subMenuTriParent.children].forEach((childLi) => {
+        const childLink = childLi.querySelector(':scope > a');
+        const childSpan = childLi.querySelector(':scope > span');
+        const childSubListWrapper = childLi.querySelector(':scope > .has-sub-child');
 
-      // Toggle functionality for dropdown
-      menuLinkDiv.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        li.classList.toggle('active'); // This class is not in the allowlist. It should be defined in the original HTML or removed.
-        subMenusDiv.classList.toggle('show'); // This class is not in the allowlist. It should be defined in the original HTML or removed.
-        menuLinkDiv.classList.toggle('collapsed');
+        const subMenuLinkWrapper = document.createElement('div');
+        subMenuLinkWrapper.classList.add('header-comp__wrapper--menu-link', 'mb-3', 'mb-lg-0', 'gap-4', 'position-relative', 'w-100', 'd-flex', 'align-items-center', 'nav-link', 'px-0', 'font-18', 'leading-24', 'text-header-list', 'text-lg-black');
+
+        const subMenuDropdownItem = document.createElement('div');
+        subMenuDropdownItem.classList.add('header-comp__wrapper--sub-menu-link', 'dropdown-item', 'p-lg-3', 'mb-lg-3', 'mb-xl-3', 'leading-lg-24', 'leading-xl-24', 'font-default', 'font-lg-18', 'leading-lg-26', 'leading-28', 'ps-0', 'p-0', 'p-lg-3', 'd-inline-block', 'd-lg-flex', 'justify-content-between', 'align-items-center');
+
+        const subLink = document.createElement('a');
+        subLink.classList.add('text-decoration-none', 'text-dark-gray-100');
+        if (childLink) {
+          subLink.href = childLink.href;
+          subLink.textContent = childLink.textContent.trim();
+        } else if (childSpan) {
+          subLink.textContent = childSpan.textContent.trim();
+        }
+        subMenuDropdownItem.appendChild(subLink);
+
+        if (childSubListWrapper) {
+          childLi.classList.add('child-below'); // Apply to the original li from hierarchyRoot
+          subMenuLinkWrapper.classList.add('dropdown-toggle');
+          subMenuLinkWrapper.setAttribute('aria-expanded', 'false');
+
+          const arrowIconRight = document.createElement('span');
+          arrowIconRight.classList.add('arrow-icon-right', 'end-0', 'd-none', 'd-lg-inline');
+          const arrowImg = document.createElement('img');
+          arrowImg.alt = 'svg file';
+          arrowImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776313318023.svg+xml'; // Placeholder
+          arrowIconRight.appendChild(arrowImg);
+          subMenuDropdownItem.appendChild(arrowIconRight);
+
+          const arrowIconMobile = document.createElement('span');
+          arrowIconMobile.classList.add('arrow-icon', 'd-lg-none', 'end-0');
+          const mobileArrowImg = document.createElement('img');
+          mobileArrowImg.alt = 'svg file';
+          mobileArrowImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776313318081.svg+xml'; // Placeholder
+          arrowIconMobile.appendChild(mobileArrowImg);
+          subMenuLinkWrapper.appendChild(arrowIconMobile);
+
+          const innerChildsDiv = document.createElement('div');
+          innerChildsDiv.classList.add('d-lg-none', 'inner-childs');
+          innerChildsDiv.appendChild(childSubListWrapper);
+          childLi.appendChild(innerChildsDiv); // Append to the original li from hierarchyRoot
+
+          subMenuLinkWrapper.addEventListener('click', () => {
+            innerChildsDiv.classList.toggle('active');
+            childLi.classList.toggle('active');
+          });
+        } else {
+          childLi.classList.add('no-child'); // Apply to the original li from hierarchyRoot
+        }
+
+        subMenuLinkWrapper.appendChild(subMenuDropdownItem);
+        // Replace the original li content with the new structure
+        childLi.innerHTML = ''; // Clear original content
+        childLi.appendChild(subMenuLinkWrapper);
       });
-    } else {
-      li.classList.add('right-division');
-      li.append(menuLinkDiv);
+
+
+      subMenuHeaderDiv.appendChild(subMenuGroup);
+      subMenuGrid.appendChild(subMenuHeaderDiv);
+      subMenuContainer.appendChild(subMenuGrid);
+      subMenusDiv.appendChild(subMenuContainer);
+      listItem.appendChild(subMenusDiv);
+
+      toggleDropdown.addEventListener('click', () => {
+        listItem.classList.toggle('show-nav');
+        subMenusDiv.classList.toggle('show-nav');
+        menuLinkWrapper.classList.toggle('collapsed');
+      });
     }
-    navUl.append(li);
+
+    listItem.prepend(menuLinkWrapper);
+    menuList.appendChild(listItem);
+    moveInstrumentation(row, listItem);
   });
 
-  // Search and access
+  navbarCollapse.appendChild(menuList);
+
   const searchAccessDiv = document.createElement('div');
   searchAccessDiv.classList.add('header-comp__wrapper--search-access', 'd-flex', 'py-4', 'py-lg-0');
 
   const searchDiv = document.createElement('div');
   searchDiv.classList.add('header-comp__wrapper--search');
+
   const searchIconDiv = document.createElement('div');
-  searchIconDiv.classList.add('header-comp__wrapper--search-icon', 'd-flex', 'flex-column', 'align-items-center', 'font-12', 'leading-20', 'text-white');
-  const searchImg = document.createElement('img');
-  searchImg.alt = 'svg file';
-  searchImg.src = '/icons/search-icon.svg'; // Placeholder for search icon
+  searchIconDiv.classList.add(
+    'header-comp__wrapper--search-icon',
+    'd-flex',
+    'flex-column',
+    'align-items-center',
+    'font-12',
+    'leading-20',
+    'text-white',
+  );
+
+  const searchPicture = searchIconRow.querySelector('picture');
+  if (searchPicture) {
+    const searchImg = searchPicture.querySelector('img');
+    if (searchImg) {
+      const optimizedSearchPic = createOptimizedPicture(searchImg.src, searchImg.alt, false, [{ width: '750' }]);
+      moveInstrumentation(searchPicture, optimizedSearchPic);
+      searchIconDiv.appendChild(optimizedSearchPic);
+    }
+  }
+
   const searchSpan = document.createElement('span');
   searchSpan.classList.add('d-none', 'd-lg-block');
   searchSpan.textContent = 'Search';
-  searchIconDiv.append(searchImg, searchSpan);
-  searchDiv.append(searchIconDiv);
-  searchAccessDiv.append(searchDiv);
-  containerDiv.append(searchAccessDiv);
+  searchIconDiv.appendChild(searchSpan);
+  searchDiv.appendChild(searchIconDiv);
+  searchAccessDiv.appendChild(searchDiv);
+
+  navWrapper.appendChild(hamburgerButton);
+  navWrapper.appendChild(logoWrapper);
+  navWrapper.appendChild(navbarCollapse);
+  nav.appendChild(navWrapper);
+  container.appendChild(nav);
+  container.appendChild(searchAccessDiv);
+  block.appendChild(container);
+
+  const outerBox = document.createElement('div');
+  outerBox.classList.add('header__outer-box', 'position-absolute', 'w-100', 'z-2', 'start-0', 'd-lg-none');
+  block.appendChild(outerBox);
+
+  hamburgerButton.addEventListener('click', () => {
+    navbarCollapse.classList.toggle('show');
+    hamburgerButton.classList.toggle('collapsed');
+  });
 
   // Add event listener for search icon to toggle global search
   const globalSearchSection = document.querySelector('.global-search');
@@ -259,19 +391,20 @@ export default function decorate(block) {
         globalSearchSection.classList.add('d-none');
       });
     }
+
+    // Add event listener for click outside to close global search
+    const closeOnClick = globalSearchSection.querySelector('.close-on-click');
+    if (closeOnClick) {
+      closeOnClick.addEventListener('click', (event) => {
+        if (event.target === closeOnClick) {
+          globalSearchSection.classList.add('d-none');
+        }
+      });
+    }
   }
 
-  // Outer box for mobile
-  const outerBox = document.createElement('div');
-  outerBox.classList.add('header__outer-box', 'position-absolute', 'w-100', 'z-2', 'start-0', 'd-lg-none');
-  headerSection.append(outerBox);
-
-  // Replace block content
-  moveInstrumentation(block, headerSection);
-  block.replaceWith(headerSection);
-
-  // Optimize images
-  headerSection.querySelectorAll('picture > img').forEach((img) => {
+  // Image optimization for all pictures within the block
+  block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
