@@ -364,20 +364,20 @@
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logo-link",
+        "name": "logoLink",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "navigation-item",
         "label": "Navigation Menu",
-        "name": "navigation-menu"
+        "name": "navigationMenu"
       },
       {
         "component": "container",
         "item": "search-icon-item",
         "label": "Search Icons",
-        "name": "search-icons"
+        "name": "searchIcons"
       }
     ]
   },
@@ -411,7 +411,7 @@
     ]
   },
   {
-    "id": "submenu-item",
+    "id": "sub-navigation-item",
     "fields": [
       {
         "component": "text",
@@ -444,7 +444,7 @@
       },
       {
         "component": "text",
-        "label": "Label",
+        "label": "Search Label",
         "name": "label",
         "valueType": "string"
       }
