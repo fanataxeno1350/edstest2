@@ -30,6 +30,21 @@
           }
         }
       }
+    },
+    {
+      "title": "Sub-Menu-Item",
+      "id": "sub-menu-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "sub-menu-item",
+              "name": "Sub-Menu-Item"
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
@@ -45,14 +60,14 @@
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logoLink",
+          "name": "logo-link",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "navigation-item",
           "label": "Navigation Menu",
-          "name": "navigationMenu"
+          "name": "navigation-menu"
         }
       ]
     },
@@ -84,13 +99,37 @@
           "valueType": "string"
         }
       ]
+    },
+    {
+      "id": "sub-menu-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Submenu Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Submenu Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Navigation Hierarchy",
+          "name": "hierarchy-tree",
+          "valueType": "string"
+        }
+      ]
     }
   ],
   "filters": [
     {
       "id": "header-comp",
       "components": [
-        "navigation-item"
+        "navigation-item",
+        "sub-menu-item"
       ]
     }
   ]
