@@ -56,7 +56,8 @@
     "id": "header-comp",
     "components": [
       "navigation-item",
-      "sub-menu-item"
+      "submenu-item",
+      "search-icon-item"
     ]
   },
   {

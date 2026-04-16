@@ -372,6 +372,12 @@
         "item": "navigation-item",
         "label": "Navigation Menu",
         "name": "navigation-menu"
+      },
+      {
+        "component": "container",
+        "item": "search-icon-item",
+        "label": "Search Icons",
+        "name": "search-icons"
       }
     ]
   },
@@ -405,17 +411,17 @@
     ]
   },
   {
-    "id": "sub-menu-item",
+    "id": "submenu-item",
     "fields": [
       {
         "component": "text",
-        "label": "Sub Menu Label",
+        "label": "Submenu Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Sub Menu Link",
+        "label": "Submenu Link",
         "name": "link",
         "valueType": "string"
       },
@@ -423,6 +429,23 @@
         "component": "richtext",
         "label": "Navigation Hierarchy",
         "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "search-icon-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Search Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
