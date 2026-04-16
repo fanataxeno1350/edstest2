@@ -182,9 +182,6 @@
     ]
   },
   {
-    "id": "buy-now-card"
-  },
-  {
     "id": "card-carousel",
     "fields": [
       {
@@ -626,9 +623,6 @@
     ]
   },
   {
-    "id": "space-adder"
-  },
-  {
     "id": "stay-social",
     "fields": [
       {
@@ -730,8 +724,5 @@
         "valueType": "string"
       }
     ]
-  },
-  {
-    "id": "w-100"
   }
 ]

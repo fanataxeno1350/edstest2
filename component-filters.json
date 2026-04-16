@@ -37,9 +37,6 @@
     ]
   },
   {
-    "id": "buy-now-card"
-  },
-  {
     "id": "card-carousel",
     "components": [
       "product-card"
@@ -75,9 +72,6 @@
     ]
   },
   {
-    "id": "space-adder"
-  },
-  {
     "id": "stay-social",
     "components": [
       "stay-social-card",
@@ -89,8 +83,5 @@
     "components": [
       "text-banner-cta"
     ]
-  },
-  {
-    "id": "w-100"
   }
 ]
