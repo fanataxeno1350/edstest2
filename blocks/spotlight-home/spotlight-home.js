@@ -2,48 +2,38 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const spotlightHomeWrap = document.createElement('section');
-  spotlightHomeWrap.classList.add('section', 'spotlight-home-wrap', 'm-0', 'p-0');
-  moveInstrumentation(block, spotlightHomeWrap);
+  const spotlightSlides = [];
+  const quickLinks = [];
+
+  [...block.children].forEach((row) => {
+    // Spotlight Slide item has 7 cells
+    if (row.children.length === 7) {
+      spotlightSlides.push(row);
+    }
+    // Quick Link item has 2 cells
+    else if (row.children.length === 2) {
+      quickLinks.push(row);
+    }
+  });
+
+  const section = document.createElement('section');
+  section.classList.add('section', 'spotlight-home-wrap', 'm-0', 'p-0');
+  moveInstrumentation(block, section);
 
   const beamSlider = document.createElement('div');
   beamSlider.classList.add('beam-slider', 'main-slider', 'loading1', 'beam-slider-multi');
-  spotlightHomeWrap.appendChild(beamSlider);
+  section.appendChild(beamSlider);
 
   const swiperWrapper = document.createElement('div');
   swiperWrapper.classList.add('swiper-wrapper');
   beamSlider.appendChild(swiperWrapper);
 
-  const quickLinksContainer = document.createElement('div');
-  quickLinksContainer.classList.add('mt-0', 'pt-1', 'pb-1', 'm-none1', 'bottom-0', 'w-100', 'quick-links-parents-div', 'position-relative');
-  spotlightHomeWrap.appendChild(quickLinksContainer);
-
-  const containerDiv = document.createElement('div');
-  containerDiv.classList.add('container');
-  quickLinksContainer.appendChild(containerDiv);
-
-  const quickLinksUl = document.createElement('ul');
-  quickLinksUl.classList.add('quick-links-div');
-  containerDiv.appendChild(quickLinksUl);
-
-  const slides = [];
-  const quickLinks = [];
-
-  [...block.children].forEach((row) => {
-    const cells = [...row.children];
-    if (cells.length === 7) { // Spotlight Slide item
-      slides.push(cells);
-    } else if (cells.length === 2) { // Quick Link Item
-      quickLinks.push(cells);
-    }
-  });
-
-  slides.forEach((slideCells) => {
-    const [imageCell, imageAltCell, headlineCell, subheadlineCell, descriptionCell, buttonLinkCell, buttonLabelCell] = slideCells;
+  spotlightSlides.forEach((slideRow) => {
+    const [imageCell, imageAltCell, headingCell, subheadingCell, descriptionCell, ctaLinkCell, ctaLabelCell] = [...slideRow.children];
 
     const swiperSlide = document.createElement('div');
     swiperSlide.classList.add('swiper-slide', 'nogradient');
-    moveInstrumentation(imageCell.parentElement, swiperSlide); // Move instrumentation from the original row
+    moveInstrumentation(slideRow, swiperSlide);
 
     const slideBgImg = document.createElement('div');
     slideBgImg.classList.add('slide-bgimg');
@@ -53,7 +43,7 @@ export default function decorate(block) {
       const img = picture.querySelector('img');
       if (img) {
         const optimizedPic = createOptimizedPicture(img.src, imageAltCell.textContent.trim(), false, [{ width: '1903' }]);
-        moveInstrumentation(picture, optimizedPic.querySelector('img'));
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
         slideBgImg.appendChild(optimizedPic);
       }
     }
@@ -61,93 +51,109 @@ export default function decorate(block) {
 
     const mobContent = document.createElement('div');
     mobContent.classList.add('mob-content-home-spotlight');
-    const contentDiv = document.createElement('div');
-    contentDiv.classList.add('content', 'text-center', 'text-lg-start');
+    const content = document.createElement('div');
+    content.classList.add('content', 'text-center', 'text-lg-start');
 
-    const headline = document.createElement('h1');
-    headline.classList.add('heading', 'font-medium', 'font-size-tb', 'banner-text-dark');
-    headline.textContent = headlineCell.textContent.trim();
-    contentDiv.appendChild(headline);
-
-    if (subheadlineCell.textContent.trim()) {
+    if (subheadingCell.textContent.trim()) {
       const small = document.createElement('small');
       small.style.fontWeight = 'bold';
-      small.textContent = subheadlineCell.textContent.trim();
-      contentDiv.prepend(small); // Prepend to appear before headline
+      small.textContent = subheadingCell.textContent.trim();
+      content.appendChild(small);
+    }
+
+    if (headingCell.textContent.trim()) {
+      const h2 = document.createElement('h2');
+      h2.classList.add('heading', 'font-medium', 'font-size-tb');
+      h2.innerHTML = headingCell.textContent.trim().replace(/\n/g, '<br>');
+      content.appendChild(h2);
     }
 
     if (descriptionCell.textContent.trim()) {
       const p = document.createElement('p');
-      p.innerHTML = descriptionCell.textContent.trim();
-      contentDiv.appendChild(p);
+      p.innerHTML = `<strong>${descriptionCell.textContent.trim()}</strong>`;
+      content.appendChild(p);
     }
 
-    const buttonLink = buttonLinkCell.querySelector('a');
-    if (buttonLink && buttonLabelCell.textContent.trim()) {
-      const btn = document.createElement('a');
-      btn.classList.add('btn', 'btn-primary');
-      btn.href = buttonLink.href;
-      btn.textContent = buttonLabelCell.textContent.trim();
-      contentDiv.appendChild(btn);
+    const ctaLink = ctaLinkCell.querySelector('a');
+    const ctaLabel = ctaLabelCell.textContent.trim();
+    if (ctaLink && ctaLabel) {
+      const anchor = document.createElement('a');
+      anchor.href = ctaLink.href;
+      anchor.textContent = ctaLabel;
+      anchor.classList.add('btn', 'btn-primary');
+      content.appendChild(anchor);
     }
 
-    mobContent.appendChild(contentDiv);
+    mobContent.appendChild(content);
     swiperSlide.appendChild(mobContent);
     swiperWrapper.appendChild(swiperSlide);
   });
 
-  quickLinks.forEach((linkCells) => {
-    const [labelCell, linkCell] = linkCells;
-    const li = document.createElement('li');
-    moveInstrumentation(labelCell.parentElement, li); // Move instrumentation from the original row
-
-    const link = linkCell.querySelector('a');
-    if (link) {
-      const anchor = document.createElement('a');
-      anchor.href = link.href;
-      anchor.textContent = labelCell.textContent.trim();
-      anchor.classList.add('with-full-underline');
-      li.appendChild(anchor);
-    }
-    quickLinksUl.appendChild(li);
-  });
-
-  // Swiper navigation and pagination
+  // Swiper navigation buttons
   const prevButton = document.createElement('div');
   prevButton.classList.add('swiper-button-prev', 'slide-home-btn', 'swiper-button-white');
-  prevButton.setAttribute('tabindex', '0');
-  prevButton.setAttribute('role', 'button');
-  prevButton.setAttribute('aria-label', 'Previous slide');
-  prevButton.innerHTML = '<img alt="svg file" src="/icons/arrow-left.svg"/>'; // Using a generic icon path
+  const prevButtonImg = document.createElement('img');
+  prevButtonImg.alt = 'svg file';
+  prevButtonImg.src = '/icons/arrow-left.svg'; // Use a generic icon path or ensure it's provided by a block field
+  prevButton.appendChild(prevButtonImg);
   beamSlider.appendChild(prevButton);
 
   const nextButton = document.createElement('div');
   nextButton.classList.add('swiper-button-next', 'slide-home-btn', 'swiper-button-white');
-  nextButton.setAttribute('tabindex', '0');
-  nextButton.setAttribute('role', 'button');
-  nextButton.setAttribute('aria-label', 'Next slide');
-  nextButton.innerHTML = '<img alt="svg file" src="/icons/arrow-right.svg"/>'; // Using a generic icon path
+  const nextButtonImg = document.createElement('img');
+  nextButtonImg.alt = 'svg file';
+  nextButtonImg.src = '/icons/arrow-right.svg'; // Use a generic icon path or ensure it's provided by a block field
+  nextButton.appendChild(nextButtonImg);
   beamSlider.appendChild(nextButton);
 
-  const pagination = document.createElement('div');
-  pagination.classList.add('swiper-pagination', 'bullet-bottom');
-  beamSlider.appendChild(pagination);
+  const swiperPagination = document.createElement('div');
+  swiperPagination.classList.add('swiper-pagination', 'bullet-bottom');
+  beamSlider.appendChild(swiperPagination);
 
-  const swiperNotification = document.createElement('span');
-  swiperNotification.classList.add('swiper-notification');
-  swiperNotification.setAttribute('aria-live', 'assertive');
-  swiperNotification.setAttribute('aria-atomic', 'true');
-  beamSlider.appendChild(swiperNotification);
+  // Quick Links section
+  const quickLinksParentDiv = document.createElement('div');
+  quickLinksParentDiv.classList.add('mt-0', 'pt-1', 'pb-1', 'm-none1', 'bottom-0', 'w-100', 'quick-links-parents-div', 'position-relative');
+  const container = document.createElement('div');
+  container.classList.add('container', 'aos-init', 'aos-animate');
+  container.setAttribute('data-aos', 'fade-up');
+  container.setAttribute('data-aos-offset', '-100');
+  container.setAttribute('data-aos-duration', '650');
+  container.setAttribute('data-aos-easing', 'ease-in-out');
+  quickLinksParentDiv.appendChild(container);
 
-  block.replaceWith(spotlightHomeWrap);
+  const ul = document.createElement('ul');
+  ul.classList.add('quick-links-div');
+  container.appendChild(ul);
 
-  // Initialize Swiper (assuming Swiper is loaded globally or via dynamic import)
-  if (typeof Swiper !== 'undefined') {
+  quickLinks.forEach((linkRow) => {
+    const [labelCell, linkCell] = [...linkRow.children];
+
+    const li = document.createElement('li');
+    moveInstrumentation(linkRow, li);
+
+    const anchor = document.createElement('a');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      anchor.href = foundLink.href;
+    }
+    anchor.textContent = labelCell.textContent.trim();
+    anchor.classList.add('with-full-underline');
+    li.appendChild(anchor);
+    ul.appendChild(li);
+  });
+
+  section.appendChild(quickLinksParentDiv);
+  block.replaceWith(section);
+
+  // Initialize Swiper after DOM is built
+  // eslint-disable-next-line import/no-unresolved, import/extensions
+  import('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js').then((SwiperModule) => {
+    const Swiper = SwiperModule.default;
     // eslint-disable-next-line no-new
     new Swiper(beamSlider, {
-      loop: true,
       slidesPerView: 1,
       spaceBetween: 0,
+      loop: true,
       autoplay: {
         delay: 5000,
         disableOnInteraction: false,
@@ -161,8 +167,5 @@ export default function decorate(block) {
         prevEl: '.swiper-button-prev',
       },
     });
-  } else {
-    // eslint-disable-next-line no-console
-    console.warn('Swiper library not found. Spotlight Home slider will not be interactive.');
-  }
+  });
 }

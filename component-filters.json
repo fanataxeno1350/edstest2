@@ -95,6 +95,13 @@
     ]
   },
   {
+    "id": "spotlight-home",
+    "components": [
+      "spotlight-slide",
+      "quick-link-item"
+    ]
+  },
+  {
     "id": "what-we-do-wrap",
     "components": [
       "business-vertical-item"
