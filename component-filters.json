@@ -47,8 +47,8 @@
     "id": "footer-main",
     "components": [
       "social-link-item",
-      "footer-link-block",
-      "footer-link-item",
+      "footer-menu-block",
+      "footer-menu-item",
       "secondary-nav-item"
     ]
   },
