@@ -15,28 +15,78 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "cmp-header",
+      "cmp-search",
+      "slickcarousel",
+      "product-tabs",
+      "video",
+      "cookie-personality",
+      "product-swiper",
+      "social",
+      "new-footer"
     ]
   },
   {
     "id": "cards",
     "components": [
-      "card"
+      "card-item"
     ]
   },
   {
-    "id": "columns",
+    "id": "cmp-header",
     "components": [
-      "column"
+      "navigation-item",
+      "policy-link-item",
+      "social-link-item",
+      "nav-icon-item"
     ]
   },
   {
-    "id": "column",
+    "id": "cmp-search",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "search-category-item"
     ]
+  },
+  {
+    "id": "cookie-personality",
+    "components": [
+      "stepper-image",
+      "question-option"
+    ]
+  },
+  {
+    "id": "new-footer",
+    "components": [
+      "footer-navigation-item",
+      "footer-title-item",
+      "footer-social-link-item"
+    ]
+  },
+  {
+    "id": "product-swiper"
+  },
+  {
+    "id": "product-tabs",
+    "components": [
+      "product-tab",
+      "product-item"
+    ]
+  },
+  {
+    "id": "slickcarousel",
+    "components": [
+      "carousel-item"
+    ]
+  },
+  {
+    "id": "social",
+    "components": [
+      "social-card-item"
+    ]
+  },
+  {
+    "id": "video"
   }
 ]

@@ -1,0 +1,97 @@
+{
+  "definitions": [
+    {
+      "title": "Social",
+      "id": "social",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "social",
+              "model": "social",
+              "name": "Social"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Social-Card-Item",
+      "id": "social-card-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "social-card-item",
+              "name": "Social-Card-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "social",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Subtitle",
+          "name": "subtitle",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "social-card-item",
+          "label": "Cards",
+          "name": "cards"
+        },
+        {
+          "component": "text",
+          "label": "Button Label",
+          "name": "buttonLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Button Link",
+          "name": "buttonLink",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "social-card-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "social",
+      "components": [
+        "social-card-item"
+      ]
+    }
+  ]
+}

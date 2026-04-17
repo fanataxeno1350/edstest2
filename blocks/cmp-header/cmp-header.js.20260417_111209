@@ -1,0 +1,264 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+function transformNestedLists(rootUl) {
+  rootUl.querySelectorAll('li').forEach((li) => {
+    const nested = li.querySelector(':scope > ul');
+    const anchor = li.querySelector(':scope > a');
+
+    if (!anchor) {
+      const textNode = [...li.childNodes].find(
+        (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
+      );
+      if (textNode) {
+        const span = document.createElement('span');
+        span.textContent = textNode.textContent.trim();
+        textNode.remove();
+        li.prepend(span);
+      }
+    }
+
+    if (nested) {
+      nested.remove();
+      const subWrap = document.createElement('div');
+      subWrap.classList.add('cmp-header__submenu'); // Use class from ORIGINAL HTML
+      subWrap.append(nested);
+      li.append(subWrap);
+
+      const trigger = li.querySelector(':scope > a, :scope > span');
+      if (trigger) {
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          li.classList.toggle('active');
+          subWrap.classList.toggle('active');
+        });
+      }
+    }
+  });
+}
+
+export default function decorate(block) {
+  const [logoRow, logoLinkRow, ...itemRows] = [...block.children];
+
+  block.innerHTML = ''; // Clear the block to rebuild
+
+  const header = document.createElement('div');
+  header.classList.add('cmp-header');
+
+  const hamburgerInput = document.createElement('input');
+  hamburgerInput.classList.add('cmp-header__hamburger');
+  hamburgerInput.type = 'checkbox';
+  header.append(hamburgerInput);
+
+  // Logo
+  const logoDiv = document.createElement('div');
+  logoDiv.classList.add('logo', 'image', 'cmp-header__logo');
+  const logoLink = document.createElement('a');
+  logoLink.classList.add('cmp-image__link');
+  const foundLogoLink = logoLinkRow.querySelector('a');
+  if (foundLogoLink) {
+    logoLink.href = foundLogoLink.href;
+  }
+
+  const picture = logoRow.querySelector('picture');
+  if (picture) {
+    const img = picture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    logoLink.append(optimizedPic);
+  }
+  moveInstrumentation(logoRow, logoLink);
+  logoDiv.append(logoLink);
+  header.append(logoDiv);
+
+  // Navigation Links
+  const navLinksDiv = document.createElement('div');
+  navLinksDiv.classList.add('cmp-header__nav-links');
+  const navigationWrapper = document.createElement('div');
+  navigationWrapper.classList.add('navigation');
+  const nav = document.createElement('nav');
+  nav.classList.add('cmp-navigation');
+  nav.setAttribute('role', 'navigation');
+  const navGroup = document.createElement('ul');
+  navGroup.classList.add('cmp-navigation__group', 'cmp-header__nav-group');
+  nav.append(navGroup);
+  navigationWrapper.append(nav);
+  navLinksDiv.append(navigationWrapper);
+
+  const mobileList = document.createElement('div');
+  mobileList.classList.add('cmp-header__mobile-list');
+
+  const policyNav = document.createElement('ul');
+  policyNav.classList.add('cmp-header__policy');
+
+  const socialMediaDiv = document.createElement('div');
+  socialMediaDiv.classList.add('cmp-header__social-media');
+
+  const navIconsDiv = document.createElement('div');
+  navIconsDiv.classList.add('cmp-header__nav-icons');
+
+  itemRows.forEach((row) => {
+    const cells = [...row.children];
+
+    // Navigation Item (3 cells: label, link, hierarchy-tree)
+    const labelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('ul') && !cell.querySelector('picture'));
+    const linkCell = cells.find(cell => cell.querySelector('a') && !cell.querySelector('ul'));
+    const hierarchyCell = cells.find(cell => cell.querySelector('ul'));
+
+    // Social Link Item (2 cells: icon-class, link)
+    const socialIconClassCell = cells.find(cell => cell.textContent.trim().startsWith('icon-') && cells.length === 2);
+    const socialLinkCell = cells.find(cell => cell.querySelector('a') && cells.length === 2);
+
+    // Policy Link Item (2 cells: label, link) - distinguished from social by icon-class prefix
+    const policyLabelCell = cells.find(cell => !cell.textContent.trim().startsWith('icon-') && cells.length === 2);
+    const policyLinkCell = cells.find(cell => cell.querySelector('a') && cells.length === 2);
+
+    // Nav Icon Item (3 cells: icon-class, link, label) - distinguished from navigation item by icon-class prefix
+    const navIconClassCell = cells.find(cell => cell.textContent.trim().startsWith('icon-') && cells.length === 3);
+    const navIconLinkCell = cells.find(cell => cell.querySelector('a') && cells.length === 3);
+    const navIconLabelCell = cells.find(cell => !cell.querySelector('a') && cells.length === 3 && !cell.textContent.trim().startsWith('icon-'));
+
+
+    if (labelCell && linkCell && hierarchyCell) { // Navigation Item
+      const li = document.createElement('li');
+      li.classList.add('cmp-navigation__item', 'cmp-navigation__item--level-0', 'cmp-header__nav-products');
+
+      const foundLink = linkCell.querySelector('a');
+      let rootEl;
+      if (foundLink) {
+        rootEl = document.createElement('a');
+        rootEl.href = foundLink.href;
+        rootEl.classList.add('cmp-navigation__item-link');
+      } else {
+        rootEl = document.createElement('span'); // Use span for non-linked labels
+      }
+      rootEl.textContent = labelCell.textContent.trim();
+      moveInstrumentation(labelCell, rootEl); // Move instrumentation from labelCell
+
+      li.appendChild(rootEl);
+
+      const hierarchyRoot = hierarchyCell.querySelector('ul');
+      if (hierarchyRoot) {
+        li.classList.add('cmp-header__nav-products-click'); // Add class for items with sub-menu
+        const wrapper = document.createElement('ul');
+        wrapper.classList.add('cmp-navigation__group', 'cmp-header__product-items'); // Use ORIGINAL HTML class
+
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = hierarchyCell.innerHTML; // Use innerHTML to preserve nested structure
+        moveInstrumentation(hierarchyCell, tempDiv);
+
+        // Apply classes to nested elements as per ORIGINAL HTML
+        tempDiv.querySelectorAll('li').forEach(nestedLi => {
+          nestedLi.classList.add('cmp-navigation__item', 'cmp-navigation__item--level-1'); // Default level 1
+          if (!nestedLi.querySelector('ul')) {
+            nestedLi.classList.add('cmp-header__no-item'); // If no further nested UL
+          }
+        });
+        tempDiv.querySelectorAll('li > a').forEach(nestedA => {
+          nestedA.classList.add('cmp-navigation__item-link');
+        });
+        tempDiv.querySelectorAll('ul').forEach(nestedUl => {
+          nestedUl.classList.add('cmp-navigation__group');
+          if (nestedUl.parentElement.tagName === 'LI') {
+            nestedUl.classList.add('cmp-header__submenu'); // Submenu wrapper
+          }
+        });
+
+        const categoryMenuDiv = document.createElement('div');
+        categoryMenuDiv.classList.add('cmp-header__category-menu');
+        while (tempDiv.firstChild) {
+          categoryMenuDiv.appendChild(tempDiv.firstChild);
+        }
+        wrapper.appendChild(categoryMenuDiv);
+
+        rootEl.addEventListener('click', (e) => {
+          if (rootEl.tagName === 'A' && rootEl.getAttribute('href') !== '#') {
+            // If it's a real link, let it navigate
+            return;
+          }
+          e.preventDefault();
+          e.stopPropagation();
+          li.classList.toggle('active');
+          wrapper.classList.toggle('active');
+        });
+        li.appendChild(wrapper);
+        transformNestedLists(hierarchyRoot); // Re-run transform for the new structure
+      } else {
+        li.classList.add('cmp-header__no-items');
+      }
+      navGroup.appendChild(li);
+    } else if (socialIconClassCell && socialLinkCell) { // Social Link Item
+      const socialLink = document.createElement('a');
+      socialLink.classList.add(socialIconClassCell.textContent.trim());
+      const foundLink = socialLinkCell.querySelector('a');
+      if (foundLink) {
+        socialLink.href = foundLink.href;
+        socialLink.target = '_blank'; // Social links usually open in new tab
+      }
+      moveInstrumentation(row, socialLink);
+      socialMediaDiv.append(socialLink);
+    } else if (policyLabelCell && policyLinkCell) { // Policy Link Item
+      const policyLi = document.createElement('li');
+      policyLi.classList.add('cmp-header__policy-list');
+      const policyLink = document.createElement('a');
+      policyLink.textContent = policyLabelCell.textContent.trim();
+      const foundLink = policyLinkCell.querySelector('a');
+      if (foundLink) {
+        policyLink.href = foundLink.href;
+        policyLink.target = '_self'; // Policy links usually open in same tab
+      }
+      moveInstrumentation(row, policyLink);
+      policyLi.append(policyLink);
+      policyNav.append(policyLi);
+    } else if (navIconClassCell && navIconLinkCell && navIconLabelCell) { // Nav Icon Item
+      const iconDiv = document.createElement('div');
+      iconDiv.classList.add('cmp-header__search'); // Default to search class, adjust based on icon
+      if (navIconClassCell.textContent.trim() === 'icon-accessibility') {
+        iconDiv.classList.add('cmp-header__accessbility', 'cmp-header__hide-icon');
+      } else if (navIconClassCell.textContent.trim() === 'icon-profile') {
+        iconDiv.classList.add('cmp-header__login', 'cmp-header__hide-icon');
+      }
+
+      const iconAnchor = document.createElement('a');
+      iconAnchor.classList.add('cmp-header__icon-img');
+      const foundIconLink = navIconLinkCell.querySelector('a');
+      if (foundIconLink) {
+        iconAnchor.href = foundIconLink.href;
+      }
+
+      const iconImgDiv = document.createElement('div');
+      iconImgDiv.classList.add(navIconClassCell.textContent.trim());
+      iconAnchor.append(iconImgDiv);
+
+      const iconTextDiv = document.createElement('div');
+      iconTextDiv.classList.add('cmp-header__icon-text');
+      iconTextDiv.textContent = navIconLabelCell.textContent.trim();
+      iconAnchor.append(iconTextDiv);
+
+      moveInstrumentation(row, iconAnchor);
+      iconDiv.append(iconAnchor);
+      navIconsDiv.append(iconDiv);
+    }
+  });
+
+  mobileList.append(policyNav);
+  mobileList.append(socialMediaDiv);
+  nav.append(mobileList);
+
+  header.append(navLinksDiv);
+  header.append(navIconsDiv);
+  block.append(header);
+
+  // Add event listener for hamburger menu
+  hamburgerInput.addEventListener('change', () => {
+    navLinksDiv.classList.toggle('active', hamburgerInput.checked);
+  });
+
+  // Optimize images
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+}

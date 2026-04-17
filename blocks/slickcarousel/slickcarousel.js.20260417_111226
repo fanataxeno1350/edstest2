@@ -1,0 +1,110 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const carouselContainer = document.createElement('div');
+  carouselContainer.classList.add('cmp-carousel__container', 'slick-initialized', 'slick-slider');
+
+  const slickList = document.createElement('div');
+  slickList.classList.add('slick-list', 'draggable');
+  carouselContainer.append(slickList);
+
+  const slickTrack = document.createElement('div');
+  slickTrack.classList.add('slick-track');
+  slickTrack.style.opacity = '1';
+  slickList.append(slickTrack);
+
+  [...block.children].forEach((row, index) => {
+    const [desktopImageCell, mobileImageCell, buttonLabelCell, buttonLinkCell] = [...row.children];
+
+    const carouselItem = document.createElement('div');
+    carouselItem.classList.add('cmp-carousel__item', 'slick-slide');
+    if (index === 0) {
+      carouselItem.classList.add('cmp-carousel__item--active', 'slick-current', 'slick-active');
+      carouselItem.setAttribute('aria-hidden', 'false');
+      carouselItem.setAttribute('tabindex', '0');
+    } else {
+      carouselItem.setAttribute('aria-hidden', 'true');
+      carouselItem.setAttribute('tabindex', '-1');
+    }
+    carouselItem.setAttribute('role', 'tabpanel');
+    carouselItem.setAttribute('aria-roledescription', 'slide');
+    carouselItem.setAttribute('aria-label', `Slide ${index + 1} of ${block.children.length}`);
+    carouselItem.setAttribute('data-slick-index', index);
+    slickTrack.append(carouselItem);
+
+    const bannerDiv = document.createElement('div');
+    bannerDiv.classList.add('banner', 'cmp-banner--cta-left-aligned');
+    carouselItem.append(bannerDiv);
+
+    const cmpBanner = document.createElement('div');
+    cmpBanner.classList.add('cmp-banner');
+    bannerDiv.append(cmpBanner);
+
+    const cmpBannerContent = document.createElement('div');
+    cmpBannerContent.classList.add('cmp-banner__content');
+    cmpBanner.append(cmpBannerContent);
+
+    const picture = document.createElement('picture');
+    picture.classList.add('w-100', 'd-block');
+
+    const mobileImg = mobileImageCell.querySelector('img');
+    if (mobileImg) {
+      const sourceMobile = document.createElement('source');
+      sourceMobile.setAttribute('media', '(max-width: 600px)');
+      sourceMobile.setAttribute('srcset', mobileImg.src);
+      picture.append(sourceMobile);
+    }
+
+    const desktopImg = desktopImageCell.querySelector('img');
+    if (desktopImg) {
+      const img = createOptimizedPicture(desktopImg.src, desktopImg.alt, index === 0, [{ width: '1366' }]);
+      img.querySelector('img').classList.add('cmp-banner__image', 'w-100', 'd-block');
+      img.querySelector('img').setAttribute('data-desktop-src', desktopImg.src);
+      if (mobileImg) {
+        img.querySelector('img').setAttribute('data-mobile-src', mobileImg.src);
+      }
+      moveInstrumentation(desktopImg.closest('picture'), img.querySelector('img'));
+      picture.append(img.querySelector('img'));
+    }
+    cmpBanner.append(picture);
+
+    const buttonContainer = document.createElement('div');
+    // Corrected class name from 'null' to 'button-container' as 'null' is not a valid class name
+    // and 'button' is already present. The original HTML shows 'null button cmp-button--primary-anchor'
+    // which implies 'null' was a placeholder for a container class.
+    buttonContainer.classList.add('button-container', 'button', 'cmp-button--primary-anchor');
+
+    const anchor = document.createElement('a');
+    anchor.classList.add('cmp-button');
+    const foundLink = buttonLinkCell.querySelector('a');
+    if (foundLink) {
+      anchor.href = foundLink.href;
+    }
+    anchor.setAttribute('tabindex', '0');
+
+    const span = document.createElement('span');
+    span.classList.add('cmp-button__text');
+    span.textContent = buttonLabelCell.textContent.trim();
+    anchor.append(span);
+    moveInstrumentation(buttonLinkCell, anchor);
+    buttonContainer.append(anchor);
+    cmpBanner.append(buttonContainer);
+
+    moveInstrumentation(row, carouselItem);
+  });
+
+  block.innerHTML = '';
+  block.classList.add('cmp-carousel');
+  block.setAttribute('data-cmp-is', 'carousel');
+  block.setAttribute('data-show-infinite-scroll', 'true');
+  block.setAttribute('data-show-arrows', 'false');
+  block.setAttribute('data-show-dots', 'true');
+  block.setAttribute('data-item-count-per-slide', '1');
+  block.setAttribute('data-auto-play-is-enabled', 'false');
+  block.setAttribute('data-auto-play-speed-in-ms', '4200');
+  block.setAttribute('data-reveal-next-item-partially', 'false');
+  block.setAttribute('data-component', 'carousel');
+
+  block.append(carouselContainer);
+}
