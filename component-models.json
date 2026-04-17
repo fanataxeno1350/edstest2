@@ -192,7 +192,7 @@
       },
       {
         "component": "container",
-        "item": "footer-social-link",
+        "item": "social-link-item",
         "label": "Social Links",
         "name": "socialLinks"
       },
@@ -200,13 +200,13 @@
         "component": "container",
         "item": "footer-link-block",
         "label": "Footer Link Blocks",
-        "name": "linkBlocks"
+        "name": "footerLinkBlocks"
       },
       {
         "component": "container",
-        "item": "footer-secondary-link",
-        "label": "Secondary Footer Links",
-        "name": "secondaryLinks"
+        "item": "secondary-nav-item",
+        "label": "Secondary Nav",
+        "name": "secondaryNav"
       },
       {
         "component": "text",
@@ -217,17 +217,17 @@
     ]
   },
   {
-    "id": "footer-social-link",
+    "id": "social-link-item",
     "fields": [
       {
         "component": "reference",
-        "label": "Social Icon",
+        "label": "Icon",
         "name": "icon",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Social Link",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       },
@@ -257,7 +257,7 @@
       {
         "component": "container",
         "item": "footer-link-item",
-        "label": "Footer Links",
+        "label": "Links",
         "name": "links"
       }
     ]
@@ -267,36 +267,36 @@
     "fields": [
       {
         "component": "text",
-        "label": "Link Label",
+        "label": "Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link URL",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Link Hierarchy",
+        "label": "Navigation Hierarchy",
         "name": "hierarchy-tree",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-secondary-link",
+    "id": "secondary-nav-item",
     "fields": [
       {
         "component": "text",
-        "label": "Secondary Link Label",
+        "label": "Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Secondary Link URL",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       }
