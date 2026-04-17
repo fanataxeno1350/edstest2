@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Spirit-of-Rise",
-      "id": "spirit-of-rise",
+      "title": "What We Do",
+      "id": "what-we-do-wrap",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "spirit-of-rise",
-              "model": "spirit-of-rise",
-              "name": "Spirit-of-Rise"
+              "filter": "what-we-do-wrap",
+              "model": "what-we-do-wrap",
+              "name": "What We Do"
             }
           }
         }
       }
     },
     {
-      "title": "Performance-Driven-Card",
-      "id": "performance-driven-card",
+      "title": "Business Vertical",
+      "id": "business-vertical",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "performance-driven-card",
-              "name": "Performance-Driven-Card"
+              "model": "business-vertical",
+              "name": "Business Vertical"
             }
           }
         }
@@ -34,35 +34,47 @@
   ],
   "models": [
     {
-      "id": "spirit-of-rise",
+      "id": "what-we-do-wrap",
       "fields": [
         {
           "component": "text",
-          "label": "Heading",
+          "label": "Section Heading",
           "name": "heading",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Subheading",
-          "name": "subheading",
+          "label": "Section Description",
+          "name": "description",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "performance-driven-card",
-          "label": "Performance Driven Cards",
-          "name": "cards"
+          "item": "business-vertical",
+          "label": "Business Verticals",
+          "name": "businessVerticals"
         }
       ]
     },
     {
-      "id": "performance-driven-card",
+      "id": "business-vertical",
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
+          "label": "Main Image",
           "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
           "valueType": "string"
         },
         {
@@ -70,21 +82,15 @@
           "label": "Link",
           "name": "link",
           "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Description",
-          "name": "description",
-          "valueType": "string"
         }
       ]
     }
   ],
   "filters": [
     {
-      "id": "spirit-of-rise",
+      "id": "what-we-do-wrap",
       "components": [
-        "performance-driven-card"
+        "business-vertical"
       ]
     }
   ]

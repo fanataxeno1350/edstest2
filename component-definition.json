@@ -130,60 +130,60 @@
           }
         },
         {
-          "title": "Social-Link-Item",
-          "id": "social-link-item",
+          "title": "Footer-Social-Link",
+          "id": "footer-social-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "social-link-item",
-                  "name": "Social-Link-Item"
+                  "model": "footer-social-link",
+                  "name": "Footer-Social-Link"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer-Navigation-Section",
-          "id": "footer-navigation-section",
+          "title": "Footer-Link-Block",
+          "id": "footer-link-block",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-navigation-section",
-                  "name": "Footer-Navigation-Section"
+                  "model": "footer-link-block",
+                  "name": "Footer-Link-Block"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer-Navigation-Item",
-          "id": "footer-navigation-item",
+          "title": "Footer-Link-Item",
+          "id": "footer-link-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-navigation-item",
-                  "name": "Footer-Navigation-Item"
+                  "model": "footer-link-item",
+                  "name": "Footer-Link-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Secondary-Nav-Item",
-          "id": "secondary-nav-item",
+          "title": "Footer-Secondary-Link",
+          "id": "footer-secondary-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "secondary-nav-item",
-                  "name": "Secondary-Nav-Item"
+                  "model": "footer-secondary-link",
+                  "name": "Footer-Secondary-Link"
                 }
               }
             }
@@ -206,30 +206,30 @@
           }
         },
         {
-          "title": "Story-Item",
-          "id": "story-item",
+          "title": "Twitter-Feed-Item",
+          "id": "twitter-feed-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "story-item",
-                  "name": "Story-Item"
+                  "model": "twitter-feed-item",
+                  "name": "Twitter-Feed-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Twitter-Feed-Embed",
-          "id": "twitter-feed-embed",
+          "title": "Story-Card",
+          "id": "story-card",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "twitter-feed-embed",
-                  "name": "Twitter-Feed-Embed"
+                  "model": "story-card",
+                  "name": "Story-Card"
                 }
               }
             }
@@ -267,21 +267,6 @@
           }
         },
         {
-          "title": "Press-Release-Item",
-          "id": "press-release-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "press-release-item",
-                  "name": "Press-Release-Item"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Contact-Link-Item",
           "id": "contact-link-item",
           "plugins": {
@@ -297,15 +282,45 @@
           }
         },
         {
-          "title": "Search-Link-Item",
-          "id": "search-link-item",
+          "title": "Search-Item",
+          "id": "search-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "search-link-item",
-                  "name": "Search-Link-Item"
+                  "model": "search-item",
+                  "name": "Search-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Press-Release-Item",
+          "id": "press-release-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "press-release-item",
+                  "name": "Press-Release-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Logo-Item",
+          "id": "logo-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "logo-item",
+                  "name": "Logo-Item"
                 }
               }
             }
@@ -374,7 +389,7 @@
           }
         },
         {
-          "title": "Spirit-Of-Rise",
+          "title": "Spirit-of-Rise",
           "id": "spirit-of-rise",
           "plugins": {
             "xwalk": {
@@ -383,22 +398,22 @@
                 "template": {
                   "filter": "spirit-of-rise",
                   "model": "spirit-of-rise",
-                  "name": "Spirit-Of-Rise"
+                  "name": "Spirit-of-Rise"
                 }
               }
             }
           }
         },
         {
-          "title": "Performace-Driven-Card",
-          "id": "performace-driven-card",
+          "title": "Performance-Driven-Card",
+          "id": "performance-driven-card",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "performace-driven-card",
-                  "name": "Performace-Driven-Card"
+                  "model": "performance-driven-card",
+                  "name": "Performance-Driven-Card"
                 }
               }
             }
@@ -476,6 +491,37 @@
                 "template": {
                   "model": "business-vertical-item",
                   "name": "Business-Vertical-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "What We Do",
+          "id": "what-we-do-wrap",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "what-we-do-wrap",
+                  "model": "what-we-do-wrap",
+                  "name": "What We Do"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Business Vertical Item",
+          "id": "business-vertical-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "business-vertical-item",
+                  "name": "Business Vertical Item"
                 }
               }
             }

@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Spotlight-Home",
+      "title": "Spotlight Home",
       "id": "spotlight-home",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "spotlight-home",
               "model": "spotlight-home",
-              "name": "Spotlight-Home"
+              "name": "Spotlight Home"
             }
           }
         }
       }
     },
     {
-      "title": "Spotlight-Slide",
+      "title": "Spotlight Slide",
       "id": "spotlight-slide",
       "plugins": {
         "xwalk": {
@@ -25,14 +25,14 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "spotlight-slide",
-              "name": "Spotlight-Slide"
+              "name": "Spotlight Slide"
             }
           }
         }
       }
     },
     {
-      "title": "Quick-Link-Item",
+      "title": "Quick Link Item",
       "id": "quick-link-item",
       "plugins": {
         "xwalk": {
@@ -40,7 +40,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "quick-link-item",
-              "name": "Quick-Link-Item"
+              "name": "Quick Link Item"
             }
           }
         }
@@ -70,26 +70,26 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Main Image",
+          "label": "Background Image",
           "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Image Alt Text",
-          "name": "imageAlt",
+          "name": "alt",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Headline",
-          "name": "headline",
+          "label": "Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Subheadline",
-          "name": "subheadline",
+          "label": "Small Text",
+          "name": "small",
           "valueType": "string"
         },
         {
@@ -100,14 +100,14 @@
         },
         {
           "component": "aem-content",
-          "label": "Button Link",
-          "name": "buttonLink",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Button Label",
-          "name": "buttonLabel",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         }
       ]
@@ -116,15 +116,15 @@
       "id": "quick-link-item",
       "fields": [
         {
-          "component": "text",
-          "label": "Link Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
           "label": "Link",
           "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         }
       ]

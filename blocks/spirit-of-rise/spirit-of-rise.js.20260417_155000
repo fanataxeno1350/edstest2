@@ -1,0 +1,94 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const children = [...block.children];
+
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+
+  // Heading
+  const headingRow = children[0];
+  const headingCell = headingRow.firstElementChild;
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  // Heading is type=text, but original HTML shows <br> tags, so innerHTML is safer.
+  heading.innerHTML = headingCell.innerHTML.trim();
+  moveInstrumentation(headingRow, heading);
+  sectionHeader.appendChild(heading);
+
+  // Description
+  const descriptionRow = children[1];
+  const descriptionCell = descriptionRow.firstElementChild;
+  const description = document.createElement('p');
+  description.classList.add('aos-init', 'aos-animate');
+  // Description is type=text, but original HTML shows <br> tags, so innerHTML is safer.
+  description.innerHTML = descriptionCell.innerHTML.trim();
+  moveInstrumentation(descriptionRow, description);
+  sectionHeader.appendChild(description);
+
+  const grid = document.createElement('div');
+  grid.classList.add('row', 'g-4', 'purpose-led-grid', 'pt-3');
+
+  // Cards
+  const cardRows = children.slice(2);
+  cardRows.forEach((row) => {
+    // CRITICAL FIX: Replaced row.children[n] with destructuring for fixed-field item model
+    const [imageCell, linkCell, altTextCell, descriptionCell] = [...row.children];
+
+    const col = document.createElement('div');
+    col.classList.add('col-md-6', 'aos-init', 'aos-animate');
+
+    const cardWrap = document.createElement('a');
+    cardWrap.classList.add('card-wrap');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      cardWrap.href = foundLink.href;
+      cardWrap.target = '_blank';
+    }
+    moveInstrumentation(row, cardWrap);
+
+    const cardImageDiv = document.createElement('div');
+    cardImageDiv.classList.add('card-image');
+
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        // The original HTML shows img-fluid class on the img inside picture.
+        // createOptimizedPicture does not automatically add this.
+        // We need to add it to the img element that createOptimizedPicture returns.
+        const optimizedPic = createOptimizedPicture(img.src, altTextCell.textContent.trim(), false, [{ width: '750' }]);
+        const optimizedImg = optimizedPic.querySelector('img');
+        if (optimizedImg) {
+          optimizedImg.classList.add('img-fluid'); // Add missing class
+          moveInstrumentation(img, optimizedImg);
+          cardImageDiv.appendChild(optimizedPic);
+        }
+      }
+    }
+
+    const cardTextDiv = document.createElement('div');
+    cardTextDiv.classList.add('card-text');
+
+    const descP = document.createElement('p');
+    descP.classList.add('desc');
+    // Description is type=richtext, so innerHTML is correct.
+    descP.innerHTML = descriptionCell.innerHTML;
+
+    cardTextDiv.appendChild(descP);
+    cardWrap.appendChild(cardImageDiv);
+    cardWrap.appendChild(cardTextDiv);
+    col.appendChild(cardWrap);
+    grid.appendChild(col);
+  });
+
+  block.innerHTML = ''; // Clear original block content
+  const container = document.createElement('div');
+  container.classList.add('container');
+  container.appendChild(sectionHeader);
+  container.appendChild(grid);
+  block.appendChild(container);
+
+  block.classList.add('section', 'grey-bg');
+}

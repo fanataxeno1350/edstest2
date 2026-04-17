@@ -17,15 +17,30 @@
       }
     },
     {
-      "title": "Performance-Driven-Card",
-      "id": "performance-driven-card",
+      "title": "Spirit-of-Rise-Section",
+      "id": "spirit-of-rise-section",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "performance-driven-card",
-              "name": "Performance-Driven-Card"
+              "model": "spirit-of-rise-section",
+              "name": "Spirit-of-Rise-Section"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Spirit-of-Rise-Card",
+      "id": "spirit-of-rise-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "spirit-of-rise-card",
+              "name": "Spirit-of-Rise-Card"
             }
           }
         }
@@ -37,27 +52,38 @@
       "id": "spirit-of-rise",
       "fields": [
         {
+          "component": "container",
+          "item": "spirit-of-rise-section",
+          "label": "Sections",
+          "name": "sections"
+        }
+      ]
+    },
+    {
+      "id": "spirit-of-rise-section",
+      "fields": [
+        {
           "component": "text",
-          "label": "Heading",
+          "label": "Section Heading",
           "name": "heading",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Subheading",
-          "name": "subheading",
+          "label": "Section Description",
+          "name": "description",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "performance-driven-card",
-          "label": "Performance Driven Cards",
+          "item": "spirit-of-rise-card",
+          "label": "Cards",
           "name": "cards"
         }
       ]
     },
     {
-      "id": "performance-driven-card",
+      "id": "spirit-of-rise-card",
       "fields": [
         {
           "component": "reference",
@@ -67,13 +93,13 @@
         },
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Card Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Description",
+          "label": "Card Description",
           "name": "description",
           "valueType": "string"
         }
@@ -84,7 +110,8 @@
     {
       "id": "spirit-of-rise",
       "components": [
-        "performance-driven-card"
+        "spirit-of-rise-section",
+        "spirit-of-rise-card"
       ]
     }
   ]

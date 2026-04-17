@@ -146,7 +146,7 @@
     "fields": [
       {
         "component": "text",
-        "label": "Heading",
+        "label": "Section Heading",
         "name": "heading",
         "valueType": "string"
       },
@@ -192,24 +192,24 @@
       },
       {
         "component": "container",
-        "item": "social-link-item",
+        "item": "footer-social-link",
         "label": "Social Links",
         "name": "socialLinks"
       },
       {
         "component": "container",
-        "item": "footer-navigation-section",
-        "label": "Footer Navigation Sections",
-        "name": "footerNavigationSections"
+        "item": "footer-link-block",
+        "label": "Footer Link Blocks",
+        "name": "linkBlocks"
       },
       {
         "component": "container",
-        "item": "secondary-nav-item",
-        "label": "Secondary Navigation",
-        "name": "secondaryNav"
+        "item": "footer-secondary-link",
+        "label": "Secondary Footer Links",
+        "name": "secondaryLinks"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Copyright Text",
         "name": "copyrightText",
         "valueType": "string"
@@ -217,93 +217,87 @@
     ]
   },
   {
-    "id": "social-link-item",
+    "id": "footer-social-link",
     "fields": [
       {
         "component": "reference",
-        "label": "Icon",
+        "label": "Social Icon",
         "name": "icon",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
+        "label": "Social Link",
         "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-navigation-section",
+    "id": "footer-link-block",
     "fields": [
       {
         "component": "text",
-        "label": "Section Title",
-        "name": "sectionTitle",
+        "label": "Block Title",
+        "name": "blockTitle",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Section Link",
-        "name": "sectionLink",
+        "label": "Block Title Link",
+        "name": "blockTitleLink",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-navigation-item",
-        "label": "Section Items",
-        "name": "items"
+        "item": "footer-link-item",
+        "label": "Footer Links",
+        "name": "links"
+      }
+    ]
+  },
+  {
+    "id": "footer-link-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link URL",
+        "name": "link",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Navigation Hierarchy",
+        "label": "Link Hierarchy",
         "name": "hierarchy-tree",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-navigation-item",
+    "id": "footer-secondary-link",
     "fields": [
       {
         "component": "text",
-        "label": "Label",
+        "label": "Secondary Link Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
+        "label": "Secondary Link URL",
         "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Navigation Hierarchy",
-        "name": "hierarchy-tree",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "secondary-nav-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Navigation Hierarchy",
-        "name": "hierarchy-tree",
         "valueType": "string"
       }
     ]
@@ -313,26 +307,167 @@
     "fields": [
       {
         "component": "text",
-        "label": "Heading",
+        "label": "Section Heading",
         "name": "heading",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "story-item",
-        "label": "Stories",
-        "name": "stories"
+        "item": "twitter-feed-item",
+        "label": "Twitter Feed Items",
+        "name": "twitterFeed"
       },
       {
         "component": "container",
-        "item": "twitter-feed-embed",
-        "label": "Twitter Feed Embed",
-        "name": "twitterFeed"
+        "item": "story-card",
+        "label": "Stories",
+        "name": "stories"
       }
     ]
   },
   {
-    "id": "story-item",
+    "id": "twitter-feed-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Banner Image",
+        "name": "bannerImage",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Profile Image",
+        "name": "profileImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "User Name",
+        "name": "userName",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Screen Name",
+        "name": "screenName",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "User Profile Link",
+        "name": "userProfileLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Posts Count",
+        "name": "postsCount",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Following Count",
+        "name": "followingCount",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Followers Count",
+        "name": "followersCount",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "tweet-item",
+        "label": "Tweets",
+        "name": "tweets"
+      }
+    ]
+  },
+  {
+    "id": "tweet-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "User Image",
+        "name": "userImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "User Name",
+        "name": "userName",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Screen Name",
+        "name": "screenName",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Tweet Date",
+        "name": "tweetDate",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Tweet Link",
+        "name": "tweetLink",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Tweet Text",
+        "name": "tweetText",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "tweet-media",
+        "label": "Tweet Media",
+        "name": "media"
+      },
+      {
+        "component": "number",
+        "label": "Reply Count",
+        "name": "replyCount",
+        "valueType": "number"
+      },
+      {
+        "component": "number",
+        "label": "Repost Count",
+        "name": "repostCount",
+        "valueType": "number"
+      },
+      {
+        "component": "number",
+        "label": "Like Count",
+        "name": "likeCount",
+        "valueType": "number"
+      }
+    ]
+  },
+  {
+    "id": "tweet-media",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Media Image",
+        "name": "mediaImage",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Media Link",
+        "name": "mediaLink",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "story-card",
     "fields": [
       {
         "component": "reference",
@@ -354,7 +489,7 @@
       },
       {
         "component": "aem-content",
-        "label": "Link",
+        "label": "Read More Link",
         "name": "link",
         "valueType": "string"
       },
@@ -371,14 +506,14 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Logo",
-        "name": "logo",
+        "label": "Primary Logo",
+        "name": "primary-logo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Logo Link",
-        "name": "logoLink",
+        "label": "Primary Logo Link",
+        "name": "primary-logo-link",
         "valueType": "string"
       },
       {
@@ -390,32 +525,32 @@
       {
         "component": "aem-content",
         "label": "Anniversary Logo Link",
-        "name": "anniversaryLogoLink",
+        "name": "anniversary-logo-link",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "navigation-item",
         "label": "Navigation Menu",
-        "name": "navigationMenu"
-      },
-      {
-        "component": "container",
-        "item": "press-release-item",
-        "label": "Press Releases",
-        "name": "pressReleases"
+        "name": "navigation-menu"
       },
       {
         "component": "container",
         "item": "contact-link-item",
         "label": "Contact Links",
-        "name": "contactLinks"
+        "name": "contact-links"
       },
       {
         "component": "container",
-        "item": "search-link-item",
-        "label": "Search Links",
-        "name": "searchLinks"
+        "item": "search-item",
+        "label": "Search Items",
+        "name": "search-items"
+      },
+      {
+        "component": "container",
+        "item": "press-release-item",
+        "label": "Press Release Items",
+        "name": "press-release-items"
       }
     ]
   },
@@ -448,49 +583,8 @@
       },
       {
         "component": "text",
-        "label": "Left Heading",
-        "name": "leftHeading",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Left Description",
-        "name": "leftDesc",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Left Subdescription",
-        "name": "leftSubdesc",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "press-release-item",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "Press Release Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Press Release Title",
-        "name": "title",
-        "valueType": "string"
-      },
-      {
-        "component": "date-time",
-        "label": "Date",
-        "name": "date",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Category",
-        "name": "category",
+        "label": "Menu Description",
+        "name": "description",
         "valueType": "string"
       }
     ]
@@ -519,23 +613,75 @@
     ]
   },
   {
-    "id": "search-link-item",
+    "id": "search-item",
     "fields": [
       {
         "component": "reference",
-        "label": "First Icon",
-        "name": "icon1",
+        "label": "Search Icon",
+        "name": "search-icon",
         "valueType": "string"
       },
       {
-        "component": "reference",
-        "label": "Second Icon",
-        "name": "icon2",
+        "component": "text",
+        "label": "Search Label",
+        "name": "search-label",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Input Placeholder",
+        "name": "input-placeholder",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
+        "label": "Form Action URL",
+        "name": "form-action",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "press-release-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Press Release Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "date-time",
+        "label": "Date",
+        "name": "date",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Category",
+        "name": "category",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "logo-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
         "name": "link",
         "valueType": "string"
       }
@@ -656,20 +802,20 @@
       },
       {
         "component": "text",
-        "label": "Description",
-        "name": "description",
+        "label": "Subheading",
+        "name": "subheading",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "performace-driven-card",
-        "label": "Cards",
+        "item": "performance-driven-card",
+        "label": "Performance Driven Cards",
         "name": "cards"
       }
     ]
   },
   {
-    "id": "performace-driven-card",
+    "id": "performance-driven-card",
     "fields": [
       {
         "component": "reference",
@@ -685,8 +831,8 @@
       },
       {
         "component": "text",
-        "label": "Card Label",
-        "name": "label",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       }
     ]
@@ -825,6 +971,58 @@
     ]
   },
   {
+    "id": "what-we-do-wrap",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "business-vertical-item",
+        "label": "Business Verticals",
+        "name": "businessVerticals"
+      }
+    ]
+  },
+  {
+    "id": "business-vertical-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "work-with-us",
     "fields": [
       {
@@ -852,20 +1050,38 @@
       },
       {
         "component": "text",
+        "label": "Image Alt Text",
+        "name": "imageAlt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Image Title",
+        "name": "imageTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
         "label": "Title",
         "name": "title",
         "valueType": "string"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Description",
         "name": "description",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
+        "label": "Button Link",
         "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Button Label",
+        "name": "linkLabel",
         "valueType": "string"
       }
     ]

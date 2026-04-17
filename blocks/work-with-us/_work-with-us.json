@@ -61,20 +61,38 @@
         },
         {
           "component": "text",
+          "label": "Image Alt Text",
+          "name": "imageAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Image Title",
+          "name": "imageTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
           "label": "Title",
           "name": "title",
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Description",
           "name": "description",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Button Link",
           "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Button Label",
+          "name": "linkLabel",
           "valueType": "string"
         }
       ]

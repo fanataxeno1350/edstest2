@@ -4,28 +4,27 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [headingRow, ...slideRows] = [...block.children];
 
+  const section = document.createElement('section');
+  section.classList.add('section', 'work-with-us', 'pb-0');
+  moveInstrumentation(block, section);
+
+  // Section Header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
-
-  const headingCell = [...headingRow.children].find(c => c.textContent.trim());
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  // CRITICAL FIX: Replaced row.children[0] with content detection
+  const headingCell = [...headingRow.children].find(cell => cell.textContent.trim());
   if (headingCell) {
-    const h2 = document.createElement('h2');
-    h2.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-    h2.setAttribute('data-aos', 'fade-up');
-    h2.setAttribute('data-aos-offset', '100');
-    h2.setAttribute('data-aos-duration', '650');
-    h2.setAttribute('data-aos-easing', 'ease-in-out');
-    moveInstrumentation(headingCell, h2);
-    h2.innerHTML = headingCell.innerHTML;
-    sectionHeader.append(h2);
+    heading.textContent = headingCell.textContent.trim();
+    moveInstrumentation(headingCell, heading);
   }
+  sectionHeader.appendChild(heading);
+  section.appendChild(sectionHeader);
 
+  // Slides Container
   const positionRelativeDiv = document.createElement('div');
   positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
-  positionRelativeDiv.setAttribute('data-aos', 'fade-up');
-  positionRelativeDiv.setAttribute('data-aos-offset', '100');
-  positionRelativeDiv.setAttribute('data-aos-duration', '650');
-  positionRelativeDiv.setAttribute('data-aos-easing', 'ease-in-out');
 
   const containerDiv = document.createElement('div');
   containerDiv.classList.add('container');
@@ -34,80 +33,82 @@ export default function decorate(block) {
   gridLayoutDiv.classList.add('grid-layout');
 
   slideRows.forEach((row) => {
-    const cells = [...row.children];
+    // CRITICAL FIX: Destructuring is correct here as per EDS Block Structure for fixed-field item models.
+    const [imageCell, imageAltCell, imageTitleCell, titleCell, descriptionCell, linkCell, linkLabelCell] = [...row.children];
 
     const slideDiv = document.createElement('div');
     slideDiv.classList.add('slides');
-    moveInstrumentation(row, slideDiv);
 
     const wrapDiv = document.createElement('div');
     wrapDiv.classList.add('wrap');
 
-    const imageCell = cells.find(c => c.querySelector('picture'));
-    const titleCell = cells.find(c => !c.querySelector('picture') && !c.querySelector('a') && !c.querySelector('p'));
-    const descriptionCell = cells.find(c => c.querySelector('p'));
-    const linkCell = cells.find(c => c.querySelector('a'));
-
-    if (imageCell) {
-      const imageWrapDiv = document.createElement('div');
-      imageWrapDiv.classList.add('image-wrap');
-      moveInstrumentation(imageCell, imageWrapDiv);
-      while (imageCell.firstChild) {
-        imageWrapDiv.append(imageCell.firstChild);
+    // Image Wrap
+    const imageWrapDiv = document.createElement('div');
+    imageWrapDiv.classList.add('image-wrap');
+    const picture = imageCell?.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, imageAltCell?.textContent.trim() || img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        optimizedPic.querySelector('img').classList.add('img-fluid');
+        optimizedPic.querySelector('img').title = imageTitleCell?.textContent.trim() || '';
+        imageWrapDiv.appendChild(optimizedPic);
       }
-      wrapDiv.append(imageWrapDiv);
+    }
+    moveInstrumentation(imageCell, imageWrapDiv);
+    if (imageWrapDiv.children.length > 0) { // Only append if there's an image
+      wrapDiv.appendChild(imageWrapDiv);
     }
 
+
+    // Content Wrap
     const contentWrapDiv = document.createElement('div');
     contentWrapDiv.classList.add('content-wrap');
 
-    const innerSectionHeader = document.createElement('div');
-    innerSectionHeader.classList.add('section-header');
+    const contentSectionHeader = document.createElement('div');
+    contentSectionHeader.classList.add('section-header');
 
+    const title = document.createElement('h3');
+    title.classList.add('heading', 'font-regular');
     if (titleCell) {
-      const h3 = document.createElement('h3');
-      h3.classList.add('heading', 'font-regular');
-      moveInstrumentation(titleCell, h3);
-      h3.innerHTML = titleCell.innerHTML;
-      innerSectionHeader.append(h3);
+      title.textContent = titleCell.textContent.trim();
+      moveInstrumentation(titleCell, title);
     }
+    contentSectionHeader.appendChild(title);
 
+    const description = document.createElement('p');
+    description.classList.add('text-size-body');
     if (descriptionCell) {
-      const p = document.createElement('p');
-      p.classList.add('text-size-body');
-      moveInstrumentation(descriptionCell, p);
-      p.innerHTML = descriptionCell.innerHTML;
-      innerSectionHeader.append(p);
+      description.textContent = descriptionCell.textContent.trim();
+      moveInstrumentation(descriptionCell, description);
     }
+    contentSectionHeader.appendChild(description);
 
-    if (linkCell) {
-      const a = document.createElement('a');
-      a.classList.add('btn', 'btn-primary', 'stretched-link');
-      const originalLink = linkCell.querySelector('a');
-      if (originalLink) {
-        a.href = originalLink.href;
-        a.textContent = originalLink.textContent;
-      }
-      moveInstrumentation(linkCell, a);
-      innerSectionHeader.append(a);
+    const link = document.createElement('a');
+    link.classList.add('btn', 'btn-primary', 'stretched-link');
+    const foundLink = linkCell?.querySelector('a');
+    if (foundLink) {
+      // CRITICAL FIX: Use getAttribute('href') for aem-content type to ensure it's a string
+      link.href = foundLink.getAttribute('href') || '';
     }
+    if (linkLabelCell) {
+      link.textContent = linkLabelCell.textContent.trim();
+      moveInstrumentation(linkLabelCell, link);
+    }
+    moveInstrumentation(linkCell, link); // Instrumentation for the link cell itself
+    contentSectionHeader.appendChild(link);
 
-    contentWrapDiv.append(innerSectionHeader);
-    wrapDiv.append(contentWrapDiv);
-    slideDiv.append(wrapDiv);
-    gridLayoutDiv.append(slideDiv);
+    contentWrapDiv.appendChild(contentSectionHeader);
+    wrapDiv.appendChild(contentWrapDiv);
+    slideDiv.appendChild(wrapDiv);
+    gridLayoutDiv.appendChild(slideDiv);
+    moveInstrumentation(row, slideDiv);
   });
 
-  containerDiv.append(gridLayoutDiv);
-  positionRelativeDiv.append(containerDiv);
+  containerDiv.appendChild(gridLayoutDiv);
+  positionRelativeDiv.appendChild(containerDiv);
+  section.appendChild(positionRelativeDiv);
 
-  block.textContent = '';
-  block.append(sectionHeader, positionRelativeDiv);
-
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-    optimizedPic.querySelector('img').classList.add('img-fluid');
-  });
+  block.replaceWith(section);
 }

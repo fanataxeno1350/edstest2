@@ -4,9 +4,8 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 function transformNestedLists(rootUl) {
   rootUl.querySelectorAll('li').forEach((li) => {
     const nested = li.querySelector(':scope > ul');
-
-    // Handle label-only nodes
     const anchor = li.querySelector(':scope > a');
+
     if (!anchor) {
       const textNode = [...li.childNodes].find(
         (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
@@ -21,16 +20,11 @@ function transformNestedLists(rootUl) {
 
     if (nested) {
       nested.remove();
-
       const subWrap = document.createElement('div');
-      // Use class from ORIGINAL HTML: 'has-sub-child'
       subWrap.classList.add('has-sub-child');
       subWrap.append(nested);
-
       li.append(subWrap);
-
       const trigger = li.querySelector(':scope > a, :scope > span');
-
       if (trigger) {
         trigger.addEventListener('click', (e) => {
           e.preventDefault();
@@ -46,127 +40,100 @@ function transformNestedLists(rootUl) {
 export default function decorate(block) {
   const children = [...block.children];
 
-  // Identify root rows based on their content and position
-  const logoRow = children[0];
-  const logoLinkRow = children[1];
-  const anniversaryLogoRow = children[2];
-  const anniversaryLogoLinkRow = children[3];
+  // Destructure the first four rows which are fixed fields
+  const [
+    primaryLogoRow,
+    primaryLogoLinkRow,
+    anniversaryLogoRow,
+    anniversaryLogoLinkRow,
+    ...itemRows
+  ] = children;
 
-  // Remaining rows are item rows for containers
-  const itemRows = children.slice(4);
+  const header = document.createElement('header');
+  header.classList.add('main-header', 'with-marquee', 'solid'); // Do not add 'nav-up' initially
 
-  block.innerHTML = '';
-  block.classList.add('with-marquee', 'solid', 'nav-up');
+  const container = document.createElement('div');
+  container.classList.add('container');
+  header.append(container);
 
-  const headerContainer = document.createElement('div');
-  headerContainer.classList.add('container');
-  block.append(headerContainer);
+  const wrap = document.createElement('div');
+  wrap.classList.add('wrap');
+  container.append(wrap);
 
-  const wrapDiv = document.createElement('div');
-  wrapDiv.classList.add('wrap');
-  headerContainer.append(wrapDiv);
-
-  // Logo
+  // Logo section
   const logoDiv = document.createElement('div');
   logoDiv.classList.add('logo');
-  wrapDiv.append(logoDiv);
+  wrap.append(logoDiv);
 
-  const logoLink = document.createElement('a');
-  const originalLogoLink = logoLinkRow.querySelector('a');
-  if (originalLogoLink) {
-    logoLink.href = originalLogoLink.href;
-    moveInstrumentation(logoLinkRow, logoLink);
-  } else {
-    logoLink.href = '#';
+  const primaryLogoLink = document.createElement('a');
+  const primaryLogoAnchor = primaryLogoLinkRow.querySelector('a');
+  if (primaryLogoAnchor) {
+    primaryLogoLink.href = primaryLogoAnchor.href;
+  }
+  moveInstrumentation(primaryLogoLinkRow, primaryLogoLink);
+  logoDiv.append(primaryLogoLink);
+
+  const primaryLogoPicture = primaryLogoRow.querySelector('picture');
+  if (primaryLogoPicture) {
+    const primaryLogoImg = primaryLogoPicture.querySelector('img');
+    const optimizedPrimaryLogo = createOptimizedPicture(
+      primaryLogoImg.src,
+      primaryLogoImg.alt,
+      false,
+      [{ width: '200' }],
+    );
+    optimizedPrimaryLogo.querySelector('img').classList.add('hiddenlogo1');
+    moveInstrumentation(primaryLogoRow, optimizedPrimaryLogo.querySelector('img'));
+    primaryLogoLink.append(optimizedPrimaryLogo);
   }
 
-  const logoPicture = logoRow.querySelector('picture');
-  if (logoPicture) {
-    const img = logoPicture.querySelector('img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
-        { width: '200' },
-      ]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      logoLink.append(optimizedPic);
-      optimizedPic.querySelector('img').classList.add('hiddenlogo1');
-    }
-  }
-  logoDiv.append(logoLink);
-
-  // Hamburger
+  // Hamburger menu
   const hamburgerDiv = document.createElement('div');
   hamburgerDiv.classList.add('hamburger');
+  wrap.append(hamburgerDiv);
+
   const hamburgerUl = document.createElement('ul');
+  hamburgerDiv.append(hamburgerUl);
   for (let i = 0; i < 3; i += 1) {
     hamburgerUl.append(document.createElement('li'));
   }
-  hamburgerDiv.append(hamburgerUl);
-  wrapDiv.append(hamburgerDiv);
-
-  // Add event listener for hamburger menu
-  hamburgerDiv.addEventListener('click', () => {
-    block.classList.toggle('active'); // Toggle 'active' class on the main block for menu visibility
-    hamburgerDiv.classList.toggle('active'); // Toggle 'active' on hamburger for animation
-    document.body.classList.toggle('no-scroll'); // Prevent scrolling when menu is open
-  });
 
   // Navigation
   const nav = document.createElement('nav');
   nav.classList.add('main-nav');
-  wrapDiv.append(nav);
+  wrap.append(nav);
 
-  const navigationUl = document.createElement('ul');
-  navigationUl.setAttribute('itemscope', '');
-  navigationUl.setAttribute('itemtype', 'http://www.schema.org/SiteNavigationElement');
-  nav.append(navigationUl);
+  const navUl = document.createElement('ul');
+  navUl.setAttribute('itemscope', '');
+  navUl.setAttribute('itemtype', 'http://www.schema.org/SiteNavigationElement');
+  nav.append(navUl);
 
-  // Navigation Items (7 cells: label, link, icon, hierarchy-tree, leftHeading, leftDesc, leftSubdesc)
-  const navigationItems = itemRows.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 7 && cells[3].querySelector('ul'); // hierarchy-tree is a richtext with ul
-  });
-
+  const navigationItems = itemRows.filter((row) => row.children.length === 5);
   navigationItems.forEach((row) => {
-    const cells = [...row.children];
-    const labelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && !cell.querySelector('ul'));
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    const iconCell = cells.find(cell => cell.querySelector('picture'));
-    const hierarchyCell = cells.find(cell => cell.querySelector('ul'));
-    const otherTextCells = cells.filter(cell => !cell.querySelector('a') && !cell.querySelector('picture') && !cell.querySelector('ul') && cell !== labelCell);
-
-    const leftHeadingCell = otherTextCells[0];
-    const leftDescCell = otherTextCells[1];
-    const leftSubdescCell = otherTextCells[2];
+    const [labelCell, linkCell, iconCell, hierarchyCell, descriptionCell] = [...row.children];
 
     const li = document.createElement('li');
     li.classList.add('has-child', 'hover-red');
     li.setAttribute('itemprop', 'name');
-    moveInstrumentation(row, li);
 
-    const anchor = document.createElement('a');
-    const foundLink = linkCell?.querySelector('a');
+    const linkEl = document.createElement('a');
+    const foundLink = linkCell.querySelector('a');
     if (foundLink) {
-      anchor.href = foundLink.href;
-      anchor.setAttribute('itemprop', 'url');
-    } else {
-      anchor.href = '#';
+      linkEl.href = foundLink.href;
     }
-    anchor.textContent = labelCell?.textContent.trim() || '';
-    li.append(anchor);
+    linkEl.textContent = labelCell.textContent.trim();
+    linkEl.setAttribute('itemprop', 'url');
+    moveInstrumentation(linkCell, linkEl);
+    li.append(linkEl);
 
-    const iconPicture = iconCell?.querySelector('picture');
+    const iconPicture = iconCell.querySelector('picture');
     if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      if (img) {
-        const span = document.createElement('span');
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
-          { width: '24' },
-        ]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        span.append(optimizedPic);
-        li.append(span);
-      }
+      const iconImg = iconPicture.querySelector('img');
+      const optimizedIcon = createOptimizedPicture(iconImg.src, iconImg.alt, false, [
+        { width: '24' },
+      ]);
+      moveInstrumentation(iconCell, optimizedIcon.querySelector('img'));
+      li.append(optimizedIcon);
     }
 
     const megaMenu = document.createElement('div');
@@ -185,260 +152,148 @@ export default function decorate(block) {
     leftDiv.classList.add('left-div');
     centerDiv.append(leftDiv);
 
-    const leftHeading = document.createElement('h4');
-    leftHeading.classList.add('left-div-heading');
-    const leftHeadingLink = document.createElement('a');
-    leftHeadingLink.textContent = leftHeadingCell?.textContent.trim() || '';
-    leftHeading.append(leftHeadingLink);
-    leftDiv.append(leftHeading);
+    const leftDivHeading = document.createElement('h4');
+    leftDivHeading.classList.add('left-div-heading');
+    const headingLink = document.createElement('a');
+    headingLink.textContent = labelCell.textContent.trim();
+    if (foundLink) {
+      headingLink.href = foundLink.href;
+    }
+    leftDivHeading.append(headingLink);
+    leftDiv.append(leftDivHeading);
 
-    const leftDesc = document.createElement('p');
-    leftDesc.classList.add('left-div-desc');
-    leftDesc.textContent = leftDescCell?.textContent.trim() || '';
-    leftDiv.append(leftDesc);
-
-    const leftSubdesc = document.createElement('p');
-    leftSubdesc.classList.add('left-div-subdesc');
-    leftSubdesc.textContent = leftSubdescCell?.textContent.trim() || '';
-    leftDiv.append(leftSubdesc);
+    const descriptionP = document.createElement('p');
+    descriptionP.classList.add('left-div-desc');
+    descriptionP.textContent = descriptionCell.textContent.trim();
+    leftDiv.append(descriptionP);
 
     const subNavWrap = document.createElement('div');
-    subNavWrap.classList.add('sub-nav-wrap');
-    const labelText = labelCell?.textContent.trim().toLowerCase();
-    if (labelText === 'who we are') {
-      subNavWrap.classList.add('about-us-sub-nav');
-    } else if (labelText === 'what we do') {
-      subNavWrap.classList.add('what-we-do');
-    } else if (labelText === 'investor relations') {
-      leftDiv.classList.add('ir-left-div');
-      subNavWrap.classList.add('element-block');
-    } else if (labelText === 'newsroom') {
-      leftDiv.classList.add('newsroom-left-div');
-    } else if (labelText === 'careers') {
-      leftDiv.classList.add('career-left-div');
-      subNavWrap.classList.add('careers-div');
-    }
+    subNavWrap.classList.add('sub-nav-wrap', 'about-us-sub-nav');
     centerDiv.append(subNavWrap);
 
-    const hierarchyRoot = hierarchyCell?.querySelector('ul');
+    const hierarchyRoot = hierarchyCell.querySelector('ul');
     if (hierarchyRoot) {
-      // Create a temporary div to hold the innerHTML and apply classes
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = hierarchyCell.innerHTML;
-      moveInstrumentation(hierarchyCell, tempDiv); // Move instrumentation from original cell to tempDiv
-
-      // Apply classes to nested elements as per ORIGINAL HTML
-      tempDiv.querySelectorAll('ul').forEach(ul => {
-        // No specific classes on ULs in ORIGINAL HTML for hierarchy-tree, but keep if needed
+      // Apply classes to the hierarchyRoot and its children based on ORIGINAL HTML
+      hierarchyRoot.querySelectorAll('li').forEach((hierarchyLi) => {
+        hierarchyLi.classList.add('top-level-li'); // Example class from ORIGINAL HTML
+        const hierarchyAnchor = hierarchyLi.querySelector('a');
+        if (hierarchyAnchor) {
+          // Add any specific classes for anchors if present in ORIGINAL HTML
+        }
+        const nestedUl = hierarchyLi.querySelector('ul');
+        if (nestedUl) {
+          // Add any specific classes for nested Uls if present in ORIGINAL HTML
+          nestedUl.querySelectorAll('li').forEach((nestedLi) => {
+            nestedLi.classList.add('first-level-li'); // Example class from ORIGINAL HTML
+            const innerNestedUl = nestedLi.querySelector('ul');
+            if (innerNestedUl) {
+              innerNestedUl.classList.add('has-inner-sub-child'); // Example class
+            }
+          });
+        }
       });
-      tempDiv.querySelectorAll('li').forEach(liItem => {
-        // Example: if ORIGINAL HTML had specific classes for li, add them here
-        // liItem.classList.add('nav-menu-item', 'list-item');
-      });
-      tempDiv.querySelectorAll('a').forEach(a => {
-        // Example: if ORIGINAL HTML had specific classes for a, add them here
-        // a.classList.add('nav-link');
-      });
-
-      // Move children from tempDiv to subNavWrap
-      while (tempDiv.firstChild) {
-        subNavWrap.append(tempDiv.firstChild);
-      }
-      // Call transformNestedLists on the new hierarchyRoot within subNavWrap
-      // Note: hierarchyRoot is now a child of subNavWrap, so we need to re-select it
-      const newHierarchyRoot = subNavWrap.querySelector('ul');
-      if (newHierarchyRoot) {
-        transformNestedLists(newHierarchyRoot);
-      }
+      moveInstrumentation(hierarchyCell, hierarchyRoot); // Move instrumentation for the whole hierarchy
+      subNavWrap.append(hierarchyRoot);
+      transformNestedLists(hierarchyRoot);
     }
 
-    navigationUl.append(li);
+    navUl.append(li);
   });
 
-  // Press Releases (latest two) (4 cells: link, title, date, category)
-  const pressReleaseItems = itemRows.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 4 && cells[0].querySelector('a') && !cells[2].querySelector('picture'); // Link, Title, Date, Category
-  });
+  // Contact Links
+  const iconNavMobile = document.createElement('div');
+  iconNavMobile.classList.add('icon-nav', 'mobile-menus-icon');
+  navUl.append(iconNavMobile);
 
-  if (pressReleaseItems.length > 0) {
-    // Find the 'Newsroom' menu item dynamically
-    const newsroomMenuItem = [...navigationUl.children].find(
-      (li) => li.querySelector('a')?.textContent.trim().toLowerCase() === 'newsroom',
-    );
+  const iconNavMobileUl = document.createElement('ul');
+  iconNavMobile.append(iconNavMobileUl);
 
-    if (newsroomMenuItem) {
-      const newsroomLeftDiv = newsroomMenuItem.querySelector('.newsroom-left-div');
-      if (newsroomLeftDiv) {
-        const latestTwoPressReleaseDiv = document.createElement('div');
-        latestTwoPressReleaseDiv.classList.add('latest-two-press-release');
-        newsroomLeftDiv.append(latestTwoPressReleaseDiv);
-
-        pressReleaseItems.slice(0, 2).forEach((row) => {
-          const cells = [...row.children];
-          const prLinkCell = cells.find(cell => cell.querySelector('a'));
-          const prTitleCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && cells.indexOf(cell) === 1);
-          const prDateCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && cells.indexOf(cell) === 2);
-          const prCategoryCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && cells.indexOf(cell) === 3);
-
-          const slidesDiv = document.createElement('div');
-          slidesDiv.classList.add('slides');
-          latestTwoPressReleaseDiv.append(slidesDiv);
-
-          const slideWrap = document.createElement('div');
-          slideWrap.classList.add('wrap');
-          slidesDiv.append(slideWrap);
-
-          const contentDiv = document.createElement('div');
-          contentDiv.classList.add('content');
-          slideWrap.append(contentDiv);
-
-          const descDiv = document.createElement('div');
-          descDiv.classList.add('desc');
-          contentDiv.append(descDiv);
-
-          const titleP = document.createElement('p');
-          const prAnchor = document.createElement('a');
-          const originalPrLink = prLinkCell?.querySelector('a');
-          if (originalPrLink) {
-            prAnchor.href = originalPrLink.href;
-            moveInstrumentation(prLinkCell, prAnchor);
-          } else {
-            prAnchor.href = '#';
-          }
-          prAnchor.textContent = prTitleCell?.textContent.trim() || '';
-          titleP.append(prAnchor);
-          descDiv.append(titleP);
-
-          const dateDiv = document.createElement('div');
-          dateDiv.classList.add('date');
-          const dateEm = document.createElement('em');
-          dateEm.textContent = prDateCell?.textContent.trim() || '';
-          dateDiv.append(dateEm);
-          const categoryEm = document.createElement('em');
-          categoryEm.textContent = prCategoryCell?.textContent.trim() || '';
-          dateDiv.append(categoryEm);
-          descDiv.append(dateDiv);
-        });
-      }
-    }
-  }
-
-  // Icon Nav (Mobile)
-  const mobileIconNav = document.createElement('div');
-  mobileIconNav.classList.add('icon-nav', 'mobile-menus-icon');
-  navigationUl.append(mobileIconNav);
-
-  const mobileIconUl = document.createElement('ul');
-  mobileIconNav.append(mobileIconUl);
-
-  // Contact Links (3 cells: icon, link, label)
-  const contactLinkItems = itemRows.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 3 && cells[0].querySelector('picture') && cells[1].querySelector('a') && !cells[2].querySelector('picture');
-  });
-
+  const contactLinkItems = itemRows.filter((row) => row.children.length === 3);
   contactLinkItems.forEach((row) => {
-    const cells = [...row.children];
-    const iconCell = cells.find(cell => cell.querySelector('picture'));
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    const labelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a'));
-
+    const [iconCell, linkCell, labelCell] = [...row.children];
     const li = document.createElement('li');
     li.classList.add('mail');
-    mobileIconUl.append(li);
 
     const anchor = document.createElement('a');
-    const foundLink = linkCell?.querySelector('a');
+    const foundLink = linkCell.querySelector('a');
     if (foundLink) {
       anchor.href = foundLink.href;
-      moveInstrumentation(linkCell, anchor);
-    } else {
-      anchor.href = '#';
     }
+    anchor.textContent = labelCell.textContent.trim();
 
-    const iconPicture = iconCell?.querySelector('picture');
+    const iconPicture = iconCell.querySelector('picture');
     if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
-          { width: '24' },
-        ]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        anchor.append(optimizedPic);
-      }
+      const iconImg = iconPicture.querySelector('img');
+      const optimizedIcon = createOptimizedPicture(iconImg.src, iconImg.alt, false, [
+        { width: '24' },
+      ]);
+      moveInstrumentation(iconCell, optimizedIcon.querySelector('img'));
+      anchor.prepend(optimizedIcon);
     }
-    anchor.append(labelCell?.textContent.trim() || '');
+    moveInstrumentation(row, anchor);
     li.append(anchor);
+    iconNavMobileUl.append(li);
   });
 
-  // Search Links (3 cells: icon1, icon2, link) - distinguished by having two pictures
-  const searchLinkItems = itemRows.filter((row) => {
-    const cells = [...row.children];
-    const pictures = cells.filter(cell => cell.querySelector('picture'));
-    return cells.length === 3 && pictures.length === 2 && cells.some(cell => cell.querySelector('a'));
-  });
+  // Search Items
+  const searchItems = itemRows.filter((row) => row.children.length === 4);
+  if (searchItems.length > 0) {
+    const searchRow = searchItems[0]; // Assuming only one search item for the header
+    const [searchIconCell, searchLabelCell, inputPlaceholderCell, formActionCell] = [
+      ...searchRow.children,
+    ];
 
-  searchLinkItems.forEach((row) => {
-    const cells = [...row.children];
-    const icon1Cell = cells.find(cell => cell.querySelector('picture') && cells.indexOf(cell) === 0);
-    const icon2Cell = cells.find(cell => cell.querySelector('picture') && cells.indexOf(cell) === 1);
-    const linkCell = cells.find(cell => cell.querySelector('a'));
+    const searchLi = document.createElement('li');
+    searchLi.classList.add('search');
 
-    const li = document.createElement('li');
-    li.classList.add('search');
-    mobileIconUl.append(li);
+    const searchAnchor = document.createElement('a');
+    searchAnchor.href = '#';
 
-    const anchor = document.createElement('a');
-    const foundLink = linkCell?.querySelector('a');
-    if (foundLink) {
-      anchor.href = foundLink.href;
-      moveInstrumentation(linkCell, anchor);
-    } else {
-      anchor.href = '#';
+    const searchIconPicture = searchIconCell.querySelector('picture');
+    if (searchIconPicture) {
+      const searchIconImg = searchIconPicture.querySelector('img');
+      const optimizedSearchIcon = createOptimizedPicture(
+        searchIconImg.src,
+        searchIconImg.alt,
+        false,
+        [{ width: '24' }],
+      );
+      moveInstrumentation(searchIconCell, optimizedSearchIcon.querySelector('img'));
+      searchAnchor.append(optimizedSearchIcon);
+      // Add a second search icon for toggle state if available in original HTML
+      // The original HTML shows two img tags within the anchor for search, so we clone and append
+      const secondSearchIcon = searchIconPicture.cloneNode(true);
+      const secondSearchIconImg = secondSearchIcon.querySelector('img');
+      const optimizedSecondSearchIcon = createOptimizedPicture(
+        secondSearchIconImg.src,
+        secondSearchIconImg.alt,
+        false,
+        [{ width: '24' }],
+      );
+      searchAnchor.append(optimizedSecondSearchIcon);
     }
 
-    const icon1Picture = icon1Cell?.querySelector('picture');
-    if (icon1Picture) {
-      const img = icon1Picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
-          { width: '24' },
-        ]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        anchor.append(optimizedPic);
-      }
-    }
-    const icon2Picture = icon2Cell?.querySelector('picture');
-    if (icon2Picture) {
-      const img = icon2Picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
-          { width: '24' },
-        ]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        anchor.append(optimizedPic);
-      }
-    }
     const searchSpan = document.createElement('span');
-    searchSpan.textContent = ' Search';
-    anchor.append(searchSpan);
-    li.append(anchor);
+    searchSpan.textContent = searchLabelCell.textContent.trim();
+    searchAnchor.append(searchSpan);
+    searchLi.append(searchAnchor);
 
     const searchScreenWrap = document.createElement('div');
     searchScreenWrap.classList.add('search-screen-wrap');
-    li.append(searchScreenWrap);
+    searchLi.append(searchScreenWrap);
 
     const searchWrapInner = document.createElement('div');
     searchWrapInner.classList.add('wrap');
     searchScreenWrap.append(searchWrapInner);
 
     const searchForm = document.createElement('form');
-    searchForm.action = 'https://www.mahindra.com/search';
+    const formAction = formActionCell.querySelector('a');
+    if (formAction) {
+      searchForm.action = formAction.href;
+    }
     searchForm.method = 'get';
     searchForm.id = 'search-block-form';
     searchForm.setAttribute('accept-charset', 'UTF-8');
-    searchForm.setAttribute('data-drupal-form-fields', 'edit-keys');
     searchWrapInner.append(searchForm);
 
     const searchInputWrap = document.createElement('div');
@@ -447,13 +302,19 @@ export default function decorate(block) {
 
     const searchIconDiv = document.createElement('div');
     searchIconDiv.classList.add('search-icon');
-    const searchIconImg = document.createElement('img');
-    // Assuming a generic search icon for this example, as it's not in the block model
-    // If the block model provided a search icon, it would be used here.
-    searchIconImg.alt = 'svg file';
-    searchIconImg.src = '/icons/search-icon.svg'; // Placeholder, replace if icon is in block model
-    searchIconDiv.append(searchIconImg);
     searchInputWrap.append(searchIconDiv);
+    // Add search icon for input field if available in original HTML
+    if (searchIconPicture) {
+      const inputSearchIcon = searchIconPicture.cloneNode(true);
+      const inputSearchIconImg = inputSearchIcon.querySelector('img');
+      const optimizedInputSearchIcon = createOptimizedPicture(
+        inputSearchIconImg.src,
+        inputSearchIconImg.alt,
+        false,
+        [{ width: '24' }],
+      );
+      searchIconDiv.append(optimizedInputSearchIcon);
+    }
 
     const searchInput = document.createElement('input');
     searchInput.type = 'text';
@@ -462,335 +323,241 @@ export default function decorate(block) {
     searchInput.name = 'key';
     searchInput.id = 'searchInput';
     searchInput.autocomplete = 'off';
-    searchInputWrap.append(searchInput);
-
-    const submitButton = document.createElement('button');
-    submitButton.classList.add('submit-button');
-    submitButton.type = 'submit'; // Ensure it's a submit button for the form
-    const buttonLabel = document.createElement('div');
-    buttonLabel.classList.add('label');
-    buttonLabel.textContent = 'Submit';
-    submitButton.append(buttonLabel);
-    const submitIconImg = document.createElement('img');
-    submitIconImg.alt = 'svg file';
-    submitIconImg.src = '/icons/submit-icon.svg'; // Placeholder, replace if icon is in block model
-    submitButton.append(submitIconImg);
-    searchInputWrap.append(submitButton);
-
-    const searchResultBox = document.createElement('div');
-    searchResultBox.classList.add('searchResultBox');
-    searchResultBox.style.display = 'none';
-    searchForm.append(searchResultBox);
-
-    const swiperDiv = document.createElement('div');
-    swiperDiv.classList.add('swiper', 'scrollSwiper');
-    searchResultBox.append(swiperDiv);
-
-    const swiperWrapper = document.createElement('div');
-    swiperWrapper.classList.add('swiper-wrapper');
-    swiperDiv.append(swiperWrapper);
-
-    const swiperSlide = document.createElement('div');
-    swiperSlide.classList.add('swiper-slide');
-    swiperWrapper.append(swiperSlide);
-
-    const swiperScrollbar = document.createElement('div');
-    swiperScrollbar.classList.add('swiper-scrollbar');
-    searchResultBox.append(swiperScrollbar);
-
-    const popularKeywords = document.createElement('div');
-    popularKeywords.classList.add('search-suggestions-wrap');
-    const popularLabel = document.createElement('div');
-    popularLabel.classList.add('label');
-    popularLabel.textContent = 'Popular Keywords:';
-    popularKeywords.append(popularLabel);
-    const popularTokens = document.createElement('div');
-    popularTokens.classList.add('tokens-wrap');
-    const popularUl = document.createElement('ul');
-    ['Business', 'FY 21', 'Brands', 'XUV700', 'Global', 'Nanhi Kali'].forEach((text) => {
-      const liItem = document.createElement('li');
-      liItem.textContent = text;
-      popularUl.append(liItem);
-    });
-    popularTokens.append(popularUl);
-    popularKeywords.append(popularTokens);
-    searchWrapInner.append(popularKeywords);
-
-    const recommendedKeywords = document.createElement('div');
-    recommendedKeywords.classList.add('search-suggestions-wrap');
-    const recommendedLabel = document.createElement('div');
-    recommendedLabel.classList.add('label');
-    recommendedLabel.textContent = 'Recommended for you:';
-    recommendedKeywords.append(recommendedLabel);
-    const recommendedTokens = document.createElement('div');
-    recommendedTokens.classList.add('tokens-wrap');
-    const recommendedUl = document.createElement('ul');
-    ['Annual Report 2021 - 2022', 'Leadership Announcement', 'Latest Press Release', 'Brand Guidelines'].forEach((text) => {
-      const liItem = document.createElement('li');
-      liItem.textContent = text;
-      recommendedUl.append(liItem);
-    });
-    recommendedTokens.append(recommendedUl);
-    recommendedKeywords.append(recommendedTokens);
-    searchWrapInner.append(recommendedKeywords);
-
-    // Event listener for search toggle
-    anchor.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      searchScreenWrap.classList.toggle('active');
-      li.classList.toggle('active');
-    });
-    searchScreenWrap.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
-    document.addEventListener('click', () => {
-      searchScreenWrap.classList.remove('active');
-      li.classList.remove('active');
-    });
-  });
-
-  // Icon Nav (Desktop)
-  const desktopIconNav = document.createElement('div');
-  desktopIconNav.classList.add('icon-nav', 'desktop-menus-icon');
-  nav.append(desktopIconNav);
-
-  const desktopIconUl = document.createElement('ul');
-  desktopIconNav.append(desktopIconUl);
-
-  // Contact Links (Desktop)
-  contactLinkItems.forEach((row) => {
-    const cells = [...row.children];
-    const iconCell = cells.find(cell => cell.querySelector('picture'));
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    // const labelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a')); // Label not used in desktop icon nav
-
-    const li = document.createElement('li');
-    li.classList.add('mail');
-    desktopIconUl.append(li);
-
-    const anchor = document.createElement('a');
-    const foundLink = linkCell?.querySelector('a');
-    if (foundLink) {
-      anchor.href = foundLink.href;
-      moveInstrumentation(linkCell, anchor);
-    } else {
-      anchor.href = '#';
-    }
-
-    const iconPicture = iconCell?.querySelector('picture');
-    if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
-          { width: '24' },
-        ]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        anchor.append(optimizedPic);
-      }
-    }
-    li.append(anchor);
-  });
-
-  // Search Links (Desktop)
-  searchLinkItems.forEach((row) => {
-    const cells = [...row.children];
-    const icon1Cell = cells.find(cell => cell.querySelector('picture') && cells.indexOf(cell) === 0);
-    const icon2Cell = cells.find(cell => cell.querySelector('picture') && cells.indexOf(cell) === 1);
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-
-    const li = document.createElement('li');
-    li.classList.add('search');
-    desktopIconUl.append(li);
-
-    const anchor = document.createElement('a');
-    const foundLink = linkCell?.querySelector('a');
-    if (foundLink) {
-      anchor.href = foundLink.href;
-      moveInstrumentation(linkCell, anchor);
-    } else {
-      anchor.href = '#';
-    }
-
-    const icon1Picture = icon1Cell?.querySelector('picture');
-    if (icon1Picture) {
-      const img = icon1Picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
-          { width: '24' },
-        ]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        anchor.append(optimizedPic);
-      }
-    }
-    const icon2Picture = icon2Cell?.querySelector('picture');
-    if (icon2Picture) {
-      const img = icon2Picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
-          { width: '24' },
-        ]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        anchor.append(optimizedPic);
-      }
-    }
-    li.append(anchor);
-
-    const searchScreenWrap = document.createElement('div');
-    searchScreenWrap.classList.add('search-screen-wrap');
-    li.append(searchScreenWrap);
-
-    const searchWrapInner = document.createElement('div');
-    searchWrapInner.classList.add('wrap');
-    searchScreenWrap.append(searchWrapInner);
-
-    const searchForm = document.createElement('form');
-    searchForm.action = 'https://www.mahindra.com/search';
-    searchForm.method = 'get';
-    searchForm.id = 'search-block-form';
-    searchForm.setAttribute('accept-charset', 'UTF-8');
-    searchForm.setAttribute('data-drupal-form-fields', 'edit-keys');
-    searchWrapInner.append(searchForm);
-
-    const searchInputWrap = document.createElement('div');
-    searchInputWrap.classList.add('search-wrap');
-    searchForm.append(searchInputWrap);
-
-    const searchIconDiv = document.createElement('div');
-    searchIconDiv.classList.add('search-icon');
-    const searchIconImg = document.createElement('img');
-    searchIconImg.alt = 'svg file';
-    searchIconImg.src = '/icons/search-icon.svg'; // Placeholder
-    searchIconDiv.append(searchIconImg);
-    searchInputWrap.append(searchIconDiv);
-
-    const searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.classList.add('input-text', 'searchtext');
-    searchInput.required = true;
-    searchInput.name = 'key';
-    searchInput.id = 'searchInput';
-    searchInput.autocomplete = 'off';
+    searchInput.placeholder = inputPlaceholderCell.textContent.trim();
     searchInputWrap.append(searchInput);
 
     const submitButton = document.createElement('button');
     submitButton.classList.add('submit-button');
     submitButton.type = 'submit';
-    const buttonLabel = document.createElement('div');
-    buttonLabel.classList.add('label');
-    buttonLabel.textContent = 'Submit';
-    submitButton.append(buttonLabel);
-    const submitIconImg = document.createElement('img');
-    submitIconImg.alt = 'svg file';
-    submitIconImg.src = '/icons/submit-icon.svg'; // Placeholder
-    submitButton.append(submitIconImg);
+    const submitLabel = document.createElement('div');
+    submitLabel.classList.add('label');
+    submitLabel.textContent = 'Submit';
+    submitButton.append(submitLabel);
+    // Add submit button icon if available in original HTML
+    if (searchIconPicture) {
+      const submitIcon = searchIconPicture.cloneNode(true);
+      const submitIconImg = submitIcon.querySelector('img');
+      const optimizedSubmitIcon = createOptimizedPicture(
+        submitIconImg.src,
+        submitIconImg.alt,
+        false,
+        [{ width: '24' }],
+      );
+      submitButton.append(optimizedSubmitIcon);
+    }
     searchInputWrap.append(submitButton);
 
-    const searchResultBox = document.createElement('div');
-    searchResultBox.classList.add('searchResultBox');
-    searchResultBox.style.display = 'none';
-    searchForm.append(searchResultBox);
+    iconNavMobileUl.append(searchLi);
 
-    const swiperDiv = document.createElement('div');
-    swiperDiv.classList.add('swiper', 'scrollSwiper');
-    searchResultBox.append(swiperDiv);
-
-    const swiperWrapper = document.createElement('div');
-    swiperWrapper.classList.add('swiper-wrapper');
-    swiperDiv.append(swiperWrapper);
-
-    const swiperSlide = document.createElement('div');
-    swiperSlide.classList.add('swiper-slide');
-    swiperWrapper.append(swiperSlide);
-
-    const swiperScrollbar = document.createElement('div');
-    swiperScrollbar.classList.add('swiper-scrollbar');
-    searchResultBox.append(swiperScrollbar);
-
-    const popularKeywords = document.createElement('div');
-    popularKeywords.classList.add('search-suggestions-wrap');
-    const popularLabel = document.createElement('div');
-    popularLabel.classList.add('label');
-    popularLabel.textContent = 'Popular Keywords:';
-    popularKeywords.append(popularLabel);
-    const popularTokens = document.createElement('div');
-    popularTokens.classList.add('tokens-wrap');
-    const popularUl = document.createElement('ul');
-    ['Business', 'FY 21', 'Brands', 'XUV700', 'Global', 'Nanhi Kali'].forEach((text) => {
-      const liItem = document.createElement('li');
-      liItem.textContent = text;
-      popularUl.append(liItem);
-    });
-    popularTokens.append(popularUl);
-    popularKeywords.append(popularTokens);
-    searchWrapInner.append(popularKeywords);
-
-    const recommendedKeywords = document.createElement('div');
-    recommendedKeywords.classList.add('search-suggestions-wrap');
-    const recommendedLabel = document.createElement('div');
-    recommendedLabel.classList.add('label');
-    recommendedLabel.textContent = 'Recommended for you:';
-    recommendedKeywords.append(recommendedLabel);
-    const recommendedTokens = document.createElement('div');
-    recommendedTokens.classList.add('tokens-wrap');
-    const recommendedUl = document.createElement('ul');
-    ['Annual Report 2021 - 2022', 'Leadership Announcement', 'Latest Press Release', 'Brand Guidelines'].forEach((text) => {
-      const liItem = document.createElement('li');
-      liItem.textContent = text;
-      recommendedUl.append(liItem);
-    });
-    recommendedTokens.append(recommendedUl);
-    recommendedKeywords.append(recommendedTokens);
-    searchWrapInner.append(recommendedKeywords);
-
-    // Event listener for search toggle
-    anchor.addEventListener('click', (e) => {
+    // Add event listeners for search functionality
+    searchAnchor.addEventListener('click', (e) => {
       e.preventDefault();
-      e.stopPropagation();
       searchScreenWrap.classList.toggle('active');
-      li.classList.toggle('active');
+      searchLi.classList.toggle('active');
     });
+
     searchScreenWrap.addEventListener('click', (e) => {
-      e.stopPropagation();
+      if (e.target === searchScreenWrap) {
+        searchScreenWrap.classList.remove('active');
+        searchLi.classList.remove('active');
+      }
     });
-    document.addEventListener('click', () => {
-      searchScreenWrap.classList.remove('active');
-      li.classList.remove('active');
-    });
+  }
+
+  // Desktop Icons (Contact and Search)
+  const iconNavDesktop = document.createElement('div');
+  iconNavDesktop.classList.add('icon-nav', 'desktop-menus-icon');
+  nav.append(iconNavDesktop);
+
+  const iconNavDesktopUl = document.createElement('ul');
+  iconNavDesktop.append(iconNavDesktopUl);
+
+  contactLinkItems.forEach((row) => {
+    const [iconCell, linkCell, labelCell] = [...row.children];
+    const li = document.createElement('li');
+    li.classList.add('mail');
+
+    const anchor = document.createElement('a');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      anchor.href = foundLink.href;
+    }
+
+    const iconPicture = iconCell.querySelector('picture');
+    if (iconPicture) {
+      const iconImg = iconPicture.querySelector('img');
+      const optimizedIcon = createOptimizedPicture(iconImg.src, iconImg.alt, false, [
+        { width: '24' },
+      ]);
+      moveInstrumentation(iconCell, optimizedIcon.querySelector('img'));
+      anchor.append(optimizedIcon);
+    }
+    moveInstrumentation(row, anchor);
+    li.append(anchor);
+    iconNavDesktopUl.append(li);
   });
 
+  if (searchItems.length > 0) {
+    const searchRow = searchItems[0];
+    const [searchIconCell, searchLabelCell, inputPlaceholderCell, formActionCell] = [
+      ...searchRow.children,
+    ];
+
+    const searchLi = document.createElement('li');
+    searchLi.classList.add('search');
+
+    const searchAnchor = document.createElement('a');
+    searchAnchor.href = '#';
+
+    const searchIconPicture = searchIconCell.querySelector('picture');
+    if (searchIconPicture) {
+      const searchIconImg = searchIconPicture.querySelector('img');
+      const optimizedSearchIcon = createOptimizedPicture(
+        searchIconImg.src,
+        searchIconImg.alt,
+        false,
+        [{ width: '24' }],
+      );
+      moveInstrumentation(searchIconCell, optimizedSearchIcon.querySelector('img'));
+      searchAnchor.append(optimizedSearchIcon);
+      const secondSearchIcon = searchIconPicture.cloneNode(true);
+      const secondSearchIconImg = secondSearchIcon.querySelector('img');
+      const optimizedSecondSearchIcon = createOptimizedPicture(
+        secondSearchIconImg.src,
+        secondSearchIconImg.alt,
+        false,
+        [{ width: '24' }],
+      );
+      searchAnchor.append(optimizedSecondSearchIcon);
+    }
+    searchLi.append(searchAnchor);
+
+    const searchScreenWrap = document.createElement('div');
+    searchScreenWrap.classList.add('search-screen-wrap');
+    searchLi.append(searchScreenWrap);
+
+    const searchWrapInner = document.createElement('div');
+    searchWrapInner.classList.add('wrap');
+    searchScreenWrap.append(searchWrapInner);
+
+    const searchForm = document.createElement('form');
+    const formAction = formActionCell.querySelector('a');
+    if (formAction) {
+      searchForm.action = formAction.href;
+    }
+    searchForm.method = 'get';
+    searchForm.id = 'search-block-form';
+    searchForm.setAttribute('accept-charset', 'UTF-8');
+    searchWrapInner.append(searchForm);
+
+    const searchInputWrap = document.createElement('div');
+    searchInputWrap.classList.add('search-wrap');
+    searchForm.append(searchInputWrap);
+
+    const searchIconDiv = document.createElement('div');
+    searchIconDiv.classList.add('search-icon');
+    searchInputWrap.append(searchIconDiv);
+    if (searchIconPicture) {
+      const inputSearchIcon = searchIconPicture.cloneNode(true);
+      const inputSearchIconImg = inputSearchIcon.querySelector('img');
+      const optimizedInputSearchIcon = createOptimizedPicture(
+        inputSearchIconImg.src,
+        inputSearchIconImg.alt,
+        false,
+        [{ width: '24' }],
+      );
+      searchIconDiv.append(optimizedInputSearchIcon);
+    }
+
+    const searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.classList.add('input-text', 'searchtext');
+    searchInput.required = true;
+    searchInput.name = 'key';
+    searchInput.id = 'searchInput';
+    searchInput.autocomplete = 'off';
+    searchInput.placeholder = inputPlaceholderCell.textContent.trim();
+    searchInputWrap.append(searchInput);
+
+    const submitButton = document.createElement('button');
+    submitButton.classList.add('submit-button');
+    submitButton.type = 'submit';
+    const submitLabel = document.createElement('div');
+    submitLabel.classList.add('label');
+    submitLabel.textContent = 'Submit';
+    submitButton.append(submitLabel);
+    if (searchIconPicture) {
+      const submitIcon = searchIconPicture.cloneNode(true);
+      const submitIconImg = submitIcon.querySelector('img');
+      const optimizedSubmitIcon = createOptimizedPicture(
+        submitIconImg.src,
+        submitIconImg.alt,
+        false,
+        [{ width: '24' }],
+      );
+      submitButton.append(optimizedSubmitIcon);
+    }
+    searchInputWrap.append(submitButton);
+
+    iconNavDesktopUl.append(searchLi);
+
+    searchAnchor.addEventListener('click', (e) => {
+      e.preventDefault();
+      searchScreenWrap.classList.toggle('active');
+      searchLi.classList.toggle('active');
+    });
+
+    searchScreenWrap.addEventListener('click', (e) => {
+      if (e.target === searchScreenWrap) {
+        searchScreenWrap.classList.remove('active');
+        searchLi.classList.remove('active');
+      }
+    });
+  }
+
   // Anniversary Logo
-  const year80LogoDiv = document.createElement('div');
-  year80LogoDiv.classList.add('logo', 'year-80-logo');
-  wrapDiv.append(year80LogoDiv);
+  const anniversaryLogoDiv = document.createElement('div');
+  anniversaryLogoDiv.classList.add('logo', 'year-80-logo');
+  wrap.append(anniversaryLogoDiv);
 
   const anniversaryLogoLink = document.createElement('a');
-  const originalAnniversaryLogoLink = anniversaryLogoLinkRow.querySelector('a');
-  if (originalAnniversaryLogoLink) {
-    anniversaryLogoLink.href = originalAnniversaryLogoLink.href;
-    moveInstrumentation(anniversaryLogoLinkRow, anniversaryLogoLink);
-  } else {
-    anniversaryLogoLink.href = '#';
+  const anniversaryLogoAnchor = anniversaryLogoLinkRow.querySelector('a');
+  if (anniversaryLogoAnchor) {
+    anniversaryLogoLink.href = anniversaryLogoAnchor.href;
   }
+  moveInstrumentation(anniversaryLogoLinkRow, anniversaryLogoLink);
+  anniversaryLogoDiv.append(anniversaryLogoLink);
 
   const anniversaryLogoPicture = anniversaryLogoRow.querySelector('picture');
   if (anniversaryLogoPicture) {
-    const img = anniversaryLogoPicture.querySelector('img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
-        { width: '74' },
-      ]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      anniversaryLogoLink.append(optimizedPic);
-      optimizedPic.querySelector('img').classList.add('hiddenlogo1', 'years-80');
-    }
+    const anniversaryLogoImg = anniversaryLogoPicture.querySelector('img');
+    const optimizedAnniversaryLogo = createOptimizedPicture(
+      anniversaryLogoImg.src,
+      anniversaryLogoImg.alt,
+      false,
+      [{ width: '74' }],
+    );
+    optimizedAnniversaryLogo.querySelector('img').classList.add('hiddenlogo1', 'years-80');
+    moveInstrumentation(anniversaryLogoRow, optimizedAnniversaryLogo.querySelector('img'));
+    anniversaryLogoLink.append(optimizedAnniversaryLogo);
   }
-  year80LogoDiv.append(anniversaryLogoLink);
 
-  // Optimise all images
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
+  block.replaceWith(header);
+
+  let lastScrollY = 0;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > lastScrollY) {
+      header.classList.add('nav-up');
+    } else {
+      header.classList.remove('nav-up');
+    }
+    lastScrollY = window.scrollY;
+  });
+
+  // Hamburger menu toggle
+  hamburgerDiv.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    hamburgerDiv.classList.toggle('active');
+    document.body.classList.toggle('no-scroll');
   });
 }
