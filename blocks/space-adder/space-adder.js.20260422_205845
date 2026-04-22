@@ -1,0 +1,13 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // The block model has no fields, meaning it's a static block whose structure
+  // is entirely defined by the original HTML. The decorate function should
+  // therefore do nothing, as the block is already rendered correctly.
+  // The original HTML shows a div with classes 'w-100 pt-3 pt-sm-3' and an
+  // empty style attribute inside the 'spaceAdder' block.
+  // The block.children will already contain this div.
+  // No dynamic content or structure needs to be added or modified.
+}
+

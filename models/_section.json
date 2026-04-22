@@ -51,7 +51,19 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "header-comp",
+        "banner-section",
+        "space-adder",
+        "text-banner",
+        "product-selection-component",
+        "card-carousel",
+        "w-100",
+        "stay-social",
+        "w-100-pt-3-pt-sm-3",
+        "buy-now-card",
+        "scroll-to-top",
+        "footer-brand"
       ]
     }
   ]

@@ -1,0 +1,16 @@
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // The block model has no fields, so we just create the div as per the original HTML.
+  const spaceAdderDiv = document.createElement('div');
+  spaceAdderDiv.classList.add('w-100', 'pt-3', 'pt-sm-3');
+  // The original HTML has style="background: ;", so we replicate that.
+  spaceAdderDiv.style.background = ''; 
+
+  // Move instrumentation from the block to the newly created div.
+  moveInstrumentation(block, spaceAdderDiv);
+  
+  // Clear the existing block content and append the new div.
+  block.innerHTML = '';
+  block.append(spaceAdderDiv);
+}

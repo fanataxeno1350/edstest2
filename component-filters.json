@@ -16,7 +16,84 @@
       "cards",
       "columns",
       "fragment",
-      "---new--blocks-----"
+      "---new--blocks-----",
+      "header-comp",
+      "banner-section",
+      "space-adder",
+      "text-banner",
+      "product-selection-component",
+      "card-carousel",
+      "w-100",
+      "stay-social",
+      "w-100-pt-3-pt-sm-3",
+      "buy-now-card",
+      "scroll-to-top",
+      "footer-brand"
     ]
+  },
+  {
+    "id": "banner-section",
+    "components": [
+      "banner-cta-item"
+    ]
+  },
+  {
+    "id": "buy-now-card"
+  },
+  {
+    "id": "card-carousel",
+    "components": [
+      "recipe-card",
+      "social-media-share-item"
+    ]
+  },
+  {
+    "id": "footer-brand",
+    "components": [
+      "footer-navigation-item",
+      "footer-secondary-link",
+      "footer-social-link"
+    ]
+  },
+  {
+    "id": "header-comp",
+    "components": [
+      "navigation-item",
+      "sub-navigation-item"
+    ]
+  },
+  {
+    "id": "product-selection-component",
+    "components": [
+      "product-item"
+    ]
+  },
+  {
+    "id": "scroll-to-top",
+    "components": [
+      "scroll-to-top-button"
+    ]
+  },
+  {
+    "id": "space-adder"
+  },
+  {
+    "id": "stay-social",
+    "components": [
+      "stay-social-card",
+      "stay-social-cta"
+    ]
+  },
+  {
+    "id": "text-banner",
+    "components": [
+      "cta-item"
+    ]
+  },
+  {
+    "id": "w-100-pt-3-pt-sm-3"
+  },
+  {
+    "id": "w-100"
   }
 ]
