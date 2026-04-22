@@ -16,74 +16,7 @@
       "cards",
       "columns",
       "fragment",
-      "---new--blocks-----",
-      "header-comp",
-      "banner-section",
-      "space-adder",
-      "text-banner",
-      "w-100",
-      "product-selection-component",
-      "card-carousel",
-      "stay-social",
-      "buy-now-card",
-      "footer-brand",
-      "footer"
-    ]
-  },
-  {
-    "id": "banner-section",
-    "components": [
-      "banner-cta"
-    ]
-  },
-  {
-    "id": "card-carousel",
-    "components": [
-      "product-card"
-    ]
-  },
-  {
-    "id": "footer-brand",
-    "components": [
-      "footer-navigation-item",
-      "footer-secondary-link-item",
-      "footer-social-link-item"
-    ]
-  },
-  {
-    "id": "footer",
-    "components": [
-      "footer-navigation-item",
-      "footer-social-link-item"
-    ]
-  },
-  {
-    "id": "header-comp",
-    "components": [
-      "navigation-item",
-      "search-icon",
-      "global-search-icon"
-    ]
-  },
-  {
-    "id": "product-selection-component",
-    "components": [
-      "product-item",
-      "right-ghee-section",
-      "right-milk-section"
-    ]
-  },
-  {
-    "id": "stay-social",
-    "components": [
-      "stay-social-card",
-      "stay-social-cta"
-    ]
-  },
-  {
-    "id": "text-banner",
-    "components": [
-      "text-banner-cta"
+      "---new--blocks-----"
     ]
   }
 ]
