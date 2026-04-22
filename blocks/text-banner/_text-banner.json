@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Cta-Item",
-      "id": "cta-item",
+      "title": "Text-Banner-CTA",
+      "id": "text-banner-cta",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "cta-item",
-              "name": "Cta-Item"
+              "model": "text-banner-cta",
+              "name": "Text-Banner-CTA"
             }
           }
         }
@@ -50,14 +50,14 @@
         },
         {
           "component": "container",
-          "item": "cta-item",
-          "label": "CTA Buttons",
+          "item": "text-banner-cta",
+          "label": "CTAs",
           "name": "ctas"
         }
       ]
     },
     {
-      "id": "cta-item",
+      "id": "text-banner-cta",
       "fields": [
         {
           "component": "text",
@@ -78,7 +78,7 @@
     {
       "id": "text-banner",
       "components": [
-        "cta-item"
+        "text-banner-cta"
       ]
     }
   ]

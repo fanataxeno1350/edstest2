@@ -28,7 +28,8 @@
       "w-100-pt-3-pt-sm-3",
       "buy-now-card",
       "scroll-to-top",
-      "footer-brand"
+      "footer-brand",
+      "footer"
     ]
   },
   {
@@ -53,6 +54,14 @@
       "footer-navigation-item",
       "footer-secondary-link",
       "footer-social-link"
+    ]
+  },
+  {
+    "id": "footer",
+    "components": [
+      "footer-nav-item",
+      "footer-link-item",
+      "footer-social-item"
     ]
   },
   {
@@ -87,7 +96,7 @@
   {
     "id": "text-banner",
     "components": [
-      "cta-item"
+      "text-banner-cta"
     ]
   },
   {

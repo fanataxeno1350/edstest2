@@ -146,14 +146,20 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Banner Image",
-        "name": "image",
+        "label": "Banner Image (Desktop)",
+        "name": "bannerImageDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Banner Image (Mobile)",
+        "name": "bannerImageMobile",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "banner-cta-item",
-        "label": "Banner CTAs",
+        "label": "CTAs",
         "name": "ctas"
       }
     ]
@@ -162,15 +168,15 @@
     "id": "banner-cta-item",
     "fields": [
       {
-        "component": "aem-content",
-        "label": "CTA Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
         "component": "text",
         "label": "CTA Label",
         "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
@@ -195,20 +201,14 @@
       },
       {
         "component": "aem-content",
-        "label": "CTA Link",
-        "name": "ctaLink",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "CTA Label",
-        "name": "ctaLabel",
+        "label": "View All Link",
+        "name": "viewAllLink",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "recipe-card",
-        "label": "Recipes",
+        "label": "Recipe Cards",
         "name": "recipes"
       },
       {
@@ -266,7 +266,7 @@
       },
       {
         "component": "text",
-        "label": "Number Served",
+        "label": "Serves",
         "name": "serves",
         "valueType": "string"
       },
@@ -283,26 +283,20 @@
     "fields": [
       {
         "component": "aem-content",
-        "label": "Share Link",
-        "name": "shareLink",
+        "label": "Social Link",
+        "name": "link",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Social Icon",
+        "label": "Icon",
         "name": "icon",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Social Label",
+        "label": "Label",
         "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Platform Name",
-        "name": "platform",
         "valueType": "string"
       }
     ]
@@ -406,6 +400,104 @@
       {
         "component": "aem-content",
         "label": "Social Link URL",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Primary Logo",
+        "name": "primaryLogo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Primary Logo Link",
+        "name": "primaryLogoLink",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Secondary Logo",
+        "name": "secondaryLogo",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-nav-item",
+        "label": "Footer Navigation",
+        "name": "footerNav"
+      },
+      {
+        "component": "container",
+        "item": "footer-link-item",
+        "label": "Footer Secondary Links",
+        "name": "footerLinks"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-item",
+        "label": "Footer Social Links",
+        "name": "footerSocialLinks"
+      }
+    ]
+  },
+  {
+    "id": "footer-nav-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-link-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Social Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Social Link",
         "name": "link",
         "valueType": "string"
       }
@@ -625,14 +717,14 @@
       },
       {
         "component": "container",
-        "item": "cta-item",
-        "label": "CTA Buttons",
+        "item": "text-banner-cta",
+        "label": "CTAs",
         "name": "ctas"
       }
     ]
   },
   {
-    "id": "cta-item",
+    "id": "text-banner-cta",
     "fields": [
       {
         "component": "text",

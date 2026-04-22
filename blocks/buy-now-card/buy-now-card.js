@@ -3,19 +3,18 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   // The buy-now-card block has no fields defined in its model.
-  // This means it's an empty block or a placeholder.
-  // Based on the provided original HTML, it only has container classes.
+  // This means the block is likely a container or a placeholder that
+  // relies on other mechanisms (e.g., AEM clientlibs, external JS)
+  // to populate its content at runtime.
 
-  // Create a div element to serve as the main container for the block.
-  const buyNowCardDiv = document.createElement('div');
+  // As per the provided EDS Block Structure and BlockJson, there are no
+  // rows or cells to process within the block itself.
+  // Therefore, this decorate function will primarily apply the necessary
+  // class names to the block element as found in the ORIGINAL HTML.
 
-  // Apply the classes from the ORIGINAL HTML to the new div.
-  // The original HTML shows:
-  // <div class="buyNowCard aem-GridColumn aem-GridColumn--default--12">
-  buyNowCardDiv.classList.add('buyNowCard', 'aem-GridColumn', 'aem-GridColumn--default--12');
+  // Apply classes from ORIGINAL HTML to the block element.
+  block.classList.add('buyNowCard', 'aem-GridColumn', 'aem-GridColumn--default--12');
 
-  // Since the block model is empty, there are no children to process or transform.
-  // We just replace the original block element with our newly created div.
-  moveInstrumentation(block, buyNowCardDiv);
-  block.replaceWith(buyNowCardDiv);
+  // Since there are no fields or content to transform,
+  // no further DOM manipulation is needed for this specific block based on the provided schema.
 }

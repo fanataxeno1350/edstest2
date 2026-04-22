@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Card Carousel",
+      "title": "Card-Carousel",
       "id": "card-carousel",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "card-carousel",
               "model": "card-carousel",
-              "name": "Card Carousel"
+              "name": "Card-Carousel"
             }
           }
         }
       }
     },
     {
-      "title": "Recipe Card",
+      "title": "Recipe-Card",
       "id": "recipe-card",
       "plugins": {
         "xwalk": {
@@ -25,14 +25,14 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "recipe-card",
-              "name": "Recipe Card"
+              "name": "Recipe-Card"
             }
           }
         }
       }
     },
     {
-      "title": "Social Media Share Item",
+      "title": "Social-Media-Share-Item",
       "id": "social-media-share-item",
       "plugins": {
         "xwalk": {
@@ -40,7 +40,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "social-media-share-item",
-              "name": "Social Media Share Item"
+              "name": "Social-Media-Share-Item"
             }
           }
         }
@@ -65,14 +65,20 @@
         },
         {
           "component": "aem-content",
-          "label": "View All Link",
-          "name": "viewAllLink",
+          "label": "CTA Link",
+          "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "recipe-card",
-          "label": "Recipe Cards",
+          "label": "Recipes",
           "name": "recipes"
         },
         {
@@ -130,7 +136,7 @@
         },
         {
           "component": "text",
-          "label": "Serves",
+          "label": "Number Served",
           "name": "serves",
           "valueType": "string"
         },
@@ -147,20 +153,26 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Social Link",
-          "name": "link",
+          "label": "Share Link",
+          "name": "shareLink",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Icon",
+          "label": "Social Icon",
           "name": "icon",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Label",
+          "label": "Social Label",
           "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Platform Name",
+          "name": "platform",
           "valueType": "string"
         }
       ]

@@ -38,20 +38,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Banner Image (Desktop)",
-          "name": "bannerImageDesktop",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Banner Image (Mobile)",
-          "name": "bannerImageMobile",
+          "label": "Banner Image",
+          "name": "image",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "banner-cta-item",
-          "label": "CTAs",
+          "label": "Banner CTAs",
           "name": "ctas"
         }
       ]
@@ -60,15 +54,15 @@
       "id": "banner-cta-item",
       "fields": [
         {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
           "label": "CTA Link",
           "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "label",
           "valueType": "string"
         }
       ]
