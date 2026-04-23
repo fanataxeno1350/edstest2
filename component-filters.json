@@ -59,12 +59,6 @@
     ]
   },
   {
-    "id": "scroll-to-top"
-  },
-  {
-    "id": "simple-block"
-  },
-  {
     "id": "stay-social",
     "components": [
       "stay-social-card"
