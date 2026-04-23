@@ -146,114 +146,61 @@
     "fields": [
       {
         "component": "text",
-        "label": "Title",
+        "label": "Carousel Title",
         "name": "title",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Subtitle",
+        "label": "Carousel Subtitle",
         "name": "subtitle",
         "valueType": "string"
       },
       {
-        "component": "aem-content",
-        "label": "View All Link",
-        "name": "viewAllLink",
-        "valueType": "string"
-      },
-      {
         "component": "container",
-        "item": "recipe-card",
-        "label": "Recipes",
-        "name": "recipes"
-      },
-      {
-        "component": "container",
-        "item": "social-media-share-item",
-        "label": "Social Media Share Items",
-        "name": "socialMediaShares"
+        "item": "product-card",
+        "label": "Cards",
+        "name": "cards"
       }
     ]
   },
   {
-    "id": "recipe-card",
+    "id": "product-card",
     "fields": [
       {
-        "component": "aem-content",
-        "label": "Recipe Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
         "component": "reference",
-        "label": "Recipe Image",
-        "name": "image",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Recipe Image Alt Text",
-        "name": "imageAlt",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Tag",
-        "name": "tag",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Recipe Title",
-        "name": "title",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Recipe Description",
-        "name": "description",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Time",
-        "name": "time",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Serves",
-        "name": "serves",
+        "label": "Main Card Image",
+        "name": "mainImage",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Navigation Hierarchy",
-        "name": "hierarchy-tree",
+        "label": "Card Title/Description",
+        "name": "cardTitle",
         "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "social-media-share-item",
-    "fields": [
+      },
+      {
+        "component": "reference",
+        "label": "Product Image",
+        "name": "productImage",
+        "valueType": "string"
+      },
       {
         "component": "aem-content",
-        "label": "Social Share Link",
-        "name": "link",
+        "label": "Product Link",
+        "name": "productLink",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Platform",
-        "name": "platform",
+        "label": "CTA Label",
+        "name": "ctaLabel",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Platform Label",
-        "name": "label",
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
         "valueType": "string"
       }
     ]

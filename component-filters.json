@@ -33,8 +33,7 @@
   {
     "id": "card-carousel",
     "components": [
-      "recipe-card",
-      "social-media-share-item"
+      "product-card"
     ]
   },
   {
