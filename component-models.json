@@ -313,7 +313,7 @@
     "id": "header-comp",
     "fields": [
       {
-        "component": "aem-content",
+        "component": "reference",
         "label": "Logo",
         "name": "logo",
         "valueType": "string"
