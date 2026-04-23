@@ -52,7 +52,7 @@
       "id": "header-comp",
       "fields": [
         {
-          "component": "reference",
+          "component": "image",
           "label": "Logo",
           "name": "logo",
           "valueType": "string"
