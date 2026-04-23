@@ -315,8 +315,7 @@
       {
         "component": "image",
         "label": "Logo",
-        "name": "logo",
-        "valueType": "string"
+        "name": "logo"
       },
       {
         "component": "aem-content",
