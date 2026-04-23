@@ -18,25 +18,20 @@
       "fragment",
       "---new--blocks-----",
       "header-comp",
-      "banner-section",
-      "space-adder",
+      "w-100",
       "text-banner",
       "product-selection-component",
       "card-carousel",
-      "w-100",
+      "simple-block",
       "stay-social",
       "w-100-pt-3-pt-sm-3",
       "buy-now-card",
       "scroll-to-top",
-      "footer-brand",
       "footer"
     ]
   },
   {
-    "id": "banner-section",
-    "components": [
-      "banner-link-item"
-    ]
+    "id": "buy-now-card"
   },
   {
     "id": "card-carousel",
@@ -46,7 +41,7 @@
     ]
   },
   {
-    "id": "footer-brand",
+    "id": "footer",
     "components": [
       "footer-navigation-item",
       "footer-link-item",
@@ -54,18 +49,10 @@
     ]
   },
   {
-    "id": "footer",
-    "components": [
-      "footer-nav-item",
-      "footer-link-item",
-      "footer-social-item"
-    ]
-  },
-  {
     "id": "header-comp",
     "components": [
       "navigation-item",
-      "sub-navigation-item"
+      "navigation-submenu-item"
     ]
   },
   {
@@ -75,10 +62,10 @@
     ]
   },
   {
-    "id": "scroll-to-top",
-    "components": [
-      "scroll-to-top-button"
-    ]
+    "id": "scroll-to-top"
+  },
+  {
+    "id": "simple-block"
   },
   {
     "id": "stay-social",
@@ -87,6 +74,15 @@
     ]
   },
   {
-    "id": "text-banner"
+    "id": "text-banner",
+    "components": [
+      "text-banner-cta"
+    ]
+  },
+  {
+    "id": "w-100-pt-3-pt-sm-3"
+  },
+  {
+    "id": "w-100"
   }
 ]

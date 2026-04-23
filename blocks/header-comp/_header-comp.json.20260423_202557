@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Navigation-Submenu-Item",
-      "id": "navigation-submenu-item",
+      "title": "Submenu-Item",
+      "id": "submenu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "navigation-submenu-item",
-              "name": "Navigation-Submenu-Item"
+              "model": "submenu-item",
+              "name": "Submenu-Item"
             }
           }
         }
@@ -66,8 +66,8 @@
         {
           "component": "container",
           "item": "navigation-item",
-          "label": "Navigation Menu",
-          "name": "navigation-menu"
+          "label": "Navigation Items",
+          "name": "navigation-items"
         }
       ]
     },
@@ -101,7 +101,7 @@
       ]
     },
     {
-      "id": "navigation-submenu-item",
+      "id": "submenu-item",
       "fields": [
         {
           "component": "text",
@@ -123,7 +123,7 @@
       "id": "header-comp",
       "components": [
         "navigation-item",
-        "navigation-submenu-item"
+        "submenu-item"
       ]
     }
   ]

@@ -53,17 +53,15 @@
         "fragment",
         "---new--blocks-----",
         "header-comp",
-        "banner-section",
-        "space-adder",
+        "w-100",
         "text-banner",
         "product-selection-component",
         "card-carousel",
-        "w-100",
+        "simple-block",
         "stay-social",
         "w-100-pt-3-pt-sm-3",
         "buy-now-card",
         "scroll-to-top",
-        "footer-brand",
         "footer"
       ]
     }

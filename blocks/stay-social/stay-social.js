@@ -2,26 +2,17 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Reorder destructuring to match the BlockJson model:
-  // title, subtext, cards (container), cta-label, cta-link
-  const [
-    titleCell,
-    subtextCell,
-    ...remainingRows // This will contain card rows, ctaLabelCell, and ctaLinkCell
-  ] = [...block.children];
+  const rows = [...block.children];
 
-  // Find CTA Label and CTA Link cells from remainingRows, assuming they are the last two
-  // This is a safer approach than fixed indices if the number of card rows can vary.
-  const ctaLinkCell = remainingRows.pop(); // Last row is cta-link
-  const ctaLabelCell = remainingRows.pop(); // Second to last row is cta-label
-  const cardRows = remainingRows; // Remaining rows are card items
-
-  block.classList.add('pt-14', 'py-lg-11', 'bg-cream-300');
+  const section = document.createElement('section');
+  section.classList.add('stay-social', 'pt-14', 'py-lg-11', 'bg-cream-300');
 
   const container = document.createElement('div');
   container.classList.add('container', 'gx-8', 'gx-sm-0');
-  moveInstrumentation(block, container);
+  section.append(container);
 
+  // Title
+  const titleCell = rows[0].firstElementChild;
   const title = document.createElement('h2');
   title.classList.add(
     'stay-social__title',
@@ -31,12 +22,14 @@ export default function decorate(block) {
     'font-baskerville',
     'font-sm-40',
     'text-center',
-    'fw-bold',
+    'fw-bold'
   );
-  title.textContent = titleCell?.textContent.trim() || '';
+  title.textContent = titleCell.textContent.trim();
   moveInstrumentation(titleCell, title);
   container.append(title);
 
+  // Subtext
+  const subtextCell = rows[1].firstElementChild;
   const subtext = document.createElement('h3');
   subtext.classList.add(
     'stay-social__subtext',
@@ -46,14 +39,15 @@ export default function decorate(block) {
     'font-sm-18',
     'text-center',
     'fw-medium',
-    'mt-4',
+    'mt-4'
   );
-  subtext.textContent = subtextCell?.textContent.trim() || '';
+  subtext.textContent = subtextCell.textContent.trim();
   moveInstrumentation(subtextCell, subtext);
   container.append(subtext);
 
   const mainDiv = document.createElement('div');
   mainDiv.classList.add('stay-social__main', 'mt-8');
+  container.append(mainDiv);
 
   const cardsList = document.createElement('ul');
   cardsList.classList.add(
@@ -62,77 +56,79 @@ export default function decorate(block) {
     'gap-5',
     'gap-sm-8',
     'w-fit',
-    'mx-auto',
+    'mx-auto'
   );
+  mainDiv.append(cardsList);
+
+  // Social Cards (item rows start from index 4, which is rows[4])
+  // The model has 5 root fields: title, subtext, cards (container), cta-label, cta-link
+  // So, item rows for 'cards' start after the first two text fields (title, subtext)
+  // and before the last two fields (cta-label, cta-link).
+  // The first two rows are title and subtext.
+  // The next two rows are cta-label and cta-link.
+  // So, card rows are from index 2 up to rows.length - 2.
+  const cardRows = rows.slice(4); // All rows after the initial 4 root fields (title, subtext, cta-label, cta-link) are card items.
+  const ctaLabelCell = rows[2].firstElementChild; // Corrected index based on model
+  const ctaLinkCell = rows[3].firstElementChild; // Corrected index based on model
 
   cardRows.forEach((row) => {
-    const cells = [...row.children];
-    // Use content detection for cells to avoid fixed indices
-    const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const linkCell = cells.find(cell => cell.querySelector('a'));
+    const [imageCellWrapper, linkCellWrapper] = [...row.children]; // Destructure cells for image and link
 
-    const listItem = document.createElement('li');
-    listItem.classList.add('stay-social__card', 'overflow-hidden', 'ratio'); // 'ratio-1x1' or 'ratio-9x16' will be added dynamically
+    const cardItem = document.createElement('li');
+    cardItem.classList.add(
+      'stay-social__card',
+      'overflow-hidden',
+      'ratio-1x1',
+      'ratio'
+    );
 
-    const link = document.createElement('a');
-    link.classList.add('stay-social__card--link', 'd-block', 'w-100', 'h-100');
-    const foundLink = linkCell?.querySelector('a');
-    if (foundLink) {
-      link.href = foundLink.href;
-      link.target = '_blank'; // Original HTML has target="_blank"
+    const cardLink = document.createElement('a');
+    cardLink.classList.add(
+      'stay-social__card--link',
+      'd-block',
+      'w-100',
+      'h-100'
+    );
+    cardLink.target = '_blank';
+
+    const imageCell = imageCellWrapper.querySelector('picture');
+    const linkAnchor = linkCellWrapper.querySelector('a'); // Get the anchor from the link cell
+
+    if (linkAnchor) {
+      cardLink.href = linkAnchor.href;
       const screenReaderSpan = document.createElement('span');
       screenReaderSpan.classList.add('cmp-link__screen-reader-only');
       screenReaderSpan.textContent = 'opens in a new tab';
-      link.append(screenReaderSpan);
+      cardLink.append(screenReaderSpan);
     }
-    moveInstrumentation(linkCell, link);
 
-    const picture = imageCell?.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
-          { media: '(max-width:600px)', width: '600' },
-          { width: '750' },
-        ]);
-        optimizedPic.querySelector('img').classList.add(
-          'stay-social__card--image',
-          'w-100',
-          'h-100',
-          'object-fit-cover',
-        );
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        link.append(optimizedPic);
-
-        // Determine ratio based on original HTML's data-image-src or img dimensions if available
-        // This is a heuristic, ideally the ratio would be a field in the model.
-        // For now, we'll assume 1x1 if not explicitly 9x16 from original HTML example.
-        const originalImgSrc = img.getAttribute('data-image-src') || img.src;
-        if (originalImgSrc.includes('kharaj-mukherjee') || originalImgSrc.includes('pure-cow-ghee-1') || originalImgSrc.includes('low-chol-ghee-card')) {
-          listItem.classList.add('ratio-9x16');
-        } else {
-          listItem.classList.add('ratio-1x1');
-        }
-      }
+    if (imageCell) {
+      const img = imageCell.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
+        { width: '600' },
+      ]);
+      optimizedPic
+        .querySelector('img')
+        .classList.add('stay-social__card--image', 'w-100', 'h-100', 'object-fit-cover');
+      moveInstrumentation(imageCellWrapper, optimizedPic); // Pass the original cell wrapper for instrumentation
+      cardLink.prepend(optimizedPic);
     }
-    moveInstrumentation(imageCell, link);
 
-    listItem.append(link);
-    cardsList.append(listItem);
-    moveInstrumentation(row, listItem);
+    moveInstrumentation(row, cardItem);
+    cardItem.append(cardLink);
+    cardsList.append(cardItem);
   });
 
-  mainDiv.append(cardsList);
-  container.append(mainDiv);
-
+  // CTA
   const ctaWrapper = document.createElement('div');
   ctaWrapper.classList.add(
     'd-flex',
     'align-items-center',
     'justify-content-center',
     'mt-8',
-    'mt-lg-10',
+    'mt-lg-10'
   );
+  section.append(ctaWrapper);
 
   const ctaLink = document.createElement('a');
   ctaLink.classList.add(
@@ -152,34 +148,33 @@ export default function decorate(block) {
     'border-red-300-active',
     'bg-red-100',
     'bg-maroon-100-hover',
-    'bg-red-300-active',
+    'bg-red-300-active'
   );
-  const foundCtaLink = ctaLinkCell?.querySelector('a');
-  if (foundCtaLink) {
-    ctaLink.href = foundCtaLink.href;
-    ctaLink.target = '_blank'; // Original HTML has target="_blank"
+  ctaLink.target = '_blank';
+
+  const ctaAnchor = ctaLinkCell.querySelector('a'); // Get the anchor from the CTA link cell
+  if (ctaAnchor) {
+    ctaLink.href = ctaAnchor.href;
+    const screenReaderSpan = document.createElement('span');
+    screenReaderSpan.classList.add('cmp-link__screen-reader-only');
+    screenReaderSpan.textContent = 'opens in a new tab';
+    ctaLink.append(screenReaderSpan);
   }
-  moveInstrumentation(ctaLinkCell, ctaLink);
 
   const ctaLabelSpan = document.createElement('span');
   ctaLabelSpan.classList.add(
     'svasti-cta__label',
     'fw-semibold',
     'fs-default',
-    'leading-26',
+    'leading-26'
   );
-  ctaLabelSpan.textContent = ctaLabelCell?.textContent.trim() || '';
-  moveInstrumentation(ctaLabelCell, ctaLabelSpan);
-  ctaLink.append(ctaLabelSpan);
+  ctaLabelSpan.textContent = ctaLabelCell.textContent.trim();
+  ctaLink.prepend(ctaLabelSpan);
 
-  const screenReaderSpan = document.createElement('span');
-  screenReaderSpan.classList.add('cmp-link__screen-reader-only');
-  screenReaderSpan.textContent = 'opens in a new tab';
-  ctaLink.append(screenReaderSpan);
-
+  moveInstrumentation(ctaLabelCell.parentElement, ctaLink);
+  moveInstrumentation(ctaLinkCell.parentElement, ctaLink);
   ctaWrapper.append(ctaLink);
-  container.append(ctaWrapper);
 
   block.innerHTML = '';
-  block.append(container);
+  block.append(section);
 }

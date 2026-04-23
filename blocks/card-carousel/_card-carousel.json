@@ -78,8 +78,8 @@
         {
           "component": "container",
           "item": "social-media-share-item",
-          "label": "Social Media Share",
-          "name": "socialMediaShare"
+          "label": "Social Media Share Items",
+          "name": "socialMediaShares"
         }
       ]
     },
@@ -100,13 +100,13 @@
         },
         {
           "component": "text",
-          "label": "Image Alt Text",
+          "label": "Recipe Image Alt Text",
           "name": "imageAlt",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Recipe Tag",
+          "label": "Tag",
           "name": "tag",
           "valueType": "string"
         },
@@ -124,13 +124,13 @@
         },
         {
           "component": "text",
-          "label": "Recipe Time",
+          "label": "Time",
           "name": "time",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Recipe Serves",
+          "label": "Serves",
           "name": "serves",
           "valueType": "string"
         },
@@ -147,19 +147,19 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Social Link",
+          "label": "Social Share Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Social Icon Name",
-          "name": "icon",
+          "label": "Platform",
+          "name": "platform",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Social Label",
+          "label": "Platform Label",
           "name": "label",
           "valueType": "string"
         }

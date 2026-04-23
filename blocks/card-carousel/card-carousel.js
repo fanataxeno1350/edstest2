@@ -39,306 +39,288 @@ function transformNestedLists(rootUl) {
 }
 
 export default function decorate(block) {
-  const rows = [...block.children];
+  const [
+    titleRow,
+    subtitleRow,
+    viewAllLinkRow,
+    ...itemRows
+  ] = [...block.children];
 
-  // Root fields: title, subtitle, viewAllLink
-  const titleRow = rows[0];
-  const subtitleRow = rows[1];
-  const viewAllLinkRow = rows[2];
-  const itemRows = rows.slice(3); // Remaining rows are item rows
+  block.innerHTML = ''; // Clear block content
 
-  block.innerHTML = ''; // Clear the block content
+  const container = document.createElement('div');
+  container.classList.add('container', 'gx-8', 'gx-sm-0');
 
-  const containerDiv = document.createElement('div');
-  containerDiv.classList.add('container', 'gx-8', 'gx-sm-0');
-  moveInstrumentation(block, containerDiv);
-
-  if (titleRow) {
-    const titleCell = [...titleRow.children].find((cell) => cell.textContent.trim());
-    if (titleCell) {
-      const title = document.createElement('h2');
-      title.classList.add(
-        'card-carousel__title',
-        'font-24',
-        'leading-28',
-        'font-sm-40',
-        'leading-sm-50',
-        'text-dark-gray-100',
-        'text-center',
-        'font-baskerville',
-      );
-      title.textContent = titleCell.textContent.trim();
-      moveInstrumentation(titleRow, title);
-      containerDiv.append(title);
-    }
-  }
-
-  if (subtitleRow) {
-    const subtitleCell = [...subtitleRow.children].find((cell) => cell.textContent.trim());
-    if (subtitleCell) {
-      const subtitle = document.createElement('p');
-      subtitle.classList.add(
-        'card-carousel__subtitle',
-        'font-default',
-        'leading-24',
-        'font-sm-18',
-        'leading-sm-32',
-        'text-dark-gray-100',
-        'text-center',
-        'mt-4',
-        'fw-medium',
-      );
-      subtitle.textContent = subtitleCell.textContent.trim();
-      moveInstrumentation(subtitleRow, subtitle);
-      containerDiv.append(subtitle);
-    }
-  }
-
-  block.append(containerDiv);
-
-  const swiperContainer = document.createElement('div');
-  swiperContainer.classList.add(
-    'card-carousel__swiper',
-    'swiper',
-    'container',
-    'gx-0',
+  // Title
+  const title = document.createElement('h2');
+  title.classList.add(
+    'card-carousel__title',
+    'font-24',
+    'leading-28',
+    'font-sm-40',
+    'leading-sm-50',
+    'text-dark-gray-100',
+    'text-center',
+    'font-baskerville',
   );
+  moveInstrumentation(titleRow.firstElementChild, title);
+  title.textContent = titleRow.firstElementChild?.textContent.trim() || '';
+  container.appendChild(title);
+
+  // Subtitle
+  const subtitle = document.createElement('p');
+  subtitle.classList.add(
+    'card-carousel__subtitle',
+    'font-default',
+    'leading-24',
+    'font-sm-18',
+    'leading-sm-32',
+    'text-dark-gray-100',
+    'text-center',
+    'mt-4',
+    'fw-medium',
+  );
+  moveInstrumentation(subtitleRow.firstElementChild, subtitle);
+  subtitle.textContent = subtitleRow.firstElementChild?.textContent.trim() || '';
+  container.appendChild(subtitle);
+
+  block.appendChild(container);
+
+  // Swiper container
+  const swiperContainer = document.createElement('div');
+  swiperContainer.classList.add('card-carousel__swiper', 'swiper', 'container', 'gx-0');
+  swiperContainer.setAttribute('data-loop', 'true');
 
   const swiperWrapperContainer = document.createElement('div');
-  swiperWrapperContainer.classList.add(
-    'card-carousel__swiper--container',
-    'mt-8',
-    'mt-sm-10',
-  );
-  swiperContainer.append(swiperWrapperContainer);
+  swiperWrapperContainer.classList.add('card-carousel__swiper--container', 'mt-8', 'mt-sm-10');
+  swiperContainer.appendChild(swiperWrapperContainer);
 
   const popularRecipeSection = document.createElement('section');
   popularRecipeSection.classList.add('popular-recipe', 'slide-in-anim');
-  swiperWrapperContainer.append(popularRecipeSection);
+  swiperWrapperContainer.appendChild(popularRecipeSection);
 
-  const popularRecipeContainer = document.createElement('div');
-  popularRecipeContainer.classList.add(
+  const popularRecipeData = document.createElement('div');
+  popularRecipeData.classList.add('popular-recipe__data', 'd-none');
+  popularRecipeSection.appendChild(popularRecipeData);
+
+  const popularRecipeInnerContainer = document.createElement('div');
+  popularRecipeInnerContainer.classList.add(
     'popular-recipe__container',
     'overflow-hidden',
     'swiper-initialized',
     'swiper-horizontal',
     'swiper-backface-hidden',
   );
-  popularRecipeSection.append(popularRecipeContainer);
+  popularRecipeInnerContainer.setAttribute('data-swiper-init-async', 'true');
+  popularRecipeSection.appendChild(popularRecipeInnerContainer);
 
   const swiperWrapper = document.createElement('div');
   swiperWrapper.classList.add('swiper-wrapper', 'popular-recipe__recipe-wrapper');
-  popularRecipeContainer.append(swiperWrapper);
+  popularRecipeInnerContainer.appendChild(swiperWrapper);
 
   const socialMediaShareItems = [];
+  const recipeCards = [];
+
   itemRows.forEach((row) => {
     const cells = [...row.children];
     if (cells.length === 9) {
-      // Recipe-Card item
-      const [
-        linkCell,
-        imageCell,
-        imageAltCell,
-        tagCell,
-        recipeTitleCell,
-        descriptionCell,
-        timeCell,
-        servesCell,
-        hierarchyTreeCell,
-      ] = cells;
-
-      const swiperSlide = document.createElement('div');
-      swiperSlide.classList.add('swiper-slide');
-      moveInstrumentation(row, swiperSlide);
-
-      const recipeCard = document.createElement('div');
-      recipeCard.classList.add('recipe-card', 'bg-cream-100', 'h-100');
-      swiperSlide.append(recipeCard);
-
-      const recipeLink = document.createElement('a');
-      recipeLink.classList.add(
-        'recipe-card__link',
-        'd-block',
-        'position-relative',
-      );
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        recipeLink.href = foundLink.href;
-      }
-      recipeCard.append(recipeLink);
-
-      const picture = imageCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(
-            img.src,
-            imageAltCell?.textContent.trim() || img.alt,
-            false,
-            [{ width: '750' }],
-          );
-          optimizedPic.querySelector('img').classList.add(
-            'recipe-card__image',
-            'object-fit-cover',
-            'w-100',
-          );
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          recipeLink.append(optimizedPic);
-        }
-      }
-
-      const recipeContent = document.createElement('div');
-      recipeContent.classList.add('recipe-card__content', 'py-6');
-      recipeLink.append(recipeContent);
-
-      const recipeInfo = document.createElement('div');
-      recipeInfo.classList.add(
-        'recipe-card__info',
-        'd-flex',
-        'align-items-center',
-        'justify-content-between',
-      );
-      recipeContent.append(recipeInfo);
-
-      const recipeTag = document.createElement('span');
-      recipeTag.classList.add(
-        'recipe-card__tag',
-        'text-uppercase',
-        'text-red-100',
-        'font-14',
-        'font-xl-default',
-        'leading-24',
-        'fw-semibold',
-      );
-      recipeTag.textContent = tagCell?.textContent.trim();
-      recipeInfo.append(recipeTag);
-
-      const shareSvg = `
-        <svg class="icon share text-dark-gray-100">
-          <use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#share"></use>
-        </svg>
-      `;
-      recipeInfo.insertAdjacentHTML('beforeend', shareSvg);
-
-      const recipeText = document.createElement('div');
-      recipeText.classList.add('recipe-card__text');
-      recipeContent.append(recipeText);
-
-      const recipeTitle = document.createElement('h3');
-      recipeTitle.classList.add(
-        'recipe-card__title',
-        'font-20',
-        'font-xl-24',
-        'leading-24',
-        'leading-xl-30',
-        'font-baskerville',
-        'fw-bold',
-        'text-dark-gray-100',
-        'mt-4',
-      );
-      recipeTitle.textContent = recipeTitleCell?.textContent.trim();
-      recipeText.append(recipeTitle);
-
-      const recipeDesc = document.createElement('p');
-      recipeDesc.classList.add(
-        'recipe-card__desc',
-        'font-default',
-        'font-xl-18',
-        'leading-24',
-        'fw-medium',
-        'text-dark-gray-100',
-        'mt-4',
-      );
-      recipeDesc.textContent = descriptionCell?.textContent.trim();
-      recipeText.append(recipeDesc);
-
-      const recipeWave = document.createElement('div');
-      recipeWave.classList.add(
-        'recipe-card__wave',
-        'mt-11',
-        'mt-xl-7',
-        'w-100',
-      );
-      recipeContent.append(recipeWave);
-
-      const recipeProperties = document.createElement('ul');
-      recipeProperties.classList.add(
-        'recipe-card__properties',
-        'mt-4',
-        'd-flex',
-        'align-items-center',
-        'mt-4',
-      );
-      recipeContent.append(recipeProperties);
-
-      const timeProperty = document.createElement('li');
-      timeProperty.classList.add(
-        'recipe-card__property',
-        'recipe-card__property--left',
-        'd-flex',
-        'align-items-center',
-      );
-      timeProperty.innerHTML = `
-        <svg class="icon clock text-dark-gray-100 ">
-          <use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#clock"></use>
-        </svg>
-        <span class="recipe-card__time text-dark-gray-100 font-14 font-xl-default leading-20 fw-medium ms-2 d-inline-block text-nowrap">${
-          timeCell?.textContent.trim() || ''
-        }</span>
-      `;
-      recipeProperties.append(timeProperty);
-
-      const servesProperty = document.createElement('li');
-      servesProperty.classList.add(
-        'recipe-card__property',
-        'recipe-card__property--right',
-        'flex-fill',
-        'd-flex',
-        'align-items-center',
-        'justify-content-end',
-      );
-      servesProperty.innerHTML = `
-        <svg class="icon people text-dark-gray-100 ">
-          <use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#people"></use>
-        </svg>
-        <span class="serve-content recipe-card__serves text-dark-gray-100 font-14 font-xl-default leading-20 fw-medium ms-2 d-inline-block">${
-          servesCell?.textContent.trim() || ''
-        }</span>
-      `;
-      recipeProperties.append(servesProperty);
-
-      // Handle hierarchy-tree richtext
-      if (hierarchyTreeCell) {
-        const hierarchyDiv = document.createElement('div');
-        hierarchyDiv.classList.add('recipe-card__hierarchy');
-        // Use innerHTML to preserve nested structure
-        hierarchyDiv.innerHTML = hierarchyTreeCell.innerHTML;
-        moveInstrumentation(hierarchyTreeCell, hierarchyDiv);
-
-        // Apply classes to nested elements as per original HTML or design
-        hierarchyDiv.querySelectorAll('ul').forEach((ul) => {
-          ul.classList.add('nav-menu', 'list-unstyled');
-        });
-        hierarchyDiv.querySelectorAll('li').forEach((li) => {
-          li.classList.add('nav-menu-item', 'list-item');
-        });
-        hierarchyDiv.querySelectorAll('a').forEach((a) => {
-          a.classList.add('nav-menu-link', 'text-decoration-none');
-        });
-
-        recipeContent.append(hierarchyDiv);
-        transformNestedLists(hierarchyDiv); // Apply interactivity for nested lists
-      }
-
-      swiperWrapper.append(swiperSlide);
+      // Recipe Card
+      recipeCards.push(row);
     } else if (cells.length === 3) {
-      // Social-Media-Share-Item
+      // Social Media Share Item
       socialMediaShareItems.push(row);
     }
   });
 
-  const socialMediaShareSection = document.createElement('section');
-  socialMediaShareSection.classList.add(
+  recipeCards.forEach((row) => {
+    const [
+      linkCell,
+      imageCell,
+      imageAltCell,
+      tagCell,
+      recipeTitleCell,
+      descriptionCell,
+      timeCell,
+      servesCell,
+      hierarchyCell,
+    ] = [...row.children];
+
+    const swiperSlide = document.createElement('div');
+    swiperSlide.classList.add('swiper-slide');
+    moveInstrumentation(row, swiperSlide);
+
+    const recipeCard = document.createElement('div');
+    recipeCard.classList.add('recipe-card', 'bg-cream-100', 'h-100');
+    swiperSlide.appendChild(recipeCard);
+
+    const link = document.createElement('a');
+    link.classList.add('recipe-card__link', 'd-block', 'position-relative');
+    link.href = linkCell?.querySelector('a')?.href || '#';
+    recipeCard.appendChild(link);
+
+    const picture = imageCell?.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      optimizedPic.classList.add('recipe-card__image', 'object-fit-cover', 'w-100');
+      link.appendChild(optimizedPic);
+    }
+
+    const content = document.createElement('div');
+    content.classList.add('recipe-card__content', 'py-6');
+    link.appendChild(content);
+
+    const info = document.createElement('div');
+    info.classList.add('recipe-card__info', 'd-flex', 'align-items-center', 'justify-content-between');
+    content.appendChild(info);
+
+    const tag = document.createElement('span');
+    tag.classList.add(
+      'recipe-card__tag',
+      'text-uppercase',
+      'text-red-100',
+      'font-14',
+      'font-xl-default',
+      'leading-24',
+      'fw-semibold',
+    );
+    tag.textContent = tagCell?.textContent.trim() || '';
+    info.appendChild(tag);
+
+    const shareIcon = document.createElement('svg');
+    shareIcon.classList.add('icon', 'share', 'text-dark-gray-100');
+    shareIcon.innerHTML = `<use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#share"></use>`;
+    info.appendChild(shareIcon);
+
+    const textDiv = document.createElement('div');
+    textDiv.classList.add('recipe-card__text');
+    content.appendChild(textDiv);
+
+    const recipeTitle = document.createElement('h3');
+    recipeTitle.classList.add(
+      'recipe-card__title',
+      'font-20',
+      'font-xl-24',
+      'leading-24',
+      'leading-xl-30',
+      'font-baskerville',
+      'fw-bold',
+      'text-dark-gray-100',
+      'mt-4',
+    );
+    recipeTitle.textContent = recipeTitleCell?.textContent.trim() || '';
+    textDiv.appendChild(recipeTitle);
+
+    const description = document.createElement('p');
+    description.classList.add(
+      'recipe-card__desc',
+      'font-default',
+      'font-xl-18',
+      'leading-24',
+      'fw-medium',
+      'text-dark-gray-100',
+      'mt-4',
+    );
+    description.textContent = descriptionCell?.textContent.trim() || '';
+    textDiv.appendChild(description);
+
+    const wave = document.createElement('div');
+    wave.classList.add('recipe-card__wave', 'mt-11', 'mt-xl-7', 'w-100');
+    content.appendChild(wave);
+
+    const properties = document.createElement('ul');
+    properties.classList.add(
+      'recipe-card__properties',
+      'mt-4',
+      'd-flex',
+      'align-items-center',
+    );
+    content.appendChild(properties);
+
+    const timeProperty = document.createElement('li');
+    timeProperty.classList.add(
+      'recipe-card__property',
+      'recipe-card__property--left',
+      'd-flex',
+      'align-items-center',
+    );
+    properties.appendChild(timeProperty);
+
+    const clockIcon = document.createElement('svg');
+    clockIcon.classList.add('icon', 'clock', 'text-dark-gray-100');
+    clockIcon.innerHTML = `<use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#clock"></use>`;
+    timeProperty.appendChild(clockIcon);
+
+    const timeSpan = document.createElement('span');
+    timeSpan.classList.add(
+      'recipe-card__time',
+      'text-dark-gray-100',
+      'font-14',
+      'font-xl-default',
+      'leading-20',
+      'fw-medium',
+      'ms-2',
+      'd-inline-block',
+      'text-nowrap',
+    );
+    timeSpan.textContent = timeCell?.textContent.trim() || '';
+    timeProperty.appendChild(timeSpan);
+
+    const servesProperty = document.createElement('li');
+    servesProperty.classList.add(
+      'recipe-card__property',
+      'recipe-card__property--right',
+      'flex-fill',
+      'd-flex',
+      'align-items-center',
+      'justify-content-end',
+    );
+    properties.appendChild(servesProperty);
+
+    const peopleIcon = document.createElement('svg');
+    peopleIcon.classList.add('icon', 'people', 'text-dark-gray-100');
+    peopleIcon.innerHTML = `<use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#people"></use>`;
+    servesProperty.appendChild(peopleIcon);
+
+    const servesSpan = document.createElement('span');
+    servesSpan.classList.add(
+      'serve-content',
+      'recipe-card__serves',
+      'text-dark-gray-100',
+      'font-14',
+      'font-xl-default',
+      'leading-20',
+      'fw-medium',
+      'ms-2',
+      'd-inline-block',
+    );
+    servesSpan.textContent = servesCell?.textContent.trim() || '';
+    servesProperty.appendChild(servesSpan);
+
+    // Hierarchy-tree richtext field
+    if (hierarchyCell) {
+      const hierarchyDiv = document.createElement('div');
+      hierarchyDiv.classList.add('recipe-card__hierarchy'); // Add a class for styling if needed
+      moveInstrumentation(hierarchyCell, hierarchyDiv);
+      hierarchyDiv.innerHTML = hierarchyCell.innerHTML;
+
+      // Apply classes to nested elements from ORIGINAL HTML if they exist
+      hierarchyDiv.querySelectorAll('ul').forEach(ul => ul.classList.add('hierarchy-list'));
+      hierarchyDiv.querySelectorAll('li').forEach(li => li.classList.add('hierarchy-list-item'));
+      hierarchyDiv.querySelectorAll('a').forEach(a => a.classList.add('hierarchy-link'));
+
+      content.appendChild(hierarchyDiv); // Append to content or another appropriate parent
+    }
+
+    swiperWrapper.appendChild(swiperSlide);
+  });
+
+  const popularRecipeShare = document.createElement('div');
+  popularRecipeShare.classList.add('popular-recipe__share');
+  popularRecipeSection.appendChild(popularRecipeShare);
+
+  const socialMediaShare = document.createElement('section');
+  socialMediaShare.classList.add(
     'social-media-share',
     'd-none',
     'w-100',
@@ -351,7 +333,16 @@ export default function decorate(block) {
     'bottom-0',
     'z-2',
   );
-  popularRecipeSection.append(socialMediaShareSection);
+  popularRecipeShare.appendChild(socialMediaShare);
+
+  // Add event listener to all share icons to open the social media share modal
+  block.querySelectorAll('.icon.share').forEach((icon) => {
+    icon.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation(); // Prevent the link click from firing
+      socialMediaShare.classList.remove('d-none');
+    });
+  });
 
   const shareWrapper = document.createElement('div');
   shareWrapper.classList.add(
@@ -361,10 +352,10 @@ export default function decorate(block) {
     'px-3',
     'px-md-8',
   );
-  socialMediaShareSection.append(shareWrapper);
+  socialMediaShare.appendChild(shareWrapper);
 
-  const shareTitleClose = document.createElement('div');
-  shareTitleClose.classList.add(
+  const titleCloseDiv = document.createElement('div');
+  titleCloseDiv.classList.add(
     'social-media-share__wrapper--title-close',
     'pb-8',
     'd-flex',
@@ -375,23 +366,22 @@ export default function decorate(block) {
     'align-items-center',
     'justify-content-between',
   );
-  shareWrapper.append(shareTitleClose);
+  shareWrapper.appendChild(titleCloseDiv);
 
-  const closeButton = document.createElement('div');
-  closeButton.classList.add('social-media-share__wrapper--close');
-  closeButton.innerHTML = `
+  const closeBtn = document.createElement('div');
+  closeBtn.classList.add('social-media-share__wrapper--close');
+  closeBtn.innerHTML = `
     <svg class="icon cross text-black h-100 w-100">
       <use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#cross"></use>
     </svg>
   `;
-  shareTitleClose.append(closeButton);
-
-  closeButton.addEventListener('click', () => {
-    socialMediaShareSection.classList.add('d-none');
+  closeBtn.addEventListener('click', () => {
+    socialMediaShare.classList.add('d-none');
   });
+  titleCloseDiv.appendChild(closeBtn);
 
-  const socialIconsWrapper = document.createElement('div');
-  socialIconsWrapper.classList.add(
+  const socialIconsDiv = document.createElement('div');
+  socialIconsDiv.classList.add(
     'social-media-share__wrapper--social-icons',
     'pt-8',
     'd-flex',
@@ -399,10 +389,10 @@ export default function decorate(block) {
     'swiper-initialized',
     'swiper-horizontal',
   );
-  shareWrapper.append(socialIconsWrapper);
+  shareWrapper.appendChild(socialIconsDiv);
 
   socialMediaShareItems.forEach((row) => {
-    const [socialLinkCell, socialIconCell, socialLabelCell] = [...row.children];
+    const [linkCell, platformCell, labelCell] = [...row.children];
 
     const iconLabelDiv = document.createElement('div');
     iconLabelDiv.classList.add(
@@ -413,8 +403,8 @@ export default function decorate(block) {
     );
     moveInstrumentation(row, iconLabelDiv);
 
-    const socialLink = document.createElement('a');
-    socialLink.classList.add(
+    const shareLink = document.createElement('a');
+    shareLink.classList.add(
       'social-media-share__link',
       'd-flex',
       'align-items-center',
@@ -424,13 +414,9 @@ export default function decorate(block) {
       'flex-md-column',
       'justify-content-center',
     );
-    const foundSocialLink = socialLinkCell.querySelector('a');
-    if (foundSocialLink) {
-      socialLink.href = foundSocialLink.href;
-      socialLink.target = '_blank';
-      socialLink.rel = 'noopener noreferrer';
-    }
-    iconLabelDiv.append(socialLink);
+    shareLink.href = linkCell?.querySelector('a')?.href || '#';
+    shareLink.target = '_blank';
+    iconLabelDiv.appendChild(shareLink);
 
     const iconWrapper = document.createElement('div');
     iconWrapper.classList.add(
@@ -441,44 +427,47 @@ export default function decorate(block) {
       'justify-content-center',
       'align-items-center',
     );
-    socialLink.append(iconWrapper);
+    shareLink.appendChild(iconWrapper);
 
-    const iconInnerLink = document.createElement('div');
-    iconInnerLink.classList.add('social-media-share__wrapper--link', 'text-decoration-none');
-    iconInnerLink.innerHTML = `
-      <svg class="icon text-black ${socialIconCell?.textContent.trim()} social-media-share__wrapper--images">
-        <use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#${socialIconCell?.textContent.trim()}"></use>
-      </svg>
-    `;
-    iconWrapper.append(iconInnerLink);
+    const iconLink = document.createElement('div');
+    iconLink.classList.add('social-media-share__wrapper--link', 'text-decoration-none');
+    // iconLink.target = '_blank'; // target attribute is not valid for a div
+    iconWrapper.appendChild(iconLink);
 
-    const labelDiv = document.createElement('div');
-    labelDiv.classList.add(
+    const platform = platformCell?.textContent.trim() || '';
+    const platformIcon = document.createElement('svg');
+    platformIcon.classList.add('icon', 'text-black', platform, 'social-media-share__wrapper--images');
+    platformIcon.innerHTML = `<use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#${platform}"></use>`;
+    iconLink.appendChild(platformIcon);
+
+    const label = document.createElement('div');
+    label.classList.add(
       'social-media-share__wrapper--label',
       'text-center',
       'font-16',
       'leading-22',
       'text-black',
     );
-    labelDiv.textContent = socialLabelCell?.textContent.trim();
-    socialLink.append(labelDiv);
+    label.setAttribute('data-socialmedia-name', platform);
+    label.textContent = labelCell?.textContent.trim() || '';
+    shareLink.appendChild(label);
 
     const screenReaderOnly = document.createElement('span');
     screenReaderOnly.classList.add('cmp-link__screen-reader-only');
     screenReaderOnly.textContent = 'opens in a new tab';
-    socialLink.append(screenReaderOnly);
+    shareLink.appendChild(screenReaderOnly);
 
     const hiddenInput = document.createElement('input');
     hiddenInput.type = 'hidden';
     hiddenInput.classList.add('social-media-share__wrapper--url');
-    hiddenInput.value = socialIconCell?.textContent.trim();
-    iconLabelDiv.append(hiddenInput);
+    hiddenInput.value = platform;
+    iconLabelDiv.appendChild(hiddenInput);
 
-    socialIconsWrapper.append(iconLabelDiv);
+    socialIconsDiv.appendChild(iconLabelDiv);
   });
 
-  const inputButtonWrapper = document.createElement('div');
-  inputButtonWrapper.classList.add(
+  const inputButtonDiv = document.createElement('div');
+  inputButtonDiv.classList.add(
     'social-media-share__wrapper--input-button',
     'd-flex',
     'align-items-center',
@@ -487,11 +476,11 @@ export default function decorate(block) {
     'flex-column',
     'flex-md-row',
   );
-  shareWrapper.append(inputButtonWrapper);
+  shareWrapper.appendChild(inputButtonDiv);
 
-  const shareInput = document.createElement('input');
-  shareInput.type = 'text';
-  shareInput.classList.add(
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.classList.add(
     'social-media-share__wrapper--input',
     'bg-white',
     'font-16',
@@ -500,7 +489,7 @@ export default function decorate(block) {
     'py-3',
     'shadow-none',
   );
-  inputButtonWrapper.append(shareInput);
+  inputButtonDiv.appendChild(input);
 
   const copyButton = document.createElement('button');
   copyButton.classList.add(
@@ -513,28 +502,11 @@ export default function decorate(block) {
     'text-white',
   );
   copyButton.textContent = 'Copy';
-  inputButtonWrapper.append(copyButton);
-
-  // Add share button click listener to open modal
-  swiperWrapper.querySelectorAll('.icon.share').forEach((shareIcon) => {
-    shareIcon.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      socialMediaShareSection.classList.remove('d-none');
-      shareInput.value = window.location.href; // Set current URL to share input
-    });
-  });
-
   copyButton.addEventListener('click', () => {
-    shareInput.select();
+    input.select();
     document.execCommand('copy');
-    // Optionally, provide user feedback
-    const originalText = copyButton.textContent;
-    copyButton.textContent = 'Copied!';
-    setTimeout(() => {
-      copyButton.textContent = originalText;
-    }, 2000);
   });
+  inputButtonDiv.appendChild(copyButton);
 
   const prevButton = document.createElement('button');
   prevButton.classList.add(
@@ -556,7 +528,7 @@ export default function decorate(block) {
       <use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#arrow_right_carousel"></use>
     </svg>
   `;
-  swiperWrapperContainer.append(prevButton);
+  swiperWrapperContainer.appendChild(prevButton);
 
   const nextButton = document.createElement('button');
   nextButton.classList.add(
@@ -579,7 +551,7 @@ export default function decorate(block) {
       <use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#arrow_right_carousel"></use>
     </svg>
   `;
-  swiperWrapperContainer.append(nextButton);
+  swiperWrapperContainer.appendChild(nextButton);
 
   const pagination = document.createElement('div');
   pagination.classList.add(
@@ -593,77 +565,86 @@ export default function decorate(block) {
     'mx-auto',
     'w-fit',
   );
-  swiperContainer.append(pagination);
+  swiperContainer.appendChild(pagination);
 
-  block.append(swiperContainer);
+  block.appendChild(swiperContainer);
 
-  const ctaWrapper = document.createElement('div');
-  ctaWrapper.classList.add(
+  const viewAllCtaWrapper = document.createElement('div');
+  viewAllCtaWrapper.classList.add(
     'd-flex',
     'justify-content-center',
     'align-items-center',
     'mt-8',
   );
-  block.append(ctaWrapper);
 
-  if (viewAllLinkRow) {
-    const viewAllLink = document.createElement('a');
-    viewAllLink.classList.add(
-      'svasti-cta',
-      'cta-analytics',
-      'w-fit',
-      'text-decoration-none',
-      'd-flex',
-      'align-items-center',
-      'primary',
-      'px-8',
-      'pb-3',
-      'text-cream-100',
-      'border',
-      'border-2',
-      'border-red-100',
-      'border-maroon-100-hover',
-      'border-red-300-active',
-      'bg-red-100',
-      'bg-maroon-100-hover',
-      'bg-red-300-active',
-    );
-    const foundViewAllLink = viewAllLinkRow.querySelector('a'); // Use querySelector on the row itself
-    if (foundViewAllLink) {
-      viewAllLink.href = foundViewAllLink.href;
-    }
-    const labelSpan = document.createElement('span');
-    labelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-    labelSpan.textContent = 'View All'; // Hardcoded label as per original HTML
-    moveInstrumentation(viewAllLinkRow, viewAllLink);
-    ctaWrapper.append(viewAllLink);
-  }
+  const viewAllLink = document.createElement('a');
+  viewAllLink.classList.add(
+    'svasti-cta',
+    'cta-analytics',
+    'w-fit',
+    'text-decoration-none',
+    'd-flex',
+    'align-items-center',
+    'primary',
+    'px-8',
+    'pb-3',
+    'text-cream-100',
+    'border',
+    'border-2',
+    'border-red-100',
+    'border-maroon-100-hover',
+    'border-red-300-active',
+    'bg-red-100',
+    'bg-maroon-100-hover',
+    'bg-red-300-active',
+  );
+  viewAllLink.href = viewAllLinkRow?.querySelector('a')?.href || '#';
+  moveInstrumentation(viewAllLinkRow.firstElementChild, viewAllLink);
 
-  // Initialize Swiper after all elements are added to the DOM
-  // This part assumes Swiper is loaded globally or imported.
-  // For EDS, Swiper is usually loaded as a dependency.
-  if (typeof window.Swiper === 'function') {
-    // eslint-disable-next-line no-new
-    new window.Swiper(swiperContainer, {
-      loop: true,
-      slidesPerView: 1,
-      spaceBetween: 34,
-      navigation: {
-        nextEl: nextButton,
-        prevEl: prevButton,
-      },
-      pagination: {
-        el: pagination,
-        clickable: true,
-      },
-      breakpoints: {
-        640: {
-          slidesPerView: 2,
-        },
-        1024: {
-          slidesPerView: 3,
-        },
-      },
+  const viewAllLabel = document.createElement('span');
+  viewAllLabel.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
+  viewAllLabel.textContent = 'View All';
+  viewAllLink.appendChild(viewAllLabel);
+  viewAllCtaWrapper.appendChild(viewAllLink);
+  block.appendChild(viewAllCtaWrapper);
+
+  // Initialize Swiper (simplified for EDS, actual Swiper JS would be loaded separately)
+  let currentIndex = 0;
+  const slides = [...swiperWrapper.children];
+  const totalSlides = slides.length;
+
+  const updateCarousel = () => {
+    slides.forEach((slide, i) => {
+      slide.style.display = i === currentIndex ? 'block' : 'none';
     });
+
+    // Update pagination bullets
+    pagination.innerHTML = '';
+    for (let i = 0; i < totalSlides; i += 1) {
+      const bullet = document.createElement('span');
+      bullet.classList.add('swiper-pagination-bullet');
+      if (i === currentIndex) {
+        bullet.classList.add('swiper-pagination-bullet-active', 'swiper-pagination-bullet-active-main');
+      }
+      bullet.addEventListener('click', () => {
+        currentIndex = i;
+        updateCarousel();
+      });
+      pagination.appendChild(bullet);
+    }
+  };
+
+  prevButton.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    updateCarousel();
+  });
+
+  nextButton.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    updateCarousel();
+  });
+
+  if (totalSlides > 0) {
+    updateCarousel();
   }
 }

@@ -814,8 +814,6 @@
 
 .border { border:var(--bs-border-width) var(--bs-border-style) var(--bs-border-color)!important }
 
-.border-0 { border:0!important }
-
 .border-bottom { border-bottom:var(--bs-border-width) var(--bs-border-style) var(--bs-border-color)!important }
 
 .border-dark-gray-100 { --bs-border-opacity:1;border-color:#343434!important }
@@ -1574,7 +1572,19 @@ body .root{margin:auto;max-width:100rem;overflow:hidden}
 
 @media(min-width:768px){.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__wrapper--social-icons-wrapper .social-media-share__wrapper--icon-label .social-media-share__wrapper--icons .social-media-share__wrapper--images{height:3rem;width:3rem}}
 
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button { -webkit-column-gap:1rem;-moz-column-gap:1rem;column-gap:1rem;row-gap:1.5rem }
+
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--input { border-radius:.3125rem;padding:.625rem 0;width:100% }
+
 @media(min-width:768px){.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--input{width:53.4%}}
+
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--button { background-color:#da001c;border-radius:.3125rem;cursor:pointer }
+
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--button:hover { background-color:#bf271b }
+
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--button:active { background-color:#dd3830 }
+
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--button:disabled { opacity:.4 }
 
 @media(min-width:576px){.similar-products .similar-products__container{margin-left:4.0625rem;margin-right:4.0625rem;padding:0}}
 

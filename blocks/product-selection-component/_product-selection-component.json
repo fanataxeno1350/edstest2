@@ -61,12 +61,6 @@
         },
         {
           "component": "text",
-          "label": "Alt Text",
-          "name": "altText",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
           "label": "Product Label",
           "name": "label",
           "valueType": "string"

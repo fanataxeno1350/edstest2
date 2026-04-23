@@ -1,0 +1,381 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+function transformNestedLists(rootUl) {
+  rootUl.classList.add('header-comp__wrapper--sub-menu-group', 'w-auto', 'border-0', 'pb-lg-0', 'dropdown-menu', 'p-0');
+  rootUl.querySelectorAll('li').forEach((li) => {
+    li.classList.add('header-comp__wrapper--sub-menu-item');
+    const nested = li.querySelector(':scope > ul');
+    const anchor = li.querySelector(':scope > a');
+
+    if (!anchor) {
+      const textNode = [...li.childNodes].find(
+        (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
+      );
+      if (textNode) {
+        const span = document.createElement('span');
+        span.textContent = textNode.textContent.trim();
+        textNode.remove();
+        li.prepend(span);
+      }
+    }
+
+    if (nested) {
+      nested.remove();
+      const subWrap = document.createElement('div');
+      subWrap.classList.add('d-lg-none', 'inner-childs');
+      subWrap.append(nested);
+      li.append(subWrap);
+
+      const trigger = li.querySelector(':scope > a, :scope > span');
+      if (trigger) {
+        const arrowIcon = document.createElement('span');
+        arrowIcon.classList.add('arrow-icon', 'd-lg-none', 'end-0');
+        arrowIcon.innerHTML = `
+          <svg class="icon accordion-arrow-down text-dark-gray-100">
+            <use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-e6cdd9.svg#accordion-arrow-down"></use>
+          </svg>
+        `;
+        trigger.parentNode.insertBefore(arrowIcon, trigger.nextSibling);
+
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          li.classList.toggle('child-below'); // Original HTML uses this for active state
+          subWrap.classList.toggle('active'); // No direct class in original, but needed for toggle
+        });
+      }
+      transformNestedLists(nested); // Recursively transform nested lists
+    }
+  });
+}
+
+export default function decorate(block) {
+  const [logoRow, logoLinkRow, ...itemRows] = [...block.children];
+
+  const logoPicture = logoRow.querySelector('picture');
+  const logoLink = logoLinkRow.querySelector('a');
+
+  const headerSection = document.createElement('section');
+  headerSection.classList.add('header-comp', 'bg-red-100', 'position-fixed', 'top-0', 'start-0', 'z-2', 'w-100');
+  moveInstrumentation(block, headerSection);
+
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container', 'gx-8', 'gx-sm-0', 'd-flex', 'justify-content-between', 'align-items-start', 'align-items-md-center');
+
+  const headerNav = document.createElement('nav');
+  headerNav.classList.add('header-nav', 'navbar', 'position-static', 'navbar-expand-lg');
+
+  const headerWrapper = document.createElement('div');
+  headerWrapper.classList.add('header-comp__wrapper', 'container-fluid', 'justify-content-start', 'gx-4', 'gx-md-0');
+
+  const hamburgerButton = document.createElement('button');
+  hamburgerButton.classList.add('border-0', 'shadow-none', 'navbar-toggler', 'header-comp__wrapper--hamburger', 'collapsed', 'p-0');
+  hamburgerButton.type = 'button';
+  hamburgerButton.setAttribute('aria-controls', 'navbarSupportedContent');
+  hamburgerButton.setAttribute('aria-expanded', 'false');
+  hamburgerButton.setAttribute('aria-label', 'Toggle navigation');
+  hamburgerButton.innerHTML = `
+    <span class="navbar-toggler-icon d-flex flex-column justify-content-center align-items-center">
+      <span class="d-block bg-white"></span>
+      <span class="d-block bg-white"></span>
+      <span class="d-block bg-white"></span>
+    </span>
+  `;
+
+  const logoDiv = document.createElement('div');
+  logoDiv.classList.add('header-comp__wrapper--logo');
+
+  const logoAnchor = document.createElement('a');
+  logoAnchor.classList.add('header-comp__wrapper--link', 'cta-analytics', 'navbar-brand', 'm-0');
+  logoAnchor.setAttribute('data-link-region', 'Header');
+  logoAnchor.href = logoLink ? logoLink.href : '/';
+
+  if (logoPicture) {
+    const img = logoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    logoAnchor.append(optimizedPic);
+    optimizedPic.querySelector('img').classList.add('header-comp__wrapper--image', 'h-100');
+  }
+  logoDiv.append(logoAnchor);
+
+  const navbarCollapse = document.createElement('div');
+  navbarCollapse.classList.add('header-comp__wrapper--menus', 'collapse', 'navbar-collapse', 'z-3');
+  navbarCollapse.id = 'navbarSupportedContent';
+
+  const navList = document.createElement('ul');
+  navList.classList.add('header-comp__wrapper--menus-groups', 'navbar-nav', 'me-auto', 'mb-2', 'mb-lg-0', 'w-100');
+
+  // Filter item rows based on cell count to distinguish navigation-item (4 cells) from submenu-item (2 cells)
+  const navigationItems = itemRows.filter((row) => [...row.children].length === 4);
+  // const submenuItems = itemRows.filter((row) => [...row.children].length === 2); // Not used directly here, handled by hierarchy-tree
+
+  navigationItems.forEach((row, i) => {
+    const cells = [...row.children];
+    const iconCell = cells.find(cell => cell.querySelector('picture'));
+    const labelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && !cell.querySelector('ul'));
+    const linkCell = cells.find(cell => cell.querySelector('a') && !cell.querySelector('ul'));
+    const hierarchyCell = cells.find(cell => cell.querySelector('ul'));
+
+    const li = document.createElement('li');
+    li.classList.add('header-comp__wrapper--menu-item', 'h-100', 'd-flex', 'align-items-center', 'nav-item', 'p-4', 'p-lg-0', 'border-bottom-lg-0', 'dropdown', 'border-lg-0', 'position-relative');
+    if (i % 2 === 0) {
+      li.classList.add('left-division');
+    } else {
+      li.classList.add('right-division');
+    }
+
+    const menuLinkDiv = document.createElement('div');
+    menuLinkDiv.classList.add('header-comp__wrapper--menu-link', 'gap-6', 'gap-lg-1', 'position-relative', 'w-100', 'd-flex', 'align-items-center', 'nav-link', 'px-0', 'font-default', 'leading-28', 'leading-lg-26', 'text-header-list', 'text-lg-cream-100');
+    menuLinkDiv.setAttribute('aria-current', 'page');
+
+    if (iconCell) {
+      const iconPicture = iconCell.querySelector('picture');
+      if (iconPicture) {
+        const img = iconPicture.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '30' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        optimizedPic.querySelector('img').classList.add('header-comp__wrapper--menu-image', 'd-lg-none');
+        menuLinkDiv.append(optimizedPic);
+      }
+    }
+
+    const anchor = document.createElement('a');
+    anchor.classList.add('text-decoration-none', 'cta-analytics', 'header-comp__wrapper--link');
+    anchor.setAttribute('data-link-region', 'Header');
+    anchor.href = linkCell?.querySelector('a')?.href || '#';
+
+    const span = document.createElement('span');
+    span.classList.add('link-span');
+    span.textContent = labelCell?.textContent.trim() || '';
+    anchor.append(span);
+    menuLinkDiv.append(anchor);
+
+    if (hierarchyCell) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = hierarchyCell.innerHTML;
+      const hierarchyRoot = tempDiv.querySelector('ul');
+
+      if (hierarchyRoot) {
+        menuLinkDiv.classList.add('dropdown-toggle');
+        menuLinkDiv.setAttribute('aria-expanded', 'false');
+
+        const toggleDropDown = document.createElement('span');
+        toggleDropDown.classList.add('toggle-drop-down', 'arrow-icon', 'd-flex', 'end-0', 'top-parent');
+        toggleDropDown.innerHTML = `
+          <svg class="header-icon icon accordion-arrow-down text-dark-gray-100">
+            <use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-e6cdd9.svg#accordion-arrow-down"></use>
+          </svg>
+        `;
+        menuLinkDiv.append(toggleDropDown);
+
+        const subMenusDiv = document.createElement('div');
+        subMenusDiv.classList.add('header-comp__sub-menus');
+        subMenusDiv.id = `leftHeaderItem${i}`;
+
+        const xfpageDiv = document.createElement('div');
+        xfpageDiv.classList.add('xfpage', 'page', 'basicpage');
+        const aemGridDiv = document.createElement('div');
+        aemGridDiv.classList.add('aem-Grid', 'aem-Grid--12', 'aem-Grid--default--12');
+        const headerSubMenuDiv = document.createElement('div');
+        headerSubMenuDiv.classList.add('headerSubMenu', 'aem-GridColumn', 'aem-GridColumn--default--12');
+
+        const subMenuGroup = document.createElement('ul');
+        subMenuGroup.classList.add('header-comp__wrapper--sub-menu-group', 'w-auto', 'border-0', 'pb-lg-0', 'dropdown-menu', 'p-0');
+        const headerSubMenuParent = document.createElement('div');
+        headerSubMenuParent.classList.add('header-comp__sub-menu', 'tri-parent');
+        subMenuGroup.append(headerSubMenuParent);
+
+        // Apply classes to all <a>, <li>, <ul> elements within the hierarchy
+        hierarchyRoot.querySelectorAll('a').forEach(a => a.classList.add('text-decoration-none', 'text-dark-gray-100'));
+        hierarchyRoot.querySelectorAll('li').forEach(liElement => liElement.classList.add('header-comp__wrapper--sub-menu-item'));
+        hierarchyRoot.querySelectorAll('ul').forEach(ulElement => ulElement.classList.add('header-comp__wrapper--sub-menu-group', 'w-auto', 'border-0', 'pb-lg-0', 'dropdown-menu', 'p-0'));
+
+        transformNestedLists(hierarchyRoot);
+        moveInstrumentation(hierarchyCell, hierarchyRoot); // Move instrumentation from original cell to the transformed root
+
+        // Append children from the transformed hierarchyRoot to headerSubMenuParent
+        while (hierarchyRoot.firstChild) {
+          const childLi = hierarchyRoot.firstChild;
+          const subMenuItem = document.createElement('li');
+          subMenuItem.classList.add('header-comp__wrapper--sub-menu-item');
+          moveInstrumentation(childLi, subMenuItem);
+
+          const childAnchor = childLi.querySelector(':scope > a');
+          const childSpan = childLi.querySelector(':scope > span'); // For cases where <li> has a span instead of <a>
+          const childSubWrap = childLi.querySelector(':scope > div.inner-childs');
+          const childArrowIcon = childLi.querySelector(':scope > span.arrow-icon');
+
+          const subMenuLinkDiv = document.createElement('div');
+          subMenuLinkDiv.classList.add('header-comp__wrapper--menu-link', 'mb-3', 'mb-lg-0', 'gap-4', 'position-relative', 'w-100', 'd-flex', 'align-items-center', 'nav-link', 'px-0', 'font-18', 'leading-24', 'text-header-list', 'text-lg-black');
+          subMenuLinkDiv.setAttribute('aria-current', 'page');
+          if (childSubWrap) {
+            subMenuLinkDiv.classList.add('dropdown-toggle');
+            subMenuLinkDiv.setAttribute('aria-expanded', 'false');
+            subMenuItem.classList.add('child-below');
+          } else {
+            subMenuItem.classList.add('no-child');
+          }
+
+          const subMenuLinkInnerDiv = document.createElement('div');
+          subMenuLinkInnerDiv.classList.add('header-comp__wrapper--sub-menu-link', 'dropdown-item', 'p-lg-3', 'mb-lg-3', 'mb-xl-3', 'leading-lg-24', 'leading-xl-24', 'font-default', 'font-lg-18', 'leading-lg-26', 'leading-28', 'ps-0', 'p-0', 'p-lg-3', 'd-inline-block', 'd-lg-flex', 'justify-content-between', 'align-items-center');
+
+          const subLinkAnchor = document.createElement('a');
+          subLinkAnchor.classList.add('text-decoration-none', 'text-dark-gray-100');
+          if (childAnchor) {
+            subLinkAnchor.href = childAnchor.href;
+          } else {
+            subLinkAnchor.href = '#';
+          }
+
+          const subLinkSpan = document.createElement('span');
+          subLinkSpan.classList.add('sub-link-span');
+          subLinkSpan.textContent = childAnchor ? childAnchor.textContent.trim() : (childSpan ? childSpan.textContent.trim() : '');
+          subLinkAnchor.append(subLinkSpan);
+          subMenuLinkInnerDiv.append(subLinkAnchor);
+
+          if (childSubWrap) {
+            const arrowIconRight = document.createElement('span');
+            arrowIconRight.classList.add('arrow-icon-right', 'end-0', 'd-none', 'd-lg-inline');
+            arrowIconRight.innerHTML = `
+              <svg class="icon accordion-arrow-down text-dark-gray-100">
+                <use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#arrow_right"></use>
+              </svg>
+            `;
+            subMenuLinkInnerDiv.append(arrowIconRight);
+          }
+          subMenuLinkDiv.append(subMenuLinkInnerDiv);
+
+          if (childArrowIcon) {
+            subMenuLinkDiv.append(childArrowIcon);
+          }
+
+          subMenuItem.append(subMenuLinkDiv);
+          if (childSubWrap) {
+            subMenuItem.append(childSubWrap);
+          }
+          headerSubMenuParent.append(subMenuItem);
+          childLi.remove(); // Remove original child after processing
+        }
+
+        headerSubMenuDiv.append(subMenuGroup);
+        aemGridDiv.append(headerSubMenuDiv);
+        xfpageDiv.append(aemGridDiv);
+        subMenusDiv.append(xfpageDiv);
+        li.append(subMenusDiv);
+
+        toggleDropDown.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          li.classList.toggle('show-nav');
+          menuLinkDiv.classList.toggle('show-nav');
+          subMenusDiv.classList.toggle('show-nav');
+        });
+      }
+    }
+
+    li.append(menuLinkDiv);
+    navList.append(li);
+  });
+
+  navbarCollapse.append(navList);
+
+  headerWrapper.append(hamburgerButton, logoDiv, navbarCollapse);
+  headerNav.append(headerWrapper);
+
+  const searchAccessDiv = document.createElement('div');
+  searchAccessDiv.classList.add('header-comp__wrapper--search-access', 'd-flex', 'py-4', 'py-lg-0');
+
+  const searchDiv = document.createElement('div');
+  searchDiv.classList.add('header-comp__wrapper--search');
+
+  const searchIconDiv = document.createElement('div');
+  searchIconDiv.classList.add('header-comp__wrapper--search-icon', 'd-flex', 'flex-column', 'align-items-center', 'font-12', 'leading-20', 'text-white');
+  searchIconDiv.innerHTML = `
+    <svg class="icon search-red text-white">
+      <use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#search"></use>
+    </svg>
+    <span class="d-none d-lg-block">Search</span>
+  `;
+  searchDiv.append(searchIconDiv);
+  searchAccessDiv.append(searchDiv);
+
+  containerDiv.append(headerNav, searchAccessDiv);
+
+  const outerBoxDiv = document.createElement('div');
+  outerBoxDiv.classList.add('header__outer-box', 'position-absolute', 'w-100', 'z-2', 'start-0', 'd-lg-none');
+
+  headerSection.append(containerDiv, outerBoxDiv);
+
+  block.replaceWith(headerSection);
+
+  // Global Search Section
+  const globalSearchSection = document.createElement('section');
+  globalSearchSection.classList.add('global-search', 'position-fixed', 'w-100', 'd-none');
+  globalSearchSection.innerHTML = `
+    <div class="w-100 z-4 global-search__wrapper pb-md-5 pb-lg-6 pt-lg-0 pt-md-0 pt-2 pb-2">
+      <div class="d-flex justify-content-center h-100">
+        <div class="d-lg-block align-items-center d-flex">
+          <div class="cross-wrap d-flex justify-content-center align-items-center">
+            <svg class="global-search__wrapper--cross display-inline-block text-black text-white m-0">
+              <use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#cross"></use>
+            </svg>
+          </div>
+        </div>
+        <div class="global-search__wrapper--form d-flex align-items-center justify-content-center">
+          <input type="text" class="global-search__wrapper--form-input pb-1 pb-md-1 pb-lg-3 px-lg-4" placeholder="Start typing..." data-path="/content/svasti/in/en" data-limit="5" data-error="&lt;p&gt;&lt;b&gt;Sorry, we cannot find what you are looking for :(&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;&nbsp;&lt;/p&gt;
+&lt;p&gt;Please try a new search term or browse through one of our product categories.&lt;/p&gt;
+">
+        </div>
+        <div class="d-lg-block align-items-center d-flex">
+          <div class="search-wrap d-flex justify-content-center align-items-center">
+            <svg class="global-search__wrapper--search display-inline-block text-white m-0">
+              <use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#search"></use>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center w-100 close-on-click">
+      <div class="global-search__response d-flex justify-content-start z-4 bg-transparent">
+        <ul class="global-search__response--results m-0 w-100 d-none pt-5 pb-5 px-9"></ul>
+      </div>
+    </div>
+  `;
+  document.body.append(globalSearchSection);
+
+  // Event Listeners for interactive behavior
+  hamburgerButton.addEventListener('click', () => {
+    navbarCollapse.classList.toggle('show');
+    hamburgerButton.classList.toggle('collapsed');
+  });
+
+  const searchTrigger = searchIconDiv;
+  const searchClose = globalSearchSection.querySelector('.global-search__wrapper--cross');
+
+  searchTrigger.addEventListener('click', () => {
+    globalSearchSection.classList.remove('d-none');
+  });
+
+  searchClose.addEventListener('click', () => {
+    globalSearchSection.classList.add('d-none');
+  });
+
+  globalSearchSection.addEventListener('click', (e) => {
+    if (e.target.classList.contains('close-on-click')) {
+      globalSearchSection.classList.add('d-none');
+    }
+  });
+
+  let lastScrollY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > lastScrollY && window.scrollY > 100) {
+      headerSection.classList.add('nav-up');
+    } else {
+      headerSection.classList.remove('nav-up');
+    }
+    lastScrollY = window.scrollY;
+  });
+}

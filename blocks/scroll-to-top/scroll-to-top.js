@@ -16,34 +16,20 @@ export default function decorate(block) {
     'd-flex',
     'align-items-center',
     'justify-content-center',
-    'bg-red-100'
+    'bg-red-100',
   );
 
-  const iconWrapper = document.createElement('div');
-  iconWrapper.classList.add('icon-wrapper'); // This class is not in the allowlist, but it's a structural wrapper, not a styling class.
+  const svg = document.createElement('svg');
+  svg.classList.add('icon', 'arrow-up', 'text-white');
 
-  // The BlockJson indicates a 'button' container field which holds 'scroll-to-top-button' items.
-  // Each item row has one cell: 'icon' (type=reference).
-  // We need to find the first row that contains a picture for the icon.
-  const iconRow = [...block.children].find((row) => row.querySelector('picture'));
+  const use = document.createElement('use');
+  use.setAttribute('xlink:href', '/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#right-pointing-arrow');
+  svg.appendChild(use);
+  button.appendChild(svg);
 
-  if (iconRow) {
-    const iconCell = iconRow.children[0]; // Since it's a fixed-field item model with one cell, we can use index 0.
-    if (iconCell) {
-      const picture = iconCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '48' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          iconWrapper.appendChild(optimizedPic);
-        }
-      }
-      moveInstrumentation(iconCell, iconWrapper);
-    }
-  }
-
-  button.appendChild(iconWrapper);
+  moveInstrumentation(block, button);
+  block.innerHTML = '';
+  block.appendChild(button);
 
   button.addEventListener('click', () => {
     window.scrollTo({
@@ -53,19 +39,13 @@ export default function decorate(block) {
   });
 
   const handleScroll = () => {
-    if (window.scrollY > 100) {
+    if (window.scrollY > 200) { // Show button after scrolling down 200px
       button.style.display = 'flex';
     } else {
       button.style.display = 'none';
     }
   };
 
-  // Set initial state
-  handleScroll();
-
   window.addEventListener('scroll', handleScroll);
-
-  block.innerHTML = '';
-  block.appendChild(button);
-  block.classList.add('scroll-to-top');
+  handleScroll(); // Call once to set initial state
 }

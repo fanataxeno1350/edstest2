@@ -1,16 +1,16 @@
 {
   "definitions": [
     {
-      "title": "Scroll-To-Top",
-      "id": "scroll-to-top",
+      "title": "Buy-Now-Card",
+      "id": "buy-now-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "scroll-to-top",
-              "model": "scroll-to-top",
-              "name": "Scroll-To-Top"
+              "filter": "buy-now-card",
+              "model": "buy-now-card",
+              "name": "Buy-Now-Card"
             }
           }
         }
@@ -19,12 +19,12 @@
   ],
   "models": [
     {
-      "id": "scroll-to-top"
+      "id": "buy-now-card"
     }
   ],
   "filters": [
     {
-      "id": "scroll-to-top"
+      "id": "buy-now-card"
     }
   ]
 }
