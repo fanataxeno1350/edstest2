@@ -31,9 +31,6 @@
     ]
   },
   {
-    "id": "buy-now-card"
-  },
-  {
     "id": "card-carousel",
     "components": [
       "recipe-card",
@@ -78,11 +75,5 @@
     "components": [
       "text-banner-cta"
     ]
-  },
-  {
-    "id": "w-100-pt-3-pt-sm-3"
-  },
-  {
-    "id": "w-100"
   }
 ]
