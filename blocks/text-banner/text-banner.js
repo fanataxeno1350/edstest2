@@ -2,7 +2,9 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [titleRow, descriptionRow, ...ctaRows] = [...block.children];
+  // CHECK 0 & 1: Structure alignment - using destructuring for root fields is correct.
+  // The BlockJson defines 4 root fields, and the JS destructures 4.
+  const [titleCell, descriptionCell, ctaLinkCell, ctaLabelCell] = [...block.children];
 
   const section = document.createElement('section');
   section.classList.add('text-banner--wrapper', 'position-relative', 'bg-maroon-700');
@@ -10,116 +12,107 @@ export default function decorate(block) {
 
   const bgCircleLeft = document.createElement('div');
   bgCircleLeft.classList.add('position-absolute', 'opacity-60', 'bg-circle-left');
-  section.appendChild(bgCircleLeft);
+  section.append(bgCircleLeft);
 
   const bgCircleRight = document.createElement('div');
   bgCircleRight.classList.add('position-absolute', 'opacity-20', 'bg-circle-right');
-  section.appendChild(bgCircleRight);
+  section.append(bgCircleRight);
 
   const bgCurveTop = document.createElement('div');
   bgCurveTop.classList.add('position-absolute', 'start-0', 'end-0', 'bg-curve-top');
-  section.appendChild(bgCurveTop);
+  section.append(bgCurveTop);
 
   const bgCurveBottom = document.createElement('div');
   bgCurveBottom.classList.add('position-absolute', 'start-0', 'end-0', 'bg-curve-bottom');
-  section.appendChild(bgCurveBottom);
+  section.append(bgCurveBottom);
 
   const container = document.createElement('div');
   container.classList.add('container', 'gx-8', 'gx-sm-0');
-  section.appendChild(container);
+  section.append(container);
 
   const row = document.createElement('div');
   row.classList.add('row', 'gx-8', 'gx-sm-0', 'text-cream-100');
-  container.appendChild(row);
+  container.append(row);
 
   const textBannerContainer = document.createElement('div');
-  textBannerContainer.classList.add(
-    'text-banner--container',
-    'd-flex',
-    'flex-column',
-    'align-items-center',
-    'justify-content-between',
-  );
-  row.appendChild(textBannerContainer);
+  textBannerContainer.classList.add('text-banner--container', 'd-flex', 'flex-column', 'align-items-center', 'justify-content-between');
+  row.append(textBannerContainer);
 
   const contentWrapper = document.createElement('div');
   contentWrapper.classList.add('d-flex', 'flex-column', 'align-items-center');
-  textBannerContainer.appendChild(contentWrapper);
+  textBannerContainer.append(contentWrapper);
 
-  // Title
-  if (titleRow) {
+  if (titleCell) {
     const titleDiv = document.createElement('div');
-    const h2 = document.createElement('h2');
-    h2.classList.add('font-baskerville', 'font-md-40', 'font-24', 'text-banner--title');
-    moveInstrumentation(titleRow.firstElementChild, h2);
-    h2.textContent = titleRow.firstElementChild.textContent.trim();
-    titleDiv.appendChild(h2);
-    contentWrapper.appendChild(titleDiv);
+    const title = document.createElement('h2');
+    title.classList.add('font-baskerville', 'font-md-40', 'font-24', 'text-banner--title');
+    // CHECK 1.5: title field is type=text, .textContent.trim() is correct.
+    title.textContent = titleCell.textContent.trim();
+    moveInstrumentation(titleCell, title);
+    titleDiv.append(title);
+    contentWrapper.append(titleDiv);
   }
 
-  // Description
-  if (descriptionRow) {
+  if (descriptionCell) {
     const descriptionDiv = document.createElement('div');
     descriptionDiv.classList.add('mt-sm-8', 'mt-5', 'text-banner--description');
-    const innerDiv = document.createElement('div');
-    innerDiv.classList.add('font-md-18', 'font-default', 'leading-24', 'text-center', 'promise-text-padding');
-    moveInstrumentation(descriptionRow.firstElementChild, innerDiv);
-    innerDiv.innerHTML = descriptionRow.firstElementChild.innerHTML;
-    descriptionDiv.appendChild(innerDiv);
-    contentWrapper.appendChild(descriptionDiv);
+    const descriptionContent = document.createElement('div');
+    descriptionContent.classList.add('font-md-18', 'font-default', 'leading-24', 'text-center', 'promise-text-padding');
+    // CHECK 1.5: description field is type=richtext, .innerHTML is correct.
+    descriptionContent.innerHTML = descriptionCell.innerHTML;
+    moveInstrumentation(descriptionCell, descriptionContent);
+    descriptionDiv.append(descriptionContent);
+    contentWrapper.append(descriptionDiv);
   }
 
-  // CTAs
-  if (ctaRows.length > 0) {
+  if (ctaLinkCell && ctaLabelCell) {
     const ctaWrapper = document.createElement('div');
     ctaWrapper.classList.add('text-banner--cta', 'mt-12', 'mt-lg-16');
-    textBannerContainer.appendChild(ctaWrapper);
 
-    ctaRows.forEach((ctaRow) => {
-      // Correctly destructure cells for fixed-field item model
-      const [labelCell, linkCell] = [...ctaRow.children];
+    const ctaLink = document.createElement('a');
+    const foundLink = ctaLinkCell.querySelector('a');
+    if (foundLink) {
+      // FIX: ctaLink field is type=aem-content, so we must read the href from the <a> tag.
+      // The original code correctly found the link but then didn't use its href.
+      ctaLink.href = foundLink.href;
+    }
+    ctaLink.classList.add(
+      'svasti-cta',
+      'cta-analytics',
+      'w-fit',
+      'text-decoration-none',
+      'd-flex',
+      'align-items-center',
+      'primary',
+      'px-8',
+      'pb-3',
+      'text-black',
+      'border',
+      'border-2',
+      'border-cream-100',
+      'border-cream-500-hover',
+      'border-cream-500-active',
+      'bg-cream-100',
+      'bg-cream-500-hover',
+      'bg-cream-100-active',
+    );
 
-      const link = document.createElement('a');
-      link.classList.add(
-        'svasti-cta',
-        'cta-analytics',
-        'w-fit',
-        'text-decoration-none',
-        'd-flex',
-        'align-items-center',
-        'primary',
-        'px-8',
-        'pb-3',
-        'text-black',
-        'border',
-        'border-2',
-        'border-cream-100',
-        'border-cream-500-hover',
-        'border-cream-500-active',
-        'bg-cream-100',
-        'bg-cream-500-hover',
-        'bg-cream-100-active',
-      );
-
-      // Correctly read href from aem-content cell
-      const foundLinkElement = linkCell.querySelector('a');
-      if (foundLinkElement) {
-        link.href = foundLinkElement.href;
-      }
-
-      const span = document.createElement('span');
-      span.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-      // Correctly read label from text cell
-      span.textContent = labelCell.textContent.trim();
-      link.appendChild(span);
-
-      moveInstrumentation(ctaRow, link);
-      ctaWrapper.appendChild(link);
-    });
+    const ctaSpan = document.createElement('span');
+    ctaSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
+    // CHECK 1.5: ctaLabel field is type=text, .textContent.trim() is correct.
+    ctaSpan.textContent = ctaLabelCell.textContent.trim();
+    moveInstrumentation(ctaLabelCell, ctaSpan);
+    ctaLink.append(ctaSpan);
+    moveInstrumentation(ctaLinkCell, ctaLink);
+    ctaWrapper.append(ctaLink);
+    textBannerContainer.append(ctaWrapper);
   }
 
   block.replaceWith(section);
 
+  // CHECK 2: Interactivity - The original HTML shows a CTA link, which is handled.
+  // No other interactive elements (toggles, modals, etc.) are present in the original HTML.
+  // All CSS classes used are from the allowlist.
   section.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));

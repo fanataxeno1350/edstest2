@@ -76,7 +76,7 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Menu Icon",
+          "label": "Icon",
           "name": "icon",
           "valueType": "string"
         },
@@ -105,13 +105,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Submenu Label",
+          "label": "Sub-navigation Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Submenu Link",
+          "label": "Sub-navigation Link",
           "name": "link",
           "valueType": "string"
         }

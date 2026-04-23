@@ -35,8 +35,11 @@
   {
     "id": "banner-section",
     "components": [
-      "banner-cta-item"
+      "banner-link-item"
     ]
+  },
+  {
+    "id": "buy-now-card"
   },
   {
     "id": "card-carousel",
@@ -49,8 +52,8 @@
     "id": "footer-brand",
     "components": [
       "footer-navigation-item",
-      "footer-secondary-link",
-      "footer-social-link"
+      "footer-link-item",
+      "footer-social-link-item"
     ]
   },
   {
@@ -81,16 +84,21 @@
     ]
   },
   {
+    "id": "space-adder"
+  },
+  {
     "id": "stay-social",
     "components": [
-      "stay-social-card",
-      "stay-social-cta"
+      "stay-social-card"
     ]
   },
   {
-    "id": "text-banner",
-    "components": [
-      "text-banner-cta"
-    ]
+    "id": "text-banner"
+  },
+  {
+    "id": "w-100-pt-3-pt-sm-3"
+  },
+  {
+    "id": "w-100"
   }
 ]

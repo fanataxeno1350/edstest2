@@ -1570,37 +1570,11 @@ body .root{margin:auto;max-width:100rem;overflow:hidden}
 
 @media(min-width:768px){.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__wrapper--social-icons-wrapper .social-media-share__wrapper--icon-label{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;gap:1rem}}
 
-.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__wrapper--social-icons-wrapper .social-media-share__wrapper--icon-label .social-media-share__wrapper--icons { cursor:pointer;height:3rem;width:3rem }
-
 @media(min-width:768px){.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__wrapper--social-icons-wrapper .social-media-share__wrapper--icon-label .social-media-share__wrapper--icons{height:5.625rem;width:5.625rem}}
-
-.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__wrapper--social-icons-wrapper .social-media-share__wrapper--icon-label .social-media-share__wrapper--icons .social-media-share__wrapper--images { height:1.5rem;width:1.5rem }
 
 @media(min-width:768px){.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__wrapper--social-icons-wrapper .social-media-share__wrapper--icon-label .social-media-share__wrapper--icons .social-media-share__wrapper--images{height:3rem;width:3rem}}
 
-.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__wrapper--social-icons-wrapper:has(+.swiper-button-lock) { -webkit-box-pack:center;-ms-flex-pack:center;justify-content:center }
-
-.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__button { cursor:pointer;height:1.5rem;top:45%;width:.75rem }
-
-.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__prev { left:4rem }
-
-.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__prev .carousel-right-arrow-v2 { -webkit-transform:rotate(180deg);transform:rotate(180deg) }
-
-.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__next { right:4rem }
-
-.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button { -webkit-column-gap:1rem;-moz-column-gap:1rem;column-gap:1rem;row-gap:1.5rem }
-
-.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--input { border-radius:.3125rem;padding:.625rem 0;width:100% }
-
 @media(min-width:768px){.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--input{width:53.4%}}
-
-.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--button { background-color:#da001c;border-radius:.3125rem;cursor:pointer }
-
-.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--button:hover { background-color:#bf271b }
-
-.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--button:active { background-color:#dd3830 }
-
-.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--button:disabled { opacity:.4 }
 
 @media(min-width:576px){.similar-products .similar-products__container{margin-left:4.0625rem;margin-right:4.0625rem;padding:0}}
 
