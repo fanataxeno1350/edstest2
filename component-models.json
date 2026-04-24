@@ -140,5 +140,430 @@
         ]
       }
     ]
+  },
+  {
+    "id": "banner-section",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Desktop Image",
+        "name": "desktopImage",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Image",
+        "name": "mobileImage",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "banner-cta",
+        "label": "CTAs",
+        "name": "ctas"
+      }
+    ]
+  },
+  {
+    "id": "banner-cta",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "card-carousel",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Subtitle",
+        "name": "subtitle",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "recipe-card",
+        "label": "Recipes",
+        "name": "recipes"
+      },
+      {
+        "component": "container",
+        "item": "social-media-share-item",
+        "label": "Social Media Share",
+        "name": "socialMediaShare"
+      }
+    ]
+  },
+  {
+    "id": "recipe-card",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Recipe Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Recipe Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Image Alt Text",
+        "name": "imageAlt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Tag",
+        "name": "tag",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Cooking Time",
+        "name": "time",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Serves",
+        "name": "serves",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-media-share-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Social Media Share Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Social Media Name",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-brand",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Primary Logo",
+        "name": "primary-logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Primary Logo Link",
+        "name": "primary-logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Secondary Logo",
+        "name": "secondary-logo",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-navigation-item",
+        "label": "Footer Navigation",
+        "name": "footer-navigation"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-link",
+        "label": "Footer Social Links",
+        "name": "footer-social-links"
+      },
+      {
+        "component": "text",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-navigation-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-link",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Social Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "header-comp",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "navigation-item",
+        "label": "Navigation Items",
+        "name": "navigation"
+      }
+    ]
+  },
+  {
+    "id": "navigation-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Menu Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Menu Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Menu Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "sub-navigation-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Submenu Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Submenu Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "product-selection-component",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "product-item",
+        "label": "Products",
+        "name": "products"
+      }
+    ]
+  },
+  {
+    "id": "product-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Product Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Product Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "scroll-to-top"
+  },
+  {
+    "id": "stay-social",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Subtext",
+        "name": "subtext",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "social-card",
+        "label": "Social Cards",
+        "name": "cards"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "cta-label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "cta-link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-card",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Card Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Card Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "text-banner",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      }
+    ]
   }
 ]

@@ -16,7 +16,70 @@
       "cards",
       "columns",
       "fragment",
-      "---new--blocks-----"
+      "---new--blocks-----",
+      "main-header",
+      "spotlight-home",
+      "what-we-do-wrap",
+      "purpose-led-grid",
+      "spirit-of-rise",
+      "latest-stories",
+      "work-with-us",
+      "faqs-section",
+      "footer-main",
+      "spotlight-home-wrap",
+      "header-comp",
+      "banner-section",
+      "text-banner",
+      "product-selection-component",
+      "card-carousel",
+      "stay-social",
+      "scroll-to-top",
+      "footer-brand"
     ]
+  },
+  {
+    "id": "banner-section",
+    "components": [
+      "banner-cta"
+    ]
+  },
+  {
+    "id": "card-carousel",
+    "components": [
+      "recipe-card",
+      "social-media-share-item"
+    ]
+  },
+  {
+    "id": "footer-brand",
+    "components": [
+      "footer-navigation-item",
+      "footer-social-link"
+    ]
+  },
+  {
+    "id": "header-comp",
+    "components": [
+      "navigation-item",
+      "sub-navigation-item"
+    ]
+  },
+  {
+    "id": "product-selection-component",
+    "components": [
+      "product-item"
+    ]
+  },
+  {
+    "id": "scroll-to-top"
+  },
+  {
+    "id": "stay-social",
+    "components": [
+      "social-card"
+    ]
+  },
+  {
+    "id": "text-banner"
   }
 ]
