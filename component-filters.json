@@ -16,57 +16,7 @@
       "cards",
       "columns",
       "fragment",
-      "---new--blocks-----",
-      "header-comp",
-      "w-100",
-      "text-banner",
-      "product-selection-component",
-      "card-carousel",
-      "simple-block",
-      "stay-social",
-      "w-100-pt-3-pt-sm-3",
-      "buy-now-card",
-      "scroll-to-top",
-      "footer"
-    ]
-  },
-  {
-    "id": "card-carousel",
-    "components": [
-      "product-card"
-    ]
-  },
-  {
-    "id": "footer",
-    "components": [
-      "footer-navigation-item",
-      "footer-link-item",
-      "footer-social-link-item"
-    ]
-  },
-  {
-    "id": "header-comp",
-    "components": [
-      "navigation-item",
-      "navigation-submenu-item"
-    ]
-  },
-  {
-    "id": "product-selection-component",
-    "components": [
-      "product-item"
-    ]
-  },
-  {
-    "id": "stay-social",
-    "components": [
-      "stay-social-card"
-    ]
-  },
-  {
-    "id": "text-banner",
-    "components": [
-      "text-banner-cta"
+      "---new--blocks-----"
     ]
   }
 ]
