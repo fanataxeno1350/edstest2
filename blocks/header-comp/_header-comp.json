@@ -51,11 +51,12 @@
     {
       "id": "header-comp",
       "fields": [
-          {
-            "component": "image",
-            "label": "Logo",
-            "name": "logo"
-          },
+        {
+          "component": "reference",
+          "label": "Logo",
+          "name": "logo",
+          "valueType": "string"
+        },
         {
           "component": "aem-content",
           "label": "Logo Link",
