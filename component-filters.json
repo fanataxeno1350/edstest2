@@ -76,7 +76,7 @@
   {
     "id": "slickcarousel",
     "components": [
-      "banner-item"
+      "carousel-item"
     ]
   },
   {

@@ -665,37 +665,37 @@
     "fields": [
       {
         "component": "container",
-        "item": "banner-item",
+        "item": "carousel-item",
         "label": "Carousel Items",
         "name": "items"
       }
     ]
   },
   {
-    "id": "banner-item",
+    "id": "carousel-item",
     "fields": [
       {
         "component": "reference",
         "label": "Desktop Image",
-        "name": "desktop-image",
+        "name": "image-desktop",
         "valueType": "string"
       },
       {
         "component": "reference",
         "label": "Mobile Image",
-        "name": "mobile-image",
+        "name": "image-mobile",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Button Link",
-        "name": "button-link",
+        "label": "CTA Link",
+        "name": "cta-link",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Button Label",
-        "name": "button-label",
+        "label": "CTA Label",
+        "name": "cta-label",
         "valueType": "string"
       }
     ]

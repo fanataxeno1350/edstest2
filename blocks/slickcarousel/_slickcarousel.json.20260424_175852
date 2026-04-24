@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Carousel-Item",
-      "id": "carousel-item",
+      "title": "Banner-Item",
+      "id": "banner-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "carousel-item",
-              "name": "Carousel-Item"
+              "model": "banner-item",
+              "name": "Banner-Item"
             }
           }
         }
@@ -38,37 +38,37 @@
       "fields": [
         {
           "component": "container",
-          "item": "carousel-item",
+          "item": "banner-item",
           "label": "Carousel Items",
           "name": "items"
         }
       ]
     },
     {
-      "id": "carousel-item",
+      "id": "banner-item",
       "fields": [
         {
           "component": "reference",
           "label": "Desktop Image",
-          "name": "image-desktop",
+          "name": "desktop-image",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Mobile Image",
-          "name": "image-mobile",
+          "name": "mobile-image",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "cta-link",
+          "label": "Button Link",
+          "name": "button-link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Label",
-          "name": "cta-label",
+          "label": "Button Label",
+          "name": "button-label",
           "valueType": "string"
         }
       ]
@@ -78,7 +78,7 @@
     {
       "id": "slickcarousel",
       "components": [
-        "carousel-item"
+        "banner-item"
       ]
     }
   ]
