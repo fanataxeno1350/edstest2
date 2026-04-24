@@ -16,73 +16,7 @@
       "cards",
       "columns",
       "fragment",
-      "---new--blocks-----",
-      "cmp-header",
-      "cmp-search",
-      "slickcarousel",
-      "product-tabs",
-      "cookie-personality",
-      "product-swiper",
-      "social",
-      "footer-new"
-    ]
-  },
-  {
-    "id": "cards",
-    "components": [
-      "recipe-card"
-    ]
-  },
-  {
-    "id": "cmp-header",
-    "components": [
-      "navigation-item",
-      "policy-link-item",
-      "social-media-link-item",
-      "nav-icon-item"
-    ]
-  },
-  {
-    "id": "cmp-search",
-    "components": [
-      "search-category-item"
-    ]
-  },
-  {
-    "id": "cookie-personality",
-    "components": [
-      "stepper-step",
-      "option-item"
-    ]
-  },
-  {
-    "id": "footer-new",
-    "components": [
-      "footer-navigation-item",
-      "footer-social-link-item",
-      "footer-link-item"
-    ]
-  },
-  {
-    "id": "product-swiper"
-  },
-  {
-    "id": "product-tabs",
-    "components": [
-      "tab-item",
-      "product-item"
-    ]
-  },
-  {
-    "id": "slickcarousel",
-    "components": [
-      "slickcarousel-item"
-    ]
-  },
-  {
-    "id": "social",
-    "components": [
-      "social-card-item"
+      "---new--blocks-----"
     ]
   }
 ]
