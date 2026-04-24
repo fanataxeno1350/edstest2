@@ -71,9 +71,6 @@
     ]
   },
   {
-    "id": "scroll-to-top"
-  },
-  {
     "id": "stay-social",
     "components": [
       "social-card"
