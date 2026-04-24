@@ -17,30 +17,15 @@
       }
     },
     {
-      "title": "Twitter-Feed-Embed",
-      "id": "twitter-feed-embed",
+      "title": "Story-Card",
+      "id": "story-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "twitter-feed-embed",
-              "name": "Twitter-Feed-Embed"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "News-Slide",
-      "id": "news-slide",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "news-slide",
-              "name": "News-Slide"
+              "model": "story-card",
+              "name": "Story-Card"
             }
           }
         }
@@ -53,37 +38,20 @@
       "fields": [
         {
           "component": "text",
-          "label": "Section Heading",
-          "name": "heading",
+          "label": "Section Title",
+          "name": "title",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "twitter-feed-embed",
-          "label": "Twitter Feed Embed",
-          "name": "twitterFeed"
-        },
-        {
-          "component": "container",
-          "item": "news-slide",
-          "label": "News Slides",
-          "name": "newsSlides"
+          "item": "story-card",
+          "label": "Stories",
+          "name": "stories"
         }
       ]
     },
     {
-      "id": "twitter-feed-embed",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Elfsight App Widget Id",
-          "name": "widgetId",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "news-slide",
+      "id": "story-card",
       "fields": [
         {
           "component": "reference",
@@ -99,18 +67,18 @@
         },
         {
           "component": "text",
-          "label": "News Text",
-          "name": "text",
+          "label": "Description",
+          "name": "description",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
+          "label": "Read More Link",
+          "name": "link",
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "date-time",
           "label": "Date",
           "name": "date",
           "valueType": "string"
@@ -122,8 +90,7 @@
     {
       "id": "latest-stories",
       "components": [
-        "twitter-feed-embed",
-        "news-slide"
+        "story-card"
       ]
     }
   ]

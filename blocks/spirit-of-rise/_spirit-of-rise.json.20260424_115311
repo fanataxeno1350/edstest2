@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Spirit of Rise",
+      "title": "Spirit-Of-Rise",
       "id": "spirit-of-rise",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,29 @@
             "template": {
               "filter": "spirit-of-rise",
               "model": "spirit-of-rise",
-              "name": "Spirit of Rise"
+              "name": "Spirit-Of-Rise"
             }
           }
         }
       }
     },
     {
-      "title": "Spirit of Rise Card",
+      "title": "Spirit-Of-Rise-Section",
+      "id": "spirit-of-rise-section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "spirit-of-rise-section",
+              "name": "Spirit-Of-Rise-Section"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Spirit-Of-Rise-Card",
       "id": "spirit-of-rise-card",
       "plugins": {
         "xwalk": {
@@ -25,7 +40,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "spirit-of-rise-card",
-              "name": "Spirit of Rise Card"
+              "name": "Spirit-Of-Rise-Card"
             }
           }
         }
@@ -37,14 +52,25 @@
       "id": "spirit-of-rise",
       "fields": [
         {
+          "component": "container",
+          "item": "spirit-of-rise-section",
+          "label": "Sections",
+          "name": "sections"
+        }
+      ]
+    },
+    {
+      "id": "spirit-of-rise-section",
+      "fields": [
+        {
           "component": "text",
-          "label": "Heading",
+          "label": "Section Heading",
           "name": "heading",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Description",
+          "label": "Section Description",
           "name": "description",
           "valueType": "string"
         },
@@ -61,19 +87,19 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
+          "label": "Card Image",
           "name": "image",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Card Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Description",
+          "label": "Card Description",
           "name": "description",
           "valueType": "string"
         }
@@ -84,6 +110,7 @@
     {
       "id": "spirit-of-rise",
       "components": [
+        "spirit-of-rise-section",
         "spirit-of-rise-card"
       ]
     }

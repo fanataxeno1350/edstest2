@@ -1,23 +1,23 @@
 {
   "definitions": [
     {
-      "title": "Spotlight Home Wrap",
-      "id": "spotlight-home-wrap",
+      "title": "Spotlight-Home",
+      "id": "spotlight-home",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "spotlight-home-wrap",
-              "model": "spotlight-home-wrap",
-              "name": "Spotlight Home Wrap"
+              "filter": "spotlight-home",
+              "model": "spotlight-home",
+              "name": "Spotlight-Home"
             }
           }
         }
       }
     },
     {
-      "title": "Spotlight Slide",
+      "title": "Spotlight-Slide",
       "id": "spotlight-slide",
       "plugins": {
         "xwalk": {
@@ -25,22 +25,22 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "spotlight-slide",
-              "name": "Spotlight Slide"
+              "name": "Spotlight-Slide"
             }
           }
         }
       }
     },
     {
-      "title": "Quick Link",
-      "id": "quick-link",
+      "title": "Spotlight-Quick-Link",
+      "id": "spotlight-quick-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "quick-link",
-              "name": "Quick Link"
+              "model": "spotlight-quick-link",
+              "name": "Spotlight-Quick-Link"
             }
           }
         }
@@ -49,17 +49,17 @@
   ],
   "models": [
     {
-      "id": "spotlight-home-wrap",
+      "id": "spotlight-home",
       "fields": [
         {
           "component": "container",
           "item": "spotlight-slide",
-          "label": "Spotlight Slides",
+          "label": "Slides",
           "name": "slides"
         },
         {
           "component": "container",
-          "item": "quick-link",
+          "item": "spotlight-quick-link",
           "label": "Quick Links",
           "name": "quickLinks"
         }
@@ -70,26 +70,26 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Slide Image",
+          "label": "Main Image",
           "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Image Alt Text",
-          "name": "altText",
+          "name": "imageAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Small Heading",
+          "name": "smallHeading",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Heading",
-          "name": "title",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Subtitle",
-          "name": "subtitle",
+          "name": "heading",
           "valueType": "string"
         },
         {
@@ -113,18 +113,18 @@
       ]
     },
     {
-      "id": "quick-link",
+      "id": "spotlight-quick-link",
       "fields": [
         {
-          "component": "text",
-          "label": "Link Label",
-          "name": "label",
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Link URL",
-          "name": "link",
+          "component": "text",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         }
       ]
@@ -132,10 +132,10 @@
   ],
   "filters": [
     {
-      "id": "spotlight-home-wrap",
+      "id": "spotlight-home",
       "components": [
         "spotlight-slide",
-        "quick-link"
+        "spotlight-quick-link"
       ]
     }
   ]

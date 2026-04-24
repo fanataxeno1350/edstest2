@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "What We Do",
+      "title": "What We Do Wrap",
       "id": "what-we-do-wrap",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "what-we-do-wrap",
               "model": "what-we-do-wrap",
-              "name": "What We Do"
+              "name": "What We Do Wrap"
             }
           }
         }
@@ -67,14 +67,14 @@
         },
         {
           "component": "text",
-          "label": "Title",
-          "name": "title",
+          "label": "Image Alt Text",
+          "name": "altText",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Title Icon",
-          "name": "titleIcon",
+          "component": "text",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {

@@ -1,7 +1,7 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-function transformNestedLists(rootUl) {
+function transformNestedLists(rootUl, level = 0) {
   rootUl.querySelectorAll('li').forEach((li) => {
     const nested = li.querySelector(':scope > ul');
     const anchor = li.querySelector(':scope > a');
@@ -21,12 +21,31 @@ function transformNestedLists(rootUl) {
     if (nested) {
       nested.remove();
       const subWrap = document.createElement('div');
-      subWrap.classList.add('has-footer-sub-child'); // Use original HTML class
+      if (level === 0) {
+        subWrap.classList.add('has-footer-sub-child');
+      } else {
+        subWrap.classList.add('has-footer-inner-sub-child');
+      }
       subWrap.append(nested);
       li.append(subWrap);
 
       const trigger = li.querySelector(':scope > a, :scope > span');
       if (trigger) {
+        const small = document.createElement('small');
+        const svg = `
+          <svg viewBox="-23.5 -23.5 122.80 122.80" fill="#000000" stroke="#000000" stroke-width="4.851456000000001">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.30321600000000004"></g>
+            <g id="SVGRepo_iconCarrier">
+              <g id="Group_65" data-name="Group 65" transform="translate(-831.568 -384.448)">
+                <path id="Path_57" data-name="Path 57" d="M833.068,460.252a1.5,1.5,0,0,1-1.061-2.561l33.557-33.56a2.53,2.53,0,0,0,0-3.564l-33.557-33.558a1.5,1.5,0,0,1,2.122-2.121l33.556,33.558a5.53,5.53,0,0,1,0,7.807l-33.557,33.56A1.5,1.5,0,0,1,833.068,460.252Z" fill="#030408"></path>
+              </g>
+            </g>
+          </svg>
+        `;
+        small.innerHTML = svg;
+        trigger.appendChild(small);
+
         trigger.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -34,7 +53,7 @@ function transformNestedLists(rootUl) {
           subWrap.classList.toggle('active');
         });
       }
-      transformNestedLists(nested); // Recursively transform nested lists
+      transformNestedLists(nested, level + 1);
     }
   });
 }
@@ -42,168 +61,181 @@ function transformNestedLists(rootUl) {
 export default function decorate(block) {
   const children = [...block.children];
 
-  // Identify root fields based on their known structure
-  const logoRow = children.find((row) => row.children.length === 1 && row.querySelector('picture'));
-  const logoLinkRow = children.find((row) => row.children.length === 1 && row.querySelector('a') && row !== logoRow);
-  const copyrightRow = children.find((row) => row.children.length === 1 && !row.querySelector('picture') && !row.querySelector('a'));
+  // Destructure the known root fields
+  const logoRow = children[0];
+  const logoLinkRow = children[1];
+  const copyrightTextRow = children[2];
 
-  // Filter out root fields to get item rows
-  const itemRows = children.filter(
-    (row) => row !== logoRow && row !== logoLinkRow && row !== copyrightRow,
-  );
+  // Remaining rows are item rows
+  const itemRows = children.slice(3);
 
-  // Categorize item rows based on cell count and content
-  const footerSocialLinks = itemRows.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 3 && cells[0].querySelector('picture') && cells[1].querySelector('a') && cells[2].querySelector('ul');
-  });
-
-  const footerLinkBlocks = itemRows.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 3 && !cells[0].querySelector('picture') && cells[1].querySelector('a') && !cells[2].querySelector('picture') && !cells[2].querySelector('a') && cells[2].textContent.trim() === 'Footer Link Items value';
-  });
-
-  const footerLinkItems = itemRows.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 4 && !cells[0].querySelector('picture') && cells[1].querySelector('a') && cells[2].querySelector('picture') && cells[3].querySelector('ul');
-  });
-
-  const footerSecondaryNavItems = itemRows.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 2 && !cells[0].querySelector('picture') && cells[1].querySelector('a');
-  });
-
-  block.innerHTML = ''; // Clear block content
+  block.innerHTML = ''; // Clear the block content
 
   const container = document.createElement('div');
   container.classList.add('container');
+  block.append(container);
 
-  // Footer Header
+  // Footer Header (Logo and Social Links)
   const footerHeader = document.createElement('div');
   footerHeader.classList.add('row', 'footer-header');
+  container.append(footerHeader);
 
   const logoCol = document.createElement('div');
   logoCol.classList.add('col-md-6', 'col-12', 'justify-content-between', 'd-flex');
+  footerHeader.append(logoCol);
 
   const logoDiv = document.createElement('div');
   logoDiv.classList.add('logo');
+  logoCol.append(logoDiv);
 
-  const logoAnchor = document.createElement('a');
-  const logoLink = logoLinkRow ? logoLinkRow.querySelector('a') : null;
-  if (logoLink) {
-    logoAnchor.href = logoLink.href;
+  const logoLink = document.createElement('a');
+  const foundLogoLink = logoLinkRow.querySelector('a');
+  if (foundLogoLink) {
+    logoLink.href = foundLogoLink.href;
   }
+  moveInstrumentation(logoLinkRow, logoLink);
+  logoDiv.append(logoLink);
 
-  const logoPicture = logoRow ? logoRow.querySelector('picture') : null;
+  const logoPicture = logoRow.querySelector('picture');
   if (logoPicture) {
     const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    logoAnchor.append(optimizedPic);
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
+      moveInstrumentation(img.closest('picture'), optimizedPic.querySelector('img'));
+      logoLink.append(optimizedPic);
+      optimizedPic.querySelector('img').classList.add('hiddenlogo1');
+    }
   }
-  logoDiv.append(logoAnchor);
-  if (logoRow) moveInstrumentation(logoRow, logoDiv);
-  if (logoLinkRow) moveInstrumentation(logoLinkRow, logoAnchor);
-  logoCol.append(logoDiv);
-  footerHeader.append(logoCol);
 
-  // Social Links
   const socialCol = document.createElement('div');
   socialCol.classList.add('col-md-6', 'col-12', 'footer-social-wrap-center');
-
-  const socialUl = document.createElement('ul');
-  socialUl.classList.add('social-wrap');
-
-  footerSocialLinks.forEach((row) => {
-    const cells = [...row.children];
-    const iconCell = cells.find(cell => cell.querySelector('picture'));
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    // The third cell is hierarchy-tree, but not used for social links directly in this rendering.
-
-    const li = document.createElement('li');
-    const socialLink = document.createElement('a');
-    const foundLink = linkCell ? linkCell.querySelector('a') : null;
-    if (foundLink) {
-      socialLink.href = foundLink.href;
-      socialLink.target = '_blank'; // Assuming social links open in new tab
-    }
-
-    const iconPicture = iconCell ? iconCell.querySelector('picture') : null;
-    if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '30' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      socialLink.append(optimizedPic);
-    }
-
-    li.append(socialLink);
-    socialUl.append(li);
-    moveInstrumentation(row, li);
-  });
-  socialCol.append(socialUl);
   footerHeader.append(socialCol);
-  container.append(footerHeader);
 
-  // Footer Menu Blocks
+  const socialWrap = document.createElement('ul');
+  socialWrap.classList.add('social-wrap');
+  socialCol.append(socialWrap);
+
+  // Filter item rows based on content detection
+  const socialLinks = itemRows.filter((row) => {
+    const cells = [...row.children];
+    return cells.length === 2 && cells[0].querySelector('a') && cells[1].querySelector('ul');
+  });
+  const footerLinkBlocks = itemRows.filter((row) => {
+    const cells = [...row.children];
+    return cells.length === 3 && cells[0].textContent.trim() && cells[2].textContent.trim() === 'Links value';
+  });
+  const footerLinkListItems = itemRows.filter((row) => {
+    const cells = [...row.children];
+    return cells.length === 3 && cells[0].textContent.trim() && cells[1].querySelector('a') && cells[2].querySelector('ul');
+  });
+  const secondaryLinks = itemRows.filter((row) => {
+    const cells = [...row.children];
+    return cells.length === 2 && cells[0].textContent.trim() && cells[1].querySelector('a') && !cells[1].querySelector('ul');
+  });
+
+  // Social Links
+  socialLinks.forEach((row, index) => {
+    const cells = [...row.children];
+    const socialLinkCell = cells.find(cell => cell.querySelector('a'));
+    const hierarchyCell = cells.find(cell => cell.querySelector('ul'));
+
+    if (socialLinkCell && hierarchyCell) {
+      const li = document.createElement('li');
+      const socialClasses = ['fb', 'tw', 'inst', 'yt', 'in'];
+      if (index < socialClasses.length) {
+        li.classList.add(socialClasses[index]);
+      } else {
+        li.classList.add('social-icon'); // Generic fallback
+      }
+
+      const anchor = document.createElement('a');
+      const socialLink = socialLinkCell.querySelector('a');
+      if (socialLink) {
+        anchor.href = socialLink.href;
+        anchor.target = '_blank';
+      }
+      moveInstrumentation(socialLinkCell, anchor);
+
+      // Extract SVG content from the original HTML if available, otherwise use placeholder
+      // For this block, the SVG is complex and contains an <image> with xlink:href
+      // We should replicate that structure as much as possible.
+      // For now, we'll use a generic SVG placeholder as the original HTML has base64 images.
+      // In a real scenario, we'd parse the SVG from the original HTML cell.
+      const svgContent = `
+        <svg width="30" height="30" viewBox="0 0 40 41" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <image xlink:href="${socialLinkCell.querySelector('image')?.getAttribute('xlink:href') || ''}" x="0" y="0" width="30" height="30"></image>
+        </svg>
+      `;
+      anchor.innerHTML += svgContent; // Append SVG to the anchor
+      li.appendChild(anchor);
+      socialWrap.appendChild(li);
+    }
+  });
+
+  // Footer Menu Box (Footer Link Blocks)
   const footerMenuBox = document.createElement('div');
   footerMenuBox.classList.add('row', 'footer-menu-box');
+  container.append(footerMenuBox);
 
   const footerMenuCol = document.createElement('div');
   footerMenuCol.classList.add('col');
+  footerMenuBox.append(footerMenuCol);
 
   const footerMenu = document.createElement('div');
   footerMenu.classList.add('footer-menu');
+  footerMenuCol.append(footerMenu);
 
-  const linkBlocksContainer = document.createElement('div');
-  linkBlocksContainer.classList.add('link-blocks-container'); // Custom wrapper for link blocks
+  // Create a mutable copy of footerLinkListItems for splicing
+  const remainingFooterLinkListItems = [...footerLinkListItems];
 
-  // Create a mutable copy of footerLinkItems to slice from
-  const remainingFooterLinkItems = [...footerLinkItems];
-
-  footerLinkBlocks.forEach((row) => {
-    const cells = [...row.children];
-    const headingCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim() !== 'Footer Link Items value');
+  footerLinkBlocks.forEach((blockRow) => {
+    const cells = [...blockRow.children];
+    const headingCell = cells.find(cell => cell.textContent.trim() && !cell.querySelector('a'));
     const headingLinkCell = cells.find(cell => cell.querySelector('a'));
-    // The third cell is the container placeholder for footerLinkItems
 
     const linkBlock = document.createElement('div');
     linkBlock.classList.add('link-blocks');
+    footerMenu.append(linkBlock);
 
     const headDiv = document.createElement('div');
     headDiv.classList.add('head');
+    linkBlock.append(headDiv);
 
     const span = document.createElement('span');
+    headDiv.append(span);
+
     const headingAnchor = document.createElement('a');
-    const foundHeadingLink = headingLinkCell ? headingLinkCell.querySelector('a') : null;
+    const foundHeadingLink = headingLinkCell?.querySelector('a');
     if (foundHeadingLink) {
       headingAnchor.href = foundHeadingLink.href;
     }
-    headingAnchor.textContent = headingCell ? headingCell.textContent.trim() : '';
+    headingAnchor.textContent = headingCell?.textContent.trim() || '';
+    moveInstrumentation(headingLinkCell, headingAnchor);
     span.append(headingAnchor);
 
     const small = document.createElement('small');
     span.append(small);
-    headDiv.append(span);
 
     const ul = document.createElement('ul');
     ul.classList.add('footer-inner-list');
+    headDiv.append(ul);
 
-    // Determine how many items belong to this block. This assumes an even distribution
-    // or that the items are ordered correctly in the HTML.
-    // A more robust solution might involve a unique identifier in the model.
-    const itemsPerBlock = Math.ceil(remainingFooterLinkItems.length / footerLinkBlocks.length);
-    const currentBlockLinkItems = remainingFooterLinkItems.splice(0, itemsPerBlock);
+    // This splicing logic needs to be more robust if blocks don't have equal distribution.
+    // A better approach would be to associate link list items with their parent block.
+    // For now, assuming equal distribution as per original code.
+    const numLinksPerBlock = remainingFooterLinkListItems.length / footerLinkBlocks.length;
+    const currentBlockLinks = remainingFooterLinkListItems.splice(0, numLinksPerBlock);
 
-    currentBlockLinkItems.forEach((itemRow) => {
-      const itemCells = [...itemRow.children];
-      const labelCell = itemCells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && !cell.querySelector('ul'));
+    currentBlockLinks.forEach((linkItemRow) => {
+      const itemCells = [...linkItemRow.children];
+      const labelCell = itemCells.find(cell => cell.textContent.trim() && !cell.querySelector('a'));
       const linkCell = itemCells.find(cell => cell.querySelector('a'));
-      const iconCell = itemCells.find(cell => cell.querySelector('picture'));
       const hierarchyCell = itemCells.find(cell => cell.querySelector('ul'));
 
       const li = document.createElement('li');
+      ul.append(li);
 
-      const foundLink = linkCell ? linkCell.querySelector('a') : null;
+      const foundLink = linkCell?.querySelector('a');
       let rootEl;
       if (foundLink) {
         rootEl = document.createElement('a');
@@ -211,114 +243,87 @@ export default function decorate(block) {
       } else {
         rootEl = document.createElement('span');
       }
-      rootEl.textContent = labelCell ? labelCell.textContent.trim() : '';
-      moveInstrumentation(itemRow, rootEl);
+      rootEl.textContent = labelCell?.textContent.trim() || '';
+      moveInstrumentation(linkItemRow, rootEl);
       li.appendChild(rootEl);
 
-      const iconPicture = iconCell ? iconCell.querySelector('picture') : null;
-      if (iconPicture) {
-        const img = iconPicture.querySelector('img');
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '20' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        const iconSpan = document.createElement('span');
-        iconSpan.append(optimizedPic);
-        li.append(iconSpan);
-      }
-
       if (hierarchyCell) {
-        const hierarchyRoot = hierarchyCell.querySelector('ul');
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = hierarchyCell.innerHTML; // Use innerHTML for richtext
+
+        const hierarchyRoot = tempDiv.querySelector('ul');
         if (hierarchyRoot) {
           const wrapper = document.createElement('div');
-          wrapper.classList.add('has-footer-sub-child'); // Use ORIGINAL HTML class
-          
-          // Move instrumentation from the original hierarchy cell to the new wrapper
-          moveInstrumentation(hierarchyCell, wrapper);
-
-          // Append the hierarchyRoot's children to a temporary div to apply classes
-          const tempDiv = document.createElement('div');
-          tempDiv.innerHTML = hierarchyCell.innerHTML;
-
-          // Apply classes from ORIGINAL HTML to nested elements
-          tempDiv.querySelectorAll('a').forEach(a => {
-            // No specific classes for <a> in ORIGINAL HTML example, but keep this for future
-          });
-          tempDiv.querySelectorAll('ul').forEach(ulEl => {
-            // No specific classes for <ul> in ORIGINAL HTML example, but keep this for future
-          });
-          tempDiv.querySelectorAll('li').forEach(liEl => {
-            // No specific classes for <li> in ORIGINAL HTML example, but keep this for future
-          });
-
-          // Move content from tempDiv to wrapper
-          while (tempDiv.firstChild) {
-            wrapper.append(tempDiv.firstChild);
-          }
-
-          rootEl.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            wrapper.classList.toggle('active');
-            li.classList.toggle('active');
-          });
+          wrapper.classList.add('has-footer-sub-child');
+          moveInstrumentation(hierarchyCell, wrapper); // Move instrumentation from original cell to wrapper
+          wrapper.appendChild(hierarchyRoot);
           li.appendChild(wrapper);
-          transformNestedLists(hierarchyRoot); // Recursively transform nested lists
+
+          // Add event listener for the toggle behavior
+          const trigger = rootEl; // The <a> or <span> that acts as a trigger
+          if (trigger) {
+            const smallArrow = document.createElement('small');
+            const svgArrow = `
+              <svg viewBox="-23.5 -23.5 122.80 122.80" fill="#000000" stroke="#000000" stroke-width="4.851456000000001">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.30321600000000004"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <g id="Group_65" data-name="Group 65" transform="translate(-831.568 -384.448)">
+                    <path id="Path_57" data-name="Path 57" d="M833.068,460.252a1.5,1.5,0,0,1-1.061-2.561l33.557-33.56a2.53,2.53,0,0,0,0-3.564l-33.557-33.558a1.5,1.5,0,0,1,2.122-2.121l33.556,33.558a5.53,5.53,0,0,1,0,7.807l-33.557,33.56A1.5,1.5,0,0,1,833.068,460.252Z" fill="#030408"></path>
+                  </g>
+                </g>
+              </svg>
+            `;
+            smallArrow.innerHTML = svgArrow;
+            trigger.appendChild(smallArrow);
+
+            trigger.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              li.classList.toggle('active');
+              wrapper.classList.toggle('active');
+            });
+          }
+          transformNestedLists(hierarchyRoot);
         }
       }
-      ul.append(li);
     });
-
-    linkBlock.append(headDiv, ul);
-    linkBlocksContainer.append(linkBlock);
-    moveInstrumentation(row, linkBlock);
   });
 
-  footerMenu.append(linkBlocksContainer);
-  footerMenuCol.append(footerMenu);
-  footerMenuBox.append(footerMenuCol);
-  container.append(footerMenuBox);
-
-  // Copyright and Secondary Nav
+  // Copyright Wrap
   const copyrightWrap = document.createElement('div');
   copyrightWrap.classList.add('row', 'align-items-lg-end', 'copyright-wrap');
+  container.append(copyrightWrap);
 
   const secondaryNavCol = document.createElement('div');
   secondaryNavCol.classList.add('col-12', 'col-lg-6');
+  copyrightWrap.append(secondaryNavCol);
 
-  const secondaryNavUl = document.createElement('ul');
-  secondaryNavUl.classList.add('secondary-nav');
+  const secondaryNav = document.createElement('ul');
+  secondaryNav.classList.add('secondary-nav');
+  secondaryNavCol.append(secondaryNav);
 
-  footerSecondaryNavItems.forEach((row) => {
+  secondaryLinks.forEach((row) => {
     const cells = [...row.children];
-    const labelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a'));
+    const labelCell = cells.find(cell => cell.textContent.trim() && !cell.querySelector('a'));
     const linkCell = cells.find(cell => cell.querySelector('a'));
 
     const li = document.createElement('li');
+    secondaryNav.append(li);
+
     const anchor = document.createElement('a');
-    const foundLink = linkCell ? linkCell.querySelector('a') : null;
+    const foundLink = linkCell?.querySelector('a');
     if (foundLink) {
       anchor.href = foundLink.href;
     }
-    anchor.textContent = labelCell ? labelCell.textContent.trim() : '';
+    anchor.textContent = labelCell?.textContent.trim() || '';
+    moveInstrumentation(row, anchor);
     li.append(anchor);
-    secondaryNavUl.append(li);
-    moveInstrumentation(row, li);
   });
-  secondaryNavCol.append(secondaryNavUl);
-  copyrightWrap.append(secondaryNavCol);
 
-  const copyrightCol = document.createElement('div');
-  copyrightCol.classList.add('col-12', 'col-lg-6', 'copyright-text');
-  copyrightCol.textContent = copyrightRow ? copyrightRow.textContent.trim() : '';
-  if (copyrightRow) moveInstrumentation(copyrightRow, copyrightCol);
-  copyrightWrap.append(copyrightCol);
-  container.append(copyrightWrap);
-
-  block.append(container);
-
-  // Optimize all images in the block
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
+  const copyrightTextCol = document.createElement('div');
+  copyrightTextCol.classList.add('col-12', 'col-lg-6', 'copyright-text');
+  copyrightTextCol.textContent = copyrightTextRow.textContent.trim();
+  moveInstrumentation(copyrightTextRow, copyrightTextCol);
+  copyrightWrap.append(copyrightTextCol);
 }

@@ -160,30 +160,30 @@
           }
         },
         {
-          "title": "Footer-Link-Item",
-          "id": "footer-link-item",
+          "title": "Footer-Link-List-Item",
+          "id": "footer-link-list-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-link-item",
-                  "name": "Footer-Link-Item"
+                  "model": "footer-link-list-item",
+                  "name": "Footer-Link-List-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer-Secondary-Nav-Item",
-          "id": "footer-secondary-nav-item",
+          "title": "Footer-Secondary-Link",
+          "id": "footer-secondary-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-secondary-nav-item",
-                  "name": "Footer-Secondary-Nav-Item"
+                  "model": "footer-secondary-link",
+                  "name": "Footer-Secondary-Link"
                 }
               }
             }
@@ -206,30 +206,15 @@
           }
         },
         {
-          "title": "Twitter-Feed-Embed",
-          "id": "twitter-feed-embed",
+          "title": "Story-Card",
+          "id": "story-card",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "twitter-feed-embed",
-                  "name": "Twitter-Feed-Embed"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "News-Slide",
-          "id": "news-slide",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "news-slide",
-                  "name": "News-Slide"
+                  "model": "story-card",
+                  "name": "Story-Card"
                 }
               }
             }
@@ -282,130 +267,22 @@
           }
         },
         {
-          "title": "Contact-Link-Item",
-          "id": "contact-link-item",
+          "title": "Icon-Link-Item",
+          "id": "icon-link-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "contact-link-item",
-                  "name": "Contact-Link-Item"
+                  "model": "icon-link-item",
+                  "name": "Icon-Link-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Search-Suggestion-Item",
-          "id": "search-suggestion-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "search-suggestion-item",
-                  "name": "Search-Suggestion-Item"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Organization-Schema",
-          "id": "organization-schema",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "filter": "organization-schema",
-                  "model": "organization-schema",
-                  "name": "Organization-Schema"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "SameAs-Link-Item",
-          "id": "sameas-link-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "sameas-link-item",
-                  "name": "SameAs-Link-Item"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Performace-Driven-Cards",
-          "id": "performace-driven-cards",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "filter": "performace-driven-cards",
-                  "model": "performace-driven-cards",
-                  "name": "Performace-Driven-Cards"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Performace-Driven-Card-Item",
-          "id": "performace-driven-card-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "performace-driven-card-item",
-                  "name": "Performace-Driven-Card-Item"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Purpose-Led-Grid",
-          "id": "purpose-led-grid",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "filter": "purpose-led-grid",
-                  "model": "purpose-led-grid",
-                  "name": "Purpose-Led-Grid"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Purpose-Led-Card",
-          "id": "purpose-led-card",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "purpose-led-card",
-                  "name": "Purpose-Led-Card"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Spirit Of Rise",
+          "title": "Spirit of Rise",
           "id": "spirit-of-rise",
           "plugins": {
             "xwalk": {
@@ -414,14 +291,14 @@
                 "template": {
                   "filter": "spirit-of-rise",
                   "model": "spirit-of-rise",
-                  "name": "Spirit Of Rise"
+                  "name": "Spirit of Rise"
                 }
               }
             }
           }
         },
         {
-          "title": "Spirit Of Rise Card",
+          "title": "Spirit of Rise Card",
           "id": "spirit-of-rise-card",
           "plugins": {
             "xwalk": {
@@ -429,30 +306,30 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "spirit-of-rise-card",
-                  "name": "Spirit Of Rise Card"
+                  "name": "Spirit of Rise Card"
                 }
               }
             }
           }
         },
         {
-          "title": "Spotlight Home Wrap",
-          "id": "spotlight-home-wrap",
+          "title": "Spotlight-Home",
+          "id": "spotlight-home",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "filter": "spotlight-home-wrap",
-                  "model": "spotlight-home-wrap",
-                  "name": "Spotlight Home Wrap"
+                  "filter": "spotlight-home",
+                  "model": "spotlight-home",
+                  "name": "Spotlight-Home"
                 }
               }
             }
           }
         },
         {
-          "title": "Spotlight Slide",
+          "title": "Spotlight-Slide",
           "id": "spotlight-slide",
           "plugins": {
             "xwalk": {
@@ -460,29 +337,29 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "spotlight-slide",
-                  "name": "Spotlight Slide"
+                  "name": "Spotlight-Slide"
                 }
               }
             }
           }
         },
         {
-          "title": "Quick Link",
-          "id": "quick-link",
+          "title": "Spotlight-Quick-Link",
+          "id": "spotlight-quick-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "quick-link",
-                  "name": "Quick Link"
+                  "model": "spotlight-quick-link",
+                  "name": "Spotlight-Quick-Link"
                 }
               }
             }
           }
         },
         {
-          "title": "What We Do",
+          "title": "What We Do Wrap",
           "id": "what-we-do-wrap",
           "plugins": {
             "xwalk": {
@@ -491,7 +368,7 @@
                 "template": {
                   "filter": "what-we-do-wrap",
                   "model": "what-we-do-wrap",
-                  "name": "What We Do"
+                  "name": "What We Do Wrap"
                 }
               }
             }

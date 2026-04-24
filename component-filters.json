@@ -18,15 +18,12 @@
       "fragment",
       "---new--blocks-----",
       "main-header",
-      "spotlight-home-wrap",
+      "spotlight-home",
       "what-we-do-wrap",
-      "purpose-led-grid",
-      "performace-driven-cards",
       "spirit-of-rise",
       "latest-stories",
       "work-with-us",
       "faqs-section",
-      "organization-schema",
       "footer-main"
     ]
   },
@@ -41,42 +38,22 @@
     "components": [
       "footer-social-link",
       "footer-link-block",
-      "footer-link-item",
-      "footer-secondary-nav-item"
+      "footer-link-list-item",
+      "footer-secondary-link"
     ]
   },
   {
     "id": "latest-stories",
     "components": [
-      "twitter-feed-embed",
-      "news-slide"
+      "story-card"
     ]
   },
   {
     "id": "main-header",
     "components": [
       "navigation-item",
-      "press-release-item",
-      "contact-link-item",
-      "search-suggestion-item"
-    ]
-  },
-  {
-    "id": "organization-schema",
-    "components": [
-      "sameas-link-item"
-    ]
-  },
-  {
-    "id": "performace-driven-cards",
-    "components": [
-      "performace-driven-card-item"
-    ]
-  },
-  {
-    "id": "purpose-led-grid",
-    "components": [
-      "purpose-led-card"
+      "icon-link-item",
+      "press-release-item"
     ]
   },
   {
@@ -86,10 +63,10 @@
     ]
   },
   {
-    "id": "spotlight-home-wrap",
+    "id": "spotlight-home",
     "components": [
       "spotlight-slide",
-      "quick-link"
+      "spotlight-quick-link"
     ]
   },
   {
