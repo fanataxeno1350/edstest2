@@ -16,6 +16,9 @@ export default function decorate(block) {
 
   [...block.children].forEach((row, index) => {
     // CHECK 0: No row.children[n] violations here, destructuring is used.
+    if(index === 0) {
+      continue; // Skip header row
+    }
     const [imageDesktopCell, imageMobileCell, ctaLinkCell, ctaLabelCell] = [...row.children];
 
     const carouselItem = document.createElement('div');
