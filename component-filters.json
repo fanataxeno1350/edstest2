@@ -39,8 +39,7 @@
     "components": [
       "navigation-item",
       "policy-link-item",
-      "social-media-link-item",
-      "nav-icon-item"
+      "social-link-item"
     ]
   },
   {

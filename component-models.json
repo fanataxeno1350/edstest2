@@ -246,15 +246,9 @@
       },
       {
         "component": "container",
-        "item": "social-media-link-item",
+        "item": "social-link-item",
         "label": "Social Media Links",
-        "name": "social-media-links"
-      },
-      {
-        "component": "container",
-        "item": "nav-icon-item",
-        "label": "Nav Icons",
-        "name": "nav-icons"
+        "name": "social-links"
       }
     ]
   },
@@ -299,41 +293,18 @@
     ]
   },
   {
-    "id": "social-media-link-item",
+    "id": "social-link-item",
     "fields": [
       {
         "component": "text",
-        "label": "Social Media Type",
-        "name": "social-type",
+        "label": "Platform",
+        "name": "platform",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Social Media Link",
+        "label": "Social Link",
         "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "nav-icon-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Icon Type",
-        "name": "icon-type",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Icon Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Icon Label",
-        "name": "label",
         "valueType": "string"
       }
     ]

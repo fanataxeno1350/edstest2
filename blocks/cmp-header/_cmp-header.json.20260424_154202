@@ -47,15 +47,30 @@
       }
     },
     {
-      "title": "Social-Link-Item",
-      "id": "social-link-item",
+      "title": "Social-Media-Link-Item",
+      "id": "social-media-link-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "social-link-item",
-              "name": "Social-Link-Item"
+              "model": "social-media-link-item",
+              "name": "Social-Media-Link-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Nav-Icon-Item",
+      "id": "nav-icon-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "nav-icon-item",
+              "name": "Nav-Icon-Item"
             }
           }
         }
@@ -92,9 +107,15 @@
         },
         {
           "component": "container",
-          "item": "social-link-item",
+          "item": "social-media-link-item",
           "label": "Social Media Links",
-          "name": "social-links"
+          "name": "social-media-links"
+        },
+        {
+          "component": "container",
+          "item": "nav-icon-item",
+          "label": "Nav Icons",
+          "name": "nav-icons"
         }
       ]
     },
@@ -139,18 +160,41 @@
       ]
     },
     {
-      "id": "social-link-item",
+      "id": "social-media-link-item",
       "fields": [
         {
           "component": "text",
-          "label": "Platform",
-          "name": "platform",
+          "label": "Social Media Type",
+          "name": "social-type",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Social Link",
+          "label": "Social Media Link",
           "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "nav-icon-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Icon Type",
+          "name": "icon-type",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Icon Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Icon Label",
+          "name": "label",
           "valueType": "string"
         }
       ]
@@ -162,7 +206,8 @@
       "components": [
         "navigation-item",
         "policy-link-item",
-        "social-link-item"
+        "social-media-link-item",
+        "nav-icon-item"
       ]
     }
   ]
