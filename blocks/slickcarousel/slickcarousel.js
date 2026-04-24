@@ -11,30 +11,27 @@ export default function decorate(block) {
   const slickTrack = document.createElement('div');
   slickTrack.classList.add('slick-track');
 
-  const items = [...block.children];
-  items.forEach((row, index) => {
+  [...block.children].forEach((row, index) => {
     const [desktopImageCell, mobileImageCell, buttonLabelCell, buttonLinkCell] = [...row.children];
 
     const carouselItem = document.createElement('div');
     carouselItem.classList.add('cmp-carousel__item', 'slick-slide');
     if (index === 0) {
       carouselItem.classList.add('cmp-carousel__item--active', 'slick-current', 'slick-active');
-      carouselItem.setAttribute('aria-hidden', 'false');
-      carouselItem.setAttribute('tabindex', '0');
-    } else {
-      carouselItem.setAttribute('aria-hidden', 'true');
-      carouselItem.setAttribute('tabindex', '-1');
     }
     carouselItem.setAttribute('role', 'tabpanel');
-    carouselItem.setAttribute('aria-roledescription', 'slide');
-    carouselItem.setAttribute('aria-label', `Slide ${index + 1} of ${items.length}`);
+    carouselItem.setAttribute('aria-label', `Slide ${index + 1} of ${block.children.length}`);
     carouselItem.setAttribute('data-slick-index', index);
+    carouselItem.setAttribute('aria-hidden', index !== 0);
+    carouselItem.setAttribute('tabindex', index === 0 ? '0' : '-1');
 
     const bannerDiv = document.createElement('div');
     bannerDiv.classList.add('banner', 'cmp-banner--cta-left-aligned');
 
     const cmpBannerDiv = document.createElement('div');
     cmpBannerDiv.classList.add('cmp-banner');
+    cmpBannerDiv.setAttribute('data-component', 'banner');
+    cmpBannerDiv.setAttribute('data-initialized', 'true');
 
     const cmpBannerContent = document.createElement('div');
     cmpBannerContent.classList.add('cmp-banner__content');
@@ -42,65 +39,72 @@ export default function decorate(block) {
     const picture = document.createElement('picture');
     picture.classList.add('w-100', 'd-block');
 
-    const desktopImg = desktopImageCell.querySelector('img');
-    const mobileImg = mobileImageCell.querySelector('img');
-
-    if (mobileImg) {
+    const mobileImage = mobileImageCell.querySelector('img');
+    if (mobileImage) {
       const sourceMobile = document.createElement('source');
       sourceMobile.setAttribute('media', '(max-width: 600px)');
-      sourceMobile.setAttribute('srcset', mobileImg.src);
-      picture.appendChild(sourceMobile);
+      sourceMobile.setAttribute('srcset', mobileImage.src);
+      picture.append(sourceMobile);
     }
 
-    if (desktopImg) {
-      const img = createOptimizedPicture(desktopImg.src, desktopImg.alt, index === 0, [{ width: '1366' }]);
-      const imgElement = img.querySelector('img');
-      imgElement.classList.add('cmp-banner__image', 'w-100', 'd-block');
-      imgElement.setAttribute('data-desktop-src', desktopImg.src);
-      if (mobileImg) {
-        imgElement.setAttribute('data-mobile-src', mobileImg.src);
+    const desktopImage = desktopImageCell.querySelector('img');
+    if (desktopImage) {
+      const img = createOptimizedPicture(desktopImage.src, desktopImage.alt, false, [{ width: '1366' }]);
+      img.querySelector('img').classList.add('cmp-banner__image', 'w-100', 'd-block');
+      img.querySelector('img').setAttribute('data-desktop-src', desktopImage.src);
+      if (mobileImage) {
+        img.querySelector('img').setAttribute('data-mobile-src', mobileImage.src);
       }
-      if (index === 0) {
-        imgElement.setAttribute('fetchpriority', 'high');
-      }
-      moveInstrumentation(desktopImg, imgElement);
-      picture.appendChild(img);
+      img.querySelector('img').setAttribute('fetchpriority', 'high');
+      moveInstrumentation(desktopImage, img.querySelector('img'));
+      picture.append(img.querySelector('img'));
     }
 
-    cmpBannerContent.appendChild(picture);
+    cmpBannerContent.append(picture);
 
-    const buttonContainer = document.createElement('div');
-    buttonContainer.classList.add('button', 'cmp-button--primary-anchor'); // Removed 'null' class
+    const buttonDiv = document.createElement('div');
+    buttonDiv.classList.add('button', 'cmp-button--primary-anchor'); // Removed 'null' class
 
-    const buttonLink = buttonLinkCell.querySelector('a');
-    if (buttonLink) {
-      const anchor = document.createElement('a');
-      anchor.classList.add('cmp-button');
-      anchor.setAttribute('data-request', 'true');
-      anchor.setAttribute('data-show-pop', 'false');
-      anchor.href = buttonLink.href;
-      anchor.setAttribute('tabindex', '0');
+    const buttonLink = document.createElement('a');
+    buttonLink.classList.add('cmp-button');
+    buttonLink.setAttribute('data-request', 'true');
+    buttonLink.setAttribute('data-show-pop', 'false');
+    buttonLink.setAttribute('tabindex', '0');
 
-      const span = document.createElement('span');
-      span.classList.add('cmp-button__text');
-      span.textContent = buttonLabelCell.textContent.trim();
-      anchor.appendChild(span);
-      moveInstrumentation(buttonLinkCell, anchor);
-      buttonContainer.appendChild(anchor);
+    const foundLink = buttonLinkCell.querySelector('a');
+    if (foundLink) {
+      buttonLink.href = foundLink.href;
     }
 
-    cmpBannerContent.appendChild(buttonContainer);
-    cmpBannerDiv.appendChild(cmpBannerContent);
-    bannerDiv.appendChild(cmpBannerDiv);
-    carouselItem.appendChild(bannerDiv);
-    slickTrack.appendChild(carouselItem);
+    const buttonSpan = document.createElement('span');
+    buttonSpan.classList.add('cmp-button__text');
+    buttonSpan.textContent = buttonLabelCell.textContent.trim();
+    buttonLink.append(buttonSpan);
+
+    moveInstrumentation(buttonLinkCell, buttonLink);
+    buttonDiv.append(buttonLink);
+    cmpBannerContent.append(buttonDiv);
+
+    cmpBannerDiv.append(cmpBannerContent);
+    bannerDiv.append(cmpBannerDiv);
     moveInstrumentation(row, carouselItem);
+    carouselItem.append(bannerDiv);
+    slickTrack.append(carouselItem);
   });
 
-  slickList.appendChild(slickTrack);
-  carouselContainer.appendChild(slickList);
-
+  slickList.append(slickTrack);
+  carouselContainer.append(slickList);
   block.innerHTML = '';
-  block.classList.add('cmp-carousel'); // Add the base class for the block itself
-  block.appendChild(carouselContainer);
+  block.classList.add('cmp-carousel');
+  block.setAttribute('data-placeholder-text', 'false');
+  block.setAttribute('data-cmp-is', 'carousel');
+  block.setAttribute('data-show-infinite-scroll', 'true');
+  block.setAttribute('data-show-arrows', 'false');
+  block.setAttribute('data-show-dots', 'true');
+  block.setAttribute('data-item-count-per-slide', '1');
+  block.setAttribute('data-auto-play-is-enabled', 'false');
+  block.setAttribute('data-auto-play-speed-in-ms', '4200');
+  block.setAttribute('data-reveal-next-item-partially', 'false');
+  block.setAttribute('data-component', 'carousel');
+  block.append(carouselContainer);
 }

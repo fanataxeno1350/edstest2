@@ -24,7 +24,7 @@
         {
           "component": "reference",
           "label": "Background Image",
-          "name": "backgroundImage",
+          "name": "background-image",
           "valueType": "string"
         },
         {
@@ -36,31 +36,31 @@
         {
           "component": "text",
           "label": "Sub Title",
-          "name": "subTitle",
+          "name": "sub-title",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Swipe Icon",
-          "name": "swipeIcon",
+          "name": "swipe-icon",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Cookie Image",
-          "name": "cookieImage",
+          "name": "cookie-image",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Morning Image",
-          "name": "morningImage",
+          "name": "morning-image",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Morning Label",
-          "name": "morningLabel",
+          "label": "Section 2 Text",
+          "name": "section2-text",
           "valueType": "string"
         }
       ]

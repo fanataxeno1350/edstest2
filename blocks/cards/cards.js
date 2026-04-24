@@ -7,161 +7,185 @@ export default function decorate(block) {
     subHeadingRow,
     ctaLinkRow,
     ctaTextRow,
-    ...cardItemRows
+    ...cardRows
   ] = [...block.children];
 
-  // Create main container
-  const cmpCards = document.createElement('div');
-  cmpCards.classList.add('cmp-cards', 'cmp-cards--recipe');
-  moveInstrumentation(block, cmpCards);
+  block.innerHTML = '';
+  block.classList.add('cmp-cards', 'cmp-cards--recipe', 'None');
 
   // Heading
-  const heading = document.createElement('h2');
-  heading.classList.add('cmp-cards__heading');
-  heading.textContent = headingRow?.firstElementChild?.textContent.trim() || '';
-  cmpCards.appendChild(heading);
+  if (headingRow) {
+    const heading = document.createElement('h2');
+    heading.classList.add('cmp-cards__heading');
+    moveInstrumentation(headingRow, heading);
+    heading.textContent = headingRow.firstElementChild?.textContent.trim();
+    block.append(heading);
+  }
 
   // Sub Heading
-  const subHeading = document.createElement('p');
-  subHeading.classList.add('cmp-cards__sub-heading', 'body-3');
-  subHeading.textContent = subHeadingRow?.firstElementChild?.textContent.trim() || '';
-  cmpCards.appendChild(subHeading);
+  if (subHeadingRow) {
+    const subHeading = document.createElement('p');
+    subHeading.classList.add('cmp-cards__sub-heading', 'body-3');
+    moveInstrumentation(subHeadingRow, subHeading);
+    subHeading.textContent = subHeadingRow.firstElementChild?.textContent.trim();
+    block.append(subHeading);
+  }
 
-  // Carousel container
+  // Cards List (Carousel)
   const carouselWrapper = document.createElement('div');
   carouselWrapper.classList.add('slickcarousel', 'carousel', 'panelcontainer');
-  cmpCards.appendChild(carouselWrapper);
-
   const cmpCarousel = document.createElement('div');
   cmpCarousel.classList.add('cmp-carousel');
-  carouselWrapper.appendChild(cmpCarousel);
+  cmpCarousel.setAttribute('data-component', 'carousel');
+  cmpCarousel.setAttribute('data-show-infinite-scroll', 'false');
+  cmpCarousel.setAttribute('data-show-arrows', 'true');
+  cmpCarousel.setAttribute('data-show-dots', 'true');
+  cmpCarousel.setAttribute('data-item-count-per-slide', '3');
+  cmpCarousel.setAttribute('data-auto-play-is-enabled', 'false');
+  cmpCarousel.setAttribute('data-auto-play-speed-in-ms', '3000');
+  cmpCarousel.setAttribute('data-reveal-next-item-partially', 'false');
+  cmpCarousel.setAttribute('data-show-center-zoom', 'false');
+  cmpCarousel.setAttribute('data-slides-to-scroll', '3');
 
   const carouselContainer = document.createElement('div');
-  carouselContainer.classList.add('cmp-carousel__container'); // Slick JS will add slick-initialized, slick-slider, slick-dotted
-  cmpCarousel.appendChild(carouselContainer);
+  carouselContainer.classList.add('cmp-carousel__container'); // slick-initialized, slick-slider, slick-dotted will be added by slick.js
 
   const slickList = document.createElement('div');
   slickList.classList.add('slick-list', 'draggable');
-  carouselContainer.appendChild(slickList);
-
   const slickTrack = document.createElement('div');
   slickTrack.classList.add('slick-track');
-  slickList.appendChild(slickTrack);
 
-  cardItemRows.forEach((row) => {
-    const [
-      imageCell,
-      redirectionUrlCell,
-      tagCell,
-      titleCell,
-      titleLinkCell,
-      timeInMinutesCell,
-    ] = [...row.children];
+  cardRows.forEach((row, index) => {
+    const [imageCell, linkCell, titleCell, tagCell, timeInMinutesCell] = [...row.children];
 
-    const cmpCarouselItem = document.createElement('div');
-    cmpCarouselItem.classList.add('cmp-carousel__item', 'slick-slide'); // Slick JS will add slick-current, slick-active
-    moveInstrumentation(row, cmpCarouselItem);
-    slickTrack.appendChild(cmpCarouselItem);
+    const carouselItem = document.createElement('div');
+    carouselItem.classList.add('cmp-carousel__item', 'slick-slide'); // slick-current, slick-active will be added by slick.js
+    carouselItem.setAttribute('data-slick-index', index.toString());
+    carouselItem.setAttribute('aria-hidden', 'true'); // Will be set to false for active slides
 
     const card = document.createElement('div');
     card.classList.add('card', 'cmp-card--recipe');
-    cmpCarouselItem.appendChild(card);
 
     const cmpCard = document.createElement('div');
     cmpCard.classList.add('cmp-card');
-    card.appendChild(cmpCard);
 
     const cmpCardContent = document.createElement('div');
     cmpCardContent.classList.add('cmp-card__content');
-    cmpCard.appendChild(cmpCardContent);
 
     const cmpCardMedia = document.createElement('div');
     cmpCardMedia.classList.add('cmp-card__media');
-    cmpCardContent.appendChild(cmpCardMedia);
 
     const cmpCardOptions = document.createElement('div');
     cmpCardOptions.classList.add('cmp-card__options');
-    cmpCardMedia.appendChild(cmpCardOptions);
-
     const threeDots = document.createElement('div');
     threeDots.classList.add('cmp-card__three-dots', 'icon-open-card-popup');
-    cmpCardOptions.appendChild(threeDots);
+    // Add event listener for the three-dots icon
+    threeDots.addEventListener('click', () => {
+      // Placeholder for interactivity: e.g., open a popup/modal
+      console.log('Three dots clicked for card:', titleCell?.textContent.trim());
+      // Example: threeDots.classList.toggle('active');
+      // Example: showCardPopup(card);
+    });
+    cmpCardOptions.append(threeDots);
 
     const cmpCardImage = document.createElement('div');
     cmpCardImage.classList.add('cmp-card__image');
-    cmpCardMedia.appendChild(cmpCardImage);
-
     const lazyImageContainer = document.createElement('div');
     lazyImageContainer.classList.add('lazy-image-container');
-    const redirectionUrl = redirectionUrlCell?.querySelector('a')?.href;
-    if (redirectionUrl) {
-      lazyImageContainer.setAttribute('data-redirection-url', redirectionUrl);
-    }
-    cmpCardImage.appendChild(lazyImageContainer);
 
-    const picture = imageCell?.querySelector('picture');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      lazyImageContainer.setAttribute('data-redirection-url', foundLink.href);
+    }
+
+    const picture = imageCell.querySelector('picture');
     if (picture) {
       const img = picture.querySelector('img');
       if (img) {
         const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        optimizedPic.classList.add('is-clickable', 'lazy-image', 'loaded');
         moveInstrumentation(img, optimizedPic.querySelector('img'));
-        lazyImageContainer.appendChild(optimizedPic);
-        optimizedPic.querySelector('img').classList.add('is-clickable', 'lazy-image', 'loaded');
+        lazyImageContainer.append(optimizedPic);
       }
     }
 
+    cmpCardImage.append(lazyImageContainer);
+    cmpCardMedia.append(cmpCardOptions, cmpCardImage);
+
     const cmpCardInfo = document.createElement('div');
     cmpCardInfo.classList.add('cmp-card__info');
-    cmpCardContent.appendChild(cmpCardInfo);
 
     const cmpCardTag = document.createElement('div');
     cmpCardTag.classList.add('cmp-card__tag');
-    cmpCardInfo.appendChild(cmpCardTag);
-
-    const cmpCardTagWrapper = document.createElement('div');
-    cmpCardTagWrapper.classList.add('cmp-card__tag-wrapper');
-    cmpCardTag.appendChild(cmpCardTagWrapper);
-
+    const tagWrapper = document.createElement('div');
+    tagWrapper.classList.add('cmp-card__tag-wrapper');
     const tagP = document.createElement('p');
-    tagP.textContent = tagCell?.textContent.trim() || '';
-    cmpCardTagWrapper.appendChild(tagP);
+    tagP.textContent = tagCell?.textContent.trim();
+    tagWrapper.append(tagP);
+    cmpCardTag.append(tagWrapper);
 
     const cmpCardTitle = document.createElement('div');
     cmpCardTitle.classList.add('cmp-card__title');
-    cmpCardInfo.appendChild(cmpCardTitle);
-
     const titleLink = document.createElement('a');
-    titleLink.href = titleLinkCell?.querySelector('a')?.href || '#';
-    titleLink.textContent = titleCell?.textContent.trim() || '';
+    if (foundLink) {
+      titleLink.href = foundLink.href;
+    }
     const titleH5 = document.createElement('h5');
-    titleH5.appendChild(titleLink);
-    cmpCardTitle.appendChild(titleH5);
+    titleH5.textContent = titleCell?.textContent.trim();
+    titleLink.append(titleH5);
+    cmpCardTitle.append(titleLink);
 
     const cmpCardTime = document.createElement('div');
     cmpCardTime.classList.add('cmp-card__time-in-minutes', 'desc-1');
-    cmpCardTime.textContent = timeInMinutesCell?.textContent.trim() || '';
-    cmpCardInfo.appendChild(cmpCardTime);
+    cmpCardTime.textContent = `Time: ${timeInMinutesCell?.textContent.trim()}`;
+
+    cmpCardInfo.append(cmpCardTag, cmpCardTitle, cmpCardTime);
+    cmpCardContent.append(cmpCardMedia, cmpCardInfo);
+    cmpCard.append(cmpCardContent);
+    card.append(cmpCard);
+    carouselItem.append(card);
+    moveInstrumentation(row, carouselItem);
+    slickTrack.append(carouselItem);
   });
 
+  slickList.append(slickTrack);
+  carouselContainer.append(slickList);
+  cmpCarousel.append(carouselContainer);
+  carouselWrapper.append(cmpCarousel);
+  block.append(carouselWrapper);
+
   // CTA Button
-  const buttonDiv = document.createElement('div');
-  buttonDiv.classList.add('button', 'cmp-button--primary-anchor', 'cmp-button--primary-anchor-undefined', 'cards-cta-button');
-  cmpCards.appendChild(buttonDiv);
+  if (ctaLinkRow && ctaTextRow) {
+    const buttonDiv = document.createElement('div');
+    buttonDiv.classList.add('button', 'cmp-button--primary-anchor', 'cmp-button--primary-anchor-undefined', 'cards-cta-button');
 
-  const ctaLink = document.createElement('a');
-  ctaLink.classList.add('cmp-button');
-  ctaLink.href = ctaLinkRow?.querySelector('a')?.href || '#';
-  buttonDiv.appendChild(ctaLink);
+    const ctaAnchor = document.createElement('a');
+    ctaAnchor.classList.add('cmp-button');
+    const foundCtaLink = ctaLinkRow.querySelector('a');
+    if (foundCtaLink) {
+      ctaAnchor.href = foundCtaLink.href;
+    }
+    ctaAnchor.setAttribute('target', '_self');
 
-  const ctaTextSpan = document.createElement('span');
-  ctaTextSpan.classList.add('cmp-button__text');
-  ctaTextSpan.textContent = ctaTextRow?.firstElementChild?.textContent.trim() || '';
-  ctaLink.appendChild(ctaTextSpan);
+    const ctaSpan = document.createElement('span');
+    ctaSpan.classList.add('cmp-button__text');
+    ctaSpan.textContent = ctaTextRow.firstElementChild?.textContent.trim(); // Correctly read text content
+    ctaAnchor.append(ctaSpan);
+    buttonDiv.append(ctaAnchor);
+    moveInstrumentation(ctaLinkRow, buttonDiv);
+    moveInstrumentation(ctaTextRow, buttonDiv);
+    block.append(buttonDiv);
+  }
 
+  // Share div (empty as per original HTML)
   const shareDiv = document.createElement('div');
   shareDiv.classList.add('share');
-  cmpCards.appendChild(shareDiv);
+  block.append(shareDiv);
 
-  block.innerHTML = '';
-  block.appendChild(cmpCards);
+  // Image optimization
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 }

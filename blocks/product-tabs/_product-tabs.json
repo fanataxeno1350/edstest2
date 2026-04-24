@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Product-Tab",
-      "id": "product-tab",
+      "title": "Tab-Item",
+      "id": "tab-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "product-tab",
-              "name": "Product-Tab"
+              "model": "tab-item",
+              "name": "Tab-Item"
             }
           }
         }
@@ -53,50 +53,47 @@
       "fields": [
         {
           "component": "text",
-          "label": "Tabs Title",
+          "label": "Title",
           "name": "title",
           "valueType": "string"
         },
         {
           "component": "boolean",
           "label": "Auto Play Enabled",
-          "name": "autoPlayEnabled",
-          "valueType": "boolean"
+          "name": "autoPlayIsEnabled"
         },
         {
           "component": "number",
           "label": "Auto Play Speed (ms)",
-          "name": "autoPlaySpeedMs",
-          "valueType": "number"
+          "name": "autoPlaySpeedInMs"
         },
         {
           "component": "boolean",
-          "label": "Infinite Scroll Enabled",
-          "name": "infiniteScroll",
-          "valueType": "boolean"
+          "label": "Infinite Scroll",
+          "name": "infiniteScroll"
         },
         {
           "component": "container",
-          "item": "product-tab",
+          "item": "tab-item",
           "label": "Tabs",
           "name": "tabs"
         },
         {
           "component": "container",
           "item": "product-item",
-          "label": "Carousel Items",
-          "name": "carouselItems"
+          "label": "Products",
+          "name": "products"
         },
         {
           "component": "text",
-          "label": "View Range Button Label",
-          "name": "viewRangeLabel",
+          "label": "Range Button Label",
+          "name": "rangeButtonLabel",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "product-tab",
+      "id": "tab-item",
       "fields": [
         {
           "component": "text",
@@ -111,19 +108,19 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
+          "label": "Product Image",
           "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Image Alt Text",
+          "label": "Alt Text",
           "name": "altText",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Redirection URL",
+          "label": "Product Link",
           "name": "link",
           "valueType": "string"
         }
@@ -134,7 +131,7 @@
     {
       "id": "product-tabs",
       "components": [
-        "product-tab",
+        "tab-item",
         "product-item"
       ]
     }

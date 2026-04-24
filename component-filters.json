@@ -21,17 +21,16 @@
       "cmp-search",
       "slickcarousel",
       "product-tabs",
-      "video",
       "cookie-personality",
       "product-swiper",
       "social",
-      "new-footer"
+      "footer-new"
     ]
   },
   {
     "id": "cards",
     "components": [
-      "card-item"
+      "recipe-card"
     ]
   },
   {
@@ -39,7 +38,7 @@
     "components": [
       "navigation-item",
       "policy-link-item",
-      "social-link-item",
+      "social-media-link-item",
       "nav-icon-item"
     ]
   },
@@ -52,16 +51,16 @@
   {
     "id": "cookie-personality",
     "components": [
-      "stepper-image",
-      "question-option"
+      "stepper-step",
+      "option-item"
     ]
   },
   {
-    "id": "new-footer",
+    "id": "footer-new",
     "components": [
       "footer-navigation-item",
-      "footer-title-item",
-      "footer-social-link-item"
+      "footer-social-link-item",
+      "footer-link-item"
     ]
   },
   {
@@ -70,14 +69,14 @@
   {
     "id": "product-tabs",
     "components": [
-      "product-tab",
+      "tab-item",
       "product-item"
     ]
   },
   {
     "id": "slickcarousel",
     "components": [
-      "carousel-item"
+      "slickcarousel-item"
     ]
   },
   {
@@ -85,8 +84,5 @@
     "components": [
       "social-card-item"
     ]
-  },
-  {
-    "id": "video"
   }
 ]

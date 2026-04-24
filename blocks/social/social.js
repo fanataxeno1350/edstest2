@@ -5,108 +5,112 @@ export default function decorate(block) {
   const [
     titleRow,
     subtitleRow,
-    buttonLabelRow,
     buttonLinkRow,
-    ...itemRows
+    buttonLabelRow,
+    ...cardRows
   ] = [...block.children];
 
-  const socialComponent = document.createElement('div');
-  socialComponent.classList.add('cmp-social');
-  moveInstrumentation(block, socialComponent);
+  block.innerHTML = '';
+  block.classList.add('cmp-social');
 
-  // Title and Subtitle
+  // Title and Subtitle container
   const titleContainer = document.createElement('div');
   titleContainer.classList.add('cmp-social__title-container');
+  block.append(titleContainer);
 
-  const titleDiv = document.createElement('div');
-  titleDiv.classList.add('title', 'cmp-social__title');
-  const cmpTitle = document.createElement('div');
-  cmpTitle.classList.add('cmp-title');
-  const h2 = document.createElement('h2');
-  h2.classList.add('cmp-title__text');
-  h2.textContent = titleRow?.firstElementChild?.textContent.trim() || '';
-  moveInstrumentation(titleRow, h2);
-  cmpTitle.appendChild(h2);
-  titleDiv.appendChild(cmpTitle);
-  titleContainer.appendChild(titleDiv);
-
-  const subtitleDiv = document.createElement('div');
-  subtitleDiv.classList.add('text', 'cmp-social__sub-title', 'body-3');
-  const cmpText = document.createElement('div');
-  cmpText.classList.add('cmp-text');
-  cmpText.innerHTML = subtitleRow?.firstElementChild?.innerHTML || '';
-  moveInstrumentation(subtitleRow, cmpText);
-  subtitleDiv.appendChild(cmpText);
-  titleContainer.appendChild(subtitleDiv);
-
-  socialComponent.appendChild(titleContainer);
-
-  // Card Container
-  const cardContainer = document.createElement('div');
-  cardContainer.classList.add('cmp-social__card-container', 'cmp-social__card-container--anchor');
-
-  // Create columns and distribute cards
-  const columns = Array.from({ length: 5 }, () => {
-    const column = document.createElement('div');
-    column.classList.add('cmp-social__card-column');
-    return column;
-  });
-
-  itemRows.forEach((row, index) => {
-    const cells = [...row.children];
-    const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-
-    const anchor = document.createElement('a');
-    const foundLink = linkCell?.querySelector('a');
-    if (foundLink) {
-      anchor.href = foundLink.href;
-    }
-
-    const picture = imageCell?.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '100%' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        anchor.appendChild(optimizedPic);
-      }
-    }
-    moveInstrumentation(row, anchor);
-    columns[index % columns.length].appendChild(anchor);
-  });
-
-  columns.forEach((column) => cardContainer.appendChild(column));
-  socialComponent.appendChild(cardContainer);
-
-  // Button
-  const socialButtonDiv = document.createElement('div');
-  socialButtonDiv.classList.add('socialButton', 'button', 'cmp-button--primary-anchor');
-
-  const buttonAnchor = document.createElement('a');
-  buttonAnchor.classList.add('cmp-button');
-  buttonAnchor.setAttribute('data-request', 'true');
-  buttonAnchor.setAttribute('target', '_blank');
-
-  const foundButtonLink = buttonLinkRow?.querySelector('a');
-  if (foundButtonLink) {
-    buttonAnchor.href = foundButtonLink.href;
+  // Title
+  if (titleRow) {
+    const titleWrapper = document.createElement('div');
+    titleWrapper.classList.add('title', 'cmp-social__title');
+    const cmpTitle = document.createElement('div');
+    cmpTitle.classList.add('cmp-title');
+    const h2 = document.createElement('h2');
+    h2.classList.add('cmp-title__text');
+    moveInstrumentation(titleRow.firstElementChild, h2);
+    h2.textContent = titleRow.firstElementChild.textContent.trim();
+    cmpTitle.append(h2);
+    titleWrapper.append(cmpTitle);
+    titleContainer.append(titleWrapper);
   }
 
-  const buttonSpan = document.createElement('span');
-  buttonSpan.classList.add('cmp-button__text');
-  buttonSpan.textContent = buttonLabelRow?.firstElementChild?.textContent.trim() || '';
-  moveInstrumentation(buttonLabelRow, buttonSpan);
-  buttonAnchor.appendChild(buttonSpan);
-  moveInstrumentation(buttonLinkRow, buttonAnchor);
-  socialButtonDiv.appendChild(buttonAnchor);
-  socialComponent.appendChild(socialButtonDiv);
+  // Subtitle
+  if (subtitleRow) {
+    const subtitleWrapper = document.createElement('div');
+    subtitleWrapper.classList.add('text', 'cmp-social__sub-title', 'body-3');
+    const cmpText = document.createElement('div');
+    cmpText.classList.add('cmp-text');
+    moveInstrumentation(subtitleRow.firstElementChild, cmpText);
+    cmpText.innerHTML = subtitleRow.firstElementChild.innerHTML;
+    subtitleWrapper.append(cmpText);
+    titleContainer.append(subtitleWrapper);
+  }
+
+  // Card container
+  if (cardRows.length > 0) {
+    const cardContainer = document.createElement('div');
+    cardContainer.classList.add('cmp-social__card-container', 'cmp-social__card-container--anchor');
+    block.append(cardContainer);
+
+    // Group cards into columns (assuming 5 columns based on original HTML)
+    const numColumns = 5;
+    const columns = Array.from({ length: numColumns }, () => {
+      const col = document.createElement('div');
+      col.classList.add('cmp-social__card-column');
+      return col;
+    });
+
+    cardRows.forEach((row, index) => {
+      // VIOLATION FIXED: Replaced row.children[n] with content detection
+      const cells = [...row.children];
+      const imageCell = cells.find(cell => cell.querySelector('picture'));
+      const linkCell = cells.find(cell => cell.querySelector('a'));
+
+      const linkEl = document.createElement('a');
+      const foundLink = linkCell?.querySelector('a');
+      if (foundLink) {
+        linkEl.href = foundLink.href;
+      }
+
+      const picture = imageCell?.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        linkEl.append(optimizedPic);
+      }
+      moveInstrumentation(row, linkEl);
+      columns[index % numColumns].append(linkEl);
+    });
+
+    columns.forEach((col) => cardContainer.append(col));
+  }
+
+  // Button
+  if (buttonLinkRow && buttonLabelRow) {
+    const buttonWrapper = document.createElement('div');
+    buttonWrapper.classList.add('socialButton', 'button', 'cmp-button--primary-anchor');
+
+    const buttonLink = document.createElement('a');
+    buttonLink.classList.add('cmp-button');
+    const foundButtonLink = buttonLinkRow.querySelector('a');
+    if (foundButtonLink) {
+      buttonLink.href = foundButtonLink.href;
+      buttonLink.setAttribute('target', '_blank'); // Assuming target blank from original HTML
+    }
+
+    const buttonTextSpan = document.createElement('span');
+    buttonTextSpan.classList.add('cmp-button__text');
+    moveInstrumentation(buttonLabelRow.firstElementChild, buttonTextSpan);
+    buttonTextSpan.textContent = buttonLabelRow.firstElementChild.textContent.trim();
+
+    buttonLink.append(buttonTextSpan);
+    moveInstrumentation(buttonLinkRow, buttonLink); // Move instrumentation from buttonLinkRow
+    buttonWrapper.append(buttonLink);
+    block.append(buttonWrapper);
+  }
 
   // Gradient
   const gradientDiv = document.createElement('div');
   gradientDiv.classList.add('cmp-social__gradient');
-  socialComponent.appendChild(gradientDiv);
-
-  block.textContent = '';
-  block.appendChild(socialComponent);
+  block.append(gradientDiv);
 }

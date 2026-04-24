@@ -39,43 +39,43 @@
         {
           "component": "number",
           "label": "Minimum Search Length",
-          "name": "minLength",
+          "name": "min-length",
           "valueType": "number"
         },
         {
           "component": "number",
           "label": "Results Desktop Size",
-          "name": "resultsDesktopSize",
+          "name": "results-desktop-size",
           "valueType": "number"
         },
         {
           "component": "number",
           "label": "Results Mobile Size",
-          "name": "resultsMobileSize",
+          "name": "results-mobile-size",
           "valueType": "number"
         },
         {
           "component": "text",
           "label": "Input Placeholder",
-          "name": "inputPlaceholder",
+          "name": "input-placeholder",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "No Results Title",
-          "name": "noResultsTitle",
+          "name": "no-results-title",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "No Results Description",
-          "name": "noResultsDescription",
+          "name": "no-results-description",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "search-category-item",
-          "label": "Suggested Categories",
+          "label": "Categories",
           "name": "categories"
         }
       ]
@@ -86,13 +86,13 @@
         {
           "component": "text",
           "label": "Category Name",
-          "name": "categoryName",
+          "name": "category-name",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Category URL",
-          "name": "categoryURL",
+          "name": "category-url",
           "valueType": "string"
         }
       ]

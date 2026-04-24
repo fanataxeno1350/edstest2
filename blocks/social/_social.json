@@ -49,10 +49,10 @@
           "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "social-card-item",
-          "label": "Cards",
-          "name": "cards"
+          "component": "aem-content",
+          "label": "Button Link",
+          "name": "buttonLink",
+          "valueType": "string"
         },
         {
           "component": "text",
@@ -61,10 +61,10 @@
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Button Link",
-          "name": "buttonLink",
-          "valueType": "string"
+          "component": "container",
+          "item": "social-card-item",
+          "label": "Cards",
+          "name": "cards"
         }
       ]
     },

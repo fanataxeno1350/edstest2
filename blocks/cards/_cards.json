@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Card-Item",
-      "id": "card-item",
+      "title": "Recipe-Card",
+      "id": "recipe-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "card-item",
-              "name": "Card-Item"
+              "model": "recipe-card",
+              "name": "Recipe-Card"
             }
           }
         }
@@ -62,25 +62,31 @@
         },
         {
           "component": "container",
-          "item": "card-item",
+          "item": "recipe-card",
           "label": "Cards List",
           "name": "cardsList"
         }
       ]
     },
     {
-      "id": "card-item",
+      "id": "recipe-card",
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
+          "label": "Card Image",
           "name": "image",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Redirection URL",
-          "name": "redirectionUrl",
+          "label": "Recipe Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
@@ -91,19 +97,7 @@
         },
         {
           "component": "text",
-          "label": "Title",
-          "name": "title",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Title Link",
-          "name": "titleLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Time In Minutes",
+          "label": "Time in Minutes",
           "name": "timeInMinutes",
           "valueType": "string"
         }
@@ -114,7 +108,7 @@
     {
       "id": "cards",
       "components": [
-        "card-item"
+        "recipe-card"
       ]
     }
   ]

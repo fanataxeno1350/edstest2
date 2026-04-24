@@ -17,30 +17,30 @@
       }
     },
     {
-      "title": "Stepper-Image",
-      "id": "stepper-image",
+      "title": "Stepper-Step",
+      "id": "stepper-step",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "stepper-image",
-              "name": "Stepper-Image"
+              "model": "stepper-step",
+              "name": "Stepper-Step"
             }
           }
         }
       }
     },
     {
-      "title": "Question-Option",
-      "id": "question-option",
+      "title": "Option-Item",
+      "id": "option-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "question-option",
-              "name": "Question-Option"
+              "model": "option-item",
+              "name": "Option-Item"
             }
           }
         }
@@ -54,7 +54,7 @@
         {
           "component": "reference",
           "label": "Background Image",
-          "name": "backgroundImage",
+          "name": "background-image",
           "valueType": "string"
         },
         {
@@ -65,9 +65,9 @@
         },
         {
           "component": "container",
-          "item": "stepper-image",
-          "label": "Stepper Images",
-          "name": "stepperImages"
+          "item": "stepper-step",
+          "label": "Steps",
+          "name": "steps"
         },
         {
           "component": "text",
@@ -77,36 +77,42 @@
         },
         {
           "component": "container",
-          "item": "question-option",
+          "item": "option-item",
           "label": "Options",
           "name": "options"
         },
         {
           "component": "text",
-          "label": "Button Label",
-          "name": "buttonLabel",
+          "label": "Button Text",
+          "name": "button-text",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "stepper-image",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Image",
-          "name": "image",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "question-option",
+      "id": "stepper-step",
       "fields": [
         {
           "component": "text",
-          "label": "Option Text",
-          "name": "optionText",
+          "label": "Step Label",
+          "name": "step-label",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Step Image",
+          "name": "step-image",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "option-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Option Label",
+          "name": "option-label",
           "valueType": "string"
         }
       ]
@@ -116,8 +122,8 @@
     {
       "id": "cookie-personality",
       "components": [
-        "stepper-image",
-        "question-option"
+        "stepper-step",
+        "option-item"
       ]
     }
   ]

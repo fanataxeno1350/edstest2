@@ -2,165 +2,196 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const children = [...block.children];
+  const [
+    backgroundImageRow,
+    titleRow,
+    questionRow,
+    buttonTextRow,
+    ...itemRows
+  ] = [...block.children];
 
-  // Fixed fields
-  const [backgroundImageRow, titleRow, questionRow, buttonLabelRow] = children.slice(0, 4);
+  block.innerHTML = ''; // Clear the block content
 
-  const backgroundImageCell = backgroundImageRow.firstElementChild;
-  const titleCell = titleRow.firstElementChild;
-  const questionCell = questionRow.firstElementChild;
-  const buttonLabelCell = buttonLabelRow.firstElementChild;
-
-  // Item rows
-  const itemRows = children.slice(4);
-
-  const stepperImageRows = [];
-  const questionOptionRows = [];
-
-  itemRows.forEach((row) => {
-    // Stepper Image has 1 cell (image)
-    // Question Option has 1 cell (optionText)
-    // Differentiate by content: Stepper Image has a picture, Question Option has plain text
-    if (row.firstElementChild?.querySelector('picture')) {
-      stepperImageRows.push(row);
-    } else {
-      questionOptionRows.push(row);
-    }
-  });
-
-  // Main container
   const cmpCookiePersonality = document.createElement('div');
   cmpCookiePersonality.classList.add('cmp-cookie-personality');
-  moveInstrumentation(block, cmpCookiePersonality);
+  moveInstrumentation(backgroundImageRow, cmpCookiePersonality);
 
   // Background Image
-  const backgroundPicture = backgroundImageCell.querySelector('picture');
-  if (backgroundPicture) {
-    const img = backgroundPicture.querySelector('img');
+  const backgroundImagePicture = backgroundImageRow.querySelector('picture');
+  if (backgroundImagePicture) {
+    const img = backgroundImagePicture.querySelector('img');
     if (img) {
       cmpCookiePersonality.style.backgroundImage = `url("${img.src}")`;
+      // Optimize image
+      createOptimizedPicture(img.src, img.alt, false, [{ width: '1366' }]);
+      // The original HTML does not have the picture element directly in the background,
+      // so we don't need to append it. We just use the src for the background-image style.
+      // If the image was intended to be visible in the DOM, we would do:
+      // moveInstrumentation(img, optimizedPic.querySelector('img'));
+      // backgroundImagePicture.replaceWith(optimizedPic);
     }
-    // Remove original picture element as it's used for background style
-    backgroundImageCell.remove();
   }
 
   // Title
-  if (titleCell && titleCell.textContent.trim()) {
-    const titleElement = document.createElement('h2');
-    titleElement.textContent = titleCell.textContent.trim();
-    cmpCookiePersonality.append(titleElement);
-    moveInstrumentation(titleRow, titleElement);
-  }
+  const titleH2 = document.createElement('h2');
+  titleH2.textContent = titleRow.textContent.trim();
+  moveInstrumentation(titleRow, titleH2);
+  cmpCookiePersonality.append(titleH2);
 
   // Stepper
-  if (stepperImageRows.length > 0) {
-    const stepper = document.createElement('div');
-    stepper.classList.add('cmp-cookie-personality__stepper');
+  const stepperDiv = document.createElement('div');
+  stepperDiv.classList.add('cmp-cookie-personality__stepper');
+  cmpCookiePersonality.append(stepperDiv);
 
-    stepperImageRows.forEach((row, index) => {
-      const stepperCell = row.firstElementChild;
-      const stepDiv = document.createElement('div');
-      stepDiv.classList.add('cmp-cookie-personality__stepper--step');
-      if (index === 0) {
-        stepDiv.classList.add('active');
-      }
+  // Filter itemRows for stepper-step items (2 cells: label, image)
+  const stepperSteps = itemRows.filter((row) => row.children.length === 2);
+  stepperSteps.forEach((stepRow, index) => {
+    const cells = [...stepRow.children];
+    const stepLabelCell = cells.find(cell => !cell.querySelector('picture'));
+    const stepImageCell = cells.find(cell => cell.querySelector('picture'));
 
-      if (index < stepperImageRows.length - 1) {
-        const span = document.createElement('span');
-        span.textContent = (index + 1).toString();
-        stepDiv.append(span);
-      } else {
-        stepDiv.classList.add('cmp-cookie-personality__stepper--step-4');
+    const stepDiv = document.createElement('div');
+    stepDiv.classList.add('cmp-cookie-personality__stepper--step');
+    if (index === 0) {
+      stepDiv.classList.add('active'); // First step is active by default
+    }
+
+    const span = document.createElement('span');
+    span.textContent = stepLabelCell.textContent.trim();
+    moveInstrumentation(stepLabelCell, span);
+    stepDiv.append(span);
+
+    if (stepImageCell) {
+      const stepImagePicture = stepImageCell.querySelector('picture');
+      if (stepImagePicture) {
+        stepDiv.classList.add('cmp-cookie-personality__stepper--step-4'); // This class is for the image step
         const lazyImageContainer = document.createElement('div');
         lazyImageContainer.classList.add('lazy-image-container');
-        const picture = stepperCell.querySelector('picture');
-        if (picture) {
-          const img = picture.querySelector('img');
-          if (img) {
-            const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-            moveInstrumentation(img, optimizedPic.querySelector('img'));
-            lazyImageContainer.append(optimizedPic);
-          }
+
+        const img = stepImagePicture.querySelector('img');
+        if (img) {
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
+          lazyImageContainer.append(optimizedPic);
         }
+        moveInstrumentation(stepImageCell, lazyImageContainer);
         stepDiv.append(lazyImageContainer);
       }
-      stepper.append(stepDiv);
-      moveInstrumentation(row, stepDiv);
-    });
-    cmpCookiePersonality.append(stepper);
-  }
+    }
+    moveInstrumentation(stepRow, stepDiv);
+    stepperDiv.append(stepDiv);
+  });
 
   // Question Wrapper
   const questionWrapper = document.createElement('div');
   questionWrapper.classList.add('cmp-cookie-personality__question-wrapper');
-
-  // Question
-  if (questionCell && questionCell.textContent.trim()) {
-    const questionElement = document.createElement('h3');
-    questionElement.textContent = questionCell.textContent.trim();
-    questionWrapper.append(questionElement);
-    moveInstrumentation(questionRow, questionElement);
-  }
-
-  // Options
-  if (questionOptionRows.length > 0) {
-    const optionsDiv = document.createElement('div');
-    optionsDiv.classList.add('cmp-cookie-personality__options', 'body-3');
-
-    questionOptionRows.forEach((row) => {
-      const optionCell = row.firstElementChild;
-      const optionDiv = document.createElement('div');
-      optionDiv.classList.add('cmp-cookie-personality__option', 'false');
-      optionDiv.textContent = optionCell.textContent.trim();
-      optionsDiv.append(optionDiv);
-      moveInstrumentation(row, optionDiv);
-    });
-    questionWrapper.append(optionsDiv);
-  }
   cmpCookiePersonality.append(questionWrapper);
 
-  // Actions (Button)
-  let buttonElement;
-  if (buttonLabelCell && buttonLabelCell.textContent.trim()) {
-    const actionsDiv = document.createElement('div');
-    actionsDiv.classList.add('cmp-cookie-personality__actions');
+  // Question
+  const questionH3 = document.createElement('h3');
+  questionH3.textContent = questionRow.textContent.trim();
+  moveInstrumentation(questionRow, questionH3);
+  questionWrapper.append(questionH3);
 
-    const buttonDiv = document.createElement('div');
-    buttonDiv.classList.add('button', 'cmp-button--secondary', 'cmp-button--secondary-undefined');
+  // Options
+  const optionsDiv = document.createElement('div');
+  optionsDiv.classList.add('cmp-cookie-personality__options', 'body-3');
+  questionWrapper.append(optionsDiv);
 
-    buttonElement = document.createElement('button');
-    buttonElement.type = 'button';
-    buttonElement.classList.add('cmp-button');
-    buttonElement.disabled = true; // Initially disabled as per original HTML
+  // Filter itemRows for option-item items (1 cell: label)
+  const optionItems = itemRows.filter((row) => row.children.length === 1);
+  optionItems.forEach((optionRow) => {
+    const optionLabelCell = optionRow.children[0]; // Only one cell, so direct access is fine here
+    const optionDiv = document.createElement('div');
+    optionDiv.classList.add('cmp-cookie-personality__option', 'false'); // 'false' is from original HTML
+    optionDiv.textContent = optionLabelCell.textContent.trim();
+    moveInstrumentation(optionRow, optionDiv);
+    optionsDiv.append(optionDiv);
+  });
 
-    const spanText = document.createElement('span');
-    spanText.classList.add('cmp-button__text');
-    spanText.textContent = buttonLabelCell.textContent.trim();
+  // Actions
+  const actionsDiv = document.createElement('div');
+  actionsDiv.classList.add('cmp-cookie-personality__actions');
+  cmpCookiePersonality.append(actionsDiv);
 
-    buttonElement.append(spanText);
-    buttonDiv.append(buttonElement);
-    actionsDiv.append(buttonDiv);
-    cmpCookiePersonality.append(actionsDiv);
-    moveInstrumentation(buttonLabelRow, actionsDiv);
-  }
+  // Button
+  const buttonDiv = document.createElement('div');
+  buttonDiv.classList.add('button', 'cmp-button--secondary', 'cmp-button--secondary-undefined'); // 'cmp-button--secondary-undefined' from original HTML
+  const button = document.createElement('button');
+  button.classList.add('cmp-button');
+  button.type = 'button';
+  button.disabled = true; // Disabled by default as per original HTML
+  const buttonSpan = document.createElement('span');
+  buttonSpan.classList.add('cmp-button__text');
+  buttonSpan.textContent = buttonTextRow.textContent.trim();
+  moveInstrumentation(buttonTextRow, buttonSpan);
+  button.append(buttonSpan);
+  buttonDiv.append(button);
+  actionsDiv.append(buttonDiv);
 
-  block.innerHTML = '';
   block.append(cmpCookiePersonality);
 
-  // Interactivity: Option selection and button state
-  const options = cmpCookiePersonality.querySelectorAll('.cmp-cookie-personality__option');
-  options.forEach((option) => {
-    option.addEventListener('click', () => {
-      // Remove 'active' class from all options
-      options.forEach((opt) => opt.classList.remove('active'));
-      // Add 'active' class to the clicked option
-      option.classList.add('active');
+  // --- Interactivity ---
+  const stepperStepsElements = stepperDiv.querySelectorAll('.cmp-cookie-personality__stepper--step');
+  const optionElements = optionsDiv.querySelectorAll('.cmp-cookie-personality__option');
 
-      // Enable the button if an option is selected
-      if (buttonElement) {
-        buttonElement.disabled = false;
+  let currentStepIndex = 0;
+  let selectedOption = null;
+
+  function updateStepper() {
+    stepperStepsElements.forEach((step, index) => {
+      if (index === currentStepIndex) {
+        step.classList.add('active');
+      } else {
+        step.classList.remove('active');
       }
     });
+  }
+
+  function enableButton() {
+    button.disabled = false;
+  }
+
+  function disableButton() {
+    button.disabled = true;
+  }
+
+  optionElements.forEach((option, index) => {
+    option.addEventListener('click', () => {
+      // Deselect previous option
+      if (selectedOption) {
+        selectedOption.classList.remove('true');
+        selectedOption.classList.add('false');
+      }
+
+      // Select current option
+      option.classList.remove('false');
+      option.classList.add('true');
+      selectedOption = option;
+      enableButton();
+    });
   });
+
+  button.addEventListener('click', () => {
+    if (!button.disabled) {
+      // Logic to proceed to next step or submit
+      // For now, let's just simulate moving to the next stepper step
+      currentStepIndex = (currentStepIndex + 1) % stepperStepsElements.length;
+      updateStepper();
+
+      // Reset options and disable button for the next "question"
+      if (selectedOption) {
+        selectedOption.classList.remove('true');
+        selectedOption.classList.add('false');
+        selectedOption = null;
+      }
+      disableButton();
+
+      // In a real scenario, you would load the next question and options here
+      // This is a placeholder for the actual block logic.
+      console.log('Next button clicked. Current step:', currentStepIndex);
+    }
+  });
+
+  updateStepper(); // Initialize stepper state
 }
