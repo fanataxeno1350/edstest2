@@ -665,14 +665,14 @@
     "fields": [
       {
         "component": "container",
-        "item": "carousel-item",
+        "item": "banner-item",
         "label": "Carousel Items",
         "name": "items"
       }
     ]
   },
   {
-    "id": "carousel-item",
+    "id": "banner-item",
     "fields": [
       {
         "component": "reference",

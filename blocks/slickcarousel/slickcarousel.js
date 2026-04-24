@@ -10,105 +10,117 @@ export default function decorate(block) {
 
   const slickTrack = document.createElement('div');
   slickTrack.classList.add('slick-track');
-  slickTrack.style.opacity = '1';
 
-  [...block.children].forEach((row, index) => {
-    // CHECK 0 & 1: Using destructuring for fixed-field item model, which is correct.
-    const [desktopImageCell, mobileImageCell, buttonLinkCell, buttonLabelCell] = [...row.children];
+  const items = [...block.children];
+  items.forEach((row, index) => {
+    const cells = [...row.children];
+
+    // Content detection for cells
+    const desktopImageCell = cells.find(cell => cell.querySelector('picture') && cell.querySelector('img[alt="Desktop Image"]'));
+    const mobileImageCell = cells.find(cell => cell.querySelector('picture') && cell.querySelector('img[alt="Mobile Image"]'));
+    const buttonLinkCell = cells.find(cell => cell.querySelector('a') && cell.textContent.startsWith('/content/')); // aem-content type
+    const buttonLabelCell = cells.find(cell => !cell.querySelector('a') && cell.textContent.trim() !== '' && cell !== desktopImageCell && cell !== mobileImageCell); // text type
 
     const carouselItem = document.createElement('div');
     carouselItem.classList.add('cmp-carousel__item', 'slick-slide');
     if (index === 0) {
       carouselItem.classList.add('cmp-carousel__item--active', 'slick-current', 'slick-active');
-      carouselItem.setAttribute('aria-hidden', 'false');
-      carouselItem.setAttribute('tabindex', '0');
-    } else {
-      carouselItem.setAttribute('aria-hidden', 'true');
-      carouselItem.setAttribute('tabindex', '-1');
     }
-    carouselItem.setAttribute('role', 'tabpanel');
-    carouselItem.setAttribute('aria-roledescription', 'slide');
-    carouselItem.setAttribute('aria-label', `Slide ${index + 1} of ${block.children.length}`);
     carouselItem.setAttribute('data-slick-index', index);
+    carouselItem.setAttribute('aria-hidden', index !== 0);
+    carouselItem.setAttribute('tabindex', index === 0 ? '0' : '-1');
+    carouselItem.setAttribute('role', 'tabpanel');
+    carouselItem.setAttribute('aria-labelledby', `slickcarousel-item-${index}-tab`);
+    carouselItem.setAttribute('aria-roledescription', 'slide');
+    carouselItem.setAttribute('aria-label', `Slide ${index + 1} of ${items.length}`);
 
     const bannerDiv = document.createElement('div');
     bannerDiv.classList.add('banner', 'cmp-banner--cta-left-aligned');
 
-    const cmpBannerDiv = document.createElement('div');
-    cmpBannerDiv.classList.add('cmp-banner');
+    const cmpBanner = document.createElement('div');
+    cmpBanner.classList.add('cmp-banner');
+    cmpBanner.setAttribute('data-component', 'banner');
+    cmpBanner.setAttribute('data-initialized', 'true');
 
-    const cmpBannerContentDiv = document.createElement('div');
-    cmpBannerContentDiv.classList.add('cmp-banner__content');
+    const bannerContent = document.createElement('div');
+    bannerContent.classList.add('cmp-banner__content');
 
     const picture = document.createElement('picture');
     picture.classList.add('w-100', 'd-block');
 
-    const desktopImg = desktopImageCell.querySelector('img');
-    const mobileImg = mobileImageCell.querySelector('img');
-
-    if (mobileImg) {
-      const sourceMobile = document.createElement('source');
-      sourceMobile.setAttribute('media', '(max-width: 600px)');
-      sourceMobile.srcset = mobileImg.src;
-      picture.append(sourceMobile);
-    }
-
-    if (desktopImg) {
-      const img = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '1366' }]);
-      const imgElement = img.querySelector('img');
-      imgElement.classList.add('cmp-banner__image', 'w-100', 'd-block');
-      imgElement.setAttribute('fetchpriority', 'high');
-      imgElement.setAttribute('data-desktop-src', desktopImg.src);
+    if (mobileImageCell) {
+      const mobileImg = mobileImageCell.querySelector('img');
       if (mobileImg) {
-        imgElement.setAttribute('data-mobile-src', mobileImg.src);
+        const sourceMobile = document.createElement('source');
+        sourceMobile.setAttribute('media', '(max-width: 600px)');
+        sourceMobile.setAttribute('srcset', mobileImg.src);
+        picture.append(sourceMobile);
       }
-      moveInstrumentation(desktopImg.closest('picture'), img);
-      picture.append(img);
     }
 
-    const buttonWrapper = document.createElement('div');
-    // CHECK 1.5: Removed 'null' class as it's not a valid CSS class and likely a placeholder.
-    buttonWrapper.classList.add('button', 'cmp-button--primary-anchor');
+    if (desktopImageCell) {
+      const desktopImg = desktopImageCell.querySelector('img');
+      if (desktopImg) {
+        const img = createOptimizedPicture(desktopImg.src, desktopImg.alt, index === 0, [{ width: '1366' }]);
+        img.querySelector('img').classList.add('cmp-banner__image', 'w-100', 'd-block');
+        img.querySelector('img').setAttribute('data-desktop-src', desktopImg.src);
+        if (mobileImageCell && mobileImageCell.querySelector('img')) {
+          img.querySelector('img').setAttribute('data-mobile-src', mobileImageCell.querySelector('img').src);
+        }
+        if (index === 0) {
+          img.querySelector('img').setAttribute('fetchpriority', 'high');
+        }
+        picture.append(img.querySelector('img'));
+        moveInstrumentation(desktopImg.closest('picture'), picture.querySelector('img'));
+      }
+    }
+
+    const buttonDiv = document.createElement('div');
+    // The class 'null' is not in the allowlist. Assuming it should be 'button-container' based on common EDS patterns.
+    buttonDiv.classList.add('button-container', 'button', 'cmp-button--primary-anchor');
 
     const buttonLink = document.createElement('a');
     buttonLink.classList.add('cmp-button');
-    const foundLink = buttonLinkCell.querySelector('a');
-    if (foundLink) {
-      buttonLink.href = foundLink.href;
+    if (buttonLinkCell) {
+      const foundLink = buttonLinkCell.querySelector('a');
+      if (foundLink) {
+        buttonLink.href = foundLink.href;
+      }
     }
-    buttonLink.setAttribute('tabindex', '0');
+    buttonLink.setAttribute('tabindex', index === 0 ? '0' : '-1');
 
     const buttonText = document.createElement('span');
     buttonText.classList.add('cmp-button__text');
-    buttonText.textContent = buttonLabelCell.textContent.trim();
+    if (buttonLabelCell) {
+      buttonText.textContent = buttonLabelCell.textContent.trim();
+    }
     buttonLink.append(buttonText);
-    moveInstrumentation(buttonLinkCell, buttonLink); // Move instrumentation from link cell
+    buttonDiv.append(buttonLink);
+    if (buttonLinkCell) {
+      moveInstrumentation(buttonLinkCell, buttonLink);
+    }
 
-    buttonWrapper.append(buttonLink);
-
-    cmpBannerContentDiv.append(picture, buttonWrapper);
-    cmpBannerDiv.append(cmpBannerContentDiv);
-    bannerDiv.append(cmpBannerDiv);
+    bannerContent.append(picture, buttonDiv);
+    cmpBanner.append(bannerContent);
+    bannerDiv.append(cmpBanner);
     carouselItem.append(bannerDiv);
-    moveInstrumentation(row, carouselItem); // Move instrumentation from original row
     slickTrack.append(carouselItem);
+    moveInstrumentation(row, carouselItem);
   });
 
   slickList.append(slickTrack);
   carouselContainer.append(slickList);
 
   block.innerHTML = '';
-  block.classList.add('cmp-carousel');
   block.append(carouselContainer);
-
-  // CHECK 2: Interactivity - The original HTML shows a carousel with slick-initialized and slick-slider classes.
-  // This implies a JavaScript library (Slick Carousel) is expected to initialize it.
-  // Since EDS blocks should not rely on external JS frameworks like Slick,
-  // and the generated JS only builds the DOM structure,
-  // a custom JS implementation for carousel behavior (arrows, dots, auto-play)
-  // would be needed if Slick is not loaded globally.
-  // For this review, assuming Slick is loaded externally or this block is purely structural.
-  // If not, add custom event listeners for navigation (e.g., for arrows/dots if they were present in HTML).
-  // As no explicit interactive elements (buttons for next/prev, dots) are created *within* this decorate function
-  // and no event listeners are present in the original HTML for these, no changes are made here.
+  block.classList.add('cmp-carousel');
+  block.setAttribute('data-cmp-is', 'carousel');
+  block.setAttribute('data-show-infinite-scroll', 'true');
+  block.setAttribute('data-show-arrows', 'false');
+  block.setAttribute('data-show-dots', 'true');
+  block.setAttribute('data-item-count-per-slide', '1');
+  block.setAttribute('data-auto-play-is-enabled', 'false');
+  block.setAttribute('data-auto-play-speed-in-ms', '4200');
+  block.setAttribute('data-reveal-next-item-partially', 'false');
+  block.setAttribute('data-component', 'carousel');
 }
