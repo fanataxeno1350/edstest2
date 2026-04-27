@@ -45,21 +45,6 @@
           }
         }
       }
-    },
-    {
-      "title": "Footer-Secondary-Link-Item",
-      "id": "footer-secondary-link-item",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footer-secondary-link-item",
-              "name": "Footer-Secondary-Link-Item"
-            }
-          }
-        }
-      }
     }
   ],
   "models": [
@@ -87,14 +72,14 @@
         {
           "component": "container",
           "item": "footer-navigation-item",
-          "label": "Navigation Links",
-          "name": "navigationLinks"
+          "label": "Footer Navigation",
+          "name": "navigation"
         },
         {
           "component": "container",
-          "item": "footer-secondary-link-item",
-          "label": "Secondary Links",
-          "name": "secondaryLinks"
+          "item": "footer-social-link-item",
+          "label": "Social Links",
+          "name": "socialLinks"
         },
         {
           "component": "text",
@@ -103,10 +88,10 @@
           "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "footer-social-link-item",
-          "label": "Social Links",
-          "name": "socialLinks"
+          "component": "aem-content",
+          "label": "ITC Portal Link",
+          "name": "itcPortalLink",
+          "valueType": "string"
         }
       ]
     },
@@ -149,23 +134,6 @@
           "valueType": "string"
         }
       ]
-    },
-    {
-      "id": "footer-secondary-link-item",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Secondary Link Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Secondary Link",
-          "name": "link",
-          "valueType": "string"
-        }
-      ]
     }
   ],
   "filters": [
@@ -173,7 +141,6 @@
       "id": "footer-brand",
       "components": [
         "footer-navigation-item",
-        "footer-secondary-link-item",
         "footer-social-link-item"
       ]
     }

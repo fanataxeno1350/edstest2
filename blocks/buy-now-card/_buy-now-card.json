@@ -19,13 +19,13 @@
   ],
   "models": [
     {
-      "id": "buy-now-card",
-      "fields": []
+      "id": "buy-now-card"
     }
   ],
   "filters": [
     {
-      "id": "buy-now-card"
+      "id": "buy-now-card",
+      "components": []
     }
   ]
 }

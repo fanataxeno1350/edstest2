@@ -62,7 +62,10 @@
         "popular-recipe",
         "stay-social",
         "buy-now-card",
-        "footer-brand"
+        "footer-brand",
+        "simple-block",
+        "simple-section",
+        "scroll-to-top"
       ]
     }
   ]

@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Product-Selection-Component",
+      "title": "Product Selection Component",
       "id": "product-selection-component",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "product-selection-component",
               "model": "product-selection-component",
-              "name": "Product-Selection-Component"
+              "name": "Product Selection Component"
             }
           }
         }
       }
     },
     {
-      "title": "Product-Item",
+      "title": "Product Item",
       "id": "product-item",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "product-item",
-              "name": "Product-Item"
+              "name": "Product Item"
             }
           }
         }
@@ -40,6 +40,60 @@
           "component": "text",
           "label": "Heading",
           "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Ghee Background Image Desktop",
+          "name": "ghee-background-image-desktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Ghee Background Image Mobile",
+          "name": "ghee-background-image-mobile",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Ghee Description",
+          "name": "ghee-description",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Ghee Download Report Link",
+          "name": "ghee-download-report-link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Ghee Report Downloaded Message",
+          "name": "ghee-report-downloaded-message",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Milk Background Image Desktop",
+          "name": "milk-background-image-desktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Milk Background Image Mobile",
+          "name": "milk-background-image-mobile",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Milk Description",
+          "name": "milk-description",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Milk Whatsapp Link",
+          "name": "milk-whatsapp-link",
           "valueType": "string"
         },
         {
@@ -61,8 +115,8 @@
         },
         {
           "component": "text",
-          "label": "Product Label",
-          "name": "label",
+          "label": "Product Name",
+          "name": "name",
           "valueType": "string"
         }
       ]

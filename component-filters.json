@@ -27,29 +27,33 @@
       "popular-recipe",
       "stay-social",
       "buy-now-card",
-      "footer-brand"
+      "footer-brand",
+      "simple-block",
+      "simple-section",
+      "scroll-to-top"
     ]
   },
   {
     "id": "banner-section",
     "components": [
-      "banner-cta-item"
+      "banner-cta"
     ]
   },
   {
-    "id": "buy-now-card"
+    "id": "buy-now-card",
+    "components": []
   },
   {
     "id": "card-carousel",
     "components": [
-      "product-card"
+      "recipe-card",
+      "social-media-share-item"
     ]
   },
   {
     "id": "footer-brand",
     "components": [
       "footer-navigation-item",
-      "footer-secondary-link-item",
       "footer-social-link-item"
     ]
   },
@@ -73,6 +77,18 @@
     ]
   },
   {
+    "id": "scroll-to-top",
+    "components": []
+  },
+  {
+    "id": "simple-block",
+    "components": []
+  },
+  {
+    "id": "simple-section",
+    "components": []
+  },
+  {
     "id": "stay-social",
     "components": [
       "stay-social-card"
@@ -81,13 +97,15 @@
   {
     "id": "text-banner",
     "components": [
-      "text-banner-cta"
+      "banner-cta-item"
     ]
   },
   {
-    "id": "w-100-pt-3-pt-sm-3"
+    "id": "w-100-pt-3-pt-sm-3",
+    "components": []
   },
   {
-    "id": "w-100"
+    "id": "w-100",
+    "components": []
   }
 ]

@@ -49,22 +49,22 @@
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
-          "valueType": "string"
-        },
-        {
           "component": "container",
           "item": "stay-social-card",
           "label": "Cards",
           "name": "cards"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "cta-label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "cta-link",
+          "valueType": "string"
         }
       ]
     },
@@ -73,13 +73,13 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
+          "label": "Card Image",
           "name": "image",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Card Link",
           "name": "link",
           "valueType": "string"
         }

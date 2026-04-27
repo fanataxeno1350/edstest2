@@ -2,76 +2,79 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const children = [...block.children];
+  // Use content detection for the first two rows which are images, then spread the rest for CTAs
+  const rows = [...block.children];
+  const desktopImageRow = rows.find(row => row.children[0]?.querySelector('picture') || row.children[0]?.querySelector('img'));
+  const mobileImageRow = rows.find(row => row !== desktopImageRow && (row.children[0]?.querySelector('picture') || row.children[0]?.querySelector('img')));
+  const ctaRows = rows.filter(row => row !== desktopImageRow && row !== mobileImageRow);
 
-  // Fixed fields: desktopImage, mobileImage
-  const [desktopImageRow, mobileImageRow, ...ctaRows] = children;
-
+  // Main wrapper
   const wrapper = document.createElement('div');
   wrapper.classList.add('position-relative', 'banner-section__wrapper', 'asp-ratio-9x16', 'asp-ratio-sm-16x9', 'd-flex', 'justify-content-center');
   moveInstrumentation(block, wrapper);
 
-  // Handle desktop and mobile images
-  const desktopPicture = desktopImageRow?.querySelector('picture');
-  const mobilePicture = mobileImageRow?.querySelector('picture');
+  // Image handling
+  const desktopImageCell = desktopImageRow?.firstElementChild;
+  const mobileImageCell = mobileImageRow?.firstElementChild;
 
-  if (desktopPicture || mobilePicture) {
-    const pictureEl = document.createElement('picture');
-    pictureEl.classList.add('d-block', 'w-100', 'h-100');
+  if (desktopImageCell || mobileImageCell) {
+    const picture = document.createElement('picture');
+    picture.classList.add('d-block', 'w-100', 'h-100');
 
-    if (mobilePicture) {
-      const mobileImg = mobilePicture.querySelector('img');
+    if (mobileImageCell) {
+      const mobileImg = mobileImageCell.querySelector('img');
       if (mobileImg) {
         const sourceMobile = document.createElement('source');
         sourceMobile.media = '(max-width:600px)';
-        sourceMobile.srcset = mobileImg.src;
-        pictureEl.appendChild(sourceMobile);
+        sourceMobile.srcset = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '600' }]).querySelector('img').src;
+        picture.appendChild(sourceMobile);
       }
     }
 
-    if (desktopPicture) {
-      const desktopImg = desktopPicture.querySelector('img');
+    if (desktopImageCell) {
+      const desktopImg = desktopImageCell.querySelector('img');
       if (desktopImg) {
         const sourceDesktop = document.createElement('source');
-        sourceDesktop.srcset = desktopImg.src;
-        pictureEl.appendChild(sourceDesktop);
+        sourceDesktop.srcset = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '2000' }]).querySelector('img').src;
+        picture.appendChild(sourceDesktop);
 
-        const imgEl = createOptimizedPicture(desktopImg.src, desktopImg.alt, true, [{ width: '750' }]).querySelector('img');
-        imgEl.classList.add('w-100', 'h-100', 'object-fit-cover', 'banner-media', 'd-block');
-        imgEl.setAttribute('loading', 'eager');
-        imgEl.setAttribute('fetchpriority', 'high');
-        pictureEl.appendChild(imgEl);
-        moveInstrumentation(desktopPicture, imgEl);
+        const img = document.createElement('img');
+        img.src = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '2000' }]).querySelector('img').src;
+        img.loading = 'eager';
+        img.fetchPriority = 'high';
+        img.alt = desktopImg.alt;
+        img.classList.add('w-100', 'h-100', 'object-fit-cover', 'banner-media', 'd-block');
+        picture.appendChild(img);
+        moveInstrumentation(desktopImageCell, img);
       }
     }
-    wrapper.appendChild(pictureEl);
+    wrapper.appendChild(picture);
   }
 
   const overlayDiv = document.createElement('div');
   overlayDiv.classList.add('position-absolute', 'start-0', 'bottom-0', 'w-100', 'h-100');
   wrapper.appendChild(overlayDiv);
 
+  // Banner content
   const bannerContent = document.createElement('div');
   bannerContent.classList.add('position-absolute', 'banner-content');
 
   const container = document.createElement('div');
   container.classList.add('container', 'sticky-element', 'gx-8', 'gx-lg-0', 'd-flex', 'justify-content-center', 'align-items-center', 'flex-column', 'start-0', 'end-0', 'bottom-0');
 
-  const ctaWrapper = document.createElement('span');
-  ctaWrapper.classList.add('text-capitalize', 'mt-6', 'mt-md-3', 'mt-lg-9', 'mb-7');
+  const ctaSpan = document.createElement('span');
+  ctaSpan.classList.add('text-capitalize', 'mt-6', 'mt-md-3', 'mt-lg-9', 'mb-7');
 
   ctaRows.forEach((row) => {
-    // Use content detection instead of index access for CTA rows
-    const cells = [...row.children];
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    const labelCell = cells.find(cell => !cell.querySelector('a')); // Assuming label cell has no anchor
+    // Destructure cells for CTA rows as per BlockJson model
+    const [labelCell, linkCell] = [...row.children];
 
-    const link = linkCell?.querySelector('a');
-    const label = labelCell?.textContent.trim();
+    const foundLink = linkCell.querySelector('a');
+    const labelText = labelCell.textContent.trim();
 
-    if (link && label) {
-      const cta = document.createElement('a');
-      cta.classList.add(
+    if (foundLink && labelText) {
+      const anchor = document.createElement('a');
+      anchor.classList.add(
         'svasti-cta',
         'cta-analytics',
         'w-fit',
@@ -91,22 +94,21 @@ export default function decorate(block) {
         'bg-maroon-100-hover',
         'bg-red-300-active',
       );
-      cta.href = link.href;
+      anchor.href = foundLink.href; // Correctly read href from the <a> tag
 
-      const ctaLabel = document.createElement('span');
-      ctaLabel.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-      ctaLabel.textContent = label;
-      cta.appendChild(ctaLabel);
-      moveInstrumentation(row, cta);
-      ctaWrapper.appendChild(cta);
+      const labelSpan = document.createElement('span');
+      labelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
+      labelSpan.textContent = labelText;
+      anchor.appendChild(labelSpan);
+      moveInstrumentation(row, anchor);
+      ctaSpan.appendChild(anchor);
     }
   });
 
-  container.appendChild(ctaWrapper);
+  container.appendChild(ctaSpan);
   bannerContent.appendChild(container);
   wrapper.appendChild(bannerContent);
 
   block.innerHTML = '';
-  block.classList.add('banner-section');
   block.appendChild(wrapper);
 }

@@ -147,25 +147,25 @@
       {
         "component": "reference",
         "label": "Desktop Image",
-        "name": "desktopImage",
+        "name": "image-desktop",
         "valueType": "string"
       },
       {
         "component": "reference",
         "label": "Mobile Image",
-        "name": "mobileImage",
+        "name": "image-mobile",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "banner-cta-item",
+        "item": "banner-cta",
         "label": "CTAs",
         "name": "ctas"
       }
     ]
   },
   {
-    "id": "banner-cta-item",
+    "id": "banner-cta",
     "fields": [
       {
         "component": "text",
@@ -182,8 +182,7 @@
     ]
   },
   {
-    "id": "buy-now-card",
-    "fields": []
+    "id": "buy-now-card"
   },
   {
     "id": "card-carousel",
@@ -201,44 +200,109 @@
         "valueType": "string"
       },
       {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      },
+      {
         "component": "container",
-        "item": "product-card",
-        "label": "Product Cards",
-        "name": "cards"
+        "item": "recipe-card",
+        "label": "Recipe Cards",
+        "name": "recipes"
+      },
+      {
+        "component": "container",
+        "item": "social-media-share-item",
+        "label": "Social Media Share Items",
+        "name": "socialMediaShare"
       }
     ]
   },
   {
-    "id": "product-card",
+    "id": "recipe-card",
     "fields": [
       {
+        "component": "aem-content",
+        "label": "Recipe Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
         "component": "reference",
-        "label": "Main Product Image",
-        "name": "mainImage",
+        "label": "Recipe Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Image Alt Text",
+        "name": "imageAlt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Tag",
+        "name": "tag",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Preparation Time",
+        "name": "time",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Serves",
+        "name": "serves",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Product Card Title/Description",
-        "name": "cardTitle",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
         "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Secondary Product Image",
-        "name": "secondaryImage",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Product Link",
-        "name": "productLink",
-        "valueType": "string"
-      },
+      }
+    ]
+  },
+  {
+    "id": "social-media-share-item",
+    "fields": [
       {
         "component": "aem-content",
-        "label": "CTA Link",
-        "name": "ctaLink",
+        "label": "Share Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Platform Name",
+        "name": "platform",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
@@ -267,14 +331,14 @@
       {
         "component": "container",
         "item": "footer-navigation-item",
-        "label": "Navigation Links",
-        "name": "navigationLinks"
+        "label": "Footer Navigation",
+        "name": "navigation"
       },
       {
         "component": "container",
-        "item": "footer-secondary-link-item",
-        "label": "Secondary Links",
-        "name": "secondaryLinks"
+        "item": "footer-social-link-item",
+        "label": "Social Links",
+        "name": "socialLinks"
       },
       {
         "component": "text",
@@ -283,10 +347,10 @@
         "valueType": "string"
       },
       {
-        "component": "container",
-        "item": "footer-social-link-item",
-        "label": "Social Links",
-        "name": "socialLinks"
+        "component": "aem-content",
+        "label": "ITC Portal Link",
+        "name": "itcPortalLink",
+        "valueType": "string"
       }
     ]
   },
@@ -331,23 +395,6 @@
     ]
   },
   {
-    "id": "footer-secondary-link-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Secondary Link Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Secondary Link",
-        "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "header-comp",
     "fields": [
       {
@@ -359,14 +406,14 @@
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logo-link",
+        "name": "logoLink",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "navigation-item",
-        "label": "Navigation",
-        "name": "navigation"
+        "label": "Navigation Menu",
+        "name": "navigationMenu"
       }
     ]
   },
@@ -375,19 +422,19 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Navigation Icon",
+        "label": "Menu Icon",
         "name": "icon",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Navigation Label",
+        "label": "Menu Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Navigation Link",
+        "label": "Menu Link",
         "name": "link",
         "valueType": "string"
       },
@@ -502,6 +549,60 @@
         "valueType": "string"
       },
       {
+        "component": "reference",
+        "label": "Ghee Background Image Desktop",
+        "name": "ghee-background-image-desktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Ghee Background Image Mobile",
+        "name": "ghee-background-image-mobile",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Ghee Description",
+        "name": "ghee-description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Ghee Download Report Link",
+        "name": "ghee-download-report-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Ghee Report Downloaded Message",
+        "name": "ghee-report-downloaded-message",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Milk Background Image Desktop",
+        "name": "milk-background-image-desktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Milk Background Image Mobile",
+        "name": "milk-background-image-mobile",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Milk Description",
+        "name": "milk-description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Milk Whatsapp Link",
+        "name": "milk-whatsapp-link",
+        "valueType": "string"
+      },
+      {
         "component": "container",
         "item": "product-item",
         "label": "Products",
@@ -520,11 +621,20 @@
       },
       {
         "component": "text",
-        "label": "Product Label",
-        "name": "label",
+        "label": "Product Name",
+        "name": "name",
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "scroll-to-top"
+  },
+  {
+    "id": "simple-block"
+  },
+  {
+    "id": "simple-section"
   },
   {
     "id": "stay-social",
@@ -542,22 +652,22 @@
         "valueType": "string"
       },
       {
-        "component": "aem-content",
-        "label": "CTA Link",
-        "name": "ctaLink",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "CTA Label",
-        "name": "ctaLabel",
-        "valueType": "string"
-      },
-      {
         "component": "container",
         "item": "stay-social-card",
         "label": "Cards",
         "name": "cards"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "cta-label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "cta-link",
+        "valueType": "string"
       }
     ]
   },
@@ -566,13 +676,13 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Image",
+        "label": "Card Image",
         "name": "image",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
+        "label": "Card Link",
         "name": "link",
         "valueType": "string"
       }
@@ -595,14 +705,14 @@
       },
       {
         "component": "container",
-        "item": "text-banner-cta",
-        "label": "CTA Buttons",
+        "item": "banner-cta-item",
+        "label": "CTAs",
         "name": "ctas"
       }
     ]
   },
   {
-    "id": "text-banner-cta",
+    "id": "banner-cta-item",
     "fields": [
       {
         "component": "text",
@@ -619,11 +729,9 @@
     ]
   },
   {
-    "id": "w-100-pt-3-pt-sm-3",
-    "fields": []
+    "id": "w-100-pt-3-pt-sm-3"
   },
   {
-    "id": "w-100",
-    "fields": []
+    "id": "w-100"
   }
 ]
