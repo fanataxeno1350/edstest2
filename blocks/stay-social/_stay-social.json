@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Social-Card",
-      "id": "social-card",
+      "title": "Stay-Social-Card",
+      "id": "stay-social-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "social-card",
-              "name": "Social-Card"
+              "model": "stay-social-card",
+              "name": "Stay-Social-Card"
             }
           }
         }
@@ -49,37 +49,37 @@
           "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "social-card",
-          "label": "Social Cards",
-          "name": "cards"
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
+          "valueType": "string"
         },
         {
           "component": "text",
           "label": "CTA Label",
-          "name": "cta-label",
+          "name": "ctaLabel",
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "CTA Link",
-          "name": "cta-link",
-          "valueType": "string"
+          "component": "container",
+          "item": "stay-social-card",
+          "label": "Cards",
+          "name": "cards"
         }
       ]
     },
     {
-      "id": "social-card",
+      "id": "stay-social-card",
       "fields": [
         {
           "component": "reference",
-          "label": "Card Image",
+          "label": "Image",
           "name": "image",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Card Link",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         }
@@ -90,7 +90,7 @@
     {
       "id": "stay-social",
       "components": [
-        "social-card"
+        "stay-social-card"
       ]
     }
   ]

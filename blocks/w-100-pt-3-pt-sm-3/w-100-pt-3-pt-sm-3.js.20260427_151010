@@ -1,0 +1,12 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // The block is empty and only serves as a container for styling.
+  // We apply the classes directly to the block element.
+  block.classList.add('w-100', 'pt-3', 'pt-sm-3');
+
+  // No content needs to be transformed or moved, as the block is purely for layout.
+  // If there were any child elements (which there aren't in the provided EDS structure),
+  // they would be processed here.
+}

@@ -11,122 +11,105 @@ export default function decorate(block) {
   container.classList.add('container', 'gx-8', 'gx-sm-0');
   section.append(container);
 
-  // Root fields: title, subtext, cta-label, cta-link, followed by item rows
-  // The BlockJson model defines 5 root fields: title, subtext, cards (container), cta-label, cta-link.
-  // The EDS block structure shows:
-  // children[0]: title
-  // children[1]: subtext
-  // children[2]: cta-label
-  // children[3]: cta-link
-  // children[4+]: item rows
+  // Title (block.children[0])
+  const titleRow = children[0];
+  const titleCell = [...titleRow.children].find(cell => cell.textContent.trim() !== '');
+  const title = document.createElement('h2');
+  title.classList.add('stay-social__title', 'font-24', 'leading-34', 'text-dark-gray-100', 'font-baskerville', 'font-sm-40', 'text-center', 'fw-bold');
+  title.textContent = titleCell?.textContent.trim() || '';
+  moveInstrumentation(titleRow, title);
+  container.append(title);
 
-  // Title
-  const titleRow = children.find((row, index) => index === 0 && row.firstElementChild && !row.firstElementChild.querySelector('a') && !row.firstElementChild.querySelector('picture'));
-  if (titleRow) {
-    const titleCell = titleRow.firstElementChild;
-    const title = document.createElement('h2');
-    title.classList.add('stay-social__title', 'font-24', 'leading-34', 'text-dark-gray-100', 'font-baskerville', 'font-sm-40', 'text-center', 'fw-bold');
-    title.textContent = titleCell.textContent.trim();
-    moveInstrumentation(titleRow, title);
-    container.append(title);
-  }
+  // Subtext (block.children[1])
+  const subtextRow = children[1];
+  const subtextCell = [...subtextRow.children].find(cell => cell.textContent.trim() !== '');
+  const subtext = document.createElement('h3');
+  subtext.classList.add('stay-social__subtext', 'font-16', 'leading-24', 'text-dark-gray-100', 'font-sm-18', 'text-center', 'fw-medium', 'mt-4');
+  subtext.textContent = subtextCell?.textContent.trim() || '';
+  moveInstrumentation(subtextRow, subtext);
+  container.append(subtext);
 
-  // Subtext
-  const subtextRow = children.find((row, index) => index === 1 && row.firstElementChild && !row.firstElementChild.querySelector('a') && !row.firstElementChild.querySelector('picture'));
-  if (subtextRow) {
-    const subtextCell = subtextRow.firstElementChild;
-    const subtext = document.createElement('h3');
-    subtext.classList.add('stay-social__subtext', 'font-16', 'leading-24', 'text-dark-gray-100', 'font-sm-18', 'text-center', 'fw-medium', 'mt-4');
-    subtext.textContent = subtextCell.textContent.trim();
-    moveInstrumentation(subtextRow, subtext);
-    container.append(subtext);
-  }
-
-  const mainDiv = document.createElement('div');
-  mainDiv.classList.add('stay-social__main', 'mt-8');
-  container.append(mainDiv);
+  const main = document.createElement('div');
+  main.classList.add('stay-social__main', 'mt-8');
+  container.append(main);
 
   const cardsList = document.createElement('ul');
   cardsList.classList.add('stay-social__cards', 'd-grid', 'gap-5', 'gap-sm-8', 'w-fit', 'mx-auto');
-  mainDiv.append(cardsList);
+  main.append(cardsList);
 
-  // CTA Label and Link are before item rows in the block structure
-  const ctaLabelRow = children.find((row, index) => index === 2 && row.firstElementChild && !row.firstElementChild.querySelector('a') && !row.firstElementChild.querySelector('picture'));
-  const ctaLinkRow = children.find((row, index) => index === 3 && row.firstElementChild && row.firstElementChild.querySelector('a'));
-
-  // Social Cards (item rows start from index 4)
-  const itemRows = children.slice(4);
-
-  itemRows.forEach((row) => {
-    const [imageCell, linkCell] = [...row.children]; // Destructuring is safe here as per EDS structure for item rows
+  // Cards
+  const cardRows = children.slice(4); // All rows after the fixed fields are card items
+  cardRows.forEach((row) => {
+    const [imageCell, linkCell] = [...row.children];
 
     const li = document.createElement('li');
-    li.classList.add('stay-social__card', 'overflow-hidden', 'ratio-1x1', 'ratio'); // Default to 1x1, adjust if needed by content
+    li.classList.add('stay-social__card', 'overflow-hidden', 'ratio-1x1', 'ratio'); // ratio-1x1 is default, will be overridden by original HTML if ratio-9x16 is present
 
-    const cardLink = document.createElement('a');
-    cardLink.classList.add('stay-social__card--link', 'd-block', 'w-100', 'h-100');
-    const foundLink = linkCell.querySelector('a');
+    const link = document.createElement('a');
+    link.classList.add('stay-social__card--link', 'd-block', 'w-100', 'h-100');
+    const foundLink = linkCell?.querySelector('a');
     if (foundLink) {
-      cardLink.href = foundLink.href;
-      cardLink.target = '_blank'; // Assuming external links from original HTML
+      link.href = foundLink.href;
+      link.target = '_blank'; // From original HTML
+      const screenReaderSpan = document.createElement('span');
+      screenReaderSpan.classList.add('cmp-link__screen-reader-only');
+      screenReaderSpan.textContent = 'opens in a new tab';
+      link.append(screenReaderSpan);
     }
-    moveInstrumentation(linkCell, cardLink);
+    moveInstrumentation(row, link);
 
-    const picture = imageCell.querySelector('picture');
+    const picture = imageCell?.querySelector('picture');
     if (picture) {
       const img = picture.querySelector('img');
       if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        optimizedPic.querySelector('img').classList.add('stay-social__card--image', 'w-100', 'h-100', 'object-fit-cover');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '600' }]);
+        optimizedPic.classList.add('stay-social__card--image', 'w-100', 'h-100', 'object-fit-cover');
+        // Copy existing sources to the optimized picture if any
+        [...picture.querySelectorAll('source')].forEach((source) => {
+          optimizedPic.prepend(source.cloneNode(true));
+        });
         moveInstrumentation(img, optimizedPic.querySelector('img'));
-        cardLink.append(optimizedPic);
+        link.append(optimizedPic);
       }
     }
-    moveInstrumentation(imageCell, cardLink);
-
-    const screenReaderSpan = document.createElement('span');
-    screenReaderSpan.classList.add('cmp-link__screen-reader-only');
-    screenReaderSpan.textContent = 'opens in a new tab';
-    cardLink.append(screenReaderSpan);
-
-    li.append(cardLink);
+    li.append(link);
     cardsList.append(li);
   });
 
-  // CTA Button
+  // CTA Button (block.children[2] for link, block.children[3] for label)
+  const ctaLinkRow = children[2];
+  const ctaLinkCell = [...ctaLinkRow.children].find(cell => cell.querySelector('a'));
+
+  const ctaLabelRow = children[3];
+  const ctaLabelCell = [...ctaLabelRow.children].find(cell => cell.textContent.trim() !== '');
+
   const ctaWrapper = document.createElement('div');
   ctaWrapper.classList.add('d-flex', 'align-items-center', 'justify-content-center', 'mt-8', 'mt-lg-10');
   section.append(ctaWrapper);
 
   const ctaLink = document.createElement('a');
-  ctaLink.classList.add('svasti-cta', 'w-fit', 'text-decoration-none', 'd-flex', 'align-items-center',
-    'primary', 'px-8', 'pb-3', 'text-cream-100', 'border', 'border-2', 'border-red-100',
-    'border-maroon-100-hover', 'border-red-300-active', 'bg-red-100', 'bg-maroon-100-hover', 'bg-red-300-active');
+  ctaLink.classList.add('svasti-cta', 'w-fit', 'text-decoration-none', 'd-flex', 'align-items-center', 'primary', 'px-8', 'pb-3', 'text-cream-100', 'border', 'border-2', 'border-red-100', 'border-maroon-100-hover', 'border-red-300-active', 'bg-red-100', 'bg-maroon-100-hover', 'bg-red-300-active');
 
-  if (ctaLinkRow) {
-    const foundCtaLink = ctaLinkRow.firstElementChild.querySelector('a');
-    if (foundCtaLink) {
-      ctaLink.href = foundCtaLink.href;
-      ctaLink.target = '_blank';
-    }
-    moveInstrumentation(ctaLinkRow, ctaLink);
+  const foundCtaLink = ctaLinkCell?.querySelector('a');
+  if (foundCtaLink) {
+    ctaLink.href = foundCtaLink.href;
+    ctaLink.target = '_blank'; // From original HTML
   }
 
+  const ctaLabelSpan = document.createElement('span');
+  ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
+  ctaLabelSpan.textContent = ctaLabelCell?.textContent.trim() || '';
+  ctaLink.append(ctaLabelSpan);
 
-  if (ctaLabelRow) {
-    const ctaLabelSpan = document.createElement('span');
-    ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-    ctaLabelSpan.textContent = ctaLabelRow.firstElementChild.textContent.trim();
-    moveInstrumentation(ctaLabelRow, ctaLabelSpan);
-    ctaLink.append(ctaLabelSpan);
+  if (ctaLink.target === '_blank') {
+    const screenReaderSpan = document.createElement('span');
+    screenReaderSpan.classList.add('cmp-link__screen-reader-only');
+    screenReaderSpan.textContent = 'opens in a new tab';
+    ctaLink.append(screenReaderSpan);
   }
 
-
-  const ctaScreenReaderSpan = document.createElement('span');
-  ctaScreenReaderSpan.classList.add('cmp-link__screen-reader-only');
-  ctaScreenReaderSpan.textContent = 'opens in a new tab';
-  ctaLink.append(ctaScreenReaderSpan);
-
+  moveInstrumentation(ctaLinkRow, ctaLink);
+  moveInstrumentation(ctaLabelRow, ctaLink);
   ctaWrapper.append(ctaLink);
 
   block.innerHTML = '';

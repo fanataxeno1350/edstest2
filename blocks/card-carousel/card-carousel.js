@@ -2,538 +2,241 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [
-    titleRow,
-    subtitleRow,
-    ctaLinkRow,
-    ctaLabelRow,
-    ...itemRows
-  ] = [...block.children];
+  const rows = [...block.children];
 
-  // Section container
   const section = document.createElement('section');
   section.classList.add('card-carousel');
   moveInstrumentation(block, section);
 
-  // Main container for title, subtitle
   const container = document.createElement('div');
   container.classList.add('container', 'gx-8', 'gx-sm-0');
-  section.appendChild(container);
 
-  // Title
-  const title = document.createElement('h2');
-  title.classList.add(
-    'card-carousel__title',
-    'font-24',
-    'leading-28',
-    'font-sm-40',
-    'leading-sm-50',
-    'text-dark-gray-100',
-    'text-center',
-    'font-baskerville',
-  );
-  title.textContent = titleRow?.textContent.trim() || '';
-  moveInstrumentation(titleRow, title);
-  container.appendChild(title);
+  // Check 0 & 1: Content detection for title and subtitle rows
+  // Model: card-carousel has 'title' and 'subtitle' as root fields.
+  // They are plain text, so we can detect them by checking if they are the first two rows
+  // and contain only text (no images or links).
+  const titleRow = rows.shift(); // First row is title
+  const subtitleRow = rows.shift(); // Second row is subtitle
+  const cardRows = rows; // Remaining rows are card items
 
-  // Subtitle
-  const subtitle = document.createElement('p');
-  subtitle.classList.add(
-    'card-carousel__subtitle',
-    'font-default',
-    'leading-24',
-    'font-sm-18',
-    'leading-sm-32',
-    'text-dark-gray-100',
-    'text-center',
-    'mt-4',
-    'fw-medium',
-  );
-  subtitle.textContent = subtitleRow?.textContent.trim() || '';
-  moveInstrumentation(subtitleRow, subtitle);
-  container.appendChild(subtitle);
+  if (titleRow) {
+    const titleCell = titleRow.firstElementChild;
+    const title = document.createElement('h2');
+    title.classList.add(
+      'card-carousel__title',
+      'font-24',
+      'leading-28',
+      'font-sm-40',
+      'leading-sm-50',
+      'text-dark-gray-100',
+      'text-center',
+      'font-baskerville',
+    );
+    moveInstrumentation(titleCell, title);
+    title.textContent = titleCell.textContent.trim();
+    container.append(title);
+  }
 
-  // Swiper container
+  if (subtitleRow) {
+    const subtitleCell = subtitleRow.firstElementChild;
+    const subtitle = document.createElement('p');
+    subtitle.classList.add(
+      'card-carousel__subtitle',
+      'font-default',
+      'leading-24',
+      'font-sm-18',
+      'leading-sm-32',
+      'text-dark-gray-100',
+      'text-center',
+      'mt-4',
+      'fw-medium',
+    );
+    moveInstrumentation(subtitleCell, subtitle);
+    subtitle.textContent = subtitleCell.textContent.trim();
+    container.append(subtitle);
+  }
+
+  section.append(container);
+
+  const swiperSection = document.createElement('div');
+  swiperSection.classList.add('card-carousel__swiper', 'swiper', 'container', 'gx-0');
+
   const swiperContainer = document.createElement('div');
-  swiperContainer.classList.add('card-carousel__swiper', 'swiper', 'container', 'gx-0');
-  swiperContainer.setAttribute('data-loop', 'true');
-  section.appendChild(swiperContainer);
+  swiperContainer.classList.add('card-carousel__swiper--container', 'mt-8', 'mt-sm-10');
 
-  const swiperWrapper = document.createElement('div');
-  swiperWrapper.classList.add('card-carousel__swiper--container', 'mt-8', 'mt-sm-10');
-  swiperContainer.appendChild(swiperWrapper);
-
-  const popularRecipeContainer = document.createElement('div');
-  popularRecipeContainer.classList.add(
-    'popular-recipe__container',
+  const productCardsContainer = document.createElement('div');
+  productCardsContainer.classList.add(
+    'product-cards__card-container',
+    'mx-4',
+    'mx-sm-0',
     'overflow-hidden',
+    'add-margin',
     'swiper-initialized',
     'swiper-horizontal',
     'swiper-backface-hidden',
   );
-  popularRecipeContainer.setAttribute('data-swiper-init-async', 'true');
-  swiperWrapper.appendChild(popularRecipeContainer);
 
-  const swiperInnerWrapper = document.createElement('div');
-  swiperInnerWrapper.classList.add('swiper-wrapper', 'popular-recipe__recipe-wrapper');
-  popularRecipeContainer.appendChild(swiperInnerWrapper);
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('swiper-wrapper', 'slide-in-anim');
 
-  const recipeCards = itemRows.filter((row) => row.children.length === 9);
-  const socialShareItems = itemRows.filter((row) => row.children.length === 2);
+  cardRows.forEach((row) => {
+    // Check 0: Replaced row.children[n] with content detection for item cells
+    // Model: product-card has 5 fields: mainImage (reference), cardTitle (richtext),
+    // secondaryImage (reference), productLink (aem-content), ctaLink (aem-content).
+    // We can use querySelector to reliably find these.
+    const cells = [...row.children];
+    const mainImageCell = cells.find(cell => cell.querySelector('picture'));
+    const cardTitleCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.innerHTML.includes('<p>')); // Richtext often contains <p>
+    const secondaryImageCell = cells.find(cell => cell !== mainImageCell && cell.querySelector('picture'));
+    const productLinkCell = cells.find(cell => cell !== ctaLinkCell && cell.querySelector('a'));
+    const ctaLinkCell = cells.find(cell => cell !== productLinkCell && cell.querySelector('a'));
 
-  recipeCards.forEach((row, index) => {
-    const [
-      linkCell,
-      imageCell,
-      imageAltCell,
-      tagCell,
-      recipeTitleCell,
-      descriptionCell,
-      timeCell,
-      servesCell,
-      hierarchyCell,
-    ] = [...row.children];
 
-    const slide = document.createElement('div');
-    slide.classList.add('swiper-slide');
-    if (index === 0) {
-      slide.classList.add('swiper-slide-active');
-    } else if (index === 1) {
-      slide.classList.add('swiper-slide-next');
-    }
-    swiperInnerWrapper.appendChild(slide);
+    const card = document.createElement('div');
+    card.classList.add(
+      'product-cards__card',
+      'swiper-slide',
+      'd-flex',
+      'flex-column',
+      'cursor-pointer',
+    );
+    moveInstrumentation(row, card);
 
-    const recipeCard = document.createElement('div');
-    recipeCard.classList.add('recipe-card', 'bg-cream-100', 'h-100');
-    slide.appendChild(recipeCard);
+    const media = document.createElement('div');
+    media.classList.add('product-cards__card-media', 'position-relative');
 
-    const recipeLink = document.createElement('a');
-    recipeLink.classList.add('recipe-card__link', 'd-block', 'position-relative');
-    recipeLink.href = linkCell?.querySelector('a')?.href || '#';
-    moveInstrumentation(linkCell, recipeLink);
-    recipeCard.appendChild(recipeLink);
+    const ratioWrapper = document.createElement('div');
+    ratioWrapper.classList.add('ratio', 'ratio-3x4', 'position-relative', 'product-cards__card-video-wrapper');
 
-    const picture = imageCell?.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(
-          img.src,
-          imageAltCell?.textContent.trim() || img.alt,
-          false,
-          [{ width: '750' }],
-        );
-        optimizedPic.querySelector('img').classList.add('recipe-card__image', 'object-fit-cover', 'w-100');
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        recipeLink.appendChild(optimizedPic);
+    if (mainImageCell) {
+      const mainPicture = mainImageCell.querySelector('picture');
+      if (mainPicture) {
+        const mainImg = mainPicture.querySelector('img');
+        const optimizedMainPic = createOptimizedPicture(mainImg.src, mainImg.alt, false, [{ width: '750' }]);
+        const optimizedMainImg = optimizedMainPic.querySelector('img');
+        optimizedMainImg.classList.add('product-cards__card-thumb', 'object-fit-cover');
+        moveInstrumentation(mainImg, optimizedMainImg);
+        mainPicture.replaceWith(optimizedMainPic);
+        ratioWrapper.append(optimizedMainPic);
       }
     }
 
-    const content = document.createElement('div');
-    content.classList.add('recipe-card__content', 'py-6');
-    recipeLink.appendChild(content);
-
-    const info = document.createElement('div');
-    info.classList.add('recipe-card__info', 'd-flex', 'align-items-center', 'justify-content-between');
-    content.appendChild(info);
-
-    const tag = document.createElement('span');
-    tag.classList.add(
-      'recipe-card__tag',
-      'text-uppercase',
-      'text-red-100',
-      'font-14',
-      'font-xl-default',
-      'leading-24',
-      'fw-semibold',
+    const cardGradient = document.createElement('div');
+    cardGradient.classList.add(
+      'card-gradient',
+      'position-absolute',
+      'top-0',
+      'bottom-0',
+      'start-0',
+      'end-0',
     );
-    tag.textContent = tagCell?.textContent.trim() || '';
-    moveInstrumentation(tagCell, tag);
-    info.appendChild(tag);
+    ratioWrapper.append(cardGradient);
+    media.append(ratioWrapper);
 
-    const shareSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    shareSvg.classList.add('icon', 'share', 'text-dark-gray-100');
-    const shareUse = document.createElementNS('http://www.w3.org/1999/xlink', 'href', '/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#share');
-    shareSvg.appendChild(shareUse);
-    info.appendChild(shareSvg);
-
-    const textDiv = document.createElement('div');
-    textDiv.classList.add('recipe-card__text');
-    content.appendChild(textDiv);
-
-    const recipeTitle = document.createElement('h3');
-    recipeTitle.classList.add(
-      'recipe-card__title',
-      'font-20',
-      'font-xl-24',
-      'leading-24',
-      'leading-xl-30',
-      'font-baskerville',
-      'fw-bold',
-      'text-dark-gray-100',
-      'mt-4',
+    const cardTitle = document.createElement('div');
+    cardTitle.classList.add(
+      'product-cards__card-title',
+      'position-absolute',
+      'top-0',
+      'text-white',
+      'px-5',
+      'pt-4',
+      'text-cream-100',
+      'leading-32',
     );
-    recipeTitle.textContent = recipeTitleCell?.textContent.trim() || '';
-    moveInstrumentation(recipeTitleCell, recipeTitle);
-    textDiv.appendChild(recipeTitle);
-
-    const description = document.createElement('p');
-    description.classList.add(
-      'recipe-card__desc',
-      'font-default',
-      'font-xl-18',
-      'leading-24',
-      'fw-medium',
-      'text-dark-gray-100',
-      'mt-4',
-    );
-    description.textContent = descriptionCell?.textContent.trim() || '';
-    moveInstrumentation(descriptionCell, description);
-    textDiv.appendChild(description);
-
-    const wave = document.createElement('div');
-    wave.classList.add('recipe-card__wave', 'mt-11', 'mt-xl-7', 'w-100');
-    content.appendChild(wave);
-
-    const properties = document.createElement('ul');
-    properties.classList.add('recipe-card__properties', 'mt-4', 'd-flex', 'align-items-center');
-    content.appendChild(properties);
-
-    const timeProperty = document.createElement('li');
-    timeProperty.classList.add(
-      'recipe-card__property',
-      'recipe-card__property--left',
-      'd-flex',
-      'align-items-center',
-    );
-    properties.appendChild(timeProperty);
-
-    const clockSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    clockSvg.classList.add('icon', 'clock', 'text-dark-gray-100');
-    const clockUse = document.createElementNS('http://www.w3.org/1999/xlink', 'href', '/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#clock');
-    clockSvg.appendChild(clockUse);
-    timeProperty.appendChild(clockSvg);
-
-    const timeSpan = document.createElement('span');
-    timeSpan.classList.add(
-      'recipe-card__time',
-      'text-dark-gray-100',
-      'font-14',
-      'font-xl-default',
-      'leading-20',
-      'fw-medium',
-      'ms-2',
-      'd-inline-block',
-      'text-nowrap',
-    );
-    timeSpan.textContent = timeCell?.textContent.trim() || '';
-    moveInstrumentation(timeCell, timeSpan);
-    timeProperty.appendChild(timeSpan);
-
-    const servesProperty = document.createElement('li');
-    servesProperty.classList.add(
-      'recipe-card__property',
-      'recipe-card__property--right',
-      'flex-fill',
-      'd-flex',
-      'align-items-center',
-      'justify-content-end',
-    );
-    properties.appendChild(servesProperty);
-
-    const peopleSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    peopleSvg.classList.add('icon', 'people', 'text-dark-gray-100');
-    const peopleUse = document.createElementNS('http://www.w3.org/1999/xlink', 'href', '/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#people');
-    peopleSvg.appendChild(peopleUse);
-    servesProperty.appendChild(peopleSvg);
-
-    const servesSpan = document.createElement('span');
-    servesSpan.classList.add(
-      'serve-content',
-      'recipe-card__serves',
-      'text-dark-gray-100',
-      'font-14',
-      'font-xl-default',
-      'leading-20',
-      'fw-medium',
-      'ms-2',
-      'd-inline-block',
-    );
-    servesSpan.textContent = servesCell?.textContent.trim() || '';
-    moveInstrumentation(servesCell, servesSpan);
-    servesProperty.appendChild(servesSpan);
-
-    // Handle hierarchy-tree richtext
-    if (hierarchyCell) {
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = hierarchyCell.innerHTML;
-      moveInstrumentation(hierarchyCell, tempDiv);
-
-      tempDiv.querySelectorAll('ul').forEach((ul) => {
-        ul.classList.add('recipe-card__hierarchy-list'); // Example class, adjust as needed
-      });
-      tempDiv.querySelectorAll('li').forEach((li) => {
-        li.classList.add('recipe-card__hierarchy-item'); // Example class, adjust as needed
-      });
-      tempDiv.querySelectorAll('a').forEach((a) => {
-        a.classList.add('recipe-card__hierarchy-link'); // Example class, adjust as needed
-      });
-
-      // Append the processed hierarchy content to the recipeCard or another appropriate element
-      // For this block, it's not explicitly rendered in the original HTML, so we'll append it
-      // to the content div for now, but in a real scenario, its placement would be defined.
-      // If it's not meant to be rendered, this block could be removed.
-      // For demonstration, let's append it to the content div.
-      const hierarchyWrapper = document.createElement('div');
-      hierarchyWrapper.classList.add('recipe-card__hierarchy-wrapper', 'mt-4');
-      while (tempDiv.firstChild) {
-        hierarchyWrapper.appendChild(tempDiv.firstChild);
-      }
-      content.appendChild(hierarchyWrapper);
+    // Check 1.5: Richtext field 'cardTitle' uses innerHTML
+    if (cardTitleCell) {
+      cardTitle.innerHTML = cardTitleCell.innerHTML;
     }
-  });
+    media.append(cardTitle);
 
-  const popularRecipeShare = document.createElement('div');
-  popularRecipeShare.classList.add('popular-recipe__share');
-  swiperWrapper.appendChild(popularRecipeShare);
+    const cardImgWrapper = document.createElement('div');
+    cardImgWrapper.classList.add(
+      'product-cards__card-img',
+      'pt-lg-8',
+      'pt-sm-6',
+      'pt-8',
+      'pb-3',
+      'bg-cream-300',
+      'position-absolute',
+      'start-50',
+      'top-100',
+      'rounded-top-circle',
+    );
 
-  const socialMediaShare = document.createElement('section');
-  socialMediaShare.classList.add(
-    'social-media-share',
-    'd-none',
-    'w-100',
-    'justify-content-center',
-    'align-items-center',
-    'position-fixed',
-    'top-0',
-    'start-0',
-    'end-0',
-    'bottom-0',
-    'z-2',
-  );
-  popularRecipeShare.appendChild(socialMediaShare);
+    const ratio1x1 = document.createElement('div');
+    ratio1x1.classList.add('ratio', 'ratio-1x1');
 
-  const shareWrapper = document.createElement('div');
-  shareWrapper.classList.add(
-    'social-media-share__wrapper',
-    'bg-cream-100',
-    'py-8',
-    'px-3',
-    'px-md-8',
-  );
-  socialMediaShare.appendChild(shareWrapper);
+    const productLink = document.createElement('a');
+    productLink.classList.add('cta-analytics');
+    if (productLinkCell) {
+      const productLinkHref = productLinkCell.querySelector('a')?.href;
+      if (productLinkHref) {
+        productLink.href = productLinkHref;
+      }
+    }
 
-  const titleClose = document.createElement('div');
-  titleClose.classList.add(
-    'social-media-share__wrapper--title-close',
-    'pb-8',
-    'd-flex',
-    'mx-3',
-    'mx-md-0',
-    'border-bottom',
-    'border-dark-gray-100',
-    'align-items-center',
-    'justify-content-between',
-  );
-  shareWrapper.appendChild(titleClose);
 
-  const closeButton = document.createElement('div');
-  closeButton.classList.add('social-media-share__wrapper--close');
-  const crossSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  crossSvg.classList.add('icon', 'cross', 'text-black', 'h-100', 'w-100');
-  const crossUse = document.createElementNS('http://www.w3.org/1999/xlink', 'href', '/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#cross');
-  crossSvg.appendChild(crossUse);
-  closeButton.appendChild(crossSvg);
-  titleClose.appendChild(closeButton);
+    if (secondaryImageCell) {
+      const secondaryPicture = secondaryImageCell.querySelector('picture');
+      if (secondaryPicture) {
+        const secondaryImg = secondaryPicture.querySelector('img');
+        const optimizedSecondaryPic = createOptimizedPicture(secondaryImg.src, secondaryImg.alt, false, [{ width: '750' }]);
+        const optimizedSecondaryImg = optimizedSecondaryPic.querySelector('img');
+        optimizedSecondaryImg.classList.add('w-100', 'h-100', 'object-fit-contain');
+        moveInstrumentation(secondaryImg, optimizedSecondaryImg);
+        secondaryPicture.replaceWith(optimizedSecondaryPic);
+        productLink.append(optimizedSecondaryPic);
+      }
+    }
+    ratio1x1.append(productLink);
+    cardImgWrapper.append(ratio1x1);
+    media.append(cardImgWrapper);
+    card.append(media);
 
-  closeButton.addEventListener('click', () => {
-    socialMediaShare.classList.add('d-none');
-  });
+    const ctaWrapper = document.createElement('div');
+    ctaWrapper.classList.add('mt-6', 'align-self-center');
 
-  const socialIconsWrapper = document.createElement('div');
-  socialIconsWrapper.classList.add(
-    'social-media-share__wrapper--social-icons',
-    'pt-8',
-    'd-flex',
-    'overflow-hidden',
-    'swiper-initialized',
-    'swiper-horizontal',
-  );
-  shareWrapper.appendChild(socialIconsWrapper);
-
-  const socialIconsInner = document.createElement('div');
-  socialIconsInner.classList.add('social-media-share__wrapper--social-icons-wrapper', 'swiper-wrapper', 'px-3', 'px-md-0');
-  socialIconsInner.setAttribute('data-page-url', '#');
-  socialIconsWrapper.appendChild(socialIconsInner);
-
-  socialShareItems.forEach((row) => {
-    const [linkCell, labelCell] = [...row.children];
-
-    const iconLabel = document.createElement('div');
-    iconLabel.classList.add('social-media-share__wrapper--icon-label', 'swiper-slide', 'd-flex', 'align-items-center');
-    socialIconsInner.appendChild(iconLabel);
-
-    const socialLink = document.createElement('a');
-    socialLink.classList.add(
-      'social-media-share__link',
-      'd-flex',
-      'align-items-center',
-      'text-decoration-none',
-      'gap-4',
+    const ctaLink = document.createElement('a');
+    ctaLink.classList.add(
+      'cta-analytics',
+      'svasti-cta',
       'w-fit',
-      'flex-md-column',
-      'justify-content-center',
-    );
-    socialLink.href = linkCell?.querySelector('a')?.href || '#';
-    socialLink.target = '_blank';
-    moveInstrumentation(linkCell, socialLink);
-    iconLabel.appendChild(socialLink);
-
-    const iconsDiv = document.createElement('div');
-    iconsDiv.classList.add(
-      'social-media-share__wrapper--icons',
-      'rounded-circle',
-      'bg-white',
+      'text-decoration-none',
       'd-flex',
-      'justify-content-center',
       'align-items-center',
+      'primary',
+      'px-8',
+      'pb-3',
+      'text-cream-100',
+      'border',
+      'border-2',
+      'border-red-100',
+      'border-maroon-100-hover',
+      'border-red-300-active',
+      'bg-red-100',
+      'bg-maroon-100-hover',
+      'bg-red-300-active',
     );
-    socialLink.appendChild(iconsDiv);
-
-    const linkDiv = document.createElement('div');
-    linkDiv.classList.add('social-media-share__wrapper--link', 'text-decoration-none');
-    iconsDiv.appendChild(linkDiv);
-
-    const labelText = labelCell?.textContent.trim().toLowerCase() || '';
-    const socialSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    socialSvg.classList.add('icon', 'text-black', 'social-media-share__wrapper--images');
-    let iconName = '';
-    if (labelText.includes('facebook')) {
-      iconName = 'facebook';
-    } else if (labelText.includes('whatsapp')) {
-      iconName = 'whatsapp_icon';
-    } else if (labelText.includes('x')) {
-      iconName = 'twitterX';
+    if (ctaLinkCell) {
+      const ctaLinkHref = ctaLinkCell.querySelector('a')?.href;
+      if (ctaLinkHref) {
+        ctaLink.href = ctaLinkHref;
+      }
+      moveInstrumentation(ctaLinkCell, ctaLink);
     }
-    socialSvg.classList.add(iconName);
-    const socialUse = document.createElementNS('http://www.w3.org/1999/xlink', 'href', `/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#${iconName}`);
-    socialSvg.appendChild(socialUse);
-    linkDiv.appendChild(socialSvg);
+    ctaLink.textContent = 'Explore More'; // Text content is hardcoded, not from cell
+    ctaWrapper.append(ctaLink);
+    card.append(ctaWrapper);
 
-    const labelDiv = document.createElement('div');
-    labelDiv.classList.add(
-      'social-media-share__wrapper--label',
-      'text-center',
-      'font-16',
-      'leading-22',
-      'text-black',
-    );
-    labelDiv.setAttribute('data-socialmedia-name', iconName);
-    labelDiv.textContent = labelCell?.textContent.trim() || '';
-    moveInstrumentation(labelCell, labelDiv);
-    socialLink.appendChild(labelDiv);
-
-    const srOnlySpan = document.createElement('span');
-    srOnlySpan.classList.add('cmp-link__screen-reader-only');
-    srOnlySpan.textContent = 'opens in a new tab';
-    socialLink.appendChild(srOnlySpan);
-
-    const hiddenInput = document.createElement('input');
-    hiddenInput.type = 'hidden';
-    hiddenInput.classList.add('social-media-share__wrapper--url');
-    hiddenInput.value = iconName;
-    iconLabel.appendChild(hiddenInput);
+    swiperWrapper.append(card);
   });
+
+  productCardsContainer.append(swiperWrapper);
+  swiperContainer.append(productCardsContainer);
 
   const prevButton = document.createElement('button');
   prevButton.classList.add(
-    'social-media-share__button',
-    'bg-transparent',
-    'border-0',
-    'social-media-share__prev',
-    'd-none',
-    'z-2',
-    'd-md-block',
-    'position-absolute',
-    'swiper-button-prev',
-  );
-  const prevSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  prevSvg.classList.add('icon', 'carousel-right-arrow-v2', 'h-100', 'w-100', 'text-red-100');
-  const prevUse = document.createElementNS('http://www.w3.org/1999/xlink', 'href', '/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#arrow_right_carousel_v2');
-  prevSvg.appendChild(prevUse);
-  prevButton.appendChild(prevSvg);
-  socialIconsWrapper.appendChild(prevButton);
-
-  const nextButton = document.createElement('button');
-  nextButton.classList.add(
-    'social-media-share__button',
-    'bg-transparent',
-    'border-0',
-    'social-media-share__next',
-    'd-none',
-    'z-2',
-    'd-md-block',
-    'position-absolute',
-    'swiper-button-next',
-  );
-  const nextSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  nextSvg.classList.add('icon', 'carousel-right-arrow-v2', 'h-100', 'w-100', 'text-red-100');
-  const nextUse = document.createElementNS('http://www.w3.org/1999/xlink', 'href', '/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#arrow_right_carousel_v2');
-  nextSvg.appendChild(nextUse);
-  nextButton.appendChild(nextSvg);
-  socialIconsWrapper.appendChild(nextButton);
-
-  const inputButtonWrapper = document.createElement('div');
-  inputButtonWrapper.classList.add(
-    'social-media-share__wrapper--input-button',
-    'd-flex',
-    'align-items-center',
-    'mt-8',
-    'justify-content-md-center',
-    'flex-column',
-    'flex-md-row',
-  );
-  shareWrapper.appendChild(inputButtonWrapper);
-
-  const inputField = document.createElement('input');
-  inputField.type = 'text';
-  inputField.classList.add(
-    'social-media-share__wrapper--input',
-    'bg-white',
-    'font-16',
-    'leading-22',
-    'px-4',
-    'py-3',
-    'shadow-none',
-  );
-  inputButtonWrapper.appendChild(inputField);
-
-  const copyButton = document.createElement('button');
-  copyButton.classList.add(
-    'social-media-share__wrapper--button',
-    'font-18',
-    'leading-24',
-    'py-4',
-    'px-8',
-    'fw-bold',
-    'text-white',
-  );
-  copyButton.textContent = 'Copy';
-  inputButtonWrapper.appendChild(copyButton);
-
-  // Event listener for copy button
-  copyButton.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(inputField.value);
-      // Optionally, provide user feedback
-      console.log('Link copied to clipboard!');
-    } catch (err) {
-      console.error('Failed to copy: ', err);
-    }
-  });
-
-  const swiperNavPrev = document.createElement('button');
-  swiperNavPrev.classList.add(
     'card-carousel__swiper--prev',
     'card-carousel__navigation',
     'cursor-pointer',
@@ -546,16 +249,18 @@ export default function decorate(block) {
     'position-absolute',
     'd-none',
     'd-sm-flex',
+    'opacity-30',
   );
-  const swiperNavPrevSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  swiperNavPrevSvg.classList.add('icon', 'w-100', 'h-100');
-  const swiperNavPrevUse = document.createElementNS('http://www.w3.org/1999/xlink', 'href', '/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#arrow_right_carousel');
-  swiperNavPrevSvg.appendChild(swiperNavPrevUse);
-  swiperNavPrev.appendChild(swiperNavPrevSvg);
-  swiperWrapper.appendChild(swiperNavPrev);
+  prevButton.disabled = true;
+  prevButton.innerHTML = `
+    <svg class="icon w-100 h-100">
+      <use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#arrow_right_carousel"></use>
+    </svg>
+  `;
+  swiperContainer.append(prevButton);
 
-  const swiperNavNext = document.createElement('button');
-  swiperNavNext.classList.add(
+  const nextButton = document.createElement('button');
+  nextButton.classList.add(
     'card-carousel__swiper--next',
     'card-carousel__navigation',
     'cursor-pointer',
@@ -570,12 +275,14 @@ export default function decorate(block) {
     'd-none',
     'd-sm-flex',
   );
-  const swiperNavNextSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  swiperNavNextSvg.classList.add('icon', 'w-100', 'h-100');
-  const swiperNavNextUse = document.createElementNS('http://www.w3.org/1999/xlink', 'href', '/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#arrow_right_carousel');
-  swiperNavNextSvg.appendChild(swiperNavNextUse);
-  swiperNavNext.appendChild(swiperNavNextSvg);
-  swiperWrapper.appendChild(swiperNavNext);
+  nextButton.innerHTML = `
+    <svg class="icon w-100 h-100">
+      <use xlink:href="/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/sprite-1f1f4c.svg#arrow_right_carousel"></use>
+    </svg>
+  `;
+  swiperContainer.append(nextButton);
+
+  swiperSection.append(swiperContainer);
 
   const pagination = document.createElement('div');
   pagination.classList.add(
@@ -589,42 +296,59 @@ export default function decorate(block) {
     'mx-auto',
     'w-fit',
   );
-  swiperContainer.appendChild(pagination);
+  swiperSection.append(pagination);
 
-  const ctaButtonWrapper = document.createElement('div');
-  ctaButtonWrapper.classList.add('d-flex', 'justify-content-center', 'align-items-center', 'mt-8');
-  section.appendChild(ctaButtonWrapper);
-
-  const ctaLink = document.createElement('a');
-  ctaLink.classList.add(
-    'svasti-cta',
-    'cta-analytics',
-    'w-fit',
-    'text-decoration-none',
-    'd-flex',
-    'align-items-center',
-    'primary',
-    'px-8',
-    'pb-3',
-    'text-cream-100',
-    'border',
-    'border-2',
-    'border-red-100',
-    'border-maroon-100-hover',
-    'border-red-300-active',
-    'bg-red-100',
-    'bg-maroon-100-hover',
-    'bg-red-300-active',
-  );
-  ctaLink.href = ctaLinkRow?.querySelector('a')?.href || '#';
-  moveInstrumentation(ctaLinkRow, ctaLink);
-  ctaButtonWrapper.appendChild(ctaLink);
-
-  const ctaLabel = document.createElement('span');
-  ctaLabel.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-  ctaLabel.textContent = ctaLabelRow?.textContent.trim() || '';
-  moveInstrumentation(ctaLabelRow, ctaLabel);
-  ctaLink.appendChild(ctaLabel);
+  section.append(swiperSection);
 
   block.replaceWith(section);
+
+  // Swiper initialization
+  let swiper = null;
+  const initSwiper = async () => {
+    const { default: Swiper } = await import('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs');
+    swiper = new Swiper(productCardsContainer, {
+      slidesPerView: 'auto',
+      spaceBetween: 32,
+      loop: false,
+      navigation: {
+        nextEl: nextButton,
+        prevEl: prevButton,
+      },
+      pagination: {
+        el: pagination,
+        clickable: true,
+        renderBullet: (index, className) => `<span class="${className}"></span>`, // Removed inline style, Swiper handles positioning
+      },
+      on: {
+        init() {
+          updateNavigationButtons();
+        },
+        slideChange() {
+          updateNavigationButtons();
+        },
+      },
+    });
+
+    function updateNavigationButtons() {
+      if (swiper) {
+        if (swiper.isBeginning) {
+          prevButton.disabled = true;
+          prevButton.classList.add('opacity-30');
+        } else {
+          prevButton.disabled = false;
+          prevButton.classList.remove('opacity-30');
+        }
+
+        if (swiper.isEnd) {
+          nextButton.disabled = true;
+          nextButton.classList.add('opacity-30');
+        } else {
+          nextButton.disabled = false;
+          nextButton.classList.remove('opacity-30');
+        }
+      }
+    }
+  };
+
+  initSwiper();
 }

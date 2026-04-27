@@ -1,0 +1,30 @@
+{
+  "definitions": [
+    {
+      "title": "W-100",
+      "id": "w-100",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "w-100",
+              "model": "w-100",
+              "name": "W-100"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "w-100"
+    }
+  ],
+  "filters": [
+    {
+      "id": "w-100"
+    }
+  ]
+}

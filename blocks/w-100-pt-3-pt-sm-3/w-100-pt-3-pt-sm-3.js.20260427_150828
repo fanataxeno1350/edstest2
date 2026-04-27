@@ -1,0 +1,11 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // The block has no fields in its model, so it only serves as a container
+  // for classes. We just need to apply the classes from the original HTML.
+  block.classList.add('w-100', 'pt-3', 'pt-sm-3');
+
+  // Since there are no authorable fields, there's no content to move or transform.
+  // The block itself is the final element.
+}

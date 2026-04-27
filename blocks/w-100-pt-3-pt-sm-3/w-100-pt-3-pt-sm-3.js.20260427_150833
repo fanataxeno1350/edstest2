@@ -1,0 +1,10 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // Apply classes from ORIGINAL HTML to the block element.
+  block.classList.add('w-100', 'pt-3', 'pt-sm-3');
+
+  // The block has no fields, so there are no children to process.
+  // The block itself is the final rendered element with the desired classes.
+}

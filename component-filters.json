@@ -17,51 +17,53 @@
       "columns",
       "fragment",
       "---new--blocks-----",
-      "main-header",
-      "spotlight-home",
-      "what-we-do-wrap",
-      "purpose-led-grid",
-      "spirit-of-rise",
-      "latest-stories",
-      "work-with-us",
-      "faqs-section",
-      "footer-main",
-      "spotlight-home-wrap",
       "header-comp",
       "banner-section",
+      "w-100-pt-3-pt-sm-3",
       "text-banner",
       "product-selection-component",
+      "w-100",
       "card-carousel",
+      "popular-recipe",
       "stay-social",
-      "scroll-to-top",
+      "buy-now-card",
       "footer-brand"
     ]
   },
   {
     "id": "banner-section",
     "components": [
-      "banner-cta"
+      "banner-cta-item"
     ]
+  },
+  {
+    "id": "buy-now-card"
   },
   {
     "id": "card-carousel",
     "components": [
-      "recipe-card",
-      "social-media-share-item"
+      "product-card"
     ]
   },
   {
     "id": "footer-brand",
     "components": [
       "footer-navigation-item",
-      "footer-social-link"
+      "footer-secondary-link-item",
+      "footer-social-link-item"
     ]
   },
   {
     "id": "header-comp",
     "components": [
-      "navigation-item",
-      "sub-navigation-item"
+      "navigation-item"
+    ]
+  },
+  {
+    "id": "popular-recipe",
+    "components": [
+      "recipe-card",
+      "social-media-share-item"
     ]
   },
   {
@@ -73,10 +75,19 @@
   {
     "id": "stay-social",
     "components": [
-      "social-card"
+      "stay-social-card"
     ]
   },
   {
-    "id": "text-banner"
+    "id": "text-banner",
+    "components": [
+      "text-banner-cta"
+    ]
+  },
+  {
+    "id": "w-100-pt-3-pt-sm-3"
+  },
+  {
+    "id": "w-100"
   }
 ]

@@ -1,0 +1,17 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // The block has no fields, so it's a simple container block.
+  // We just need to apply the classes from the original HTML to the block itself.
+  // The original HTML is: <div class="w-100 pt-3 pt-sm-3" style="background: ;"></div>
+  // The block element already has 'w-100-pt-3-pt-sm-3' from the block name.
+  // We need to add 'w-100', 'pt-3', 'pt-sm-3'.
+
+  // The block element already has the block name as a class, which is 'w-100-pt-3-pt-sm-3'.
+  // We need to add the specific utility classes from the original HTML.
+  block.classList.add('w-100', 'pt-3', 'pt-sm-3');
+
+  // Since there are no fields in the block model, there are no children to process.
+  // The block itself is the final element.
+}
