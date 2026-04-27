@@ -19,7 +19,8 @@
   ],
   "models": [
     {
-      "id": "buy-now-card"
+      "id": "buy-now-card",
+      "fields": []
     }
   ],
   "filters": [

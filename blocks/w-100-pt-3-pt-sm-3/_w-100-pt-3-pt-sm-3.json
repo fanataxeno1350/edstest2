@@ -19,7 +19,8 @@
   ],
   "models": [
     {
-      "id": "w-100-pt-3-pt-sm-3"
+      "id": "w-100-pt-3-pt-sm-3",
+      "fields": []
     }
   ],
   "filters": [

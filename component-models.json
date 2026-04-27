@@ -182,7 +182,8 @@
     ]
   },
   {
-    "id": "buy-now-card"
+    "id": "buy-now-card",
+    "fields": []
   },
   {
     "id": "card-carousel",
@@ -618,9 +619,11 @@
     ]
   },
   {
-    "id": "w-100-pt-3-pt-sm-3"
+    "id": "w-100-pt-3-pt-sm-3",
+    "fields": []
   },
   {
-    "id": "w-100"
+    "id": "w-100",
+    "fields": []
   }
 ]
