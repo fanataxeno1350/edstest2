@@ -38,7 +38,7 @@
       "fields": [
         {
           "component": "text",
-          "label": "Section Heading",
+          "label": "Heading",
           "name": "heading",
           "valueType": "string"
         },
@@ -61,32 +61,20 @@
         },
         {
           "component": "text",
-          "label": "Image Alt Text",
-          "name": "alt",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Slide Title",
+          "label": "Title",
           "name": "title",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Slide Description",
+          "label": "Description",
           "name": "description",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Slide Link",
+          "label": "Link",
           "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Link Label",
-          "name": "linkLabel",
           "valueType": "string"
         }
       ]

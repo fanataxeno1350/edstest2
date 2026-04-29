@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Spotlight Home",
+      "title": "Spotlight-Home",
       "id": "spotlight-home",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "spotlight-home",
               "model": "spotlight-home",
-              "name": "Spotlight Home"
+              "name": "Spotlight-Home"
             }
           }
         }
       }
     },
     {
-      "title": "Spotlight Slide",
+      "title": "Spotlight-Slide",
       "id": "spotlight-slide",
       "plugins": {
         "xwalk": {
@@ -25,14 +25,14 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "spotlight-slide",
-              "name": "Spotlight Slide"
+              "name": "Spotlight-Slide"
             }
           }
         }
       }
     },
     {
-      "title": "Quick Link Item",
+      "title": "Quick-Link-Item",
       "id": "quick-link-item",
       "plugins": {
         "xwalk": {
@@ -40,7 +40,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "quick-link-item",
-              "name": "Quick Link Item"
+              "name": "Quick-Link-Item"
             }
           }
         }
@@ -70,25 +70,25 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Slide Image",
+          "label": "Image",
           "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Image Alt Text",
-          "name": "altText",
+          "name": "alt",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Small Text",
-          "name": "smallText",
+          "label": "Small Heading",
+          "name": "small",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Heading",
+          "label": "Main Heading",
           "name": "heading",
           "valueType": "string"
         },
