@@ -15,28 +15,68 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "main-header",
+      "spotlight-home",
+      "what-we-do-wrap",
+      "spirit-of-rise",
+      "latest-stories",
+      "work-with-us",
+      "faqs-section",
+      "footer-main"
     ]
   },
   {
-    "id": "cards",
+    "id": "faqs-section",
     "components": [
-      "card"
+      "faq-item"
     ]
   },
   {
-    "id": "columns",
+    "id": "footer-main",
     "components": [
-      "column"
+      "social-link-item"
     ]
   },
   {
-    "id": "column",
+    "id": "latest-stories",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "twitter-feed-item",
+      "story-card"
+    ]
+  },
+  {
+    "id": "main-header",
+    "components": [
+      "navigation-item",
+      "icon-link-item",
+      "press-release-item"
+    ]
+  },
+  {
+    "id": "spirit-of-rise",
+    "components": [
+      "performance-card"
+    ]
+  },
+  {
+    "id": "spotlight-home",
+    "components": [
+      "spotlight-slide",
+      "quick-link-item"
+    ]
+  },
+  {
+    "id": "what-we-do-wrap",
+    "components": [
+      "business-vertical-item"
+    ]
+  },
+  {
+    "id": "work-with-us",
+    "components": [
+      "work-with-us-slide"
     ]
   }
 ]

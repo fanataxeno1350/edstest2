@@ -1,0 +1,76 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, descriptionRow, ...cardRows] = [...block.children];
+
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  heading.textContent = headingRow.textContent.trim();
+  moveInstrumentation(headingRow, heading);
+  sectionHeader.appendChild(heading);
+
+  const description = document.createElement('p');
+  description.classList.add('aos-init', 'aos-animate');
+  description.textContent = descriptionRow.textContent.trim();
+  moveInstrumentation(descriptionRow, description);
+  sectionHeader.appendChild(description);
+
+  const purposeLedGrid = document.createElement('div');
+  purposeLedGrid.classList.add('row', 'g-4', 'purpose-led-grid', 'pt-3');
+
+  cardRows.forEach((row) => {
+    const colDiv = document.createElement('div');
+    colDiv.classList.add('col-md-6', 'aos-init', 'aos-animate');
+    moveInstrumentation(row, colDiv);
+
+    const [imageCell, altTextCell, linkCell, descriptionCell] = [...row.children];
+
+    const cardLink = document.createElement('a');
+    cardLink.classList.add('card-wrap');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      cardLink.href = foundLink.href;
+      cardLink.target = '_blank'; // Assuming target blank from original HTML
+    }
+
+    const cardImageDiv = document.createElement('div');
+    cardImageDiv.classList.add('card-image');
+
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, altTextCell.textContent.trim(), false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        cardImageDiv.appendChild(optimizedPic);
+      }
+    }
+
+    const cardTextDiv = document.createElement('div');
+    cardTextDiv.classList.add('card-text');
+
+    const descP = document.createElement('p');
+    descP.classList.add('desc');
+    descP.innerHTML = descriptionCell.textContent.trim(); // Use innerHTML to preserve line breaks
+    cardTextDiv.appendChild(descP);
+
+    cardLink.appendChild(cardImageDiv);
+    cardLink.appendChild(cardTextDiv);
+    colDiv.appendChild(cardLink);
+    purposeLedGrid.appendChild(colDiv);
+  });
+
+  block.innerHTML = '';
+  block.classList.add('section', 'grey-bg', 'spirit-of-rise'); // Add section classes to block itself
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+  container.appendChild(sectionHeader);
+  container.appendChild(purposeLedGrid);
+
+  block.appendChild(container);
+}

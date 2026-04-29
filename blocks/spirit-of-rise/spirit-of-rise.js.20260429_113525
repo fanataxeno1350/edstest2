@@ -1,0 +1,94 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, subheadingRow, ...cardRows] = [...block.children];
+
+  // Section Header
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+  moveInstrumentation(headingRow, sectionHeader);
+
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  // FIX: Use content detection instead of children[0]
+  const headingCell = [...headingRow.children].find(cell => cell.textContent.trim());
+  heading.textContent = headingCell?.textContent.trim() || '';
+  sectionHeader.appendChild(heading);
+
+  const subheading = document.createElement('p');
+  subheading.classList.add('aos-init', 'aos-animate');
+  // FIX: Use content detection instead of children[0]
+  const subheadingCell = [...subheadingRow.children].find(cell => cell.textContent.trim());
+  subheading.textContent = subheadingCell?.textContent.trim() || '';
+  sectionHeader.appendChild(subheading);
+
+  // Performance Driven Container
+  const performanceDriven = document.createElement('div');
+  performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+  performanceDriven.appendChild(container);
+
+  const cardsWrapper = document.createElement('div');
+  cardsWrapper.classList.add('performace-driven-cards');
+  container.appendChild(cardsWrapper);
+
+  cardRows.forEach((row) => {
+    // Destructuring is fine here as per EDS Block Structure for fixed-field item models
+    const [imageCell, mobileImageCell, linkCell, descriptionCell] = [...row.children];
+
+    const link = document.createElement('a');
+    link.classList.add('performace-driven-cards-link');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      link.href = foundLink.href;
+      link.target = '_blank'; // Assuming target="_blank" from original HTML
+    }
+    moveInstrumentation(row, link);
+
+    const cardWrapper = document.createElement('div');
+    cardWrapper.classList.add('performace-driven-card-wrapper');
+    link.appendChild(cardWrapper);
+
+    const cardImage = document.createElement('div');
+    cardImage.classList.add('card-image');
+    cardWrapper.appendChild(cardImage);
+
+    const picture = document.createElement('picture');
+    const mobileImg = mobileImageCell.querySelector('img');
+    const desktopImg = imageCell.querySelector('img');
+
+    if (mobileImg) {
+      const sourceMobile = document.createElement('source');
+      sourceMobile.media = '(max-width: 576px)';
+      sourceMobile.srcset = mobileImg.src;
+      picture.appendChild(sourceMobile);
+    }
+
+    if (desktopImg) {
+      const img = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '750' }]).querySelector('img');
+      moveInstrumentation(desktopImg, img);
+      picture.appendChild(img);
+    }
+    cardImage.appendChild(picture);
+
+    const boxCard = document.createElement('div');
+    boxCard.classList.add('performace-driven-home-box-card');
+    cardWrapper.appendChild(boxCard);
+
+    const description = document.createElement('p');
+    description.classList.add('desc');
+    // FIX: Use innerHTML for description cell as it's type=text and might contain line breaks
+    description.innerHTML = descriptionCell.innerHTML.trim();
+    boxCard.appendChild(description);
+
+    cardsWrapper.appendChild(link);
+  });
+
+  block.innerHTML = '';
+  block.classList.add('section', 'spirit-of-rise'); // Add section class from original HTML
+  block.appendChild(sectionHeader);
+  block.appendChild(performanceDriven);
+}
