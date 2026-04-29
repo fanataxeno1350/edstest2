@@ -221,7 +221,8 @@
     ]
   },
   {
-    "id": "cmp-scroll-arrow"
+    "id": "cmp-scroll-arrow",
+    "fields": []
   },
   {
     "id": "discoverdropdown",
