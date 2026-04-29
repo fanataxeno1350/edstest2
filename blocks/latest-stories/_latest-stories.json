@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Latest-Stories",
+      "title": "Latest Stories",
       "id": "latest-stories",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "latest-stories",
               "model": "latest-stories",
-              "name": "Latest-Stories"
+              "name": "Latest Stories"
             }
           }
         }
       }
     },
     {
-      "title": "Story-Item",
+      "title": "Story Item",
       "id": "story-item",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "story-item",
-              "name": "Story-Item"
+              "name": "Story Item"
             }
           }
         }
@@ -38,7 +38,7 @@
       "fields": [
         {
           "component": "text",
-          "label": "Heading",
+          "label": "Section Heading",
           "name": "heading",
           "valueType": "string"
         },
@@ -55,8 +55,20 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image",
+          "label": "Main Image (Default)",
+          "name": "imageDefault",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Horizontal Image",
+          "name": "imageHorizontal",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Vertical Image",
+          "name": "imageVertical",
           "valueType": "string"
         },
         {
@@ -67,7 +79,7 @@
         },
         {
           "component": "text",
-          "label": "Text",
+          "label": "Story Text",
           "name": "text",
           "valueType": "string"
         },
@@ -78,9 +90,21 @@
           "valueType": "string"
         },
         {
-          "component": "date-time",
+          "component": "text",
+          "label": "Read More Label",
+          "name": "linkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
           "label": "Date",
           "name": "date",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Date (datetime attribute)",
+          "name": "dateTime",
           "valueType": "string"
         }
       ]

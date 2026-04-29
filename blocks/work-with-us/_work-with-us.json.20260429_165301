@@ -39,7 +39,7 @@
         {
           "component": "text",
           "label": "Section Heading",
-          "name": "sectionHeading",
+          "name": "heading",
           "valueType": "string"
         },
         {
@@ -55,44 +55,32 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Mobile Image (max-width: 576px)",
-          "name": "imageMobileXS",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Mobile Image (max-width: 799px)",
-          "name": "imageMobile",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Desktop Image",
-          "name": "imageDesktop",
+          "label": "Image",
+          "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Slide Heading",
-          "name": "heading",
+          "label": "Image Alt Text",
+          "name": "altText",
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
+          "label": "Slide Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
           "label": "Slide Description",
           "name": "description",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
+          "label": "Slide Link",
+          "name": "link",
           "valueType": "string"
         }
       ]

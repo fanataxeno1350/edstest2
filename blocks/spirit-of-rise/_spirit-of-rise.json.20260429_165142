@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Spirit Of Rise Card",
-      "id": "spirit-of-rise-card",
+      "title": "Performance Driven Card",
+      "id": "performance-driven-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "spirit-of-rise-card",
-              "name": "Spirit Of Rise Card"
+              "model": "performance-driven-card",
+              "name": "Performance Driven Card"
             }
           }
         }
@@ -38,43 +38,43 @@
       "fields": [
         {
           "component": "text",
-          "label": "Heading",
+          "label": "Section Heading",
           "name": "heading",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Subtitle",
-          "name": "subtitle",
+          "label": "Section Description",
+          "name": "description",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "spirit-of-rise-card",
-          "label": "Cards",
+          "item": "performance-driven-card",
+          "label": "Performance Driven Cards",
           "name": "cards"
         }
       ]
     },
     {
-      "id": "spirit-of-rise-card",
+      "id": "performance-driven-card",
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Image",
-          "name": "imageDesktop",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Mobile Image",
+          "label": "Card Image (Mobile)",
           "name": "imageMobile",
           "valueType": "string"
         },
         {
+          "component": "reference",
+          "label": "Card Image (Desktop)",
+          "name": "imageDesktop",
+          "valueType": "string"
+        },
+        {
           "component": "richtext",
-          "label": "Description",
-          "name": "description",
+          "label": "Card Description",
+          "name": "cardDescription",
           "valueType": "string"
         },
         {
@@ -90,7 +90,7 @@
     {
       "id": "spirit-of-rise",
       "components": [
-        "spirit-of-rise-card"
+        "performance-driven-card"
       ]
     }
   ]

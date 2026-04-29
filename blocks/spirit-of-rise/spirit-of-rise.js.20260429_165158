@@ -1,0 +1,100 @@
+import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default async function decorate(block) {
+  const children = [...block.children];
+
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+
+  const [headingRow, subheadingRow, ...cardRows] = children;
+
+  if (headingRow) {
+    const heading = document.createElement('h2');
+    heading.classList.add('heading', 'font-regular');
+    moveInstrumentation(headingRow, heading);
+    heading.textContent = headingRow.textContent.trim();
+    sectionHeader.append(heading);
+  }
+
+  if (subheadingRow) {
+    const subheading = document.createElement('p');
+    moveInstrumentation(subheadingRow, subheading);
+    subheading.textContent = subheadingRow.textContent.trim();
+    sectionHeader.append(subheading);
+  }
+
+  const performanceDriven = document.createElement('div');
+  performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+  performanceDriven.append(container);
+
+  const performaceDrivenCards = document.createElement('div');
+  performaceDrivenCards.classList.add('performace-driven-cards');
+  container.append(performaceDrivenCards);
+
+  cardRows.forEach((row) => {
+    const [imageDesktopCell, imageMobileCell, descriptionCell, linkCell] = [...row.children];
+
+    const linkEl = document.createElement('a');
+    linkEl.classList.add('performace-driven-cards-link');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      linkEl.href = foundLink.href;
+      linkEl.target = '_blank'; // Explicitly set target blank as per original HTML
+    }
+    moveInstrumentation(row, linkEl);
+
+    const cardWrapper = document.createElement('div');
+    cardWrapper.classList.add('performace-driven-card-wrapper');
+    linkEl.append(cardWrapper);
+
+    const cardImage = document.createElement('div');
+    cardImage.classList.add('card-image');
+    cardWrapper.append(cardImage);
+
+    if (imageDesktopCell && imageMobileCell) {
+      const picture = document.createElement('picture');
+
+      const sourceMobile = document.createElement('source');
+      sourceMobile.media = '(max-width: 576px)';
+      const mobileImg = imageMobileCell.querySelector('img');
+      if (mobileImg) {
+        sourceMobile.srcset = mobileImg.src;
+      }
+      picture.append(sourceMobile);
+
+      const desktopImg = imageDesktopCell.querySelector('img');
+      if (desktopImg) {
+        const img = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '750' }]);
+        // createOptimizedPicture returns a <picture> element, we need to append its <img> child
+        moveInstrumentation(desktopImg, img.querySelector('img'));
+        picture.append(img.querySelector('img'));
+      }
+      cardImage.append(picture);
+    }
+
+    const homeBoxCard = document.createElement('div');
+    homeBoxCard.classList.add('performace-driven-home-box-card');
+    cardWrapper.append(homeBoxCard);
+
+    if (descriptionCell) {
+      const description = document.createElement('p');
+      description.classList.add('desc');
+      moveInstrumentation(descriptionCell, description);
+      description.innerHTML = descriptionCell.innerHTML;
+      homeBoxCard.append(description);
+    }
+
+    performaceDrivenCards.append(linkEl);
+  });
+
+  block.replaceChildren(sectionHeader, performanceDriven);
+
+  // Swiper initialization (if applicable, based on original HTML classes)
+  // The original HTML does not explicitly show Swiper classes, but if it were a carousel,
+  // this is where Swiper would be initialized. For this specific block, it's a grid of cards.
+  // No Swiper initialization is needed based on the provided ORIGINAL HTML.
+}
