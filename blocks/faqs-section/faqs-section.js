@@ -2,74 +2,77 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [headingRow, ...faqItems] = [...block.children];
+  const [headingRow, ...faqRows] = [...block.children];
 
-  const sectionHeader = document.createElement('div');
-  sectionHeader.classList.add('section-header', 'text-center');
-
-  // headingRow has a single cell, as per EDS BLOCK STRUCTURE and BlockJson model
-  const [headingCell] = [...headingRow.children];
-  const heading = document.createElement('h2');
-  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.setAttribute('data-aos', 'fade-up');
-  moveInstrumentation(headingRow, heading); // Move instrumentation from the entire headingRow
-  heading.textContent = headingCell.textContent.trim();
-  sectionHeader.append(heading);
-
-  const accoDiv = document.createElement('div');
-  accoDiv.classList.add('acco-div');
-  const ul = document.createElement('ul');
-
-  faqItems.forEach((row, index) => {
-    // Each faq-item row has two cells: question (text) and answer (richtext)
-    const [questionCell, answerCell] = [...row.children];
-
-    const li = document.createElement('li');
-    li.classList.add('aos-init', 'aos-animate');
-    li.setAttribute('data-aos', 'fade-up');
-    if (index === 0) {
-      li.classList.add('active');
-    }
-
-    const h2Question = document.createElement('h2');
-    h2Question.setAttribute('data-once', 'faqsAccordion');
-    moveInstrumentation(questionCell, h2Question);
-    h2Question.textContent = questionCell.textContent.trim();
-
-    const accoContentDiv = document.createElement('div');
-    accoContentDiv.classList.add('acco-content-div');
-    if (index === 0) {
-      accoContentDiv.classList.add('show');
-    }
-    // For richtext, use innerHTML to preserve nested HTML structure
-    moveInstrumentation(answerCell, accoContentDiv);
-    accoContentDiv.innerHTML = answerCell.innerHTML;
-
-    h2Question.addEventListener('click', () => {
-      const currentlyActive = ul.querySelector('li.active');
-      if (currentlyActive && currentlyActive !== li) {
-        currentlyActive.classList.remove('active');
-        currentlyActive.querySelector('.acco-content-div').classList.remove('show');
-      }
-      li.classList.toggle('active');
-      accoContentDiv.classList.toggle('show');
-    });
-
-    li.append(h2Question, accoContentDiv);
-    ul.append(li);
-  });
-
-  accoDiv.append(ul);
+  const section = document.createElement('section');
+  section.classList.add('section', 'faqs-section');
 
   const container = document.createElement('div');
   container.classList.add('container');
-  container.append(sectionHeader, accoDiv);
+  section.append(container);
 
-  block.replaceChildren(container);
+  if (headingRow) {
+    const sectionHeader = document.createElement('div');
+    sectionHeader.classList.add('section-header', 'text-center');
+    moveInstrumentation(headingRow, sectionHeader);
 
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
+    // CRITICAL FIX: Replaced headingRow.children[0] with content detection
+    const headingCell = [...headingRow.children].find(cell => cell.textContent.trim());
+    if (headingCell) {
+      const heading = document.createElement('h2');
+      heading.classList.add('heading', 'font-regular');
+      heading.textContent = headingCell.textContent.trim();
+      sectionHeader.append(heading);
+    }
+    container.append(sectionHeader);
+  }
+
+  const accoDiv = document.createElement('div');
+  accoDiv.classList.add('acco-div');
+  container.append(accoDiv);
+
+  const ul = document.createElement('ul');
+  accoDiv.append(ul);
+
+  faqRows.forEach((row, index) => {
+    // This destructuring is correct because the model defines fixed fields for faq-item
+    const [questionCell, answerCell] = [...row.children];
+
+    const li = document.createElement('li');
+    moveInstrumentation(row, li);
+    ul.append(li);
+
+    const question = document.createElement('h2');
+    question.textContent = questionCell?.textContent.trim();
+    li.append(question);
+
+    const accoContentDiv = document.createElement('div');
+    accoContentDiv.classList.add('acco-content-div');
+    accoContentDiv.innerHTML = answerCell?.innerHTML; // Correctly using innerHTML for richtext
+    li.append(accoContentDiv);
+
+    if (index === 0) {
+      li.classList.add('active');
+      accoContentDiv.classList.add('show');
+    }
+
+    question.addEventListener('click', () => {
+      const isActive = li.classList.contains('active');
+
+      // Close all other active items
+      ul.querySelectorAll('li.active').forEach((activeLi) => {
+        activeLi.classList.remove('active');
+        activeLi.querySelector('.acco-content-div').classList.remove('show');
+      });
+
+      // Toggle current item
+      if (!isActive) {
+        li.classList.add('active');
+        accoContentDiv.classList.add('show');
+      }
+    });
   });
+
+  block.innerHTML = '';
+  block.append(section);
 }

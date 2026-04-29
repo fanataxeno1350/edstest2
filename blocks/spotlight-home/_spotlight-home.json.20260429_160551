@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Quick Link",
-      "id": "quick-link",
+      "title": "Quick Link Item",
+      "id": "quick-link-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "quick-link",
-              "name": "Quick Link"
+              "model": "quick-link-item",
+              "name": "Quick Link Item"
             }
           }
         }
@@ -59,7 +59,7 @@
         },
         {
           "component": "container",
-          "item": "quick-link",
+          "item": "quick-link-item",
           "label": "Quick Links",
           "name": "quickLinks"
         }
@@ -70,50 +70,56 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image",
+          "label": "Background Image (Desktop)",
+          "name": "backgroundImageDesktop",
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Image Alt Text",
-          "name": "altText",
+          "component": "reference",
+          "label": "Background Image (Tablet, max-width 799px)",
+          "name": "backgroundImageTablet",
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Small Text",
-          "name": "smallText",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "component": "reference",
+          "label": "Background Image (Mobile, max-width 576px)",
+          "name": "backgroundImageMobile",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Description",
+          "label": "Main Headline",
+          "name": "headline",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Subheadline (small tag, optional)",
+          "name": "subheadline",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description (paragraph below headline, optional)",
           "name": "description",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
+          "label": "CTA Link (optional)",
           "name": "ctaLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Label",
+          "label": "CTA Label (optional)",
           "name": "ctaLabel",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "quick-link",
+      "id": "quick-link-item",
       "fields": [
         {
           "component": "aem-content",
@@ -135,7 +141,7 @@
       "id": "spotlight-home",
       "components": [
         "spotlight-slide",
-        "quick-link"
+        "quick-link-item"
       ]
     }
   ]

@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Faqs Section",
+      "title": "Faqs-Section",
       "id": "faqs-section",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "faqs-section",
               "model": "faqs-section",
-              "name": "Faqs Section"
+              "name": "Faqs-Section"
             }
           }
         }
       }
     },
     {
-      "title": "Faq Item",
+      "title": "Faq-Item",
       "id": "faq-item",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "faq-item",
-              "name": "Faq Item"
+              "name": "Faq-Item"
             }
           }
         }

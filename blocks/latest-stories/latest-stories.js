@@ -2,56 +2,65 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [headlineRow, ...storyRows] = [...block.children];
+  const [headingRow, ...storyRows] = [...block.children];
 
   const section = document.createElement('section');
   section.classList.add('section', 'grey-bg', 'latest-stories', 'home-stories');
+  moveInstrumentation(block, section);
 
+  // Section Header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
-  const headline = document.createElement('h2');
-  headline.classList.add('heading', 'font-regular');
-  moveInstrumentation(headlineRow, headline);
-  headline.textContent = headlineRow.textContent.trim();
-  sectionHeader.append(headline);
-  section.append(sectionHeader);
 
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular');
+  moveInstrumentation(headingRow.firstElementChild, heading);
+  heading.textContent = headingRow.firstElementChild.textContent.trim();
+  sectionHeader.appendChild(heading);
+  section.appendChild(sectionHeader);
+
+  // Container for stories
   const container = document.createElement('div');
   container.classList.add('container');
 
   const flickitySliderWrap = document.createElement('div');
   flickitySliderWrap.classList.add('flickity-slider-mobile-wrap', 'grid-layout');
-  flickitySliderWrap.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "watchCSS": true, "adaptiveHeight": true }');
+  container.appendChild(flickitySliderWrap);
 
   const slidesContainer = document.createElement('div');
-  slidesContainer.classList.add('slides');
+  slidesContainer.classList.add('slides'); // This is where 'slides' class should be
+  flickitySliderWrap.appendChild(slidesContainer);
 
   storyRows.forEach((row) => {
-    const [
-      imageCell,
-      imageHorizontalCell,
-      imageVerticalCell,
-      categoryCell,
-      summaryCell,
-      readMoreLinkCell,
-      readMoreLabelCell,
-      dateCell,
-      dateIsoCell,
-    ] = [...row.children];
+    const [imageCell, categoryCell, textCell, linkCell, dateCell] = [...row.children];
 
     const slide = document.createElement('div');
-    // The original HTML has <div class="slides"> for the container, and then each item is also wrapped in <div class="slides">
-    // This is a common pattern for Flickity where 'slides' is the class for individual cells.
-    // The generated JS was using 'slides' for both the container and the individual slide, which is correct.
-    // However, the original HTML also has a top-level <div class="slides"> which is the container for all items.
-    // The generated JS was creating a new div with class 'slides' for each item, which is correct for Flickity.
-    // The previous fix was to remove the 'slides' class from the individual slide, but that would break Flickity.
-    // Reverting to the original generated JS for this part.
-    slide.classList.add('slides'); // This is correct for Flickity individual slides.
+    // The individual story items do NOT have the 'slides' class,
+    // they are direct children of the 'slidesContainer' which has it.
+    // The original HTML shows: <div class="slides"><div class="wrap">...</div></div>
+    // So the 'slide' element here should be the one with the 'slides' class.
+    // However, the original HTML also shows the 'slides' class on the container,
+    // and then again on each item. This suggests a potential misinterpretation
+    // of the original HTML or a specific Flickity requirement.
+    // Given the EDS block structure, each row is a 'story-item'.
+    // The original HTML shows:
+    // <div class="flickity-slider-mobile-wrap grid-layout">
+    //   <div class="slides"> <-- This is the slidesContainer
+    //     <div class="slides"> <-- This is the individual slide
+    //       <div class="wrap">...</div>
+    //     </div>
+    //     <div class="slides"> <-- Another individual slide
+    //       <div class="wrap">...</div>
+    //     </div>
+    //   </div>
+    // </div>
+    // So, the `slide` element *should* have the `slides` class.
+    slide.classList.add('slides'); // Corrected based on original HTML's nested 'slides' structure
 
     const wrap = document.createElement('div');
     wrap.classList.add('wrap');
 
+    // Image
     const imageWrap = document.createElement('div');
     imageWrap.classList.add('image-wrap');
     const picture = imageCell.querySelector('picture');
@@ -59,12 +68,13 @@ export default function decorate(block) {
       const img = picture.querySelector('img');
       if (img) {
         const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        moveInstrumentation(imageCell, optimizedPic.querySelector('img'));
-        imageWrap.append(optimizedPic);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        imageWrap.appendChild(optimizedPic);
       }
     }
-    wrap.append(imageWrap);
+    wrap.appendChild(imageWrap);
 
+    // Content
     const contentWrap = document.createElement('div');
     contentWrap.classList.add('content-wrap');
 
@@ -72,41 +82,39 @@ export default function decorate(block) {
     category.classList.add('category');
     moveInstrumentation(categoryCell, category);
     category.textContent = categoryCell.textContent.trim();
-    contentWrap.append(category);
+    contentWrap.appendChild(category);
 
-    const summary = document.createElement('div');
-    summary.classList.add('text');
-    moveInstrumentation(summaryCell, summary);
-    summary.textContent = summaryCell.textContent.trim();
-    contentWrap.append(summary);
+    const text = document.createElement('div');
+    text.classList.add('text');
+    moveInstrumentation(textCell, text);
+    text.textContent = textCell.textContent.trim();
+    contentWrap.appendChild(text);
 
     const readMoreLink = document.createElement('a');
     readMoreLink.classList.add('btn', 'btn-link');
-    const foundLink = readMoreLinkCell.querySelector('a');
+    const foundLink = linkCell.querySelector('a');
     if (foundLink) {
       readMoreLink.href = foundLink.href;
+      readMoreLink.textContent = 'Read more'; // Hardcoded as per original HTML
     }
-    moveInstrumentation(readMoreLinkCell, readMoreLink);
-    readMoreLink.textContent = readMoreLabelCell.textContent.trim();
-    contentWrap.append(readMoreLink);
+    moveInstrumentation(linkCell, readMoreLink);
+    contentWrap.appendChild(readMoreLink);
 
-    const dateDiv = document.createElement('div');
-    dateDiv.classList.add('date');
+    const date = document.createElement('div');
+    date.classList.add('date');
     const time = document.createElement('time');
-    moveInstrumentation(dateCell, time);
-    time.setAttribute('datetime', dateIsoCell.textContent.trim());
+    time.setAttribute('datetime', dateCell.textContent.trim()); // Assuming date-time field provides ISO format
     time.textContent = dateCell.textContent.trim();
-    dateDiv.append(time);
-    contentWrap.append(dateDiv);
+    date.appendChild(time);
+    moveInstrumentation(dateCell, date);
+    contentWrap.appendChild(date);
 
-    wrap.append(contentWrap);
-    slide.append(wrap);
-    slidesContainer.append(slide);
+    wrap.appendChild(contentWrap);
+    slide.appendChild(wrap);
+    slidesContainer.appendChild(slide);
+    moveInstrumentation(row, slide);
   });
 
-  flickitySliderWrap.append(slidesContainer);
-  container.append(flickitySliderWrap);
-  section.append(container);
-
-  block.replaceChildren(section);
+  section.appendChild(container);
+  block.replaceWith(section);
 }

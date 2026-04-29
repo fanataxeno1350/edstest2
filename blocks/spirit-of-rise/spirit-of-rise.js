@@ -2,89 +2,80 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [headingRow, subheadingRow, ...cardRows] = [...block.children];
+  const [headingRow, descriptionRow, ...cardRows] = [...block.children];
 
+  // Section header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+  moveInstrumentation(headingRow, sectionHeader);
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular');
-  moveInstrumentation(headingRow, heading);
-  heading.textContent = headingRow.textContent.trim();
+  heading.textContent = headingRow.firstElementChild?.textContent.trim() || '';
   sectionHeader.append(heading);
 
-  const subheading = document.createElement('p');
-  moveInstrumentation(subheadingRow, subheading);
-  subheading.textContent = subheadingRow.textContent.trim();
-  sectionHeader.append(subheading);
+  const description = document.createElement('p');
+  description.textContent = descriptionRow.firstElementChild?.textContent.trim() || '';
+  sectionHeader.append(description);
 
+  // Performance driven section
   const performanceDriven = document.createElement('div');
   performanceDriven.classList.add('performance-driven', 'performace-driven-home');
 
   const container = document.createElement('div');
   container.classList.add('container');
+  performanceDriven.append(container);
 
-  const cardsWrapper = document.createElement('div');
-  cardsWrapper.classList.add('performace-driven-cards');
+  const cardsContainer = document.createElement('div');
+  cardsContainer.classList.add('performace-driven-cards');
+  container.append(cardsContainer);
 
   cardRows.forEach((row) => {
-    const [imageMobileCell, imageDesktopCell, descriptionCell, linkCell] = [...row.children];
+    const cells = [...row.children];
+    const imageCell = cells.find(cell => cell.querySelector('picture'));
+    const linkCell = cells.find(cell => cell.querySelector('a'));
+    const descriptionCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a'));
 
-    const linkEl = document.createElement('a');
-    linkEl.classList.add('performace-driven-cards-link');
-    const foundLink = linkCell.querySelector('a');
+    const link = document.createElement('a');
+    link.classList.add('performace-driven-cards-link');
+    const foundLink = linkCell?.querySelector('a');
     if (foundLink) {
-      linkEl.href = foundLink.href;
-      linkEl.target = '_blank'; // From original HTML
+      link.href = foundLink.href;
+      link.target = '_blank'; // From original HTML
     }
-    moveInstrumentation(row, linkEl);
+    moveInstrumentation(row, link);
 
     const cardWrapper = document.createElement('div');
     cardWrapper.classList.add('performace-driven-card-wrapper');
+    link.append(cardWrapper);
 
     const cardImage = document.createElement('div');
     cardImage.classList.add('card-image');
+    cardWrapper.append(cardImage);
 
-    const pictureMobile = imageMobileCell.querySelector('picture');
-    const pictureDesktop = imageDesktopCell.querySelector('picture');
-
-    if (pictureMobile && pictureDesktop) {
-      const imgMobile = pictureMobile.querySelector('img');
-      const imgDesktop = pictureDesktop.querySelector('img');
-
-      // Create optimized pictures for mobile and desktop
-      const optimizedPictureMobile = createOptimizedPicture(imgMobile.src, imgMobile.alt, false, [{ media: '(max-width: 576px)', width: '576' }]);
-      const optimizedPictureDesktop = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '750' }]);
-
-      // Extract source and img elements
-      const sourceMobile = optimizedPictureMobile.querySelector('source');
-      const sourceDesktop = optimizedPictureDesktop.querySelector('source');
-      const finalImg = optimizedPictureDesktop.querySelector('img'); // Use the desktop img as the fallback
-
-      // Create a new picture element to combine sources and img
-      const combinedPicture = document.createElement('picture');
-      if (sourceMobile) combinedPicture.append(sourceMobile);
-      if (sourceDesktop) combinedPicture.append(sourceDesktop);
-      if (finalImg) combinedPicture.append(finalImg);
-
-      cardImage.append(combinedPicture);
+    const picture = imageCell?.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '576', media: '(max-width: 576px)' }, { width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        cardImage.append(optimizedPic);
+      }
     }
 
     const homeBoxCard = document.createElement('div');
     homeBoxCard.classList.add('performace-driven-home-box-card');
+    cardWrapper.append(homeBoxCard);
 
-    const description = document.createElement('p');
-    description.classList.add('desc');
-    description.innerHTML = descriptionCell.textContent.trim().replace(/\n/g, '<br>'); // Preserve line breaks
-    homeBoxCard.append(description);
+    const desc = document.createElement('p');
+    desc.classList.add('desc');
+    desc.textContent = descriptionCell?.textContent.trim() || '';
+    homeBoxCard.append(desc);
 
-    cardWrapper.append(cardImage, homeBoxCard);
-    linkEl.append(cardWrapper);
-    cardsWrapper.append(linkEl);
+    cardsContainer.append(link);
   });
 
-  container.append(cardsWrapper);
-  performanceDriven.append(container);
-
-  block.replaceChildren(sectionHeader, performanceDriven);
+  block.innerHTML = '';
+  block.classList.add('section', 'grey-bg', 'spirit-of-rise'); // Add section classes to block
+  block.append(sectionHeader, performanceDriven);
 }

@@ -37,39 +37,44 @@
   {
     "id": "footer-main",
     "components": [
-      "footer-social-link"
+      "social-link",
+      "footer-menu-block",
+      "footer-menu-item",
+      "footer-menu-subitem",
+      "secondary-nav-item"
     ]
   },
   {
     "id": "latest-stories",
     "components": [
-      "latest-story-item"
+      "story-item"
     ]
   },
   {
     "id": "main-header",
     "components": [
       "navigation-item",
-      "icon-link-item"
+      "icon-link-item",
+      "press-release-item"
     ]
   },
   {
     "id": "spirit-of-rise",
     "components": [
-      "spirit-of-rise-card"
+      "rise-card"
     ]
   },
   {
     "id": "spotlight-home",
     "components": [
       "spotlight-slide",
-      "quick-link-item"
+      "quick-link"
     ]
   },
   {
     "id": "what-we-do-wrap",
     "components": [
-      "business-vertical"
+      "business-vertical-item"
     ]
   },
   {
@@ -81,7 +86,7 @@
   {
     "id": "work-with-us",
     "components": [
-      "work-with-us-item"
+      "work-with-us-slide"
     ]
   }
 ]
