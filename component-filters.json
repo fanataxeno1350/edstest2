@@ -24,7 +24,8 @@
       "latest-stories",
       "work-with-us",
       "faqs-section",
-      "footer-main"
+      "footer-main",
+      "what-we-do"
     ]
   },
   {
@@ -36,23 +37,20 @@
   {
     "id": "footer-main",
     "components": [
-      "footer-social-link",
-      "footer-menu-block",
-      "footer-menu-item",
-      "footer-secondary-nav-item"
+      "footer-social-link"
     ]
   },
   {
     "id": "latest-stories",
     "components": [
-      "story-item"
+      "latest-story-item"
     ]
   },
   {
     "id": "main-header",
     "components": [
       "navigation-item",
-      "contact-link-item"
+      "icon-link-item"
     ]
   },
   {
@@ -75,9 +73,15 @@
     ]
   },
   {
+    "id": "what-we-do",
+    "components": [
+      "business-vertical-item"
+    ]
+  },
+  {
     "id": "work-with-us",
     "components": [
-      "work-with-us-slide"
+      "work-with-us-item"
     ]
   }
 ]

@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Icon Link Item",
-      "id": "icon-link-item",
+      "title": "Contact Link Item",
+      "id": "contact-link-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "icon-link-item",
-              "name": "Icon Link Item"
+              "model": "contact-link-item",
+              "name": "Contact Link Item"
             }
           }
         }
@@ -53,39 +53,39 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Primary Logo",
-          "name": "primaryLogo",
+          "label": "Logo",
+          "name": "logo",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Primary Logo Link",
-          "name": "primaryLogoLink",
+          "label": "Logo Link",
+          "name": "logo-link",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Anniversary Logo",
-          "name": "anniversaryLogo",
+          "name": "anniversary-logo",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Anniversary Logo Link",
-          "name": "anniversaryLogoLink",
+          "name": "anniversary-logo-link",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "navigation-item",
           "label": "Navigation Menu",
-          "name": "navigationMenu"
+          "name": "navigation-menu"
         },
         {
           "component": "container",
-          "item": "icon-link-item",
-          "label": "Icon Links",
-          "name": "iconLinks"
+          "item": "contact-link-item",
+          "label": "Contact Links",
+          "name": "contact-links"
         }
       ]
     },
@@ -113,24 +113,12 @@
       ]
     },
     {
-      "id": "icon-link-item",
+      "id": "contact-link-item",
       "fields": [
-        {
-          "component": "reference",
-          "label": "Icon",
-          "name": "icon",
-          "valueType": "string"
-        },
         {
           "component": "aem-content",
           "label": "Link",
           "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
           "valueType": "string"
         }
       ]
@@ -141,7 +129,7 @@
       "id": "main-header",
       "components": [
         "navigation-item",
-        "icon-link-item"
+        "contact-link-item"
       ]
     }
   ]

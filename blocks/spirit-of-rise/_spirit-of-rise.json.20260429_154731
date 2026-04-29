@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Spirit Of Rise",
+      "title": "Spirit-Of-Rise",
       "id": "spirit-of-rise",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "spirit-of-rise",
               "model": "spirit-of-rise",
-              "name": "Spirit Of Rise"
+              "name": "Spirit-Of-Rise"
             }
           }
         }
       }
     },
     {
-      "title": "Spirit Of Rise Card",
+      "title": "Spirit-Of-Rise-Card",
       "id": "spirit-of-rise-card",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "spirit-of-rise-card",
-              "name": "Spirit Of Rise Card"
+              "name": "Spirit-Of-Rise-Card"
             }
           }
         }
@@ -61,18 +61,18 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Card Image (Mobile)",
+          "label": "Image (Mobile)",
           "name": "imageMobile",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Card Image (Desktop)",
+          "label": "Image (Desktop)",
           "name": "imageDesktop",
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Card Description",
           "name": "description",
           "valueType": "string"
@@ -80,7 +80,7 @@
         {
           "component": "aem-content",
           "label": "Card Link",
-          "name": "link",
+          "name": "cardLink",
           "valueType": "string"
         }
       ]

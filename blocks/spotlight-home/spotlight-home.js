@@ -1,197 +1,233 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
-  const allRows = [...block.children];
+export default async function decorate(block) {
+  const rows = [...block.children];
 
-  const slideRows = allRows.filter((row) => row.children.length === 7);
-  const quickLinkRows = allRows.filter((row) => row.children.length === 2);
+  const spotlightSlides = rows.filter((row) => row.children.length === 8);
+  const quickLinkItems = rows.filter((row) => row.children.length === 2);
 
   const section = document.createElement('section');
   section.classList.add('section', 'spotlight-home-wrap', 'm-0', 'p-0');
-  moveInstrumentation(block, section);
 
   const beamSlider = document.createElement('div');
   beamSlider.classList.add('beam-slider', 'main-slider', 'loading1', 'beam-slider-multi');
+  beamSlider.setAttribute('data-aos', 'fade-up');
+  beamSlider.setAttribute('data-aos-offset', '-100');
+  beamSlider.setAttribute('data-aos-duration', '650');
+  beamSlider.setAttribute('data-aos-easing', 'ease-in-out');
 
   const swiperWrapper = document.createElement('div');
   swiperWrapper.classList.add('swiper-wrapper');
+  swiperWrapper.id = `swiper-wrapper-${Math.random().toString(36).substring(2, 15)}`; // Generate unique ID
 
-  slideRows.forEach((row, index) => {
-    const [imageCell, altTextCell, smallHeadingCell, mainHeadingCell, descriptionCell, ctaLinkCell, ctaLabelCell] = [...row.children];
+  spotlightSlides.forEach((row) => {
+    const [
+      backgroundImageDesktopCell,
+      backgroundImageTabletCell,
+      backgroundImageMobileCell,
+      headlineCell,
+      subheadlineCell,
+      descriptionCell,
+      ctaLinkCell,
+      ctaLabelCell,
+    ] = [...row.children];
 
     const swiperSlide = document.createElement('div');
     swiperSlide.classList.add('swiper-slide', 'nogradient');
+    // Check if the slide should have 'dark-content' class based on original HTML
+    // This is a heuristic, as there's no explicit model field for it.
+    // Assuming if subheadline or description is present, it might imply dark content.
+    // A more robust solution would be to add a model field for 'dark-content'.
+    const hasDarkContent = subheadlineCell.textContent.trim() || descriptionCell.textContent.trim();
+    if (hasDarkContent) {
+      // This is a heuristic. If the original HTML has a specific pattern to determine 'dark-content',
+      // it should be implemented here. For now, we'll add it if there's content.
+      // A better approach would be to add a specific model field for this.
+      // For now, we'll check if the original row had the class.
+      if (row.classList.contains('dark-content')) {
+        swiperSlide.classList.add('dark-content');
+      }
+    }
     moveInstrumentation(row, swiperSlide);
 
     const slideBgImg = document.createElement('div');
     slideBgImg.classList.add('slide-bgimg');
 
-    const picture = imageCell.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, altTextCell.textContent.trim(), false, [{ width: '1903' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      picture.replaceWith(optimizedPic);
-      slideBgImg.append(optimizedPic);
+    const picture = document.createElement('picture');
+
+    const mobileImg = backgroundImageMobileCell.querySelector('img');
+    if (mobileImg) {
+      const sourceMobile = document.createElement('source');
+      sourceMobile.media = '(max-width: 576px)';
+      sourceMobile.srcset = mobileImg.src;
+      picture.appendChild(sourceMobile);
     }
 
-    const mobContent = document.createElement('div');
-    mobContent.classList.add('mob-content-home-spotlight');
+    const tabletImg = backgroundImageTabletCell.querySelector('img');
+    if (tabletImg) {
+      const sourceTablet = document.createElement('source');
+      sourceTablet.media = '(max-width: 799px)';
+      sourceTablet.srcset = tabletImg.src;
+      picture.appendChild(sourceTablet);
+    }
 
-    const content = document.createElement('div');
-    content.classList.add('content', 'text-center', 'text-lg-start');
+    const desktopImg = backgroundImageDesktopCell.querySelector('img');
+    if (desktopImg) {
+      const img = createOptimizedPicture(desktopImg.src, desktopImg.alt, true, [{ width: '1903' }]);
+      moveInstrumentation(desktopImg, img.querySelector('img'));
+      picture.appendChild(img.querySelector('img'));
+    }
 
-    if (smallHeadingCell.textContent.trim()) {
+    slideBgImg.appendChild(picture);
+    swiperSlide.appendChild(slideBgImg);
+
+    const mobContentHomeSpotlight = document.createElement('div');
+    mobContentHomeSpotlight.classList.add('mob-content-home-spotlight');
+
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add('content', 'text-center', 'text-lg-start');
+
+    const subheadlineText = subheadlineCell.textContent.trim();
+    if (subheadlineText) {
       const small = document.createElement('small');
       small.style.fontWeight = 'bold';
-      small.textContent = smallHeadingCell.textContent.trim();
-      content.append(small);
+      small.textContent = subheadlineText;
+      contentDiv.appendChild(small);
     }
 
-    if (mainHeadingCell.textContent.trim()) {
+    const headlineContent = headlineCell.innerHTML.trim();
+    if (headlineContent) {
       const h1 = document.createElement('h1');
       h1.classList.add('heading', 'font-medium', 'font-size-tb');
-      if (index === 0) { // Apply banner-text-dark only for the first slide as per original HTML
+      // Add banner-text-dark class if present in original HTML for the first slide
+      // This is a heuristic, ideally this would be a model field.
+      if (row.classList.contains('banner-text-dark')) { // Check if the original row had this class
         h1.classList.add('banner-text-dark');
       }
-      h1.innerHTML = mainHeadingCell.textContent.trim();
-      content.append(h1);
+      // Check for heading-small class from original HTML
+      if (headlineCell.querySelector('h2.heading-small')) {
+        h1.classList.add('heading-small');
+      }
+      h1.innerHTML = headlineContent;
+      contentDiv.appendChild(h1);
     }
 
-    if (descriptionCell.textContent.trim()) {
+    const descriptionContent = descriptionCell.innerHTML.trim();
+    if (descriptionContent) {
       const p = document.createElement('p');
-      const strong = document.createElement('strong');
-      strong.textContent = descriptionCell.textContent.trim();
-      p.append(strong);
-      content.append(p);
+      p.innerHTML = descriptionContent;
+      contentDiv.appendChild(p);
     }
 
     const ctaLink = ctaLinkCell.querySelector('a');
-    if (ctaLink && ctaLabelCell.textContent.trim()) {
-      const anchor = document.createElement('a');
-      anchor.href = ctaLink.href;
-      anchor.textContent = ctaLabelCell.textContent.trim();
-      anchor.classList.add('btn');
-      // Check for btn-primary and other classes from original HTML
-      if (index === 0 || index === 1 || index === 3 || index === 4 || index === 8) {
-        anchor.classList.add('btn-primary');
-      } else if (index === 2) {
-        anchor.style.backgroundColor = 'rgb(255, 255, 255)';
-        anchor.style.color = 'rgb(0, 0, 0)';
+    const ctaLabel = ctaLabelCell.textContent.trim();
+    if (ctaLink && ctaLabel) {
+      const a = document.createElement('a');
+      a.href = ctaLink.href;
+      // Copy target attribute if present, assuming it's from the original link
+      if (ctaLink.hasAttribute('target')) {
+        a.setAttribute('target', ctaLink.getAttribute('target'));
       }
-      content.append(anchor);
+      a.textContent = ctaLabel;
+      // Check for specific button classes from original HTML
+      if (ctaLink.classList.contains('btn')) {
+        a.classList.add('btn');
+      }
+      if (ctaLink.classList.contains('btn-primary')) {
+        a.classList.add('btn-primary');
+      }
+      // Copy inline styles if present for button
+      if (ctaLink.hasAttribute('style')) {
+        a.setAttribute('style', ctaLink.getAttribute('style'));
+      }
+      contentDiv.appendChild(a);
     }
 
-    mobContent.append(content);
-    swiperSlide.append(slideBgImg, mobContent);
-    swiperWrapper.append(swiperSlide);
+    mobContentHomeSpotlight.appendChild(contentDiv);
+    swiperSlide.appendChild(mobContentHomeSpotlight);
+    swiperWrapper.appendChild(swiperSlide);
   });
 
-  beamSlider.append(swiperWrapper);
+  beamSlider.appendChild(swiperWrapper);
 
-  // Swiper navigation buttons
-  const prevButton = document.createElement('div');
-  prevButton.classList.add('swiper-button-prev', 'slide-home-btn', 'swiper-button-white');
-  prevButton.setAttribute('tabindex', '0');
-  prevButton.setAttribute('role', 'button');
-  prevButton.setAttribute('aria-label', 'Previous slide');
-  prevButton.innerHTML = '<svg class="swiper-navigation-icon" width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.38296 20.0762C0.111788 19.805 0.111788 19.3654 0.38296 19.0942L9.19758 10.2796L0.38296 1.46497C0.111788 1.19379 0.111788 0.754138 0.38296 0.482966C0.654131 0.211794 1.09379 0.211794 1.36496 0.482966L10.4341 9.55214C10.8359 9.9539 10.8359 10.6053 10.4341 11.007L1.36496 20.0762C1.09379 20.3474 0.654131 20.3474 0.38296 20.0762Z" fill="currentColor"></path></svg>';
-  beamSlider.append(prevButton);
+  const prevBtn = document.createElement('div');
+  prevBtn.classList.add('swiper-button-prev', 'slide-home-btn', 'swiper-button-white');
+  prevBtn.innerHTML = '<svg class="swiper-navigation-icon" width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.38296 20.0762C0.111788 19.805 0.111788 19.3654 0.38296 19.0942L9.19758 10.2796L0.38296 1.46497C0.111788 1.19379 0.111788 0.754138 0.38296 0.482966C0.654131 0.211794 1.09379 0.211794 1.36496 0.482966L10.4341 9.55214C10.8359 9.9539 10.8359 10.6053 10.4341 11.007L1.36496 20.0762C1.09379 20.3474 0.654131 20.3474 0.38296 20.0762Z" fill="currentColor"></path></svg>';
+  beamSlider.appendChild(prevBtn);
 
-  const nextButton = document.createElement('div');
-  nextButton.classList.add('swiper-button-next', 'slide-home-btn', 'swiper-button-white');
-  nextButton.setAttribute('tabindex', '0');
-  nextButton.setAttribute('role', 'button');
-  nextButton.setAttribute('aria-label', 'Next slide');
-  nextButton.innerHTML = '<svg class="swiper-navigation-icon" width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.38296 20.0762C0.111788 19.805 0.111788 19.3654 0.38296 19.0942L9.19758 10.2796L0.38296 1.46497C0.111788 1.19379 0.111788 0.754138 0.38296 0.482966C0.654131 0.211794 1.09379 0.211794 1.36496 0.482966L10.4341 9.55214C10.8359 9.9539 10.8359 10.6053 10.4341 11.007L1.36496 20.0762C1.09379 20.3474 0.654131 20.3474 0.38296 20.0762Z" fill="currentColor"></path></svg>';
-  beamSlider.append(nextButton);
+  const nextBtn = document.createElement('div');
+  nextBtn.classList.add('swiper-button-next', 'slide-home-btn', 'swiper-button-white');
+  nextBtn.innerHTML = '<svg class="swiper-navigation-icon" width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.38296 20.0762C0.111788 19.805 0.111788 19.3654 0.38296 19.0942L9.19758 10.2796L0.38296 1.46497C0.111788 1.19379 0.111788 0.754138 0.38296 0.482966C0.654131 0.211794 1.09379 0.211794 1.36496 0.482966L10.4341 9.55214C10.8359 9.9539 10.8359 10.6053 10.4341 11.007L1.36496 20.0762C1.09379 20.3474 0.654131 20.3474 0.38296 20.0762Z" fill="currentColor"></path></svg>';
+  beamSlider.appendChild(nextBtn);
 
-  const swiperPagination = document.createElement('div');
-  swiperPagination.classList.add('swiper-pagination', 'bullet-bottom');
-  beamSlider.append(swiperPagination);
+  const paginationEl = document.createElement('div');
+  paginationEl.classList.add('swiper-pagination', 'bullet-bottom');
+  beamSlider.appendChild(paginationEl);
 
-  const swiperNotification = document.createElement('span');
-  swiperNotification.classList.add('swiper-notification');
-  swiperNotification.setAttribute('aria-live', 'assertive');
-  swiperNotification.setAttribute('aria-atomic', 'true');
-  beamSlider.append(swiperNotification);
+  section.appendChild(beamSlider);
 
-  section.append(beamSlider);
+  const quickLinksParentDiv = document.createElement('div');
+  quickLinksParentDiv.classList.add('mt-0', 'pt-1', 'pb-1', 'm-none1', 'bottom-0', 'w-100', 'quick-links-parents-div', 'position-relative');
 
-  // Quick Links
-  if (quickLinkRows.length > 0) {
-    const quickLinksParentDiv = document.createElement('div');
-    quickLinksParentDiv.classList.add('mt-0', 'pt-1', 'pb-1', 'm-none1', 'bottom-0', 'w-100', 'quick-links-parents-div', 'position-relative');
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container', 'aos-init', 'aos-animate');
+  containerDiv.setAttribute('data-aos', 'fade-up');
+  containerDiv.setAttribute('data-aos-offset', '-100');
+  containerDiv.setAttribute('data-aos-duration', '650');
+  containerDiv.setAttribute('data-aos-easing', 'ease-in-out');
 
-    const container = document.createElement('div');
-    container.classList.add('container', 'aos-init', 'aos-animate');
-    container.setAttribute('data-aos', 'fade-up');
-    container.setAttribute('data-aos-offset', '-100');
-    container.setAttribute('data-aos-duration', '650');
-    container.setAttribute('data-aos-easing', 'ease-in-out');
+  const quickLinksUl = document.createElement('ul');
+  quickLinksUl.classList.add('quick-links-div');
 
-    const quickLinksUl = document.createElement('ul');
-    quickLinksUl.classList.add('quick-links-div');
+  quickLinkItems.forEach((row) => {
+    const [linkCell, labelCell] = [...row.children];
 
-    quickLinkRows.forEach((row) => {
-      const [linkCell, labelCell] = [...row.children];
-      const li = document.createElement('li');
-      const anchor = document.createElement('a');
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        anchor.href = foundLink.href;
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      link.href = foundLink.href;
+      // Copy target attribute if present, assuming it's from the original link
+      if (foundLink.hasAttribute('target')) {
+        link.setAttribute('target', foundLink.getAttribute('target'));
       }
-      anchor.textContent = labelCell.textContent.trim();
-      anchor.classList.add('with-full-underline');
-      moveInstrumentation(row, anchor);
-      li.append(anchor);
-      quickLinksUl.append(li);
-    });
+    }
+    link.textContent = labelCell.textContent.trim();
+    link.classList.add('with-full-underline');
+    moveInstrumentation(row, li);
+    li.appendChild(link);
+    quickLinksUl.appendChild(li);
+  });
 
-    container.append(quickLinksUl);
-    quickLinksParentDiv.append(container);
-    section.append(quickLinksParentDiv);
-  }
+  containerDiv.appendChild(quickLinksUl);
+  quickLinksParentDiv.appendChild(containerDiv);
+  section.appendChild(quickLinksParentDiv);
 
-  block.replaceWith(section);
+  block.replaceChildren(section);
 
-  // Initialize Swiper after DOM is built
-  // This is a minimal Swiper setup. Full Swiper implementation requires Swiper library import and more options.
-  // For EDS, we only provide the structure, Swiper JS is handled by the theme's JS.
-  // If Swiper is not globally available, you might need to import it or ensure it's loaded.
-  if (typeof window.Swiper === 'function') {
-    // eslint-disable-next-line no-new
-    new window.Swiper(beamSlider, {
-      loop: true,
-      slidesPerView: 1,
-      spaceBetween: 0,
-      navigation: {
-        nextEl: nextButton,
-        prevEl: prevButton,
-      },
-      pagination: {
-        el: swiperPagination,
-        clickable: true,
-      },
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-      },
-      on: {
-        init: (swiper) => {
-          swiper.slides.forEach((slide) => {
-            slide.querySelector('.content').classList.remove('active');
-          });
-          swiper.slides[swiper.activeIndex].querySelector('.content').classList.add('active');
-        },
-        slideChangeTransitionEnd: (swiper) => {
-          swiper.slides.forEach((slide) => {
-            slide.querySelector('.content').classList.remove('active');
-          });
-          swiper.slides[swiper.activeIndex].querySelector('.content').classList.add('active');
-        },
-      },
-    });
-  }
+  // Initialize Swiper
+  await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+  await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
+  // eslint-disable-next-line no-undef
+  new Swiper(beamSlider, {
+    slidesPerView: 1,
+    spaceBetween: 0,
+    loop: true, // Assuming loop from original HTML behavior
+    navigation: {
+      prevEl: prevBtn,
+      nextEl: nextBtn,
+    },
+    pagination: {
+      el: paginationEl,
+      clickable: true,
+    },
+    breakpoints: {
+      // Add breakpoints if needed based on original HTML/CSS responsive behavior
+      // Example:
+      // 576: { slidesPerView: 1 },
+      // 768: { slidesPerView: 1 },
+      // 992: { slidesPerView: 1 },
+    },
+  });
 }
