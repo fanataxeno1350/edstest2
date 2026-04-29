@@ -51,7 +51,17 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "header-new",
+        "breadcrumb",
+        "banner-carousel",
+        "discoverdropdown",
+        "teaser",
+        "tabs",
+        "cmp-image",
+        "scroll-arrow-section",
+        "footer",
+        "cmp-scroll-arrow"
       ]
     }
   ]

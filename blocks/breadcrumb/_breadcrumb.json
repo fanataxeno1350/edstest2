@@ -1,0 +1,79 @@
+{
+  "definitions": [
+    {
+      "title": "Breadcrumb",
+      "id": "breadcrumb",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "breadcrumb",
+              "model": "breadcrumb",
+              "name": "Breadcrumb"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Breadcrumb-Item",
+      "id": "breadcrumb-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "breadcrumb-item",
+              "name": "Breadcrumb-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "breadcrumb",
+      "fields": [
+        {
+          "component": "container",
+          "item": "breadcrumb-item",
+          "label": "Breadcrumb Items",
+          "name": "items"
+        }
+      ]
+    },
+    {
+      "id": "breadcrumb-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "name",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "number",
+          "label": "Position",
+          "name": "position",
+          "valueType": "number"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "breadcrumb",
+      "components": [
+        "breadcrumb-item"
+      ]
+    }
+  ]
+}

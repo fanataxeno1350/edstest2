@@ -1,0 +1,175 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const children = [...block.children];
+
+  // Root fields detection
+  const descriptionRow = children.find(row => row.children[0]?.innerHTML.includes('<p>Description text content</p>'));
+  const exploreMoreLabelRow = children.find(row => row.children[0]?.textContent.trim() === 'Explore More Label label text');
+  const exploreMoreLinkRow = children.find(row => row.children[0]?.querySelector('a')?.href.includes('/content/site/exploreMoreLink'));
+
+  // Filter out the identified root rows to get only item rows
+  const itemRows = children.filter(row =>
+    row !== descriptionRow &&
+    row !== exploreMoreLabelRow &&
+    row !== exploreMoreLinkRow
+  );
+
+  const container = document.createElement('div');
+  container.classList.add('cmp-container');
+
+  // Description section
+  if (descriptionRow) {
+    const descriptionDiv = document.createElement('div');
+    descriptionDiv.classList.add('text', 'desc-1');
+    const cmpTextDiv = document.createElement('div');
+    cmpTextDiv.classList.add('cmp-text');
+    moveInstrumentation(descriptionRow, cmpTextDiv);
+    cmpTextDiv.innerHTML = descriptionRow.firstElementChild?.innerHTML || '';
+    descriptionDiv.append(cmpTextDiv);
+    container.append(descriptionDiv);
+  }
+
+  // Cards section
+  const cardsDiv = document.createElement('div');
+  cardsDiv.classList.add('cards');
+
+  const cmpCardRecipeDetails = document.createElement('div');
+  cmpCardRecipeDetails.classList.add('cmp-card--recipe-details', 'cmp-card--default');
+
+  const cmpCardContainer = document.createElement('div');
+  cmpCardContainer.classList.add('cmp-card__container');
+
+  itemRows.forEach((row) => {
+    const cells = [...row.children];
+    // Use index destructuring for item rows as per guide, since they are fixed-field
+    const [
+      imageCell,
+      titleCell,
+      descriptionCell,
+      preparationLabelCell,
+      preparationValueCell,
+      servesLabelCell,
+      servesValueCell,
+      drinksLabelCell,
+      drinksValueCell,
+      linkCell,
+    ] = cells;
+
+    const linkEl = document.createElement('a');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      linkEl.href = foundLink.href;
+    }
+    linkEl.target = '_self'; // Assuming default target from original HTML
+
+    const cmpCardContent = document.createElement('div');
+    cmpCardContent.classList.add('cmp-card__content');
+    cmpCardContent.setAttribute('tabindex', '0');
+
+    const cmpCardMedia = document.createElement('div');
+    cmpCardMedia.classList.add('cmp-card__media', 'youtube-url-wrapper');
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        cmpCardMedia.append(optimizedPic);
+      }
+    }
+    cmpCardContent.append(cmpCardMedia);
+
+    const cmpCardInfo = document.createElement('div');
+    cmpCardInfo.classList.add('cmp-card__info');
+
+    const cmpCardTitle = document.createElement('div');
+    cmpCardTitle.classList.add('cmp-card__title');
+    const h4Title = document.createElement('h4');
+    h4Title.textContent = titleCell.textContent.trim();
+    cmpCardTitle.append(h4Title);
+    cmpCardInfo.append(cmpCardTitle);
+
+    const cmpCardDescription = document.createElement('div');
+    cmpCardDescription.classList.add('cmp-card__description');
+    const pDescription = document.createElement('p');
+    pDescription.classList.add('body-2');
+    pDescription.innerHTML = descriptionCell.innerHTML; // Use innerHTML for richtext
+    cmpCardDescription.append(pDescription);
+    cmpCardInfo.append(cmpCardDescription);
+
+    const cmpCardDetails = document.createElement('div');
+    cmpCardDetails.classList.add('cmp-card__details');
+
+    const createDetailContent = (label, value) => {
+      const detailContent = document.createElement('div');
+      detailContent.classList.add('cmp-card__details-content');
+      const detailTitle = document.createElement('div');
+      detailTitle.classList.add('cmp-card__title');
+      const pLabel = document.createElement('p');
+      pLabel.classList.add('body-4');
+      pLabel.textContent = label;
+      const h4Value = document.createElement('h4');
+      h4Value.textContent = value;
+      detailTitle.append(pLabel, h4Value);
+      detailContent.append(detailTitle);
+      return detailContent;
+    };
+
+    if (preparationLabelCell.textContent.trim() && preparationValueCell.textContent.trim()) {
+      cmpCardDetails.append(createDetailContent(
+        preparationLabelCell.textContent.trim(),
+        preparationValueCell.textContent.trim(),
+      ));
+    }
+
+    if (servesLabelCell.textContent.trim() && servesValueCell.textContent.trim()) {
+      cmpCardDetails.append(createDetailContent(
+        servesLabelCell.textContent.trim(),
+        servesValueCell.textContent.trim(),
+      ));
+    }
+
+    if (drinksLabelCell.textContent.trim() && drinksValueCell.textContent.trim()) {
+      cmpCardDetails.append(createDetailContent(
+        drinksLabelCell.textContent.trim(),
+        drinksValueCell.textContent.trim(),
+      ));
+    }
+
+    cmpCardInfo.append(cmpCardDetails);
+    cmpCardContent.append(cmpCardInfo);
+    moveInstrumentation(row, linkEl);
+    linkEl.append(cmpCardContent);
+    cmpCardContainer.append(linkEl);
+  });
+
+  cmpCardRecipeDetails.append(cmpCardContainer);
+  cardsDiv.append(cmpCardRecipeDetails);
+
+  // Explore More Button
+  if (exploreMoreLabelRow && exploreMoreLinkRow) {
+    const exploreMoreDiv = document.createElement('div');
+    exploreMoreDiv.classList.add('exploremore', 'button', 'cmp-button--secondary');
+    const exploreMoreAnchor = document.createElement('a');
+    exploreMoreAnchor.classList.add('cmp-button');
+    const foundExploreMoreLink = exploreMoreLinkRow.querySelector('a');
+    if (foundExploreMoreLink) {
+      exploreMoreAnchor.href = foundExploreMoreLink.href;
+    }
+    exploreMoreAnchor.target = '_blank'; // Corrected target to match ORIGINAL HTML
+
+    const exploreMoreSpan = document.createElement('span');
+    exploreMoreSpan.classList.add('cmp-button__text');
+    exploreMoreSpan.textContent = exploreMoreLabelRow.textContent.trim();
+    exploreMoreAnchor.append(exploreMoreSpan);
+    moveInstrumentation(exploreMoreLinkRow, exploreMoreAnchor);
+    exploreMoreDiv.append(exploreMoreAnchor);
+    cardsDiv.append(exploreMoreDiv);
+  }
+
+  container.append(cardsDiv);
+  block.innerHTML = '';
+  block.append(container);
+}

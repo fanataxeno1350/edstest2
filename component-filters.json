@@ -15,28 +15,83 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "header-new",
+      "breadcrumb",
+      "banner-carousel",
+      "discoverdropdown",
+      "teaser",
+      "tabs",
+      "cmp-image",
+      "scroll-arrow-section",
+      "footer",
+      "cmp-scroll-arrow"
     ]
   },
   {
-    "id": "cards",
+    "id": "banner-carousel",
     "components": [
-      "card"
+      "banner-carousel-item"
     ]
   },
   {
-    "id": "columns",
+    "id": "breadcrumb",
     "components": [
-      "column"
+      "breadcrumb-item"
     ]
   },
   {
-    "id": "column",
+    "id": "cmp-image",
+    "components": []
+  },
+  {
+    "id": "cmp-scroll-arrow",
+    "components": []
+  },
+  {
+    "id": "discoverdropdown",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "dropdown-option"
     ]
+  },
+  {
+    "id": "footer",
+    "components": [
+      "navigation-item",
+      "itc-link-item",
+      "social-link-item"
+    ]
+  },
+  {
+    "id": "header-new",
+    "components": [
+      "navigation-item"
+    ]
+  },
+  {
+    "id": "image",
+    "components": []
+  },
+  {
+    "id": "scroll-arrow-section",
+    "components": [
+      "card-item"
+    ]
+  },
+  {
+    "id": "tabs",
+    "components": [
+      "tab-panel",
+      "product-card"
+    ]
+  },
+  {
+    "id": "teaser",
+    "components": []
+  },
+  {
+    "id": "text",
+    "components": []
   }
 ]

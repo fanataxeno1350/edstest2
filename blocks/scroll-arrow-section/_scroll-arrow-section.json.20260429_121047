@@ -1,0 +1,139 @@
+{
+  "definitions": [
+    {
+      "title": "Scroll-Arrow-Section",
+      "id": "scroll-arrow-section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "scroll-arrow-section",
+              "model": "scroll-arrow-section",
+              "name": "Scroll-Arrow-Section"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Recipe-Card",
+      "id": "recipe-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "recipe-card",
+              "name": "Recipe-Card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "scroll-arrow-section",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "recipe-card",
+          "label": "Cards",
+          "name": "cards"
+        },
+        {
+          "component": "text",
+          "label": "Explore More Label",
+          "name": "exploreMoreLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Explore More Link",
+          "name": "exploreMoreLink",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "recipe-card",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Preparation Label",
+          "name": "preparationLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Preparation Value",
+          "name": "preparationValue",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Serves Label",
+          "name": "servesLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Serves Value",
+          "name": "servesValue",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Drinks Label",
+          "name": "drinksLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Drinks Value",
+          "name": "drinksValue",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Recipe Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "scroll-arrow-section",
+      "components": [
+        "recipe-card"
+      ]
+    }
+  ]
+}
