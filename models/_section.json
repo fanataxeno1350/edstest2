@@ -51,7 +51,13 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "headerseconds",
+        "main-banner",
+        "why-savlon",
+        "products-block",
+        "youtube-slider",
+        "foot-container"
       ]
     }
   ]

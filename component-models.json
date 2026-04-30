@@ -142,75 +142,295 @@
     ]
   },
   {
-    "id": "card",
+    "id": "foot-container",
     "fields": [
       {
         "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
+        "label": "ITC Logo",
+        "name": "itc-logo",
+        "valueType": "string"
       },
       {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
+        "component": "aem-content",
+        "label": "ITC Logo Link",
+        "name": "itc-logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "foot-link-item",
+        "label": "Footer Links",
+        "name": "foot-links"
+      },
+      {
+        "component": "text",
+        "label": "Copyright Text",
+        "name": "copyright",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Social Section Title",
+        "name": "social-title",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "social-link-item",
+        "label": "Social Links",
+        "name": "social-links"
+      }
+    ]
+  },
+  {
+    "id": "foot-link-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link URL",
+        "name": "link",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "columns",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "columns",
-        "value": "",
-        "label": "Columns"
-      },
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "rows",
-        "value": "",
-        "label": "Rows"
-      }
-    ]
-  },
-  {
-    "id": "fragment",
-    "fields": [
-      {
-        "component": "aem-content",
-        "name": "reference",
-        "label": "Reference"
-      }
-    ]
-  },
-  {
-    "id": "hero",
+    "id": "social-link-item",
     "fields": [
       {
         "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
+        "label": "Social Icon",
+        "name": "icon",
+        "valueType": "string"
       },
       {
+        "component": "aem-content",
+        "label": "Social Link URL",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "headerseconds",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logoLink",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "navigation-item",
+        "label": "Navigation Menu",
+        "name": "navigationMenu"
+      }
+    ]
+  },
+  {
+    "id": "navigation-item",
+    "fields": [
+      {
         "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Alt",
-        "value": ""
+        "label": "Menu Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Menu Link",
+        "name": "link",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "main-banner",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Header Banner Image",
+        "name": "headerImage",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Banner Logo",
+        "name": "bannerLogo",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Banner Title",
+        "name": "bannerTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "banner-slide",
+        "label": "Banner Slides",
+        "name": "bannerSlides"
+      }
+    ]
+  },
+  {
+    "id": "banner-slide",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Slide Image",
+        "name": "slideImage",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Slide Copy",
+        "name": "slideCopy",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "products-block",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Block Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "product-item",
+        "label": "Products",
+        "name": "products"
+      }
+    ]
+  },
+  {
+    "id": "product-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Product Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Product Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Read More Link",
+        "name": "readMoreLink",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Disclaimer",
+        "name": "disclaimer",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "why-savlon",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Image Alt Text",
+        "name": "imageAlt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Disclaimer",
+        "name": "disclaimer",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "youtube-slider",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Block Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "youtube-video-item",
+        "label": "YouTube Videos",
+        "name": "videos"
+      }
+    ]
+  },
+  {
+    "id": "youtube-video-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "YouTube Embed URL",
+        "name": "embedUrl",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Video Title",
+        "name": "videoTitle",
         "valueType": "string"
       }
     ]

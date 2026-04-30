@@ -1,0 +1,1212 @@
+/*
+    Colorbox Core Style:
+    The following CSS is consistent between example themes and should not be altered.
+*/
+#colorbox, #cboxOverlay, #cboxWrapper { position:absolute; top:0; left:0; z-index:9999; overflow:hidden; -webkit-transform: translate3d(0,0,0); }
+
+#cboxWrapper { max-width:none; }
+
+#cboxOverlay { position:fixed; width:100%; height:100%; }
+
+#cboxMiddleLeft, #cboxBottomLeft { clear:left; }
+
+#cboxContent { position:relative; }
+
+#cboxLoadedContent { overflow:auto; -webkit-overflow-scrolling: touch; }
+
+#cboxTitle { margin:0; }
+
+#cboxLoadingOverlay, #cboxLoadingGraphic { position:absolute; top:0; left:0; width:100%; height:100%; }
+
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow { cursor:pointer; }
+
+#colorbox, #cboxContent, #cboxLoadedContent { box-sizing:content-box; -moz-box-sizing:content-box; -webkit-box-sizing:content-box; }
+
+/* 
+    User Style:
+    Change the following styles to modify the appearance of Colorbox.  They are
+    ordered & tabbed in a way that represents the nesting of the generated HTML.
+*/
+#cboxOverlay { background:#000; opacity: 0.9; filter: alpha(opacity = 90); }
+
+#colorbox { outline:0; }
+
+#cboxContent { margin-top:32px; overflow:visible; background:#000; }
+
+#cboxError { padding:50px; border:1px solid #ccc; }
+
+#cboxLoadedContent { background:#000; padding:1px; }
+
+#cboxLoadingGraphic { background:url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/loading-ab488c.gif") no-repeat center center; }
+
+#cboxLoadingOverlay { background:#000; }
+
+#cboxTitle { position:absolute; top:-22px; left:0; color:#000; }
+
+#cboxCurrent { position:absolute; top:-22px; right:205px; text-indent:-9999px; }
+
+/* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
+        #cboxPrevious, #cboxNext, #cboxSlideshow, #cboxClose { border:0; padding:0; margin:0; overflow:visible; text-indent:-9999px; width:20px; height:20px; position:absolute; top:-20px; background:url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/controls-898f2b.png") no-repeat 0 0; }
+
+/* avoid outlines on :active (mouseclick), but preserve outlines on :focus (tabbed navigating) */
+        #cboxPrevious:active, #cboxNext:active, #cboxSlideshow:active, #cboxClose:active { outline:0; }
+
+#cboxPrevious { background-position:0px 0px; right:44px; }
+
+#cboxPrevious:hover { background-position:0px -25px; }
+
+#cboxNext { background-position:-25px 0px; right:22px; }
+
+#cboxNext:hover { background-position:-25px -25px; }
+
+#cboxClose { background-position:-50px 0px; right:0; }
+
+#cboxClose:hover { background-position:-50px -25px; }
+
+/**
+ * BxSlider v4.1.2 - Fully loaded, responsive content slider
+ * http://bxslider.com
+ *
+ * Written by: Steven Wanderski, 2014
+ * http://stevenwanderski.com
+ * (while drinking Belgian ales and listening to jazz)
+ *
+ * CEO and founder of bxCreative, LTD
+ * http://bxcreative.com
+ */
+
+
+/** RESET AND LAYOUT
+===================================*/
+
+.bx-wrapper {
+	position: relative;
+	margin: 0 4%;
+	padding: 0;
+	*zoom: 1;
+}
+
+/* create css for manage amazone and bigbasket button by kuvar*/
+#block-views-products-block-0 > div > div > div > div >
+ div > div > div:nth-child(3) > div > a:nth-child(5) > img, #block-views-products-block-0 > div > div > div > div >
+ div > div > div:nth-child(3) > div > a:nth-child(6) > img { 
+    width: 50%;
+    margin-top: 12px;
+ }
+
+#block-views-products-block-0 > div > div > div > div 
+> div > div > div:nth-child(2) > div > a:nth-child(5) > img, #block-views-products-block-0 > div > div > div > div 
+> div > div > div:nth-child(2) > div > a:nth-child(6) > img { 
+    width: 50%;
+    margin-top: 12px;
+ }
+
+@font-face {
+    font-family: 'DINPro-Black';
+    src: url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-black-gdi-1c6754.vnd.ms-fontobject");
+    src: url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-black-gdi-1c6754.vnd.ms-fontobject") format('embedded-opentype'), url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-black-gdi-fc01d3.woff") format('woff'), url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-black-gdi-cc2e14.ttf") format('truetype'), url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/dinpro-black-gdi-b11b2c.svg") format('svg');
+    font-weight: 900;
+    font-style: normal;
+    font-stretch: normal;
+    unicode-range: U+0020-25CA;
+}
+
+@font-face {
+    font-family: 'DINPro-Bold';
+    src: url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-bold-gdi-6a5c35.vnd.ms-fontobject");
+    src: url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-bold-gdi-6a5c35.vnd.ms-fontobject") format('embedded-opentype'), url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-bold-gdi-ddef5e.woff") format('woff'), url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-bold-gdi-5a8611.ttf") format('truetype'), url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/dinpro-bold-gdi-5fee8a.svg") format('svg');
+    font-weight: 700;
+    font-style: normal;
+    font-stretch: normal;
+    unicode-range: U+0020-25CA;
+}
+
+@font-face {
+    font-family: 'DINPro-Light';
+    src: url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-light-gdi-bd76ab.vnd.ms-fontobject");
+    src: url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-light-gdi-bd76ab.vnd.ms-fontobject") format('embedded-opentype'), url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-light-gdi-53cc9f.woff") format('woff'), url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-light-gdi-395fc5.ttf") format('truetype'), url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/dinpro-light-gdi-454d57.svg") format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    unicode-range: U+0020-25CA;
+}
+
+@font-face {
+    font-family: 'DINPro-Medium';
+    src: url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-medium-gdi-77997a.vnd.ms-fontobject");
+    src: url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-medium-gdi-77997a.vnd.ms-fontobject") format('embedded-opentype'), url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-medium-gdi-e8672e.woff") format('woff'), url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-medium-gdi-e551f1.ttf") format('truetype'), url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/dinpro-medium-gdi-351a3a.svg") format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    unicode-range: U+0020-25CA;
+}
+
+@font-face {
+    font-family: 'DINPro-Regular';
+    src: url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-regular-gdi-19f63c.vnd.ms-fontobject");
+    src: url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-regular-gdi-19f63c.vnd.ms-fontobject") format('embedded-opentype'), url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-regular-gdi-abe614.woff") format('woff'), url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/font/dinpro-regular-gdi-64210e.ttf") format('truetype'), url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/dinpro-regular-gdi-20a611.svg") format('svg');
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    unicode-range: U+0020-25CA;
+}
+
+/*------- demo reference for @font-face -------*/
+
+/*--------------- CSS Reset --------------*/
+
+html { 
+    color: #222222;
+ }
+
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+p,
+blockquote,
+th,
+td {
+    margin: 0;
+    padding: 0;
+}
+
+table { 
+    border-collapse: collapse;
+    border-spacing: 0;
+ }
+
+fieldset, img { 
+    border: 0;
+ }
+
+address, caption, cite, code, dfn, th, var, optgroup { 
+    font-style: inherit;
+    font-weight: inherit;
+ }
+
+del, ins { 
+    text-decoration: none;
+ }
+
+li { 
+    list-style: none;
+ }
+
+caption, th { 
+    text-align: left;
+ }
+
+h1, h2, h3, h4, h5, h6 { 
+    font-size: 100%;
+    font-weight: normal;
+ }
+
+q:before, q:after { 
+    content: '';
+ }
+
+abbr, acronym { 
+    border: 0;
+    font-variant: normal;
+ }
+
+sub { 
+    vertical-align: baseline;
+ }
+
+legend { 
+    color: #000;
+ }
+
+input, button, textarea, select, optgroup, option { 
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+ }
+
+input, button, textarea, select { 
+    *font-size: 100%;
+ }
+
+a, img { 
+    outline: none;
+    border: 0;
+ }
+
+article, aside, audio, canvas, command, datalist, details, embed, address, figcaption, figure, footer, header, hgroup, keygen, meter, nav, output, progress, section, source, video { 
+    display: block
+ }
+
+mark, rp, rt, ruby, summary, time { 
+    display: inline
+ }
+
+/*--------------- CSS Reset --------------*/
+
+* { 
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+ }
+
+body {
+    font-family: 'DINPro-Regular';
+    background-color: #fff;
+    -webkit-text-size-adjust: none;
+}
+
+img { 
+    max-width: 100%;
+    width: 100%;
+    vertical-align: top;
+ }
+
+#main-wrapper { 
+    max-width: 1920px;
+    width: 100%;
+    margin: 0 auto;
+ }
+
+/*--------------- Header Start --------------*/
+
+header { 
+    width: 100%;
+    padding: 0 2%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999999;
+    background-color: #FFFFFF;
+    -moz-box-shadow: 0px 2px 3px #ababab;
+    -webkit-box-shadow: 0px 2px 3px #ababab;
+    box-shadow: 0 2px 3px #ababab;
+ }
+
+header .head-container { 
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+ }
+
+.logo { 
+    margin: 8px 0px 0;
+    width: 18%;
+    float: left;
+ }
+
+.hamburger-inner { 
+    display: block;
+    top: 50%;
+    margin-top: -2px;
+ }
+
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after { 
+    width: 32px;
+    height: 1px;
+    background-color: #666;
+    border-radius: 4px;
+    position: absolute;
+    transition-property: -webkit-transform;
+    transition-property: transform;
+    transition-property: transform, -webkit-transform;
+    transition-duration: 0.15s;
+    transition-timing-function: ease;
+ }
+
+.hamburger-inner::before, .hamburger-inner::after { 
+    content: "";
+    display: block;
+ }
+
+.hamburger-inner::before { 
+    top: -10px;
+ }
+
+.hamburger-inner::after { 
+    bottom: -10px;
+ }
+
+/*
+ * Spin
+ */
+
+.hamburger--spin .hamburger-inner {
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+/*
+ * Spin Reverse
+ */
+
+.hamburger--spin-r .hamburger-inner {
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+/*media query start*/
+ 
+@media (max-width: 767px) {   
+    div ul.filtereration-benifit li.row {             
+        display: flex;
+        flex-wrap: wrap;
+        text-align: center;
+    }  
+    div ul.filtereration-benifit li .filter_img {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%; 
+        margin-bottom: 30px; 
+    }
+    div ul.filtereration-benifit li .filter_text {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;        
+    }
+    div ul.filtereration-benifit li .filter_text p {
+
+    }
+    #multipurpose-block > div > div.bodywash-liquid2.mask-benifits {
+        padding: 0 20px 40px 20px;
+        margin: 0px auto;
+    }
+    .liquid-block-3.mask-benifits h1.orange { 
+        padding: 0 10px 15px;
+    }
+    .block.block-views ul.btn_multiples li a > img {  
+        max-width: 80px;
+    }
+    .block.block-views ul.btn_multiples li:nth-child(3) > div > a {
+        max-width: 100%;
+    }
+
+    .block.block-views ul.btn_multiples li:nth-child(3) > div > a:first-child > img {
+        margin-right: 0!important;
+    } 
+
+    .block.block-views ul.btn_multiples li:nth-child(2) {
+        width: 33% !important; 
+    }
+    .block.block-views ul.btn_multiples li:nth-child(3) { 
+        width: 33% !important;  
+    }
+    .block.block-views ul.btn_multiples li:nth-child(2) > a > img {
+        left: 0;
+        top: 15px; 
+    } 
+    .block.block-views ul.btn_multiples li:nth-child(3) > div > a > img {  
+        margin: 0 0 0 0 !important; 
+    }                              
+ }
+
+/*menu mobile start*/
+
+@media only screen and (min-width: 320px) and (max-width: 768px) { 
+    /*menu mobile end*/
+ }
+
+/*rgba(0, 0, 0 { 
+    background: #d74f08;
+ }
+
+#video { 
+    position: relative;
+    background: #000;
+    width: 21vw;
+    margin: 1.5vw auto 0;
+    box-shadow: 0 0 30px rgba(215, 78, 8, 0.3);
+    cursor: pointer
+ }
+
+#video img, #video iframe { 
+    display: block;
+ }
+
+#play { 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background: url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/play-button-b9cfa2.png") no-repeat 50% 50%;
+    background-size: auto, cover;
+    z-index: 9999;
+ }
+
+#play:hover { 
+    background-color: rgba(0, 0, 0, 0.2) !important;
+ }
+
+#bx-pager a img { 
+    width: auto;
+ }
+
+/*--------------- Banner End --------------*/
+
+/*--------------- footer Start --------------*/
+
+footer { 
+    width: 100%;
+    padding: 2%;
+    position: relative;
+    background-color: #fff;
+    color: #555555;
+    font-family: 'DINPro-Medium';
+    font-size: 12px;
+    text-transform: uppercase;
+    overflow: hidden;
+    border-top: 1px solid #e6e6e6;
+ }
+
+#user-login { 
+    margin: 160px auto;
+ }
+
+/*31 july 2020 start code css*/
+
+@media (max-width: 991px) {  
+   #multipurpose-block > div > div > figure.hexa > h1 > img { 
+        max-width: 500px;
+    }
+    .products_set .listing-bn {
+        min-height: 160px; 
+    } 
+
+ }
+
+/* 1-aug-2020 created by kp singh*/
+@media only screen and (max-width:767px) { 
+    .content .why-us.antiseptics {
+        padding-top: 10px;
+    }
+    .main-banner .inner-banner.contct-t {
+        background-image: url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/contact-banner-bg-7c617d.jpeg"); 
+        background-position: 0 9px; 
+    }
+    #multipurpose-block > div > div > figure.hexa > h1 > img {
+        width: 100% !important;
+    }
+    #block-views-products-block-2 .liquid-block-2 {
+        background-size: 100% !important;
+    }
+    #block-views-products-block-2 .liquid-block-3 {
+        background-size: 100% !important;
+    }
+    #block-views-products-block-3 .liquid-block-2 {
+        background-size: 100% !important;
+    } 
+    .listing-bn2 { 
+        height: auto; 
+        min-height: 61px;
+        background-size: contain;
+    }    
+    .set-infent.manages .col-md-4 {
+        width: 100%; 
+        margin-bottom: 30px;  
+        padding-left: 0;
+        padding-right: 0; 
+    }
+    .liquid-block-2 h1.orange {
+        font-size: 24px !important; 
+    }
+    .foot-container section:nth-child(1) {
+        width: 100%;
+    }
+    .foot-container section:nth-child(2) {
+        width: 100%;
+    }
+    .foot-container section:nth-child(3) {
+        width: 100%;
+    }
+    div .liquid-block-2 .set-infent img {
+        /*width: 100% !important; */
+        height: auto;
+        object-fit: contain; 
+    }
+    .set-infent.manages .surfaces {
+        min-height: 570px; 
+    }
+    .surfaces>h3 {
+        height: auto;
+    }
+    .surfaces>h3:before {
+        opacity: 0;
+    }
+
+    .liquid-block-2 h1.orange {
+        font-family: 'DINPro-Regular';
+        color: #2d2b74;
+        font-size: 24px;
+    }
+    .sanitizerlogo {
+        padding-bottom: 6vw !important;
+    }
+ }
+
+@media only screen and (min-width: 480px) and (max-width: 640px) { .logo { 
+        width: 25%;
+        margin: 0;
+     }
+
+header { 
+        padding: 2%;
+        position: relative;
+        float: left;
+     } }
+
+@media only screen and (min-width: 768px) and (max-width: 1400px) { header { 
+        padding: 0 1%;
+        height: 70px;
+     }
+
+.logo { 
+        padding: 5px;
+        width: 18%;
+     } }
+
+@media only screen and (width: 768px) and (orientation: portrait) { header { 
+        padding: 1%;
+        position: relative;
+        float: left;
+     }
+
+.logo { 
+        padding: 5px;
+        width: 18%;
+     } }
+
+@media only screen and (max-width:1440px) { /*#video {  width:338px;}
+.main-banner .header-banner .header-content { margin:7vh 8vw 2vh;}*/
+    .why-savlon figure {
+        height: 520px;
+     }
+
+#video { 
+        box-shadow: 0 0 13px rgba(215, 78, 8, 0.3);
+        width: 22vw;
+     } }
+
+#breadcrumb { 
+    display: none;
+ }
+
+@media only screen and (max-width:800px) { #skip-link { 
+        display: none
+     } }
+
+@media only screen and (max-width:768px) { header { 
+        position: relative;
+        float: left;
+     }
+
+.logo { 
+        margin: 17px 0;
+     }
+
+#video { 
+        width: 100%;
+        margin: 15px auto !important
+     }
+
+#video { 
+        margin: 0 auto;
+        width: 70%;
+     }
+
+header { 
+        padding: 0 2%
+     } }
+
+@media only screen and (min-device-width:320px) and (max-device-width:700px) { #block-views-products-block-0 > div > div > div > div >
+    div > div > div:nth-child(3) > div > a:nth-child(5) > img { 
+    width: 50%;
+    margin-top: 12px;
+     } }
+
+@media only screen and (min-width: 320px) and (max-width: 360px) { .logo { 
+        margin: 15px 0;
+        width: 30%;
+     } }
+
+/*----------media Screen------------*/
+
+@media only screen and (min-width: 320px) and (max-width: 980px) { 
+    .popup-main-wrapper {
+        margin: 0 auto;
+        left: 5%;
+        width: 90%;
+        padding: 10px;
+    }
+ }
+
+@media only screen and (min-width: 320px) and (max-width:360px) { iframe { 
+        height: 180px;
+     } }
+
+@media only screen and (min-width: 480px) and (max-width:640px) { iframe { 
+        height: 230px;
+     } }
+
+@media only screen and (min-width: 768px) and (max-width:980px) { iframe { 
+        height: 320px;
+     } }
+
+@media only screen and (min-width: 320px) and (max-width:640px) { #cboxWrapper { 
+        width: 90% !important;
+        margin: 0 5% !important
+     }
+
+#cboxContent { 
+        width: 100% !important
+     }
+
+#colorbox { 
+        width: 100% !important;
+        top: 30% !important
+     }
+
+#cboxLoadedContent { 
+        width: 100% !important
+     }
+
+#colorbox, #cboxOverlay, #cboxWrapper { 
+        z-index: 9999999 !important
+     } }
+
+/*5 Aug 2020 start code css*/
+
+@media (max-width: 767px) {   
+
+    .why-us .main-banner .inner-banner.effectives { 
+        height: 25.5vw;
+    }
+
+    .why-us .main-banner .inner-banner.effectives h1 {
+        padding: 3vw 1vw 3vw 12vw;
+    }
+
+    .main-banner.listing-bn2 {            
+        min-height: 140px;
+    }
+ }
+
+.logo img { width:43%!important; }
+
+sup { font-size:16px!important; }
+
+::-webkit-scrollbar {   
+  width: 5px; 
+ }
+
+/* Track */
+::-webkit-scrollbar-track {  
+  background: #f1f1f1; 
+ }
+
+/* Handle */
+::-webkit-scrollbar-thumb {  
+  background: #888; 
+ }
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {  
+  background: #555; 
+ }
+
+header { 
+    position: relative;
+    width: 100%;
+    background: #fff;  
+ }
+
+.headerseconds .logo {   
+    position: relative;
+    z-index: 9;
+    padding-top: 10px; 
+ }
+
+header.sticky-head {               
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0px;
+    z-index: 1030;
+ }
+
+/*.logo { 
+    position: relative;
+    z-index: 123;
+    padding: 10px;
+    font: 18px verdana;
+    color: #6ddb07;
+    float: left;
+    width: 15%;
+}
+.logo a {
+    color: #6ddb07;
+}*/
+
+header.headerseconds {
+    /*margin-top: -22px; */
+ }
+
+nav#cssmenu ul.pull-rights {   
+    float: right; 
+ }
+
+nav {  
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+ }
+
+#cssmenu, #cssmenu ul, #cssmenu ul li, #cssmenu ul li a, #cssmenu #head-mobile { 
+    border: 0;
+    list-style: none;
+    line-height: 1;
+    display: block;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+ }
+
+#cssmenu:after, #cssmenu > ul:after { 
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+ }
+
+#cssmenu #head-mobile { 
+    display: none;
+ }
+
+#cssmenu { 
+    font-family: 'DINPro-Regular';
+    background: #fff;
+ }
+
+#cssmenu > ul > li { 
+    float: left;
+    margin-right: 1px;
+ }
+
+#cssmenu  ul  li  a { 
+    font-weight: 600;
+    line-height: 30px;
+    text-transform: uppercase;
+    font-size: 15px;
+ }
+
+#cssmenu > ul > li > a { 
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-weight: 700;
+    color: #474747;
+    display: block;
+    padding: 20px 20px;
+    line-height: 30px;
+    font-size: 14px;
+ }
+
+#cssmenu > ul > li:hover > a { 
+    color: #fff;
+ }
+
+#cssmenu > ul > li > a { 
+    position: relative;  
+ }
+
+#cssmenu > ul > li > a:hover::after {  
+    background: url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/active-arow-37afc0.png") no-repeat 0 0 !important;  
+    position: absolute !important;  
+    bottom: -18px !important;  
+    left: 50% !important;  
+    margin-left: -10px !important;  
+    content: "" !important;  
+    height: 20px !important;  
+    width: 20px !important;  
+    z-index: 99999 !important;  
+ }
+
+#cssmenu > ul > li:hover { 
+    background: #e41e2d !important;
+    -webkit-transition: background 0.3s ease;
+    -ms-transition: background 0.3s ease;
+    transition: background 0.3s ease; 
+ }
+
+#cssmenu > ul > li.has-sub > a { 
+    padding-right: 30px;
+ }
+
+#cssmenu > ul > li.has-sub > a:after { 
+    /*position: absolute;  
+    top: 22px;
+    right: 11px;
+    width: 8px;
+    height: 2px;
+    display: block;
+    background: #ddd;
+    content: "";
+    opacity: 0;*/
+ }
+
+#cssmenu > ul > li.has-sub > a:before { 
+    position: absolute;
+    top: 19px;
+    right: 14px;
+    display: block;
+    width: 2px;
+    height: 8px;
+    background: #ddd;
+    content: "";
+    -webkit-transition: all 0.25s ease;
+    -ms-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+    opacity: 0;
+ }
+
+#cssmenu > ul > li.has-sub:hover > a:before { 
+    top: 23px;
+    height: 0;
+    opacity: 0;
+ }
+
+#cssmenu ul ul { 
+    position: absolute;
+    left: -9999px;
+ }
+
+#cssmenu ul ul li { 
+    height: 0;
+    -webkit-transition: all 0.25s ease; 
+    -ms-transition: all 0.25s ease;
+    background: #333;
+    transition: all 0.25s ease;
+ }
+
+#cssmenu ul ul li:hover { 
+    background: #e41e2d !important; 
+ }
+
+#cssmenu li:hover > ul { 
+    left: auto;
+/*    max-height: 307px;
+    overflow: auto;*/
+ }
+
+#cssmenu li.has-sub > ul {   
+    max-height: 307px;
+    overflow: auto;
+ }
+
+#cssmenu li:hover > ul > li { 
+    /*height: 35px;*/
+    height: auto; 
+ }
+
+#cssmenu ul ul ul { 
+    margin-left: 100%;
+    top: 0;
+ }
+
+#cssmenu ul ul li a { 
+    border-bottom: 1px solid rgba(150, 150, 150, 0.15);
+    padding: 11px 15px;
+    width: 220px;  
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-weight: 700;
+    color: #fff;
+    display: block;
+    padding: 15px 20px; 
+    line-height: 30px;
+    font-size: 14px;
+    height: auto;
+ }
+
+#cssmenu ul ul li:last-child > a { 
+    border-bottom: 0;
+ }
+
+#cssmenu ul ul li:hover > a, #cssmenu ul ul li a:hover { 
+    color: #fff;
+ }
+
+@media screen and (max-width: 1000px) { /*.logo { 
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 46px;
+        text-align: center;
+        padding: 10px 0 0 0;
+        float: none;
+    }
+    .logo2 {
+        display: none;
+    }*/
+    nav {
+        width: 100%;
+     }
+
+#cssmenu { 
+        width: 100%;
+     }
+
+#cssmenu ul { 
+        width: 100%;
+        display: none;
+     }
+
+#cssmenu ul li {  
+        width: 100%;
+        border-top: 1px solid #ccc; 
+     }
+
+#cssmenu ul li:hover { 
+        background: #363636;
+     }
+
+#cssmenu ul ul li, #cssmenu li:hover > ul > li { 
+        height: auto;
+     }
+
+#cssmenu ul li a, #cssmenu ul ul li a { 
+        width: 100%;
+        border-bottom: 0;
+        font-family: 'DINPro-Regular' !important ;
+     }
+
+#cssmenu > ul > li { 
+        float: none;
+     }
+
+#cssmenu ul ul li a { 
+        padding-left: 25px;
+        font-family: 'DINPro-Regular' !important ;
+     }
+
+#cssmenu ul ul li { 
+        background: #333 !important;
+     }
+
+#cssmenu ul ul li:hover { 
+        background: #363636 !important;
+     }
+
+#cssmenu ul ul ul li a { 
+        font-family: 'DINPro-Regular' !important ;
+        padding-left: 35px;
+     }
+
+#cssmenu ul ul li a { 
+        color: #ddd;
+        background: none;
+     }
+
+#cssmenu ul ul li:hover > a { 
+        color: #fff;
+     }
+
+#cssmenu ul ul, #cssmenu ul ul ul {   
+        position: relative;
+        left: 0;
+        width: 100%;
+        margin: 0;
+        text-align: left;
+        max-height: 285px;
+        overflow: scroll; 
+     }
+
+#cssmenu > ul > li.has-sub > a:after, #cssmenu > ul > li.has-sub > a:before { 
+        display: none;
+     }
+
+#cssmenu #head-mobile { 
+        display: block;
+        padding: 23px;
+        color: #ddd;
+        font-size: 12px;
+        font-weight: 700;
+     }
+
+.button { 
+        width: 55px;
+        height: 46px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        cursor: pointer;
+        z-index: 12399994;
+     }
+
+.button:after { 
+        position: absolute;
+        top: 22px;
+        right: 20px;
+        display: block;
+        height: 4px;
+        width: 20px;
+        border-top: 2px solid #999;
+        border-bottom: 2px solid #999;
+        content: "";
+     }
+
+.button:before { 
+        -webkit-transition: all 0.3s ease;
+        -ms-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        display: block;
+        height: 2px;
+        width: 20px;
+        background: #999; 
+        content: "";
+     }
+
+#cssmenu .submenu-button { 
+            position: absolute;
+            z-index: 99;
+            right: 0;
+            top: 0;
+            display: block;
+            border-left: 1px solid #ccc; 
+            height: 70px;
+            line-height: 70px;
+            width: 46px;
+            cursor: pointer;
+            font-family: 'DINPro-Regular' !important ;
+     }
+
+#cssmenu .submenu-button:after { 
+           position: absolute;
+            top: 35px;
+            right: 16px;
+            width: 14px;
+            height: 2px;
+            display: block;
+            background: #999;
+            content: "";
+     }
+
+#cssmenu .submenu-button:before { 
+            position: absolute;
+    top: 29px;
+    right: 22px;
+    display: block;
+    width: 2px;
+    height: 14px;
+    background: #999;
+    content: "";
+     } }
+
+@media (max-width: 767px) { .headerseconds .logo { 
+        margin: 0 0;
+        width: 55%;              
+     }
+
+header.headerseconds { 
+        padding-top: 5px;
+        padding-bottom: 5px;
+     } }
+
+#ytThumbs { 
+  position: relative;
+  top:0;
+ }
+
+iframe { 
+	border: 0;
+	width: 100%
+ }
+
+body{ margin: 0; padding:0}
+
+body{
+    margin: 0px;
+    padding: 0px;
+  }
+
+@keyframes fb_transform{0%{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+
+#fb-root #fb_dialog_ipad_overlay { background:#0006;inset:0;min-height:100%;position:absolute;width:100%;z-index:10000 }
+
+#fb_dialog_loader_close { float:left }
+
+#fb_dialog_loader_spinner { animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/onuujj0tcqe-39ea52.png");background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px }
+
+@keyframes rotateSpinner{0%{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+#youTubeSlider { 
+    /*background: url("/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/handwash-banner-bg-36b783.jpeg");*/
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 50px 0;
+    background: rgb(240, 84, 35);
+   }
+
+#slider-wrapper { 
+  width:600px;  
+  height:400px;
+  position:relative;
+  color:#fff;
+  height: 100%;
+  margin: 0 auto;
+   }
+
+#youTubeSlider #slider-wrap { 
+  width:600px;
+  height:400px;
+  position:relative;
+  overflow:hidden;
+ }
+
+#slider h4 { color: #fff;text-align: center;font-size: 18px; }
+
+@media only screen and (max-width: 767px) { #youTubeSlider { width: 100%;height: auto; }
+
+#slider-wrap ul#slider li {  } }
+
+#youTubeSlider { position: relative; }
+
+#youTubeSlider button { 
+position: absolute;
+    top: 40%;
+    background: none;
+    border: 0;
+    outline: none;
+    padding: 0;
+    cursor: pointer;
+ }
+
+#youTubeSlider button img { width: 20px; }

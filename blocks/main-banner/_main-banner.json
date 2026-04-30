@@ -1,0 +1,91 @@
+{
+  "definitions": [
+    {
+      "title": "Main-Banner",
+      "id": "main-banner",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "main-banner",
+              "model": "main-banner",
+              "name": "Main-Banner"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Banner-Slide",
+      "id": "banner-slide",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "banner-slide",
+              "name": "Banner-Slide"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "main-banner",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Header Banner Image",
+          "name": "headerImage",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Banner Logo",
+          "name": "bannerLogo",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Banner Title",
+          "name": "bannerTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "banner-slide",
+          "label": "Banner Slides",
+          "name": "bannerSlides"
+        }
+      ]
+    },
+    {
+      "id": "banner-slide",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Slide Image",
+          "name": "slideImage",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Slide Copy",
+          "name": "slideCopy",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "main-banner",
+      "components": [
+        "banner-slide"
+      ]
+    }
+  ]
+}

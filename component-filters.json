@@ -15,28 +15,49 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "headerseconds",
+      "main-banner",
+      "why-savlon",
+      "products-block",
+      "youtube-slider",
+      "foot-container"
     ]
   },
   {
-    "id": "cards",
+    "id": "foot-container",
     "components": [
-      "card"
+      "foot-link-item",
+      "social-link-item"
     ]
   },
   {
-    "id": "columns",
+    "id": "headerseconds",
     "components": [
-      "column"
+      "navigation-item"
     ]
   },
   {
-    "id": "column",
+    "id": "main-banner",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "banner-slide"
+    ]
+  },
+  {
+    "id": "products-block",
+    "components": [
+      "product-item"
+    ]
+  },
+  {
+    "id": "why-savlon",
+    "components": []
+  },
+  {
+    "id": "youtube-slider",
+    "components": [
+      "youtube-video-item"
     ]
   }
 ]
