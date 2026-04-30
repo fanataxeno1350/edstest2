@@ -41,8 +41,8 @@
         },
         {
           "component": "select",
-          "label": "Fruit Origin Story",
-          "name": "fruit-origin-story",
+          "label": "Fruit Origin",
+          "name": "fruit-origin",
           "options": [
             {
               "label": "Guava",
@@ -82,7 +82,7 @@
         {
           "component": "text",
           "label": "YouTube Embed URL",
-          "name": "youtube-embed-url",
+          "name": "youtube-url",
           "valueType": "string"
         }
       ]

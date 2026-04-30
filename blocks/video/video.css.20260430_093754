@@ -35,12 +35,6 @@
   width: 100%;
 }
 
-/* column of a grid */
-.aem-GridColumn { 
-  box-sizing: border-box;
-  clear: both;
- }
-
 /* phone breakpoint */
 @media (max-width: 768px) { 
   .aem-Grid.aem-Grid--1 > .aem-GridColumn.aem-GridColumn--phone--1 {
@@ -2864,6 +2858,12 @@ b, strong { font-weight:900 }
 @media only screen and (max-width:767px) { .cmp-video { width:100% } }
 
 .cmp-video .cmp-video__youtube-wrapper { position:relative }
+
+.cmp-video .cmp-video__youtube-wrapper .cmp-video__iframe { height:38rem;width:100% }
+
+@media only screen and (max-width:1023px) { .cmp-video .cmp-video__youtube-wrapper .cmp-video__iframe { height:25.5625rem } }
+
+@media only screen and (max-width:767px) { .cmp-video .cmp-video__youtube-wrapper .cmp-video__iframe { height:11.5625rem } }
 
 .cmp-video .video-content { align-items:end;display:flex;justify-content:space-between }
 

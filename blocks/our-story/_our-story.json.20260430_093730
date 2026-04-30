@@ -1,16 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Video",
-      "id": "video",
+      "title": "Our Story",
+      "id": "our-story",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "video",
-              "model": "video",
-              "name": "Video"
+              "filter": "our-story",
+              "model": "our-story",
+              "name": "Our Story"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Story Teaser",
+      "id": "story-teaser",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "story-teaser",
+              "name": "Story Teaser"
             }
           }
         }
@@ -19,8 +34,20 @@
   ],
   "models": [
     {
-      "id": "video",
+      "id": "our-story",
       "fields": [
+        {
+          "component": "richtext",
+          "label": "Intro Content",
+          "name": "intro",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "story-teaser",
+          "label": "Story Teasers",
+          "name": "storyTeasers"
+        },
         {
           "component": "text",
           "label": "Video Title",
@@ -41,8 +68,8 @@
         },
         {
           "component": "select",
-          "label": "Fruit Origin Story",
-          "name": "fruit-origin-story",
+          "label": "Fruit Origin",
+          "name": "fruit-origin",
           "options": [
             {
               "label": "Guava",
@@ -81,8 +108,37 @@
         },
         {
           "component": "text",
-          "label": "YouTube Embed URL",
-          "name": "youtube-embed-url",
+          "label": "YouTube Video URL",
+          "name": "youtube-url",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "story-teaser",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Teaser Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Main Image",
+          "name": "main-image",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Small Image",
+          "name": "small-image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "cta-link",
           "valueType": "string"
         }
       ]
@@ -90,8 +146,10 @@
   ],
   "filters": [
     {
-      "id": "video",
-      "components": []
+      "id": "our-story",
+      "components": [
+        "story-teaser"
+      ]
     }
   ]
 }

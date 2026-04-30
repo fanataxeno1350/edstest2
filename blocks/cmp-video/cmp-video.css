@@ -35,12 +35,6 @@
   width: 100%;
 }
 
-/* column of a grid */
-.aem-GridColumn { 
-  box-sizing: border-box;
-  clear: both;
- }
-
 /* phone breakpoint */
 @media (max-width: 768px) { 
   .aem-Grid.aem-Grid--1 > .aem-GridColumn.aem-GridColumn--phone--1 {

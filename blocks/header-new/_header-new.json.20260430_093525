@@ -38,33 +38,33 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image Desktop",
-          "name": "background-desktop",
+          "label": "Desktop Background Image",
+          "name": "desktopBackground",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Background Image Mobile",
-          "name": "background-mobile",
+          "label": "Mobile Background Image",
+          "name": "mobileBackground",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Logo",
+          "label": "Logo Image",
           "name": "logo",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logo-link",
+          "name": "logoLink",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "navigation-item",
-          "label": "Navigation Items",
-          "name": "navigation"
+          "label": "Navigation Menu",
+          "name": "navigationMenu"
         }
       ]
     },

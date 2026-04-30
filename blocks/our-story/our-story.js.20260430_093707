@@ -1,0 +1,260 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const children = [...block.children];
+
+  // According to BlockJson, there are 7 root fields:
+  // intro-text, storyTeasers (container), video-title, video-producer, video-location, fruit-origin, video-url
+  // The storyTeasers container field does not consume a row itself; its items follow the root fields.
+  // So, the first 6 rows are root fields, and subsequent rows are story-teaser items.
+
+  // Destructure the first 6 root rows
+  const [
+    introTextRow,
+    videoTitleRow,
+    videoProducerRow,
+    videoLocationRow,
+    fruitOriginRow,
+    videoUrlRow,
+    ...storyTeaserRows // All remaining rows are story teasers
+  ] = children;
+
+  // Intro Text
+  const introSection = document.createElement('div');
+  introSection.classList.add('text', 'desc-1', 'aem-GridColumn--default--none', 'aem-GridColumn--phone--none', 'aem-GridColumn--phone--10', 'aem-GridColumn', 'aem-GridColumn--default--10', 'aem-GridColumn--offset--phone--1', 'aem-GridColumn--offset--default--1');
+  const cmpText = document.createElement('div');
+  cmpText.classList.add('cmp-text');
+  cmpText.innerHTML = introTextRow.firstElementChild.innerHTML;
+  moveInstrumentation(introTextRow, cmpText);
+  introSection.append(cmpText);
+  block.replaceChild(introSection, introTextRow);
+
+  // Story Teasers
+  const ourstoryWrapper = document.createElement('div');
+  ourstoryWrapper.classList.add('ourstory', 'aem-GridColumn', 'aem-GridColumn--default--12');
+  const cmpOurStory = document.createElement('div');
+  cmpOurStory.classList.add('cmp-our-story');
+  cmpOurStory.setAttribute('data-component', 'our-story');
+  ourstoryWrapper.append(cmpOurStory);
+
+  storyTeaserRows.forEach((row, index) => {
+    const [descriptionCell, mainImageCell, smallImageCell, ctaLinkCell] = [...row.children];
+
+    const storyTeaser = document.createElement('div');
+    storyTeaser.classList.add(`story_${index}`, 'teaser', 'cmp-teaser');
+    if (index % 2 === 0) {
+      storyTeaser.classList.add('cmp-teaser--right-image-aligned', 'cmp-button--primary-anchor-straight');
+    } else {
+      storyTeaser.classList.add('cmp-teaser--read-more-option', 'cmp-teaser--left-image-aligned', 'cmp-button--primary-anchor-straight');
+    }
+    storyTeaser.setAttribute('data-component', 'teaser');
+    storyTeaser.setAttribute('data-show-line', index % 2 === 0 ? '1' : '4');
+
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add('cmp-teaser__content');
+
+    const descriptionDiv = document.createElement('div');
+    descriptionDiv.classList.add('cmp-teaser__description');
+    descriptionDiv.innerHTML = descriptionCell.innerHTML;
+    contentDiv.append(descriptionDiv);
+
+    const ctaLink = ctaLinkCell.querySelector('a');
+    if (ctaLink) {
+      const actionContainer = document.createElement('div');
+      actionContainer.classList.add('cmp-teaser__action-container');
+      const actionLink = document.createElement('a');
+      actionLink.classList.add('cmp-teaser__action-link', 'cmp-button');
+      actionLink.href = ctaLink.href;
+      actionLink.textContent = ctaLink.textContent; // Use text content from the CTA link
+      actionContainer.append(actionLink);
+      contentDiv.append(actionContainer);
+    }
+
+    storyTeaser.append(contentDiv);
+
+    const imageDiv = document.createElement('div');
+    imageDiv.classList.add('cmp-teaser__image');
+
+    const mainImagePicture = mainImageCell.querySelector('picture');
+    if (mainImagePicture) {
+      const img = mainImagePicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '2344' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      imageDiv.append(optimizedPic);
+      optimizedPic.querySelector('img').classList.add('cmp-image__image');
+    }
+
+    const animationDiv = document.createElement('div');
+    animationDiv.classList.add('cmp-animation', 'visible');
+    const smallImagePicture = smallImageCell.querySelector('picture');
+    if (smallImagePicture) {
+      const smallImg = smallImagePicture.querySelector('img');
+      const optimizedSmallPic = createOptimizedPicture(smallImg.src, smallImg.alt, false, [{ width: '600' }]);
+      moveInstrumentation(smallImg, optimizedSmallPic.querySelector('img'));
+      animationDiv.append(optimizedSmallPic);
+      optimizedSmallPic.querySelector('img').classList.add('cmp-teaser__smallimage');
+    }
+    imageDiv.append(animationDiv);
+    storyTeaser.append(imageDiv);
+
+    moveInstrumentation(row, storyTeaser);
+    cmpOurStory.append(storyTeaser);
+  });
+
+  // Replace the first story teaser row with the wrapper, then remove the rest
+  if (storyTeaserRows.length > 0) {
+    block.replaceChild(ourstoryWrapper, storyTeaserRows[0]);
+    storyTeaserRows.slice(1).forEach((row) => row.remove());
+  } else {
+    // If no story teasers, just append the wrapper and remove the placeholder
+    block.append(ourstoryWrapper);
+  }
+
+
+  // Video Section
+  const videoSection = document.createElement('div');
+  videoSection.classList.add('video', 'aem-GridColumn', 'aem-GridColumn--default--12');
+  const cmpVideo = document.createElement('div');
+  cmpVideo.classList.add('cmp-video');
+  cmpVideo.setAttribute('data-component', 'video');
+  videoSection.append(cmpVideo);
+
+  const videoContent = document.createElement('div');
+  videoContent.classList.add('video-content');
+  cmpVideo.append(videoContent);
+
+  const videoDetails = document.createElement('div');
+  videoDetails.classList.add('video-details');
+  videoContent.append(videoDetails);
+
+  const videoTitle = document.createElement('h3');
+  videoTitle.classList.add('video-title');
+  videoTitle.textContent = videoTitleRow.firstElementChild.textContent.trim();
+  moveInstrumentation(videoTitleRow, videoTitle);
+  videoDetails.append(videoTitle);
+
+  const videoProducer = document.createElement('h2');
+  videoProducer.classList.add('video-producer');
+  videoProducer.textContent = videoProducerRow.firstElementChild.textContent.trim();
+  moveInstrumentation(videoProducerRow, videoProducer);
+  videoDetails.append(videoProducer);
+
+  const videoLocation = document.createElement('p');
+  videoLocation.classList.add('video-location');
+  videoLocation.textContent = videoLocationRow.firstElementChild.textContent.trim();
+  moveInstrumentation(videoLocationRow, videoLocation);
+  videoDetails.append(videoLocation);
+
+  const cmpDropdown = document.createElement('div');
+  cmpDropdown.classList.add('cmp-dropdown');
+  cmpDropdown.setAttribute('data-component', 'dropdown');
+  cmpDropdown.setAttribute('data-initialized', 'true');
+  videoContent.append(cmpDropdown);
+
+  const dropdownContent = document.createElement('div');
+  dropdownContent.classList.add('content', 'above-dropdown-title-aligned');
+  cmpDropdown.append(dropdownContent);
+
+  const dropdownTitle = document.createElement('div');
+  dropdownTitle.classList.add('cmp-dropdown__title');
+  const dropdownTitleH4 = document.createElement('h4');
+  dropdownTitleH4.textContent = 'Select the fruit\'s origin story'; // Hardcoded as per original HTML
+  dropdownTitle.append(dropdownTitleH4);
+  dropdownContent.append(dropdownTitle);
+
+  const customSelect = document.createElement('div');
+  customSelect.classList.add('cmp-dropdown__custom-select');
+  dropdownContent.append(customSelect);
+
+  const selectElement = document.createElement('select');
+  selectElement.classList.add('selectele');
+  customSelect.append(selectElement);
+
+  const fruitOriginValue = fruitOriginRow.firstElementChild.textContent.trim();
+  const options = ['Guava', 'Litchi', 'Apple', 'Orange', 'Mango', 'Mixed Fruit', 'Pineapple', 'Pomegranate'];
+  options.forEach((optionText) => {
+    const option = document.createElement('option');
+    option.value = optionText;
+    option.textContent = optionText;
+    if (optionText === fruitOriginValue) {
+      option.selected = true;
+    }
+    selectElement.append(option);
+  });
+  moveInstrumentation(fruitOriginRow, selectElement);
+
+  const selectSelected = document.createElement('div');
+  selectSelected.classList.add('cmp-dropdown__select-selected');
+  selectSelected.setAttribute('data-selected', fruitOriginValue);
+  selectSelected.textContent = fruitOriginValue;
+  customSelect.append(selectSelected);
+
+  const selectItems = document.createElement('div');
+  selectItems.classList.add('cmp-dropdown__select-items', 'cmp-dropdown__select-hide');
+  customSelect.append(selectItems);
+
+  options.forEach((optionText) => {
+    const item = document.createElement('div');
+    item.textContent = optionText;
+    selectItems.append(item);
+  });
+
+  selectSelected.addEventListener('click', (e) => {
+    e.stopPropagation();
+    selectItems.classList.toggle('cmp-dropdown__select-hide');
+    selectSelected.classList.toggle('select-arrow-active');
+  });
+
+  selectItems.querySelectorAll('div').forEach((item) => {
+    item.addEventListener('click', () => {
+      selectSelected.textContent = item.textContent;
+      selectElement.value = item.textContent;
+      selectSelected.setAttribute('data-selected', item.textContent);
+      selectItems.classList.add('cmp-dropdown__select-hide');
+      selectSelected.classList.remove('select-arrow-active');
+    });
+  });
+
+  document.addEventListener('click', () => {
+    selectItems.classList.add('cmp-dropdown__select-hide');
+    selectSelected.classList.remove('select-arrow-active');
+  });
+
+  const youtubeWrapper = document.createElement('div');
+  youtubeWrapper.classList.add('cmp-video__youtube-wrapper');
+  cmpVideo.append(youtubeWrapper);
+
+  const iframeWrapper = document.createElement('div');
+  iframeWrapper.classList.add('cmp-video__iframe-wrapper');
+  youtubeWrapper.append(iframeWrapper);
+
+  const videoLink = videoUrlRow.querySelector('a');
+  if (videoLink) {
+    const youtubeVideoUrl = videoLink.href;
+    const videoIdMatch = youtubeVideoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|v\/|embed\/|user\/(?:[\w#]+\/)+))([^&#?\n]+)/);
+    const videoId = videoIdMatch ? videoIdMatch[1] : '';
+
+    const iframeDiv = document.createElement('div');
+    iframeDiv.setAttribute('data-embed-kind', 'youtube');
+    iframeDiv.setAttribute('data-embed-url', `https://www.youtube.com/embed/${videoId}?autoplay=0&controls=0&showinfo=0&modestbranding=1&loop=1&fs=0&cc_load_policy=0&iv_load_policy=3&autohide=0&rel=0&enablejsapi=1&origin=https%3A%2F%2Fbnatural.in&widgetid=1&forigin=https%3A%2F%2Fbnatural.in%2Four-story.html&aoriginsup=1&vf=6`);
+    iframeDiv.setAttribute('data-embed-config', JSON.stringify({ videoId }));
+    iframeDiv.innerHTML = `[youtube]`; // Placeholder as per original HTML
+    iframeWrapper.append(iframeDiv);
+    moveInstrumentation(videoUrlRow, iframeDiv);
+  }
+
+  block.append(videoSection);
+
+  // Remove original video-related rows
+  [videoTitleRow, videoProducerRow, videoLocationRow, fruitOriginRow, videoUrlRow].forEach((row) => row.remove());
+
+  // Add empty text div at the end as per original HTML
+  const emptyTextDiv = document.createElement('div');
+  emptyTextDiv.classList.add('text', 'aem-GridColumn', 'aem-GridColumn--default--12');
+  const emptyCmpText = document.createElement('div');
+  emptyCmpText.classList.add('cmp-text');
+  emptyCmpText.innerHTML = '<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>';
+  emptyTextDiv.append(emptyCmpText);
+  block.append(emptyTextDiv);
+}

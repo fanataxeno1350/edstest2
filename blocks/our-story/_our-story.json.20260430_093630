@@ -38,14 +38,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image (Desktop)",
-          "name": "background-image-desktop",
+          "label": "Background Desktop Image",
+          "name": "background-desktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Background Image (Mobile)",
-          "name": "background-image-mobile",
+          "label": "Background Mobile Image",
+          "name": "background-mobile",
           "valueType": "string"
         },
         {
@@ -73,12 +73,6 @@
         },
         {
           "component": "reference",
-          "label": "Main Image (Mobile)",
-          "name": "main-image-mobile",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
           "label": "Small Image",
           "name": "small-image",
           "valueType": "string"
@@ -87,12 +81,6 @@
           "component": "aem-content",
           "label": "CTA Link",
           "name": "cta-link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "cta-label",
           "valueType": "string"
         }
       ]

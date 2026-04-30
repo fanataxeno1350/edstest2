@@ -63,7 +63,10 @@
         "footer",
         "cmp-scroll-arrow",
         "our-story",
-        "cmp-video"
+        "cmp-video",
+        "video",
+        "story-3",
+        "story-5-teaser"
       ]
     }
   ]

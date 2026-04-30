@@ -1,0 +1,247 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const children = [...block.children];
+
+  const [
+    introRow,
+    videoTitleRow,
+    videoProducerRow,
+    videoLocationRow,
+    fruitOriginRow,
+    youtubeUrlRow,
+    ...storyTeaserRows
+  ] = children;
+
+  block.innerHTML = ''; // Clear the block to rebuild
+
+  const ourStoryContainer = document.createElement('div');
+  ourStoryContainer.classList.add('cmp-our-story');
+  moveInstrumentation(block, ourStoryContainer);
+  block.append(ourStoryContainer);
+
+  // Intro Content
+  if (introRow) {
+    const introContent = document.createElement('div');
+    introContent.classList.add('cmp-text');
+    // Access the first child of introRow, which is the actual cell
+    moveInstrumentation(introRow.children[0], introContent);
+    introContent.innerHTML = introRow.children[0].innerHTML; // Use innerHTML for richtext
+    const introWrapper = document.createElement('div');
+    introWrapper.classList.add('text', 'desc-1', 'aem-GridColumn--default--none', 'aem-GridColumn--phone--none', 'aem-GridColumn--phone--10', 'aem-GridColumn', 'aem-GridColumn--default--10', 'aem-GridColumn--offset--phone--1', 'aem-GridColumn--offset--default--1');
+    introWrapper.append(introContent);
+    ourStoryContainer.append(introWrapper);
+  }
+
+  // Story Teasers
+  const storyTeaserWrapper = document.createElement('div');
+  storyTeaserWrapper.classList.add('ourstory', 'aem-GridColumn', 'aem-GridColumn--default--12');
+  ourStoryContainer.append(storyTeaserWrapper);
+
+  storyTeaserRows.forEach((row, index) => {
+    const [descriptionCell, mainImageCell, smallImageCell, ctaLinkCell] = [...row.children];
+
+    const teaserDiv = document.createElement('div');
+    teaserDiv.classList.add(`story_${index}`, 'teaser');
+    if (index % 2 === 0) {
+      teaserDiv.classList.add('cmp-teaser--right-image-aligned', 'cmp-button--primary-anchor-straight');
+    } else {
+      teaserDiv.classList.add('cmp-teaser--read-more-option', 'cmp-teaser--left-image-aligned', 'cmp-button--primary-anchor-straight');
+    }
+
+    const cmpTeaser = document.createElement('div');
+    cmpTeaser.classList.add('cmp-teaser');
+    moveInstrumentation(row, cmpTeaser);
+    teaserDiv.append(cmpTeaser);
+
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add('cmp-teaser__content');
+    cmpTeaser.append(contentDiv);
+
+    const descriptionDiv = document.createElement('div');
+    descriptionDiv.classList.add('cmp-teaser__description');
+    descriptionDiv.innerHTML = descriptionCell?.innerHTML || ''; // Use innerHTML for richtext
+    contentDiv.append(descriptionDiv);
+
+    const imageDiv = document.createElement('div');
+    imageDiv.classList.add('cmp-teaser__image');
+    cmpTeaser.append(imageDiv);
+
+    const mainPicture = mainImageCell?.querySelector('picture');
+    if (mainPicture) {
+      const cmpImage = document.createElement('div');
+      cmpImage.classList.add('cmp-image');
+      const img = mainPicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '2344' }]);
+      moveInstrumentation(mainPicture, optimizedPic.querySelector('img'));
+      cmpImage.append(optimizedPic);
+      imageDiv.append(cmpImage);
+    }
+
+    const smallImageAnimationDiv = document.createElement('div');
+    smallImageAnimationDiv.classList.add('cmp-animation', 'visible');
+    imageDiv.append(smallImageAnimationDiv);
+
+    const smallPicture = smallImageCell?.querySelector('picture');
+    if (smallPicture) {
+      const img = smallPicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '600' }]);
+      moveInstrumentation(smallPicture, optimizedPic.querySelector('img'));
+      optimizedPic.querySelector('img').classList.add('cmp-teaser__smallimage');
+      smallImageAnimationDiv.append(optimizedPic);
+    }
+
+    const ctaLink = ctaLinkCell?.querySelector('a');
+    if (ctaLink) {
+      const actionContainer = document.createElement('div');
+      actionContainer.classList.add('cmp-teaser__action-container');
+      const anchor = document.createElement('a');
+      anchor.classList.add('cmp-teaser__action-link', 'cmp-button');
+      anchor.href = ctaLink.href;
+      anchor.textContent = ctaLink.textContent; // Use actual link text from the block
+      actionContainer.append(anchor);
+      contentDiv.append(actionContainer);
+    }
+
+    storyTeaserWrapper.append(teaserDiv);
+  });
+
+  // Video Section
+  const videoSection = document.createElement('div');
+  videoSection.classList.add('video', 'aem-GridColumn', 'aem-GridColumn--default--12');
+  ourStoryContainer.append(videoSection);
+
+  const cmpVideo = document.createElement('div');
+  cmpVideo.classList.add('cmp-video');
+  // Move instrumentation from the first cell of the videoTitleRow
+  moveInstrumentation(videoTitleRow.children[0], cmpVideo);
+  videoSection.append(cmpVideo);
+
+  const videoContent = document.createElement('div');
+  videoContent.classList.add('video-content');
+  cmpVideo.append(videoContent);
+
+  const videoDetails = document.createElement('div');
+  videoDetails.classList.add('video-details');
+  videoContent.append(videoDetails);
+
+  if (videoTitleRow) {
+    const videoTitle = document.createElement('h3');
+    videoTitle.classList.add('video-title');
+    videoTitle.textContent = videoTitleRow.children[0].textContent.trim();
+    videoDetails.append(videoTitle);
+  }
+
+  if (videoProducerRow) {
+    const videoProducer = document.createElement('h2');
+    videoProducer.classList.add('video-producer');
+    videoProducer.textContent = videoProducerRow.children[0].textContent.trim();
+    videoDetails.append(videoProducer);
+  }
+
+  if (videoLocationRow) {
+    const videoLocation = document.createElement('p');
+    videoLocation.classList.add('video-location');
+    videoLocation.textContent = videoLocationRow.children[0].textContent.trim();
+    videoDetails.append(videoLocation);
+  }
+
+  const cmpDropdown = document.createElement('div');
+  cmpDropdown.classList.add('cmp-dropdown');
+  cmpDropdown.setAttribute('data-initialized', 'true'); // From original HTML
+  videoContent.append(cmpDropdown);
+
+  const contentAboveDropdown = document.createElement('div');
+  contentAboveDropdown.classList.add('content', 'above-dropdown-title-aligned');
+  cmpDropdown.append(contentAboveDropdown);
+
+  const dropdownTitle = document.createElement('div');
+  dropdownTitle.classList.add('cmp-dropdown__title');
+  const h4 = document.createElement('h4');
+  h4.textContent = 'Select the fruit\'s origin story'; // Hardcoded as per original HTML
+  dropdownTitle.append(h4);
+  contentAboveDropdown.append(dropdownTitle);
+
+  const customSelect = document.createElement('div');
+  customSelect.classList.add('cmp-dropdown__custom-select');
+  contentAboveDropdown.append(customSelect);
+
+  const selectElement = document.createElement('select');
+  selectElement.classList.add('selectele');
+  customSelect.append(selectElement);
+
+  const fruitOriginOptions = ['Guava', 'Litchi', 'Apple', 'Orange', 'Mango', 'Mixed Fruit', 'Pineapple', 'Pomegranate'];
+  fruitOriginOptions.forEach(optionText => {
+    const option = document.createElement('option');
+    option.value = optionText;
+    option.textContent = optionText;
+    selectElement.append(option);
+  });
+
+  const selectSelected = document.createElement('div');
+  selectSelected.classList.add('cmp-dropdown__select-selected');
+  selectSelected.setAttribute('data-selected', fruitOriginRow?.children[0].textContent.trim() || 'Guava');
+  selectSelected.textContent = fruitOriginRow?.children[0].textContent.trim() || 'Guava';
+  customSelect.append(selectSelected);
+
+  const selectItems = document.createElement('div');
+  selectItems.classList.add('cmp-dropdown__select-items', 'cmp-dropdown__select-hide');
+  customSelect.append(selectItems);
+
+  fruitOriginOptions.forEach(optionText => {
+    const item = document.createElement('div');
+    item.textContent = optionText;
+    selectItems.append(item);
+  });
+
+  selectSelected.addEventListener('click', (e) => {
+    e.stopPropagation();
+    selectItems.classList.toggle('cmp-dropdown__select-hide');
+    selectSelected.classList.toggle('select-arrow-active');
+  });
+
+  selectItems.querySelectorAll('div').forEach(item => {
+    item.addEventListener('click', () => {
+      selectSelected.textContent = item.textContent;
+      selectSelected.setAttribute('data-selected', item.textContent);
+      selectElement.value = item.textContent; // Update the native select element's value
+      selectItems.classList.add('cmp-dropdown__select-hide');
+      selectSelected.classList.remove('select-arrow-active');
+    });
+  });
+
+  document.addEventListener('click', () => {
+    selectItems.classList.add('cmp-dropdown__select-hide');
+    selectSelected.classList.remove('select-arrow-active');
+  });
+
+  const youtubeWrapper = document.createElement('div');
+  youtubeWrapper.classList.add('cmp-video__youtube-wrapper');
+  youtubeWrapper.style.minHeight = '200px'; // From original HTML
+  cmpVideo.append(youtubeWrapper);
+
+  const iframeWrapper = document.createElement('div');
+  iframeWrapper.classList.add('cmp-video__iframe-wrapper');
+  youtubeWrapper.append(iframeWrapper);
+
+  if (youtubeUrlRow) {
+    const youtubeUrl = youtubeUrlRow.children[0].textContent.trim();
+    const videoIdMatch = youtubeUrl.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([\w-]{11})(?:\S+)?/);
+    const videoId = videoIdMatch ? videoIdMatch[1] : null;
+
+    if (videoId) {
+      const iframe = document.createElement('iframe');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=0&controls=0&showinfo=0&modestbranding=1&loop=1&fs=0&cc_load_policy=0&iv_load_policy=3&autohide=0&rel=0&enablejsapi=1&origin=${window.location.origin}`;
+      iframeWrapper.append(iframe);
+    } else {
+      // Fallback for non-YouTube URLs or invalid format
+      const placeholder = document.createElement('div');
+      placeholder.style.cssText = 'border: 1px dashed rgb(204, 204, 204); padding: 20px; background-color: rgb(245, 245, 245); border-radius: 4px;';
+      placeholder.textContent = '[youtube]';
+      iframeWrapper.append(placeholder);
+    }
+  }
+}

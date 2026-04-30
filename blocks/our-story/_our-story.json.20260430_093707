@@ -1,0 +1,155 @@
+{
+  "definitions": [
+    {
+      "title": "Our Story",
+      "id": "our-story",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "our-story",
+              "model": "our-story",
+              "name": "Our Story"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Story Teaser",
+      "id": "story-teaser",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "story-teaser",
+              "name": "Story Teaser"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "our-story",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Intro Text",
+          "name": "intro-text",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "story-teaser",
+          "label": "Story Teasers",
+          "name": "storyTeasers"
+        },
+        {
+          "component": "text",
+          "label": "Video Title",
+          "name": "video-title",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Video Producer",
+          "name": "video-producer",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Video Location",
+          "name": "video-location",
+          "valueType": "string"
+        },
+        {
+          "component": "select",
+          "label": "Fruit Origin",
+          "name": "fruit-origin",
+          "options": [
+            {
+              "label": "Guava",
+              "value": "Guava"
+            },
+            {
+              "label": "Litchi",
+              "value": "Litchi"
+            },
+            {
+              "label": "Apple",
+              "value": "Apple"
+            },
+            {
+              "label": "Orange",
+              "value": "Orange"
+            },
+            {
+              "label": "Mango",
+              "value": "Mango"
+            },
+            {
+              "label": "Mixed Fruit",
+              "value": "Mixed Fruit"
+            },
+            {
+              "label": "Pineapple",
+              "value": "Pineapple"
+            },
+            {
+              "label": "Pomegranate",
+              "value": "Pomegranate"
+            }
+          ],
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "YouTube Video URL",
+          "name": "video-url",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "story-teaser",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Main Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Small Image",
+          "name": "small-image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "cta-link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "our-story",
+      "components": [
+        "story-teaser"
+      ]
+    }
+  ]
+}

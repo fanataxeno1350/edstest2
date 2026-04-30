@@ -219,6 +219,81 @@
     "fields": []
   },
   {
+    "id": "cmp-video",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Video Title",
+        "name": "video-title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Video Producer",
+        "name": "video-producer",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Video Location",
+        "name": "video-location",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Dropdown Title",
+        "name": "dropdown-title",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "label": "Dropdown Options",
+        "name": "dropdown-options",
+        "options": [
+          {
+            "label": "Guava",
+            "value": "Guava"
+          },
+          {
+            "label": "Litchi",
+            "value": "Litchi"
+          },
+          {
+            "label": "Apple",
+            "value": "Apple"
+          },
+          {
+            "label": "Orange",
+            "value": "Orange"
+          },
+          {
+            "label": "Mango",
+            "value": "Mango"
+          },
+          {
+            "label": "Mixed Fruit",
+            "value": "Mixed Fruit"
+          },
+          {
+            "label": "Pineapple",
+            "value": "Pineapple"
+          },
+          {
+            "label": "Pomegranate",
+            "value": "Pomegranate"
+          }
+        ],
+        "valueType": "string[]"
+      },
+      {
+        "component": "reference",
+        "label": "YouTube Video URL",
+        "name": "youtube-video-url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "discoverdropdown",
     "fields": [
       {
@@ -269,39 +344,39 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Logo",
-        "name": "logo",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Logo Link",
-        "name": "logoLink",
+        "label": "Desktop Background Image",
+        "name": "desktopBackground",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "FSSAI Logo",
-        "name": "fssaiLogo",
+        "label": "Mobile Background Image",
+        "name": "mobileBackground",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-navigation-item",
-        "label": "Footer Navigation One",
-        "name": "footerNavOne"
+        "item": "footer-logo-item",
+        "label": "Footer Logos",
+        "name": "footerLogos"
       },
       {
         "component": "container",
         "item": "footer-navigation-item",
-        "label": "Footer Navigation Two",
-        "name": "footerNavTwo"
+        "label": "Navigation Column One",
+        "name": "footerNavigationOne"
       },
       {
         "component": "container",
         "item": "footer-navigation-item",
-        "label": "Footer Navigation Three",
-        "name": "footerNavThree"
+        "label": "Navigation Column Two",
+        "name": "footerNavigationTwo"
+      },
+      {
+        "component": "container",
+        "item": "footer-navigation-item",
+        "label": "Navigation Column Three",
+        "name": "footerNavigationThree"
       },
       {
         "component": "container",
@@ -311,9 +386,32 @@
       },
       {
         "component": "container",
-        "item": "footer-social-icon-item",
-        "label": "Footer Social Icons",
-        "name": "footerSocialIcons"
+        "item": "footer-social-item",
+        "label": "Footer Social Links",
+        "name": "footerSocialLinks"
+      }
+    ]
+  },
+  {
+    "id": "footer-logo-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
       }
     ]
   },
@@ -331,12 +429,6 @@
         "label": "Navigation Link",
         "name": "link",
         "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Navigation Hierarchy",
-        "name": "hierarchy-tree",
-        "valueType": "string"
       }
     ]
   },
@@ -345,20 +437,20 @@
     "fields": [
       {
         "component": "text",
-        "label": "Footer Link Label",
+        "label": "Link Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Footer Link",
+        "label": "Link URL",
         "name": "link",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-social-icon-item",
+    "id": "footer-social-item",
     "fields": [
       {
         "component": "reference",
@@ -379,33 +471,33 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Desktop Background Image",
-        "name": "desktopBackground",
+        "label": "Background Image Desktop",
+        "name": "background-desktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Mobile Background Image",
-        "name": "mobileBackground",
+        "label": "Background Image Mobile",
+        "name": "background-mobile",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Logo Image",
+        "label": "Logo",
         "name": "logo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logoLink",
+        "name": "logo-link",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "navigation-item",
-        "label": "Navigation Menu",
-        "name": "navigationMenu"
+        "label": "Navigation Items",
+        "name": "navigation"
       }
     ]
   },
@@ -448,14 +540,14 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Background Desktop Image",
-        "name": "background-desktop",
+        "label": "Background Image (Desktop)",
+        "name": "background-image-desktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Background Mobile Image",
-        "name": "background-mobile",
+        "label": "Background Image (Mobile)",
+        "name": "background-image-mobile",
         "valueType": "string"
       },
       {
@@ -483,6 +575,12 @@
       },
       {
         "component": "reference",
+        "label": "Main Image (Mobile)",
+        "name": "main-image-mobile",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
         "label": "Small Image",
         "name": "small-image",
         "valueType": "string"
@@ -491,6 +589,12 @@
         "component": "aem-content",
         "label": "CTA Link",
         "name": "cta-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "cta-label",
         "valueType": "string"
       }
     ]
@@ -555,6 +659,58 @@
         "component": "text",
         "label": "Card Title",
         "name": "title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "story-3",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Main Image",
+        "name": "mainImage",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Small Image",
+        "name": "smallImage",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "story-5-teaser",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Main Image",
+        "name": "main-image",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Small Image",
+        "name": "small-image",
         "valueType": "string"
       }
     ]
@@ -675,7 +831,7 @@
     ]
   },
   {
-    "id": "cmp-video",
+    "id": "video",
     "fields": [
       {
         "component": "text",
@@ -696,33 +852,49 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Dropdown Title",
-        "name": "dropdown-title",
+        "component": "select",
+        "label": "Fruit Origin Story",
+        "name": "fruit-origin-story",
+        "options": [
+          {
+            "label": "Guava",
+            "value": "Guava"
+          },
+          {
+            "label": "Litchi",
+            "value": "Litchi"
+          },
+          {
+            "label": "Apple",
+            "value": "Apple"
+          },
+          {
+            "label": "Orange",
+            "value": "Orange"
+          },
+          {
+            "label": "Mango",
+            "value": "Mango"
+          },
+          {
+            "label": "Mixed Fruit",
+            "value": "Mixed Fruit"
+          },
+          {
+            "label": "Pineapple",
+            "value": "Pineapple"
+          },
+          {
+            "label": "Pomegranate",
+            "value": "Pomegranate"
+          }
+        ],
         "valueType": "string"
       },
       {
-        "component": "multiselect",
-        "label": "Dropdown Options",
-        "name": "dropdown-options",
-        "valueType": "string"
-      },
-      {
         "component": "text",
-        "label": "Selected Option",
-        "name": "selected-option",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "YouTube Iframe Src",
-        "name": "iframe-src",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Iframe Title",
-        "name": "iframe-title",
+        "label": "YouTube Embed URL",
+        "name": "youtube-embed-url",
         "valueType": "string"
       }
     ]

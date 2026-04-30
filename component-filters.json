@@ -28,7 +28,10 @@
       "footer",
       "cmp-scroll-arrow",
       "our-story",
-      "cmp-video"
+      "cmp-video",
+      "video",
+      "story-3",
+      "story-5-teaser"
     ]
   },
   {
@@ -52,6 +55,10 @@
     "components": []
   },
   {
+    "id": "cmp-video",
+    "components": []
+  },
+  {
     "id": "discoverdropdown",
     "components": [
       "dropdown-option"
@@ -60,9 +67,10 @@
   {
     "id": "footer",
     "components": [
+      "footer-logo-item",
       "footer-navigation-item",
       "footer-link-item",
-      "footer-social-icon-item"
+      "footer-social-item"
     ]
   },
   {
@@ -88,6 +96,14 @@
     ]
   },
   {
+    "id": "story-3",
+    "components": []
+  },
+  {
+    "id": "story-5-teaser",
+    "components": []
+  },
+  {
     "id": "tabs",
     "components": [
       "tab-panel",
@@ -103,7 +119,7 @@
     "components": []
   },
   {
-    "id": "cmp-video",
+    "id": "video",
     "components": []
   }
 ]

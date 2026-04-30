@@ -1,0 +1,162 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // Correctly access the content cells from block.children
+  const rows = [...block.children];
+  const videoTitleCell = rows[0]?.children[0];
+  const videoProducerCell = rows[1]?.children[0];
+  const videoLocationCell = rows[2]?.children[0];
+  const fruitOriginCell = rows[3]?.children[0]; // This cell contains the initial selected value
+  const youtubeUrlCell = rows[4]?.children[0];
+
+  // Create main video container
+  const cmpVideo = document.createElement('div');
+  cmpVideo.classList.add('cmp-video');
+  moveInstrumentation(block, cmpVideo);
+
+  // Create video content section
+  const videoContent = document.createElement('div');
+  videoContent.classList.add('video-content');
+
+  // Create video details section
+  const videoDetails = document.createElement('div');
+  videoDetails.classList.add('video-details');
+
+  // Video Title
+  const videoTitle = document.createElement('h3');
+  videoTitle.classList.add('video-title');
+  videoTitle.textContent = videoTitleCell?.textContent.trim() || '';
+  videoDetails.append(videoTitle);
+
+  // Video Producer
+  const videoProducer = document.createElement('h2');
+  videoProducer.classList.add('video-producer');
+  videoProducer.textContent = videoProducerCell?.textContent.trim() || '';
+  videoDetails.append(videoProducer);
+
+  // Video Location
+  const videoLocation = document.createElement('p');
+  videoLocation.classList.add('video-location');
+  videoLocation.textContent = videoLocationCell?.textContent.trim() || '';
+  videoDetails.append(videoLocation);
+
+  videoContent.append(videoDetails);
+
+  // Create dropdown for Fruit Origin
+  const cmpDropdown = document.createElement('div');
+  cmpDropdown.classList.add('cmp-dropdown');
+
+  const contentDiv = document.createElement('div');
+  contentDiv.classList.add('content', 'above-dropdown-title-aligned');
+
+  const dropdownTitleDiv = document.createElement('div');
+  dropdownTitleDiv.classList.add('cmp-dropdown__title');
+  const dropdownTitle = document.createElement('h4');
+  dropdownTitle.textContent = 'Select the fruit\'s origin story'; // Hardcoded as per original HTML
+  dropdownTitleDiv.append(dropdownTitle);
+  contentDiv.append(dropdownTitleDiv);
+
+  const customSelect = document.createElement('div');
+  customSelect.classList.add('cmp-dropdown__custom-select');
+
+  const selectElement = document.createElement('select');
+  selectElement.classList.add('selectele');
+
+  // Populate select options based on BlockJson model or hardcoded from original HTML
+  // The fruitOriginCell only contains the *selected* value, not all options.
+  // Options must be hardcoded or derived from a different model structure.
+  const fruitOptions = [
+    'Guava', 'Litchi', 'Apple', 'Orange', 'Mango', 'Mixed Fruit', 'Pineapple', 'Pomegranate',
+  ];
+
+  let selectedValue = fruitOriginCell?.textContent.trim() || fruitOptions[0]; // Default to first option if cell is empty
+
+  // Add a blank option as per original HTML if it exists, otherwise add the first option
+  const blankOption = document.createElement('option');
+  blankOption.value = '';
+  blankOption.textContent = '';
+  selectElement.append(blankOption);
+
+
+  fruitOptions.forEach((optionText) => {
+    const option = document.createElement('option');
+    option.value = optionText;
+    option.textContent = optionText;
+    selectElement.append(option);
+  });
+  selectElement.value = selectedValue; // Set the initial selected value
+
+  const selectSelected = document.createElement('div');
+  selectSelected.classList.add('cmp-dropdown__select-selected');
+  selectSelected.setAttribute('data-selected', selectedValue);
+  selectSelected.textContent = selectedValue;
+
+  const selectItems = document.createElement('div');
+  selectItems.classList.add('cmp-dropdown__select-items', 'cmp-dropdown__select-hide');
+
+  fruitOptions.forEach((optionText) => {
+    const itemDiv = document.createElement('div');
+    itemDiv.textContent = optionText;
+    itemDiv.addEventListener('click', () => {
+      selectSelected.textContent = itemDiv.textContent;
+      selectSelected.setAttribute('data-selected', itemDiv.textContent);
+      selectElement.value = itemDiv.textContent;
+      selectItems.classList.add('cmp-dropdown__select-hide');
+      selectSelected.classList.remove('select-arrow-active'); // Hide arrow on selection
+    });
+    selectItems.append(itemDiv);
+  });
+
+  selectSelected.addEventListener('click', (e) => {
+    e.stopPropagation();
+    selectItems.classList.toggle('cmp-dropdown__select-hide');
+    selectSelected.classList.toggle('select-arrow-active');
+  });
+
+  document.addEventListener('click', () => {
+    selectItems.classList.add('cmp-dropdown__select-hide');
+    selectSelected.classList.remove('select-arrow-active');
+  });
+
+  customSelect.append(selectElement, selectSelected, selectItems);
+  contentDiv.append(customSelect);
+  cmpDropdown.append(contentDiv);
+  cmpDropdown.setAttribute('data-component', 'dropdown'); // Add data-component as per original HTML
+  cmpDropdown.setAttribute('data-initialized', 'true'); // Add data-initialized as per original HTML
+  videoContent.append(cmpDropdown);
+  cmpVideo.append(videoContent);
+
+  // Create YouTube embed wrapper
+  const youtubeWrapper = document.createElement('div');
+  youtubeWrapper.classList.add('cmp-video__youtube-wrapper');
+  youtubeWrapper.style.minHeight = '200px';
+
+  const iframeWrapper = document.createElement('div');
+  iframeWrapper.classList.add('cmp-video__iframe-wrapper');
+
+  const youtubeUrl = youtubeUrlCell?.textContent.trim();
+  if (youtubeUrl) {
+    const youtubeEmbedDiv = document.createElement('div');
+    youtubeEmbedDiv.setAttribute('data-embed-kind', 'youtube');
+    youtubeEmbedDiv.setAttribute('data-embed-url', youtubeUrl);
+    // Extract videoId from a full YouTube URL, not just the last part after '/'
+    const videoIdMatch = youtubeUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?/);
+    const videoId = videoIdMatch ? videoIdMatch[1] : '';
+
+    youtubeEmbedDiv.setAttribute('data-embed-config', JSON.stringify({ videoId }));
+    youtubeEmbedDiv.style.border = '1px dashed rgb(204, 204, 204)';
+    youtubeEmbedDiv.style.padding = '20px';
+    youtubeEmbedDiv.style.backgroundColor = 'rgb(245, 245, 245)';
+    youtubeEmbedDiv.style.borderRadius = '4px';
+    youtubeEmbedDiv.textContent = '[youtube]'; // Placeholder text
+
+    iframeWrapper.append(youtubeEmbedDiv);
+  }
+
+  youtubeWrapper.append(iframeWrapper);
+  cmpVideo.append(youtubeWrapper);
+
+  block.innerHTML = '';
+  block.append(cmpVideo);
+}

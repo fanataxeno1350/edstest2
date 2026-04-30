@@ -8,53 +8,55 @@ export default function decorate(block) {
 
   const ol = document.createElement('ol');
   ol.classList.add('cmp-breadcrumb__list');
+  nav.append(ol);
 
-  const items = [...block.children];
-
-  items.forEach((row, index) => {
+  [...block.children].forEach((row, i, rows) => {
+    // Correctly destructure cells based on the BlockJson model:
+    // cell[0]: field="label" type=text
+    // cell[1]: field="link" type=aem-content
     const [labelCell, linkCell] = [...row.children];
 
     const li = document.createElement('li');
     li.classList.add('cmp-breadcrumb__item');
     li.setAttribute('itemprop', 'itemListElement');
 
-    const label = labelCell.textContent.trim();
-    const linkElement = linkCell.querySelector('a'); // Get the anchor element from the link cell
+    const link = document.createElement('a');
+    link.classList.add('cmp-breadcrumb__item-link');
 
-    if (index < items.length - 1) {
-      // Not the last item, so it's a clickable link
-      const anchor = document.createElement('a');
-      anchor.classList.add('cmp-breadcrumb__item-link');
-      if (linkElement) {
-        anchor.href = linkElement.href; // Use the href from the anchor element
-      } else {
-        anchor.href = '#'; // Fallback if link is missing
-      }
-      const span = document.createElement('span');
-      span.textContent = label;
-      anchor.append(span);
-      moveInstrumentation(row, anchor);
-      li.append(anchor);
+    // For type=aem-content, read ONLY .querySelector('a').href
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink && foundLink.href) {
+      link.href = foundLink.href;
     } else {
-      // Last item, active and not a link
+      // Fallback if no link is found, though aem-content should always have one
+      link.href = '#';
+    }
+
+    const span = document.createElement('span');
+    span.textContent = labelCell.textContent.trim();
+    link.append(span);
+
+    moveInstrumentation(row, li); // Move instrumentation from row to li
+
+    if (i === rows.length - 1) {
+      // Last item is active
       li.classList.add('cmp-breadcrumb__item--active');
       li.setAttribute('aria-current', 'page');
-      const span = document.createElement('span');
-      span.textContent = label;
-      moveInstrumentation(row, span);
-      li.append(span);
+      // As per ORIGINAL HTML, the active item's link does not have an href
+      link.removeAttribute('href');
+      li.append(span); // Append span directly, not the link element
+    } else {
+      li.append(link);
     }
 
     const meta = document.createElement('meta');
     meta.setAttribute('itemprop', 'position');
-    meta.setAttribute('content', (index + 1).toString());
+    meta.setAttribute('content', (i + 1).toString());
     li.append(meta);
 
     ol.append(li);
   });
 
-  nav.append(ol);
-  block.innerHTML = ''; // Clear the original block content
+  block.innerHTML = '';
   block.append(nav);
-  block.classList.add('breadcrumb'); // Add the root block class
 }
