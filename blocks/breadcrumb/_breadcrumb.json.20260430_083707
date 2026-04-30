@@ -50,7 +50,7 @@
         {
           "component": "text",
           "label": "Label",
-          "name": "label",
+          "name": "name",
           "valueType": "string"
         },
         {
@@ -58,6 +58,12 @@
           "label": "Link",
           "name": "link",
           "valueType": "string"
+        },
+        {
+          "component": "number",
+          "label": "Position",
+          "name": "position",
+          "valueType": "number"
         }
       ]
     }

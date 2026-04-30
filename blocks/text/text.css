@@ -35,6 +35,12 @@
   width: 100%;
 }
 
+/* column of a grid */
+.aem-GridColumn { 
+  box-sizing: border-box;
+  clear: both;
+ }
+
 /* phone breakpoint */
 @media (max-width: 768px) { 
   .aem-Grid.aem-Grid--1 > .aem-GridColumn.aem-GridColumn--phone--1 {
@@ -2826,6 +2832,10 @@ h4, h4 span, p, span { font-family:Arial,sans-serif;font-size:1rem;line-height:1
 b, strong { font-weight:900 }
 
 .desc-1 h3 { color:#f04755 }
+
+.desc-1 h1 { padding-bottom:1rem;padding-top:.5rem }
+
+.desc-1 h4 { font-weight:400 }
 
 .cmp-text { margin:0 auto;max-width:115pc }
 

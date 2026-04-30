@@ -61,7 +61,9 @@
         "cmp-image",
         "scroll-arrow-section",
         "footer",
-        "cmp-scroll-arrow"
+        "cmp-scroll-arrow",
+        "our-story",
+        "cmp-video"
       ]
     }
   ]

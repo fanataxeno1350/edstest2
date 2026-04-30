@@ -26,7 +26,9 @@
       "cmp-image",
       "scroll-arrow-section",
       "footer",
-      "cmp-scroll-arrow"
+      "cmp-scroll-arrow",
+      "our-story",
+      "cmp-video"
     ]
   },
   {
@@ -58,9 +60,9 @@
   {
     "id": "footer",
     "components": [
-      "navigation-item",
-      "itc-link-item",
-      "social-link-item"
+      "footer-navigation-item",
+      "footer-link-item",
+      "footer-social-icon-item"
     ]
   },
   {
@@ -72,6 +74,12 @@
   {
     "id": "image",
     "components": []
+  },
+  {
+    "id": "our-story",
+    "components": [
+      "teaser"
+    ]
   },
   {
     "id": "scroll-arrow-section",
@@ -92,6 +100,10 @@
   },
   {
     "id": "text",
+    "components": []
+  },
+  {
+    "id": "cmp-video",
     "components": []
   }
 ]

@@ -2825,6 +2825,10 @@ h4, h4 span, p, span { font-family:Arial,sans-serif;font-size:1rem;line-height:1
 
 b, strong { font-weight:900 }
 
+.desc-1 h3 { color:#f04755 }
+
+.cmp-text { margin:0 auto;max-width:115pc }
+
 @font-face{font-display:swap;font-family:icomoon;font-style:normal;font-weight:400;src:url("/content/dam/aemigrate/uploaded-folder/bnatural-in/font/icomoon-9b411f.vnd.ms-fontobject");src:url("/content/dam/aemigrate/uploaded-folder/bnatural-in/font/icomoon-9b411f.vnd.ms-fontobject") format("embedded-opentype"),url("/content/dam/aemigrate/uploaded-folder/bnatural-in/font/icomoon-3567fc.ttf") format("truetype"),url("/content/dam/aemigrate/uploaded-folder/bnatural-in/font/icomoon-a4d1f8.x-font-woff") format("woff"),url("/content/dam/aemigrate/uploaded-folder/bnatural-in/image/icomoon-320ff7.svg") format("svg")}
 
 [class*=" icon-"], [class^=icon-] { speak:never;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-family:icomoon!important;font-style:normal;font-variant:normal;font-weight:400;line-height:1;text-transform:none }
@@ -2848,36 +2852,6 @@ b, strong { font-weight:900 }
 @media(max-width:1023px){.cmp-teaser--right-image-full-bg-aligned .cmp-teaser .cmp-teaser__content .cmp-teaser__image{padding:0}.cmp-teaser--right-image-full-bg-aligned .cmp-teaser .cmp-teaser__content .cmp-teaser__image .cmp-teaser__logo{margin-bottom:2rem}}
 
 @keyframes cmp-search__loading-indicator-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}
-
-.breadcrumb { left:0;margin:0 auto;max-width:115rem;position:absolute;right:0 }
-
-@media only screen and (max-width:767px) { .breadcrumb { top:2.5rem;transition:top .3s ease } }
-
-.cmp-breadcrumb .cmp-breadcrumb__list { display:flex;gap:.5rem }
-
-@media only screen and (max-width:767px) { .cmp-breadcrumb .cmp-breadcrumb__list { padding-inline-start:1.25rem } }
-
-.cmp-breadcrumb .cmp-breadcrumb__item { align-items:center;background-color:hsla(0,0%,100%,.8);border-radius:1rem;cursor:pointer;display:flex;flex:none;height:1.5rem;padding:.25rem 2rem .25rem .5rem;position:relative;z-index:2 }
-
-.cmp-breadcrumb .cmp-breadcrumb__item:after { color:#1d1d1d;content:"";font-family:icomoon;font-size:1.25rem;position:absolute;right:.25rem;transform:rotate(270deg) }
-
-.cmp-breadcrumb .cmp-breadcrumb__item:last-of-type { padding-right:.5rem }
-
-@media only screen and (max-width:767px) { .cmp-breadcrumb .cmp-breadcrumb__item { display:none }
-
-.cmp-breadcrumb .cmp-breadcrumb__item:nth-last-child(-n+2) { display:flex }
-
-.cmp-breadcrumb .cmp-breadcrumb__item a, .cmp-breadcrumb .cmp-breadcrumb__item span { max-width:7.0625rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap } }
-
-.cmp-breadcrumb .cmp-breadcrumb__item, .cmp-breadcrumb .cmp-breadcrumb__item span, .cmp-breadcrumb .cmp-breadcrumb__item-link { color:#1d1d1d;font-size:.875rem;font-weight:500;line-height:1.75rem;text-decoration:none }
-
-.cmp-breadcrumb .cmp-breadcrumb__item span:hover, .cmp-breadcrumb .cmp-breadcrumb__item-link:hover, .cmp-breadcrumb .cmp-breadcrumb__item:hover { text-decoration:underline }
-
-.cmp-breadcrumb .cmp-breadcrumb__item--active span { color:#146614;text-decoration:none }
-
-.cmp-breadcrumb .cmp-breadcrumb__item--active span:hover, .cmp-breadcrumb .cmp-breadcrumb__item--active:hover { text-decoration:none }
-
-.cmp-breadcrumb .cmp-breadcrumb__item--active:after { display:none }
 
 .cmp-text--round-bulletin ul li>*{flex-shrink:0}
 
