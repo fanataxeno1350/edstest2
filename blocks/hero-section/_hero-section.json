@@ -23,38 +23,44 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Star 1",
+          "label": "Star Decoration 1",
           "name": "star1",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Star 2",
+          "label": "Star Decoration 2",
           "name": "star2",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Headline",
+          "name": "headline",
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Description",
           "name": "description",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA",
-          "name": "cta",
+          "label": "CTA Link",
+          "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Hero Image",
-          "name": "hero-image",
+          "name": "heroImage",
           "valueType": "string"
         }
       ]
@@ -62,7 +68,8 @@
   ],
   "filters": [
     {
-      "id": "hero-section"
+      "id": "hero-section",
+      "components": []
     }
   ]
 }

@@ -83,38 +83,38 @@
       "id": "blocks",
       "components": [
         {
-          "title": "About-Section",
-          "id": "about-section",
+          "title": "About-Us",
+          "id": "about-us",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "filter": "about-section",
-                  "model": "about-section",
-                  "name": "About-Section"
+                  "filter": "about-us",
+                  "model": "about-us",
+                  "name": "About-Us"
                 }
               }
             }
           }
         },
         {
-          "title": "About-Item",
-          "id": "about-item",
+          "title": "Service-Item",
+          "id": "service-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "about-item",
-                  "name": "About-Item"
+                  "model": "service-item",
+                  "name": "Service-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Blog-Section",
+          "title": "Blog Section",
           "id": "blog-section",
           "plugins": {
             "xwalk": {
@@ -123,22 +123,22 @@
                 "template": {
                   "filter": "blog-section",
                   "model": "blog-section",
-                  "name": "Blog-Section"
+                  "name": "Blog Section"
                 }
               }
             }
           }
         },
         {
-          "title": "Blog-Card",
-          "id": "blog-card",
+          "title": "Blog Card Item",
+          "id": "blog-card-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "blog-card",
-                  "name": "Blog-Card"
+                  "model": "blog-card-item",
+                  "name": "Blog Card Item"
                 }
               }
             }
@@ -161,6 +161,21 @@
           }
         },
         {
+          "title": "Social-Link-Item",
+          "id": "social-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "social-link-item",
+                  "name": "Social-Link-Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Faqs",
           "id": "faqs",
           "plugins": {
@@ -177,15 +192,15 @@
           }
         },
         {
-          "title": "Accordion-Item",
-          "id": "accordion-item",
+          "title": "Faq-Item",
+          "id": "faq-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "accordion-item",
-                  "name": "Accordion-Item"
+                  "model": "faq-item",
+                  "name": "Faq-Item"
                 }
               }
             }
@@ -208,15 +223,30 @@
           }
         },
         {
-          "title": "Footer-Link",
-          "id": "footer-link",
+          "title": "Footer-Link-Item",
+          "id": "footer-link-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-link",
-                  "name": "Footer-Link"
+                  "model": "footer-link-item",
+                  "name": "Footer-Link-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Section-Item",
+          "id": "footer-section-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-section-item",
+                  "name": "Footer-Section-Item"
                 }
               }
             }
@@ -239,15 +269,46 @@
           }
         },
         {
-          "title": "Nav-Link",
-          "id": "nav-link",
+          "title": "Nav-Item",
+          "id": "nav-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "nav-link",
-                  "name": "Nav-Link"
+                  "model": "nav-item",
+                  "name": "Nav-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Header",
+          "id": "header",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "header",
+                  "model": "header",
+                  "name": "Header"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Nav-Item",
+          "id": "nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "nav-item",
+                  "name": "Nav-Item"
                 }
               }
             }
@@ -270,7 +331,7 @@
           }
         },
         {
-          "title": "Service-Section",
+          "title": "Service Section",
           "id": "service-section",
           "plugins": {
             "xwalk": {
@@ -279,14 +340,14 @@
                 "template": {
                   "filter": "service-section",
                   "model": "service-section",
-                  "name": "Service-Section"
+                  "name": "Service Section"
                 }
               }
             }
           }
         },
         {
-          "title": "Service-Card",
+          "title": "Service Card",
           "id": "service-card",
           "plugins": {
             "xwalk": {
@@ -294,23 +355,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "service-card",
-                  "name": "Service-Card"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Toast",
-          "id": "toast",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "filter": "toast",
-                  "model": "toast",
-                  "name": "Toast"
+                  "name": "Service Card"
                 }
               }
             }
@@ -333,15 +378,15 @@
           }
         },
         {
-          "title": "Why-Card",
-          "id": "why-card",
+          "title": "Why-Card-Item",
+          "id": "why-card-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "why-card",
-                  "name": "Why-Card"
+                  "model": "why-card-item",
+                  "name": "Why-Card-Item"
                 }
               }
             }

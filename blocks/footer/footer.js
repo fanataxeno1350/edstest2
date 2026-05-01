@@ -4,164 +4,230 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const children = [...block.children];
 
-  // Destructure rows based on the BlockJson model order
   const [
     logoRow,
-    brandRow,
+    logoLinkRow,
+    logoTitleRow,
     newsletterTitleRow,
     newsletterDescriptionRow,
     newsletterFormActionRow,
     newsletterEmailPlaceholderRow,
     newsletterButtonLabelRow,
-    copyrightRow, // Copyright is now before item rows in the model
-    ...itemRows // Remaining rows are footer-link items
+    ...restRows
   ] = children;
 
-  // Filter itemRows into useful and service links based on the original HTML structure
-  // The BlockJson defines 'useful-links' and 'service-links' as containers of 'footer-link' items.
-  // We need to infer which group they belong to from the original HTML or a convention.
-  // Assuming the first 4 item rows are 'useful-links' and the rest are 'service-links' as per original HTML.
-  const usefulLinks = itemRows.slice(0, 4);
-  const serviceLinks = itemRows.slice(4);
+  const copyrightRow = restRows.pop(); // Copyright is the last fixed field
 
-  const footerContainer = document.createElement('div');
-  footerContainer.classList.add('container');
+  const itemRows = restRows;
 
-  const rowDiv = document.createElement('div');
-  rowDiv.classList.add('row', 'gy-5');
+  // No need to separate footerLinkItems and footerSectionItems here
+  // The loop below will handle both based on row.children.length
+  // footerLinkItems would have 2 children, footerSectionItems would have 3.
 
-  // Column 1: Logo, Brand, Newsletter
-  const col1 = document.createElement('div');
-  col1.classList.add('col-lg-6', 'col-12');
+  const footer = document.createElement('footer');
+  const container = document.createElement('div');
+  container.classList.add('container');
+  footer.append(container);
+
+  const row = document.createElement('div');
+  row.classList.add('row', 'gy-5');
+  container.append(row);
+
+  // Logo and Newsletter Section
+  const logoNewsletterCol = document.createElement('div');
+  logoNewsletterCol.classList.add('col-lg-6', 'col-12');
+  row.append(logoNewsletterCol);
 
   const logoLink = document.createElement('a');
   logoLink.classList.add('footer-logo', 'd-flex', 'align-items-center');
-  logoLink.href = '/';
+  const foundLogoLink = logoLinkRow.querySelector('a');
+  if (foundLogoLink) {
+    logoLink.href = foundLogoLink.href;
+  }
+  moveInstrumentation(logoLinkRow, logoLink);
 
-  const logoPicture = logoRow.querySelector('picture');
-  if (logoPicture) {
-    const img = logoPicture.querySelector('img');
+  const picture = logoRow.querySelector('picture');
+  if (picture) {
+    const img = picture.querySelector('img');
     if (img) {
+      // Original HTML has width="40", so use that. createOptimizedPicture handles responsive.
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '40' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      // moveInstrumentation should be on the original element, not the new one's child
+      moveInstrumentation(logoRow, optimizedPic); // Instrument the picture itself
       logoLink.append(optimizedPic);
     }
+  } else {
+    // If no picture, ensure instrumentation for logoRow is still moved
+    moveInstrumentation(logoRow, logoLink);
   }
 
-  const brandH2 = document.createElement('h2');
-  moveInstrumentation(brandRow.firstElementChild, brandH2);
-  while (brandRow.firstElementChild.firstChild) {
-    brandH2.append(brandRow.firstElementChild.firstChild);
-  }
-  logoLink.append(brandH2);
-  col1.append(logoLink);
+  const h2 = document.createElement('h2');
+  h2.textContent = logoTitleRow.textContent.trim();
+  moveInstrumentation(logoTitleRow, h2);
+  logoLink.append(h2);
+  logoNewsletterCol.append(logoLink);
 
-  const newsletterTitleH3 = document.createElement('h3');
-  moveInstrumentation(newsletterTitleRow.firstElementChild, newsletterTitleH3);
-  while (newsletterTitleRow.firstElementChild.firstChild) {
-    newsletterTitleH3.append(newsletterTitleRow.firstElementChild.firstChild);
-  }
-  col1.append(newsletterTitleH3);
+  const newsletterTitle = document.createElement('h3');
+  newsletterTitle.textContent = newsletterTitleRow.textContent.trim();
+  moveInstrumentation(newsletterTitleRow, newsletterTitle);
+  logoNewsletterCol.append(newsletterTitle);
 
-  const newsletterDescriptionP = document.createElement('p');
-  moveInstrumentation(newsletterDescriptionRow.firstElementChild, newsletterDescriptionP);
-  while (newsletterDescriptionRow.firstElementChild.firstChild) {
-    newsletterDescriptionP.append(newsletterDescriptionRow.firstElementChild.firstChild);
-  }
-  col1.append(newsletterDescriptionP);
+  const newsletterDescription = document.createElement('p');
+  newsletterDescription.textContent = newsletterDescriptionRow.textContent.trim();
+  moveInstrumentation(newsletterDescriptionRow, newsletterDescription);
+  logoNewsletterCol.append(newsletterDescription);
 
-  const newsletterForm = document.createElement('form');
-  newsletterForm.classList.add('d-flex', 'flex-wrap');
-  newsletterForm.action = newsletterFormActionRow.firstElementChild.textContent.trim();
-  newsletterForm.method = 'post';
+  const form = document.createElement('form');
+  form.classList.add('d-flex', 'flex-wrap');
+  const foundFormAction = newsletterFormActionRow.querySelector('a');
+  if (foundFormAction) {
+    form.action = foundFormAction.href;
+  }
+  form.method = 'post';
+  moveInstrumentation(newsletterFormActionRow, form);
+
+  // Hidden input for CSRF is hardcoded in original HTML, but its value is dynamic.
+  // Since EDS doesn't provide dynamic values for hidden inputs, we omit it unless
+  // a specific value is provided in the block content.
+  // If a hidden input is needed, it should be a separate field in the model.
 
   const emailInput = document.createElement('input');
   emailInput.type = 'email';
   emailInput.name = 'email';
-  emailInput.placeholder = newsletterEmailPlaceholderRow.firstElementChild.textContent.trim();
-  newsletterForm.append(emailInput);
+  emailInput.placeholder = newsletterEmailPlaceholderRow.textContent.trim();
+  moveInstrumentation(newsletterEmailPlaceholderRow, emailInput);
+  form.append(emailInput);
 
   const subscribeButton = document.createElement('button');
   subscribeButton.classList.add('btn', 'btn-primary', 'subscribe-btn');
-  moveInstrumentation(newsletterButtonLabelRow.firstElementChild, subscribeButton);
-  while (newsletterButtonLabelRow.firstElementChild.firstChild) {
-    subscribeButton.append(newsletterButtonLabelRow.firstElementChild.firstChild);
-  }
-  newsletterForm.append(subscribeButton);
-  col1.append(newsletterForm);
-  rowDiv.append(col1);
+  subscribeButton.textContent = newsletterButtonLabelRow.textContent.trim();
+  moveInstrumentation(newsletterButtonLabelRow, subscribeButton);
+  form.append(subscribeButton);
 
-  // Column 2: Useful Links
-  const col2 = document.createElement('div');
-  col2.classList.add('col-lg-3', 'col-6');
+  logoNewsletterCol.append(form);
 
-  const usefulLinksH5 = document.createElement('h5');
-  usefulLinksH5.textContent = 'Useful Links';
-  col2.append(usefulLinksH5);
+  // Footer Sections and Footer Links
+  itemRows.forEach((itemRow) => {
+    if (itemRow.children.length === 2) { // footer-link-item
+      const [labelCell, linkCell] = [...itemRow.children];
 
-  const usefulLinksUl = document.createElement('ul');
-  usefulLinksUl.classList.add('d-flex', 'flex-column', 'useful-links-list');
+      const sectionCol = document.createElement('div');
+      sectionCol.classList.add('col-lg-3', 'col-6'); // Assuming these links also go into a column
+      row.append(sectionCol);
+      moveInstrumentation(itemRow, sectionCol);
 
-  usefulLinks.forEach((linkRow) => {
-    const li = document.createElement('li');
-    moveInstrumentation(linkRow, li); // Move instrumentation from the row to the new li
+      const ul = document.createElement('ul');
+      ul.classList.add('d-flex', 'flex-column', 'useful-links-list');
+      sectionCol.append(ul);
 
-    const linkCell = [...linkRow.children].find((cell) => cell.querySelector('a'));
-    const labelCell = [...linkRow.children].find((cell) => !cell.querySelector('a'));
+      const newLi = document.createElement('li');
+      const link = document.createElement('a');
+      const foundLink = linkCell.querySelector('a');
+      if (foundLink) {
+        link.href = foundLink.href;
+        link.textContent = labelCell.textContent.trim(); // Use labelCell for text
+      } else {
+        link.href = '#'; // Fallback
+        link.textContent = labelCell.textContent.trim();
+      }
+      moveInstrumentation(labelCell, newLi); // Instrument the label cell to the li
+      moveInstrumentation(linkCell, link); // Instrument the link cell to the a
+      newLi.append(link);
+      ul.append(newLi);
+    } else if (itemRow.children.length === 3) { // footer-section-item
+      const [titleCell, sectionLinksCell, hierarchyTreeCell] = [...itemRow.children];
 
-    const link = document.createElement('a');
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      link.href = foundLink.href;
-      link.textContent = labelCell.textContent.trim();
+      const sectionCol = document.createElement('div');
+      sectionCol.classList.add('col-lg-3', 'col-6');
+      row.append(sectionCol);
+      moveInstrumentation(itemRow, sectionCol);
+
+      const sectionTitle = document.createElement('h5');
+      sectionTitle.textContent = titleCell.textContent.trim();
+      moveInstrumentation(titleCell, sectionTitle);
+      sectionCol.append(sectionTitle);
+
+      const ul = document.createElement('ul');
+      ul.classList.add('d-flex', 'flex-column', 'useful-links-list');
+      sectionCol.append(ul);
+
+      const tempDiv = document.createElement('div');
+      moveInstrumentation(hierarchyTreeCell, tempDiv); // Instrument the hierarchyTreeCell to tempDiv
+      tempDiv.innerHTML = hierarchyTreeCell.innerHTML;
+
+      const hierarchyRoot = tempDiv.querySelector('ul');
+      if (hierarchyRoot) {
+        // Move instrumentation for the hierarchy-tree content
+        moveInstrumentation(hierarchyTreeCell, hierarchyRoot);
+
+        [...hierarchyRoot.children].forEach((li) => {
+          const anchor = li.querySelector(':scope > a');
+          const newLi = document.createElement('li');
+          const link = document.createElement('a');
+
+          if (anchor) {
+            link.href = anchor.href;
+            link.textContent = anchor.textContent.trim();
+            moveInstrumentation(anchor, link); // Instrument the original anchor to the new link
+          } else {
+            link.href = '#';
+            link.textContent = li.textContent.trim();
+          }
+          moveInstrumentation(li, newLi); // Instrument the original li to the new li
+          newLi.append(link);
+
+          // Handle nested ul if present
+          const nestedUl = li.querySelector(':scope > ul');
+          if (nestedUl) {
+            moveInstrumentation(nestedUl, nestedUl); // Instrument the nested ul itself
+            newLi.append(nestedUl); // Append the original nested ul directly
+          }
+          ul.append(newLi);
+        });
+      } else {
+        // Fallback to sectionLinks if hierarchy-tree is empty or malformed
+        const sectionLinksTempDiv = document.createElement('div');
+        moveInstrumentation(sectionLinksCell, sectionLinksTempDiv); // Instrument sectionLinksCell
+        sectionLinksTempDiv.innerHTML = sectionLinksCell.innerHTML;
+
+        const sectionLinksUl = sectionLinksTempDiv.querySelector('ul');
+        if (sectionLinksUl) {
+          moveInstrumentation(sectionLinksCell, sectionLinksUl); // Instrument the ul if found
+          [...sectionLinksUl.children].forEach((li) => {
+            const anchor = li.querySelector('a');
+            if (anchor) {
+              const newLi = document.createElement('li');
+              const link = document.createElement('a');
+              link.href = anchor.href;
+              link.textContent = anchor.textContent.trim();
+              moveInstrumentation(li, newLi); // Instrument original li
+              moveInstrumentation(anchor, link); // Instrument original anchor
+              newLi.append(link);
+              ul.append(newLi);
+            }
+          });
+        } else {
+          // If sectionLinks is just text or <p> tags, try to extract links
+          [...sectionLinksTempDiv.querySelectorAll('a')].forEach((anchor) => {
+            const newLi = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = anchor.href;
+            link.textContent = anchor.textContent.trim();
+            moveInstrumentation(anchor, link); // Instrument original anchor
+            newLi.append(link);
+            ul.append(newLi);
+          });
+        }
+      }
     }
-    li.append(link);
-    usefulLinksUl.append(li);
   });
-  col2.append(usefulLinksUl);
-  rowDiv.append(col2);
-
-  // Column 3: Our Services
-  const col3 = document.createElement('div');
-  col3.classList.add('col-lg-3', 'col-6');
-
-  const serviceLinksH5 = document.createElement('h5');
-  serviceLinksH5.textContent = 'Our Services';
-  col3.append(serviceLinksH5);
-
-  const serviceLinksUl = document.createElement('ul');
-  serviceLinksUl.classList.add('d-flex', 'flex-column', 'useful-links-list');
-
-  serviceLinks.forEach((linkRow) => {
-    const li = document.createElement('li');
-    moveInstrumentation(linkRow, li); // Move instrumentation from the row to the new li
-
-    const linkCell = [...linkRow.children].find((cell) => cell.querySelector('a'));
-    const labelCell = [...linkRow.children].find((cell) => !cell.querySelector('a'));
-
-    const link = document.createElement('a');
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      link.href = foundLink.href;
-      link.textContent = labelCell.textContent.trim();
-    }
-    li.append(link);
-    serviceLinksUl.append(li);
-  });
-  col3.append(serviceLinksUl);
-  rowDiv.append(col3);
-
-  footerContainer.append(rowDiv);
 
   // Copyright
-  const copyrightH5 = document.createElement('h5');
-  copyrightH5.classList.add('text-center', 'mt-6');
-  moveInstrumentation(copyrightRow.firstElementChild, copyrightH5);
-  while (copyrightRow.firstElementChild.firstChild) {
-    copyrightH5.append(copyrightRow.firstElementChild.firstChild);
-  }
-  footerContainer.append(copyrightH5);
+  const copyright = document.createElement('h5');
+  copyright.classList.add('text-center', 'mt-6');
+  copyright.textContent = copyrightRow.textContent.trim();
+  moveInstrumentation(copyrightRow, copyright);
+  footer.append(copyright);
 
-  block.textContent = '';
-  block.append(footerContainer);
+  block.replaceChildren(footer);
 }

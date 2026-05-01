@@ -53,16 +53,15 @@
         "fragment",
         "---new--blocks-----",
         "header-nav",
-        "toast",
+        "header",
         "hero-section",
         "why-techatom",
         "service-section",
-        "about-section",
+        "about-us",
         "blog-section",
         "faqs",
         "contact-section",
-        "footer",
-        "pubble-app"
+        "footer"
       ]
     }
   ]

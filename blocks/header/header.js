@@ -1,10 +1,10 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
+export default async function decorate(block) {
   const children = [...block.children];
 
-  const header = document.createElement('header');
+  const headerEl = document.createElement('header');
   const nav = document.createElement('nav');
   const container = document.createElement('div');
   container.classList.add('container', 'd-flex', 'align-items-center', 'justify-content-between');
@@ -28,7 +28,7 @@ export default function decorate(block) {
   if (foundLogoLink) {
     logoLinkEl.href = foundLogoLink.href;
   } else {
-    logoLinkEl.href = '/'; // Fallback link
+    logoLinkEl.href = '/'; // Default to home if no link is provided
   }
 
   const siteTitle = document.createElement('h4');
@@ -48,41 +48,39 @@ export default function decorate(block) {
 
   navItemRows.forEach((row) => {
     const [labelCell, linkCell] = [...row.children];
-    const navItemLink = document.createElement('a');
-    navItemLink.classList.add('navitems');
+    const navItem = document.createElement('a');
+    navItem.classList.add('navitems');
+    navItem.textContent = labelCell.textContent.trim();
 
     const foundLink = linkCell.querySelector('a');
     if (foundLink) {
-      navItemLink.href = foundLink.href;
+      navItem.href = foundLink.href;
+    } else {
+      navItem.href = '#';
     }
-
-    navItemLink.textContent = labelCell.textContent.trim();
-    moveInstrumentation(row, navItemLink);
-    navList.append(navItemLink);
+    moveInstrumentation(row, navItem);
+    navList.append(navItem);
   });
+
   container.append(navList);
 
-  // Navbar Toggler Button
-  const toggler = document.createElement('button');
-  toggler.classList.add('navbar-toggler');
-  toggler.setAttribute('type', 'button');
-  toggler.innerHTML = `
+  // Navbar Toggler
+  const navbarToggler = document.createElement('button');
+  navbarToggler.classList.add('navbar-toggler');
+  navbarToggler.type = 'button';
+  navbarToggler.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
       <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
     </svg>
   `;
 
-  toggler.addEventListener('click', () => {
-    navList.classList.toggle('show'); // Assuming 'show' class controls visibility
-    // 'collapsed' class is not present in the original HTML for the toggler,
-    // and there's no Swiper.js to manage it.
-    // If icon change is needed, it should be handled via CSS on 'show' class or a different class.
+  navbarToggler.addEventListener('click', () => {
+    navList.classList.toggle('show'); // Assuming 'show' class will handle visibility
   });
 
-  container.append(toggler);
-
+  container.append(navbarToggler);
   nav.append(container);
-  header.append(nav);
+  headerEl.append(nav);
 
-  block.replaceChildren(header);
+  block.replaceChildren(headerEl);
 }

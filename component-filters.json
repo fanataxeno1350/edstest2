@@ -18,53 +18,63 @@
       "fragment",
       "---new--blocks-----",
       "header-nav",
-      "toast",
+      "header",
       "hero-section",
       "why-techatom",
       "service-section",
-      "about-section",
+      "about-us",
       "blog-section",
       "faqs",
       "contact-section",
-      "footer",
-      "pubble-app"
+      "footer"
     ]
   },
   {
-    "id": "about-section",
+    "id": "about-us",
     "components": [
-      "about-item"
+      "service-item"
     ]
   },
   {
     "id": "blog-section",
     "components": [
-      "blog-card"
+      "blog-card-item"
     ]
   },
   {
-    "id": "contact-section"
+    "id": "contact-section",
+    "components": [
+      "social-link-item"
+    ]
   },
   {
     "id": "faqs",
     "components": [
-      "accordion-item"
+      "faq-item"
     ]
   },
   {
     "id": "footer",
     "components": [
-      "footer-link"
+      "footer-link-item",
+      "footer-section-item"
     ]
   },
   {
     "id": "header-nav",
     "components": [
-      "nav-link"
+      "nav-item"
     ]
   },
   {
-    "id": "hero-section"
+    "id": "header",
+    "components": [
+      "nav-item"
+    ]
+  },
+  {
+    "id": "hero-section",
+    "components": []
   },
   {
     "id": "service-section",
@@ -73,12 +83,9 @@
     ]
   },
   {
-    "id": "toast"
-  },
-  {
     "id": "why-techatom",
     "components": [
-      "why-card"
+      "why-card-item"
     ]
   }
 ]

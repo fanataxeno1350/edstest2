@@ -1,16 +1,16 @@
 {
   "definitions": [
     {
-      "title": "Header-Nav",
-      "id": "header-nav",
+      "title": "Header",
+      "id": "header",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "header-nav",
-              "model": "header-nav",
-              "name": "Header-Nav"
+              "filter": "header",
+              "model": "header",
+              "name": "Header"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "header-nav",
+      "id": "header",
       "fields": [
         {
           "component": "reference",
@@ -67,13 +67,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Menu Label",
+          "label": "Navigation Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Menu Link",
+          "label": "Navigation Link",
           "name": "link",
           "valueType": "string"
         }
@@ -82,7 +82,7 @@
   ],
   "filters": [
     {
-      "id": "header-nav",
+      "id": "header",
       "components": [
         "nav-item"
       ]

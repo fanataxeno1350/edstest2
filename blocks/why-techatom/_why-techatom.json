@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Why-Card",
-      "id": "why-card",
+      "title": "Why-Card-Item",
+      "id": "why-card-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "why-card",
-              "name": "Why-Card"
+              "model": "why-card-item",
+              "name": "Why-Card-Item"
             }
           }
         }
@@ -38,38 +38,39 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Heading",
-          "name": "heading",
-          "valueType": "string"
+          "label": "Section Headline",
+          "name": "headline"
         },
         {
           "component": "container",
-          "item": "why-card",
+          "item": "why-card-item",
           "label": "Why Cards",
-          "name": "whyCards"
+          "name": "cards"
         }
       ]
     },
     {
-      "id": "why-card",
+      "id": "why-card-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image",
-          "valueType": "string"
+          "label": "Card Image",
+          "name": "image"
         },
         {
           "component": "text",
-          "label": "Title",
-          "name": "title",
-          "valueType": "string"
+          "label": "Card Title",
+          "name": "title"
         },
         {
           "component": "richtext",
-          "label": "Description",
-          "name": "description",
-          "valueType": "string"
+          "label": "Card Description",
+          "name": "description"
+        },
+        {
+          "component": "aem-content",
+          "label": "Card Link",
+          "name": "link"
         }
       ]
     }
@@ -78,7 +79,7 @@
     {
       "id": "why-techatom",
       "components": [
-        "why-card"
+        "why-card-item"
       ]
     }
   ]
