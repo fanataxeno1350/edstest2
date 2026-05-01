@@ -16,7 +16,96 @@
       "cards",
       "columns",
       "fragment",
-      "---new--blocks-----"
+      "---new--blocks-----",
+      "header",
+      "hero-slider",
+      "quick-links",
+      "what-we-do",
+      "purpose-led-grid",
+      "performance-driven",
+      "performance-driven-2",
+      "future-ready",
+      "latest-news",
+      "work-with-us",
+      "faqs",
+      "footer"
+    ]
+  },
+  {
+    "id": "faqs",
+    "components": [
+      "faq-item"
+    ]
+  },
+  {
+    "id": "footer",
+    "components": [
+      "footer-section-item",
+      "footer-link-item",
+      "footer-social-item"
+    ]
+  },
+  {
+    "id": "future-ready",
+    "components": [
+      "future-ready-card-item"
+    ]
+  },
+  {
+    "id": "header",
+    "components": [
+      "navigation-item",
+      "press-release-item",
+      "icon-nav-item"
+    ]
+  },
+  {
+    "id": "hero-slider",
+    "components": [
+      "hero-slide-item",
+      "quick-link-item"
+    ]
+  },
+  {
+    "id": "latest-news",
+    "components": [
+      "news-item"
+    ]
+  },
+  {
+    "id": "performance-driven-2",
+    "components": [
+      "performance-driven-card-item"
+    ]
+  },
+  {
+    "id": "performance-driven",
+    "components": [
+      "performance-driven-card-item"
+    ]
+  },
+  {
+    "id": "purpose-led-grid",
+    "components": [
+      "purpose-grid-item"
+    ]
+  },
+  {
+    "id": "quick-links",
+    "components": [
+      "quick-link-item"
+    ]
+  },
+  {
+    "id": "what-we-do",
+    "components": [
+      "business-vertical-item"
+    ]
+  },
+  {
+    "id": "work-with-us",
+    "components": [
+      "work-with-us-slide-item"
     ]
   }
 ]

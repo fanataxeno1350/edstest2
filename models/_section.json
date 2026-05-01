@@ -51,7 +51,19 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "header",
+        "hero-slider",
+        "quick-links",
+        "what-we-do",
+        "purpose-led-grid",
+        "performance-driven",
+        "performance-driven-2",
+        "future-ready",
+        "latest-news",
+        "work-with-us",
+        "faqs",
+        "footer"
       ]
     }
   ]
