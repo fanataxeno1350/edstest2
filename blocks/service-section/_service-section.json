@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Service Card",
-      "id": "service-card",
+      "title": "Service Card Item",
+      "id": "service-card-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "service-card",
-              "name": "Service Card"
+              "model": "service-card-item",
+              "name": "Service Card Item"
             }
           }
         }
@@ -38,8 +38,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "Section Headline",
-          "name": "headline",
+          "label": "Section Title",
+          "name": "title",
           "valueType": "string"
         },
         {
@@ -50,14 +50,14 @@
         },
         {
           "component": "container",
-          "item": "service-card",
+          "item": "service-card-item",
           "label": "Service Cards",
-          "name": "cards"
+          "name": "serviceCards"
         }
       ]
     },
     {
-      "id": "service-card",
+      "id": "service-card-item",
       "fields": [
         {
           "component": "aem-content",
@@ -86,7 +86,7 @@
         {
           "component": "text",
           "label": "Button Label",
-          "name": "buttonLabel",
+          "name": "ctaLabel",
           "valueType": "string"
         }
       ]
@@ -96,7 +96,7 @@
     {
       "id": "service-section",
       "components": [
-        "service-card"
+        "service-card-item"
       ]
     }
   ]

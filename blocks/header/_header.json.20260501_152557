@@ -50,8 +50,8 @@
         },
         {
           "component": "text",
-          "label": "Site Title",
-          "name": "siteTitle",
+          "label": "Logo Title",
+          "name": "logoTitle",
           "valueType": "string"
         },
         {
@@ -67,13 +67,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Navigation Label",
+          "label": "Menu Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Navigation Link",
+          "label": "Menu Link",
           "name": "link",
           "valueType": "string"
         }

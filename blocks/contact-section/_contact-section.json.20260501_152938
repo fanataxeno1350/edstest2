@@ -38,20 +38,20 @@
       "fields": [
         {
           "component": "text",
-          "label": "Main Heading",
-          "name": "mainHeading",
+          "label": "Headline",
+          "name": "headline",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Sub Heading",
-          "name": "subHeading",
+          "label": "Subheadline",
+          "name": "subheadline",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Location Detail",
-          "name": "locationDetail",
+          "label": "Location Description",
+          "name": "location",
           "valueType": "string"
         },
         {
@@ -92,8 +92,8 @@
         },
         {
           "component": "text",
-          "label": "Form Button Label",
-          "name": "formButtonLabel",
+          "label": "Form Submit Button Label",
+          "name": "formSubmitLabel",
           "valueType": "string"
         }
       ]

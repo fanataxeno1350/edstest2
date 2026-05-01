@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Header",
-      "id": "header",
+      "title": "Header-Nav",
+      "id": "header-nav",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "header",
-              "model": "header",
-              "name": "Header"
+              "filter": "header-nav",
+              "model": "header-nav",
+              "name": "Header-Nav"
             }
           }
         }
       }
     },
     {
-      "title": "Navigation-Item",
-      "id": "navigation-item",
+      "title": "Nav-Item",
+      "id": "nav-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "navigation-item",
-              "name": "Navigation-Item"
+              "model": "nav-item",
+              "name": "Nav-Item"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "header",
+      "id": "header-nav",
       "fields": [
         {
           "component": "reference",
@@ -56,24 +56,24 @@
         },
         {
           "component": "container",
-          "item": "navigation-item",
+          "item": "nav-item",
           "label": "Navigation Menu",
           "name": "navigationMenu"
         }
       ]
     },
     {
-      "id": "navigation-item",
+      "id": "nav-item",
       "fields": [
         {
           "component": "text",
-          "label": "Navigation Label",
+          "label": "Menu Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Navigation Link",
+          "label": "Menu Link",
           "name": "link",
           "valueType": "string"
         }
@@ -82,9 +82,9 @@
   ],
   "filters": [
     {
-      "id": "header",
+      "id": "header-nav",
       "components": [
-        "navigation-item"
+        "nav-item"
       ]
     }
   ]

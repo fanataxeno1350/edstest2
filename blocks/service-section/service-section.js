@@ -2,89 +2,81 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // CHECK 0.5: Remove block's own class from inner wrapper.
-  // The outer block div already has 'service-section' from AEM.
+  // Destructure root rows based on BlockJson model
+  const [sectionTitleRow, pointerImageRow, ...serviceCardRows] = [...block.children];
+
   const section = document.createElement('section');
-  section.id = 'services'; // Keep other classes/attributes from ORIGINAL HTML
+  // section.classList.add('service-section'); // Removed: block already has this class from AEM
+  section.id = 'services'; // ID is allowed as it's not a class
 
-  const [headlineRow, pointerImageRow, ...serviceCardRows] = [...block.children];
+  const container1 = document.createElement('div');
+  container1.classList.add('container', 'position-relative');
 
-  // Section Headline
-  const headlineContainer = document.createElement('div');
-  headlineContainer.classList.add('container', 'position-relative');
-  const headline = document.createElement('h2');
-  moveInstrumentation(headlineRow, headline);
-  headline.textContent = headlineRow.textContent.trim();
-  headlineContainer.append(headline);
+  const title = document.createElement('h2');
+  moveInstrumentation(sectionTitleRow, title);
+  title.textContent = sectionTitleRow.textContent.trim();
+  container1.append(title);
 
-  // Pointer Image
   const pointerPicture = pointerImageRow.querySelector('picture');
   if (pointerPicture) {
     const pointerImg = pointerPicture.querySelector('img');
-    const optimizedPointerPic = createOptimizedPicture(
-      pointerImg.src,
-      pointerImg.alt,
-      false,
-      [{ width: '750' }],
-    );
-    optimizedPointerPic.querySelector('img').classList.add('pointer');
-    moveInstrumentation(pointerImageRow, optimizedPointerPic.querySelector('img'));
-    headlineContainer.append(optimizedPointerPic);
+    const optimizedPointerPic = createOptimizedPicture(pointerImg.src, pointerImg.alt, false, [{ width: '750' }]);
+    const newPointerImg = optimizedPointerPic.querySelector('img');
+    newPointerImg.classList.add('pointer');
+    moveInstrumentation(pointerImageRow, newPointerImg);
+    container1.append(optimizedPointerPic);
   }
-  section.append(headlineContainer);
 
-  // Service Cards
-  const cardsContainer = document.createElement('div');
-  cardsContainer.classList.add('container');
-  const rowDiv = document.createElement('div');
-  rowDiv.classList.add('row', 'justify-content-around');
+  section.append(container1);
 
-  serviceCardRows.forEach((row) => {
-    // CHECK 0: Replaced querySelector('div:nth-child(n)') with array destructuring for fixed-schema item rows.
-    const [cardLinkCell, cardImageCell, cardTitleCell, cardDescriptionCell, buttonLabelCell] = [...row.children];
+  const container2 = document.createElement('div');
+  container2.classList.add('container');
 
-    const cardLink = document.createElement('a');
-    cardLink.classList.add('d-block', 'col-lg-4', 'col-md-6', 'col-12', 'service-card');
-    const foundLink = cardLinkCell?.querySelector('a');
-    if (foundLink) {
-      cardLink.href = foundLink.href;
+  const row = document.createElement('div');
+  row.classList.add('row', 'justify-content-around');
+
+  serviceCardRows.forEach((cardRow) => {
+    // Destructure cells for service-card-item based on BlockJson model
+    const [cardLinkCell, cardImageCell, cardTitleCell, cardDescriptionCell, ctaLabelCell] = [...cardRow.children];
+
+    const cardLink = cardLinkCell.querySelector('a');
+    const cardHref = cardLink ? cardLink.href : '#';
+
+    const serviceCard = document.createElement('a');
+    serviceCard.classList.add('d-block', 'col-lg-4', 'col-md-6', 'col-12', 'service-card');
+    serviceCard.href = cardHref;
+    moveInstrumentation(cardRow, serviceCard);
+
+    const cardPicture = cardImageCell.querySelector('picture');
+    if (cardPicture) {
+      const cardImg = cardPicture.querySelector('img');
+      const optimizedCardPic = createOptimizedPicture(cardImg.src, cardImg.alt, false, [{ width: '750' }]);
+      const newCardImg = optimizedCardPic.querySelector('img');
+      newCardImg.classList.add('img-fluid', 'service-img');
+      serviceCard.append(optimizedCardPic);
     }
 
-    if (cardImageCell) {
-      const picture = cardImageCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        optimizedPic.querySelector('img').classList.add('img-fluid', 'service-img');
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        cardLink.append(optimizedPic);
-      }
-    }
+    const cardTitle = document.createElement('h3');
+    cardTitle.textContent = cardTitleCell.textContent.trim();
+    serviceCard.append(cardTitle);
 
-    if (cardTitleCell) {
-      const cardTitle = document.createElement('h3');
-      cardTitle.textContent = cardTitleCell.textContent.trim();
-      cardLink.append(cardTitle);
-    }
+    const cardDescription = document.createElement('p');
+    // cardDescription is a richtext field, so innerHTML is correct.
+    // The original HTML shows <p> inside the cell, so assigning to <p> will create <p><p>...</p></p>.
+    // It's better to use a <div> for richtext content to avoid invalid nesting.
+    const cardDescriptionDiv = document.createElement('div'); // Changed to div
+    cardDescriptionDiv.innerHTML = cardDescriptionCell.innerHTML;
+    serviceCard.append(cardDescriptionDiv); // Appending the div
 
-    if (cardDescriptionCell) {
-      // CHECK 0.7 B: Changed <p> to <div> for richtext content to avoid <p> inside <p>
-      const cardDescription = document.createElement('div');
-      cardDescription.innerHTML = cardDescriptionCell.innerHTML;
-      cardLink.append(cardDescription);
-    }
+    const ctaButton = document.createElement('button');
+    ctaButton.textContent = ctaLabelCell.textContent.trim();
+    serviceCard.append(ctaButton);
 
-    if (buttonLabelCell) {
-      const button = document.createElement('button');
-      button.textContent = buttonLabelCell.textContent.trim();
-      cardLink.append(button);
-    }
-    moveInstrumentation(row, cardLink);
-    rowDiv.append(cardLink);
+    row.append(serviceCard);
   });
 
-  cardsContainer.append(rowDiv);
-  section.append(cardsContainer);
+  container2.append(row);
+  section.append(container2);
 
   block.replaceChildren(section);
 }

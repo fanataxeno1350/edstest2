@@ -1,7 +1,7 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
+export default async function decorate(block) {
   const children = [...block.children];
 
   const headerEl = document.createElement('header');
@@ -20,27 +20,24 @@ export default function decorate(block) {
   if (logoPicture) {
     const img = logoPicture.querySelector('img');
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    // moveInstrumentation should be called on the original element and applied to the new element
-    moveInstrumentation(logoPicture, optimizedPic); // Apply instrumentation to the new picture element
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
     logoLinkEl.append(optimizedPic);
   }
 
   const foundLogoLink = logoLinkRow.querySelector('a');
   if (foundLogoLink) {
     logoLinkEl.href = foundLogoLink.href;
-    moveInstrumentation(logoLinkRow, logoLinkEl); // Move instrumentation from the row to the link element
   } else {
     logoLinkEl.href = '/'; // Default to home if no link is provided
   }
 
   const siteTitle = document.createElement('h4');
   siteTitle.textContent = siteTitleRow.textContent.trim();
-  moveInstrumentation(siteTitleRow, siteTitle); // Move instrumentation from the row to the title element
   logoLinkEl.append(siteTitle);
 
-  // moveInstrumentation for logoRow is handled by the logoPicture, logoLinkRow by logoLinkEl, siteTitleRow by siteTitle.
-  // No need for a separate moveInstrumentation(logoRow, logoLinkEl) here as logoLinkEl is not the direct replacement for logoRow.
-  // The original logoRow content (picture) is moved into logoLinkEl.
+  moveInstrumentation(logoRow, logoLinkEl);
+  moveInstrumentation(logoLinkRow, logoLinkEl);
+  moveInstrumentation(siteTitleRow, siteTitle);
 
   logoWrapper.append(logoLinkEl);
   container.append(logoWrapper);
@@ -51,37 +48,37 @@ export default function decorate(block) {
 
   navItemRows.forEach((row) => {
     const [labelCell, linkCell] = [...row.children];
-    const navItemLink = document.createElement('a');
-    navItemLink.classList.add('navitems');
+    const navItem = document.createElement('a');
+    navItem.classList.add('navitems');
+    navItem.textContent = labelCell.textContent.trim();
 
     const foundLink = linkCell.querySelector('a');
     if (foundLink) {
-      navItemLink.href = foundLink.href;
+      navItem.href = foundLink.href;
+    } else {
+      navItem.href = '#';
     }
-
-    navItemLink.textContent = labelCell.textContent.trim();
-    moveInstrumentation(row, navItemLink);
-    navList.append(navItemLink);
+    moveInstrumentation(row, navItem);
+    navList.append(navItem);
   });
 
   container.append(navList);
 
-  // Navbar Toggler Button
-  const toggler = document.createElement('button');
-  toggler.classList.add('navbar-toggler');
-  toggler.type = 'button';
-  toggler.innerHTML = `
+  // Navbar Toggler
+  const navbarToggler = document.createElement('button');
+  navbarToggler.classList.add('navbar-toggler');
+  navbarToggler.type = 'button';
+  navbarToggler.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
       <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
     </svg>
   `;
 
-  toggler.addEventListener('click', () => {
-    navList.classList.toggle('show'); // Toggle a 'show' class for mobile nav
+  navbarToggler.addEventListener('click', () => {
+    navList.classList.toggle('show'); // Assuming 'show' class will handle visibility
   });
 
-  container.append(toggler);
-
+  container.append(navbarToggler);
   nav.append(container);
   headerEl.append(nav);
 

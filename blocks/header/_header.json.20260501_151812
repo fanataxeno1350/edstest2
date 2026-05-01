@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Navigation-Item",
-      "id": "navigation-item",
+      "title": "Nav-Item",
+      "id": "nav-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "navigation-item",
-              "name": "Navigation-Item"
+              "model": "nav-item",
+              "name": "Nav-Item"
             }
           }
         }
@@ -50,20 +50,20 @@
         },
         {
           "component": "text",
-          "label": "Site Title",
-          "name": "siteTitle",
+          "label": "Logo Label",
+          "name": "logoLabel",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "navigation-item",
-          "label": "Navigation Menu",
-          "name": "navigationMenu"
+          "item": "nav-item",
+          "label": "Navigation",
+          "name": "navigation"
         }
       ]
     },
     {
-      "id": "navigation-item",
+      "id": "nav-item",
       "fields": [
         {
           "component": "text",
@@ -84,7 +84,7 @@
     {
       "id": "header",
       "components": [
-        "navigation-item"
+        "nav-item"
       ]
     }
   ]

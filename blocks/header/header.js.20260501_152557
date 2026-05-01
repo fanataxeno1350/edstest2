@@ -1,0 +1,78 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const children = [...block.children];
+
+  const [logoRow, logoLinkRow, logoTitleRow, ...navigationItemRows] = children;
+
+  const header = document.createElement('header');
+  const nav = document.createElement('nav');
+  const container = document.createElement('div');
+  container.classList.add('container', 'd-flex', 'align-items-center', 'justify-content-between');
+
+  // Logo section
+  const logoDiv = document.createElement('div');
+  const logoLink = document.createElement('a');
+  logoLink.classList.add('logo', 'd-flex', 'align-items-center', 'gap-2');
+
+  const logoAnchor = logoLinkRow.querySelector('a');
+  if (logoAnchor) {
+    logoLink.href = logoAnchor.href;
+  }
+  moveInstrumentation(logoLinkRow, logoLink);
+
+  const picture = logoRow.querySelector('picture');
+  if (picture) {
+    const img = picture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(picture, optimizedPic); // Corrected: move instrumentation from original picture to optimized picture
+    logoLink.append(optimizedPic);
+  }
+  moveInstrumentation(logoRow, logoLink);
+
+  const logoTitle = document.createElement('h4');
+  logoTitle.textContent = logoTitleRow.textContent.trim();
+  moveInstrumentation(logoTitleRow, logoTitle);
+  logoLink.append(logoTitle);
+  logoDiv.append(logoLink);
+
+  // Navigation menu
+  const navListDiv = document.createElement('div');
+  navListDiv.classList.add('nav-list');
+
+  navigationItemRows.forEach((row) => {
+    const [labelCell, linkCell] = [...row.children];
+    const navItemLink = document.createElement('a');
+    navItemLink.classList.add('navitems');
+
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      navItemLink.href = foundLink.href;
+    }
+    navItemLink.textContent = labelCell.textContent.trim();
+
+    moveInstrumentation(row, navItemLink);
+    navListDiv.append(navItemLink);
+  });
+
+  // Navbar toggler
+  const toggler = document.createElement('button');
+  toggler.classList.add('navbar-toggler');
+  toggler.type = 'button';
+  toggler.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
+    </svg>
+  `;
+
+  toggler.addEventListener('click', () => {
+    navListDiv.classList.toggle('show'); // Assuming 'show' class will handle visibility
+  });
+
+  container.append(logoDiv, navListDiv, toggler);
+  nav.append(container);
+  header.append(nav);
+
+  block.replaceChildren(header);
+}

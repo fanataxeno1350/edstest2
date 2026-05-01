@@ -1,11 +1,12 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
+export default async function decorate(block) {
   const [
     star1Row,
     star2Row,
     headlineRow,
+    headlineSpanRow,
     descriptionRow,
     ctaLinkRow,
     ctaLabelRow,
@@ -14,7 +15,9 @@ export default function decorate(block) {
 
   const section = document.createElement('section');
   section.classList.add('hero-section');
-  // moveInstrumentation(block, section); // Instrumentation for the block itself is handled by replaceChildren
+  // The block's own class 'hero-section' is already on the outer block div.
+  // Adding it here would cause double padding/CSS. Removed.
+  moveInstrumentation(block, section);
 
   const container = document.createElement('div');
   container.classList.add('container');
@@ -25,68 +28,73 @@ export default function decorate(block) {
   const heroDescription = document.createElement('div');
   heroDescription.classList.add('hero-description', 'col-lg-6', 'col-12');
 
-  // Star Decoration 1
-  const star1Picture = star1Row.children[0]?.querySelector('picture');
+  // Star 1
+  const star1Picture = star1Row.querySelector('picture');
   if (star1Picture) {
     const star1Img = star1Picture.querySelector('img');
     const optimizedStar1 = createOptimizedPicture(star1Img.src, star1Img.alt, false, [{ width: '750' }]);
-    optimizedStar1.classList.add('star-1');
-    moveInstrumentation(star1Row.children[0], optimizedStar1.querySelector('img')); // Instrumentation on the cell
+    optimizedStar1.querySelector('img').classList.add('star-1');
+    moveInstrumentation(star1Row, optimizedStar1.querySelector('img'));
     heroDescription.append(optimizedStar1);
   }
 
-  // Star Decoration 2
-  const star2Picture = star2Row.children[0]?.querySelector('picture');
+  // Star 2
+  const star2Picture = star2Row.querySelector('picture');
   if (star2Picture) {
     const star2Img = star2Picture.querySelector('img');
     const optimizedStar2 = createOptimizedPicture(star2Img.src, star2Img.alt, false, [{ width: '750' }]);
-    optimizedStar2.classList.add('star-2');
-    moveInstrumentation(star2Row.children[0], optimizedStar2.querySelector('img')); // Instrumentation on the cell
+    optimizedStar2.querySelector('img').classList.add('star-2');
+    moveInstrumentation(star2Row, optimizedStar2.querySelector('img'));
     heroDescription.append(optimizedStar2);
   }
 
   // Headline
-  const headline = document.createElement('h1');
-  moveInstrumentation(headlineRow.children[0], headline); // Instrumentation on the cell
-  headline.textContent = headlineRow.children[0]?.textContent.trim() || '';
-  heroDescription.append(headline);
+  const h1 = document.createElement('h1');
+  moveInstrumentation(headlineRow, h1);
+  h1.textContent = headlineRow.textContent.trim();
+
+  // Headline Span
+  const span = document.createElement('span');
+  moveInstrumentation(headlineSpanRow, span);
+  span.textContent = headlineSpanRow.textContent.trim();
+  h1.append(span);
+  heroDescription.append(h1);
 
   // Description
-  const description = document.createElement('p');
-  moveInstrumentation(descriptionRow.children[0], description); // Instrumentation on the cell
-  description.textContent = descriptionRow.children[0]?.textContent.trim() || '';
-  heroDescription.append(description);
+  const p = document.createElement('p');
+  moveInstrumentation(descriptionRow, p);
+  p.textContent = descriptionRow.textContent.trim();
+  heroDescription.append(p);
 
-  // CTA Link and Label
-  const ctaLink = document.createElement('a');
-  ctaLink.classList.add('btn', 'btn-primary', 'shadow');
-  const foundCtaLink = ctaLinkRow.children[0]?.querySelector('a');
-  if (foundCtaLink) {
-    ctaLink.href = foundCtaLink.href;
+  // CTA Link
+  const ctaLink = ctaLinkRow.querySelector('a');
+  const ctaLabel = ctaLabelRow.textContent.trim();
+  if (ctaLink && ctaLabel) {
+    const anchor = document.createElement('a');
+    anchor.href = ctaLink.href;
+    anchor.textContent = ctaLabel;
+    anchor.classList.add('btn', 'btn-primary', 'shadow');
+    moveInstrumentation(ctaLinkRow, anchor);
+    moveInstrumentation(ctaLabelRow, anchor);
+    heroDescription.append(anchor);
   }
-  moveInstrumentation(ctaLinkRow.children[0], ctaLink); // Instrumentation on the cell
-  ctaLink.textContent = ctaLabelRow.children[0]?.textContent.trim() || '';
-  moveInstrumentation(ctaLabelRow.children[0], ctaLink); // Move instrumentation for label cell to the link as well
-  heroDescription.append(ctaLink);
 
   row.append(heroDescription);
 
+  // Hero Image
   const heroImageDiv = document.createElement('div');
   heroImageDiv.classList.add('hero-image', 'col-lg-6', 'col-12');
-
-  // Hero Image
-  const heroPicture = heroImageRow.children[0]?.querySelector('picture');
-  if (heroPicture) {
-    const heroImg = heroPicture.querySelector('img');
-    const optimizedHero = createOptimizedPicture(heroImg.src, heroImg.alt, false, [{ width: '750' }]);
-    optimizedHero.classList.add('img-fluid');
-    moveInstrumentation(heroImageRow.children[0], optimizedHero.querySelector('img')); // Instrumentation on the cell
-    heroImageDiv.append(optimizedHero);
+  const heroImagePicture = heroImageRow.querySelector('picture');
+  if (heroImagePicture) {
+    const heroImg = heroImagePicture.querySelector('img');
+    const optimizedHeroImage = createOptimizedPicture(heroImg.src, heroImg.alt, false, [{ width: '750' }]);
+    optimizedHeroImage.querySelector('img').classList.add('img-fluid');
+    moveInstrumentation(heroImageRow, optimizedHeroImage.querySelector('img'));
+    heroImageDiv.append(optimizedHeroImage);
   }
-
   row.append(heroImageDiv);
+
   container.append(row);
   section.append(container);
-
   block.replaceChildren(section);
 }

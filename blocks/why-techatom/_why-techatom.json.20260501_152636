@@ -38,9 +38,8 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Main Headline",
-          "name": "headline",
-          "valueType": "string"
+          "label": "Section Headline",
+          "name": "headline"
         },
         {
           "component": "container",
@@ -56,20 +55,22 @@
         {
           "component": "reference",
           "label": "Card Image",
-          "name": "image",
-          "valueType": "string"
+          "name": "image"
         },
         {
           "component": "text",
           "label": "Card Title",
-          "name": "title",
-          "valueType": "string"
+          "name": "title"
         },
         {
           "component": "richtext",
           "label": "Card Description",
-          "name": "description",
-          "valueType": "string"
+          "name": "description"
+        },
+        {
+          "component": "aem-content",
+          "label": "Card Link",
+          "name": "link"
         }
       ]
     }

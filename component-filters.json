@@ -26,7 +26,14 @@
       "blog-section",
       "faqs",
       "contact-section",
-      "footer"
+      "footer",
+      "about-section"
+    ]
+  },
+  {
+    "id": "about-section",
+    "components": [
+      "about-feature-item"
     ]
   },
   {
@@ -56,8 +63,8 @@
   {
     "id": "footer",
     "components": [
-      "footer-link-item",
-      "footer-section-item"
+      "footer-link-section",
+      "footer-link-item"
     ]
   },
   {
@@ -69,7 +76,7 @@
   {
     "id": "header",
     "components": [
-      "nav-item"
+      "navigation-item"
     ]
   },
   {
@@ -79,7 +86,7 @@
   {
     "id": "service-section",
     "components": [
-      "service-card"
+      "service-card-item"
     ]
   },
   {
