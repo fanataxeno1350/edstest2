@@ -2,6 +2,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  // Select all top-level rows of the block
   const children = [...block.children];
 
   const headerEl = document.createElement('header');
@@ -9,64 +10,71 @@ export default function decorate(block) {
   const container = document.createElement('div');
   container.classList.add('container', 'd-flex', 'align-items-center', 'justify-content-between');
 
-  // Logo and Site Title
-  const logoWrapper = document.createElement('div');
+  // Destructure the rows based on your EDS content model
+  // Row 0: Logo | Row 1: Logo Link | Row 2: Site Title | Row 3+: Nav Items
+  const [logoRow, logoLinkRow, siteTitleRow, ...navItemRows] = children;
+
+  // 1. Logo and Site Title Wrapper
   const logoLinkEl = document.createElement('a');
   logoLinkEl.classList.add('logo', 'd-flex', 'align-items-center', 'gap-2');
 
-  const [logoRow, logoLinkRow, siteTitleRow, ...navItemRows] = children;
-
-  const logoPicture = logoRow.querySelector('picture');
-  if (logoPicture) {
-    const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    // moveInstrumentation should be called on the original element and applied to the new element
-    moveInstrumentation(logoPicture, optimizedPic); // Apply instrumentation to the new picture element
-    logoLinkEl.append(optimizedPic);
+  // Handle Logo Image
+  if (logoRow) {
+    const img = logoRow.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt || 'logo', false, [{ width: '750' }]);
+      moveInstrumentation(logoRow, optimizedPic);
+      logoLinkEl.append(optimizedPic);
+    }
   }
 
-  const foundLogoLink = logoLinkRow.querySelector('a');
-  if (foundLogoLink) {
-    logoLinkEl.href = foundLogoLink.href;
-    moveInstrumentation(logoLinkRow, logoLinkEl); // Move instrumentation from the row to the link element
+  // Handle Logo Link Href
+  if (logoLinkRow) {
+    const anchor = logoLinkRow.querySelector('a');
+    logoLinkEl.href = anchor ? anchor.getAttribute('href') : '/';
+    moveInstrumentation(logoLinkRow, logoLinkEl);
   } else {
-    logoLinkEl.href = '/'; // Default to home if no link is provided
+    logoLinkEl.href = '/';
   }
 
-  const siteTitle = document.createElement('h4');
-  siteTitle.textContent = siteTitleRow.textContent.trim();
-  moveInstrumentation(siteTitleRow, siteTitle); // Move instrumentation from the row to the title element
-  logoLinkEl.append(siteTitle);
+  // Handle Site Title (TechAtom)
+  if (siteTitleRow) {
+    const siteTitle = document.createElement('h4');
+    siteTitle.textContent = siteTitleRow.textContent.trim();
+    moveInstrumentation(siteTitleRow, siteTitle);
+    logoLinkEl.append(siteTitle);
+  }
 
-  // moveInstrumentation for logoRow is handled by the logoPicture, logoLinkRow by logoLinkEl, siteTitleRow by siteTitle.
-  // No need for a separate moveInstrumentation(logoRow, logoLinkEl) here as logoLinkEl is not the direct replacement for logoRow.
-  // The original logoRow content (picture) is moved into logoLinkEl.
-
+  const logoWrapper = document.createElement('div');
   logoWrapper.append(logoLinkEl);
   container.append(logoWrapper);
 
-  // Navigation Menu
+  // 2. Navigation Menu
   const navList = document.createElement('div');
   navList.classList.add('nav-list');
 
   navItemRows.forEach((row) => {
-    const [labelCell, linkCell] = [...row.children];
-    const navItemLink = document.createElement('a');
-    navItemLink.classList.add('navitems');
+    // EDS rows usually have two columns: [Label, Link]
+    const cells = [...row.children];
+    if (cells.length >= 2) {
+      const navItemLink = document.createElement('a');
+      navItemLink.classList.add('navitems');
 
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      navItemLink.href = foundLink.href;
+      // Get text from the first cell (Label)
+      navItemLink.textContent = cells[0].textContent.trim();
+
+      // Get href from the second cell (Link)
+      const link = cells[1].querySelector('a');
+      navItemLink.href = link ? link.getAttribute('href') : '#';
+
+      moveInstrumentation(row, navItemLink);
+      navList.append(navItemLink);
     }
-
-    navItemLink.textContent = labelCell.textContent.trim();
-    moveInstrumentation(row, navItemLink);
-    navList.append(navItemLink);
   });
 
   container.append(navList);
 
-  // Navbar Toggler Button
+  // 3. Navbar Toggler (Mobile)
   const toggler = document.createElement('button');
   toggler.classList.add('navbar-toggler');
   toggler.type = 'button';
@@ -77,7 +85,7 @@ export default function decorate(block) {
   `;
 
   toggler.addEventListener('click', () => {
-    navList.classList.toggle('show'); // Toggle a 'show' class for mobile nav
+    navList.classList.toggle('show');
   });
 
   container.append(toggler);
@@ -85,5 +93,6 @@ export default function decorate(block) {
   nav.append(container);
   headerEl.append(nav);
 
+  // CRITICAL: Replace the messy raw block content with our clean structure
   block.replaceChildren(headerEl);
 }
