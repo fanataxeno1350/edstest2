@@ -61,13 +61,13 @@
         },
         {
           "component": "text",
-          "label": "Product Title",
-          "name": "title",
+          "label": "Product Name",
+          "name": "name",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Description",
+          "label": "Product Description",
           "name": "description",
           "valueType": "string"
         },

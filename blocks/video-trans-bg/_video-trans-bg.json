@@ -1,0 +1,39 @@
+{
+  "definitions": [
+    {
+      "title": "Video-Trans-Bg",
+      "id": "video-trans-bg",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "video-trans-bg",
+              "model": "video-trans-bg",
+              "name": "Video-Trans-Bg"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "video-trans-bg",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Iframe Src",
+          "name": "iframe-src",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "video-trans-bg",
+      "components": []
+    }
+  ]
+}

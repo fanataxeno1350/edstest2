@@ -50,15 +50,15 @@
         },
         {
           "component": "text",
-          "label": "Banner Title",
-          "name": "bannerTitle",
+          "label": "Headline",
+          "name": "headline",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "banner-slide",
           "label": "Banner Slides",
-          "name": "bannerSlides"
+          "name": "slides"
         }
       ]
     },

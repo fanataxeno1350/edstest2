@@ -147,38 +147,32 @@
       {
         "component": "reference",
         "label": "ITC Logo",
-        "name": "itc-logo",
+        "name": "itcLogo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "ITC Logo Link",
-        "name": "itc-logo-link",
+        "name": "itcLogoLink",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "foot-link-item",
         "label": "Footer Links",
-        "name": "foot-links"
-      },
-      {
-        "component": "text",
-        "label": "Copyright Text",
-        "name": "copyright",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Social Section Title",
-        "name": "social-title",
-        "valueType": "string"
+        "name": "footerLinks"
       },
       {
         "component": "container",
-        "item": "social-link-item",
-        "label": "Social Links",
-        "name": "social-links"
+        "item": "footer-social-item",
+        "label": "Footer Social Links",
+        "name": "footerSocialLinks"
+      },
+      {
+        "component": "text",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
       }
     ]
   },
@@ -193,14 +187,14 @@
       },
       {
         "component": "aem-content",
-        "label": "Link URL",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "social-link-item",
+    "id": "footer-social-item",
     "fields": [
       {
         "component": "reference",
@@ -210,7 +204,7 @@
       },
       {
         "component": "aem-content",
-        "label": "Social Link URL",
+        "label": "Social Link",
         "name": "link",
         "valueType": "string"
       }
@@ -279,15 +273,15 @@
       },
       {
         "component": "text",
-        "label": "Banner Title",
-        "name": "bannerTitle",
+        "label": "Headline",
+        "name": "headline",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "banner-slide",
         "label": "Banner Slides",
-        "name": "bannerSlides"
+        "name": "slides"
       }
     ]
   },
@@ -336,13 +330,13 @@
       },
       {
         "component": "text",
-        "label": "Product Title",
-        "name": "title",
+        "label": "Product Name",
+        "name": "name",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Description",
+        "label": "Product Description",
         "name": "description",
         "valueType": "string"
       },
@@ -362,6 +356,17 @@
         "component": "richtext",
         "label": "Navigation Hierarchy",
         "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "video-trans-bg",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Iframe Src",
+        "name": "iframe-src",
         "valueType": "string"
       }
     ]
@@ -406,20 +411,20 @@
     "fields": [
       {
         "component": "text",
-        "label": "Block Title",
+        "label": "Title",
         "name": "title",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "youtube-video-item",
-        "label": "YouTube Videos",
-        "name": "videos"
+        "item": "youtube-video-slide",
+        "label": "YouTube Slides",
+        "name": "slides"
       }
     ]
   },
   {
-    "id": "youtube-video-item",
+    "id": "youtube-video-slide",
     "fields": [
       {
         "component": "aem-content",

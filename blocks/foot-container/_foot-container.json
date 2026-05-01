@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Social-Link-Item",
-      "id": "social-link-item",
+      "title": "Footer-Social-Item",
+      "id": "footer-social-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "social-link-item",
-              "name": "Social-Link-Item"
+              "model": "footer-social-item",
+              "name": "Footer-Social-Item"
             }
           }
         }
@@ -54,38 +54,32 @@
         {
           "component": "reference",
           "label": "ITC Logo",
-          "name": "itc-logo",
+          "name": "itcLogo",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "ITC Logo Link",
-          "name": "itc-logo-link",
+          "name": "itcLogoLink",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "foot-link-item",
           "label": "Footer Links",
-          "name": "foot-links"
-        },
-        {
-          "component": "text",
-          "label": "Copyright Text",
-          "name": "copyright",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Social Section Title",
-          "name": "social-title",
-          "valueType": "string"
+          "name": "footerLinks"
         },
         {
           "component": "container",
-          "item": "social-link-item",
-          "label": "Social Links",
-          "name": "social-links"
+          "item": "footer-social-item",
+          "label": "Footer Social Links",
+          "name": "footerSocialLinks"
+        },
+        {
+          "component": "text",
+          "label": "Copyright",
+          "name": "copyright",
+          "valueType": "string"
         }
       ]
     },
@@ -100,14 +94,14 @@
         },
         {
           "component": "aem-content",
-          "label": "Link URL",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "social-link-item",
+      "id": "footer-social-item",
       "fields": [
         {
           "component": "reference",
@@ -117,7 +111,7 @@
         },
         {
           "component": "aem-content",
-          "label": "Social Link URL",
+          "label": "Social Link",
           "name": "link",
           "valueType": "string"
         }
@@ -129,7 +123,7 @@
       "id": "foot-container",
       "components": [
         "foot-link-item",
-        "social-link-item"
+        "footer-social-item"
       ]
     }
   ]

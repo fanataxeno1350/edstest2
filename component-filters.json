@@ -18,6 +18,7 @@
       "fragment",
       "---new--blocks-----",
       "headerseconds",
+      "video-trans-bg",
       "main-banner",
       "why-savlon",
       "products-block",
@@ -29,7 +30,7 @@
     "id": "foot-container",
     "components": [
       "foot-link-item",
-      "social-link-item"
+      "footer-social-item"
     ]
   },
   {
@@ -51,13 +52,17 @@
     ]
   },
   {
+    "id": "video-trans-bg",
+    "components": []
+  },
+  {
     "id": "why-savlon",
     "components": []
   },
   {
     "id": "youtube-slider",
     "components": [
-      "youtube-video-item"
+      "youtube-video-slide"
     ]
   }
 ]

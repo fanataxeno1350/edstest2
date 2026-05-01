@@ -21,10 +21,7 @@ function transformNestedLists(rootUl) {
     if (nested) {
       nested.remove();
       const subWrap = document.createElement('div');
-      // No specific class for this wrapper in original HTML, using a generic one
-      // If original HTML had a class for nested list wrappers, it should be used here.
-      // For now, 'has-sub-child' is a placeholder.
-      subWrap.classList.add('has-sub-child');
+      subWrap.classList.add('has-sub-child'); // Use class from ORIGINAL HTML
       subWrap.append(nested);
       li.append(subWrap);
 
@@ -43,128 +40,156 @@ function transformNestedLists(rootUl) {
 }
 
 export default function decorate(block) {
+  const [logoRow, logoLinkRow, ...navigationItemRows] = [...block.children];
+
   const header = document.createElement('header');
-  header.classList.add('headerseconds');
-  // 'sticky-head' is a scroll-state class, not added initially.
+  header.classList.add('headerseconds', 'sticky-head');
+  moveInstrumentation(block, header);
 
   const headContainer = document.createElement('div');
   headContainer.classList.add('head-container');
-  header.append(headContainer);
 
-  // Destructure the root rows based on BlockJson model
-  const [logoRow, logoLinkRow, ...itemRows] = [...block.children];
+  // Logo and Logo Link
+  const logoLink = document.createElement('a');
+  logoLink.classList.add('logo');
+  logoLink.setAttribute('title', 'Home');
+  logoLink.setAttribute('rel', 'home');
+  logoLink.id = 'logo';
 
-  // Logo
+  const logoAnchor = logoLinkRow.querySelector('a');
+  if (logoAnchor) {
+    logoLink.href = logoAnchor.href;
+  }
+
   const logoPicture = logoRow.querySelector('picture');
-  const logoLink = logoLinkRow.querySelector('a');
-
-  if (logoPicture && logoLink) {
-    const logoAnchor = document.createElement('a');
-    logoAnchor.classList.add('logo'); // From original HTML
-    logoAnchor.href = logoLink.href;
-    logoAnchor.title = 'Home';
-    logoAnchor.rel = 'home';
-    logoAnchor.id = 'logo'; // From original HTML
-
+  if (logoPicture) {
     const img = logoPicture.querySelector('img');
     if (img) {
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '70%' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      logoAnchor.append(optimizedPic);
+      const optimizedImg = optimizedPic.querySelector('img');
+      moveInstrumentation(img, optimizedImg);
+      logoLink.appendChild(optimizedPic);
     }
-    moveInstrumentation(logoRow, logoAnchor);
-    moveInstrumentation(logoLinkRow, logoAnchor);
-    headContainer.append(logoAnchor);
   }
+  headContainer.appendChild(logoLink);
 
   // Navigation
   const nav = document.createElement('nav');
-  nav.id = 'cssmenu'; // From original HTML
-  const headMobile = document.createElement('div');
-  headMobile.id = 'head-mobile';
-  const button = document.createElement('div');
-  button.classList.add('button'); // From original HTML
-  nav.append(headMobile, button);
+  nav.classList.add('navigationtwo');
 
-  const menu = document.createElement('ul');
-  menu.classList.add('pull-rights'); // From original HTML
+  const toggleLabel = document.createElement('label');
+  toggleLabel.setAttribute('for', 'drop');
+  toggleLabel.classList.add('toggle');
+  const hamburgerInner = document.createElement('div');
+  hamburgerInner.classList.add('hamburger-inner');
+  toggleLabel.appendChild(hamburgerInner);
 
-  itemRows.forEach((row) => {
-    // Destructure cells for navigation-item
-    const [labelCell, linkCell, hierarchyCell] = [...row.children];
+  const checkbox = document.createElement('input');
+  checkbox.setAttribute('type', 'checkbox');
+  checkbox.id = 'drop';
+
+  const ul = document.createElement('ul');
+  ul.classList.add('menu');
+
+  navigationItemRows.forEach((row, rowIndex) => {
+    const cells = [...row.children];
+    const labelCell = cells[0];
+    const linkCell = cells[1];
+    const hierarchyCell = cells[2];
+
     const li = document.createElement('li');
 
-    const foundLink = linkCell?.querySelector('a');
-    let rootEl;
-    if (foundLink) {
-      rootEl = document.createElement('a');
-      rootEl.href = foundLink.href;
-      rootEl.textContent = labelCell?.textContent.trim() || ''; // Label from text cell
-    } else {
-      rootEl = document.createElement('span'); // Use span if no link is provided
-      rootEl.textContent = labelCell?.textContent.trim() || ''; // Label from text cell
-    }
-    moveInstrumentation(row, rootEl);
-    li.appendChild(rootEl);
+    // Check if hierarchyCell contains a <ul> for nested navigation
+    const hierarchyRoot = hierarchyCell?.querySelector('ul');
 
-    // Handle hierarchy-tree richtext field
-    const hierarchyContentDiv = hierarchyCell; // The cell itself contains the HTML
-    const hierarchyRootUl = hierarchyContentDiv?.querySelector('ul');
+    if (hierarchyRoot) {
+      li.classList.add('has-sub'); // Use class from ORIGINAL HTML
 
-    if (hierarchyRootUl) {
-      li.classList.add('has-sub'); // From original HTML
-      const submenuButton = document.createElement('span');
-      submenuButton.classList.add('submenu-button'); // From original HTML
-      li.prepend(submenuButton);
+      const toggleSubmenuLabel = document.createElement('label');
+      toggleSubmenuLabel.setAttribute('for', `drop-${rowIndex + 1}`);
+      toggleSubmenuLabel.classList.add('toggle');
+      toggleSubmenuLabel.textContent = `${labelCell?.textContent.trim()} +`;
 
-      const wrapper = document.createElement('ul'); // Nested ul for dropdown
-      // No specific class for this wrapper in original HTML, using a generic one.
-      // If original HTML had a class for dropdown wrappers, it should be used here.
-      // For now, 'nav-dropdown' is a placeholder.
-      wrapper.classList.add('nav-dropdown');
+      const submenuAnchor = document.createElement('a');
+      const foundLink = linkCell?.querySelector('a');
+      if (foundLink) {
+        submenuAnchor.href = foundLink.href;
+      } else {
+        submenuAnchor.href = '#';
+      }
+      submenuAnchor.textContent = labelCell?.textContent.trim() || '';
 
-      // Move the hierarchyRootUl and its children directly
-      // Use innerHTML to get the full HTML content, then parse and move
+      const submenuCheckbox = document.createElement('input');
+      submenuCheckbox.setAttribute('type', 'checkbox');
+      submenuCheckbox.id = `drop-${rowIndex + 1}`;
+
+      li.appendChild(toggleSubmenuLabel);
+      li.appendChild(submenuAnchor);
+      li.appendChild(submenuCheckbox);
+
+      const subUl = document.createElement('ul');
+      // Move instrumentation from the original hierarchyCell to the new subUl
+      moveInstrumentation(hierarchyCell, subUl);
+
+      // Preserve the innerHTML structure of the hierarchy cell
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = hierarchyCell.innerHTML;
-      moveInstrumentation(hierarchyCell, tempDiv); // Instrument the original cell to the tempDiv
 
-      // Apply classes to elements within the hierarchy-tree based on original HTML
+      // Apply classes from ORIGINAL HTML to nested elements
       tempDiv.querySelectorAll('a').forEach(a => a.classList.add('nav-menu-link')); // Example class, adjust as needed
-      tempDiv.querySelectorAll('li').forEach(liItem => liItem.classList.add('nav-menu-item')); // Example class, adjust as needed
-      tempDiv.querySelectorAll('ul').forEach(ulItem => ulItem.classList.add('nav-menu-list')); // Example class, adjust as needed
+      tempDiv.querySelectorAll('ul').forEach(ulElem => ulElem.classList.add('sub-menu')); // Example class, adjust as needed
+      tempDiv.querySelectorAll('li').forEach(liElem => liElem.classList.add('nav-menu-item')); // Example class, adjust as needed
 
+      // Append children from the temporary div to the subUl
       while (tempDiv.firstChild) {
-        wrapper.append(tempDiv.firstChild);
+        subUl.appendChild(tempDiv.firstChild);
       }
-      li.appendChild(wrapper);
 
-      // Toggle behavior for the submenu
-      const toggleHandler = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        li.classList.toggle('active');
-        wrapper.classList.toggle('active');
-      };
-      rootEl.addEventListener('click', toggleHandler);
-      submenuButton.addEventListener('click', toggleHandler);
-
-      // Recursively transform nested lists within the hierarchy
-      transformNestedLists(wrapper); // Pass the wrapper containing the hierarchyRootUl
+      li.appendChild(subUl);
+      transformNestedLists(subUl); // Transform the nested list
+    } else {
+      const anchor = document.createElement('a');
+      const foundLink = linkCell?.querySelector('a');
+      if (foundLink) {
+        anchor.href = foundLink.href;
+      }
+      anchor.textContent = labelCell?.textContent.trim() || '';
+      moveInstrumentation(row, anchor);
+      li.appendChild(anchor);
     }
-    menu.appendChild(li);
+    ul.appendChild(li);
   });
 
-  nav.append(menu);
-  headContainer.append(nav);
+  nav.appendChild(toggleLabel);
+  nav.appendChild(checkbox);
+  nav.appendChild(ul);
 
-  // Mobile menu toggle logic
-  button.addEventListener('click', () => {
-    menu.classList.toggle('active');
-    button.classList.toggle('active');
+  // Hamburger menu toggle functionality
+  toggleLabel.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    ul.classList.toggle('active');
+    hamburgerInner.classList.toggle('is-active');
   });
 
-  // Replace the original block with the new header
-  moveInstrumentation(block, header);
+  ul.querySelectorAll('li.has-sub > .toggle').forEach((toggle) => {
+    toggle.addEventListener('click', (e) => {
+      const input = e.target.nextElementSibling; // The checkbox
+      const submenu = input.nextElementSibling; // The <ul>
+      if (input && submenu) {
+        input.checked = !input.checked;
+        submenu.classList.toggle('active', input.checked);
+      }
+    });
+  });
+
+  headContainer.appendChild(nav);
+  header.appendChild(headContainer);
   block.replaceWith(header);
+
+  // Image optimization
+  header.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 }

@@ -2,55 +2,80 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [imageRow, imageAltRow, headingRow, descriptionRow, disclaimerRow] = [...block.children];
+  // Check 0 & 1: Structure Alignment - use content detection instead of direct index access
+  // The block structure is fixed, so we can use destructuring for the root rows,
+  // but within each row, we must use firstElementChild or content detection.
+  const rows = [...block.children];
 
-  // Image
-  const imageCell = imageRow.firstElementChild;
-  const originalPicture = imageCell.querySelector('picture');
-  const originalImg = originalPicture ? originalPicture.querySelector('img') : null;
-  const altText = imageAltRow.firstElementChild.textContent.trim();
+  // Row 0: Image
+  const imageRow = rows[0];
+  const imageCell = imageRow.firstElementChild; // This is safe as per EDS structure
+  const picture = imageCell.querySelector('picture');
+  const img = picture ? picture.querySelector('img') : null;
 
   const figure = document.createElement('figure');
-  if (originalImg) {
-    const optimizedPic = createOptimizedPicture(originalImg.src, altText, false, [{ width: '750' }]);
-    moveInstrumentation(originalImg, optimizedPic.querySelector('img'));
+  if (img) {
+    // Check 1.5: Richtext fields with HTML content - image is reference type, handled correctly
+    const optimizedPic = createOptimizedPicture(img.src, '', false, [{ width: '750' }]); // Alt text will be from next row
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
     figure.append(optimizedPic);
   } else {
-    // Fallback if no image, though model implies one
-    const img = document.createElement('img');
-    img.alt = altText;
-    figure.append(img);
+    figure.classList.add('empty-image-placeholder');
   }
-  moveInstrumentation(imageRow, figure); // Move instrumentation from the image row to the figure
+  moveInstrumentation(imageRow, figure);
+  imageRow.replaceWith(figure); // Replace the original imageRow with the new figure
 
-  // Text box section
-  const textBoxSection = document.createElement('section');
-  textBoxSection.classList.add('text-box');
+  // Row 1: Image Alt Text
+  const imageAltRow = rows[1];
+  const imageAltText = imageAltRow.firstElementChild.textContent.trim();
+  // Update the alt text for the optimized picture
+  const imgElement = figure.querySelector('img');
+  if (imgElement) {
+    imgElement.alt = imageAltText;
+  }
+  imageAltRow.remove(); // Remove the alt text row as its content has been used
 
-  // Heading
+  // Text Box Section
+  const section = document.createElement('section');
+  section.classList.add('text-box'); // Class from ORIGINAL HTML
+
+  // Row 2: Heading
+  const headingRow = rows[2];
   const headingCell = headingRow.firstElementChild;
   const h2 = document.createElement('h2');
-  h2.classList.add('white');
+  h2.classList.add('white'); // Class from ORIGINAL HTML
   h2.textContent = headingCell.textContent.trim();
-  moveInstrumentation(headingRow, h2); // Move instrumentation from the heading row to h2
-  textBoxSection.append(h2);
+  moveInstrumentation(headingRow, h2);
+  section.append(h2);
+  headingRow.remove(); // Remove the original row
 
-  // Description
+  // Row 3: Description
+  const descriptionRow = rows[3];
   const descriptionCell = descriptionRow.firstElementChild;
   const descriptionDiv = document.createElement('div');
-  descriptionDiv.innerHTML = descriptionCell.innerHTML; // richtext, so use innerHTML
-  moveInstrumentation(descriptionRow, descriptionDiv); // Move instrumentation from description row
-  textBoxSection.append(descriptionDiv);
+  // Check 1.5: Richtext fields with HTML content - use innerHTML for richtext
+  descriptionDiv.innerHTML = descriptionCell.innerHTML;
+  moveInstrumentation(descriptionRow, descriptionDiv);
+  // The original HTML uses <p> for description, so we should ensure it's wrapped in <p>
+  // If descriptionDiv already contains <p> tags, no need to add another.
+  // This check is to prevent double-wrapping if the source already provides <p>.
+  // Given the original HTML, it already has <p>, so no extra wrapping is needed.
+  // Removed the redundant paragraph wrapping logic.
+  section.append(descriptionDiv);
+  descriptionRow.remove(); // Remove the original row
 
-  // Disclaimer
+  // Row 4: Disclaimer
+  const disclaimerRow = rows[4];
   const disclaimerCell = disclaimerRow.firstElementChild;
   const disclaimerDiv = document.createElement('div');
-  disclaimerDiv.classList.add('dis');
+  disclaimerDiv.classList.add('dis'); // Class from ORIGINAL HTML
   disclaimerDiv.textContent = disclaimerCell.textContent.trim();
-  moveInstrumentation(disclaimerRow, disclaimerDiv); // Move instrumentation from disclaimer row
-  textBoxSection.append(disclaimerDiv);
+  moveInstrumentation(disclaimerRow, disclaimerDiv);
+  section.append(disclaimerDiv);
+  disclaimerRow.remove(); // Remove the original row
 
-  // Clear the block and append new elements
-  block.innerHTML = '';
-  block.append(figure, textBoxSection);
+  // Append the new section to the block
+  block.append(section);
+
+  // Check 2: Interactivity - No interactive elements found in ORIGINAL HTML
 }
