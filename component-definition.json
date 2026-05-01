@@ -270,15 +270,15 @@
           }
         },
         {
-          "title": "YouTube Video Slide",
-          "id": "youtube-video-slide",
+          "title": "YouTube Video Item",
+          "id": "youtube-video-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "youtube-video-slide",
-                  "name": "YouTube Video Slide"
+                  "model": "youtube-video-item",
+                  "name": "YouTube Video Item"
                 }
               }
             }

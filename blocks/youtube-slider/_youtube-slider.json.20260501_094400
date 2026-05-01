@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "YouTube Video Item",
-      "id": "youtube-video-item",
+      "title": "YouTube Video Slide",
+      "id": "youtube-video-slide",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "youtube-video-item",
-              "name": "YouTube Video Item"
+              "model": "youtube-video-slide",
+              "name": "YouTube Video Slide"
             }
           }
         }
@@ -38,23 +38,23 @@
       "fields": [
         {
           "component": "text",
-          "label": "Slider Title",
+          "label": "Title",
           "name": "title",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "youtube-video-item",
-          "label": "YouTube Videos",
-          "name": "videos"
+          "item": "youtube-video-slide",
+          "label": "YouTube Slides",
+          "name": "slides"
         }
       ]
     },
     {
-      "id": "youtube-video-item",
+      "id": "youtube-video-slide",
       "fields": [
         {
-          "component": "text",
+          "component": "aem-content",
           "label": "YouTube Embed URL",
           "name": "embedUrl",
           "valueType": "string"
@@ -72,7 +72,7 @@
     {
       "id": "youtube-slider",
       "components": [
-        "youtube-video-item"
+        "youtube-video-slide"
       ]
     }
   ]

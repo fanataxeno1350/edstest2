@@ -411,23 +411,23 @@
     "fields": [
       {
         "component": "text",
-        "label": "Title",
+        "label": "Slider Title",
         "name": "title",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "youtube-video-slide",
-        "label": "YouTube Slides",
-        "name": "slides"
+        "item": "youtube-video-item",
+        "label": "YouTube Videos",
+        "name": "videos"
       }
     ]
   },
   {
-    "id": "youtube-video-slide",
+    "id": "youtube-video-item",
     "fields": [
       {
-        "component": "aem-content",
+        "component": "text",
         "label": "YouTube Embed URL",
         "name": "embedUrl",
         "valueType": "string"

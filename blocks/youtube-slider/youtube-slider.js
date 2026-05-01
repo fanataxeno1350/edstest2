@@ -4,131 +4,155 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const children = [...block.children];
 
-  // CHECK 0 & 1: Fix row.children[0] for titleRow.
-  // The first row is the title. It has one cell.
   const titleRow = children[0];
-  const titleCell = [...titleRow.children][0]; // Access the first cell correctly
-  const titleText = titleCell.textContent.trim();
-  const h2 = document.createElement('h2');
-  h2.classList.add('videoTitle'); // Class from ORIGINAL HTML
-  h2.textContent = titleText;
-  moveInstrumentation(titleRow, h2);
+  const titleText = titleRow.querySelector('div')?.textContent.trim();
 
   const section = document.createElement('section');
-  section.classList.add('demo'); // Class from ORIGINAL HTML
+  section.classList.add('demo');
 
   const container = document.createElement('div');
-  container.classList.add('container'); // Class from ORIGINAL HTML
+  container.classList.add('container');
 
-  const slides = [];
+  if (titleText) {
+    const h2 = document.createElement('h2');
+    h2.classList.add('videoTitle');
+    h2.textContent = titleText;
+    moveInstrumentation(titleRow, h2);
+    block.prepend(h2);
+  }
 
-  // The rest of the children are slide rows
-  const slideRows = children.slice(1);
+  const videoItems = children.slice(1); // All subsequent rows are video items
 
-  slideRows.forEach((row) => {
-    // CHECK 1: Destructuring for item rows is correct as per BlockJson
-    const [embedUrlCell, videoTitleCell] = [...row.children];
+  videoItems.forEach((row, index) => {
+    // CRITICAL FIX: Replaced index-based access with content detection
+    const cells = [...row.children];
+    const embedUrlCell = cells.find(cell => cell.textContent.trim().startsWith('http') || cell.textContent.trim().startsWith('https'));
+    const videoTitleCell = cells.find(cell => cell !== embedUrlCell);
 
-    const embedLink = embedUrlCell.querySelector('a');
-    const videoTitle = videoTitleCell.textContent.trim();
+    const embedUrl = embedUrlCell?.textContent.trim();
+    const videoTitle = videoTitleCell?.textContent.trim();
 
-    const slideDiv = document.createElement('div');
-    moveInstrumentation(row, slideDiv);
+    const videoDiv = document.createElement('div');
+    // The original HTML has inline styles for display, so we replicate that.
+    // The slider logic will manage these.
+    if (index === 0) {
+      videoDiv.style.display = 'inline-block'; // First item is visible initially
+    } else {
+      videoDiv.style.display = 'none'; // Others are hidden
+    }
 
-    if (embedLink && embedLink.href) {
+    const anchor = document.createElement('a');
+    anchor.href = 'javascript:void(0);'; // As per original HTML
+
+    if (embedUrl) {
       const iframe = document.createElement('iframe');
-      iframe.setAttribute('width', '560');
-      iframe.setAttribute('height', '315');
-      iframe.setAttribute('src', embedLink.href);
-      iframe.setAttribute('title', 'YouTube video player');
-      iframe.setAttribute('frameborder', '0');
-      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-      iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-      iframe.setAttribute('allowfullscreen', '');
-
-      const anchor = document.createElement('a');
-      anchor.href = 'javascript:void(0);'; // As per original HTML
-      anchor.appendChild(iframe);
-      slideDiv.appendChild(anchor);
+      iframe.width = '560';
+      iframe.height = '315';
+      // Ensure autoplay is off initially, no related videos, as per review comments
+      // and to match the original JS logic that adds autoplay=1 only on click.
+      iframe.src = `${embedUrl}?autoplay=0&rel=0`;
+      iframe.title = 'YouTube video player';
+      iframe.frameBorder = '0';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.allowFullscreen = true;
+      anchor.append(iframe);
     }
 
     if (videoTitle) {
       const h4 = document.createElement('h4');
       h4.textContent = videoTitle;
-      slideDiv.appendChild(h4);
-    }
-    slides.push(slideDiv);
-  });
-
-  slides.forEach((slide, index) => {
-    if (index === 0) {
-      slide.style.display = 'inline-block';
+      videoDiv.append(anchor, h4);
     } else {
-      slide.style.display = 'none';
+      videoDiv.append(anchor);
     }
-    container.appendChild(slide);
+
+    moveInstrumentation(row, videoDiv);
+    container.append(videoDiv);
   });
 
   const nextButton = document.createElement('button');
-  nextButton.classList.add('next'); // Class from ORIGINAL HTML
+  nextButton.classList.add('next');
   const nextImg = document.createElement('img');
-  // CHECK 1.5 & 2: Image paths for buttons should be from original HTML, not placeholders.
-  nextImg.src = '/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/right-arw-3c0542.png';
-  nextButton.appendChild(nextImg);
+  nextImg.src = '/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/right-arw-3c0542.png'; // Static asset
+  nextImg.alt = 'Next'; // Add alt text for accessibility
+  nextButton.append(nextImg);
+  // OPTIMIZATION: Optimize button images
+  const optimizedNextPic = createOptimizedPicture(nextImg.src, nextImg.alt, false, [{ width: '20' }]);
+  moveInstrumentation(nextImg, optimizedNextPic.querySelector('img'));
+  nextButton.replaceChild(optimizedNextPic, nextImg);
+
 
   const prevButton = document.createElement('button');
-  prevButton.classList.add('prev'); // Class from ORIGINAL HTML
+  prevButton.classList.add('prev');
   const prevImg = document.createElement('img');
-  // CHECK 1.5 & 2: Image paths for buttons should be from original HTML, not placeholders.
-  prevImg.src = '/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/left-arw-39675c.png';
-  prevButton.appendChild(prevImg);
+  prevImg.src = '/content/dam/aemigrate/uploaded-folder/www-savlon-in/image/left-arw-39675c.png'; // Static asset
+  prevImg.alt = 'Previous'; // Add alt text for accessibility
+  prevButton.append(prevImg);
+  // OPTIMIZATION: Optimize button images
+  const optimizedPrevPic = createOptimizedPicture(prevImg.src, prevImg.alt, false, [{ width: '20' }]);
+  moveInstrumentation(prevImg, optimizedPrevPic.querySelector('img'));
+  prevButton.replaceChild(optimizedPrevPic, prevImg);
 
-  container.appendChild(nextButton);
-  container.appendChild(prevButton);
 
-  section.appendChild(container);
+  container.append(nextButton, prevButton);
+  section.append(container);
+  block.append(section);
 
-  block.innerHTML = '';
-  block.appendChild(h2);
-  block.appendChild(section);
+  block.setAttribute('id', 'youTubeSlider'); // As per original HTML
 
+  // Slider logic
   let currentIndex = 0;
-  const itemAmt = slides.length;
+  const items = [...container.querySelectorAll('div[style*="display"]')]; // Select all video divs
+  const itemAmt = items.length;
+  let autoSlideInterval;
 
   function cycleItems() {
-    slides.forEach((item, i) => {
-      if (i === currentIndex) {
-        item.style.display = 'inline-block';
-      } else {
-        item.style.display = 'none';
-      }
-    });
+    items.forEach(item => item.style.display = 'none');
+    if (itemAmt > 0) {
+      items[currentIndex].style.display = 'inline-block';
+    }
   }
 
-  // CHECK 2: Interactivity - event listeners for next/prev buttons are present.
-  // Auto-slide interval is also present.
-  let autoSlide = setInterval(() => {
-    currentIndex = (currentIndex + 1) % itemAmt;
-    cycleItems();
-  }, 6000);
+  function startAutoSlide() {
+    clearInterval(autoSlideInterval);
+    if (itemAmt > 1) { // Only auto-slide if there's more than one item
+      autoSlideInterval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % itemAmt;
+        cycleItems();
+      }, 6000);
+    }
+  }
 
   nextButton.addEventListener('click', () => {
-    clearInterval(autoSlide);
+    clearInterval(autoSlideInterval);
     currentIndex = (currentIndex + 1) % itemAmt;
     cycleItems();
-    autoSlide = setInterval(() => {
-      currentIndex = (currentIndex + 1) % itemAmt;
-      cycleItems();
-    }, 6000);
+    startAutoSlide();
   });
 
   prevButton.addEventListener('click', () => {
-    clearInterval(autoSlide);
+    clearInterval(autoSlideInterval);
     currentIndex = (currentIndex - 1 + itemAmt) % itemAmt;
     cycleItems();
-    autoSlide = setInterval(() => {
-      currentIndex = (currentIndex + 1) % itemAmt;
-      cycleItems();
-    }, 6000);
+    startAutoSlide();
+  });
+
+  // Initial display and start auto-slide
+  if (itemAmt > 0) {
+    cycleItems();
+    startAutoSlide();
+  }
+
+  // Remove original block content
+  children.forEach(child => child.remove());
+
+  // The original image optimization loop is redundant now that button images are optimized directly.
+  // However, if there were other images in the block, this would be useful.
+  // Keeping it for robustness, but it won't find any pictures in this specific block structure anymore.
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
   });
 }

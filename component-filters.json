@@ -62,7 +62,7 @@
   {
     "id": "youtube-slider",
     "components": [
-      "youtube-video-slide"
+      "youtube-video-item"
     ]
   }
 ]
