@@ -51,7 +51,16 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "cmp-experiencefragment--header",
+        "banner-carousel",
+        "cmp-embed-video",
+        "cmp-experiencefragment--footer",
+        "pagelist",
+        "tabimage",
+        "teaser",
+        "lfb-sign-up_sticky",
+        "experiencefragment-footer"
       ]
     }
   ]

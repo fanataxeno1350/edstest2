@@ -1,0 +1,91 @@
+{
+  "definitions": [
+    {
+      "title": "Pagelist",
+      "id": "pagelist",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "pagelist",
+              "model": "pagelist",
+              "name": "Pagelist"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Pagelist-Item",
+      "id": "pagelist-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "pagelist-item",
+              "name": "Pagelist-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "pagelist",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "pagelist-item",
+          "label": "Items",
+          "name": "items"
+        }
+      ]
+    },
+    {
+      "id": "pagelist-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Link Text",
+          "name": "link-text",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "pagelist",
+      "components": [
+        "pagelist-item"
+      ]
+    }
+  ]
+}

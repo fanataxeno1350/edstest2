@@ -1,0 +1,170 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [
+    subheadingLinkRow,
+    headingRow,
+    longSubheadingRow,
+    ...itemRows
+  ] = [...block.children];
+
+  block.classList.add('list', 'page-list--related', 'page-list--3-item', 'page-list--right_link', 'aem-GridColumn', 'aem-GridColumn--default--12');
+
+  const filterTagsContainer = document.createElement('div');
+  filterTagsContainer.classList.add('filter-tags-container');
+  const cmpList = document.createElement('div');
+  cmpList.classList.add('cmp-list');
+  filterTagsContainer.append(cmpList);
+
+  const pagelistWrapper = document.createElement('div');
+  pagelistWrapper.classList.add('pagelist-wrapper');
+
+  const pagelistHeader = document.createElement('div');
+  pagelistHeader.classList.add('pagelist-header');
+
+  const pagelistHeading = document.createElement('div');
+  pagelistHeading.classList.add('pagelist-heading');
+
+  const cPageListingV2Heading = document.createElement('div');
+  cPageListingV2Heading.classList.add('c-page-listing-v2-heading');
+
+  const cPageListingV2SubHeadingContainer = document.createElement('div');
+  cPageListingV2SubHeadingContainer.classList.add('c-page-listing-v2-heading__sub-heading-container');
+  const subheadingP = document.createElement('p');
+  const subheadingLink = document.createElement('a');
+  const originalSubheadingLink = subheadingLinkRow.querySelector('a');
+  if (originalSubheadingLink) {
+    subheadingLink.href = originalSubheadingLink.href;
+    subheadingLink.textContent = originalSubheadingLink.textContent.trim(); // Fixed: Read textContent for label
+  }
+  moveInstrumentation(subheadingLinkRow, subheadingLink);
+  subheadingP.append(subheadingLink);
+  cPageListingV2SubHeadingContainer.append(subheadingP);
+
+  const headingH2 = document.createElement('h2');
+  headingH2.classList.add('c-page-listing-v2-heading__heading-container');
+  headingH2.textContent = headingRow.textContent.trim();
+  moveInstrumentation(headingRow, headingH2);
+
+  cPageListingV2Heading.append(cPageListingV2SubHeadingContainer, headingH2);
+
+  const listLongSubheading = document.createElement('div');
+  listLongSubheading.classList.add('list__long-subheading');
+  const longSubheadingP = document.createElement('p');
+  longSubheadingP.textContent = longSubheadingRow.textContent.trim();
+  moveInstrumentation(longSubheadingRow, longSubheadingP);
+  listLongSubheading.append(longSubheadingP);
+
+  pagelistHeading.append(cPageListingV2Heading, listLongSubheading);
+
+  const cPageListingV2Filter = document.createElement('div');
+  cPageListingV2Filter.classList.add('c-page-listing-v2-filter', 'active');
+  const cPageListingV2FilterBlock = document.createElement('div');
+  cPageListingV2FilterBlock.classList.add('c-page-listing-v2-filter__block');
+  const cFilterWrapper = document.createElement('div');
+  cFilterWrapper.classList.add('c-filter__wrapper', 'js-filter__wrapper');
+  const cPageListingV2FilterContainer = document.createElement('div');
+  cPageListingV2FilterContainer.classList.add('c-page-listing-v2-filter__container');
+  cFilterWrapper.append(cPageListingV2FilterContainer);
+  cPageListingV2FilterBlock.append(cFilterWrapper);
+  cPageListingV2Filter.append(cPageListingV2FilterBlock);
+
+  pagelistHeader.append(pagelistHeading, cPageListingV2Filter);
+
+  const cmpListUl = document.createElement('ul');
+  cmpListUl.classList.add('cmp-list', 'pageList');
+
+  itemRows.forEach((row) => {
+    const [imageCell, imageAltCell, titleCell, descriptionCell, actionLinkCell, actionLabelCell] = [...row.children];
+
+    const listItem = document.createElement('li');
+    listItem.classList.add('cmp-list__item');
+
+    const teaserDiv = document.createElement('div');
+    teaserDiv.classList.add('cmp-teaser', 'article-content');
+
+    const teaserImageDiv = document.createElement('div');
+    teaserImageDiv.classList.add('cmp-teaser__image');
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, imageAltCell.textContent.trim(), false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      teaserImageDiv.append(optimizedPic);
+    }
+    moveInstrumentation(imageCell, teaserImageDiv);
+
+    const teaserContentDiv = document.createElement('div');
+    teaserContentDiv.classList.add('cmp-teaser__content');
+
+    const teaserTitleSpan = document.createElement('span');
+    teaserTitleSpan.classList.add('cmp-teaser__title');
+    teaserTitleSpan.textContent = titleCell.textContent.trim();
+    moveInstrumentation(titleCell, teaserTitleSpan);
+
+    const teaserDescriptionDiv = document.createElement('div');
+    teaserDescriptionDiv.classList.add('cmp-teaser__description');
+    teaserDescriptionDiv.innerHTML = descriptionCell.innerHTML;
+    moveInstrumentation(descriptionCell, teaserDescriptionDiv);
+
+    const teaserActionContainerDiv = document.createElement('div');
+    teaserActionContainerDiv.classList.add('cmp-teaser__action-container');
+    const actionLink = document.createElement('a');
+    actionLink.classList.add('cmp-teaser__action-link', 'focusable-anchor');
+    const originalActionLink = actionLinkCell.querySelector('a');
+    if (originalActionLink) {
+      actionLink.href = originalActionLink.href;
+    }
+    actionLink.textContent = actionLabelCell.textContent.trim();
+    moveInstrumentation(actionLinkCell, actionLink);
+    moveInstrumentation(actionLabelCell, actionLink);
+    teaserActionContainerDiv.append(actionLink);
+
+    teaserContentDiv.append(
+      teaserTitleSpan,
+      teaserDescriptionDiv,
+      teaserActionContainerDiv,
+    );
+
+    teaserDiv.append(teaserImageDiv, teaserContentDiv);
+    moveInstrumentation(row, teaserDiv);
+    listItem.append(teaserDiv);
+    cmpListUl.append(listItem);
+  });
+
+  const listShowMoreDiv = document.createElement('div');
+  listShowMoreDiv.classList.add('list__show-more', 'js-load-more', 'button', 'type-a');
+  listShowMoreDiv.style.display = 'none';
+  const loadMoreButton = document.createElement('button');
+  loadMoreButton.classList.add('cmp-button');
+  loadMoreButton.setAttribute('aria-label', 'Load More');
+  loadMoreButton.setAttribute('title', 'Load More');
+  const buttonTextSpan = document.createElement('span');
+  buttonTextSpan.classList.add('cmp-button__text');
+  buttonTextSpan.textContent = 'Load More';
+  loadMoreButton.append(buttonTextSpan);
+  listShowMoreDiv.append(loadMoreButton);
+
+  // Add event listener for the "Load More" button
+  loadMoreButton.addEventListener('click', () => {
+    // Implement load more functionality here
+    // This typically involves fetching more items and appending them to cmpListUl
+    console.log('Load More button clicked!');
+    // Example: Hide the button after click if no more items
+    listShowMoreDiv.style.display = 'none';
+  });
+
+  const preloaderDiv = document.createElement('div');
+  preloaderDiv.classList.add('preloader');
+
+  pagelistWrapper.append(
+    pagelistHeader,
+    cmpListUl,
+    listShowMoreDiv,
+    preloaderDiv,
+  );
+
+  block.innerHTML = ''; // Clear original block content
+  block.append(filterTagsContainer, pagelistWrapper);
+}

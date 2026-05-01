@@ -1,0 +1,163 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const pagelistWrapper = document.createElement('div');
+  pagelistWrapper.classList.add('pagelist-wrapper');
+
+  const pagelistHeader = document.createElement('div');
+  pagelistHeader.classList.add('pagelist-header');
+
+  const pagelistHeading = document.createElement('div');
+  pagelistHeading.classList.add('pagelist-heading');
+
+  const cPageListingV2Heading = document.createElement('div');
+  cPageListingV2Heading.classList.add('c-page-listing-v2-heading');
+
+  const h2 = document.createElement('h2');
+  h2.classList.add('c-page-listing-v2-heading__heading-container');
+
+  const [headingRow, ...itemRows] = [...block.children];
+
+  // Heading
+  const headingCell = headingRow.querySelector('div');
+  if (headingCell) {
+    h2.textContent = headingCell.textContent.trim();
+    moveInstrumentation(headingRow, h2);
+  }
+  cPageListingV2Heading.append(h2);
+  pagelistHeading.append(cPageListingV2Heading);
+  pagelistHeader.append(pagelistHeading);
+
+  // Filter (empty as per original HTML structure)
+  const cPageListingV2Filter = document.createElement('div');
+  cPageListingV2Filter.classList.add('c-page-listing-v2-filter', 'active');
+  const cPageListingV2FilterBlock = document.createElement('div');
+  cPageListingV2FilterBlock.classList.add('c-page-listing-v2-filter__block');
+  const cFilterWrapper = document.createElement('div');
+  cFilterWrapper.classList.add('c-filter__wrapper', 'js-filter__wrapper');
+  const cPageListingV2FilterContainer = document.createElement('div');
+  cPageListingV2FilterContainer.classList.add('c-page-listing-v2-filter__container');
+  cFilterWrapper.append(cPageListingV2FilterContainer);
+  cPageListingV2FilterBlock.append(cFilterWrapper);
+  cPageListingV2Filter.append(cPageListingV2FilterBlock);
+  pagelistHeader.append(cPageListingV2Filter);
+
+  pagelistWrapper.append(pagelistHeader);
+
+  const ul = document.createElement('ul');
+  ul.classList.add('cmp-list', 'pageList');
+
+  itemRows.forEach((row) => {
+    const li = document.createElement('li');
+    li.classList.add('cmp-list__item');
+
+    const teaser = document.createElement('div');
+    teaser.classList.add('cmp-teaser', 'article-content');
+
+    // Use content detection instead of index access for item rows
+    const cells = [...row.children];
+    const imageCell = cells.find(cell => cell.querySelector('picture'));
+    const titleCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim() !== '');
+    const linkCell = cells.find(cell => cell.querySelector('a') && cell.querySelector('a').href.includes('/content/')); // AEM content link
+    const linkTextCell = cells.find(cell => cell !== imageCell && cell !== titleCell && cell !== linkCell); // The remaining cell should be link text
+
+    // Image
+    const teaserImage = document.createElement('div');
+    teaserImage.classList.add('cmp-teaser__image');
+    const imageDiv = document.createElement('div');
+    imageDiv.classList.add('cmp-image');
+    if (imageCell) {
+      const picture = imageCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '320' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        imageDiv.append(optimizedPic);
+      }
+    }
+    teaserImage.append(imageDiv);
+    teaser.append(teaserImage);
+
+    // Content
+    const teaserContent = document.createElement('div');
+    teaserContent.classList.add('cmp-teaser__content');
+
+    const teaserTitle = document.createElement('span');
+    teaserTitle.classList.add('cmp-teaser__title');
+    if (titleCell) {
+      teaserTitle.textContent = titleCell.textContent.trim();
+      moveInstrumentation(titleCell, teaserTitle);
+    }
+    teaserContent.append(teaserTitle);
+
+    const teaserActionContainer = document.createElement('div');
+    teaserActionContainer.classList.add('cmp-teaser__action-container');
+
+    const teaserActionLink = document.createElement('a');
+    teaserActionLink.classList.add('cmp-teaser__action-link', 'focusable-anchor');
+    if (linkCell) {
+      const foundLink = linkCell.querySelector('a');
+      if (foundLink) {
+        teaserActionLink.href = foundLink.href;
+      }
+    }
+    const srOnlySpan = document.createElement('span');
+    srOnlySpan.classList.add('sr-only');
+    srOnlySpan.textContent = `Discover more about ${titleCell ? titleCell.textContent.trim() : ''}`;
+    teaserActionLink.append(srOnlySpan);
+    if (linkTextCell) {
+      teaserActionLink.append(` ${linkTextCell.textContent.trim()}`);
+      moveInstrumentation(linkTextCell, teaserActionLink);
+    }
+    if (linkCell) {
+      moveInstrumentation(linkCell, teaserActionLink);
+    }
+
+    teaserActionContainer.append(teaserActionLink);
+    teaserContent.append(teaserActionContainer);
+    teaser.append(teaserContent);
+
+    moveInstrumentation(row, li);
+    li.append(teaser);
+    ul.append(li);
+  });
+
+  pagelistWrapper.append(ul);
+
+  // Load More (hidden as per original HTML structure)
+  const loadMoreDiv = document.createElement('div');
+  loadMoreDiv.classList.add('list__show-more', 'js-load-more', 'button', 'type-a');
+  loadMoreDiv.style.display = 'none'; // Initially hidden
+
+  const loadMoreButton = document.createElement('button');
+  loadMoreButton.classList.add('cmp-button');
+  loadMoreButton.setAttribute('aria-label', 'Load More');
+  loadMoreButton.setAttribute('title', 'Load More');
+
+  const buttonText = document.createElement('span');
+  buttonText.classList.add('cmp-button__text');
+  buttonText.textContent = 'Load More';
+  loadMoreButton.append(buttonText);
+  loadMoreDiv.append(loadMoreButton);
+  pagelistWrapper.append(loadMoreDiv);
+
+  // Add event listener for Load More button
+  loadMoreButton.addEventListener('click', () => {
+    // Implement load more logic here.
+    // This typically involves fetching more items and appending them to the ul.
+    // For now, we'll just log a message.
+    console.log('Load More button clicked!');
+    // Example: make an API call, then append new items to 'ul'
+    // For this review, no actual fetch implementation is needed, just the listener.
+  });
+
+  // Preloader
+  const preloaderDiv = document.createElement('div');
+  preloaderDiv.classList.add('preloader');
+  pagelistWrapper.append(preloaderDiv);
+
+  block.textContent = '';
+  block.classList.add('list', 'cmp-pagelistv2');
+  block.append(pagelistWrapper);
+}

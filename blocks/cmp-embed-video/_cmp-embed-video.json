@@ -1,0 +1,57 @@
+{
+  "definitions": [
+    {
+      "title": "Cmp-Embed-Video",
+      "id": "cmp-embed-video",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "cmp-embed-video",
+              "model": "cmp-embed-video",
+              "name": "Cmp-Embed-Video"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "cmp-embed-video",
+      "fields": [
+        {
+          "component": "text",
+          "label": "YouTube Video ID",
+          "name": "videoId",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Video Title",
+          "name": "videoname",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Thumbnail Image",
+          "name": "thumbnail",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Play Icon",
+          "name": "playicon",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "cmp-embed-video",
+      "components": []
+    }
+  ]
+}
