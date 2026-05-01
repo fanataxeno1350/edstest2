@@ -19,7 +19,8 @@
   ],
   "models": [
     {
-      "id": "experiencefragment-footer"
+      "id": "experiencefragment-footer",
+      "fields":[]
     }
   ],
   "filters": [
