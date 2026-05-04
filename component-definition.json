@@ -345,7 +345,7 @@
           }
         },
         {
-          "title": "Social Grid",
+          "title": "Social-Grid",
           "id": "social-grid",
           "plugins": {
             "xwalk": {
@@ -354,37 +354,37 @@
                 "template": {
                   "filter": "social-grid",
                   "model": "social-grid",
-                  "name": "Social Grid"
+                  "name": "Social-Grid"
                 }
               }
             }
           }
         },
         {
-          "title": "Social Link Item",
-          "id": "social-link-item",
+          "title": "Social-Link",
+          "id": "social-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "social-link-item",
-                  "name": "Social Link Item"
+                  "model": "social-link",
+                  "name": "Social-Link"
                 }
               }
             }
           }
         },
         {
-          "title": "Walls-io Embed",
-          "id": "walls-io-embed",
+          "title": "Walls-Embed",
+          "id": "walls-embed",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "walls-io-embed",
-                  "name": "Walls-io Embed"
+                  "model": "walls-embed",
+                  "name": "Walls-Embed"
                 }
               }
             }

@@ -26,14 +26,7 @@
       "faqs-section",
       "organization-schema",
       "footer-main",
-      "global-navigation",
-      "custom-slick-slider",
-      "counter-stats-cards",
-      "photo-lockup",
-      "component-three-column-tile",
-      "social-grid",
-      "global-footer",
-      "first-time-banner"
+      "social-grid"
     ]
   },
   {
@@ -82,8 +75,8 @@
   {
     "id": "social-grid",
     "components": [
-      "social-link-item",
-      "walls-io-embed"
+      "social-link",
+      "walls-embed"
     ]
   }
 ]

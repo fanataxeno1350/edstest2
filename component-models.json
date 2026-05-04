@@ -645,30 +645,30 @@
       },
       {
         "component": "container",
-        "item": "social-link-item",
+        "item": "social-link",
         "label": "Social Links",
         "name": "socialLinks"
       },
       {
         "component": "container",
-        "item": "walls-io-embed",
-        "label": "Embeds",
+        "item": "walls-embed",
+        "label": "Walls.io Embeds",
         "name": "embeds"
       }
     ]
   },
   {
-    "id": "social-link-item",
+    "id": "social-link",
     "fields": [
       {
         "component": "reference",
-        "label": "Icon Image",
+        "label": "Icon",
         "name": "icon",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Social Link",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       },
@@ -681,7 +681,7 @@
     ]
   },
   {
-    "id": "walls-io-embed",
+    "id": "walls-embed",
     "fields": [
       {
         "component": "text",
