@@ -1,4 +1,4 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createOptimizedPicture, loadScript } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
@@ -29,13 +29,31 @@ export default function decorate(block) {
     const cells = [...row.children];
     if (cells.length === 3) { // Embed-Widget item
       const [embedUrlCell, embedKindCell, embedConfigCell] = cells;
+      const kind = embedKindCell.textContent.trim();
 
       const embedDiv = document.createElement('div');
-      embedDiv.setAttribute('data-embed-kind', embedKindCell.textContent.trim());
-      embedDiv.setAttribute('data-embed-url', embedUrlCell.textContent.trim());
-      embedDiv.setAttribute('data-embed-config', embedConfigCell.textContent.trim());
-      embedDiv.textContent = '[elfsight-widget placeholder]'; // Placeholder text as in original HTML
       moveInstrumentation(row, embedDiv);
+
+      if (kind === 'elfsight-widget') {
+        try {
+          const config = JSON.parse(embedConfigCell.textContent.trim());
+          if (config.app_id) {
+            embedDiv.classList.add(`elfsight-app-${config.app_id}`);
+            // Dynamically load the elfsight platform script
+            loadScript('https://static.elfsight.com/platform/platform.js');
+          }
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.error('Failed to parse Elfsight config', e);
+          embedDiv.textContent = '[elfsight-widget error]';
+        }
+      } else {
+        // Fallback for other embed types
+        embedDiv.setAttribute('data-embed-kind', kind);
+        embedDiv.setAttribute('data-embed-url', embedUrlCell.textContent.trim());
+        embedDiv.textContent = `[${kind} placeholder]`;
+      }
+
       slidesContainer.append(embedDiv);
     } else if (cells.length === 5) { // Story-Item
       const [imageCell, categoryCell, descriptionCell, linkCell, dateCell] = cells;
