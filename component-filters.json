@@ -38,9 +38,9 @@
     "id": "footer-main",
     "components": [
       "social-link-item",
-      "footer-link-section",
+      "footer-link-block",
       "footer-link-item",
-      "secondary-nav-item"
+      "secondary-nav-link-item"
     ]
   },
   {

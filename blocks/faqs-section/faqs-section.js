@@ -2,8 +2,6 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const children = [...block.children];
-
   const section = document.createElement('section');
   section.classList.add('section', 'faqs-section');
 
@@ -11,74 +9,74 @@ export default function decorate(block) {
   container.classList.add('container');
   section.append(container);
 
+  const [headingRow, ...faqRows] = [...block.children];
+
   // Heading
-  // Use content detection instead of children[0]
-  const headingRow = children.find(row => row.children.length === 1 && !row.querySelector('p') && !row.querySelector('ul'));
-  if (headingRow) {
-    const headingCell = headingRow.firstElementChild;
-    if (headingCell) {
-      const sectionHeader = document.createElement('div');
-      sectionHeader.classList.add('section-header', 'text-center');
-      moveInstrumentation(headingRow, sectionHeader);
-
-      const heading = document.createElement('h2');
-      heading.classList.add('heading', 'font-regular'); // Added font-regular from original HTML
-      heading.textContent = headingCell.textContent.trim();
-      sectionHeader.append(heading);
-      container.append(sectionHeader);
-    }
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center');
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  heading.setAttribute('data-aos', 'fade-up');
+  
+  // FIX: Replaced headingRow.children[0] with content detection
+  const headingCell = [...headingRow.children].find(cell => cell.textContent.trim());
+  if (headingCell) {
+    heading.textContent = headingCell.textContent.trim();
+    moveInstrumentation(headingRow, heading);
   }
+  
+  sectionHeader.append(heading);
+  container.append(sectionHeader);
 
-  // FAQs
+  // FAQs Accordion
   const accoDiv = document.createElement('div');
   accoDiv.classList.add('acco-div');
   const ul = document.createElement('ul');
   accoDiv.append(ul);
-  container.append(accoDiv);
-
-  // Filter out the heading row if it was found, then iterate over FAQ item rows
-  const faqRows = children.filter(row => row !== headingRow);
 
   faqRows.forEach((row, index) => {
-    // Use destructuring for fixed-field item models as per guide
     const [questionCell, answerCell] = [...row.children];
 
     const li = document.createElement('li');
-    moveInstrumentation(row, li);
+    li.classList.add('aos-init', 'aos-animate');
+    li.setAttribute('data-aos', 'fade-up');
     if (index === 0) {
-      li.classList.add('active'); // First item is active by default in original HTML
+      li.classList.add('active');
     }
 
     const h2 = document.createElement('h2');
+    h2.setAttribute('data-once', 'faqsAccordion');
     h2.textContent = questionCell.textContent.trim();
-    li.append(h2);
+    moveInstrumentation(questionCell, h2);
 
     const accoContentDiv = document.createElement('div');
     accoContentDiv.classList.add('acco-content-div');
     if (index === 0) {
       accoContentDiv.classList.add('show');
     }
-    accoContentDiv.innerHTML = answerCell.innerHTML; // Correctly uses innerHTML for richtext
-    li.append(accoContentDiv);
+    accoContentDiv.innerHTML = answerCell.innerHTML;
+    moveInstrumentation(answerCell, accoContentDiv);
+
+    li.append(h2, accoContentDiv);
+    ul.append(li);
 
     h2.addEventListener('click', () => {
       const isActive = li.classList.contains('active');
+
       // Close all other open accordions
       ul.querySelectorAll('li.active').forEach((activeLi) => {
-        activeLi.classList.remove('active');
-        activeLi.querySelector('.acco-content-div').classList.remove('show');
+        if (activeLi !== li) {
+          activeLi.classList.remove('active');
+          activeLi.querySelector('.acco-content-div').classList.remove('show');
+        }
       });
 
       // Toggle current accordion
-      if (!isActive) {
-        li.classList.add('active');
-        accoContentDiv.classList.add('show');
-      }
+      li.classList.toggle('active', !isActive);
+      accoContentDiv.classList.toggle('show', !isActive);
     });
-
-    ul.append(li);
   });
 
-  block.innerHTML = '';
-  block.append(section);
+  container.append(accoDiv);
+  block.replaceWith(section);
 }

@@ -198,15 +198,15 @@
       },
       {
         "component": "container",
-        "item": "footer-link-section",
-        "label": "Footer Link Sections",
-        "name": "footerLinkSections"
+        "item": "footer-link-block",
+        "label": "Footer Link Blocks",
+        "name": "footerLinkBlocks"
       },
       {
         "component": "container",
-        "item": "secondary-nav-item",
-        "label": "Secondary Navigation",
-        "name": "secondaryNav"
+        "item": "secondary-nav-link-item",
+        "label": "Secondary Navigation Links",
+        "name": "secondaryNavLinks"
       },
       {
         "component": "text",
@@ -234,25 +234,25 @@
     ]
   },
   {
-    "id": "footer-link-section",
+    "id": "footer-link-block",
     "fields": [
       {
         "component": "text",
-        "label": "Section Label",
-        "name": "sectionLabel",
+        "label": "Block Title",
+        "name": "blockTitle",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Section Link",
-        "name": "sectionLink",
+        "label": "Block Title Link",
+        "name": "blockTitleLink",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "footer-link-item",
-        "label": "Section Links",
-        "name": "sectionLinks"
+        "label": "Footer Links",
+        "name": "links"
       }
     ]
   },
@@ -261,7 +261,7 @@
     "fields": [
       {
         "component": "text",
-        "label": "Link Label",
+        "label": "Label",
         "name": "label",
         "valueType": "string"
       },
@@ -280,11 +280,11 @@
     ]
   },
   {
-    "id": "secondary-nav-item",
+    "id": "secondary-nav-link-item",
     "fields": [
       {
         "component": "text",
-        "label": "Link Label",
+        "label": "Label",
         "name": "label",
         "valueType": "string"
       },

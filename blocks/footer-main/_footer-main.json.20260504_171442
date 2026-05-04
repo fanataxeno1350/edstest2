@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Footer-Link-Block",
-      "id": "footer-link-block",
+      "title": "Footer-Link-Section",
+      "id": "footer-link-section",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-link-block",
-              "name": "Footer-Link-Block"
+              "model": "footer-link-section",
+              "name": "Footer-Link-Section"
             }
           }
         }
@@ -62,15 +62,15 @@
       }
     },
     {
-      "title": "Secondary-Nav-Link-Item",
-      "id": "secondary-nav-link-item",
+      "title": "Secondary-Nav-Item",
+      "id": "secondary-nav-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "secondary-nav-link-item",
-              "name": "Secondary-Nav-Link-Item"
+              "model": "secondary-nav-item",
+              "name": "Secondary-Nav-Item"
             }
           }
         }
@@ -101,15 +101,15 @@
         },
         {
           "component": "container",
-          "item": "footer-link-block",
-          "label": "Footer Link Blocks",
-          "name": "footerLinkBlocks"
+          "item": "footer-link-section",
+          "label": "Footer Link Sections",
+          "name": "footerLinkSections"
         },
         {
           "component": "container",
-          "item": "secondary-nav-link-item",
-          "label": "Secondary Navigation Links",
-          "name": "secondaryNavLinks"
+          "item": "secondary-nav-item",
+          "label": "Secondary Navigation",
+          "name": "secondaryNav"
         },
         {
           "component": "text",
@@ -137,25 +137,25 @@
       ]
     },
     {
-      "id": "footer-link-block",
+      "id": "footer-link-section",
       "fields": [
         {
           "component": "text",
-          "label": "Block Title",
-          "name": "blockTitle",
+          "label": "Section Label",
+          "name": "sectionLabel",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Block Title Link",
-          "name": "blockTitleLink",
+          "label": "Section Link",
+          "name": "sectionLink",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "footer-link-item",
-          "label": "Footer Links",
-          "name": "links"
+          "label": "Section Links",
+          "name": "sectionLinks"
         }
       ]
     },
@@ -164,7 +164,7 @@
       "fields": [
         {
           "component": "text",
-          "label": "Label",
+          "label": "Link Label",
           "name": "label",
           "valueType": "string"
         },
@@ -183,11 +183,11 @@
       ]
     },
     {
-      "id": "secondary-nav-link-item",
+      "id": "secondary-nav-item",
       "fields": [
         {
           "component": "text",
-          "label": "Label",
+          "label": "Link Label",
           "name": "label",
           "valueType": "string"
         },
@@ -205,9 +205,9 @@
       "id": "footer-main",
       "components": [
         "social-link-item",
-        "footer-link-block",
+        "footer-link-section",
         "footer-link-item",
-        "secondary-nav-link-item"
+        "secondary-nav-item"
       ]
     }
   ]
