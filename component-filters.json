@@ -45,7 +45,7 @@
   {
     "id": "counter-stats-cards",
     "components": [
-      "stats-card"
+      "stats-card-item"
     ]
   },
   {
@@ -82,8 +82,8 @@
   {
     "id": "social-grid",
     "components": [
-      "social-grid-item",
-      "embed"
+      "social-link-item",
+      "walls-io-embed"
     ]
   }
 ]

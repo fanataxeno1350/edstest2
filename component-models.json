@@ -216,31 +216,31 @@
       },
       {
         "component": "container",
-        "item": "stats-card",
+        "item": "stats-card-item",
         "label": "Stats Cards",
         "name": "statsCards"
       }
     ]
   },
   {
-    "id": "stats-card",
+    "id": "stats-card-item",
     "fields": [
       {
         "component": "text",
-        "label": "Statistic Number",
-        "name": "statNumber",
+        "label": "Number",
+        "name": "number",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Statistic Number Suffix",
-        "name": "statNumberSuffix",
+        "label": "Number Label",
+        "name": "numberLabel",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Statistic Description",
-        "name": "statDescription",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       }
     ]
@@ -633,8 +633,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Title",
-        "name": "title",
+        "label": "Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
@@ -645,30 +645,30 @@
       },
       {
         "component": "container",
-        "item": "social-grid-item",
+        "item": "social-link-item",
         "label": "Social Links",
         "name": "socialLinks"
       },
       {
         "component": "container",
-        "item": "embed",
-        "label": "External Embeds",
+        "item": "walls-io-embed",
+        "label": "Embeds",
         "name": "embeds"
       }
     ]
   },
   {
-    "id": "social-grid-item",
+    "id": "social-link-item",
     "fields": [
       {
         "component": "reference",
-        "label": "Icon",
+        "label": "Icon Image",
         "name": "icon",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
+        "label": "Social Link",
         "name": "link",
         "valueType": "string"
       },
@@ -681,7 +681,7 @@
     ]
   },
   {
-    "id": "embed",
+    "id": "walls-io-embed",
     "fields": [
       {
         "component": "text",

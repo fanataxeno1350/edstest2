@@ -1,115 +1,124 @@
-import { createOptimizedPicture, loadScript } from '../../scripts/aem.js';
-import { moveInstrumentation } from '../../scripts/scripts.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation, loadScript } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const children = [...block.children];
 
-  const [titleRow, descriptionRow, ...itemRows] = children;
+  // Fixed fields: heading and description
+  const headingRow = children[0];
+  const descriptionRow = children[1];
 
-  block.innerHTML = ''; // Clear the block to rebuild
+  const heading = document.createElement('h3');
+  moveInstrumentation(headingRow, heading);
+  heading.textContent = headingRow.firstElementChild?.textContent.trim() || '';
+
+  const description = document.createElement('div');
+  moveInstrumentation(descriptionRow, description);
+  description.innerHTML = descriptionRow.firstElementChild?.innerHTML || '';
 
   const blockWrapper = document.createElement('div');
   blockWrapper.classList.add('block-wrapper');
-  moveInstrumentation(titleRow, blockWrapper);
+  blockWrapper.append(heading, description);
 
-  // Title
-  const title = document.createElement('h3');
-  title.textContent = titleRow?.firstElementChild?.textContent.trim() || '';
-  blockWrapper.append(title);
-
-  // Separator
   const separator = document.createElement('div');
   separator.classList.add('separator');
-  blockWrapper.append(separator);
+  blockWrapper.insertBefore(separator, description);
 
-  // Description
-  const description = document.createElement('div');
-  description.innerHTML = descriptionRow?.firstElementChild?.innerHTML || '';
-  blockWrapper.append(description);
-
-  block.append(blockWrapper);
-
+  // Social Links and Embeds
   const socialLinksContainer = document.createElement('div');
   socialLinksContainer.classList.add('row', 'd-flex', 'justify-content-left');
 
-  itemRows.forEach((row) => {
+  const embedsContainer = document.createElement('div');
+
+  children.slice(2).forEach((row) => {
     const cells = [...row.children];
+
     if (cells.length === 3) {
-      const [cell0, cell1, cell2] = cells;
-
-      // Detect if it's a social-grid-item or an embed based on content
-      const isSocialGridItem = cell0.querySelector('picture') && cell1.querySelector('a') && cell2.textContent.trim();
-      const isEmbed = cell0.textContent.includes('Embed URL') && cell1.textContent.includes('Embed Kind');
-
-      if (isSocialGridItem) {
-        const iconCell = cell0;
-        const linkCell = cell1;
-        const labelCell = cell2;
+      // Differentiate between social-link-item and walls-io-embed
+      // social-link-item has an image in the first cell
+      // walls-io-embed has plain text in the first cell (data-embed-url)
+      if (cells[0].querySelector('picture')) {
+        // Social Link Item
+        const [iconCell, linkCell, labelCell] = cells; // CORRECT: Using destructuring
 
         const col = document.createElement('div');
         col.classList.add('col-sm-4', 'col-md-2', 'col-lg-1', 'text-align-center');
         col.style.paddingTop = '25px';
-        moveInstrumentation(row, col);
 
         const link = document.createElement('a');
         const foundLink = linkCell.querySelector('a');
-        if (foundLink && foundLink.href) { // Ensure href exists
-          link.href = foundLink.href;
+        if (foundLink) {
+          link.href = foundLink.href; // CORRECT: Reading href from <a> tag
           link.target = '_blank';
           link.rel = 'noopener';
-          link.setAttribute('aria-label', `${labelCell.textContent.trim()} - open in a new tab`);
+          link.ariaLabel = `${labelCell.textContent.trim()} - open in a new tab`;
         }
 
         const picture = iconCell.querySelector('picture');
         if (picture) {
           const img = picture.querySelector('img');
           if (img) {
-            const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '60%' }]);
+            const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
             moveInstrumentation(img, optimizedPic.querySelector('img'));
             link.append(optimizedPic);
           }
         }
-        col.append(link);
 
-        const label = document.createElement('h6');
-        label.style.lineHeight = '18px';
-        label.style.marginTop = '10px';
-        label.textContent = labelCell.textContent.trim();
-        col.append(label);
+        const h6 = document.createElement('h6');
+        h6.style.lineHeight = '18px';
+        h6.style.marginTop = '10px';
+        h6.textContent = labelCell.textContent.trim();
 
+        moveInstrumentation(row, col);
+        col.append(link, h6);
         socialLinksContainer.append(col);
-      } else if (isEmbed) {
-        const [urlCell, kindCell, configCell] = cells;
+
+        // Optimize images within the social link
+        col.querySelectorAll('picture > img').forEach((img) => {
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
+          img.closest('picture').replaceWith(optimizedPic);
+        });
+      } else if (cells[1].textContent.trim() === 'Embed Kind label text') { // CORRECT: Differentiating by actual content from EDS structure
+        // Walls-io Embed
+        const [urlCell, kindCell, configCell] = cells; // CORRECT: Using destructuring
+        const embedDiv = document.createElement('div');
+        moveInstrumentation(row, embedDiv);
+
         const embedKind = kindCell.textContent.trim();
-        const embedConfig = configCell.textContent.trim();
-
-        const embedEl = document.createElement('div');
-        moveInstrumentation(row, embedEl);
-        embedEl.dataset.embedKind = embedKind;
-        embedEl.dataset.embedUrl = urlCell.textContent.trim();
-
-        if (embedKind === 'elfsight-widget') {
-          try {
-            const config = JSON.parse(embedConfig);
-            if (config.app_id) {
-              embedEl.classList.add(`elfsight-app-${config.app_id}`);
-              // Elfsight platform script is loaded once
-              loadScript('https://static.elfsight.com/platform/platform.js');
-              embedEl.textContent = ''; // Clear placeholder text
-            }
-          } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error('Failed to parse Elfsight embed config:', e);
-          }
-        } else {
-          embedEl.textContent = `[${embedKind} placeholder]`; // Fallback for unknown embed kinds
+        const embedUrl = urlCell.textContent.trim();
+        let embedConfig = {};
+        try {
+          embedConfig = JSON.parse(configCell.textContent.trim());
+        } catch (e) {
+          console.error('Error parsing embed config:', e);
         }
-        block.append(embedEl); // Appending embeds directly to the block, not socialLinksContainer
+
+        embedDiv.dataset.embedKind = embedKind;
+        embedDiv.dataset.embedUrl = embedUrl;
+        Object.keys(embedConfig).forEach((key) => {
+          embedDiv.dataset[`embed${key.charAt(0).toUpperCase() + key.slice(1)}`] = embedConfig[key];
+        });
+
+        // Specific handling for walls-io
+        if (embedKind === 'walls-io') {
+          embedDiv.textContent = '[walls-io placeholder]'; // Placeholder text as in original HTML
+          loadScript('https://walls.io/js/wallsio-widget-1.2.js').then(() => {
+            // Initialize Walls.io widget after script loads
+            window.WallsIO = window.WallsIO || [];
+            window.WallsIO.push({
+              id: embedUrl.split('/').pop().split('?')[0], // Extract ID from URL
+              el: embedDiv,
+              url: embedUrl,
+              ...embedConfig,
+            });
+          });
+        }
+        embedsContainer.append(embedDiv);
       }
     }
   });
 
-  if (socialLinksContainer.children.length > 0) {
-    block.append(socialLinksContainer);
-  }
+  block.textContent = ''; // Clear original content
+  block.append(blockWrapper, socialLinksContainer, embedsContainer);
 }
