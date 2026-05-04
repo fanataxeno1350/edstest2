@@ -54,7 +54,7 @@
         {
           "component": "container",
           "item": "spotlight-slide",
-          "label": "Slides",
+          "label": "Spotlight Slides",
           "name": "slides"
         },
         {
@@ -70,25 +70,25 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Slide Image",
+          "label": "Background Image",
           "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Image Alt Text",
-          "name": "alt",
+          "name": "imageAlt",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Small Heading",
-          "name": "small",
+          "label": "Small Text",
+          "name": "smallText",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Main Heading",
+          "label": "Heading",
           "name": "heading",
           "valueType": "string"
         },

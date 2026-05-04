@@ -38,10 +38,9 @@
     "id": "footer-main",
     "components": [
       "social-link-item",
-      "footer-menu-block",
-      "footer-menu-item",
-      "footer-menu-sub-item",
-      "footer-secondary-nav-item"
+      "footer-link-group",
+      "footer-link-item",
+      "footer-secondary-link-item"
     ]
   },
   {
@@ -81,7 +80,7 @@
   {
     "id": "what-we-do-wrap",
     "components": [
-      "business-vertical"
+      "business-vertical-item"
     ]
   },
   {
