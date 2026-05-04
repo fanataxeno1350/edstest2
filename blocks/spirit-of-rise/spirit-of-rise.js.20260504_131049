@@ -1,0 +1,83 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, descriptionRow, ...cardRows] = [...block.children];
+
+  const section = document.createElement('section');
+  section.classList.add('section', 'grey-bg', 'spirit-of-rise');
+  moveInstrumentation(block, section);
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+
+  // Header
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  heading.textContent = headingRow ? headingRow.textContent.trim() : '';
+  moveInstrumentation(headingRow, heading);
+
+  const description = document.createElement('p');
+  description.classList.add('aos-init', 'aos-animate');
+  description.textContent = descriptionRow ? descriptionRow.textContent.trim() : '';
+  moveInstrumentation(descriptionRow, description);
+
+  sectionHeader.append(heading, description);
+  container.append(sectionHeader);
+
+  // Grid
+  const grid = document.createElement('div');
+  grid.classList.add('row', 'g-4', 'purpose-led-grid', 'pt-3');
+
+  cardRows.forEach((row) => {
+    const col = document.createElement('div');
+    col.classList.add('col-md-6', 'aos-init', 'aos-animate');
+    moveInstrumentation(row, col);
+
+    // CRITICAL FIX: Replaced .querySelector('div:nth-child(n)') with array destructuring
+    // as per EDS BLOCK STRUCTURE guide for fixed-field item models.
+    const [linkCell, imageCell, altTextCell, descriptionCell] = [...row.children];
+
+    const cardLink = document.createElement('a');
+    cardLink.classList.add('card-wrap');
+    const authoredLink = linkCell ? linkCell.querySelector('a') : null;
+    if (authoredLink) {
+      cardLink.href = authoredLink.href;
+    }
+    cardLink.target = '_blank'; // From original HTML
+
+    const cardImage = document.createElement('div');
+    cardImage.classList.add('card-image');
+
+    const picture = imageCell ? imageCell.querySelector('picture') : null;
+    if (picture) {
+      const img = picture.querySelector('img');
+      // Added 'img-fluid' class from ORIGINAL HTML to the img element
+      const optimizedPic = createOptimizedPicture(img.src, altTextCell ? altTextCell.textContent.trim() : '', false, [{ width: '750' }]);
+      const optimizedImg = optimizedPic.querySelector('img');
+      optimizedImg.classList.add('img-fluid'); // Add class from original HTML
+      moveInstrumentation(picture, optimizedImg);
+      cardImage.append(optimizedPic);
+    }
+
+    const cardText = document.createElement('div');
+    cardText.classList.add('card-text');
+    const descP = document.createElement('p');
+    descP.classList.add('desc');
+    // CRITICAL FIX: Changed .textContent.trim() to .innerHTML for descriptionCell
+    // to preserve potential line breaks (<br>) or other HTML in the description.
+    descP.innerHTML = descriptionCell ? descriptionCell.innerHTML.trim() : '';
+    cardText.append(descP);
+
+    cardLink.append(cardImage, cardText);
+    col.append(cardLink);
+    grid.append(col);
+  });
+
+  container.append(grid);
+  section.append(container);
+  block.replaceWith(section);
+}
