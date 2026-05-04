@@ -2,130 +2,158 @@ import { createOptimizedPicture, loadScript } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [headingRow, ...itemRows] = [...block.children];
+  const children = [...block.children];
+
+  // Check 0 & 1: Heading is the first row, first cell.
+  // Use content detection for heading cell to avoid row.children[0]
+  const headingRow = children.find(row => row.children.length === 1 && row.children[0].textContent.trim() !== '');
+  const headingText = headingRow ? headingRow.children[0].textContent.trim() : '';
+
+  const storyItems = children.filter((row) => row.children.length === 5);
+  const elfsightWidgets = children.filter((row) => row.children.length === 3);
+
+  block.innerHTML = ''; // Clear the block to rebuild
 
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
   const heading = document.createElement('h2');
-  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  // Use children[0] for consistency with other cell access patterns, though firstElementChild works here.
-  moveInstrumentation(headingRow.children[0], heading);
-  heading.textContent = headingRow.children[0].textContent.trim();
+  heading.classList.add('heading', 'font-regular');
+  heading.textContent = headingText;
   sectionHeader.append(heading);
+  block.append(sectionHeader);
 
   const container = document.createElement('div');
-  container.classList.add('container', 'aos-init', 'aos-animate');
+  container.classList.add('container');
+  const flickitySliderWrap = document.createElement('div');
+  flickitySliderWrap.classList.add('flickity-slider-mobile-wrap', 'grid-layout');
+  container.append(flickitySliderWrap);
 
-  const sliderWrap = document.createElement('div');
-  sliderWrap.classList.add('flickity-slider-mobile-wrap', 'grid-layout');
+  elfsightWidgets.forEach((row) => {
+    const [embedUrlCell, embedKindCell, embedConfigCell] = [...row.children];
+    const embedKind = embedKindCell.textContent.trim();
 
-  itemRows.forEach((row) => {
-    const cells = [...row.children];
-    const slide = document.createElement('div');
-    slide.classList.add('slides');
+    const slidesDiv = document.createElement('div');
+    slidesDiv.classList.add('slides');
+    const embedDiv = document.createElement('div');
+    embedDiv.setAttribute('data-embed-kind', embedKind);
+    embedDiv.setAttribute('data-embed-url', embedUrlCell.textContent.trim());
+    embedDiv.setAttribute('data-embed-config', embedConfigCell.textContent.trim());
 
-    // Detect if it's a news-story-item (5 cells) or an elfsight-widget (3 cells)
-    if (cells.length === 5) {
-      // news-story-item
-      const [imageCell, categoryCell, textCell, linkCell, dateCell] = cells;
-
-      const wrap = document.createElement('div');
-      wrap.classList.add('wrap');
-
-      const imageWrap = document.createElement('div');
-      imageWrap.classList.add('image-wrap');
-      const picture = imageCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          imageWrap.append(optimizedPic);
-        }
-      }
-      wrap.append(imageWrap);
-
-      const contentWrap = document.createElement('div');
-      contentWrap.classList.add('content-wrap');
-
-      const category = document.createElement('div');
-      category.classList.add('category');
-      moveInstrumentation(categoryCell, category);
-      category.textContent = categoryCell.textContent.trim();
-      contentWrap.append(category);
-
-      const text = document.createElement('div');
-      text.classList.add('text');
-      moveInstrumentation(textCell, text);
-      text.textContent = textCell.textContent.trim();
-      contentWrap.append(text);
-
-      const readMoreLink = document.createElement('a');
-      readMoreLink.classList.add('btn', 'btn-link');
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        readMoreLink.href = foundLink.href;
-      }
-      readMoreLink.textContent = 'Read more'; // Hardcoded as per original HTML
-      moveInstrumentation(linkCell, readMoreLink);
-      contentWrap.append(readMoreLink);
-
-      const date = document.createElement('div');
-      date.classList.add('date');
-      moveInstrumentation(dateCell, date);
-      date.textContent = dateCell.textContent.trim();
-      contentWrap.append(date);
-
-      wrap.append(contentWrap);
-      slide.append(wrap);
-    } else if (cells.length === 3) {
-      // elfsight-widget
-      const [urlCell, kindCell, configCell] = cells;
-      const el = document.createElement('div');
-      moveInstrumentation(row, el);
-
-      const config = JSON.parse(configCell.textContent.trim());
-      el.classList.add(`elfsight-app-${config.app_id}`);
-      el.dataset.embedKind = kindCell.textContent.trim();
-      el.dataset.embedUrl = urlCell.textContent.trim(); // Add URL as data attribute for debugging/info
-      el.textContent = ''; // Clear placeholder text
-
-      // Load elfsight platform script
+    if (embedKind === 'elfsight-widget') {
+      const config = JSON.parse(embedConfigCell.textContent.trim());
+      embedDiv.classList.add(`elfsight-app-${config.app_id}`);
+      embedDiv.setAttribute('data-elfsight-app-lazy', '');
       loadScript('https://static.elfsight.com/platform/platform.js');
-      slide.append(el);
+    } else if (embedKind === 'walls-io') {
+      const wallScript = document.createElement('script');
+      wallScript.src = 'https://walls.io/js/wallsio-widget-1.2.js';
+      wallScript.dataset.wallurl = embedUrlCell.textContent.trim();
+      wallScript.dataset.width = '100%';
+      wallScript.dataset.autoheight = '1';
+      wallScript.async = true;
+      embedDiv.append(wallScript);
+    } else if (['twitter-embed', 'instagram-embed', 'tiktok-embed'].includes(embedKind)) {
+      const platforms = {
+        'twitter-embed': 'https://platform.twitter.com/widgets.js',
+        'instagram-embed': 'https://www.instagram.com/embed.js',
+        'tiktok-embed': 'https://www.tiktok.com/embed.js',
+      };
+      loadScript(platforms[embedKind]);
+      const link = document.createElement('a');
+      link.href = embedUrlCell.textContent.trim();
+      link.textContent = `View post on ${embedKind.split('-')[0].charAt(0).toUpperCase()}${embedKind.split('-')[0].slice(1)}`;
+      embedDiv.append(link);
     }
-    sliderWrap.append(slide);
+
+    moveInstrumentation(row, slidesDiv);
+    slidesDiv.append(embedDiv);
+    flickitySliderWrap.append(slidesDiv);
   });
 
-  container.append(sliderWrap);
-  block.innerHTML = '';
-  block.classList.add('section', 'grey-bg', 'home-stories'); // Add section classes to block
-  block.append(sectionHeader, container);
+  storyItems.forEach((row) => {
+    const [imageCell, categoryCell, textCell, linkCell, dateCell] = [...row.children];
 
-  // Initialize Flickity after elements are added to the DOM
-  // The original HTML has data-flickity attributes, but we need to ensure the script loads and initializes
-  // This is a common pattern for JS-driven components like sliders.
-  loadScript('/scripts/flickity.pkgd.min.js').then(() => {
-    // eslint-disable-next-line no-undef
-    if (typeof Flickity !== 'undefined') {
-      // Find the slider element and initialize Flickity
-      const sliderElement = block.querySelector('.flickity-slider-mobile-wrap');
-      if (sliderElement) {
-        // The data-flickity attribute is already present in the original HTML,
-        // so Flickity should pick it up automatically if loaded correctly.
-        // If not, we would manually initialize it here:
-        // eslint-disable-next-line no-new, no-undef
-        new Flickity(sliderElement, {
-          wrapAround: false,
-          lazyLoad: true,
-          pageDots: true,
-          prevNextButtons: false,
-          imagesLoaded: true,
-          cellAlign: 'left',
-          watchCSS: true,
-          adaptiveHeight: true,
-        });
+    const slidesDiv = document.createElement('div');
+    slidesDiv.classList.add('slides');
+    const wrapDiv = document.createElement('div');
+    wrapDiv.classList.add('wrap');
+
+    const imageWrapDiv = document.createElement('div');
+    imageWrapDiv.classList.add('image-wrap');
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        imageWrapDiv.append(optimizedPic);
+        optimizedPic.querySelector('img').classList.add('thumb-img', 'img-fluid');
       }
+    }
+    wrapDiv.append(imageWrapDiv);
+
+    const contentWrapDiv = document.createElement('div');
+    contentWrapDiv.classList.add('content-wrap');
+
+    const categoryDiv = document.createElement('div');
+    categoryDiv.classList.add('category');
+    categoryDiv.textContent = categoryCell.textContent.trim();
+    contentWrapDiv.append(categoryDiv);
+
+    const textDiv = document.createElement('div');
+    textDiv.classList.add('text');
+    textDiv.textContent = textCell.textContent.trim();
+    contentWrapDiv.append(textDiv);
+
+    const linkAnchor = document.createElement('a');
+    linkAnchor.classList.add('btn', 'btn-link');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      linkAnchor.href = foundLink.href; // Correctly reading href for aem-content type
+    }
+    linkAnchor.textContent = 'Read more';
+    contentWrapDiv.append(linkAnchor);
+
+    const dateDiv = document.createElement('div');
+    dateDiv.classList.add('date');
+    const time = document.createElement('time');
+    time.setAttribute('datetime', dateCell.textContent.trim()); // Assuming date is in a parseable format
+    time.textContent = new Date(dateCell.textContent.trim()).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+    dateDiv.append(time);
+    contentWrapDiv.append(dateDiv);
+
+    wrapDiv.append(contentWrapDiv);
+    moveInstrumentation(row, slidesDiv);
+    slidesDiv.append(wrapDiv);
+    flickitySliderWrap.append(slidesDiv);
+  });
+
+  block.append(container);
+
+  // Check 2: Interactivity - Flickity slider initialization
+  // The original HTML has data-flickity attributes, indicating Flickity is used.
+  // We need to ensure Flickity is loaded and initialized.
+  loadScript('/scripts/flickity.pkgd.min.js').then(() => {
+    if (typeof Flickity === 'function') {
+      // The data-flickity attribute is on flickity-slider-mobile-wrap,
+      // so we need to read its content and parse it.
+      const flickityOptions = {
+        wrapAround: false,
+        lazyLoad: true,
+        pageDots: true,
+        prevNextButtons: false,
+        imagesLoaded: true,
+        cellAlign: 'left',
+        watchCSS: true,
+        adaptiveHeight: true
+      };
+      // Initialize Flickity
+      // eslint-disable-next-line no-new
+      new Flickity(flickitySliderWrap, flickityOptions);
     }
   });
 }

@@ -46,7 +46,7 @@
   {
     "id": "latest-stories",
     "components": [
-      "news-story-item",
+      "story-item",
       "elfsight-widget"
     ]
   },

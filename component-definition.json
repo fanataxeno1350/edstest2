@@ -206,15 +206,15 @@
           }
         },
         {
-          "title": "News-Story-Item",
-          "id": "news-story-item",
+          "title": "Story-Item",
+          "id": "story-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "news-story-item",
-                  "name": "News-Story-Item"
+                  "model": "story-item",
+                  "name": "Story-Item"
                 }
               }
             }

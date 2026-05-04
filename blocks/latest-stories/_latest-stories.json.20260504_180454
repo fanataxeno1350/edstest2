@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Story-Item",
-      "id": "story-item",
+      "title": "News-Story-Item",
+      "id": "news-story-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "story-item",
-              "name": "Story-Item"
+              "model": "news-story-item",
+              "name": "News-Story-Item"
             }
           }
         }
@@ -59,20 +59,20 @@
         },
         {
           "component": "container",
-          "item": "story-item",
+          "item": "news-story-item",
           "label": "Stories",
           "name": "stories"
         },
         {
           "component": "container",
           "item": "elfsight-widget",
-          "label": "Elfsight Embeds",
-          "name": "elfsightEmbeds"
+          "label": "External Embeds",
+          "name": "embeds"
         }
       ]
     },
     {
-      "id": "story-item",
+      "id": "news-story-item",
       "fields": [
         {
           "component": "reference",
@@ -88,18 +88,18 @@
         },
         {
           "component": "text",
-          "label": "Text",
+          "label": "Story Text",
           "name": "text",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Read More Link",
           "name": "link",
           "valueType": "string"
         },
         {
-          "component": "date-time",
+          "component": "text",
           "label": "Date",
           "name": "date",
           "valueType": "string"
@@ -134,7 +134,7 @@
     {
       "id": "latest-stories",
       "components": [
-        "story-item",
+        "news-story-item",
         "elfsight-widget"
       ]
     }

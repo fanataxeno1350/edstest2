@@ -307,20 +307,20 @@
       },
       {
         "component": "container",
-        "item": "news-story-item",
+        "item": "story-item",
         "label": "Stories",
         "name": "stories"
       },
       {
         "component": "container",
         "item": "elfsight-widget",
-        "label": "External Embeds",
-        "name": "embeds"
+        "label": "Elfsight Embeds",
+        "name": "elfsightEmbeds"
       }
     ]
   },
   {
-    "id": "news-story-item",
+    "id": "story-item",
     "fields": [
       {
         "component": "reference",
@@ -336,18 +336,18 @@
       },
       {
         "component": "text",
-        "label": "Story Text",
+        "label": "Text",
         "name": "text",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Read More Link",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "date-time",
         "label": "Date",
         "name": "date",
         "valueType": "string"
