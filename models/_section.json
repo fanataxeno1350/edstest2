@@ -51,7 +51,24 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "main-header",
+        "spotlight-home",
+        "what-we-do-wrap",
+        "spirit-of-rise",
+        "latest-stories",
+        "work-with-us",
+        "faqs-section",
+        "organization-schema",
+        "footer-main",
+        "global-navigation",
+        "custom-slick-slider",
+        "counter-stats-cards",
+        "photo-lockup",
+        "component-three-column-tile",
+        "social-grid",
+        "global-footer",
+        "first-time-banner"
       ]
     }
   ]

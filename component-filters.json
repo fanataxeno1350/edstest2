@@ -16,7 +16,74 @@
       "cards",
       "columns",
       "fragment",
-      "---new--blocks-----"
+      "---new--blocks-----",
+      "main-header",
+      "spotlight-home",
+      "what-we-do-wrap",
+      "spirit-of-rise",
+      "latest-stories",
+      "work-with-us",
+      "faqs-section",
+      "organization-schema",
+      "footer-main",
+      "global-navigation",
+      "custom-slick-slider",
+      "counter-stats-cards",
+      "photo-lockup",
+      "component-three-column-tile",
+      "social-grid",
+      "global-footer",
+      "first-time-banner"
+    ]
+  },
+  {
+    "id": "component-three-column-tile",
+    "components": [
+      "tile-item"
+    ]
+  },
+  {
+    "id": "counter-stats-cards",
+    "components": [
+      "stats-card"
+    ]
+  },
+  {
+    "id": "custom-slick-slider",
+    "components": [
+      "slider-item"
+    ]
+  },
+  {
+    "id": "first-time-banner",
+    "components": []
+  },
+  {
+    "id": "global-footer",
+    "components": [
+      "footer-social-link",
+      "footer-navigation-section",
+      "footer-navigation-link",
+      "be-related-link"
+    ]
+  },
+  {
+    "id": "global-navigation",
+    "components": [
+      "utility-link-item",
+      "language-item",
+      "navigation-item"
+    ]
+  },
+  {
+    "id": "photo-lockup",
+    "components": []
+  },
+  {
+    "id": "social-grid",
+    "components": [
+      "social-grid-item",
+      "embed"
     ]
   }
 ]

@@ -140,5 +140,567 @@
         ]
       }
     ]
+  },
+  {
+    "id": "component-three-column-tile",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "tile-item",
+        "label": "Tiles",
+        "name": "tiles"
+      }
+    ]
+  },
+  {
+    "id": "tile-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Tile Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Tile Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Flag Text",
+        "name": "flagText",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Tile Caption",
+        "name": "caption",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Read More Label",
+        "name": "readMoreLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "counter-stats-cards",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "stats-card",
+        "label": "Stats Cards",
+        "name": "statsCards"
+      }
+    ]
+  },
+  {
+    "id": "stats-card",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Statistic Number",
+        "name": "statNumber",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Statistic Number Suffix",
+        "name": "statNumberSuffix",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Statistic Description",
+        "name": "statDescription",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "custom-slick-slider",
+    "fields": [
+      {
+        "component": "container",
+        "item": "slider-item",
+        "label": "Slides",
+        "name": "slides"
+      }
+    ]
+  },
+  {
+    "id": "slider-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Video",
+        "name": "video",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Desktop Image",
+        "name": "desktopImage",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Image",
+        "name": "mobileImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Subtitle",
+        "name": "subtitle",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "first-time-banner",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Welcome Title",
+        "name": "welcome-title",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Promo Link",
+        "name": "promo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Promo Description",
+        "name": "promo-description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Cookie Message",
+        "name": "cookie-message",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Privacy Policy Link",
+        "name": "privacy-policy-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Accept Button Label",
+        "name": "accept-button-label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "global-footer",
+    "fields": [
+      {
+        "component": "container",
+        "item": "footer-social-link",
+        "label": "Social Links",
+        "name": "socialLinks"
+      },
+      {
+        "component": "container",
+        "item": "footer-navigation-section",
+        "label": "Footer Navigation Sections",
+        "name": "footerNavigationSections"
+      },
+      {
+        "component": "reference",
+        "label": "Footer Logo",
+        "name": "footerLogo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Footer Address Link",
+        "name": "footerAddressLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Footer Phone",
+        "name": "footerPhone",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "be-related-link",
+        "label": "Also of Interest Links",
+        "name": "beRelatedLinks"
+      },
+      {
+        "component": "richtext",
+        "label": "Footer Legal Text",
+        "name": "footerLegal",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Welcome Title",
+        "name": "welcomeTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Welcome Link",
+        "name": "welcomeLink",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Welcome Description",
+        "name": "welcomeDescription",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Cookie Message",
+        "name": "cookieMessage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Accept Cookie Button Label",
+        "name": "acceptCookieLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Platform",
+        "name": "platform",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-navigation-section",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Section Title",
+        "name": "sectionTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-navigation-link",
+        "label": "Links",
+        "name": "links"
+      }
+    ]
+  },
+  {
+    "id": "footer-navigation-link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link URL",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "be-related-link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Related Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Related Link URL",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "global-navigation",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Search Placeholder",
+        "name": "search-placeholder",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Search Action",
+        "name": "search-action",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "utility-link-item",
+        "label": "Utility Links",
+        "name": "utility-links"
+      },
+      {
+        "component": "container",
+        "item": "language-item",
+        "label": "Languages",
+        "name": "languages"
+      },
+      {
+        "component": "container",
+        "item": "navigation-item",
+        "label": "Navigation Menu",
+        "name": "navigation-menu"
+      }
+    ]
+  },
+  {
+    "id": "utility-link-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link URL",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "language-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Language Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Language URL",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "navigation-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Menu Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Menu Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "photo-lockup",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image",
+        "name": "backgroundImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-grid",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "social-grid-item",
+        "label": "Social Links",
+        "name": "socialLinks"
+      },
+      {
+        "component": "container",
+        "item": "embed",
+        "label": "External Embeds",
+        "name": "embeds"
+      }
+    ]
+  },
+  {
+    "id": "social-grid-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "embed",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Embed URL",
+        "name": "data-embed-url",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Embed Kind",
+        "name": "data-embed-kind",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Embed Config",
+        "name": "data-embed-config",
+        "valueType": "string"
+      }
+    ]
   }
 ]

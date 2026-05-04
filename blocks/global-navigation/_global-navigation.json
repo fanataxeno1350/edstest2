@@ -1,0 +1,187 @@
+{
+  "definitions": [
+    {
+      "title": "Global-Navigation",
+      "id": "global-navigation",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "global-navigation",
+              "model": "global-navigation",
+              "name": "Global-Navigation"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Utility-Link-Item",
+      "id": "utility-link-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "utility-link-item",
+              "name": "Utility-Link-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Language-Item",
+      "id": "language-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "language-item",
+              "name": "Language-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Navigation-Item",
+      "id": "navigation-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "navigation-item",
+              "name": "Navigation-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "global-navigation",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo",
+          "name": "logo",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logo-link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Search Placeholder",
+          "name": "search-placeholder",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Search Action",
+          "name": "search-action",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "utility-link-item",
+          "label": "Utility Links",
+          "name": "utility-links"
+        },
+        {
+          "component": "container",
+          "item": "language-item",
+          "label": "Languages",
+          "name": "languages"
+        },
+        {
+          "component": "container",
+          "item": "navigation-item",
+          "label": "Navigation Menu",
+          "name": "navigation-menu"
+        }
+      ]
+    },
+    {
+      "id": "utility-link-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Link Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link URL",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Navigation Hierarchy",
+          "name": "hierarchy-tree",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "language-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Language Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Language URL",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "navigation-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Menu Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Menu Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Navigation Hierarchy",
+          "name": "hierarchy-tree",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "global-navigation",
+      "components": [
+        "utility-link-item",
+        "language-item",
+        "navigation-item"
+      ]
+    }
+  ]
+}

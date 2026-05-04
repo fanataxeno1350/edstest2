@@ -1,0 +1,110 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // CHECK 0 & 1: Structure Alignment - Direct destructuring of block.children is correct for root fields.
+  const [backgroundImageCell, headingCell, bodyCell, ctaLinkCell, ctaLabelCell] = [...block.children];
+
+  const section = document.createElement('section');
+  section.classList.add('component-photo-lockup', 'bg-light-gray', 'pad-top-lg');
+  moveInstrumentation(block, section);
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+  section.append(container);
+
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('wrapper', 'block-right');
+  container.append(wrapper);
+
+  // Background Image
+  const picture = backgroundImageCell.querySelector('picture');
+  if (picture) {
+    const img = picture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
+      // Use the optimized picture's img src for the background-image style
+      const optimizedImg = optimizedPic.querySelector('img');
+      if (optimizedImg) {
+        wrapper.style.backgroundImage = `url("${optimizedImg.src}")`;
+      }
+      // The original HTML has a wrapper-mobile div with the same background image.
+      const wrapperMobile = document.createElement('div');
+      wrapperMobile.classList.add('wrapper-mobile');
+      if (optimizedImg) {
+        wrapperMobile.style.backgroundImage = `url("${optimizedImg.src}")`;
+      }
+      wrapper.append(wrapperMobile);
+    }
+  }
+
+  const accent = document.createElement('div');
+  accent.classList.add('accent');
+  wrapper.append(accent);
+
+  const layer1 = document.createElement('div');
+  layer1.classList.add('layer', 'layer1', 'bg-primary-d2-blue');
+  accent.append(layer1);
+
+  const layer2 = document.createElement('div');
+  layer2.classList.add('layer', 'layer2', 'bg-primary-d2-blue');
+  accent.append(layer2);
+
+  const layer3 = document.createElement('div');
+  layer3.classList.add('layer', 'layer3', 'bg-primary-d2-blue');
+  accent.append(layer3);
+
+  const innerContainer = document.createElement('div');
+  innerContainer.classList.add('container');
+  wrapper.append(innerContainer);
+
+  const row = document.createElement('div');
+  row.classList.add('row');
+  innerContainer.append(row);
+
+  const blockText = document.createElement('div');
+  blockText.classList.add('block-text', 'col-md-12', 'col-lg-6', 'offset-lg-5');
+  row.append(blockText);
+
+  const blockWrapper = document.createElement('div');
+  blockWrapper.classList.add('block-wrapper', 'col-md-12', 'col-lg-5', 'offset-lg-6');
+  row.append(blockWrapper);
+
+  // Heading
+  if (headingCell && headingCell.textContent.trim()) {
+    const heading = document.createElement('h3');
+    heading.textContent = headingCell.textContent.trim();
+    blockWrapper.append(heading);
+  }
+
+  const separator = document.createElement('div');
+  separator.classList.add('separator');
+  blockWrapper.append(separator);
+
+  // Body - CHECK 1.5: Richtext field uses innerHTML correctly.
+  if (bodyCell && bodyCell.innerHTML.trim()) {
+    const tileBody = document.createElement('div');
+    tileBody.classList.add('tile-body');
+    tileBody.innerHTML = bodyCell.innerHTML.trim();
+    blockWrapper.append(tileBody);
+  }
+
+  // CTA
+  const cta = document.createElement('div');
+  cta.classList.add('cta');
+  blockWrapper.append(cta);
+
+  const ctaLink = ctaLinkCell.querySelector('a');
+  if (ctaLink) {
+    const anchor = document.createElement('a');
+    anchor.href = ctaLink.href;
+    // CHECK 2: Interactivity - CTA is a simple link, no complex event listeners needed.
+    // Class names are from ORIGINAL HTML.
+    anchor.classList.add('btn', 'bg-primary-d2-blue');
+    anchor.textContent = ctaLabelCell.textContent.trim();
+    moveInstrumentation(ctaLinkCell, anchor);
+    cta.append(anchor);
+  }
+
+  block.replaceWith(section);
+}

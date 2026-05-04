@@ -1,0 +1,244 @@
+{
+  "definitions": [
+    {
+      "title": "Global-Footer",
+      "id": "global-footer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "global-footer",
+              "model": "global-footer",
+              "name": "Global-Footer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Social-Link",
+      "id": "footer-social-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-social-link",
+              "name": "Footer-Social-Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Navigation-Section",
+      "id": "footer-navigation-section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-navigation-section",
+              "name": "Footer-Navigation-Section"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Navigation-Link",
+      "id": "footer-navigation-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-navigation-link",
+              "name": "Footer-Navigation-Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Be-Related-Link",
+      "id": "be-related-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "be-related-link",
+              "name": "Be-Related-Link"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "global-footer",
+      "fields": [
+        {
+          "component": "container",
+          "item": "footer-social-link",
+          "label": "Social Links",
+          "name": "socialLinks"
+        },
+        {
+          "component": "container",
+          "item": "footer-navigation-section",
+          "label": "Footer Navigation Sections",
+          "name": "footerNavigationSections"
+        },
+        {
+          "component": "reference",
+          "label": "Footer Logo",
+          "name": "footerLogo",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Footer Address Link",
+          "name": "footerAddressLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Footer Phone",
+          "name": "footerPhone",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "be-related-link",
+          "label": "Also of Interest Links",
+          "name": "beRelatedLinks"
+        },
+        {
+          "component": "richtext",
+          "label": "Footer Legal Text",
+          "name": "footerLegal",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Welcome Title",
+          "name": "welcomeTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Welcome Link",
+          "name": "welcomeLink",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Welcome Description",
+          "name": "welcomeDescription",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Cookie Message",
+          "name": "cookieMessage",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Accept Cookie Button Label",
+          "name": "acceptCookieLabel",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-social-link",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Platform",
+          "name": "platform",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Navigation Hierarchy",
+          "name": "hierarchy-tree",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-navigation-section",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Section Title",
+          "name": "sectionTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "footer-navigation-link",
+          "label": "Links",
+          "name": "links"
+        }
+      ]
+    },
+    {
+      "id": "footer-navigation-link",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Link Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link URL",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "be-related-link",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Related Link Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Related Link URL",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "global-footer",
+      "components": [
+        "footer-social-link",
+        "footer-navigation-section",
+        "footer-navigation-link",
+        "be-related-link"
+      ]
+    }
+  ]
+}
