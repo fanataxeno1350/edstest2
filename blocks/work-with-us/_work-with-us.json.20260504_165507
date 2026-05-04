@@ -61,6 +61,12 @@
         },
         {
           "component": "text",
+          "label": "Image Alt Text",
+          "name": "imageAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
           "label": "Slide Title",
           "name": "title",
           "valueType": "string"
