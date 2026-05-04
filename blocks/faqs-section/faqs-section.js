@@ -10,88 +10,85 @@ export default function decorate(block) {
 
   const container = document.createElement('div');
   container.classList.add('container');
+  section.append(container);
 
-  // Heading
-  const sectionHeader = document.createElement('div');
-  sectionHeader.classList.add('section-header', 'text-center');
-  const heading = document.createElement('h2');
-  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.setAttribute('data-aos', 'fade-up');
-  
-  // Fix for CHECK 0: Avoid row.children[0] for heading
-  const headingCell = [...headingRow.children].find(cell => cell.textContent.trim() !== '');
-  if (headingCell) {
-    heading.textContent = headingCell.textContent.trim();
-    moveInstrumentation(headingCell, heading);
+  // Section Header
+  if (headingRow) {
+    const headingCell = headingRow.firstElementChild;
+    if (headingCell) {
+      const sectionHeader = document.createElement('div');
+      sectionHeader.classList.add('section-header', 'text-center');
+
+      const heading = document.createElement('h2');
+      heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+      heading.setAttribute('data-aos', 'fade-up');
+      heading.textContent = headingCell.textContent.trim();
+      moveInstrumentation(headingRow, heading); // Move instrumentation from headingRow to heading
+      sectionHeader.append(heading);
+      container.append(sectionHeader);
+    }
   }
-  sectionHeader.append(heading);
-  container.append(sectionHeader);
 
   // FAQs Accordion
-  const accoDiv = document.createElement('div');
-  accoDiv.classList.add('acco-div');
-  const ul = document.createElement('ul');
+  if (faqItemRows.length > 0) {
+    const accoDiv = document.createElement('div');
+    accoDiv.classList.add('acco-div');
 
-  faqItemRows.forEach((row, index) => {
-    // Fix for CHECK 0: Avoid row.children[n] for faq items
-    const cells = [...row.children];
-    const questionCell = cells.find(cell => !cell.querySelector('p') && !cell.querySelector('ul')); // Assuming question is plain text
-    const answerCell = cells.find(cell => cell.querySelector('p') || cell.querySelector('ul') || cell.innerHTML.trim() !== ''); // Assuming answer is richtext
+    const ul = document.createElement('ul');
 
-    const li = document.createElement('li');
-    li.classList.add('aos-init', 'aos-animate');
-    li.setAttribute('data-aos', 'fade-up');
-    moveInstrumentation(row, li);
+    faqItemRows.forEach((row, index) => {
+      // Use content detection for question and answer cells
+      const cells = [...row.children];
+      const questionCell = cells.find(cell => cell.textContent.trim() !== '' && !cell.querySelector('p'));
+      const answerCell = cells.find(cell => cell.querySelector('p') || cell.innerHTML.trim() !== '');
 
-    const h2 = document.createElement('h2');
-    h2.setAttribute('data-once', 'faqsAccordion');
-    if (questionCell) {
+      if (!questionCell || !answerCell) {
+        // Skip malformed rows
+        return;
+      }
+
+      const li = document.createElement('li');
+      li.classList.add('aos-init', 'aos-animate');
+      li.setAttribute('data-aos', 'fade-up');
+      if (index === 0) {
+        li.classList.add('active');
+      }
+
+      const h2 = document.createElement('h2');
       h2.textContent = questionCell.textContent.trim();
-      moveInstrumentation(questionCell, h2);
-    }
+      h2.setAttribute('data-once', 'faqsAccordion');
+      moveInstrumentation(questionCell, h2); // Move instrumentation from questionCell to h2
 
-    const accoContentDiv = document.createElement('div');
-    accoContentDiv.classList.add('acco-content-div');
-    if (answerCell) {
-      accoContentDiv.innerHTML = answerCell.innerHTML; // CHECK 1.5: Correctly using innerHTML for richtext
-      moveInstrumentation(answerCell, accoContentDiv);
-    }
+      const accoContentDiv = document.createElement('div');
+      accoContentDiv.classList.add('acco-content-div');
+      if (index === 0) {
+        accoContentDiv.classList.add('show');
+      }
+      accoContentDiv.innerHTML = answerCell.innerHTML;
+      moveInstrumentation(answerCell, accoContentDiv); // Move instrumentation from answerCell to accoContentDiv
 
-    li.append(h2, accoContentDiv);
-    ul.append(li);
+      h2.addEventListener('click', () => {
+        const isActive = li.classList.contains('active');
 
-    // CHECK 2: Interactivity - Accordion toggle
-    h2.addEventListener('click', () => {
-      const isActive = li.classList.contains('active');
-      ul.querySelectorAll('li').forEach((item) => {
-        item.classList.remove('active');
-        const contentDiv = item.querySelector('.acco-content-div');
-        if (contentDiv) {
-          contentDiv.classList.remove('show');
+        // Close all other open accordions
+        ul.querySelectorAll('li.active').forEach((activeLi) => {
+          activeLi.classList.remove('active');
+          activeLi.querySelector('.acco-content-div').classList.remove('show');
+        });
+
+        // Toggle current accordion
+        if (!isActive) {
+          li.classList.add('active');
+          accoContentDiv.classList.add('show');
         }
       });
 
-      if (!isActive) {
-        li.classList.add('active');
-        accoContentDiv.classList.add('show');
-      }
+      li.append(h2, accoContentDiv);
+      ul.append(li);
     });
+    accoDiv.append(ul);
+    container.append(accoDiv);
+  }
 
-    // Set the first item as active by default, matching original HTML
-    if (index === 0) {
-      li.classList.add('active');
-      accoContentDiv.classList.add('show');
-    }
-  });
-
-  accoDiv.append(ul);
-  container.append(accoDiv);
-  section.append(container);
   block.replaceWith(section);
-
-  section.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
 }

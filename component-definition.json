@@ -145,45 +145,60 @@
           }
         },
         {
-          "title": "Footer-Link-Block",
-          "id": "footer-link-block",
+          "title": "Footer-Menu-Block",
+          "id": "footer-menu-block",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-link-block",
-                  "name": "Footer-Link-Block"
+                  "model": "footer-menu-block",
+                  "name": "Footer-Menu-Block"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer-Sub-Link-Item",
-          "id": "footer-sub-link-item",
+          "title": "Footer-Menu-Item",
+          "id": "footer-menu-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-sub-link-item",
-                  "name": "Footer-Sub-Link-Item"
+                  "model": "footer-menu-item",
+                  "name": "Footer-Menu-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer-Secondary-Link",
-          "id": "footer-secondary-link",
+          "title": "Footer-Menu-Sub-Item",
+          "id": "footer-menu-sub-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-secondary-link",
-                  "name": "Footer-Secondary-Link"
+                  "model": "footer-menu-sub-item",
+                  "name": "Footer-Menu-Sub-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Secondary-Nav-Item",
+          "id": "footer-secondary-nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-secondary-nav-item",
+                  "name": "Footer-Secondary-Nav-Item"
                 }
               }
             }
@@ -221,15 +236,15 @@
           }
         },
         {
-          "title": "Embed-Widget",
-          "id": "embed-widget",
+          "title": "Elfsight-Widget",
+          "id": "elfsight-widget",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "embed-widget",
-                  "name": "Embed-Widget"
+                  "model": "elfsight-widget",
+                  "name": "Elfsight-Widget"
                 }
               }
             }
@@ -267,15 +282,15 @@
           }
         },
         {
-          "title": "Icon Nav Item",
-          "id": "icon-nav-item",
+          "title": "Icon Link Item",
+          "id": "icon-link-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "icon-nav-item",
-                  "name": "Icon Nav Item"
+                  "model": "icon-link-item",
+                  "name": "Icon Link Item"
                 }
               }
             }
@@ -344,15 +359,15 @@
           }
         },
         {
-          "title": "Performace-Driven-Card",
-          "id": "performace-driven-card",
+          "title": "Performance-Driven-Card",
+          "id": "performance-driven-card",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "performace-driven-card",
-                  "name": "Performace-Driven-Card"
+                  "model": "performance-driven-card",
+                  "name": "Performance-Driven-Card"
                 }
               }
             }
@@ -390,22 +405,22 @@
           }
         },
         {
-          "title": "Spotlight Quick Link",
-          "id": "spotlight-quick-link",
+          "title": "Quick Link Item",
+          "id": "quick-link-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "spotlight-quick-link",
-                  "name": "Spotlight Quick Link"
+                  "model": "quick-link-item",
+                  "name": "Quick Link Item"
                 }
               }
             }
           }
         },
         {
-          "title": "What-We-Do-Wrap",
+          "title": "What We Do Wrap",
           "id": "what-we-do-wrap",
           "plugins": {
             "xwalk": {
@@ -414,22 +429,22 @@
                 "template": {
                   "filter": "what-we-do-wrap",
                   "model": "what-we-do-wrap",
-                  "name": "What-We-Do-Wrap"
+                  "name": "What We Do Wrap"
                 }
               }
             }
           }
         },
         {
-          "title": "Business-Vertical-Item",
-          "id": "business-vertical-item",
+          "title": "Business Vertical",
+          "id": "business-vertical",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "business-vertical-item",
-                  "name": "Business-Vertical-Item"
+                  "model": "business-vertical",
+                  "name": "Business Vertical"
                 }
               }
             }

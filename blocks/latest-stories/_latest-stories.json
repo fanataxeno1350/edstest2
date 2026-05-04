@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Embed-Widget",
-      "id": "embed-widget",
+      "title": "Elfsight-Widget",
+      "id": "elfsight-widget",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "embed-widget",
-              "name": "Embed-Widget"
+              "model": "elfsight-widget",
+              "name": "Elfsight-Widget"
             }
           }
         }
@@ -53,21 +53,21 @@
       "fields": [
         {
           "component": "text",
-          "label": "Heading",
+          "label": "Section Heading",
           "name": "heading",
           "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "embed-widget",
-          "label": "Embedded Widgets",
-          "name": "widgets"
         },
         {
           "component": "container",
           "item": "story-item",
           "label": "Stories",
           "name": "stories"
+        },
+        {
+          "component": "container",
+          "item": "elfsight-widget",
+          "label": "Elfsight Widgets",
+          "name": "elfsightEmbeds"
         }
       ]
     },
@@ -88,8 +88,8 @@
         },
         {
           "component": "text",
-          "label": "Description",
-          "name": "description",
+          "label": "Story Text",
+          "name": "text",
           "valueType": "string"
         },
         {
@@ -99,7 +99,7 @@
           "valueType": "string"
         },
         {
-          "component": "date-time",
+          "component": "text",
           "label": "Date",
           "name": "date",
           "valueType": "string"
@@ -107,24 +107,24 @@
       ]
     },
     {
-      "id": "embed-widget",
+      "id": "elfsight-widget",
       "fields": [
         {
           "component": "text",
           "label": "Embed URL",
-          "name": "embed-url",
+          "name": "data-embed-url",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Embed Kind",
-          "name": "embed-kind",
+          "name": "data-embed-kind",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Embed Config",
-          "name": "embed-config",
+          "name": "data-embed-config",
           "valueType": "string"
         }
       ]
@@ -134,8 +134,8 @@
     {
       "id": "latest-stories",
       "components": [
-        "embed-widget",
-        "story-item"
+        "story-item",
+        "elfsight-widget"
       ]
     }
   ]

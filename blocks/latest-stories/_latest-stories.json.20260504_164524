@@ -1,46 +1,46 @@
 {
   "definitions": [
     {
-      "title": "Spotlight Home",
-      "id": "spotlight-home",
+      "title": "Latest-Stories",
+      "id": "latest-stories",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "spotlight-home",
-              "model": "spotlight-home",
-              "name": "Spotlight Home"
+              "filter": "latest-stories",
+              "model": "latest-stories",
+              "name": "Latest-Stories"
             }
           }
         }
       }
     },
     {
-      "title": "Spotlight Slide",
-      "id": "spotlight-slide",
+      "title": "Story-Item",
+      "id": "story-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "spotlight-slide",
-              "name": "Spotlight Slide"
+              "model": "story-item",
+              "name": "Story-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Quick Link Item",
-      "id": "quick-link-item",
+      "title": "Embed-Widget",
+      "id": "embed-widget",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "quick-link-item",
-              "name": "Quick Link Item"
+              "model": "embed-widget",
+              "name": "Embed-Widget"
             }
           }
         }
@@ -49,47 +49,41 @@
   ],
   "models": [
     {
-      "id": "spotlight-home",
+      "id": "latest-stories",
       "fields": [
         {
-          "component": "container",
-          "item": "spotlight-slide",
-          "label": "Spotlight Slides",
-          "name": "slides"
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
         },
         {
           "component": "container",
-          "item": "quick-link-item",
-          "label": "Quick Links",
-          "name": "quickLinks"
+          "item": "embed-widget",
+          "label": "Embedded Widgets",
+          "name": "widgets"
+        },
+        {
+          "component": "container",
+          "item": "story-item",
+          "label": "Stories",
+          "name": "stories"
         }
       ]
     },
     {
-      "id": "spotlight-slide",
+      "id": "story-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image",
+          "label": "Image",
           "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Image Alt Text",
-          "name": "imageAlt",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Small Text",
-          "name": "smallText",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Category",
+          "name": "category",
           "valueType": "string"
         },
         {
@@ -100,31 +94,37 @@
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
+          "label": "Read More Link",
+          "name": "link",
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
+          "component": "date-time",
+          "label": "Date",
+          "name": "date",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "quick-link-item",
+      "id": "embed-widget",
       "fields": [
         {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
+          "component": "text",
+          "label": "Embed URL",
+          "name": "embed-url",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Label",
-          "name": "label",
+          "label": "Embed Kind",
+          "name": "embed-kind",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Embed Config",
+          "name": "embed-config",
           "valueType": "string"
         }
       ]
@@ -132,10 +132,10 @@
   ],
   "filters": [
     {
-      "id": "spotlight-home",
+      "id": "latest-stories",
       "components": [
-        "spotlight-slide",
-        "quick-link-item"
+        "embed-widget",
+        "story-item"
       ]
     }
   ]

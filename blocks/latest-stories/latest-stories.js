@@ -2,123 +2,116 @@ import { createOptimizedPicture, loadScript } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const children = [...block.children];
+  const rows = [...block.children];
+  const sectionHeadingRow = rows.shift(); // First row is always the section heading
 
+  const section = document.createElement('section');
+  section.classList.add('section', 'grey-bg', 'latest-stories', 'home-stories');
+  moveInstrumentation(block, section);
+
+  // Section Header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
-
-  const headingRow = children.shift(); // First row is always the heading
-  const [headingCell] = [...headingRow.children]; // CRITICAL FIX: Use destructuring for fixed-field rows
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.textContent = headingCell.textContent.trim();
-  moveInstrumentation(headingRow, heading);
+  heading.setAttribute('data-aos', 'fade-up');
+  heading.setAttribute('data-aos-offset', '100');
+  heading.setAttribute('data-aos-duration', '650');
+  heading.setAttribute('data-aos-easing', 'ease-in-out');
+  // FIX: Use content detection for the heading cell
+  const headingCell = [...sectionHeadingRow.children].find(c => c.textContent.trim());
+  if (headingCell) {
+    heading.textContent = headingCell.textContent.trim();
+  }
   sectionHeader.append(heading);
+  section.append(sectionHeader);
 
-  const containerDiv = document.createElement('div');
-  containerDiv.classList.add('container', 'aos-init', 'aos-animate');
+  // Container for stories and embeds
+  const container = document.createElement('div');
+  container.classList.add('container', 'aos-init', 'aos-animate');
+  container.setAttribute('data-aos', 'fade-up');
+  container.setAttribute('data-aos-offset', '100');
+  container.setAttribute('data-aos-duration', '650');
+  container.setAttribute('data-aos-easing', 'ease-in-out');
 
-  const sliderWrap = document.createElement('div');
-  sliderWrap.classList.add('flickity-slider-mobile-wrap', 'grid-layout');
-  sliderWrap.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "watchCSS": true, "adaptiveHeight": true }');
+  const flickitySliderWrap = document.createElement('div');
+  flickitySliderWrap.classList.add('flickity-slider-mobile-wrap', 'grid-layout');
+  flickitySliderWrap.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "watchCSS": true, "adaptiveHeight": true }');
 
   const slidesContainer = document.createElement('div');
-  slidesContainer.classList.add('slides');
+  slidesContainer.classList.add('slides'); // This is the container for all individual slides
 
-  children.forEach((row) => {
+  rows.forEach((row) => {
     const cells = [...row.children];
-    if (cells.length === 3) { // Embed-Widget item
-      const [embedUrlCell, embedKindCell, embedConfigCell] = cells;
-      const kind = embedKindCell.textContent.trim();
+    if (cells.length === 5) { // Story Item
+      const [imageCell, categoryCell, textCell, linkCell, dateCell] = cells;
 
-      const embedDiv = document.createElement('div');
-      moveInstrumentation(row, embedDiv);
+      const slide = document.createElement('div');
+      slide.classList.add('slides'); // Each individual slide also has the 'slides' class
+      moveInstrumentation(row, slide);
 
-      if (kind === 'elfsight-widget') {
-        try {
-          const config = JSON.parse(embedConfigCell.textContent.trim());
-          if (config.app_id) {
-            embedDiv.classList.add(`elfsight-app-${config.app_id}`);
-            // Dynamically load the elfsight platform script
-            loadScript('https://static.elfsight.com/platform/platform.js');
-          }
-        } catch (e) {
-          // eslint-disable-next-line no-console
-          console.error('Failed to parse Elfsight config', e);
-          embedDiv.textContent = '[elfsight-widget error]';
-        }
-      } else {
-        // Fallback for other embed types
-        embedDiv.setAttribute('data-embed-kind', kind);
-        embedDiv.setAttribute('data-embed-url', embedUrlCell.textContent.trim());
-        embedDiv.textContent = `[${kind} placeholder]`;
-      }
-
-      slidesContainer.append(embedDiv);
-    } else if (cells.length === 5) { // Story-Item
-      const [imageCell, categoryCell, descriptionCell, linkCell, dateCell] = cells;
-
-      const slideDiv = document.createElement('div');
-      slideDiv.classList.add('slides'); // This class is for the outer slide container, not individual slide item
-
-      const wrapDiv = document.createElement('div');
-      wrapDiv.classList.add('wrap');
+      const wrap = document.createElement('div');
+      wrap.classList.add('wrap');
 
       const imageWrap = document.createElement('div');
       imageWrap.classList.add('image-wrap');
       const picture = imageCell.querySelector('picture');
       if (picture) {
         const img = picture.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          optimizedPic.querySelector('img').classList.add('thumb-img', 'img-fluid');
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          imageWrap.append(optimizedPic);
-        }
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        imageWrap.append(optimizedPic);
       }
+      wrap.append(imageWrap);
 
       const contentWrap = document.createElement('div');
       contentWrap.classList.add('content-wrap');
 
-      const categoryDiv = document.createElement('div');
-      categoryDiv.classList.add('category');
-      categoryDiv.textContent = categoryCell.textContent.trim();
+      const category = document.createElement('div');
+      category.classList.add('category');
+      category.textContent = categoryCell.textContent.trim();
+      contentWrap.append(category);
 
-      const textDiv = document.createElement('div');
-      textDiv.classList.add('text');
-      textDiv.textContent = descriptionCell.textContent.trim();
+      const text = document.createElement('div');
+      text.classList.add('text');
+      text.textContent = textCell.textContent.trim();
+      contentWrap.append(text);
 
-      const readMoreLink = document.createElement('a');
-      readMoreLink.classList.add('btn', 'btn-link');
+      const link = document.createElement('a');
+      link.classList.add('btn', 'btn-link');
       const foundLink = linkCell.querySelector('a');
       if (foundLink) {
-        readMoreLink.href = foundLink.href; // CRITICAL FIX: Read href from the <a> tag for aem-content type
+        link.href = foundLink.href; // FIX: Ensure href is read from the found <a> tag
       }
-      readMoreLink.textContent = 'Read more';
+      link.textContent = 'Read more'; // Hardcoded as per original HTML
+      contentWrap.append(link);
 
-      const dateDiv = document.createElement('div');
-      dateDiv.classList.add('date');
-      const timeElement = document.createElement('time');
-      timeElement.setAttribute('datetime', dateCell.textContent.trim()); // Assuming date-time field provides ISO format
-      timeElement.textContent = new Date(dateCell.textContent.trim()).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      });
-      dateDiv.append(timeElement);
+      const date = document.createElement('div');
+      date.classList.add('date');
+      date.textContent = dateCell.textContent.trim();
+      contentWrap.append(date);
 
-      contentWrap.append(categoryDiv, textDiv, readMoreLink, dateDiv);
-      wrapDiv.append(imageWrap, contentWrap);
-      slideDiv.append(wrapDiv);
-      moveInstrumentation(row, slideDiv);
-      slidesContainer.append(slideDiv);
+      wrap.append(contentWrap);
+      slide.append(wrap);
+      slidesContainer.append(slide);
+    } else if (cells.length === 3) { // Elfsight Widget
+      const [urlCell, kindCell, configCell] = cells;
+      const el = document.createElement('div');
+      moveInstrumentation(row, el);
+      const config = JSON.parse(configCell.textContent.trim());
+      el.classList.add(`elfsight-app-${config.app_id}`);
+      el.dataset.embedKind = kindCell.textContent.trim();
+      el.dataset.embedUrl = urlCell.textContent.trim();
+      el.dataset.embedConfig = configCell.textContent.trim();
+
+      // Load elfsight platform
+      loadScript('https://static.elfsight.com/platform/platform.js');
+      slidesContainer.append(el);
     }
   });
 
-  sliderWrap.append(slidesContainer);
-  containerDiv.append(sliderWrap);
-
-  block.innerHTML = ''; // Clear original block content
-  block.classList.add('section', 'grey-bg', 'latest-stories', 'home-stories'); // Add section classes to the block itself
-  block.append(sectionHeader, containerDiv);
+  flickitySliderWrap.append(slidesContainer);
+  container.append(flickitySliderWrap);
+  section.append(container);
+  block.replaceWith(section);
 }

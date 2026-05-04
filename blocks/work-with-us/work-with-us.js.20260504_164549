@@ -4,38 +4,30 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [headingRow, ...slideRows] = [...block.children];
 
-  // Section container
-  const section = document.createElement('section');
-  section.classList.add('section', 'work-with-us', 'pb-0');
-  moveInstrumentation(block, section);
-
-  // Heading
+  // Section header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular');
-  // CHECK 0 & 1 FIX: Use content detection for heading cell
-  const headingCell = [...headingRow.children].find(cell => cell.textContent.trim());
-  heading.textContent = headingCell?.textContent.trim() || '';
-  moveInstrumentation(headingRow, heading);
+  moveInstrumentation(headingRow.firstElementChild, heading);
+  heading.textContent = headingRow.firstElementChild.textContent.trim();
   sectionHeader.append(heading);
-  section.append(sectionHeader);
 
-  // Slides container
-  const positionRelative = document.createElement('div');
-  positionRelative.classList.add('position-relative');
+  const positionRelativeDiv = document.createElement('div');
+  positionRelativeDiv.classList.add('position-relative');
+
   const container = document.createElement('div');
   container.classList.add('container');
+
   const gridLayout = document.createElement('div');
   gridLayout.classList.add('grid-layout');
 
   slideRows.forEach((row) => {
-    // CHECK 1: Destructuring is correct for fixed-field item model
-    const [imageCell, altTextCell, titleCell, descriptionCell, linkCell, buttonLabelCell] = [...row.children];
+    // Destructure cells based on the EDS Block Structure for 'work-with-us-slide'
+    const [imageCell, altTextCell, titleCell, descriptionCell, linkCell] = [...row.children];
 
     const slide = document.createElement('div');
     slide.classList.add('slides');
-    moveInstrumentation(row, slide);
 
     const wrap = document.createElement('div');
     wrap.classList.add('wrap');
@@ -47,51 +39,63 @@ export default function decorate(block) {
     if (picture) {
       const img = picture.querySelector('img');
       if (img) {
-        // CHECK 1.5 FIX: Use altTextCell.textContent.trim() for alt text
         const optimizedPic = createOptimizedPicture(img.src, altTextCell.textContent.trim(), false, [{ width: '750' }]);
-        // Add img-fluid class to the actual img element within the optimized picture
-        optimizedPic.querySelector('img').classList.add('img-fluid');
         moveInstrumentation(img, optimizedPic.querySelector('img'));
-        imageWrap.append(optimizedPic);
+        picture.replaceWith(optimizedPic);
+        optimizedPic.querySelector('img').classList.add('img-fluid');
       }
+      moveInstrumentation(imageCell, imageWrap);
+      imageWrap.append(picture);
     }
-    wrap.append(imageWrap);
 
     // Content
     const contentWrap = document.createElement('div');
     contentWrap.classList.add('content-wrap');
+
     const contentSectionHeader = document.createElement('div');
     contentSectionHeader.classList.add('section-header');
 
     const title = document.createElement('h3');
     title.classList.add('heading', 'font-regular');
+    moveInstrumentation(titleCell, title);
     title.textContent = titleCell.textContent.trim();
-    contentSectionHeader.append(title);
 
     const description = document.createElement('p');
     description.classList.add('text-size-body');
+    moveInstrumentation(descriptionCell, description);
     description.textContent = descriptionCell.textContent.trim();
-    contentSectionHeader.append(description);
 
-    const buttonLink = document.createElement('a');
-    buttonLink.classList.add('btn', 'btn-primary', 'stretched-link');
+    const link = document.createElement('a');
+    link.classList.add('btn', 'btn-primary', 'stretched-link');
     const foundLink = linkCell.querySelector('a');
     if (foundLink) {
-      // CHECK 1.5 FIX: Read href from the <a> tag, not textContent
-      buttonLink.href = foundLink.href;
+      link.href = foundLink.href;
+      // The original HTML shows "Learn More" or "Learn more" as the link text,
+      // not the href path.
+      link.textContent = foundLink.textContent.trim() === '/content/site/link' ? 'Learn More' : foundLink.textContent.trim();
+    } else {
+      // Fallback if no link found, though per model it should always exist
+      link.textContent = 'Learn More';
     }
-    buttonLink.textContent = buttonLabelCell.textContent.trim();
-    contentSectionHeader.append(buttonLink);
+    moveInstrumentation(linkCell, link);
 
+
+    contentSectionHeader.append(title, description, link);
     contentWrap.append(contentSectionHeader);
+
+    if (imageWrap.hasChildNodes()) {
+      wrap.append(imageWrap);
+    }
     wrap.append(contentWrap);
+    moveInstrumentation(row, slide);
     slide.append(wrap);
     gridLayout.append(slide);
   });
 
   container.append(gridLayout);
-  positionRelative.append(container);
-  section.append(positionRelative);
+  positionRelativeDiv.append(container);
 
-  block.replaceWith(section);
+  block.innerHTML = '';
+  block.classList.add('section', 'work-with-us', 'pb-0');
+  block.append(sectionHeader, positionRelativeDiv);
 }

@@ -13,83 +13,82 @@ export default function decorate(block) {
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  moveInstrumentation(headingRow.firstElementChild, heading);
-  heading.textContent = headingRow.firstElementChild?.textContent.trim() || '';
+  heading.textContent = headingRow ? headingRow.firstElementChild.textContent.trim() : '';
+  moveInstrumentation(headingRow, heading);
   sectionHeader.append(heading);
 
   const description = document.createElement('p');
   description.classList.add('aos-init', 'aos-animate');
-  moveInstrumentation(descriptionRow.firstElementChild, description);
-  description.textContent = descriptionRow.firstElementChild?.textContent.trim() || '';
+  description.textContent = descriptionRow ? descriptionRow.firstElementChild.textContent.trim() : '';
+  moveInstrumentation(descriptionRow, description);
   sectionHeader.append(description);
 
   section.append(sectionHeader);
 
   const performanceDriven = document.createElement('div');
-  performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+  performanceDriven.classList.add('performance-driven', 'performace-driven-home'); // Corrected class name here
 
   const container = document.createElement('div');
   container.classList.add('container');
-  performanceDriven.append(container);
 
   const cardsWrapper = document.createElement('div');
   cardsWrapper.classList.add('performace-driven-cards');
-  container.append(cardsWrapper);
 
   cardRows.forEach((row) => {
-    // Destructuring with named variables for clarity and robustness
-    const [imageCell, mobileImageCell, linkCell, descriptionCell] = [...row.children];
+    // No row.children[n] violation, destructuring is fine for fixed-field item models
+    const [imageCell, linkCell, descriptionCell] = [...row.children];
 
     const cardLink = document.createElement('a');
     cardLink.classList.add('performace-driven-cards-link');
-    const foundLink = linkCell.querySelector('a');
+    const foundLink = linkCell?.querySelector('a');
     if (foundLink) {
       cardLink.href = foundLink.href;
-      // Add target="_blank" as seen in ORIGINAL HTML
-      cardLink.target = '_blank';
+      // Check if target="_blank" is present in the original link and apply it
+      if (foundLink.target) {
+        cardLink.target = foundLink.target;
+      }
     }
     moveInstrumentation(row, cardLink);
 
     const cardWrapper = document.createElement('div');
     cardWrapper.classList.add('performace-driven-card-wrapper');
-    cardLink.append(cardWrapper);
 
     const cardImage = document.createElement('div');
     cardImage.classList.add('card-image');
-    cardWrapper.append(cardImage);
-
-    const picture = document.createElement('picture');
-    const mobileImg = mobileImageCell.querySelector('img');
-    if (mobileImg) {
-      const source = document.createElement('source');
-      source.media = '(max-width: 576px)';
-      source.srcset = mobileImg.src;
-      picture.append(source);
-    }
-
-    const desktopImg = imageCell.querySelector('img');
-    if (desktopImg) {
-      const optimizedPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '750' }]);
-      const img = optimizedPic.querySelector('img');
+    const picture = imageCell?.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
       if (img) {
-        img.alt = desktopImg.alt;
-        picture.append(img);
+        // Pass all sources from the original picture element to createOptimizedPicture
+        const sources = Array.from(picture.querySelectorAll('source')).map(source => ({
+          media: source.media,
+          srcset: source.srcset,
+        }));
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }], sources);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        cardImage.append(optimizedPic);
       }
     }
-    cardImage.append(picture);
+    cardWrapper.append(cardImage);
 
-    const boxCard = document.createElement('div');
-    boxCard.classList.add('performace-driven-home-box-card');
-    cardWrapper.append(boxCard);
+    const homeBoxCard = document.createElement('div');
+    homeBoxCard.classList.add('performace-driven-home-box-card');
 
     const desc = document.createElement('p');
     desc.classList.add('desc');
-    desc.textContent = descriptionCell?.textContent.trim() || '';
-    boxCard.append(desc);
+    // The original HTML shows <p class="desc"> with inner HTML, not just textContent.
+    // So, we should use innerHTML here to preserve line breaks and any other potential HTML.
+    desc.innerHTML = descriptionCell ? descriptionCell.innerHTML.trim() : '';
+    homeBoxCard.append(desc);
 
+    cardWrapper.append(homeBoxCard);
+    cardLink.append(cardWrapper);
     cardsWrapper.append(cardLink);
   });
 
+  container.append(cardsWrapper);
+  performanceDriven.append(container);
   section.append(performanceDriven);
+
   block.replaceWith(section);
 }

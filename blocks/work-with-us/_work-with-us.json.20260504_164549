@@ -38,7 +38,7 @@
       "fields": [
         {
           "component": "text",
-          "label": "Heading",
+          "label": "Section Heading",
           "name": "heading",
           "valueType": "string"
         },
@@ -62,7 +62,7 @@
         {
           "component": "text",
           "label": "Image Alt Text",
-          "name": "altText",
+          "name": "alt",
           "valueType": "string"
         },
         {
@@ -79,14 +79,8 @@
         },
         {
           "component": "aem-content",
-          "label": "Button Link",
+          "label": "Link",
           "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Button Label",
-          "name": "buttonLabel",
           "valueType": "string"
         }
       ]
