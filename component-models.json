@@ -146,7 +146,7 @@
     "fields": [
       {
         "component": "text",
-        "label": "Section Heading",
+        "label": "Heading",
         "name": "heading",
         "valueType": "string"
       },
@@ -198,15 +198,15 @@
       },
       {
         "component": "container",
-        "item": "footer-menu-block",
-        "label": "Footer Menu Blocks",
-        "name": "footerMenuBlocks"
+        "item": "footer-link-section",
+        "label": "Footer Link Sections",
+        "name": "footerLinkSections"
       },
       {
         "component": "container",
-        "item": "footer-secondary-nav-item",
-        "label": "Footer Secondary Navigation",
-        "name": "footerSecondaryNav"
+        "item": "secondary-nav-item",
+        "label": "Secondary Navigation",
+        "name": "secondaryNav"
       },
       {
         "component": "text",
@@ -234,40 +234,40 @@
     ]
   },
   {
-    "id": "footer-menu-block",
+    "id": "footer-link-section",
     "fields": [
       {
         "component": "text",
-        "label": "Block Title",
-        "name": "blockTitle",
+        "label": "Section Label",
+        "name": "sectionLabel",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Block Title Link",
-        "name": "blockTitleLink",
+        "label": "Section Link",
+        "name": "sectionLink",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-menu-item",
-        "label": "Menu Items",
-        "name": "menuItems"
+        "item": "footer-link-item",
+        "label": "Section Links",
+        "name": "sectionLinks"
       }
     ]
   },
   {
-    "id": "footer-menu-item",
+    "id": "footer-link-item",
     "fields": [
       {
         "component": "text",
-        "label": "Menu Item Label",
+        "label": "Link Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Menu Item Link",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       },
@@ -280,17 +280,17 @@
     ]
   },
   {
-    "id": "footer-secondary-nav-item",
+    "id": "secondary-nav-item",
     "fields": [
       {
         "component": "text",
-        "label": "Secondary Nav Label",
+        "label": "Link Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Secondary Nav Link",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       }
@@ -301,26 +301,26 @@
     "fields": [
       {
         "component": "text",
-        "label": "Section Heading",
+        "label": "Heading",
         "name": "heading",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "story-item",
+        "item": "news-story-item",
         "label": "Stories",
         "name": "stories"
       },
       {
         "component": "container",
         "item": "elfsight-widget",
-        "label": "Elfsight Widgets",
-        "name": "elfsightEmbeds"
+        "label": "External Embeds",
+        "name": "embeds"
       }
     ]
   },
   {
-    "id": "story-item",
+    "id": "news-story-item",
     "fields": [
       {
         "component": "reference",
@@ -444,23 +444,34 @@
         "label": "Navigation Hierarchy",
         "name": "hierarchy-tree",
         "valueType": "string"
-      },
+      }
+    ]
+  },
+  {
+    "id": "press-release-item",
+    "fields": [
       {
-        "component": "text",
-        "label": "Mega Menu Left Heading",
-        "name": "left-heading",
+        "component": "aem-content",
+        "label": "Press Release Link",
+        "name": "link",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Mega Menu Left Description",
-        "name": "left-desc",
+        "label": "Title",
+        "name": "title",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Mega Menu Left Subdescription",
-        "name": "left-subdesc",
+        "label": "Date",
+        "name": "date",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Category",
+        "name": "category",
         "valueType": "string"
       }
     ]
@@ -472,35 +483,6 @@
         "component": "aem-content",
         "label": "Link",
         "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "press-release-item",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "Press Release Link",
-        "name": "press-link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Press Release Title",
-        "name": "press-title",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Press Release Date",
-        "name": "press-date",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Press Release Topic",
-        "name": "press-topic",
         "valueType": "string"
       }
     ]
@@ -765,14 +747,14 @@
       },
       {
         "component": "container",
-        "item": "work-with-us-slide",
-        "label": "Slides",
-        "name": "slides"
+        "item": "work-with-us-item",
+        "label": "Work With Us Slides",
+        "name": "items"
       }
     ]
   },
   {
-    "id": "work-with-us-slide",
+    "id": "work-with-us-item",
     "fields": [
       {
         "component": "reference",
@@ -782,7 +764,13 @@
       },
       {
         "component": "text",
-        "label": "Slide Title",
+        "label": "Image Alt Text",
+        "name": "altText",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Card Title",
         "name": "title",
         "valueType": "string"
       },
@@ -794,14 +782,14 @@
       },
       {
         "component": "aem-content",
-        "label": "Button Link",
-        "name": "link",
+        "label": "CTA Link",
+        "name": "ctaLink",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Button Label",
-        "name": "linkLabel",
+        "label": "CTA Label",
+        "name": "ctaLabel",
         "valueType": "string"
       }
     ]

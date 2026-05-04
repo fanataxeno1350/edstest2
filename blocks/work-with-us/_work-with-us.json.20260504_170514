@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Work-With-Us-Item",
-      "id": "work-with-us-item",
+      "title": "Work-With-Us-Slide",
+      "id": "work-with-us-slide",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "work-with-us-item",
-              "name": "Work-With-Us-Item"
+              "model": "work-with-us-slide",
+              "name": "Work-With-Us-Slide"
             }
           }
         }
@@ -44,14 +44,14 @@
         },
         {
           "component": "container",
-          "item": "work-with-us-item",
-          "label": "Work With Us Slides",
-          "name": "items"
+          "item": "work-with-us-slide",
+          "label": "Slides",
+          "name": "slides"
         }
       ]
     },
     {
-      "id": "work-with-us-item",
+      "id": "work-with-us-slide",
       "fields": [
         {
           "component": "reference",
@@ -61,13 +61,7 @@
         },
         {
           "component": "text",
-          "label": "Image Alt Text",
-          "name": "altText",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Card Title",
+          "label": "Slide Title",
           "name": "title",
           "valueType": "string"
         },
@@ -79,14 +73,14 @@
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
+          "label": "Button Link",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
+          "label": "Button Label",
+          "name": "linkLabel",
           "valueType": "string"
         }
       ]
@@ -96,7 +90,7 @@
     {
       "id": "work-with-us",
       "components": [
-        "work-with-us-item"
+        "work-with-us-slide"
       ]
     }
   ]

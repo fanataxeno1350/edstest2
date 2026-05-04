@@ -38,15 +38,15 @@
     "id": "footer-main",
     "components": [
       "social-link-item",
-      "footer-menu-block",
-      "footer-menu-item",
-      "footer-secondary-nav-item"
+      "footer-link-section",
+      "footer-link-item",
+      "secondary-nav-item"
     ]
   },
   {
     "id": "latest-stories",
     "components": [
-      "story-item",
+      "news-story-item",
       "elfsight-widget"
     ]
   },
@@ -86,7 +86,7 @@
   {
     "id": "work-with-us",
     "components": [
-      "work-with-us-slide"
+      "work-with-us-item"
     ]
   }
 ]

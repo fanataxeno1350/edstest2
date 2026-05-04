@@ -2,109 +2,93 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const rows = [...block.children];
-  const sectionHeadingRow = rows.shift(); // First row is the section heading
+  const children = [...block.children];
 
-  block.classList.add('section', 'work-with-us', 'pb-0');
+  const sectionHeaderDiv = document.createElement('div');
+  sectionHeaderDiv.classList.add('section-header', 'text-center');
 
-  // Section Header
-  const sectionHeader = document.createElement('div');
-  sectionHeader.classList.add('section-header', 'text-center');
-  moveInstrumentation(sectionHeadingRow, sectionHeader);
-
-  const heading = document.createElement('h2');
-  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.textContent = sectionHeadingRow.firstElementChild?.textContent.trim() || '';
-  sectionHeader.append(heading);
-  block.prepend(sectionHeader);
-
-  // Slides Container
-  const positionRelative = document.createElement('div');
-  positionRelative.classList.add('position-relative', 'aos-init', 'aos-animate');
-
-  const container = document.createElement('div');
-  container.classList.add('container');
-  positionRelative.append(container);
-
-  const gridLayout = document.createElement('div');
-  gridLayout.classList.add('grid-layout');
-  container.append(gridLayout);
-
-  rows.forEach((row) => {
-    const cells = [...row.children];
-
-    // Content detection for cells based on BlockJson and EDS structure
-    const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    const otherCells = cells.filter(cell => cell !== imageCell && cell !== linkCell);
-
-    // Assuming order for otherCells: title, description, linkLabel
-    const titleCell = otherCells[0];
-    const descriptionCell = otherCells[1];
-    const linkLabelCell = otherCells[2];
-
-    const slide = document.createElement('div');
-    slide.classList.add('slides');
-    moveInstrumentation(row, slide);
-
-    const wrap = document.createElement('div');
-    wrap.classList.add('wrap');
-    slide.append(wrap);
-
-    // Image
-    if (imageCell) {
-      const imageWrap = document.createElement('div');
-      imageWrap.classList.add('image-wrap');
-      const picture = imageCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          picture.replaceWith(optimizedPic);
-          optimizedPic.querySelector('img').classList.add('img-fluid');
-        }
-        imageWrap.append(picture);
-      }
-      wrap.append(imageWrap);
+  const headingRow = children.shift();
+  if (headingRow) {
+    const headingCell = headingRow.querySelector('div');
+    if (headingCell) {
+      const heading = document.createElement('h2');
+      heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+      heading.textContent = headingCell.textContent.trim();
+      moveInstrumentation(headingRow, heading);
+      sectionHeaderDiv.appendChild(heading);
     }
+  }
 
-    // Content
-    const contentWrap = document.createElement('div');
-    contentWrap.classList.add('content-wrap');
-    wrap.append(contentWrap);
+  const positionRelativeDiv = document.createElement('div');
+  positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
 
-    const contentHeader = document.createElement('div');
-    contentHeader.classList.add('section-header');
-    contentWrap.append(contentHeader);
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
 
-    if (titleCell) {
-      const title = document.createElement('h3');
-      title.classList.add('heading', 'font-regular');
-      title.textContent = titleCell.textContent.trim();
-      contentHeader.append(title);
-    }
+  const gridLayoutDiv = document.createElement('div');
+  gridLayoutDiv.classList.add('grid-layout');
 
-    if (descriptionCell) {
-      const description = document.createElement('p');
-      description.classList.add('text-size-body');
-      description.textContent = descriptionCell.textContent.trim();
-      contentHeader.append(description);
-    }
+  children.forEach((row) => {
+    const [imageCell, altTextCell, titleCell, descriptionCell, ctaLinkCell, ctaLabelCell] = [...row.children];
 
-    if (linkCell) {
-      const linkElement = linkCell.querySelector('a');
-      if (linkElement) {
-        const button = document.createElement('a');
-        button.classList.add('btn', 'btn-primary', 'stretched-link');
-        button.href = linkElement.href; // Read href from the <a> tag
-        button.textContent = linkLabelCell?.textContent.trim() || ''; // Use linkLabelCell for button text
-        contentHeader.append(button);
+    const slidesDiv = document.createElement('div');
+    slidesDiv.classList.add('slides');
+
+    const wrapDiv = document.createElement('div');
+    wrapDiv.classList.add('wrap');
+
+    const imageWrapDiv = document.createElement('div');
+    imageWrapDiv.classList.add('image-wrap');
+
+    const picture = imageCell?.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, altTextCell?.textContent.trim() || img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        imageWrapDiv.appendChild(optimizedPic);
+        optimizedPic.querySelector('img').classList.add('img-fluid');
       }
     }
+    wrapDiv.appendChild(imageWrapDiv);
 
-    gridLayout.append(slide);
+    const contentWrapDiv = document.createElement('div');
+    contentWrapDiv.classList.add('content-wrap');
+
+    const cardSectionHeaderDiv = document.createElement('div');
+    cardSectionHeaderDiv.classList.add('section-header');
+
+    const cardTitle = document.createElement('h3');
+    cardTitle.classList.add('heading', 'font-regular');
+    cardTitle.textContent = titleCell?.textContent.trim() || '';
+    cardSectionHeaderDiv.appendChild(cardTitle);
+
+    const description = document.createElement('p');
+    description.classList.add('text-size-body');
+    description.textContent = descriptionCell?.textContent.trim() || '';
+    cardSectionHeaderDiv.appendChild(description);
+
+    const ctaLink = document.createElement('a');
+    ctaLink.classList.add('btn', 'btn-primary', 'stretched-link');
+    const foundLink = ctaLinkCell?.querySelector('a');
+    if (foundLink) {
+      ctaLink.href = foundLink.href;
+    }
+    ctaLink.textContent = ctaLabelCell?.textContent.trim() || '';
+    cardSectionHeaderDiv.appendChild(ctaLink);
+
+    contentWrapDiv.appendChild(cardSectionHeaderDiv);
+    wrapDiv.appendChild(contentWrapDiv);
+    slidesDiv.appendChild(wrapDiv);
+    gridLayoutDiv.appendChild(slidesDiv);
+    moveInstrumentation(row, slidesDiv);
   });
 
-  block.append(positionRelative);
+  containerDiv.appendChild(gridLayoutDiv);
+  positionRelativeDiv.appendChild(containerDiv);
+
+  block.innerHTML = '';
+  block.classList.add('section', 'work-with-us', 'pb-0');
+  block.appendChild(sectionHeaderDiv);
+  block.appendChild(positionRelativeDiv);
 }
