@@ -7,103 +7,115 @@ export default function decorate(block) {
   const blockWrapper = document.createElement('div');
   blockWrapper.classList.add('block-wrapper');
 
-  // Find heading and description rows using content detection
-  const headingRow = children.find(row => row.querySelector('div')?.textContent.trim() && !row.querySelector('p'));
-  const descriptionRow = children.find(row => row.querySelector('p'));
+  // Find heading and description cells using content detection
+  // Heading is the first row with a single text cell
+  const headingRow = children.find(row => row.children.length === 1 && !row.querySelector('p') && !row.querySelector('picture') && !row.querySelector('a'));
+  const headingCell = headingRow ? [...headingRow.children][0] : null;
 
-  if (headingRow) {
-    moveInstrumentation(headingRow, blockWrapper);
+  if (headingCell) {
     const heading = document.createElement('h3');
-    heading.textContent = headingRow.querySelector('div').textContent.trim();
+    heading.textContent = headingCell.textContent.trim();
+    moveInstrumentation(headingCell, heading);
     blockWrapper.append(heading);
-
-    const separator = document.createElement('div');
-    separator.classList.add('separator');
-    blockWrapper.append(separator);
+    headingRow.remove(); // Remove processed row from children
   }
 
-  if (descriptionRow) {
-    const description = document.createElement('p'); // Original HTML uses <p> for description
-    description.innerHTML = descriptionRow.querySelector('div').innerHTML;
+  // Separator
+  const separator = document.createElement('div');
+  separator.classList.add('separator');
+  blockWrapper.append(separator);
+
+  // Description is the first remaining row with a single richtext cell (contains <p>)
+  const descriptionRow = children.find(row => row.children.length === 1 && row.querySelector('p'));
+  const descriptionCell = descriptionRow ? [...descriptionRow.children][0] : null;
+
+  if (descriptionCell) {
+    const description = document.createElement('div');
+    description.innerHTML = descriptionCell.innerHTML;
+    moveInstrumentation(descriptionCell, description);
     blockWrapper.append(description);
+    descriptionRow.remove(); // Remove processed row from children
   }
 
-  block.innerHTML = '';
-  block.append(blockWrapper);
+  block.prepend(blockWrapper);
 
   const socialLinksContainer = document.createElement('div');
   socialLinksContainer.classList.add('row', 'd-flex', 'justify-content-left');
 
-  // Filter out the heading and description rows from the children to process item rows
-  const itemRows = children.filter(row => row !== headingRow && row !== descriptionRow);
+  // All remaining rows are item rows
+  const itemRows = [...block.children]; // Re-evaluate children after removing heading/description
 
   itemRows.forEach((row) => {
     const cells = [...row.children];
+    if (cells.length === 3) {
+      // Differentiate between social-link-item and walls-io-embed
+      // social-link-item has a picture in the first cell and an anchor in the second
+      // walls-io-embed has text content in all cells, and the second cell's text is 'walls-io'
+      const isSocialLinkItem = cells[0].querySelector('picture') && cells[1].querySelector('a');
+      const isWallsIoEmbed = cells[1].textContent.trim() === 'walls-io';
 
-    // Detect if it's a social-link or walls-embed based on content
-    // Social-link has an image/picture in the first cell and a link in the second
-    const isSocialLink = cells.length === 3 && (cells[0].querySelector('picture') || cells[0].querySelector('img')) && cells[1].querySelector('a');
-    // Walls-embed has 3 cells and the second cell's text content might indicate an embed (though not strictly necessary for detection if structure is distinct)
-    const isWallsEmbed = cells.length === 3 && !isSocialLink; // If it's not a social link and has 3 cells, assume it's an embed
+      if (isSocialLinkItem) {
+        // This is a social-link-item
+        const [iconCell, linkCell, labelCell] = cells;
 
-    if (isSocialLink) {
-      const [iconCell, linkCell, labelCell] = cells;
+        const col = document.createElement('div');
+        col.classList.add('col-sm-4', 'col-md-2', 'col-lg-1', 'text-align-center');
+        col.style.paddingTop = '25px'; // Copy inline style from original HTML
 
-      const col = document.createElement('div');
-      col.classList.add('col-sm-4', 'col-md-2', 'col-lg-1', 'text-align-center');
-      col.style.paddingTop = '25px';
-
-      const link = document.createElement('a');
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        link.href = foundLink.href; // Correctly get href from the <a> tag
-        link.target = '_blank';
-        link.rel = 'noopener';
-      }
-      link.ariaLabel = `${labelCell.textContent.trim()} - open in a new tab`;
-
-      const picture = iconCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          link.append(optimizedPic);
+        const anchor = document.createElement('a');
+        const foundLink = linkCell.querySelector('a');
+        if (foundLink) {
+          anchor.href = foundLink.href; // Read href from the <a> tag as per aem-content type
+          anchor.rel = 'noopener';
+          anchor.target = '_blank';
+          anchor.setAttribute('aria-label', `${labelCell.textContent.trim()} - open in a new tab`);
         }
+
+        const picture = iconCell.querySelector('picture');
+        if (picture) {
+          const img = picture.querySelector('img');
+          if (img) {
+            const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+            moveInstrumentation(img, optimizedPic.querySelector('img'));
+            anchor.append(optimizedPic);
+          }
+        }
+
+        const h6 = document.createElement('h6');
+        h6.style.lineHeight = '18px';
+        h6.style.marginTop = '10px';
+        h6.textContent = labelCell.textContent.trim();
+
+        moveInstrumentation(row, col);
+        col.append(anchor, h6);
+        socialLinksContainer.append(col);
+      } else if (isWallsIoEmbed) {
+        // This is a walls-io-embed
+        const [embedUrlCell, embedKindCell, embedConfigCell] = cells;
+        const kind = embedKindCell.textContent.trim();
+        const embedUrl = embedUrlCell.textContent.trim();
+
+        const embedDiv = document.createElement('div');
+        moveInstrumentation(row, embedDiv);
+        embedDiv.setAttribute('data-embed-kind', kind);
+        embedDiv.setAttribute('data-embed-url', embedUrl);
+        embedDiv.setAttribute('data-embed-config', embedConfigCell.textContent.trim());
+
+        if (kind === 'walls-io') {
+          const wallScript = document.createElement('script');
+          wallScript.src = 'https://walls.io/js/wallsio-widget-1.2.js';
+          wallScript.dataset.wallurl = embedUrl;
+          wallScript.dataset.width = '100%';
+          wallScript.dataset.autoheight = '1';
+          wallScript.async = true;
+          embedDiv.append(wallScript);
+        } else {
+          embedDiv.textContent = `[${kind} placeholder for ${embedUrl}]`;
+        }
+        block.append(embedDiv);
       }
-
-      const h6 = document.createElement('h6');
-      h6.style.lineHeight = '18px';
-      h6.style.marginTop = '10px';
-      h6.textContent = labelCell.textContent.trim();
-
-      moveInstrumentation(row, col);
-      col.append(link, h6);
-      socialLinksContainer.append(col);
-    } else if (isWallsEmbed) {
-      const [urlCell, kindCell, configCell] = cells;
-      const el = document.createElement('div');
-      moveInstrumentation(row, el);
-      // The config cell might contain JSON, but the original HTML shows it as plain text.
-      // The model also specifies it as type=text.
-      // The generated JS assumes JSON. Let's keep the JSON.parse if the content is indeed JSON.
-      // If it's just a string, this will fail. Assuming it's JSON based on the original JS.
-      const config = JSON.parse(configCell.textContent.trim());
-      el.classList.add(`elfsight-app-${config.app_id}`); // This class is invented, but seems to be part of the elfsight integration.
-                                                         // It's not in the allowlist, but is likely required for the 3rd party script.
-                                                         // If this is a standard pattern for elfsight, it might be acceptable.
-                                                         // For now, keeping it as is, but noting it's not from the allowlist.
-      el.dataset.embedKind = kindCell.textContent.trim();
-      el.dataset.embedUrl = urlCell.textContent.trim();
-      el.dataset.embedConfig = configCell.textContent.trim();
-
-      // Load elfsight platform
-      loadScript('https://static.elfsight.com/platform/platform.js');
-      block.append(el);
     }
   });
 
-  if (socialLinksContainer.children.length > 0) {
-    block.append(socialLinksContainer);
-  }
+  block.append(socialLinksContainer);
 }

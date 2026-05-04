@@ -361,30 +361,30 @@
           }
         },
         {
-          "title": "Social-Link",
-          "id": "social-link",
+          "title": "Social-Link-Item",
+          "id": "social-link-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "social-link",
-                  "name": "Social-Link"
+                  "model": "social-link-item",
+                  "name": "Social-Link-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Walls-Embed",
-          "id": "walls-embed",
+          "title": "Walls-io-Embed",
+          "id": "walls-io-embed",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "walls-embed",
-                  "name": "Walls-Embed"
+                  "model": "walls-io-embed",
+                  "name": "Walls-io-Embed"
                 }
               }
             }

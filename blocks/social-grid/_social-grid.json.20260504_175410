@@ -17,30 +17,30 @@
       }
     },
     {
-      "title": "Social-Link-Item",
-      "id": "social-link-item",
+      "title": "Social-Link",
+      "id": "social-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "social-link-item",
-              "name": "Social-Link-Item"
+              "model": "social-link",
+              "name": "Social-Link"
             }
           }
         }
       }
     },
     {
-      "title": "Walls-io-Embed",
-      "id": "walls-io-embed",
+      "title": "Walls-Embed",
+      "id": "walls-embed",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "walls-io-embed",
-              "name": "Walls-io-Embed"
+              "model": "walls-embed",
+              "name": "Walls-Embed"
             }
           }
         }
@@ -65,20 +65,20 @@
         },
         {
           "component": "container",
-          "item": "social-link-item",
+          "item": "social-link",
           "label": "Social Links",
           "name": "socialLinks"
         },
         {
           "component": "container",
-          "item": "walls-io-embed",
-          "label": "Embeds",
+          "item": "walls-embed",
+          "label": "Walls.io Embeds",
           "name": "embeds"
         }
       ]
     },
     {
-      "id": "social-link-item",
+      "id": "social-link",
       "fields": [
         {
           "component": "reference",
@@ -101,7 +101,7 @@
       ]
     },
     {
-      "id": "walls-io-embed",
+      "id": "walls-embed",
       "fields": [
         {
           "component": "text",
@@ -128,8 +128,8 @@
     {
       "id": "social-grid",
       "components": [
-        "social-link-item",
-        "walls-io-embed"
+        "social-link",
+        "walls-embed"
       ]
     }
   ]

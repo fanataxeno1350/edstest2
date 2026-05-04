@@ -645,20 +645,20 @@
       },
       {
         "component": "container",
-        "item": "social-link",
+        "item": "social-link-item",
         "label": "Social Links",
         "name": "socialLinks"
       },
       {
         "component": "container",
-        "item": "walls-embed",
-        "label": "Walls.io Embeds",
+        "item": "walls-io-embed",
+        "label": "Embeds",
         "name": "embeds"
       }
     ]
   },
   {
-    "id": "social-link",
+    "id": "social-link-item",
     "fields": [
       {
         "component": "reference",
@@ -681,7 +681,7 @@
     ]
   },
   {
-    "id": "walls-embed",
+    "id": "walls-io-embed",
     "fields": [
       {
         "component": "text",
