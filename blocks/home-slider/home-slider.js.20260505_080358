@@ -1,0 +1,180 @@
+import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default async function decorate(block) {
+  const rows = [...block.children];
+  const sliderItems = rows.filter((row) => row.children.length === 8);
+  const quickLinkItems = rows.filter((row) => row.children.length === 2);
+
+  const section = document.createElement('section');
+  section.classList.add('section', 'spotlight-home-wrap', 'm-0', 'p-0');
+  moveInstrumentation(block, section);
+
+  const swiperContainer = document.createElement('div');
+  swiperContainer.classList.add('beam-slider', 'main-slider', 'loading1', 'beam-slider-multi');
+  swiperContainer.setAttribute('data-aos', 'fade-up');
+  swiperContainer.setAttribute('data-aos-offset', '-100');
+  swiperContainer.setAttribute('data-aos-duration', '650');
+  swiperContainer.setAttribute('data-aos-easing', 'ease-in-out');
+
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('swiper-wrapper');
+
+  sliderItems.forEach((row) => {
+    const [imageDesktopCell, imageTabletCell, imageMobileCell, eyebrowCell, headlineCell, subheadlineCell, ctaLinkCell, ctaLabelCell] = [...row.children];
+
+    const swiperSlide = document.createElement('div');
+    swiperSlide.classList.add('swiper-slide', 'nogradient');
+    moveInstrumentation(row, swiperSlide);
+
+    const slideBgImg = document.createElement('div');
+    slideBgImg.classList.add('slide-bgimg');
+
+    const picture = document.createElement('picture');
+    const mobileSource = document.createElement('source');
+    mobileSource.media = '(max-width: 576px)';
+    mobileSource.srcset = imageMobileCell.querySelector('img')?.src || '';
+    picture.append(mobileSource);
+
+    const tabletSource = document.createElement('source');
+    tabletSource.media = '(max-width: 799px)';
+    tabletSource.srcset = imageTabletCell.querySelector('img')?.src || '';
+    picture.append(tabletSource);
+
+    const desktopImg = imageDesktopCell.querySelector('img');
+    if (desktopImg) {
+      const optimizedPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '1903' }]);
+      picture.append(optimizedPic.querySelector('img'));
+    }
+    slideBgImg.append(picture);
+    swiperSlide.append(slideBgImg);
+
+    const mobContent = document.createElement('div');
+    mobContent.classList.add('mob-content-home-spotlight');
+
+    const content = document.createElement('div');
+    content.classList.add('content', 'text-center', 'text-lg-start');
+
+    const eyebrow = document.createElement('small');
+    eyebrow.style.fontWeight = 'bold';
+    eyebrow.textContent = eyebrowCell.textContent.trim();
+    if (eyebrow.textContent) content.append(eyebrow);
+
+    const headline = document.createElement('h1');
+    headline.classList.add('heading', 'font-medium', 'font-size-tb');
+    // Richtext cell content should be appended directly, not assigned to innerHTML of a <p> or <h1>
+    // The original HTML shows <h1><p>...<p> which is invalid.
+    // Instead, extract the innerHTML of the cell and append its children.
+    const headlineTempDiv = document.createElement('div');
+    headlineTempDiv.innerHTML = headlineCell.innerHTML;
+    while (headlineTempDiv.firstChild) {
+      headline.append(headlineTempDiv.firstChild);
+    }
+    if (headline.textContent.trim()) content.append(headline);
+
+    const subheadline = document.createElement('p');
+    // Richtext cell content should be appended directly, not assigned to innerHTML of a <p>
+    const subheadlineTempDiv = document.createElement('div');
+    subheadlineTempDiv.innerHTML = subheadlineCell.innerHTML;
+    while (subheadlineTempDiv.firstChild) {
+      subheadline.append(subheadlineTempDiv.firstChild);
+    }
+    if (subheadline.textContent.trim()) content.append(subheadline);
+
+    const ctaLink = ctaLinkCell.querySelector('a');
+    const ctaLabel = ctaLabelCell.textContent.trim();
+    if (ctaLink && ctaLabel) {
+      const link = document.createElement('a');
+      link.href = ctaLink.href;
+      link.textContent = ctaLabel;
+      link.classList.add('btn', 'btn-primary');
+      if (ctaLink.target) { // Preserve target attribute from original link
+        link.target = ctaLink.target;
+      }
+      content.append(link);
+    }
+
+    mobContent.append(content);
+    swiperSlide.append(mobContent);
+    swiperWrapper.append(swiperSlide);
+  });
+
+  swiperContainer.append(swiperWrapper);
+
+  const prevButton = document.createElement('div');
+  prevButton.classList.add('swiper-button-prev', 'slide-home-btn', 'swiper-button-white');
+  prevButton.innerHTML = '<svg class="swiper-navigation-icon" width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.38296 20.0762C0.111788 19.805 0.111788 19.3654 0.38296 19.0942L9.19758 10.2796L0.38296 1.46497C0.111788 1.19379 0.111788 0.754138 0.38296 0.482966C0.654131 0.211794 1.09379 0.211794 1.36496 0.482966L10.4341 9.55214C10.8359 9.9539 10.8359 10.6053 10.4341 11.007L1.36496 20.0762C1.09379 20.3474 0.654131 20.3474 0.38296 20.0762Z" fill="currentColor"></path></svg>';
+  swiperContainer.append(prevButton);
+
+  const nextButton = document.createElement('div');
+  nextButton.classList.add('swiper-button-next', 'slide-home-btn', 'swiper-button-white');
+  nextButton.innerHTML = '<svg class="swiper-navigation-icon" width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.38296 20.0762C0.111788 19.805 0.111788 19.3654 0.38296 19.0942L9.19758 10.2796L0.38296 1.46497C0.111788 1.19379 0.111788 0.754138 0.38296 0.482966C0.654131 0.211794 1.09379 0.211794 1.36496 0.482966L10.4341 9.55214C10.8359 9.9539 10.8359 10.6053 10.4341 11.007L1.36496 20.0762C1.09379 20.3474 0.654131 20.3474 0.38296 20.0762Z" fill="currentColor"></path></svg>';
+  swiperContainer.append(nextButton);
+
+  const pagination = document.createElement('div');
+  pagination.classList.add('swiper-pagination', 'bullet-bottom');
+  swiperContainer.append(pagination);
+
+  section.append(swiperContainer);
+
+  if (quickLinkItems.length > 0) {
+    const quickLinksParentDiv = document.createElement('div');
+    quickLinksParentDiv.classList.add('mt-0', 'pt-1', 'pb-1', 'm-none1', 'bottom-0', 'w-100', 'quick-links-parents-div', 'position-relative');
+
+    const container = document.createElement('div');
+    container.classList.add('container', 'aos-init', 'aos-animate');
+    container.setAttribute('data-aos', 'fade-up');
+    container.setAttribute('data-aos-offset', '-100');
+    container.setAttribute('data-aos-duration', '650');
+    container.setAttribute('data-aos-easing', 'ease-in-out');
+
+    const quickLinksUl = document.createElement('ul');
+    quickLinksUl.classList.add('quick-links-div');
+
+    quickLinkItems.forEach((row) => {
+      const [labelCell, linkCell] = [...row.children];
+      const li = document.createElement('li');
+      const anchor = document.createElement('a');
+      anchor.classList.add('with-full-underline');
+      const foundLink = linkCell.querySelector('a');
+      if (foundLink) {
+        anchor.href = foundLink.href;
+        if (foundLink.target) { // Preserve target attribute from original link
+          anchor.target = foundLink.target;
+        }
+      }
+      anchor.textContent = labelCell.textContent.trim();
+      moveInstrumentation(row, li);
+      li.append(anchor);
+      quickLinksUl.append(li);
+    });
+
+    container.append(quickLinksUl);
+    quickLinksParentDiv.append(container);
+    section.append(quickLinksParentDiv);
+  }
+
+  block.replaceChildren(section);
+
+  // Initialize Swiper
+  await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+  await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
+  // eslint-disable-next-line no-undef
+  new Swiper(swiperContainer, {
+    slidesPerView: 1,
+    spaceBetween: 0,
+    loop: false, // Original HTML doesn't explicitly set loop, default to false
+    navigation: {
+      prevEl: prevButton,
+      nextEl: nextButton,
+    },
+    pagination: {
+      el: pagination,
+      clickable: true,
+    },
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
+  });
+}

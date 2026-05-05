@@ -54,23 +54,22 @@
     "id": "header",
     "components": [
       "navigation-item",
-      "contact-link-item",
-      "search-item",
-      "press-release-item"
+      "press-release-item",
+      "icon-link-item"
     ]
   },
   {
     "id": "home-slider",
     "components": [
-      "home-slide-item",
+      "slide-item",
       "quick-link-item"
     ]
   },
   {
     "id": "latest-news",
     "components": [
-      "elfsight-widget-embed",
-      "news-story-item"
+      "elfsight-embed-item",
+      "news-item"
     ]
   },
   {
@@ -88,7 +87,7 @@
   {
     "id": "purpose-led",
     "components": [
-      "purpose-led-card-item"
+      "purpose-card-item"
     ]
   },
   {

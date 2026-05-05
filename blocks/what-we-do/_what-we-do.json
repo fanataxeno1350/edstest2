@@ -43,7 +43,7 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Section Description",
           "name": "description",
           "valueType": "string"
@@ -61,26 +61,32 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Image",
+          "label": "Image (Desktop)",
           "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Image",
-          "name": "imageMobile",
+          "label": "Image (Tablet)",
+          "name": "imageTablet",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Arrow Icon",
-          "name": "arrowIcon",
+          "label": "Image (Mobile)",
+          "name": "imageMobile",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Business Vertical Title",
           "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Arrow Icon",
+          "name": "arrowIcon",
           "valueType": "string"
         },
         {
