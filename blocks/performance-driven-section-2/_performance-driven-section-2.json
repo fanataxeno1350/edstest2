@@ -51,7 +51,7 @@
         {
           "component": "container",
           "item": "performance-driven-card-item",
-          "label": "Performance Driven Cards",
+          "label": "Cards",
           "name": "cards"
         }
       ]
@@ -61,26 +61,26 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Card Image Desktop",
+          "label": "Card Image (Desktop)",
           "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Card Image Mobile",
+          "label": "Card Image (Mobile)",
           "name": "imageMobile",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Card Description",
-          "name": "description",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Card Link",
           "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Card Description",
+          "name": "description",
           "valueType": "string"
         }
       ]

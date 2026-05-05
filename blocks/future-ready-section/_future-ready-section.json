@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Future Ready Card",
-      "id": "future-ready-card",
+      "title": "Future Ready Card Item",
+      "id": "future-ready-card-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "future-ready-card",
-              "name": "Future Ready Card"
+              "model": "future-ready-card-item",
+              "name": "Future Ready Card Item"
             }
           }
         }
@@ -50,25 +50,25 @@
         },
         {
           "component": "container",
-          "item": "future-ready-card",
-          "label": "Future Ready Cards",
+          "item": "future-ready-card-item",
+          "label": "Cards",
           "name": "cards"
         }
       ]
     },
     {
-      "id": "future-ready-card",
+      "id": "future-ready-card-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Image",
-          "name": "imageDesktop",
+          "label": "Card Image (Mobile)",
+          "name": "imageMobile",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Image",
-          "name": "imageMobile",
+          "label": "Card Image (Desktop)",
+          "name": "imageDesktop",
           "valueType": "string"
         },
         {
@@ -90,7 +90,7 @@
     {
       "id": "future_ready_section",
       "components": [
-        "future-ready-card"
+        "future-ready-card-item"
       ]
     }
   ]

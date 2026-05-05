@@ -1,119 +1,101 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
-  const children = [...block.children];
+export default async function decorate(block) {
+  const [sectionHeadingRow, ...slideRows] = [...block.children];
 
-  const section = document.createElement('section');
-  section.classList.add('section', 'work-with-us', 'pb-0');
-  moveInstrumentation(block, section);
+  const root = document.createElement('section');
+  root.classList.add('section', 'work-with-us', 'pb-0');
 
-  // Destructure the first row for the section heading
-  const [sectionHeadingRow] = children;
+  // Section Header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
   moveInstrumentation(sectionHeadingRow, sectionHeader);
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  // Access the cell content correctly
-  heading.textContent = sectionHeadingRow.children[0]?.textContent.trim();
+  heading.textContent = sectionHeadingRow.textContent.trim();
   sectionHeader.append(heading);
-  section.append(sectionHeader);
+  root.append(sectionHeader);
 
+  // Slides container
   const positionRelativeDiv = document.createElement('div');
   positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
 
-  const container = document.createElement('div');
-  container.classList.add('container');
-  positionRelativeDiv.append(container);
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
 
-  const gridLayout = document.createElement('div');
-  gridLayout.classList.add('grid-layout');
-  container.append(gridLayout);
+  // The original HTML has a flickity-slider-mobile-wrap div commented out,
+  // but the current structure suggests a Swiper implementation.
+  // Assuming the intention is a simple grid-layout for now,
+  // but if it's a slider, Swiper needs to be initialized.
+  const gridLayoutDiv = document.createElement('div');
+  gridLayoutDiv.classList.add('grid-layout');
 
-  const slideRows = children.slice(1);
+  const slidesContainer = document.createElement('div');
+  slidesContainer.classList.add('slides', 'swiper'); // Add swiper class for Swiper.js
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('swiper-wrapper'); // Swiper wrapper for slides
 
   slideRows.forEach((row) => {
     const [
       imageDesktopCell,
       imageMobile576Cell,
       imageMobile799Cell,
-      headingCell,
+      slideHeadingCell,
       descriptionCell,
       ctaLinkCell,
       ctaLabelCell,
     ] = [...row.children];
 
-    const slideDiv = document.createElement('div');
-    slideDiv.classList.add('slides');
-    moveInstrumentation(row, slideDiv);
-
     const wrapDiv = document.createElement('div');
-    wrapDiv.classList.add('wrap');
+    wrapDiv.classList.add('wrap', 'swiper-slide'); // Add swiper-slide class
+    moveInstrumentation(row, wrapDiv);
 
+    // Image Wrap
     const imageWrap = document.createElement('div');
     imageWrap.classList.add('image-wrap');
 
-    const picture = document.createElement('picture');
+    // Extract image sources from cells
+    const imgDesktopSrc = imageDesktopCell.querySelector('picture img')?.src;
+    const imgMobile576Src = imageMobile576Cell.querySelector('picture img')?.src;
+    const imgMobile799Src = imageMobile799Cell.querySelector('picture img')?.src;
+    const imgAlt = imageDesktopCell.querySelector('picture img')?.alt || '';
 
-    // Mobile 576px source
-    const mobile576Picture = imageMobile576Cell.querySelector('picture');
-    if (mobile576Picture) {
-      const mobile576Img = mobile576Picture.querySelector('img');
-      if (mobile576Img) {
-        const source576 = document.createElement('source');
-        source576.media = '(max-width: 576px)';
-        source576.srcset = mobile576Img.src; // Use img.src for srcset
-        picture.append(source576);
-      }
-    }
+    // Create optimized picture
+    const picture = createOptimizedPicture(
+      imgDesktopSrc,
+      imgAlt,
+      false,
+      [
+        { media: '(max-width: 576px)', width: '576', url: imgMobile576Src },
+        { media: '(max-width: 799px)', width: '799', url: imgMobile799Src },
+        { media: '(min-width: 800px)', width: '750', url: imgDesktopSrc },
+      ],
+    );
+    // Ensure the img tag inside the picture has img-fluid class
+    picture.querySelector('img').classList.add('img-fluid');
+    moveInstrumentation(imageDesktopCell, picture.querySelector('img')); // Move instrumentation to the main img
 
-    // Mobile 799px source
-    const mobile799Picture = imageMobile799Cell.querySelector('picture');
-    if (mobile799Picture) {
-      const mobile799Img = mobile799Picture.querySelector('img');
-      if (mobile799Img) {
-        const source799 = document.createElement('source');
-        source799.media = '(max-width: 799px)';
-        source799.srcset = mobile799Img.src; // Use img.src for srcset
-        picture.append(source799);
-      }
-    }
-
-    // Desktop image
-    const desktopPicture = imageDesktopCell.querySelector('picture');
-    if (desktopPicture) {
-      const desktopImg = desktopPicture.querySelector('img');
-      if (desktopImg) {
-        // createOptimizedPicture returns a <picture> element, so we need to append its children
-        const optimizedDesktopPicture = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '750' }]);
-        // Move instrumentation from the original img to the new optimized img
-        moveInstrumentation(desktopImg, optimizedDesktopPicture.querySelector('img'));
-        // Append all children of the optimized picture to our new picture element
-        while (optimizedDesktopPicture.firstChild) {
-          picture.append(optimizedDesktopPicture.firstChild);
-        }
-      }
-    }
     imageWrap.append(picture);
     wrapDiv.append(imageWrap);
 
+    // Content Wrap
     const contentWrap = document.createElement('div');
     contentWrap.classList.add('content-wrap');
 
-    const contentSectionHeader = document.createElement('div');
-    contentSectionHeader.classList.add('section-header');
+    const slideSectionHeader = document.createElement('div');
+    slideSectionHeader.classList.add('section-header');
 
     const slideHeading = document.createElement('h3');
     slideHeading.classList.add('heading', 'font-regular');
-    slideHeading.textContent = headingCell.textContent.trim();
-    contentSectionHeader.append(slideHeading);
+    slideHeading.textContent = slideHeadingCell.textContent.trim();
+    slideSectionHeader.append(slideHeading);
 
-    const description = document.createElement('p');
+    const description = document.createElement('div'); // Use div for richtext to avoid <p> inside <p>
     description.classList.add('text-size-body');
     description.innerHTML = descriptionCell.innerHTML;
-    contentSectionHeader.append(description);
+    slideSectionHeader.append(description);
 
     const ctaLink = document.createElement('a');
     ctaLink.classList.add('btn', 'btn-primary', 'stretched-link');
@@ -122,17 +104,62 @@ export default function decorate(block) {
       ctaLink.href = foundCtaLink.href;
     }
     ctaLink.textContent = ctaLabelCell.textContent.trim();
-    contentSectionHeader.append(ctaLink);
+    slideSectionHeader.append(ctaLink);
 
-    contentWrap.append(contentSectionHeader);
+    contentWrap.append(slideSectionHeader);
     wrapDiv.append(contentWrap);
-    slideDiv.append(wrapDiv);
-    gridLayout.append(slideDiv);
+
+    swiperWrapper.append(wrapDiv);
   });
 
-  section.append(positionRelativeDiv);
-  block.replaceChildren(section);
+  slidesContainer.append(swiperWrapper);
 
-  // Removed the redundant createOptimizedPicture loop at the end.
-  // Image optimization is handled within the slideRows.forEach loop.
+  // Add Swiper navigation and pagination elements
+  const swiperPagination = document.createElement('div');
+  swiperPagination.classList.add('swiper-pagination');
+  slidesContainer.append(swiperPagination);
+
+  const swiperButtonPrev = document.createElement('div');
+  swiperButtonPrev.classList.add('swiper-button-prev');
+  slidesContainer.append(swiperButtonPrev);
+
+  const swiperButtonNext = document.createElement('div');
+  swiperButtonNext.classList.add('swiper-button-next');
+  slidesContainer.append(swiperButtonNext);
+
+  gridLayoutDiv.append(slidesContainer);
+  containerDiv.append(gridLayoutDiv);
+  positionRelativeDiv.append(containerDiv);
+  root.append(positionRelativeDiv);
+
+  block.replaceChildren(root);
+
+  // Load Swiper library and initialize
+  await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+  await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
+
+  // eslint-disable-next-line no-undef
+  new Swiper(slidesContainer, {
+    slidesPerView: 'auto',
+    loop: false, // Set loop to false based on original HTML comment
+    navigation: {
+      prevEl: swiperButtonPrev,
+      nextEl: swiperButtonNext,
+    },
+    pagination: {
+      el: swiperPagination,
+      clickable: true,
+    },
+    // The original HTML had flickity data-flickity attributes,
+    // translating them to Swiper options:
+    // "wrapAround": false -> loop: false
+    // "lazyLoad": true -> lazy: true (not explicitly added here, createOptimizedPicture handles lazy loading)
+    // "pageDots": true -> pagination: { clickable: true }
+    // "prevNextButtons": false -> navigation: { prevEl, nextEl } (but if false, these elements won't be visible)
+    // "imagesLoaded": true -> not a direct Swiper option, handled by browser
+    // "cellAlign": "left" -> slidesPerView: 'auto' with default flex alignment
+    // "watchCSS": true -> not a direct Swiper option, Swiper adapts to CSS
+    // "adaptiveHeight": true -> autoHeight: true
+    autoHeight: true, // Based on flickity adaptiveHeight
+  });
 }

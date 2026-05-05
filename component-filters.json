@@ -56,7 +56,7 @@
   {
     "id": "future_ready_section",
     "components": [
-      "future-ready-card"
+      "future-ready-card-item"
     ]
   },
   {
@@ -69,13 +69,13 @@
     "id": "header",
     "components": [
       "navigation-item",
-      "icon-nav-item",
-      "mega-menu-about-item",
-      "mega-menu-what-we-do-item",
-      "mega-menu-investor-relations-item",
-      "mega-menu-newsroom-item",
-      "mega-menu-careers-item",
-      "press-release-item"
+      "icon-link-item",
+      "mega-menu-about-us",
+      "mega-menu-what-we-do",
+      "mega-menu-investor-relations",
+      "mega-menu-newsroom",
+      "mega-menu-careers",
+      "press-release-slide"
     ]
   },
   {
@@ -114,7 +114,7 @@
   {
     "id": "performance_driven_section",
     "components": [
-      "performance-driven-card"
+      "performance-driven-card-item"
     ]
   },
   {

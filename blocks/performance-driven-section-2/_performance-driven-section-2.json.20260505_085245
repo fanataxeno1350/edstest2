@@ -1,16 +1,16 @@
 {
   "definitions": [
     {
-      "title": "Performance Driven Section",
-      "id": "performance_driven_section",
+      "title": "Performance Driven Section 2",
+      "id": "performance_driven_section-2",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "performance_driven_section",
-              "model": "performance_driven_section",
-              "name": "Performance Driven Section"
+              "filter": "performance_driven_section-2",
+              "model": "performance_driven_section-2",
+              "name": "Performance Driven Section 2"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "performance_driven_section",
+      "id": "performance_driven_section-2",
       "fields": [
         {
           "component": "text",
@@ -44,8 +44,8 @@
         },
         {
           "component": "text",
-          "label": "Section Description",
-          "name": "description",
+          "label": "Section Subheading",
+          "name": "subheading",
           "valueType": "string"
         },
         {
@@ -61,20 +61,20 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Image",
+          "label": "Card Image Desktop",
           "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Image",
+          "label": "Card Image Mobile",
           "name": "imageMobile",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Card Label",
-          "name": "label",
+          "label": "Card Description",
+          "name": "description",
           "valueType": "string"
         },
         {
@@ -88,7 +88,7 @@
   ],
   "filters": [
     {
-      "id": "performance_driven_section",
+      "id": "performance_driven_section-2",
       "components": [
         "performance-driven-card-item"
       ]

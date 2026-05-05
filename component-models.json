@@ -289,25 +289,25 @@
       },
       {
         "component": "container",
-        "item": "future-ready-card",
-        "label": "Future Ready Cards",
+        "item": "future-ready-card-item",
+        "label": "Cards",
         "name": "cards"
       }
     ]
   },
   {
-    "id": "future-ready-card",
+    "id": "future-ready-card-item",
     "fields": [
       {
         "component": "reference",
-        "label": "Desktop Image",
-        "name": "imageDesktop",
+        "label": "Card Image (Mobile)",
+        "name": "imageMobile",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Mobile Image",
-        "name": "imageMobile",
+        "label": "Card Image (Desktop)",
+        "name": "imageDesktop",
         "valueType": "string"
       },
       {
@@ -381,45 +381,35 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Logo",
-        "name": "logo",
-        "valueType": "string"
+        "label": "Main Logo",
+        "name": "mainLogo"
       },
       {
         "component": "aem-content",
-        "label": "Logo Link",
-        "name": "logoLink",
-        "valueType": "string"
+        "label": "Main Logo Link",
+        "name": "mainLogoLink"
       },
       {
         "component": "reference",
         "label": "80th Year Logo",
-        "name": "yearLogo",
-        "valueType": "string"
+        "name": "year80Logo"
       },
       {
         "component": "aem-content",
         "label": "80th Year Logo Link",
-        "name": "yearLogoLink",
-        "valueType": "string"
+        "name": "year80LogoLink"
       },
       {
         "component": "container",
         "item": "navigation-item",
-        "label": "Navigation Menu",
-        "name": "navigationMenu"
+        "label": "Navigation Items",
+        "name": "navigation"
       },
       {
         "component": "container",
-        "item": "icon-nav-item",
-        "label": "Icon Nav (Mobile)",
-        "name": "iconNavMobile"
-      },
-      {
-        "component": "container",
-        "item": "icon-nav-item",
-        "label": "Icon Nav (Desktop)",
-        "name": "iconNavDesktop"
+        "item": "icon-link-item",
+        "label": "Icon Links (Contact/Search)",
+        "name": "iconLinks"
       }
     ]
   },
@@ -428,268 +418,221 @@
     "fields": [
       {
         "component": "text",
-        "label": "Menu Label",
-        "name": "label",
-        "valueType": "string"
+        "label": "Navigation Label",
+        "name": "label"
       },
       {
         "component": "aem-content",
-        "label": "Menu Link",
-        "name": "link",
-        "valueType": "string"
+        "label": "Navigation Link",
+        "name": "link"
+      },
+      {
+        "component": "select",
+        "label": "Has Mega Menu",
+        "name": "hasMegaMenu",
+        "options": [
+          {
+            "label": "None",
+            "value": ""
+          },
+          {
+            "label": "About Us",
+            "value": "about-us"
+          },
+          {
+            "label": "What We Do",
+            "value": "what-we-do"
+          },
+          {
+            "label": "Investor Relations",
+            "value": "investor-relations"
+          },
+          {
+            "label": "Newsroom",
+            "value": "newsroom"
+          },
+          {
+            "label": "Careers",
+            "value": "careers"
+          }
+        ]
       },
       {
         "component": "richtext",
         "label": "Navigation Hierarchy",
         "name": "hierarchy-tree",
         "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "mega-menu-about-item",
-        "label": "About Mega Menu",
-        "name": "aboutMegaMenu"
-      },
-      {
-        "component": "container",
-        "item": "mega-menu-what-we-do-item",
-        "label": "What We Do Mega Menu",
-        "name": "whatWeDoMegaMenu"
-      },
-      {
-        "component": "container",
-        "item": "mega-menu-investor-relations-item",
-        "label": "Investor Relations Mega Menu",
-        "name": "investorRelationsMegaMenu"
-      },
-      {
-        "component": "container",
-        "item": "mega-menu-newsroom-item",
-        "label": "Newsroom Mega Menu",
-        "name": "newsroomMegaMenu"
-      },
-      {
-        "component": "container",
-        "item": "mega-menu-careers-item",
-        "label": "Careers Mega Menu",
-        "name": "careersMegaMenu"
       }
     ]
   },
   {
-    "id": "mega-menu-about-item",
+    "id": "mega-menu-about-us",
     "fields": [
       {
         "component": "text",
-        "label": "About Heading",
-        "name": "heading",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "About Description",
-        "name": "description",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "About Sub Description",
-        "name": "subDescription",
-        "valueType": "string"
+        "label": "Heading",
+        "name": "heading"
       },
       {
         "component": "richtext",
-        "label": "About Links",
-        "name": "aboutLinks"
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "component": "text",
+        "label": "Sub Description",
+        "name": "subDescription"
+      },
+      {
+        "component": "richtext",
+        "label": "Section Links",
+        "name": "sectionLinks"
       }
     ]
   },
   {
-    "id": "mega-menu-what-we-do-item",
+    "id": "mega-menu-what-we-do",
     "fields": [
       {
         "component": "text",
-        "label": "What We Do Heading",
-        "name": "heading",
-        "valueType": "string"
+        "label": "Heading",
+        "name": "heading"
       },
       {
         "component": "richtext",
-        "label": "Key Facts List",
+        "label": "Key Facts",
         "name": "factsList"
       },
       {
         "component": "richtext",
         "label": "Industries Hierarchy",
-        "name": "industriesHierarchy"
+        "name": "hierarchy-tree"
       },
       {
         "component": "richtext",
-        "label": "Brands Links",
-        "name": "brandsLinks"
-      },
-      {
-        "component": "richtext",
-        "label": "Global Presence Links",
-        "name": "globalPresenceLinks"
-      },
-      {
-        "component": "richtext",
-        "label": "Cultural Outreach Links",
-        "name": "culturalOutreachLinks"
+        "label": "Section Links",
+        "name": "sectionLinks"
       }
     ]
   },
   {
-    "id": "mega-menu-investor-relations-item",
+    "id": "mega-menu-investor-relations",
     "fields": [
       {
         "component": "text",
-        "label": "Investor Relations Heading",
-        "name": "heading",
-        "valueType": "string"
+        "label": "Heading",
+        "name": "heading"
       },
       {
         "component": "text",
-        "label": "Investor Relations Description",
-        "name": "description",
-        "valueType": "string"
+        "label": "Description",
+        "name": "desc"
       },
       {
         "component": "richtext",
-        "label": "Highlights List",
-        "name": "highlightsList"
+        "label": "Key Facts",
+        "name": "factsList"
       },
       {
         "component": "richtext",
-        "label": "Disclosures Links",
-        "name": "disclosuresLinks"
-      },
-      {
-        "component": "richtext",
-        "label": "Reports Links",
-        "name": "reportsLinks"
-      },
-      {
-        "component": "richtext",
-        "label": "Policies Links",
-        "name": "policiesLinks"
-      },
-      {
-        "component": "richtext",
-        "label": "Regulatory Filings Links",
-        "name": "regulatoryFilingsLinks"
-      },
-      {
-        "component": "richtext",
-        "label": "Sustainability Links",
-        "name": "sustainabilityLinks"
+        "label": "Section Links",
+        "name": "sectionLinks"
       }
     ]
   },
   {
-    "id": "mega-menu-newsroom-item",
+    "id": "mega-menu-newsroom",
     "fields": [
       {
         "component": "text",
-        "label": "Newsroom Heading",
-        "name": "heading",
-        "valueType": "string"
+        "label": "Heading",
+        "name": "heading"
       },
       {
         "component": "container",
-        "item": "press-release-item",
-        "label": "Latest Press Releases",
-        "name": "pressReleases"
+        "item": "press-release-slide",
+        "label": "Press Release Slides",
+        "name": "pressSlides"
       },
       {
         "component": "richtext",
-        "label": "Press Releases Links",
-        "name": "pressReleasesLinks"
-      },
-      {
-        "component": "richtext",
-        "label": "Media Resources Links",
-        "name": "mediaResourcesLinks"
-      },
-      {
-        "component": "richtext",
-        "label": "In The News Links",
-        "name": "inTheNewsLinks"
+        "label": "Section Links",
+        "name": "sectionLinks"
       }
     ]
   },
   {
-    "id": "press-release-item",
+    "id": "press-release-slide",
     "fields": [
-      {
-        "component": "text",
-        "label": "Press Release Title",
-        "name": "title",
-        "valueType": "string"
-      },
       {
         "component": "aem-content",
         "label": "Press Release Link",
-        "name": "link",
-        "valueType": "string"
+        "name": "pressLink"
+      },
+      {
+        "component": "text",
+        "label": "Press Release Title",
+        "name": "pressTitle"
       },
       {
         "component": "text",
         "label": "Press Release Date",
-        "name": "date",
-        "valueType": "string"
+        "name": "pressDate"
       },
       {
         "component": "text",
         "label": "Press Release Category",
-        "name": "category",
-        "valueType": "string"
+        "name": "pressCategory"
       }
     ]
   },
   {
-    "id": "mega-menu-careers-item",
+    "id": "mega-menu-careers",
     "fields": [
       {
         "component": "text",
-        "label": "Careers Heading",
-        "name": "heading",
-        "valueType": "string"
+        "label": "Heading",
+        "name": "heading"
       },
       {
         "component": "text",
-        "label": "Careers Description",
-        "name": "description",
-        "valueType": "string"
+        "label": "Description",
+        "name": "desc"
       },
       {
         "component": "text",
-        "label": "Careers Sub Description",
-        "name": "subDescription",
-        "valueType": "string"
+        "label": "Sub Description",
+        "name": "subDescription"
       },
       {
         "component": "richtext",
-        "label": "Careers Links",
-        "name": "careersLinks"
+        "label": "Careers Hierarchy",
+        "name": "hierarchy-tree"
+      },
+      {
+        "component": "richtext",
+        "label": "Section Links",
+        "name": "sectionLinks"
       }
     ]
   },
   {
-    "id": "icon-nav-item",
+    "id": "icon-link-item",
     "fields": [
       {
-        "component": "text",
-        "label": "Icon Nav Label",
-        "name": "label",
-        "valueType": "string"
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon"
       },
       {
         "component": "aem-content",
-        "label": "Icon Nav Link",
-        "name": "link",
-        "valueType": "string"
+        "label": "Link",
+        "name": "link"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label"
       }
     ]
   },
@@ -1036,7 +979,7 @@
       {
         "component": "container",
         "item": "performance-driven-card-item",
-        "label": "Performance Driven Cards",
+        "label": "Cards",
         "name": "cards"
       }
     ]
@@ -1046,26 +989,26 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Card Image Desktop",
+        "label": "Card Image (Desktop)",
         "name": "imageDesktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Card Image Mobile",
+        "label": "Card Image (Mobile)",
         "name": "imageMobile",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Card Description",
-        "name": "description",
         "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Card Link",
         "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Card Description",
+        "name": "description",
         "valueType": "string"
       }
     ]
@@ -1087,14 +1030,14 @@
       },
       {
         "component": "container",
-        "item": "performance-driven-card",
+        "item": "performance-driven-card-item",
         "label": "Performance Driven Cards",
         "name": "cards"
       }
     ]
   },
   {
-    "id": "performance-driven-card",
+    "id": "performance-driven-card-item",
     "fields": [
       {
         "component": "reference",
@@ -1110,14 +1053,14 @@
       },
       {
         "component": "text",
-        "label": "Card Description",
-        "name": "cardDescription",
+        "label": "Card Label",
+        "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Card Link",
-        "name": "cardLink",
+        "name": "link",
         "valueType": "string"
       }
     ]
@@ -1202,19 +1145,19 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Card Image (Mobile)",
-        "name": "imageMobile",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
         "label": "Card Image (Desktop)",
         "name": "imageDesktop",
         "valueType": "string"
       },
       {
+        "component": "reference",
+        "label": "Card Image (Mobile)",
+        "name": "imageMobile",
+        "valueType": "string"
+      },
+      {
         "component": "aem-content",
-        "label": "Card Link URL",
+        "label": "Card Link",
         "name": "link",
         "valueType": "string"
       },
@@ -1316,7 +1259,7 @@
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Section Description",
         "name": "description",
         "valueType": "string"
@@ -1340,13 +1283,13 @@
       },
       {
         "component": "reference",
-        "label": "Tablet Image",
-        "name": "imageTablet",
+        "label": "Tablet/Mobile Image",
+        "name": "imageTabletMobile",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Business Title",
+        "label": "Business Vertical Title",
         "name": "title",
         "valueType": "string"
       },
@@ -1358,7 +1301,7 @@
       },
       {
         "component": "aem-content",
-        "label": "Learn More Link",
+        "label": "Business Vertical Link",
         "name": "link",
         "valueType": "string"
       }
@@ -1405,7 +1348,7 @@
       {
         "component": "text",
         "label": "Slide Heading",
-        "name": "heading",
+        "name": "slideHeading",
         "valueType": "string"
       },
       {
