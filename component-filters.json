@@ -62,7 +62,7 @@
   {
     "id": "header",
     "components": [
-      "navigation-menu-item"
+      "navigation-item"
     ]
   },
   {

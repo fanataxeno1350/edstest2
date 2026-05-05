@@ -540,43 +540,19 @@
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logoLink",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Search Icon (SVG sprite reference)",
-        "name": "searchIcon",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Search Label",
-        "name": "searchLabel",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Search Placeholder",
-        "name": "searchPlaceholder",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Search Error Message",
-        "name": "searchError",
+        "name": "logo-link",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "navigation-menu-item",
+        "item": "navigation-item",
         "label": "Navigation Menu",
-        "name": "navigationMenu"
+        "name": "navigation-menu"
       }
     ]
   },
   {
-    "id": "navigation-menu-item",
+    "id": "navigation-item",
     "fields": [
       {
         "component": "reference",

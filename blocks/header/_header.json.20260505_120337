@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Navigation Item",
-      "id": "navigation-item",
+      "title": "Navigation Menu Item",
+      "id": "navigation-menu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "navigation-item",
-              "name": "Navigation Item"
+              "model": "navigation-menu-item",
+              "name": "Navigation Menu Item"
             }
           }
         }
@@ -45,19 +45,43 @@
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logo-link",
+          "name": "logoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Search Icon (SVG sprite reference)",
+          "name": "searchIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Search Label",
+          "name": "searchLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Search Placeholder",
+          "name": "searchPlaceholder",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Search Error Message",
+          "name": "searchError",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "navigation-item",
+          "item": "navigation-menu-item",
           "label": "Navigation Menu",
-          "name": "navigation-menu"
+          "name": "navigationMenu"
         }
       ]
     },
     {
-      "id": "navigation-item",
+      "id": "navigation-menu-item",
       "fields": [
         {
           "component": "reference",
@@ -90,7 +114,7 @@
     {
       "id": "header",
       "components": [
-        "navigation-item"
+        "navigation-menu-item"
       ]
     }
   ]

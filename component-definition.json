@@ -284,15 +284,15 @@
           }
         },
         {
-          "title": "Navigation Menu Item",
-          "id": "navigation-menu-item",
+          "title": "Navigation Item",
+          "id": "navigation-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "navigation-menu-item",
-                  "name": "Navigation Menu Item"
+                  "model": "navigation-item",
+                  "name": "Navigation Item"
                 }
               }
             }
