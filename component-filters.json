@@ -15,28 +15,69 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "---new--blocks-----",
+      "header",
+      "banner",
+      "text-banner",
+      "annual-report",
+      "card-carousel",
+      "card-carousel-2",
+      "stay-social",
+      "scroll-to-top",
+      "footer"
     ]
   },
   {
-    "id": "cards",
+    "id": "annual-report",
     "components": [
-      "card"
+      "product-item",
+      "product-detail-item"
     ]
   },
   {
-    "id": "columns",
+    "id": "banner",
+    "components": []
+  },
+  {
+    "id": "card-carousel-2",
     "components": [
-      "column"
+      "recipe-card-item",
+      "social-media-share-item"
     ]
   },
   {
-    "id": "column",
+    "id": "card-carousel",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "product-card-item"
     ]
+  },
+  {
+    "id": "footer",
+    "components": [
+      "footer-link-item",
+      "footer-social-item"
+    ]
+  },
+  {
+    "id": "header",
+    "components": [
+      "navigation-item",
+      "sub-navigation-item"
+    ]
+  },
+  {
+    "id": "scroll-to-top",
+    "components": []
+  },
+  {
+    "id": "stay-social",
+    "components": [
+      "social-card-item"
+    ]
+  },
+  {
+    "id": "text-banner",
+    "components": []
   }
 ]

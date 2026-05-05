@@ -51,7 +51,16 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----"
+        "---new--blocks-----",
+        "header",
+        "banner",
+        "text-banner",
+        "annual-report",
+        "card-carousel",
+        "card-carousel-2",
+        "stay-social",
+        "scroll-to-top",
+        "footer"
       ]
     }
   ]

@@ -1,0 +1,85 @@
+@font-face{font-display:swap;font-family:Poppins;font-style:normal;font-weight:400;src:url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/font/poppins-regular-98787b.woff2") format("woff2"),url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/font/poppins-regular-d72bc5.x-font-woff") format("woff")}
+
+@font-face{font-display:swap;font-family:Poppins;font-style:normal;font-weight:600;src:url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/font/poppins-semibold-f30c12.x-font-woff") format("woff2"),url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/font/poppins-semibold-f30c12.x-font-woff") format("woff")}
+
+@font-face{font-display:swap;font-family:Poppins;font-style:normal;font-weight:500;src:url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/font/poppins-medium-77c266.woff2") format("woff2"),url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/font/poppins-medium-f0f3ee.x-font-woff") format("woff")}
+
+@font-face{font-display:swap;font-family:Libre-Baskerville;font-style:normal;font-weight:700;src:url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/font/librebaskerville-bold-715aa1.woff2") format("woff2"),url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/font/librebaskerville-bold-cc34d7.x-font-woff") format("woff")}
+
+.container{ --bs-gutter-x:1.5rem;--bs-gutter-y:0;margin-left:auto;margin-right:auto;padding-left:calc(var(--bs-gutter-x)*.5);padding-right:calc(var(--bs-gutter-x)*.5);width:100% }
+
+@media(min-width:576px) { .container{ max-width:540px } }
+
+@media(min-width:768px) { .container{ max-width:45pc } }
+
+@media(min-width:992px) { .container{ max-width:60pc } }
+
+@media(min-width:1200px) { .container{ max-width:855pt } }
+
+@media(min-width:1400px) { .container{ max-width:990pt } }
+
+.row{ --bs-gutter-x:1.5rem;--bs-gutter-y:0;display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-left:calc(var(--bs-gutter-x)*-.5);margin-right:calc(var(--bs-gutter-x)*-.5);margin-top:calc(var(--bs-gutter-y)*-1) }
+
+.row>*{ -ms-flex-negative:0;flex-shrink:0;margin-top:var(--bs-gutter-y);max-width:100%;padding-left:calc(var(--bs-gutter-x)*.5);padding-right:calc(var(--bs-gutter-x)*.5);width:100% }
+
+.gx-8{ --bs-gutter-x:2rem }
+
+@media(min-width:576px) { .gx-sm-0{ --bs-gutter-x:0 } }
+
+.d-flex{ display:-webkit-box!important;display:-ms-flexbox!important;display:flex!important }
+
+@media(min-width:576px) { .mt-sm-8{ margin-top:2rem!important } }
+
+@media(min-width:992px) { .mt-lg-16{ margin-top:5rem!important } }
+
+@font-face{font-family:swiper-icons;font-style:normal;font-weight:400;src:url("data:application/font-woff;charset=utf-8;base64, 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") format("woff")}
+
+@keyframes swiper-preloader-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}
+
+@keyframes plyr-progress{to{background-position:var(--plyr-progress-loading-size,25px) 0}}
+
+@keyframes plyr-popup{0%{opacity:.5;-webkit-transform:translateY(10px);transform:translateY(10px)}to{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}}
+
+@keyframes plyr-fade-in{0%{opacity:0}to{opacity:1}}
+
+.font-baskerville{ font-family:Libre-Baskerville }
+
+.font-default{ font-size:1rem }
+
+.font-24{ font-size:1.5rem }
+
+@media(min-width:768px) { .font-md-18{ font-size:1.125rem }
+
+.font-md-40{ font-size:2.5rem } }
+
+.leading-24{ line-height:1.5rem }
+
+.leading-26{ line-height:1.625rem }
+
+.svasti-cta.primary{ border-radius:1rem;padding-top:.8125rem }
+
+.text-banner--wrapper{ background-blend-mode:color;background-image:url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/text-banner-bg-cropped-mobile-de97c3.png");background-position:bottom;background-repeat:no-repeat;background-size:contain;min-height:18.75rem;padding-bottom:5.75rem;padding-top:5rem }
+
+@media(min-width:992px) { .text-banner--wrapper{ background-image:url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/text-banner-bg-cropped-644a85.png");background-position:0 125%;padding-bottom:5rem } }
+
+.text-banner--wrapper>.bg-curve-top{ background-image:url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/text-banner-curve-mobile-0a3e53.png");background-position:bottom;background-repeat:no-repeat;background-size:cover;height:11.5384615385vw;top:-5.7692307692vw }
+
+@media(min-width:768px) { .text-banner--wrapper>.bg-curve-top{ background-image:url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/curve-default-desktop-b3b785.svg");background-position:0 0;height:5rem;top:-2.8125rem } }
+
+@media(min-width:1400px) { .text-banner--wrapper>.bg-curve-top{ height:5.625rem;top:-3.125rem } }
+
+.text-banner--wrapper>.bg-curve-bottom{ background-image:url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/text-banner-design-curve-mobile-2f178d.png");background-position:bottom;background-repeat:no-repeat;background-size:cover;bottom:-11.0526315789vw;height:18.6842105263vw }
+
+@media(min-width:768px) { .text-banner--wrapper>.bg-curve-bottom{ background-image:url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/curve-state3-desktop-bef5b0.png");background-position:0 0;bottom:-5rem;height:8rem } }
+
+.text-banner--wrapper>.bg-circle-left{ background-image:url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/pattern-dotted-c460ff.svg");background-repeat:no-repeat;background-size:contain;height:10rem;left:-2.5rem;top:-1.25rem;-webkit-transform:rotate(45deg);transform:rotate(45deg);width:10rem }
+
+@media(min-width:768px) { .text-banner--wrapper>.bg-circle-left{ height:18.1875rem;left:-4.5rem;top:-2.25rem;-webkit-transform:rotate(0deg);transform:rotate(0deg);width:13.5625rem } }
+
+.text-banner--wrapper>.bg-circle-right{ background-image:url("/content/dam/aemigrate/uploaded-folder/www-aashirvaadsvasti-in/image/pattern-dotted-c460ff.svg");background-repeat:no-repeat;background-size:contain;height:13.0625rem;right:-2.9375rem;top:-2.25rem;-webkit-transform:rotateY(180deg);transform:rotateY(180deg);width:12.3125rem }
+
+@media(max-width:575.98px) { .text-banner--wrapper>.bg-circle-right{ top:-.25rem } }
+
+@media(min-width:992px) { .text-banner--description{ width:62% } }
+
+@media(max-width:767.98px) { .text-banner--description{ padding:0 20px } }
