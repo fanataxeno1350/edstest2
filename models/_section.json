@@ -62,7 +62,16 @@
         "latest-news",
         "work-with-us",
         "faqs",
-        "footer"
+        "footer",
+        "hero_slider",
+        "quick_links",
+        "what_we_do",
+        "purpose_led_section",
+        "performance_driven_section",
+        "performance_driven_section-2",
+        "future_ready_section",
+        "latest_news",
+        "work_with_us"
       ]
     }
   ]

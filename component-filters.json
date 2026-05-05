@@ -27,7 +27,16 @@
       "latest-news",
       "work-with-us",
       "faqs",
-      "footer"
+      "footer",
+      "hero_slider",
+      "quick_links",
+      "what_we_do",
+      "purpose_led_section",
+      "performance_driven_section",
+      "performance_driven_section-2",
+      "future_ready_section",
+      "latest_news",
+      "work_with_us"
     ]
   },
   {
@@ -40,8 +49,14 @@
     "id": "footer",
     "components": [
       "footer-section-item",
-      "footer-social-item",
-      "footer-link-item"
+      "footer-link-item",
+      "footer-social-item"
+    ]
+  },
+  {
+    "id": "future_ready_section",
+    "components": [
+      "future-ready-card"
     ]
   },
   {
@@ -54,8 +69,20 @@
     "id": "header",
     "components": [
       "navigation-item",
-      "press-release-item",
-      "icon-link-item"
+      "icon-nav-item",
+      "mega-menu-about-item",
+      "mega-menu-what-we-do-item",
+      "mega-menu-investor-relations-item",
+      "mega-menu-newsroom-item",
+      "mega-menu-careers-item",
+      "press-release-item"
+    ]
+  },
+  {
+    "id": "hero_slider",
+    "components": [
+      "hero-slide-item",
+      "quick-link-item"
     ]
   },
   {
@@ -66,10 +93,10 @@
     ]
   },
   {
-    "id": "latest-news",
+    "id": "latest_news",
     "components": [
       "elfsight-embed-item",
-      "news-item"
+      "news-story-item"
     ]
   },
   {
@@ -79,9 +106,27 @@
     ]
   },
   {
+    "id": "performance_driven_section-2",
+    "components": [
+      "performance-driven-card-item"
+    ]
+  },
+  {
+    "id": "performance_driven_section",
+    "components": [
+      "performance-driven-card"
+    ]
+  },
+  {
     "id": "performance-driven",
     "components": [
       "performance-driven-card"
+    ]
+  },
+  {
+    "id": "purpose_led_section",
+    "components": [
+      "purpose-led-card-item"
     ]
   },
   {
@@ -91,15 +136,21 @@
     ]
   },
   {
-    "id": "what-we-do",
+    "id": "quick_links",
+    "components": [
+      "quick-link-item"
+    ]
+  },
+  {
+    "id": "what_we_do",
     "components": [
       "business-vertical-item"
     ]
   },
   {
-    "id": "work-with-us",
+    "id": "work_with_us",
     "components": [
-      "work-with-us-slide-item"
+      "work-with-us-slide"
     ]
   }
 ]

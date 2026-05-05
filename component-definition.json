@@ -145,6 +145,21 @@
           }
         },
         {
+          "title": "Footer Link Item",
+          "id": "footer-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-link-item",
+                  "name": "Footer Link Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Footer Social Item",
           "id": "footer-social-item",
           "plugins": {
@@ -160,15 +175,31 @@
           }
         },
         {
-          "title": "Footer Link Item",
-          "id": "footer-link-item",
+          "title": "Future Ready Section",
+          "id": "future_ready_section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "future_ready_section",
+                  "model": "future_ready_section",
+                  "name": "Future Ready Section"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Future Ready Card",
+          "id": "future-ready-card",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-link-item",
-                  "name": "Footer Link Item"
+                  "model": "future-ready-card",
+                  "name": "Future Ready Card"
                 }
               }
             }
@@ -237,6 +268,96 @@
           }
         },
         {
+          "title": "Mega Menu About Item",
+          "id": "mega-menu-about-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "mega-menu-about-item",
+                  "name": "Mega Menu About Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Mega Menu What We Do Item",
+          "id": "mega-menu-what-we-do-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "mega-menu-what-we-do-item",
+                  "name": "Mega Menu What We Do Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Mega Menu Investor Relations Item",
+          "id": "mega-menu-investor-relations-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "mega-menu-investor-relations-item",
+                  "name": "Mega Menu Investor Relations Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Mega Menu Newsroom Item",
+          "id": "mega-menu-newsroom-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "mega-menu-newsroom-item",
+                  "name": "Mega Menu Newsroom Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Mega Menu Careers Item",
+          "id": "mega-menu-careers-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "mega-menu-careers-item",
+                  "name": "Mega Menu Careers Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Icon Nav Item",
+          "id": "icon-nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "icon-nav-item",
+                  "name": "Icon Nav Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Press Release Item",
           "id": "press-release-item",
           "plugins": {
@@ -252,15 +373,46 @@
           }
         },
         {
-          "title": "Icon Link Item",
-          "id": "icon-link-item",
+          "title": "Hero Slider",
+          "id": "hero_slider",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "hero_slider",
+                  "model": "hero_slider",
+                  "name": "Hero Slider"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Hero Slide Item",
+          "id": "hero-slide-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "icon-link-item",
-                  "name": "Icon Link Item"
+                  "model": "hero-slide-item",
+                  "name": "Hero Slide Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Quick Link Item",
+          "id": "quick-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "quick-link-item",
+                  "name": "Quick Link Item"
                 }
               }
             }
@@ -313,23 +465,23 @@
           }
         },
         {
-          "title": "Latest-News",
-          "id": "latest-news",
+          "title": "Latest News",
+          "id": "latest_news",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "filter": "latest-news",
-                  "model": "latest-news",
-                  "name": "Latest-News"
+                  "filter": "latest_news",
+                  "model": "latest_news",
+                  "name": "Latest News"
                 }
               }
             }
           }
         },
         {
-          "title": "Elfsight-Embed-Item",
+          "title": "Elfsight Embed Item",
           "id": "elfsight-embed-item",
           "plugins": {
             "xwalk": {
@@ -337,22 +489,22 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "elfsight-embed-item",
-                  "name": "Elfsight-Embed-Item"
+                  "name": "Elfsight Embed Item"
                 }
               }
             }
           }
         },
         {
-          "title": "News-Item",
-          "id": "news-item",
+          "title": "News Story Item",
+          "id": "news-story-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "news-item",
-                  "name": "News-Item"
+                  "model": "news-story-item",
+                  "name": "News Story Item"
                 }
               }
             }
@@ -390,6 +542,68 @@
           }
         },
         {
+          "title": "Performance Driven Section 2",
+          "id": "performance_driven_section-2",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "performance_driven_section-2",
+                  "model": "performance_driven_section-2",
+                  "name": "Performance Driven Section 2"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Performance Driven Card Item",
+          "id": "performance-driven-card-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "performance-driven-card-item",
+                  "name": "Performance Driven Card Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Performance Driven Section",
+          "id": "performance_driven_section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "performance_driven_section",
+                  "model": "performance_driven_section",
+                  "name": "Performance Driven Section"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Performance Driven Card",
+          "id": "performance-driven-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "performance-driven-card",
+                  "name": "Performance Driven Card"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Performance Driven",
           "id": "performance-driven",
           "plugins": {
@@ -415,6 +629,37 @@
                 "template": {
                   "model": "performance-driven-card",
                   "name": "Performance Driven Card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Purpose Led Section",
+          "id": "purpose_led_section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "purpose_led_section",
+                  "model": "purpose_led_section",
+                  "name": "Purpose Led Section"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Purpose Led Card Item",
+          "id": "purpose-led-card-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "purpose-led-card-item",
+                  "name": "Purpose Led Card Item"
                 }
               }
             }
@@ -452,15 +697,46 @@
           }
         },
         {
-          "title": "What We Do",
-          "id": "what-we-do",
+          "title": "Quick Links",
+          "id": "quick_links",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "filter": "what-we-do",
-                  "model": "what-we-do",
+                  "filter": "quick_links",
+                  "model": "quick_links",
+                  "name": "Quick Links"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Quick Link Item",
+          "id": "quick-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "quick-link-item",
+                  "name": "Quick Link Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "What We Do",
+          "id": "what_we_do",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "what_we_do",
+                  "model": "what_we_do",
                   "name": "What We Do"
                 }
               }
@@ -483,31 +759,31 @@
           }
         },
         {
-          "title": "Work-With-Us",
-          "id": "work-with-us",
+          "title": "Work With Us",
+          "id": "work_with_us",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "filter": "work-with-us",
-                  "model": "work-with-us",
-                  "name": "Work-With-Us"
+                  "filter": "work_with_us",
+                  "model": "work_with_us",
+                  "name": "Work With Us"
                 }
               }
             }
           }
         },
         {
-          "title": "Work-With-Us-Slide-Item",
-          "id": "work-with-us-slide-item",
+          "title": "Work With Us Slide",
+          "id": "work-with-us-slide",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "work-with-us-slide-item",
-                  "name": "Work-With-Us-Slide-Item"
+                  "model": "work-with-us-slide",
+                  "name": "Work With Us Slide"
                 }
               }
             }

@@ -46,7 +46,7 @@
           "component": "container",
           "item": "faq-item",
           "label": "FAQ Items",
-          "name": "faqItems"
+          "name": "items"
         }
       ]
     },

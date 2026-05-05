@@ -2,258 +2,197 @@ import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.j
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
-  const children = [...block.children];
+  const [headingRow, descriptionRow, ...businessVerticalRows] = [...block.children];
+
   const section = document.createElement('section');
   section.classList.add('section', 'what-we-do-wrap');
 
   const container = document.createElement('div');
   container.classList.add('container');
-  section.append(container);
 
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
-  container.append(sectionHeader);
-
-  // Heading and Description
-  const [headingRow, descriptionRow, ...businessVerticalRows] = children;
 
   const heading = document.createElement('h2');
-  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  heading.classList.add('heading', 'font-regular');
   moveInstrumentation(headingRow, heading);
   heading.textContent = headingRow.textContent.trim();
   sectionHeader.append(heading);
 
   const description = document.createElement('p');
-  description.classList.add('aos-init', 'aos-animate');
   moveInstrumentation(descriptionRow, description);
   description.textContent = descriptionRow.textContent.trim();
   sectionHeader.append(description);
 
+  container.append(sectionHeader);
+  section.append(container);
+
   const ourBusinessVerticals = document.createElement('div');
   ourBusinessVerticals.classList.add('our-business-verticals');
-  section.append(ourBusinessVerticals);
 
-  // Desktop view
   const desktopContainer = document.createElement('div');
   desktopContainer.classList.add('container', 'd-lg-block', 'd-none');
-  ourBusinessVerticals.append(desktopContainer);
-
   const desktopRow = document.createElement('div');
   desktopRow.classList.add('row', 'row-cols-lg-3', 'row-cols-1', 'g-3');
-  desktopContainer.append(desktopRow);
 
-  // Mobile view (slider)
   const mobileContainer = document.createElement('div');
-  mobileContainer.classList.add('container', 'd-lg-none', 'd-block', 'aos-init', 'aos-animate');
-  mobileContainer.setAttribute('data-aos', 'fade-up');
-  mobileContainer.setAttribute('data-aos-offset', '100');
-  mobileContainer.setAttribute('data-aos-duration', '650');
-  mobileContainer.setAttribute('data-aos-easing', 'ease-in-out');
-  ourBusinessVerticals.append(mobileContainer);
-
+  mobileContainer.classList.add('container', 'd-lg-none', 'd-block');
   const mobileSlider = document.createElement('div');
-  mobileSlider.classList.add('mobile-slider'); // Flickity classes added by JS
+  mobileSlider.classList.add('mobile-slider');
+  // Flickity will add flickity-enabled is-draggable, flickity-viewport, flickity-slider
   mobileSlider.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "adaptiveHeight": true }');
-  mobileSlider.setAttribute('tabindex', '0');
-  mobileContainer.append(mobileSlider);
 
-  const flickityViewport = document.createElement('div');
-  flickityViewport.classList.add('flickity-viewport');
-  mobileSlider.append(flickityViewport);
+  // Flickity expects slides directly inside the .flickity-slider
+  const mobileFlickitySlider = document.createElement('div');
+  mobileFlickitySlider.classList.add('flickity-slider'); // This class is added by Flickity, but we need the container
 
-  const flickitySlider = document.createElement('div');
-  flickitySlider.classList.add('flickity-slider');
-  flickityViewport.append(flickitySlider);
-
-  const flickityPageDots = document.createElement('ol');
-  flickityPageDots.classList.add('flickity-page-dots');
-  mobileSlider.append(flickityPageDots);
-
-  // Group items for mobile slider (3 items per slide)
-  const mobileSlides = [];
-  for (let i = 0; i < businessVerticalRows.length; i += 3) {
-    mobileSlides.push(businessVerticalRows.slice(i, i + 3));
-  }
+  const mobileSlideGroups = [];
+  let currentMobileSlideGroup = document.createElement('div');
+  currentMobileSlideGroup.classList.add('slides');
+  let currentMobileRow = document.createElement('div');
+  currentMobileRow.classList.add('row', 'row-cols-1', 'gy-3');
+  currentMobileSlideGroup.append(currentMobileRow);
+  mobileSlideGroups.push(currentMobileSlideGroup);
 
   businessVerticalRows.forEach((row, index) => {
-    const [imageDesktopCell, imageTabletCell, imageMobileCell, titleCell, arrowIconCell, linkCell] = [...row.children];
-    moveInstrumentation(row, row); // Instrument the row itself
+    const [imageDesktopCell, imageTabletCell, titleCell, arrowIconCell, linkCell] = [...row.children];
 
-    const col = document.createElement('div');
-    col.classList.add('col', 'aos-init', 'aos-animate');
-    col.setAttribute('data-aos', 'fade-up');
-    col.setAttribute('data-aos-delay', `${(index % 3) * 300 + 100}`); // Stagger delays
-    desktopRow.append(col);
+    // Desktop card
+    const desktopCol = document.createElement('div');
+    desktopCol.classList.add('col');
+    const desktopWrap = document.createElement('div');
+    desktopWrap.classList.add('wrap');
 
-    const wrap = document.createElement('div');
-    wrap.classList.add('wrap');
-    col.append(wrap);
-
-    const imageDiv = document.createElement('div');
-    imageDiv.classList.add('image');
-    wrap.append(imageDiv);
-
-    // Desktop image
-    const pictureDesktop = imageDesktopCell.querySelector('picture');
-    if (pictureDesktop) {
-      const optimizedPicDesktop = createOptimizedPicture(
-        pictureDesktop.querySelector('img').src,
-        pictureDesktop.querySelector('img').alt,
-        false,
-        [{ media: '(min-width: 992px)', width: '376' }],
-      );
-      moveInstrumentation(pictureDesktop, optimizedPicDesktop.querySelector('img'));
-      imageDiv.append(optimizedPicDesktop);
+    const desktopImageDiv = document.createElement('div');
+    desktopImageDiv.classList.add('image');
+    const desktopPicture = imageDesktopCell.querySelector('picture');
+    if (desktopPicture) {
+      const img = desktopPicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 992px)', width: '376' }, { width: '376' }]);
+      moveInstrumentation(desktopPicture, optimizedPic.querySelector('img'));
+      desktopImageDiv.append(optimizedPic);
     }
+    desktopWrap.append(desktopImageDiv);
 
-    // Tablet image (for desktop view, as per original HTML structure)
-    const pictureTablet = imageTabletCell.querySelector('picture');
-    if (pictureTablet) {
-      const optimizedPicTablet = createOptimizedPicture(
-        pictureTablet.querySelector('img').src,
-        pictureTablet.querySelector('img').alt,
-        false,
-        [{ media: '(min-width: 450px)', width: '376' }],
-      );
-      moveInstrumentation(pictureTablet, optimizedPicTablet.querySelector('img'));
-      imageDiv.append(optimizedPicTablet);
+    const desktopTitleDiv = document.createElement('div');
+    desktopTitleDiv.classList.add('title');
+    desktopTitleDiv.textContent = titleCell.textContent.trim();
+    const desktopArrowIcon = arrowIconCell.querySelector('picture');
+    if (desktopArrowIcon) {
+      const img = desktopArrowIcon.querySelector('img');
+      const arrowImg = document.createElement('img');
+      arrowImg.loading = 'lazy';
+      arrowImg.src = img.src;
+      arrowImg.alt = img.alt;
+      arrowImg.width = '10';
+      arrowImg.height = '29';
+      desktopTitleDiv.append(arrowImg);
     }
+    desktopWrap.append(desktopTitleDiv);
 
-    const titleDiv = document.createElement('div');
-    titleDiv.classList.add('title');
-    titleDiv.textContent = titleCell.textContent.trim();
-    wrap.append(titleDiv);
-
-    const arrowIcon = arrowIconCell.querySelector('picture');
-    if (arrowIcon) {
-      const optimizedArrow = createOptimizedPicture(
-        arrowIcon.querySelector('img').src,
-        arrowIcon.querySelector('img').alt,
-        false,
-        [{ width: '10' }],
-      );
-      moveInstrumentation(arrowIcon, optimizedArrow.querySelector('img'));
-      titleDiv.append(optimizedArrow);
-    }
-
-    const link = document.createElement('a');
-    link.classList.add('stretched-link');
+    const desktopLink = document.createElement('a');
+    desktopLink.classList.add('stretched-link');
     const foundLink = linkCell.querySelector('a');
     if (foundLink) {
-      link.href = foundLink.href;
-      link.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
+      desktopLink.href = foundLink.href;
+      desktopLink.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
     }
-    moveInstrumentation(linkCell, link);
-    wrap.append(link);
+    moveInstrumentation(row, desktopLink); // Move instrumentation from the row to the link
+    desktopWrap.append(desktopLink);
+    desktopCol.append(desktopWrap);
+    desktopRow.append(desktopCol);
+
+    // Mobile card
+    const mobileCol = document.createElement('div');
+    mobileCol.classList.add('col');
+    const mobileWrap = document.createElement('div');
+    mobileWrap.classList.add('wrap');
+
+    const mobileImageDiv = document.createElement('div');
+    mobileImageDiv.classList.add('image');
+    const mobilePicture = imageTabletCell.querySelector('picture');
+    if (mobilePicture) {
+      const img = mobilePicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 992px)', width: '376' }, { media: '(min-width: 450px)', width: '376' }, { width: '376' }]);
+      mobileImageDiv.append(optimizedPic);
+    }
+    mobileWrap.append(mobileImageDiv);
+
+    const mobileTitleDiv = document.createElement('div');
+    mobileTitleDiv.classList.add('title');
+    mobileTitleDiv.textContent = titleCell.textContent.trim();
+    const mobileArrowIcon = arrowIconCell.querySelector('picture');
+    if (mobileArrowIcon) {
+      const img = mobileArrowIcon.querySelector('img');
+      const arrowImg = document.createElement('img');
+      arrowImg.loading = 'lazy';
+      arrowImg.src = img.src;
+      arrowImg.alt = img.alt;
+      arrowImg.width = '10';
+      arrowImg.height = '29';
+      mobileTitleDiv.append(arrowImg);
+    }
+    mobileWrap.append(mobileTitleDiv);
+
+    const mobileLink = document.createElement('a');
+    mobileLink.classList.add('stretched-link');
+    if (foundLink) {
+      mobileLink.href = foundLink.href;
+      mobileLink.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
+    }
+    mobileWrap.append(mobileLink);
+    mobileCol.append(mobileWrap);
+
+    // Add to mobile slide group
+    if (currentMobileRow.children.length === 3) {
+      currentMobileSlideGroup = document.createElement('div');
+      currentMobileSlideGroup.classList.add('slides');
+      currentMobileRow = document.createElement('div');
+      currentMobileRow.classList.add('row', 'row-cols-1', 'gy-3');
+      currentMobileSlideGroup.append(currentMobileRow);
+      mobileSlideGroups.push(currentMobileSlideGroup);
+    }
+    currentMobileRow.append(mobileCol);
   });
 
-  mobileSlides.forEach((slideItems, slideIndex) => {
-    const slideDiv = document.createElement('div');
-    slideDiv.classList.add('slides');
-    if (slideIndex === 0) {
-      slideDiv.classList.add('is-selected');
-      const dot = document.createElement('li');
-      dot.classList.add('dot', 'is-selected');
-      flickityPageDots.append(dot);
-    } else {
-      const dot = document.createElement('li');
-      dot.classList.add('dot');
-      flickityPageDots.append(dot);
-    }
-    flickitySlider.append(slideDiv);
+  desktopContainer.append(desktopRow);
+  ourBusinessVerticals.append(desktopContainer);
 
-    const slideRow = document.createElement('div');
-    slideRow.classList.add('row', 'row-cols-1', 'gy-3');
-    slideDiv.append(slideRow);
+  mobileSlideGroups.forEach((slideGroup) => {
+    mobileFlickitySlider.append(slideGroup);
+  });
+  mobileSlider.append(mobileFlickitySlider); // Append the flickity-slider to mobileSlider
+  mobileContainer.append(mobileSlider);
+  ourBusinessVerticals.append(mobileContainer);
 
-    slideItems.forEach((row) => {
-      const [imageDesktopCell, imageTabletCell, imageMobileCell, titleCell, arrowIconCell, linkCell] = [...row.children];
-      // moveInstrumentation(row, row); // Row already instrumented in the desktop loop
+  section.append(ourBusinessVerticals);
 
-      const col = document.createElement('div');
-      col.classList.add('col');
-      slideRow.append(col);
-
-      const wrap = document.createElement('div');
-      wrap.classList.add('wrap');
-      col.append(wrap);
-
-      const imageDiv = document.createElement('div');
-      imageDiv.classList.add('image');
-      wrap.append(imageDiv);
-
-      // Mobile image (for mobile slider)
-      const pictureMobile = imageMobileCell.querySelector('picture');
-      if (pictureMobile) {
-        const optimizedPicMobile = createOptimizedPicture(
-          pictureMobile.querySelector('img').src,
-          pictureMobile.querySelector('img').alt,
-          false,
-          [{ media: '(max-width: 449px)', width: '376' }], // Corrected media query for mobile
-        );
-        moveInstrumentation(pictureMobile, optimizedPicMobile.querySelector('img'));
-        imageDiv.append(optimizedPicMobile);
-      }
-
-      // Desktop image (for mobile slider, as per original HTML structure)
-      const pictureDesktop = imageDesktopCell.querySelector('picture');
-      if (pictureDesktop) {
-        const optimizedPicDesktop = createOptimizedPicture(
-          pictureDesktop.querySelector('img').src,
-          pictureDesktop.querySelector('img').alt,
-          false,
-          [{ media: '(min-width: 992px)', width: '376' }],
-        );
-        moveInstrumentation(pictureDesktop, optimizedPicDesktop.querySelector('img'));
-        imageDiv.append(optimizedPicDesktop);
-      }
-
-      const titleDiv = document.createElement('div');
-      titleDiv.classList.add('title');
-      titleDiv.textContent = titleCell.textContent.trim();
-      wrap.append(titleDiv);
-
-      const arrowIcon = arrowIconCell.querySelector('picture');
-      if (arrowIcon) {
-        const optimizedArrow = createOptimizedPicture(
-          arrowIcon.querySelector('img').src,
-          arrowIcon.querySelector('img').alt,
-          false,
-          [{ width: '10' }],
-        );
-        moveInstrumentation(arrowIcon, optimizedArrow.querySelector('img'));
-        titleDiv.append(optimizedArrow);
-      }
-
-      const link = document.createElement('a');
-      link.classList.add('stretched-link');
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        link.href = foundLink.href;
-        link.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
-      }
-      moveInstrumentation(linkCell, link);
-      wrap.append(link);
-    });
+  // Optimize images
+  section.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
   });
 
   block.replaceChildren(section);
 
   // Load Flickity for mobile slider
-  await loadCSS('/blocks/what-we-do/flickity.min.css'); // Assuming flickity.min.css is local to the block
-  await loadScript('/blocks/what-we-do/flickity.pkgd.min.js'); // Assuming flickity.pkgd.min.js is local to the block
+  if (mobileSlideGroups.length > 0) {
+    await loadCSS('/libs/flickity/flickity.min.css'); // Assuming Flickity CSS is available in /libs
+    await loadScript('/libs/flickity/flickity.pkgd.min.js'); // Assuming Flickity JS is available in /libs
 
-  // eslint-disable-next-line no-undef
-  if (typeof Flickity === 'function') {
-    // eslint-disable-next-line no-new, no-undef
-    new Flickity(mobileSlider, {
-      wrapAround: mobileSlider.dataset.flickity.includes('"wrapAround": true'),
-      lazyLoad: mobileSlider.dataset.flickity.includes('"lazyLoad": true'),
-      pageDots: mobileSlider.dataset.flickity.includes('"pageDots": true'),
-      prevNextButtons: mobileSlider.dataset.flickity.includes('"prevNextButtons": true'),
-      imagesLoaded: mobileSlider.dataset.flickity.includes('"imagesLoaded": true'),
-      cellAlign: mobileSlider.dataset.flickity.includes('"cellAlign": "left"') ? 'left' : 'center',
-      adaptiveHeight: mobileSlider.dataset.flickity.includes('"adaptiveHeight": true'),
-    });
+    // eslint-disable-next-line no-undef
+    if (typeof Flickity === 'function') {
+      // eslint-disable-next-line no-new, no-undef
+      new Flickity(mobileSlider, {
+        wrapAround: false,
+        lazyLoad: true,
+        pageDots: true,
+        prevNextButtons: false,
+        imagesLoaded: true,
+        cellAlign: 'left',
+        adaptiveHeight: true,
+      });
+    }
   }
 }

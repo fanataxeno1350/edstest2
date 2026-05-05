@@ -1,52 +1,53 @@
-import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default async function decorate(block) {
-  const [headingRow, ...slideRows] = [...block.children];
+export default function decorate(block) {
+  const children = [...block.children];
 
   const section = document.createElement('section');
   section.classList.add('section', 'work-with-us', 'pb-0');
   moveInstrumentation(block, section);
 
+  // Destructure the first row for the section heading
+  const [sectionHeadingRow] = children;
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
-  moveInstrumentation(headingRow, sectionHeader);
+  moveInstrumentation(sectionHeadingRow, sectionHeader);
 
-  const [headingCell] = [...headingRow.children]; // Fixed: Use array destructuring
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.textContent = headingCell.textContent.trim(); // Fixed: Use headingCell
+  // Access the cell content correctly
+  heading.textContent = sectionHeadingRow.children[0]?.textContent.trim();
   sectionHeader.append(heading);
   section.append(sectionHeader);
 
-  const positionRelative = document.createElement('div');
-  positionRelative.classList.add('position-relative', 'aos-init', 'aos-animate');
+  const positionRelativeDiv = document.createElement('div');
+  positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
 
   const container = document.createElement('div');
   container.classList.add('container');
-
-  // Original HTML indicates Flickity slider, so we need a wrapper for it
-  const flickitySliderMobileWrap = document.createElement('div');
-  flickitySliderMobileWrap.classList.add('flickity-slider-mobile-wrap');
-  flickitySliderMobileWrap.dataset.flickity = '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "watchCSS": true, "adaptiveHeight": true }';
+  positionRelativeDiv.append(container);
 
   const gridLayout = document.createElement('div');
   gridLayout.classList.add('grid-layout');
+  container.append(gridLayout);
+
+  const slideRows = children.slice(1);
 
   slideRows.forEach((row) => {
     const [
       imageDesktopCell,
       imageMobile576Cell,
       imageMobile799Cell,
-      slideHeadingCell,
-      slideDescriptionCell,
+      headingCell,
+      descriptionCell,
       ctaLinkCell,
       ctaLabelCell,
     ] = [...row.children];
 
-    const slidesDiv = document.createElement('div');
-    slidesDiv.classList.add('slides');
-    moveInstrumentation(row, slidesDiv);
+    const slideDiv = document.createElement('div');
+    slideDiv.classList.add('slides');
+    moveInstrumentation(row, slideDiv);
 
     const wrapDiv = document.createElement('div');
     wrapDiv.classList.add('wrap');
@@ -56,33 +57,47 @@ export default async function decorate(block) {
 
     const picture = document.createElement('picture');
 
-    const source576 = document.createElement('source');
-    source576.media = '(max-width: 576px)';
-    const img576 = imageMobile576Cell.querySelector('img');
-    if (img576) {
-      source576.srcset = img576.src;
-      picture.append(source576);
+    // Mobile 576px source
+    const mobile576Picture = imageMobile576Cell.querySelector('picture');
+    if (mobile576Picture) {
+      const mobile576Img = mobile576Picture.querySelector('img');
+      if (mobile576Img) {
+        const source576 = document.createElement('source');
+        source576.media = '(max-width: 576px)';
+        source576.srcset = mobile576Img.src; // Use img.src for srcset
+        picture.append(source576);
+      }
     }
 
-    const source799 = document.createElement('source');
-    source799.media = '(max-width: 799px)';
-    const img799 = imageMobile799Cell.querySelector('img');
-    if (img799) {
-      source799.srcset = img799.src;
-      picture.append(source799);
+    // Mobile 799px source
+    const mobile799Picture = imageMobile799Cell.querySelector('picture');
+    if (mobile799Picture) {
+      const mobile799Img = mobile799Picture.querySelector('img');
+      if (mobile799Img) {
+        const source799 = document.createElement('source');
+        source799.media = '(max-width: 799px)';
+        source799.srcset = mobile799Img.src; // Use img.src for srcset
+        picture.append(source799);
+      }
     }
 
-    const imgDesktop = imageDesktopCell.querySelector('img');
-    if (imgDesktop) {
-      const img = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '750' }]);
-      img.querySelector('img').classList.add('img-fluid');
-      picture.append(img.querySelector('img'));
+    // Desktop image
+    const desktopPicture = imageDesktopCell.querySelector('picture');
+    if (desktopPicture) {
+      const desktopImg = desktopPicture.querySelector('img');
+      if (desktopImg) {
+        // createOptimizedPicture returns a <picture> element, so we need to append its children
+        const optimizedDesktopPicture = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '750' }]);
+        // Move instrumentation from the original img to the new optimized img
+        moveInstrumentation(desktopImg, optimizedDesktopPicture.querySelector('img'));
+        // Append all children of the optimized picture to our new picture element
+        while (optimizedDesktopPicture.firstChild) {
+          picture.append(optimizedDesktopPicture.firstChild);
+        }
+      }
     }
-
-    if (picture.children.length > 0) {
-      imageWrap.append(picture);
-      wrapDiv.append(imageWrap);
-    }
+    imageWrap.append(picture);
+    wrapDiv.append(imageWrap);
 
     const contentWrap = document.createElement('div');
     contentWrap.classList.add('content-wrap');
@@ -92,13 +107,13 @@ export default async function decorate(block) {
 
     const slideHeading = document.createElement('h3');
     slideHeading.classList.add('heading', 'font-regular');
-    slideHeading.textContent = slideHeadingCell.textContent.trim();
+    slideHeading.textContent = headingCell.textContent.trim();
     contentSectionHeader.append(slideHeading);
 
-    const slideDescription = document.createElement('p');
-    slideDescription.classList.add('text-size-body');
-    slideDescription.textContent = slideDescriptionCell.textContent.trim();
-    contentSectionHeader.append(slideDescription);
+    const description = document.createElement('p');
+    description.classList.add('text-size-body');
+    description.innerHTML = descriptionCell.innerHTML;
+    contentSectionHeader.append(description);
 
     const ctaLink = document.createElement('a');
     ctaLink.classList.add('btn', 'btn-primary', 'stretched-link');
@@ -111,33 +126,13 @@ export default async function decorate(block) {
 
     contentWrap.append(contentSectionHeader);
     wrapDiv.append(contentWrap);
-    slidesDiv.append(wrapDiv);
-    gridLayout.append(slidesDiv);
+    slideDiv.append(wrapDiv);
+    gridLayout.append(slideDiv);
   });
 
-  flickitySliderMobileWrap.append(gridLayout); // gridLayout is the Flickity container
-  container.append(flickitySliderMobileWrap);
-  positionRelative.append(container);
-  section.append(positionRelative);
-
+  section.append(positionRelativeDiv);
   block.replaceChildren(section);
 
-  // Load Flickity CSS and JS
-  await loadCSS('/blocks/flickity/flickity.min.css'); // Assuming Flickity CSS is in blocks/flickity
-  await loadScript('/blocks/flickity/flickity.pkgd.min.js'); // Assuming Flickity JS is in blocks/flickity
-
-  // Initialize Flickity if it's available
-  if (typeof Flickity !== 'undefined') {
-    // eslint-disable-next-line no-new, no-undef
-    new Flickity(flickitySliderMobileWrap, {
-      wrapAround: flickitySliderMobileWrap.dataset.flickity.includes('"wrapAround": true'),
-      lazyLoad: flickitySliderMobileWrap.dataset.flickity.includes('"lazyLoad": true'),
-      pageDots: flickitySliderMobileWrap.dataset.flickity.includes('"pageDots": true'),
-      prevNextButtons: flickitySliderMobileWrap.dataset.flickity.includes('"prevNextButtons": true'),
-      imagesLoaded: flickitySliderMobileWrap.dataset.flickity.includes('"imagesLoaded": true'),
-      cellAlign: 'left', // Default from original HTML
-      watchCSS: flickitySliderMobileWrap.dataset.flickity.includes('"watchCSS": true'),
-      adaptiveHeight: flickitySliderMobileWrap.dataset.flickity.includes('"adaptiveHeight": true'),
-    });
-  }
+  // Removed the redundant createOptimizedPicture loop at the end.
+  // Image optimization is handled within the slideRows.forEach loop.
 }
