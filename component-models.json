@@ -146,8 +146,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Main Headline",
-        "name": "mainHeadline",
+        "label": "Main Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
@@ -158,9 +158,15 @@
       },
       {
         "component": "container",
-        "item": "product-detail-item",
-        "label": "Product Details",
-        "name": "productDetails"
+        "item": "ghee-panel",
+        "label": "Ghee Panel",
+        "name": "gheePanel"
+      },
+      {
+        "component": "container",
+        "item": "milk-panel",
+        "label": "Milk Panel",
+        "name": "milkPanel"
       }
     ]
   },
@@ -169,9 +175,8 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Product Icon (left panel thumbnail)",
-        "name": "productIcon",
-        "valueType": "string"
+        "label": "Product Icon",
+        "name": "productIcon"
       },
       {
         "component": "text",
@@ -182,37 +187,33 @@
     ]
   },
   {
-    "id": "product-detail-item",
+    "id": "ghee-panel",
     "fields": [
       {
         "component": "reference",
-        "label": "Desktop Background Image",
-        "name": "backgroundDesktop",
-        "valueType": "string"
+        "label": "Background Image (Desktop)",
+        "name": "backgroundDesktop"
       },
       {
         "component": "reference",
-        "label": "Mobile Background Image",
-        "name": "backgroundMobile",
-        "valueType": "string"
+        "label": "Background Image (Mobile)",
+        "name": "backgroundMobile"
       },
       {
         "component": "richtext",
-        "label": "Headline (before download)",
+        "label": "Headline (Before Download)",
         "name": "headlineBefore",
         "valueType": "string"
       },
       {
         "component": "reference",
         "label": "CTA Icon",
-        "name": "ctaIcon",
-        "valueType": "string"
+        "name": "ctaIcon"
       },
       {
         "component": "aem-content",
         "label": "CTA Link",
-        "name": "ctaLink",
-        "valueType": "string"
+        "name": "ctaLink"
       },
       {
         "component": "text",
@@ -222,21 +223,40 @@
       },
       {
         "component": "richtext",
-        "label": "Headline (after download)",
+        "label": "Headline (After Download)",
         "name": "headlineAfter",
         "valueType": "string"
       },
       {
         "component": "reference",
         "label": "Confirmation Icon",
-        "name": "confirmationIcon",
+        "name": "confirmationIcon"
+      }
+    ]
+  },
+  {
+    "id": "milk-panel",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image (Desktop)",
+        "name": "backgroundDesktop"
+      },
+      {
+        "component": "reference",
+        "label": "Background Image (Mobile)",
+        "name": "backgroundMobile"
+      },
+      {
+        "component": "richtext",
+        "label": "Headline",
+        "name": "headline",
         "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Whatsapp Link",
-        "name": "whatsappLink",
-        "valueType": "string"
+        "name": "whatsappLink"
       }
     ]
   },
@@ -301,12 +321,6 @@
         "item": "recipe-card-item",
         "label": "Recipe Cards",
         "name": "recipes"
-      },
-      {
-        "component": "container",
-        "item": "social-media-share-item",
-        "label": "Social Media Share Links",
-        "name": "socialMediaShareLinks"
       }
     ]
   },
@@ -345,13 +359,13 @@
       },
       {
         "component": "text",
-        "label": "Recipe Time",
+        "label": "Cooking Time",
         "name": "time",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Recipe Serves",
+        "label": "Serves",
         "name": "serves",
         "valueType": "string"
       },
@@ -359,23 +373,6 @@
         "component": "richtext",
         "label": "Navigation Hierarchy",
         "name": "hierarchy-tree",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "social-media-share-item",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "Social Share Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Social Network Label",
-        "name": "label",
         "valueType": "string"
       }
     ]
@@ -398,7 +395,7 @@
       {
         "component": "container",
         "item": "product-card-item",
-        "label": "Cards",
+        "label": "Product Cards",
         "name": "cards"
       }
     ]
@@ -408,38 +405,38 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Card Thumbnail Image",
-        "name": "thumbImage",
+        "label": "Background Image (Top Card Image)",
+        "name": "backgroundImage",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Card Title & Description",
+        "label": "Card Title/Description (Rich Text)",
         "name": "cardTitle",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Main Product Image",
-        "name": "mainImage",
+        "label": "Product Image (Bottom Image)",
+        "name": "productImage",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Main Image Link",
-        "name": "mainImageLink",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "CTA Link",
-        "name": "ctaLink",
+        "label": "Product Link",
+        "name": "productLink",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "CTA Label",
         "name": "ctaLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
         "valueType": "string"
       }
     ]
@@ -547,19 +544,43 @@
         "valueType": "string"
       },
       {
+        "component": "reference",
+        "label": "Search Icon (SVG sprite reference)",
+        "name": "searchIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Search Label",
+        "name": "searchLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Search Placeholder",
+        "name": "searchPlaceholder",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Search Error Message",
+        "name": "searchError",
+        "valueType": "string"
+      },
+      {
         "component": "container",
-        "item": "navigation-item",
+        "item": "navigation-menu-item",
         "label": "Navigation Menu",
         "name": "navigationMenu"
       }
     ]
   },
   {
-    "id": "navigation-item",
+    "id": "navigation-menu-item",
     "fields": [
       {
         "component": "reference",
-        "label": "Menu Icon (optional, mobile)",
+        "label": "Menu Icon (mobile)",
         "name": "icon",
         "valueType": "string"
       },
@@ -579,23 +600,6 @@
         "component": "richtext",
         "label": "Navigation Hierarchy",
         "name": "hierarchy-tree",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "sub-navigation-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Sub Navigation Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Sub Navigation Link",
-        "name": "link",
         "valueType": "string"
       }
     ]

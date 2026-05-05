@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Card-Carousel",
+      "title": "Card Carousel",
       "id": "card-carousel",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "card-carousel",
               "model": "card-carousel",
-              "name": "Card-Carousel"
+              "name": "Card Carousel"
             }
           }
         }
       }
     },
     {
-      "title": "Product-Card-Item",
+      "title": "Product Card Item",
       "id": "product-card-item",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "product-card-item",
-              "name": "Product-Card-Item"
+              "name": "Product Card Item"
             }
           }
         }
@@ -51,7 +51,7 @@
         {
           "component": "container",
           "item": "product-card-item",
-          "label": "Product Cards",
+          "label": "Cards",
           "name": "cards"
         }
       ]
@@ -61,38 +61,38 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image (Top Card Image)",
-          "name": "backgroundImage",
+          "label": "Card Thumbnail Image",
+          "name": "thumbImage",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Card Title/Description (Rich Text)",
+          "label": "Card Title \u0026 Description",
           "name": "cardTitle",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Product Image (Bottom Image)",
-          "name": "productImage",
+          "label": "Main Product Image",
+          "name": "mainImage",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Product Link",
-          "name": "productLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
+          "label": "Main Image Link",
+          "name": "mainImageLink",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "CTA Link",
           "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         }
       ]

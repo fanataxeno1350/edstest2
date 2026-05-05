@@ -32,7 +32,8 @@
     "id": "annual-report",
     "components": [
       "product-item",
-      "product-detail-item"
+      "ghee-panel",
+      "milk-panel"
     ]
   },
   {
@@ -42,8 +43,7 @@
   {
     "id": "card-carousel-2",
     "components": [
-      "recipe-card-item",
-      "social-media-share-item"
+      "recipe-card-item"
     ]
   },
   {
@@ -62,8 +62,7 @@
   {
     "id": "header",
     "components": [
-      "navigation-item",
-      "sub-navigation-item"
+      "navigation-menu-item"
     ]
   },
   {

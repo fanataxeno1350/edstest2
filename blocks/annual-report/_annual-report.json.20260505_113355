@@ -32,30 +32,15 @@
       }
     },
     {
-      "title": "Ghee Panel",
-      "id": "ghee-panel",
+      "title": "Product Detail Item",
+      "id": "product-detail-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "ghee-panel",
-              "name": "Ghee Panel"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Milk Panel",
-      "id": "milk-panel",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "milk-panel",
-              "name": "Milk Panel"
+              "model": "product-detail-item",
+              "name": "Product Detail Item"
             }
           }
         }
@@ -68,8 +53,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "Main Heading",
-          "name": "heading",
+          "label": "Main Headline",
+          "name": "mainHeadline",
           "valueType": "string"
         },
         {
@@ -80,15 +65,9 @@
         },
         {
           "component": "container",
-          "item": "ghee-panel",
-          "label": "Ghee Panel",
-          "name": "gheePanel"
-        },
-        {
-          "component": "container",
-          "item": "milk-panel",
-          "label": "Milk Panel",
-          "name": "milkPanel"
+          "item": "product-detail-item",
+          "label": "Product Details",
+          "name": "productDetails"
         }
       ]
     },
@@ -97,8 +76,9 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Product Icon",
-          "name": "productIcon"
+          "label": "Product Icon (left panel thumbnail)",
+          "name": "productIcon",
+          "valueType": "string"
         },
         {
           "component": "text",
@@ -109,33 +89,37 @@
       ]
     },
     {
-      "id": "ghee-panel",
+      "id": "product-detail-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image (Desktop)",
-          "name": "backgroundDesktop"
+          "label": "Desktop Background Image",
+          "name": "backgroundDesktop",
+          "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Background Image (Mobile)",
-          "name": "backgroundMobile"
+          "label": "Mobile Background Image",
+          "name": "backgroundMobile",
+          "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Headline (Before Download)",
+          "label": "Headline (before download)",
           "name": "headlineBefore",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "CTA Icon",
-          "name": "ctaIcon"
+          "name": "ctaIcon",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "CTA Link",
-          "name": "ctaLink"
+          "name": "ctaLink",
+          "valueType": "string"
         },
         {
           "component": "text",
@@ -145,40 +129,21 @@
         },
         {
           "component": "richtext",
-          "label": "Headline (After Download)",
+          "label": "Headline (after download)",
           "name": "headlineAfter",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Confirmation Icon",
-          "name": "confirmationIcon"
-        }
-      ]
-    },
-    {
-      "id": "milk-panel",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Background Image (Desktop)",
-          "name": "backgroundDesktop"
-        },
-        {
-          "component": "reference",
-          "label": "Background Image (Mobile)",
-          "name": "backgroundMobile"
-        },
-        {
-          "component": "richtext",
-          "label": "Headline",
-          "name": "headline",
+          "name": "confirmationIcon",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Whatsapp Link",
-          "name": "whatsappLink"
+          "name": "whatsappLink",
+          "valueType": "string"
         }
       ]
     }
@@ -188,8 +153,7 @@
       "id": "annual-report",
       "components": [
         "product-item",
-        "ghee-panel",
-        "milk-panel"
+        "product-detail-item"
       ]
     }
   ]
