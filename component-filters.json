@@ -18,10 +18,9 @@
       "fragment",
       "---new--blocks-----",
       "header",
-      "hero-slider",
-      "quick-links",
+      "home-slider",
       "what-we-do",
-      "purpose-led-grid",
+      "purpose-led",
       "performance-driven",
       "performance-driven-2",
       "future-ready",
@@ -41,35 +40,37 @@
     "id": "footer",
     "components": [
       "footer-section-item",
-      "footer-link-item",
-      "footer-social-item"
+      "footer-social-item",
+      "footer-link-item"
     ]
   },
   {
     "id": "future-ready",
     "components": [
-      "future-ready-card-item"
+      "future-ready-card"
     ]
   },
   {
     "id": "header",
     "components": [
       "navigation-item",
-      "press-release-item",
-      "icon-nav-item"
+      "contact-link-item",
+      "search-item",
+      "press-release-item"
     ]
   },
   {
-    "id": "hero-slider",
+    "id": "home-slider",
     "components": [
-      "hero-slide-item",
+      "home-slide-item",
       "quick-link-item"
     ]
   },
   {
     "id": "latest-news",
     "components": [
-      "news-item"
+      "elfsight-widget-embed",
+      "news-story-item"
     ]
   },
   {
@@ -81,19 +82,13 @@
   {
     "id": "performance-driven",
     "components": [
-      "performance-driven-card-item"
+      "performance-driven-card"
     ]
   },
   {
-    "id": "purpose-led-grid",
+    "id": "purpose-led",
     "components": [
-      "purpose-grid-item"
-    ]
-  },
-  {
-    "id": "quick-links",
-    "components": [
-      "quick-link-item"
+      "purpose-led-card-item"
     ]
   },
   {

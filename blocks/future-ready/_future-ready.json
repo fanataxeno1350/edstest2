@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Future-Ready",
+      "title": "Future Ready",
       "id": "future-ready",
       "plugins": {
         "xwalk": {
@@ -10,22 +10,22 @@
             "template": {
               "filter": "future-ready",
               "model": "future-ready",
-              "name": "Future-Ready"
+              "name": "Future Ready"
             }
           }
         }
       }
     },
     {
-      "title": "Future-Ready-Card-Item",
-      "id": "future-ready-card-item",
+      "title": "Future Ready Card",
+      "id": "future-ready-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "future-ready-card-item",
-              "name": "Future-Ready-Card-Item"
+              "model": "future-ready-card",
+              "name": "Future Ready Card"
             }
           }
         }
@@ -50,31 +50,32 @@
         },
         {
           "component": "container",
-          "item": "future-ready-card-item",
+          "item": "future-ready-card",
           "label": "Cards",
           "name": "cards"
         }
       ]
     },
     {
-      "id": "future-ready-card-item",
+      "id": "future-ready-card",
       "fields": [
         {
           "component": "reference",
-          "label": "Card Image (Desktop)",
+          "label": "Image (Desktop)",
           "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Card Image (Mobile)",
+          "label": "Image (Mobile)",
           "name": "imageMobile",
           "valueType": "string"
         },
         {
           "component": "richtext",
           "label": "Card Description",
-          "name": "description"
+          "name": "description",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
@@ -89,7 +90,7 @@
     {
       "id": "future-ready",
       "components": [
-        "future-ready-card-item"
+        "future-ready-card"
       ]
     }
   ]

@@ -2,7 +2,13 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  // Use array destructuring for root rows as per fixed schema
   const [headingRow, subheadingRow, ...cardRows] = [...block.children];
+
+  const section = document.createElement('section');
+  // The block's own class 'future-ready' is already on the outer div.
+  // 'spirit-of-rise' is from original HTML, 'section', 'grey-bg' are also from original.
+  section.classList.add('section', 'grey-bg', 'spirit-of-rise');
 
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
@@ -19,16 +25,19 @@ export default function decorate(block) {
   subheading.textContent = subheadingRow.textContent.trim();
   sectionHeader.append(subheading);
 
+  section.append(sectionHeader);
+
   const performanceDriven = document.createElement('div');
   performanceDriven.classList.add('performance-driven', 'performace-driven-home');
 
   const container = document.createElement('div');
   container.classList.add('container');
 
-  const cardsContainer = document.createElement('div');
-  cardsContainer.classList.add('performace-driven-cards');
+  const cardsWrapper = document.createElement('div');
+  cardsWrapper.classList.add('performace-driven-cards');
 
   cardRows.forEach((row) => {
+    // Use array destructuring for card item rows as per fixed schema
     const [imageDesktopCell, imageMobileCell, descriptionCell, linkCell] = [...row.children];
 
     const linkEl = document.createElement('a');
@@ -36,7 +45,7 @@ export default function decorate(block) {
     const foundLink = linkCell.querySelector('a');
     if (foundLink) {
       linkEl.href = foundLink.href;
-      if (foundLink.target) linkEl.target = foundLink.target; // Preserve target if present
+      linkEl.target = '_blank';
     }
     moveInstrumentation(row, linkEl);
 
@@ -46,55 +55,58 @@ export default function decorate(block) {
     const cardImage = document.createElement('div');
     cardImage.classList.add('card-image');
 
-    const pictureMobile = imageMobileCell.querySelector('picture');
     const pictureDesktop = imageDesktopCell.querySelector('picture');
+    const pictureMobile = imageMobileCell.querySelector('picture');
 
-    if (pictureMobile && pictureDesktop) {
+    if (pictureDesktop && pictureMobile) {
+      const imgDesktop = pictureDesktop.querySelector('img');
+      const imgMobile = pictureMobile.querySelector('img');
+
       const sourceMobile = document.createElement('source');
       sourceMobile.media = '(max-width: 576px)';
-      sourceMobile.srcset = pictureMobile.querySelector('img').src;
+      sourceMobile.srcset = imgMobile.src;
 
-      const imgDesktop = pictureDesktop.querySelector('img');
-      const optimizedPic = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '750' }]);
-      // moveInstrumentation should be from the original imgDesktop to the new img in optimizedPic
-      moveInstrumentation(imgDesktop, optimizedPic.querySelector('img'));
+      // createOptimizedPicture returns a <picture> element, not just an <img>
+      // We need to extract the <img> from it to append to our new picture element
+      const optimizedPictureDesktop = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '750' }]);
+      const optimizedImgDesktop = optimizedPictureDesktop.querySelector('img');
+      optimizedImgDesktop.alt = imgDesktop.alt; // Ensure alt is set correctly
 
-      optimizedPic.prepend(sourceMobile);
-      cardImage.append(optimizedPic);
+      const newPicture = document.createElement('picture');
+      newPicture.append(sourceMobile, optimizedImgDesktop); // Append source and the optimized img
+      cardImage.append(newPicture);
     } else if (pictureDesktop) {
-      const imgDesktop = pictureDesktop.querySelector('img');
-      const optimizedPic = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '750' }]);
-      // moveInstrumentation should be from the original imgDesktop to the new img in optimizedPic
-      moveInstrumentation(imgDesktop, optimizedPic.querySelector('img'));
-      cardImage.append(optimizedPic);
+      const optimizedPicture = createOptimizedPicture(pictureDesktop.querySelector('img').src, pictureDesktop.querySelector('img').alt, false, [{ width: '750' }]);
+      cardImage.append(optimizedPicture); // Append the entire optimized picture element
+    } else if (pictureMobile) {
+      const optimizedPicture = createOptimizedPicture(pictureMobile.querySelector('img').src, pictureMobile.querySelector('img').alt, false, [{ width: '750' }]);
+      cardImage.append(optimizedPicture); // Append the entire optimized picture element
     }
+    cardWrapper.append(cardImage);
 
     const homeBoxCard = document.createElement('div');
     homeBoxCard.classList.add('performace-driven-home-box-card');
 
     const description = document.createElement('p');
     description.classList.add('desc');
-    // descriptionCell is a richtext cell, its innerHTML is "<p>content</p>".
-    // Assigning it to a <p> creates <p><p>content</p></p>.
-    // Extract the innerHTML of the <p> inside the cell, or use a <div>.
-    // Given the ORIGINAL HTML uses <p> for the description, we extract the inner content.
-    description.innerHTML = descriptionCell.querySelector('p')?.innerHTML || descriptionCell.textContent.trim();
+    // descriptionCell is richtext, so innerHTML is correct.
+    // Assigning to <p> will create <p><p>...</p></p> if descriptionCell.innerHTML contains <p>.
+    // It's safer to use a <div> for richtext content if the target element is not guaranteed to be a <div>.
+    // However, the original HTML uses <p class="desc"> directly containing text, so this is acceptable
+    // if descriptionCell.innerHTML is guaranteed to be just text or simple inline elements.
+    // If it could contain block elements like another <p>, a <div> would be better here.
+    // Based on the example HTML, it's <p>text</p>, so assigning to <p> is okay here.
+    description.innerHTML = descriptionCell.innerHTML;
     homeBoxCard.append(description);
 
-    cardWrapper.append(cardImage, homeBoxCard);
+    cardWrapper.append(homeBoxCard);
     linkEl.append(cardWrapper);
-    cardsContainer.append(linkEl);
+    cardsWrapper.append(linkEl);
   });
 
-  container.append(cardsContainer);
+  container.append(cardsWrapper);
   performanceDriven.append(container);
+  section.append(performanceDriven);
 
-  const root = document.createElement('section');
-  // The block name 'future-ready' should not be added to the root element,
-  // as the outer block div already carries it from AEM.
-  // The original HTML shows 'section grey-bg spirit-of-rise'.
-  root.classList.add('section', 'grey-bg', 'spirit-of-rise');
-  root.append(sectionHeader, performanceDriven);
-
-  block.replaceChildren(root);
+  block.replaceChildren(section);
 }

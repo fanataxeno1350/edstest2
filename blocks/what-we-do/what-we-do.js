@@ -2,10 +2,10 @@ import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.j
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
-  const [headingRow, descriptionRow, ...businessVerticalRows] = [...block.children];
+  const children = [...block.children];
 
   const section = document.createElement('section');
-  section.classList.add('section', 'what-we-do-wrap');
+  section.classList.add('section', 'what-we-do-wrap'); // 'what-we-do-wrap' is from original HTML, not the block name
 
   const container = document.createElement('div');
   container.classList.add('container');
@@ -13,25 +13,25 @@ export default async function decorate(block) {
 
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
-  moveInstrumentation(headingRow, sectionHeader);
   container.append(sectionHeader);
 
-  if (headingRow) {
-    const [headingCell] = [...headingRow.children]; // Fixed: Use destructuring for heading cell
-    const heading = document.createElement('h2');
-    heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-    heading.textContent = headingCell?.textContent.trim() || '';
-    sectionHeader.append(heading);
-  }
+  // Heading
+  const headingRow = children[0];
+  const headingEl = document.createElement('h2');
+  headingEl.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  moveInstrumentation(headingRow, headingEl);
+  // Heading is type=text, so read from the cell directly.
+  headingEl.textContent = headingRow.children[0]?.textContent.trim() || '';
+  sectionHeader.append(headingEl);
 
-  if (descriptionRow) {
-    const [descriptionCell] = [...descriptionRow.children]; // Fixed: Use destructuring for description cell
-    const description = document.createElement('p');
-    description.classList.add('aos-init', 'aos-animate');
-    description.innerHTML = descriptionCell?.innerHTML || ''; // Fixed: Read innerHTML from cell
-    moveInstrumentation(descriptionRow, description);
-    sectionHeader.append(description);
-  }
+  // Description
+  const descriptionRow = children[1];
+  const descriptionEl = document.createElement('p');
+  descriptionEl.classList.add('aos-init', 'aos-animate');
+  moveInstrumentation(descriptionRow, descriptionEl);
+  // Description is type=richtext, so read innerHTML from the cell.
+  descriptionEl.innerHTML = descriptionRow.children[0]?.innerHTML || '';
+  sectionHeader.append(descriptionEl);
 
   const ourBusinessVerticals = document.createElement('div');
   ourBusinessVerticals.classList.add('our-business-verticals');
@@ -46,156 +46,188 @@ export default async function decorate(block) {
   desktopRow.classList.add('row', 'row-cols-lg-3', 'row-cols-1', 'g-3');
   desktopContainer.append(desktopRow);
 
-  // Mobile view (Swiper based)
+  // Mobile view
   const mobileContainer = document.createElement('div');
   mobileContainer.classList.add('container', 'd-lg-none', 'd-block', 'aos-init', 'aos-animate');
   ourBusinessVerticals.append(mobileContainer);
 
   const mobileSlider = document.createElement('div');
-  mobileSlider.classList.add('mobile-slider', 'swiper'); // Added 'swiper' class for Swiper initialization
+  mobileSlider.classList.add('mobile-slider', 'flickity-enabled', 'is-draggable');
+  // Flickity data attribute from original HTML
+  mobileSlider.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "adaptiveHeight": true }');
   mobileContainer.append(mobileSlider);
 
-  const swiperWrapper = document.createElement('div');
-  swiperWrapper.classList.add('swiper-wrapper');
-  mobileSlider.append(swiperWrapper);
+  const flickityViewport = document.createElement('div');
+  flickityViewport.classList.add('flickity-viewport');
+  mobileSlider.append(flickityViewport);
 
-  let currentMobileSlide = null;
-  let mobileSlideRow = null;
-  let itemsInCurrentSlide = 0;
+  const flickitySlider = document.createElement('div');
+  flickitySlider.classList.add('flickity-slider');
+  flickityViewport.append(flickitySlider);
 
-  const createNewMobileSlide = () => {
-    currentMobileSlide = document.createElement('div');
-    currentMobileSlide.classList.add('slides', 'swiper-slide');
-    mobileSlideRow = document.createElement('div');
-    mobileSlideRow.classList.add('row', 'row-cols-1', 'gy-3');
-    currentMobileSlide.append(mobileSlideRow);
-    swiperWrapper.append(currentMobileSlide); // Append to swiperWrapper directly
-    itemsInCurrentSlide = 0;
-  };
+  const mobileSlides = [];
+  const itemsPerSlide = 3;
+  let currentSlide = null;
+  let currentSlideRow = null;
 
-  createNewMobileSlide(); // Create the first slide
+  // Business Vertical Items
+  const businessVerticalRows = children.slice(2);
+  businessVerticalRows.forEach((row, index) => {
+    // FIXED: Replaced direct children[n] access with array destructuring for fixed-schema item rows
+    const [desktopImageCell, mobileImageCell, arrowIconCell, titleCell, linkCell] = [...row.children];
 
-  businessVerticalRows.forEach((row) => {
-    const [imageDesktopCell, imageMobileCell, titleCell, arrowIconCell, linkCell] = [...row.children];
+    const link = linkCell?.querySelector('a');
+    const href = link?.href || '#';
+    const titleText = titleCell?.textContent.trim() || '';
 
-    // Desktop item
-    const colDesktop = document.createElement('div');
-    colDesktop.classList.add('col', 'aos-init', 'aos-animate');
-    desktopRow.append(colDesktop);
+    // Desktop Item
+    const desktopCol = document.createElement('div');
+    desktopCol.classList.add('col', 'aos-init', 'aos-animate');
+    desktopCol.setAttribute('data-aos', 'fade-up');
+    desktopCol.setAttribute('data-aos-delay', `${100 + (index % 3) * 300}`); // Stagger delay
+    desktopRow.append(desktopCol);
 
-    const wrapDesktop = document.createElement('div');
-    wrapDesktop.classList.add('wrap');
-    moveInstrumentation(row, wrapDesktop);
-    colDesktop.append(wrapDesktop);
+    const desktopWrap = document.createElement('div');
+    desktopWrap.classList.add('wrap');
+    moveInstrumentation(row, desktopWrap); // Move instrumentation to the desktop item wrap
+    desktopCol.append(desktopWrap);
 
-    const imageDesktopDiv = document.createElement('div');
-    imageDesktopDiv.classList.add('image');
-    if (imageDesktopCell) {
-      const picture = imageDesktopCell.querySelector('picture');
+    const desktopImageDiv = document.createElement('div');
+    desktopImageDiv.classList.add('image');
+    if (desktopImageCell) {
+      const picture = desktopImageCell.querySelector('picture');
       if (picture) {
-        const img = picture.querySelector('img');
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 992px)', width: '376' }, { media: '(min-width: 450px)', width: '376' }, { width: '376' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        imageDesktopDiv.append(optimizedPic);
+        desktopImageDiv.append(createOptimizedPicture(picture.querySelector('img').src, picture.querySelector('img').alt, false, [{ media: '(min-width: 992px)', width: '992' }, { media: '(min-width: 450px)', width: '450' }, { width: '750' }]));
       }
     }
-    wrapDesktop.append(imageDesktopDiv);
+    desktopWrap.append(desktopImageDiv);
 
-    const titleDesktopDiv = document.createElement('div');
-    titleDesktopDiv.classList.add('title');
-    titleDesktopDiv.textContent = titleCell?.textContent.trim() || '';
+    const desktopTitleDiv = document.createElement('div');
+    desktopTitleDiv.classList.add('title');
+    desktopTitleDiv.textContent = titleText;
     if (arrowIconCell) {
-      const arrowImg = arrowIconCell.querySelector('img');
-      if (arrowImg) {
-        const optimizedArrow = createOptimizedPicture(arrowImg.src, arrowImg.alt, false, [{ width: '10' }]);
-        moveInstrumentation(arrowImg, optimizedArrow.querySelector('img'));
-        titleDesktopDiv.append(optimizedArrow);
+      const arrowPicture = arrowIconCell.querySelector('picture');
+      if (arrowPicture) {
+        const arrowImg = arrowPicture.querySelector('img');
+        if (arrowImg) {
+          const newArrowImg = document.createElement('img');
+          newArrowImg.loading = 'lazy';
+          newArrowImg.src = arrowImg.src;
+          newArrowImg.alt = arrowImg.alt;
+          newArrowImg.width = arrowImg.width;
+          newArrowImg.height = arrowImg.height;
+          desktopTitleDiv.append(newArrowImg);
+        }
       }
     }
-    wrapDesktop.append(titleDesktopDiv);
+    desktopWrap.append(desktopTitleDiv);
 
-    const linkDesktop = document.createElement('a');
-    linkDesktop.classList.add('stretched-link');
-    const foundLinkDesktop = linkCell?.querySelector('a');
-    if (foundLinkDesktop) {
-      linkDesktop.href = foundLinkDesktop.href;
-      linkDesktop.setAttribute('aria-label', `Learn more about ${titleCell?.textContent.trim() || ''}`);
+    const desktopLink = document.createElement('a');
+    desktopLink.href = href;
+    desktopLink.classList.add('stretched-link');
+    desktopLink.setAttribute('aria-label', `Learn more about ${titleText}`);
+    desktopWrap.append(desktopLink);
+
+    // Mobile Item (for slider)
+    if (index % itemsPerSlide === 0) {
+      currentSlide = document.createElement('div');
+      currentSlide.classList.add('slides');
+      if (index === 0) currentSlide.classList.add('is-selected');
+      flickitySlider.append(currentSlide);
+
+      currentSlideRow = document.createElement('div');
+      currentSlideRow.classList.add('row', 'row-cols-1', 'gy-3');
+      currentSlide.append(currentSlideRow);
+      mobileSlides.push(currentSlide);
     }
-    wrapDesktop.append(linkDesktop);
 
-    // Mobile item
-    if (itemsInCurrentSlide === 3) { // Fixed: Check items in current slide, not row.children.length
-      createNewMobileSlide();
-    }
+    const mobileCol = document.createElement('div');
+    mobileCol.classList.add('col');
+    currentSlideRow.append(mobileCol);
 
-    const colMobile = document.createElement('div');
-    colMobile.classList.add('col');
-    mobileSlideRow.append(colMobile);
+    const mobileWrap = document.createElement('div');
+    mobileWrap.classList.add('wrap');
+    mobileCol.append(mobileWrap);
 
-    const wrapMobile = document.createElement('div');
-    wrapMobile.classList.add('wrap');
-    colMobile.append(wrapMobile);
-
-    const imageMobileDiv = document.createElement('div');
-    imageMobileDiv.classList.add('image');
-    if (imageMobileCell) {
-      const picture = imageMobileCell.querySelector('picture');
+    const mobileImageDiv = document.createElement('div');
+    mobileImageDiv.classList.add('image');
+    if (mobileImageCell) {
+      const picture = mobileImageCell.querySelector('picture');
       if (picture) {
-        const img = picture.querySelector('img');
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 992px)', width: '376' }, { media: '(min-width: 450px)', width: '376' }, { width: '376' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        imageMobileDiv.append(optimizedPic);
+        mobileImageDiv.append(createOptimizedPicture(picture.querySelector('img').src, picture.querySelector('img').alt, false, [{ media: '(min-width: 992px)', width: '992' }, { media: '(min-width: 450px)', width: '450' }, { width: '750' }]));
       }
     }
-    wrapMobile.append(imageMobileDiv);
+    mobileWrap.append(mobileImageDiv);
 
-    const titleMobileDiv = document.createElement('div');
-    titleMobileDiv.classList.add('title');
-    titleMobileDiv.textContent = titleCell?.textContent.trim() || '';
+    const mobileTitleDiv = document.createElement('div');
+    mobileTitleDiv.classList.add('title');
+    mobileTitleDiv.textContent = titleText;
     if (arrowIconCell) {
-      const arrowImg = arrowIconCell.querySelector('img');
-      if (arrowImg) {
-        const optimizedArrow = createOptimizedPicture(arrowImg.src, arrowImg.alt, false, [{ width: '10' }]);
-        moveInstrumentation(arrowImg, optimizedArrow.querySelector('img'));
-        titleMobileDiv.append(optimizedArrow);
+      const arrowPicture = arrowIconCell.querySelector('picture');
+      if (arrowPicture) {
+        const arrowImg = arrowPicture.querySelector('img');
+        if (arrowImg) {
+          const newArrowImg = document.createElement('img');
+          newArrowImg.loading = 'lazy';
+          newArrowImg.src = arrowImg.src;
+          newArrowImg.alt = arrowImg.alt;
+          newArrowImg.width = arrowImg.width;
+          newArrowImg.height = arrowImg.height;
+          mobileTitleDiv.append(newArrowImg);
+        }
       }
     }
-    wrapMobile.append(titleMobileDiv);
+    mobileWrap.append(mobileTitleDiv);
 
-    const linkMobile = document.createElement('a');
-    linkMobile.classList.add('stretched-link');
-    const foundLinkMobile = linkCell?.querySelector('a');
-    if (foundLinkMobile) {
-      linkMobile.href = foundLinkMobile.href;
-      linkMobile.setAttribute('aria-label', `Learn more about ${titleCell?.textContent.trim() || ''}`);
-    }
-    wrapMobile.append(linkMobile);
-    itemsInCurrentSlide += 1; // Increment count for current slide
+    const mobileLink = document.createElement('a');
+    mobileLink.href = href;
+    mobileLink.classList.add('stretched-link');
+    mobileLink.setAttribute('aria-label', `Learn more about ${titleText}`);
+    mobileWrap.append(mobileLink);
   });
 
-  // Swiper pagination
-  const swiperPagination = document.createElement('div');
-  swiperPagination.classList.add('swiper-pagination', 'flickity-page-dots');
-  mobileSlider.append(swiperPagination);
+  // Flickity pagination dots
+  const flickityPageDots = document.createElement('ol');
+  flickityPageDots.classList.add('flickity-page-dots');
+  mobileSlider.append(flickityPageDots);
+
+  mobileSlides.forEach((_, slideIndex) => {
+    const dot = document.createElement('li');
+    dot.classList.add('dot');
+    dot.setAttribute('aria-label', `Page dot ${slideIndex + 1}`);
+    if (slideIndex === 0) {
+      dot.classList.add('is-selected');
+      dot.setAttribute('aria-current', 'step');
+    }
+    flickityPageDots.append(dot);
+  });
 
   block.replaceChildren(section);
 
-  // Initialize Swiper for mobile slider
-  await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
-  await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
-  // eslint-disable-next-line no-undef
-  new Swiper(mobileSlider, {
-    slidesPerView: 1,
-    spaceBetween: 16,
-    loop: false,
-    pagination: {
-      el: swiperPagination,
-      clickable: true,
-      renderBullet: (index, className) => `<li class="${className}" aria-label="Page dot ${index + 1}"></li>`,
-    },
-    breakpoints: {
-      // You might need to adjust these breakpoints based on the original site's mobile slider behavior
-      // 576: { slidesPerView: 1 }, // Example breakpoint
-    },
+  // Image optimization
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
   });
+
+  // Flickity Initialization
+  // Check 2.5: Flickity is used, so load its CSS and JS
+  await loadCSS('/libs/flickity/flickity.min.css'); // Assuming Flickity CSS is in /libs/flickity
+  await loadScript('/libs/flickity/flickity.pkgd.min.js'); // Assuming Flickity JS is in /libs/flickity
+
+  // eslint-disable-next-line no-undef
+  // Check 2.5: Initialize Flickity after the block is rendered and assets are loaded
+  if (typeof Flickity === 'function') {
+    // eslint-disable-next-line no-new
+    new Flickity(mobileSlider, {
+      wrapAround: mobileSlider.dataset.flickity.includes('"wrapAround": true'),
+      lazyLoad: mobileSlider.dataset.flickity.includes('"lazyLoad": true'),
+      pageDots: mobileSlider.dataset.flickity.includes('"pageDots": true'),
+      prevNextButtons: mobileSlider.dataset.flickity.includes('"prevNextButtons": true'),
+      imagesLoaded: mobileSlider.dataset.flickity.includes('"imagesLoaded": true'),
+      cellAlign: 'left', // Hardcoded in original HTML
+      adaptiveHeight: mobileSlider.dataset.flickity.includes('"adaptiveHeight": true'),
+    });
+  }
 }
