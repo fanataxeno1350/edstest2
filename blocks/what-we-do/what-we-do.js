@@ -119,11 +119,13 @@ export default function decorate(block) {
 
     const desktopCtaLink = document.createElement('a');
     desktopCtaLink.classList.add('stretched-link');
-    const ctaAnchor = ctaLinkCell.querySelector('a');
-    if (ctaAnchor) {
-      desktopCtaLink.href = ctaAnchor.href;
-      if (titleCell){
-        desktopCtaLink.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
+    if (ctaLinkCell){
+      const ctaAnchor = ctaLinkCell.querySelector('a');
+      if (ctaAnchor) {
+        desktopCtaLink.href = ctaAnchor.href;
+        if (titleCell){
+          desktopCtaLink.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
+        }
       }
     }
     desktopWrap.append(desktopCtaLink);
