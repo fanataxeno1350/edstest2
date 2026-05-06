@@ -1,16 +1,16 @@
 {
   "definitions": [
     {
-      "title": "Performance-Driven-2",
-      "id": "performance-driven-2",
+      "title": "Performance-Driven",
+      "id": "performance-driven",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "performance-driven-2",
-              "model": "performance-driven-2",
-              "name": "Performance-Driven-2"
+              "filter": "performance-driven",
+              "model": "performance-driven",
+              "name": "Performance-Driven"
             }
           }
         }
@@ -34,24 +34,24 @@
   ],
   "models": [
     {
-      "id": "performance-driven-2",
+      "id": "performance-driven",
       "fields": [
         {
           "component": "text",
-          "label": "Section Heading",
+          "label": "Heading",
           "name": "heading",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Section Subheading",
+          "label": "Subheading",
           "name": "subheading",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "performance-driven-card-item",
-          "label": "Cards",
+          "label": "Performance Driven Cards",
           "name": "cards"
         }
       ]
@@ -61,21 +61,20 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Card Image (Desktop)",
+          "label": "Desktop Image",
           "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Card Image (Mobile)",
+          "label": "Mobile Image",
           "name": "imageMobile",
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Card Description",
-          "name": "description",
-          "valueType": "string"
+          "component": "richtext",
+          "label": "Description",
+          "name": "description"
         },
         {
           "component": "aem-content",
@@ -88,7 +87,7 @@
   ],
   "filters": [
     {
-      "id": "performance-driven-2",
+      "id": "performance-driven",
       "components": [
         "performance-driven-card-item"
       ]

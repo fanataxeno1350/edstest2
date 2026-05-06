@@ -66,7 +66,10 @@
         "footer",
         "hero-carousel",
         "purpose-led-grid",
-        "performance-driven-cards"
+        "performance-driven-cards",
+        "home-slider",
+        "purpose-led",
+        "performance-driven"
       ]
     }
   ]

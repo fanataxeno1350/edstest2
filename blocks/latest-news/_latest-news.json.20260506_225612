@@ -17,21 +17,6 @@
       }
     },
     {
-      "title": "News-Item",
-      "id": "news-item",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "news-item",
-              "name": "News-Item"
-            }
-          }
-        }
-      }
-    },
-    {
       "title": "Elfsight-Widget-Embed",
       "id": "elfsight-widget-embed",
       "plugins": {
@@ -41,6 +26,21 @@
             "template": {
               "model": "elfsight-widget-embed",
               "name": "Elfsight-Widget-Embed"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "News-Item",
+      "id": "news-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "news-item",
+              "name": "News-Item"
             }
           }
         }
@@ -60,8 +60,8 @@
         {
           "component": "container",
           "item": "elfsight-widget-embed",
-          "label": "Widgets",
-          "name": "widgets"
+          "label": "Embeds",
+          "name": "embeds"
         },
         {
           "component": "container",
@@ -72,23 +72,46 @@
       ]
     },
     {
+      "id": "elfsight-widget-embed",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Embed URL",
+          "name": "data-embed-url",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Embed Kind",
+          "name": "data-embed-kind",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Embed Config",
+          "name": "data-embed-config",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
       "id": "news-item",
       "fields": [
         {
           "component": "reference",
-          "label": "News Image (Square)",
-          "name": "imageSquare",
+          "label": "Main Image",
+          "name": "image",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "News Image (Horizontal)",
+          "label": "Horizontal Image",
           "name": "imageHorizontal",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "News Image (Vertical)",
+          "label": "Vertical Image",
           "name": "imageVertical",
           "valueType": "string"
         },
@@ -114,29 +137,6 @@
           "component": "text",
           "label": "Date",
           "name": "date",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "elfsight-widget-embed",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Embed URL",
-          "name": "data-embed-url",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Embed Kind",
-          "name": "data-embed-kind",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Embed Config",
-          "name": "data-embed-config",
           "valueType": "string"
         }
       ]
