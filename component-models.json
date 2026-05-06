@@ -1036,13 +1036,13 @@
     "fields": [
       {
         "component": "text",
-        "label": "Section Heading",
+        "label": "Heading",
         "name": "heading",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Section Description",
+        "component": "richtext",
+        "label": "Description",
         "name": "description",
         "valueType": "string"
       },
@@ -1059,19 +1059,19 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Image (Desktop)",
+        "label": "Desktop Image",
         "name": "imageDesktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Image (Mobile)",
+        "label": "Mobile Image",
         "name": "imageMobile",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Business Title",
+        "label": "Title",
         "name": "title",
         "valueType": "string"
       },

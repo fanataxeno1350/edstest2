@@ -607,7 +607,7 @@
           }
         },
         {
-          "title": "Business Vertical Item",
+          "title": "Business Vertical",
           "id": "business-vertical-item",
           "plugins": {
             "xwalk": {
@@ -615,7 +615,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "business-vertical-item",
-                  "name": "Business Vertical Item"
+                  "name": "Business Vertical"
                 }
               }
             }
