@@ -354,14 +354,14 @@
       {
         "component": "container",
         "item": "navigation-item",
-        "label": "Main Navigation",
-        "name": "mainNavigation"
+        "label": "Navigation Menu",
+        "name": "navigationMenu"
       },
       {
         "component": "container",
-        "item": "nav-icon-link-item",
-        "label": "Icon Links",
-        "name": "iconLinks"
+        "item": "icon-nav-item",
+        "label": "Icon Navigation Items",
+        "name": "iconNav"
       }
     ]
   },
@@ -382,9 +382,45 @@
       },
       {
         "component": "richtext",
-        "label": "Mega Menu Content",
-        "name": "megaMenuContent",
+        "label": "Mega Menu Left Panel Heading",
+        "name": "leftPanelHeading",
         "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Mega Menu Left Panel Description",
+        "name": "leftPanelDescription",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Mega Menu Left Panel Sub Description",
+        "name": "leftPanelSubDescription",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Key Facts List (What We Do)",
+        "name": "keyFacts",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Group Highlights (Investor Relations)",
+        "name": "groupHighlights",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Mega Menu Link Lists",
+        "name": "megaMenuLinks",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "press-release-item",
+        "label": "Latest Press Releases",
+        "name": "pressReleases"
       },
       {
         "component": "richtext",
@@ -395,35 +431,18 @@
     ]
   },
   {
-    "id": "nav-icon-link-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Icon Link Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Icon Link",
-        "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "press-release-item",
     "fields": [
-      {
-        "component": "aem-content",
-        "label": "Press Release Link",
-        "name": "pressReleaseLink",
-        "valueType": "string"
-      },
       {
         "component": "text",
         "label": "Press Release Title",
         "name": "pressReleaseTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Press Release Link",
+        "name": "pressReleaseLink",
         "valueType": "string"
       },
       {
@@ -434,8 +453,25 @@
       },
       {
         "component": "text",
-        "label": "Press Release Tag",
-        "name": "pressReleaseTag",
+        "label": "Press Release Category",
+        "name": "pressReleaseCategory",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "icon-nav-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Icon Nav Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Icon Nav Link",
+        "name": "link",
         "valueType": "string"
       }
     ]

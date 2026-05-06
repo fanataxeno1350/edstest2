@@ -58,8 +58,8 @@
     "id": "header",
     "components": [
       "navigation-item",
-      "nav-icon-link-item",
-      "press-release-item"
+      "press-release-item",
+      "icon-nav-item"
     ]
   },
   {
