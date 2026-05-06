@@ -103,15 +103,17 @@ export default function decorate(block) {
     if (titleCell){
       desktopTitleDiv.textContent = titleCell.textContent.trim();
     }
-    const arrowIcon = arrowIconCell.querySelector('picture');
-    if (arrowIcon) {
-      const arrowImg = arrowIcon.querySelector('img');
-      const newArrowImg = document.createElement('img');
-      newArrowImg.src = arrowImg.src;
-      newArrowImg.alt = arrowImg.alt;
-      newArrowImg.loading = 'lazy';
-      newArrowImg.classList.add('img-fluid'); // Add img-fluid class
-      desktopTitleDiv.append(newArrowImg);
+    if (arrowIconCell){
+      const arrowIcon = arrowIconCell.querySelector('picture');
+      if (arrowIcon) {
+        const arrowImg = arrowIcon.querySelector('img');
+        const newArrowImg = document.createElement('img');
+        newArrowImg.src = arrowImg.src;
+        newArrowImg.alt = arrowImg.alt;
+        newArrowImg.loading = 'lazy';
+        newArrowImg.classList.add('img-fluid'); // Add img-fluid class
+        desktopTitleDiv.append(newArrowImg);
+      }
     }
     desktopWrap.append(desktopTitleDiv);
 
@@ -161,15 +163,17 @@ export default function decorate(block) {
     if (titleCell){
       mobileTitleDiv.textContent = titleCell.textContent.trim();
     }
-    const mobileArrowIcon = arrowIconCell.querySelector('picture');
-    if (mobileArrowIcon) {
-      const mobileArrowImg = mobileArrowIcon.querySelector('img');
-      const newMobileArrowImg = document.createElement('img');
-      newMobileArrowImg.src = mobileArrowImg.src;
-      newMobileArrowImg.alt = mobileArrowImg.alt;
-      newMobileArrowImg.loading = 'lazy';
-      newMobileArrowImg.classList.add('img-fluid'); // Add img-fluid class
-      mobileTitleDiv.append(newMobileArrowImg);
+    if (arrowIconCell){
+      const mobileArrowIcon = arrowIconCell.querySelector('picture');
+      if (mobileArrowIcon) {
+        const mobileArrowImg = mobileArrowIcon.querySelector('img');
+        const newMobileArrowImg = document.createElement('img');
+        newMobileArrowImg.src = mobileArrowImg.src;
+        newMobileArrowImg.alt = mobileArrowImg.alt;
+        newMobileArrowImg.loading = 'lazy';
+        newMobileArrowImg.classList.add('img-fluid'); // Add img-fluid class
+        mobileTitleDiv.append(newMobileArrowImg);
+      }
     }
     mobileWrap.append(mobileTitleDiv);
 
