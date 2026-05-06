@@ -329,45 +329,45 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Primary Logo",
+        "label": "Main Logo",
         "name": "logo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Primary Logo Link",
+        "label": "Main Logo Link",
         "name": "logoLink",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Secondary Logo (80th Year)",
-        "name": "secondaryLogo",
+        "label": "Anniversary Logo",
+        "name": "anniversaryLogo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Secondary Logo Link (80th Year)",
-        "name": "secondaryLogoLink",
+        "label": "Anniversary Logo Link",
+        "name": "anniversaryLogoLink",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "navigation-item",
         "label": "Navigation Menu",
-        "name": "navigationMenu"
+        "name": "navigation"
       },
       {
         "component": "container",
         "item": "press-release-item",
-        "label": "Latest Press Releases",
+        "label": "Latest Two Press Releases",
         "name": "pressReleases"
       },
       {
         "component": "container",
-        "item": "icon-nav-item",
-        "label": "Icon Navigation Items",
-        "name": "iconNavItems"
+        "item": "contact-item",
+        "label": "Contact Links",
+        "name": "contactLinks"
       }
     ]
   },
@@ -376,26 +376,50 @@
     "fields": [
       {
         "component": "text",
-        "label": "Menu Label",
+        "label": "Navigation Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Menu Link",
+        "label": "Navigation Link",
         "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Mega Menu Content",
-        "name": "megaMenuContent",
         "valueType": "string"
       },
       {
         "component": "richtext",
         "label": "Navigation Hierarchy",
         "name": "hierarchy-tree",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Mega Menu Left Heading",
+        "name": "leftHeading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Mega Menu Left Description",
+        "name": "leftDescription",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Mega Menu Left Sub Description",
+        "name": "leftSubDescription",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Mega Menu Left Fact List",
+        "name": "leftFactList",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Mega Menu Left Highlight List",
+        "name": "leftHighlightList",
         "valueType": "string"
       }
     ]
@@ -406,48 +430,42 @@
       {
         "component": "aem-content",
         "label": "Press Release Link",
-        "name": "pressReleaseLink",
+        "name": "releaseLink",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "Press Release Title",
-        "name": "pressReleaseTitle",
+        "name": "releaseTitle",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "Press Release Date",
-        "name": "pressReleaseDate",
+        "name": "releaseDate",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Press Release Tag",
-        "name": "pressReleaseTag",
+        "label": "Press Release Category",
+        "name": "releaseCategory",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "icon-nav-item",
+    "id": "contact-item",
     "fields": [
       {
-        "component": "reference",
-        "label": "Icon",
-        "name": "icon",
+        "component": "text",
+        "label": "Contact Label",
+        "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Icon Nav Link",
+        "label": "Contact Link",
         "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Label",
-        "name": "label",
         "valueType": "string"
       }
     ]

@@ -1,43 +1,5 @@
-import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-
-function createSvgIcon() {
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('viewBox', '-23.5 -23.5 122.80 122.80');
-  svg.setAttribute('fill', '#000000');
-  svg.setAttribute('stroke', '#000000');
-  svg.setAttribute('stroke-width', '4.851456000000001');
-
-  const g1 = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-  g1.setAttribute('id', 'SVGRepo_bgCarrier');
-  g1.setAttribute('stroke-width', '0');
-  svg.appendChild(g1);
-
-  const g2 = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-  g2.setAttribute('id', 'SVGRepo_tracerCarrier');
-  g2.setAttribute('stroke-linecap', 'round');
-  g2.setAttribute('stroke-linejoin', 'round');
-  g2.setAttribute('stroke', '#CCCCCC');
-  g2.setAttribute('stroke-width', '0.30321600000000004');
-  svg.appendChild(g2);
-
-  const g3 = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-  g3.setAttribute('id', 'SVGRepo_iconCarrier');
-  const g4 = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-  g4.setAttribute('id', 'Group_65');
-  g4.setAttribute('data-name', 'Group 65');
-  g4.setAttribute('transform', 'translate(-831.568 -384.448)');
-  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  path.setAttribute('id', 'Path_57');
-  path.setAttribute('data-name', 'Path 57');
-  path.setAttribute('d', 'M833.068,460.252a1.5,1.5,0,0,1-1.061-2.561l33.557-33.56a2.53,2.53,0,0,0,0-3.564l-33.557-33.558a1.5,1.5,0,0,1,2.122-2.121l33.556,33.558a5.53,5.53,0,0,1,0,7.807l-33.557,33.56A1.5,1.5,0,0,1,833.068,460.252Z');
-  path.setAttribute('fill', '#030408');
-  g4.appendChild(path);
-  g3.appendChild(g4);
-  svg.appendChild(g3);
-
-  return svg;
-}
 
 function transformNestedLists(rootUl) {
   rootUl.querySelectorAll('li').forEach((li) => {
@@ -65,8 +27,6 @@ function transformNestedLists(rootUl) {
 
       const trigger = li.querySelector(':scope > a, :scope > span');
       if (trigger) {
-        const svgIcon = createSvgIcon();
-        trigger.append(svgIcon);
         trigger.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -75,6 +35,7 @@ function transformNestedLists(rootUl) {
         });
       }
 
+      // Handle inner nested lists
       nested.querySelectorAll('li').forEach((innerLi) => {
         const innerNested = innerLi.querySelector(':scope > ul');
         const innerAnchor = innerLi.querySelector(':scope > a');
@@ -100,8 +61,6 @@ function transformNestedLists(rootUl) {
 
           const innerTrigger = innerLi.querySelector(':scope > a, :scope > span');
           if (innerTrigger) {
-            const svgIcon = createSvgIcon();
-            innerTrigger.append(svgIcon);
             innerTrigger.addEventListener('click', (e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -115,17 +74,23 @@ function transformNestedLists(rootUl) {
   });
 }
 
-export default async function decorate(block) {
+export default function decorate(block) {
   const children = [...block.children];
 
-  const [logoRow, logoLinkRow, secondaryLogoRow, secondaryLogoLinkRow, ...itemRows] = children;
+  const [
+    logoRow,
+    logoLinkRow,
+    anniversaryLogoRow,
+    anniversaryLogoLinkRow,
+    ...itemRows
+  ] = children;
 
-  const mainHeader = document.createElement('header');
-  mainHeader.classList.add('main-header', 'with-marquee', 'solid'); // Rule 19: nav-up removed
+  const header = document.createElement('header');
+  header.classList.add('main-header', 'with-marquee', 'solid'); // nav-up is a scroll-state class, not initial
 
   const container = document.createElement('div');
   container.classList.add('container');
-  mainHeader.append(container);
+  header.append(container);
 
   const wrap = document.createElement('div');
   wrap.classList.add('wrap');
@@ -134,25 +99,24 @@ export default async function decorate(block) {
   // Logo
   const logoDiv = document.createElement('div');
   logoDiv.classList.add('logo');
-  const logoLink = document.createElement('a');
-  const primaryLogoAnchor = logoLinkRow.querySelector('a');
-  if (primaryLogoAnchor) logoLink.href = primaryLogoAnchor.href;
-  moveInstrumentation(logoLinkRow, logoLink);
-
-  const primaryPicture = logoRow.querySelector('picture');
-  if (primaryPicture) {
-    const img = primaryPicture.querySelector('img');
+  const mainLogoLink = document.createElement('a');
+  mainLogoLink.href = logoLinkRow?.querySelector('a')?.href || '#';
+  const mainLogoPicture = logoRow?.querySelector('picture');
+  if (mainLogoPicture) {
+    const img = mainLogoPicture.querySelector('img');
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
-    moveInstrumentation(logoRow, optimizedPic.querySelector('img'));
-    logoLink.append(optimizedPic);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    mainLogoLink.append(optimizedPic);
   }
-  logoDiv.append(logoLink);
+  mainLogoLink.querySelector('img')?.classList.add('hiddenlogo1');
+  moveInstrumentation(logoRow, mainLogoLink);
+  moveInstrumentation(logoLinkRow, mainLogoLink);
+  logoDiv.append(mainLogoLink);
   wrap.append(logoDiv);
 
   // Hamburger
   const hamburger = document.createElement('div');
   hamburger.classList.add('hamburger');
-  hamburger.setAttribute('data-once', 'hamburger-click nav-close-search');
   const ulHamburger = document.createElement('ul');
   for (let i = 0; i < 3; i += 1) {
     ulHamburger.append(document.createElement('li'));
@@ -161,46 +125,43 @@ export default async function decorate(block) {
   wrap.append(hamburger);
 
   // Main Nav
-  const mainNav = document.createElement('nav');
-  mainNav.classList.add('main-nav');
-  mainNav.setAttribute('data-once', 'initSubChildToggle');
+  const nav = document.createElement('nav');
+  nav.classList.add('main-nav');
   const navUl = document.createElement('ul');
   navUl.setAttribute('itemscope', '');
   navUl.setAttribute('itemtype', 'http://www.schema.org/SiteNavigationElement');
-  mainNav.append(navUl);
-  wrap.append(mainNav);
+  nav.append(navUl);
+  wrap.append(nav);
 
-  const iconNavMobile = document.createElement('div');
-  iconNavMobile.classList.add('icon-nav', 'mobile-menus-icon');
-  const iconNavMobileUl = document.createElement('ul');
-  iconNavMobile.append(iconNavMobileUl);
-
-  const iconNavDesktop = document.createElement('div');
-  iconNavDesktop.classList.add('icon-nav', 'desktop-menus-icon');
-  const iconNavDesktopUl = document.createElement('ul');
-  iconNavDesktop.append(iconNavDesktopUl);
-
-  const navigationItems = itemRows.filter((row) => row.children.length === 4);
-  const pressReleaseItems = itemRows.filter((row) => row.children.length === 4 && row.querySelector('a') && !row.querySelector('picture'));
-  const iconNavItems = itemRows.filter((row) => row.children.length === 3);
+  const navigationItems = itemRows.filter((row) => row.children.length === 8);
+  const pressReleaseItems = itemRows.filter((row) => row.children.length === 4);
+  const contactItems = itemRows.filter((row) => row.children.length === 2);
 
   navigationItems.forEach((row) => {
-    const [labelCell, linkCell, megaMenuContentCell, hierarchyTreeCell] = [...row.children];
+    const [
+      labelCell,
+      linkCell,
+      hierarchyTreeCell,
+      leftHeadingCell,
+      leftDescriptionCell,
+      leftSubDescriptionCell,
+      leftFactListCell,
+      leftHighlightListCell,
+    ] = [...row.children];
+
     const li = document.createElement('li');
     li.classList.add('has-child', 'hover-red');
     li.setAttribute('itemprop', 'name');
-    li.setAttribute('data-once', 'nav-close-search');
 
     const anchor = document.createElement('a');
     anchor.setAttribute('itemprop', 'url');
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) anchor.href = foundLink.href;
-    anchor.textContent = labelCell.textContent.trim();
-    moveInstrumentation(linkCell, anchor);
+    anchor.href = linkCell?.querySelector('a')?.href || '#';
+    anchor.textContent = labelCell?.textContent.trim();
     li.append(anchor);
 
-    const svgIcon = createSvgIcon();
-    li.append(document.createElement('span').append(svgIcon));
+    const svgSpan = document.createElement('span');
+    svgSpan.innerHTML = `<svg viewBox="-23.5 -23.5 122.80 122.80" fill="#000000" stroke="#000000" stroke-width="4.851456000000001"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.30321600000000004"></g><g id="SVGRepo_iconCarrier"> <g id="Group_65" data-name="Group 65" transform="translate(-831.568 -384.448)"> <path id="Path_57" data-name="Path 57" d="M833.068,460.252a1.5,1.5,0,0,1-1.061-2.561l33.557-33.56a2.53,2.53,0,0,0,0-3.564l-33.557-33.558a1.5,1.5,0,0,1,2.122-2.121l33.556,33.558a5.53,5.53,0,0,1,0,7.807l-33.557,33.56A1.5,1.5,0,0,1,833.068,460.252Z" fill="#030408"></path> </g> </g></svg>`;
+    li.append(svgSpan);
 
     const megaMenu = document.createElement('div');
     megaMenu.classList.add('mega-menu');
@@ -215,15 +176,56 @@ export default async function decorate(block) {
     leftDiv.classList.add('left-div');
     centerDiv.append(leftDiv);
 
-    if (megaMenuContentCell.textContent.trim()) {
-      leftDiv.innerHTML = megaMenuContentCell.innerHTML;
+    if (leftHeadingCell?.textContent.trim()) {
+      const h4 = document.createElement('h4');
+      h4.classList.add('left-div-heading');
+      const h4Link = document.createElement('a');
+      h4Link.textContent = leftHeadingCell.textContent.trim();
+      h4.append(h4Link);
+      leftDiv.append(h4);
+    }
+
+    if (leftDescriptionCell?.textContent.trim()) {
+      const pDesc = document.createElement('p');
+      pDesc.classList.add('left-div-desc');
+      pDesc.textContent = leftDescriptionCell.textContent.trim();
+      leftDiv.append(pDesc);
+    }
+
+    if (leftSubDescriptionCell?.textContent.trim()) {
+      const pSubDesc = document.createElement('p');
+      pSubDesc.classList.add('left-div-subdesc');
+      pSubDesc.textContent = leftSubDescriptionCell.textContent.trim();
+      leftDiv.append(pSubDesc);
+    }
+
+    const leftFactListUl = leftFactListCell?.querySelector('ul');
+    if (leftFactListUl) {
+      leftFactListUl.classList.add('list-text-red');
+      leftDiv.append(leftFactListUl);
+    } else if (leftFactListCell?.textContent.trim()) {
+      const pFactList = document.createElement('p');
+      pFactList.classList.add('list-text-red');
+      pFactList.innerHTML = leftFactListCell.innerHTML;
+      leftDiv.append(pFactList);
+    }
+
+    const leftHighlightListUl = leftHighlightListCell?.querySelector('ul');
+    if (leftHighlightListUl) {
+      leftHighlightListUl.classList.add('list-text-red');
+      leftDiv.append(leftHighlightListUl);
+    } else if (leftHighlightListCell?.textContent.trim()) {
+      const pHighlightList = document.createElement('p');
+      pHighlightList.classList.add('list-text-red');
+      pHighlightList.innerHTML = leftHighlightListCell.innerHTML;
+      leftDiv.append(pHighlightList);
     }
 
     const subNavWrap = document.createElement('div');
     subNavWrap.classList.add('sub-nav-wrap');
     centerDiv.append(subNavWrap);
 
-    const hierarchyUl = hierarchyTreeCell.querySelector('ul');
+    const hierarchyUl = hierarchyTreeCell?.querySelector('ul');
     if (hierarchyUl) {
       transformNestedLists(hierarchyUl);
       subNavWrap.append(hierarchyUl);
@@ -231,355 +233,254 @@ export default async function decorate(block) {
 
     li.append(megaMenu);
     navUl.append(li);
-
-    li.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      li.classList.toggle('active');
-      megaMenu.classList.toggle('active');
-    });
+    moveInstrumentation(row, li);
   });
 
-  // Press Releases (as a specific navigation item)
-  if (pressReleaseItems.length > 0) {
-    const li = document.createElement('li');
-    li.classList.add('has-child', 'hover-red');
-    li.setAttribute('itemprop', 'name');
-    li.setAttribute('data-once', 'nav-close-search');
+  // Newsroom item (special handling for press releases)
+  const newsroomLi = document.createElement('li');
+  newsroomLi.classList.add('has-child', 'hover-red');
+  newsroomLi.setAttribute('itemprop', 'name');
 
-    const anchor = document.createElement('a');
-    anchor.setAttribute('itemprop', 'url');
-    anchor.href = '/newsroom';
-    anchor.textContent = 'newsroom';
-    li.append(anchor);
+  const newsroomAnchor = document.createElement('a');
+  newsroomAnchor.setAttribute('itemprop', 'url');
+  newsroomAnchor.href = 'https://www.mahindra.com/newsroom';
+  newsroomAnchor.textContent = 'newsroom';
+  newsroomLi.append(newsroomAnchor);
 
-    const svgIcon = createSvgIcon();
-    li.append(document.createElement('span').append(svgIcon));
+  const newsroomSvgSpan = document.createElement('span');
+  newsroomSvgSpan.innerHTML = `<svg viewBox="-23.5 -23.5 122.80 122.80" fill="#000000" stroke="#000000" stroke-width="4.851456000000001"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.30321600000000004"></g><g id="SVGRepo_iconCarrier"> <g id="Group_65" data-name="Group 65" transform="translate(-831.568 -384.448)"> <path id="Path_57" data-name="Path 57" d="M833.068,460.252a1.5,1.5,0,0,1-1.061-2.561l33.557-33.56a2.53,2.53,0,0,0,0-3.564l-33.557-33.558a1.5,1.5,0,0,1,2.122-2.121l33.556,33.558a5.53,5.53,0,0,1,0,7.807l-33.557,33.56A1.5,1.5,0,0,1,833.068,460.252Z" fill="#030408"></path> </g> </g></svg>`;
+  newsroomLi.append(newsroomSvgSpan);
 
-    const megaMenu = document.createElement('div');
-    megaMenu.classList.add('mega-menu');
-    const megaMenuWrap = document.createElement('div');
-    megaMenuWrap.classList.add('wrap', 'container');
-    megaMenu.append(megaMenuWrap);
-    const centerDiv = document.createElement('div');
-    centerDiv.classList.add('center-div');
-    megaMenuWrap.append(centerDiv);
+  const newsroomMegaMenu = document.createElement('div');
+  newsroomMegaMenu.classList.add('mega-menu');
+  const newsroomMegaMenuWrap = document.createElement('div');
+  newsroomMegaMenuWrap.classList.add('wrap', 'container');
+  newsroomMegaMenu.append(newsroomMegaMenuWrap);
+  const newsroomCenterDiv = document.createElement('div');
+  newsroomCenterDiv.classList.add('center-div');
+  newsroomMegaMenuWrap.append(newsroomCenterDiv);
 
-    const leftDiv = document.createElement('div');
-    leftDiv.classList.add('left-div', 'newsroom-left-div');
-    centerDiv.append(leftDiv);
+  const newsroomLeftDiv = document.createElement('div');
+  newsroomLeftDiv.classList.add('left-div', 'newsroom-left-div');
+  newsroomCenterDiv.append(newsroomLeftDiv);
 
-    const heading = document.createElement('h4');
-    heading.classList.add('left-div-heading');
-    const headingLink = document.createElement('a');
-    headingLink.textContent = 'Newsroom';
-    heading.append(headingLink);
-    leftDiv.append(heading);
+  const newsroomH4 = document.createElement('h4');
+  newsroomH4.classList.add('left-div-heading');
+  const newsroomH4Link = document.createElement('a');
+  newsroomH4Link.textContent = 'Newsroom';
+  newsroomH4.append(newsroomH4Link);
+  newsroomLeftDiv.append(newsroomH4);
 
-    const latestPressReleaseDiv = document.createElement('div');
-    latestPressReleaseDiv.classList.add('latest-two-press-release');
-    leftDiv.append(latestPressReleaseDiv);
+  const latestPressReleaseDiv = document.createElement('div');
+  latestPressReleaseDiv.classList.add('latest-two-press-release');
+  newsroomLeftDiv.append(latestPressReleaseDiv);
 
-    pressReleaseItems.slice(0, 2).forEach((row) => {
-      const [pressReleaseLinkCell, pressReleaseTitleCell, pressReleaseDateCell, pressReleaseTagCell] = [...row.children];
-      const slideDiv = document.createElement('div');
-      slideDiv.classList.add('slides');
-      const slideWrap = document.createElement('div');
-      slideWrap.classList.add('wrap');
-      slideDiv.append(slideWrap);
-      const contentDiv = document.createElement('div');
-      contentDiv.classList.add('content');
-      slideWrap.append(contentDiv);
-      const descDiv = document.createElement('div');
-      descDiv.classList.add('desc');
-      contentDiv.append(descDiv);
+  pressReleaseItems.slice(0, 2).forEach((row) => {
+    const [releaseLinkCell, releaseTitleCell, releaseDateCell, releaseCategoryCell] = [
+      ...row.children,
+    ];
+    const slidesDiv = document.createElement('div');
+    slidesDiv.classList.add('slides');
+    const slidesWrap = document.createElement('div');
+    slidesWrap.classList.add('wrap');
+    slidesDiv.append(slidesWrap);
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add('content');
+    slidesWrap.append(contentDiv);
+    const descDiv = document.createElement('div');
+    descDiv.classList.add('desc');
+    contentDiv.append(descDiv);
 
-      const p = document.createElement('p');
-      const prLink = document.createElement('a');
-      const foundPrLink = pressReleaseLinkCell.querySelector('a');
-      if (foundPrLink) prLink.href = foundPrLink.href;
-      prLink.textContent = pressReleaseTitleCell.textContent.trim();
-      moveInstrumentation(pressReleaseLinkCell, prLink);
-      p.append(prLink);
-      descDiv.append(p);
+    const pLink = document.createElement('p');
+    const releaseAnchor = document.createElement('a');
+    releaseAnchor.href = releaseLinkCell?.querySelector('a')?.href || '#';
+    releaseAnchor.textContent = releaseTitleCell?.textContent.trim();
+    pLink.append(releaseAnchor);
+    descDiv.append(pLink);
 
-      const dateDiv = document.createElement('div');
-      dateDiv.classList.add('date');
-      const emDate = document.createElement('em');
-      emDate.textContent = pressReleaseDateCell.textContent.trim();
-      const emTag = document.createElement('em');
-      emTag.textContent = pressReleaseTagCell.textContent.trim();
-      dateDiv.append(emDate, emTag);
-      descDiv.append(dateDiv);
-      moveInstrumentation(row, slideDiv);
-      latestPressReleaseDiv.append(slideDiv);
-    });
-
-    const subNavWrap = document.createElement('div');
-    subNavWrap.classList.add('sub-nav-wrap');
-    centerDiv.append(subNavWrap);
-
-    const ul1 = document.createElement('ul');
-    const li1 = document.createElement('li');
-    const a1 = document.createElement('a');
-    a1.href = 'https://www.mahindra.com/newsroom/press-release';
-    a1.textContent = 'Press Releases';
-    li1.append(a1);
-    const li2 = document.createElement('li');
-    const a2 = document.createElement('a');
-    a2.href = 'https://www.mahindra.com/newsroom/corporate-doc';
-    a2.textContent = 'Media Resources';
-    li2.append(a2);
-    ul1.append(li1, li2);
-    subNavWrap.append(ul1);
-
-    const ul2 = document.createElement('ul');
-    const li3 = document.createElement('li');
-    const a3 = document.createElement('a');
-    a3.href = 'https://www.mahindra.com/newsroom#in-the-news';
-    a3.textContent = 'In The News';
-    li3.append(a3);
-    ul2.append(li3);
-    subNavWrap.append(ul2);
-
-    li.append(megaMenu);
-    navUl.append(li);
-
-    li.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      li.classList.toggle('active');
-      megaMenu.classList.toggle('active');
-    });
-  }
-
-  // Icon Nav Items
-  iconNavItems.forEach((row) => {
-    const [iconCell, linkCell, labelCell] = [...row.children];
-
-    const mobileLi = document.createElement('li');
-    const desktopLi = document.createElement('li');
-
-    const iconAnchor = document.createElement('a');
-    const foundIconLink = linkCell.querySelector('a');
-    if (foundIconLink) iconAnchor.href = foundIconLink.href;
-    moveInstrumentation(linkCell, iconAnchor);
-
-    const iconPicture = iconCell.querySelector('picture');
-    if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '21' }]);
-      moveInstrumentation(iconCell, optimizedPic.querySelector('img'));
-      iconAnchor.append(optimizedPic);
-    }
-
-    const labelSpan = document.createElement('span');
-    labelSpan.textContent = labelCell.textContent.trim();
-
-    mobileLi.classList.add('mail');
-    iconAnchor.textContent = labelCell.textContent.trim(); // For mobile, label is text content of anchor
-    mobileLi.append(iconAnchor);
-    moveInstrumentation(row, mobileLi);
-    iconNavMobileUl.append(mobileLi);
-
-    desktopLi.classList.add('mail');
-    desktopLi.append(iconAnchor.cloneNode(true)); // Clone for desktop
-    iconNavDesktopUl.append(desktopLi);
+    const dateDiv = document.createElement('div');
+    dateDiv.classList.add('date');
+    const emDate = document.createElement('em');
+    emDate.textContent = releaseDateCell?.textContent.trim();
+    const emCategory = document.createElement('em');
+    emCategory.textContent = releaseCategoryCell?.textContent.trim();
+    dateDiv.append(emDate, emCategory);
+    descDiv.append(dateDiv);
+    latestPressReleaseDiv.append(slidesDiv);
+    moveInstrumentation(row, slidesDiv);
   });
 
-  // Search Icon (mobile and desktop)
-  const createSearchElements = (isMobile) => {
-    const searchLi = document.createElement('li');
-    searchLi.classList.add('search');
-    searchLi.setAttribute('data-once', 'search-toggle search-stop-propagation');
+  const newsroomSubNavWrap = document.createElement('div');
+  newsroomSubNavWrap.classList.add('sub-nav-wrap');
+  newsroomCenterDiv.append(newsroomSubNavWrap);
 
-    const searchAnchor = document.createElement('a');
-    searchAnchor.href = '#';
-    searchAnchor.setAttribute('data-once', 'search-stop-propagation');
+  const newsroomUl1 = document.createElement('ul');
+  const newsroomLi1 = document.createElement('li');
+  const newsroomAnchor1 = document.createElement('a');
+  newsroomAnchor1.href = 'https://www.mahindra.com/newsroom/press-release';
+  newsroomAnchor1.textContent = 'Press Releases';
+  newsroomLi1.append(newsroomAnchor1);
+  newsroomUl1.append(newsroomLi1);
 
-    const lensSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    lensSvg.setAttribute('viewBox', '0 0 21 21');
-    lensSvg.setAttribute('fill', 'none');
-    lensSvg.classList.add('lens');
-    lensSvg.setAttribute('data-once', 'search-stop-propagation');
-    const lensPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    lensPath.setAttribute('d', 'M15.0934 2.73157L15.0934 2.73156C11.6883 -0.67354 6.14543 -0.67354 2.74033 2.73156C-0.666039 6.13793 -0.666063 11.6795 2.74035 15.0847C4.38993 16.7342 6.58308 17.6433 8.91623 17.6433C10.9916 17.6433 12.9533 16.9181 14.5221 15.5975L19.5217 20.5972C19.6721 20.7476 19.8687 20.8212 20.0632 20.8212C20.2588 20.8212 20.4554 20.7476 20.6059 20.5972C20.905 20.2981 20.905 19.8121 20.6059 19.513L15.6062 14.5132C18.4815 11.0845 18.3159 5.95535 15.0934 2.73157ZM14.0092 14.0004C12.6491 15.3606 10.8404 16.1098 8.91623 16.1098C6.99211 16.1098 5.18468 15.3606 3.82452 14.0004C1.01633 11.1923 1.01633 6.62394 3.82452 3.81575C5.22857 2.41171 7.07147 1.71024 8.91623 1.71024C10.7609 1.71024 12.6052 2.41296 14.0092 3.81575C16.8174 6.62394 16.8174 11.1923 14.0092 14.0004Z');
-    lensPath.setAttribute('stroke-width', '0.25');
-    lensPath.setAttribute('data-once', 'search-stop-propagation');
-    lensSvg.append(lensPath);
-    searchAnchor.append(lensSvg);
+  const newsroomLi2 = document.createElement('li');
+  const newsroomAnchor2 = document.createElement('a');
+  newsroomAnchor2.href = 'https://www.mahindra.com/newsroom/corporate-doc';
+  newsroomAnchor2.textContent = 'Media Resources';
+  newsroomLi2.append(newsroomAnchor2);
+  newsroomUl1.append(newsroomLi2);
+  newsroomSubNavWrap.append(newsroomUl1);
 
-    const closeSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    closeSvg.setAttribute('viewBox', '0 0 50 50');
-    closeSvg.classList.add('close');
-    closeSvg.setAttribute('data-once', 'search-stop-propagation');
-    const closePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    closePath.setAttribute('d', 'M 9.15625 6.3125 L 6.3125 9.15625 L 22.15625 25 L 6.21875 40.96875 L 9.03125 43.78125 L 25 27.84375 L 40.9375 43.78125 L 43.78125 40.9375 L 27.84375 25 L 43.6875 9.15625 L 40.84375 6.3125 L 25 22.15625 Z');
-    closePath.setAttribute('data-once', 'search-stop-propagation');
-    closeSvg.append(closePath);
-    searchAnchor.append(closeSvg);
+  const newsroomUl2 = document.createElement('ul');
+  const newsroomLi3 = document.createElement('li');
+  const newsroomAnchor3 = document.createElement('a');
+  newsroomAnchor3.href = 'https://www.mahindra.com/newsroom#in-the-news';
+  newsroomAnchor3.textContent = 'In The News';
+  newsroomLi3.append(newsroomAnchor3);
+  newsroomUl2.append(newsroomLi3);
+  newsroomSubNavWrap.append(newsroomUl2);
 
-    if (isMobile) {
-      const searchSpan = document.createElement('span');
-      searchSpan.textContent = ' Search';
-      searchSpan.setAttribute('data-once', 'search-stop-propagation');
-      searchAnchor.append(searchSpan);
-    }
-    searchLi.append(searchAnchor);
+  newsroomLi.append(newsroomMegaMenu);
+  navUl.append(newsroomLi);
 
-    const searchScreenWrap = document.createElement('div');
-    searchScreenWrap.classList.add('search-screen-wrap');
-    searchScreenWrap.setAttribute('data-once', 'search-stop-propagation');
-    const searchScreenWrapInner = document.createElement('div');
-    searchScreenWrapInner.classList.add('wrap');
-    searchScreenWrapInner.setAttribute('data-once', 'search-stop-propagation');
-    searchScreenWrap.append(searchScreenWrapInner);
+  // Icon Nav (Mobile)
+  const iconNavMobile = document.createElement('div');
+  iconNavMobile.classList.add('icon-nav', 'mobile-menus-icon');
+  const iconNavMobileUl = document.createElement('ul');
+  iconNavMobile.append(iconNavMobileUl);
 
-    const searchForm = document.createElement('form');
-    searchForm.action = 'https://www.mahindra.com/search';
-    searchForm.method = 'get';
-    searchForm.id = 'search-block-form';
-    searchForm.setAttribute('accept-charset', 'UTF-8');
-    searchForm.setAttribute('data-drupal-form-fields', 'edit-keys');
-    searchForm.setAttribute('data-once', 'search-stop-propagation');
-    searchScreenWrapInner.append(searchForm);
+  const mailLiMobile = document.createElement('li');
+  mailLiMobile.classList.add('mail');
+  const mailAnchorMobile = document.createElement('a');
+  mailAnchorMobile.href = 'https://www.mahindra.com/contact-us';
+  mailAnchorMobile.textContent = 'Contact Us';
+  mailLiMobile.append(mailAnchorMobile);
+  iconNavMobileUl.append(mailLiMobile);
 
-    const searchWrap = document.createElement('div');
-    searchWrap.classList.add('search-wrap');
-    searchWrap.setAttribute('data-once', 'search-stop-propagation');
-    searchForm.append(searchWrap);
-
-    const searchIconDiv = document.createElement('div');
-    searchIconDiv.classList.add('search-icon');
-    searchIconDiv.setAttribute('data-once', 'search-stop-propagation');
-    const searchIconSvg = lensSvg.cloneNode(true); // Re-use lens SVG for search icon
-    searchIconDiv.append(searchIconSvg);
-    searchWrap.append(searchIconDiv);
-
-    const searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.classList.add('input-text', 'searchtext');
-    searchInput.required = true;
-    searchInput.name = 'key';
-    searchInput.id = 'searchInput';
-    searchInput.autocomplete = 'off';
-    searchInput.setAttribute('data-once', 'search-stop-propagation');
-    searchWrap.append(searchInput);
-
-    const submitButton = document.createElement('button');
-    submitButton.classList.add('submit-button');
-    submitButton.setAttribute('data-once', 'search-stop-propagation');
-    const submitLabel = document.createElement('div');
-    submitLabel.classList.add('label');
-    submitLabel.textContent = ' Submit ';
-    submitLabel.setAttribute('data-once', 'search-stop-propagation');
-    submitButton.append(submitLabel);
-    const arrowSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    arrowSvg.setAttribute('width', '12');
-    arrowSvg.setAttribute('height', '8');
-    arrowSvg.setAttribute('viewBox', '0 0 12 8');
-    arrowSvg.setAttribute('fill', 'none');
-    arrowSvg.setAttribute('data-once', 'search-stop-propagation');
-    const arrowPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    arrowPath.setAttribute('d', 'M11.3536 4.35355C11.5488 4.15829 11.5488 3.84171 11.3536 3.64645L8.17157 0.464465C7.97631 0.269203 7.65973 0.269203 7.46447 0.464465C7.2692 0.659728 7.2692 0.97631 7.46447 1.17157L10.2929 4L7.46447 6.82843C7.2692 7.02369 7.2692 7.34027 7.46447 7.53553C7.65973 7.7308 7.97631 7.7308 8.17157 7.53553L11.3536 4.35355ZM4.37114e-08 4.5L11 4.5L11 3.5L-4.37114e-08 3.5L4.37114e-08 4.5Z');
-    arrowPath.setAttribute('fill', 'black');
-    arrowPath.setAttribute('data-once', 'search-stop-propagation');
-    arrowSvg.append(arrowPath);
-    submitButton.append(arrowSvg);
-    searchWrap.append(submitButton);
-
-    const searchResultBox = document.createElement('div');
-    searchResultBox.classList.add('searchResultBox');
-    searchResultBox.style.display = 'none';
-    searchResultBox.setAttribute('data-once', 'search-stop-propagation');
-    const swiper = document.createElement('div');
-    swiper.classList.add('swiper', 'scrollSwiper');
-    swiper.setAttribute('data-once', 'search-stop-propagation');
-    const swiperWrapper = document.createElement('div');
-    swiperWrapper.classList.add('swiper-wrapper');
-    swiperWrapper.setAttribute('data-once', 'search-stop-propagation');
-    const swiperSlide = document.createElement('div');
-    swiperSlide.classList.add('swiper-slide');
-    swiperSlide.setAttribute('data-once', 'search-stop-propagation');
-    swiperWrapper.append(swiperSlide);
-    swiper.append(swiperWrapper);
-    searchResultBox.append(swiper);
-    const swiperScrollbar = document.createElement('div');
-    swiperScrollbar.classList.add('swiper-scrollbar');
-    swiperScrollbar.setAttribute('data-once', 'search-stop-propagation');
-    searchResultBox.append(swiperScrollbar);
-    searchForm.append(searchResultBox);
-
-    const createSuggestions = (label, keywords) => {
-      const suggestionsWrap = document.createElement('div');
-      suggestionsWrap.classList.add('search-suggestions-wrap');
-      suggestionsWrap.setAttribute('data-once', 'search-stop-propagation');
-      const labelDiv = document.createElement('div');
-      labelDiv.classList.add('label');
-      labelDiv.textContent = label;
-      labelDiv.setAttribute('data-once', 'search-stop-propagation');
-      suggestionsWrap.append(labelDiv);
-      const tokensWrap = document.createElement('div');
-      tokensWrap.classList.add('tokens-wrap');
-      tokensWrap.setAttribute('data-once', 'search-stop-propagation');
-      const ul = document.createElement('ul');
-      ul.setAttribute('data-once', 'search-stop-propagation');
-      keywords.forEach((keyword) => {
-        const li = document.createElement('li');
-        li.textContent = keyword;
-        li.setAttribute('data-once', 'search-stop-propagation');
-        ul.append(li);
-      });
-      tokensWrap.append(ul);
-      suggestionsWrap.append(tokensWrap);
-      return suggestionsWrap;
-    };
-
-    searchScreenWrapInner.append(createSuggestions('Popular Keywords:', ['Business', 'FY 21', 'Brands', 'XUV700', 'Global', 'Nanhi Kali']));
-    searchScreenWrapInner.append(createSuggestions('Recommended for you:', ['Annual Report 2021 - 2022', 'Leadership Announcement', 'Latest Press Release', 'Brand Guidelines']));
-
-    searchLi.append(searchScreenWrap);
-
-    searchAnchor.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      searchLi.classList.toggle('active');
-      searchScreenWrap.classList.toggle('active');
-    });
-
-    return searchLi;
-  };
-
-  iconNavMobileUl.append(createSearchElements(true));
-  iconNavDesktopUl.append(createSearchElements(false));
-
+  const searchLiMobile = document.createElement('li');
+  searchLiMobile.classList.add('search');
+  const searchAnchorMobile = document.createElement('a');
+  searchAnchorMobile.href = '#';
+  searchAnchorMobile.innerHTML = `<svg viewBox="0 0 21 21" fill="none" class="lens"><path d="M15.0934 2.73157L15.0934 2.73156C11.6883 -0.67354 6.14543 -0.67354 2.74033 2.73156C-0.666039 6.13793 -0.666063 11.6795 2.74035 15.0847C4.38993 16.7342 6.58308 17.6433 8.91623 17.6433C10.9916 17.6433 12.9533 16.9181 14.5221 15.5975L19.5217 20.5972C19.6721 20.7476 19.8687 20.8212 20.0632 20.8212C20.2588 20.8212 20.4554 20.7476 20.6059 20.5972C20.905 20.2981 20.905 19.8121 20.6059 19.513L15.6062 14.5132C18.4815 11.0845 18.3159 5.95535 15.0934 2.73157ZM14.0092 14.0004C12.6491 15.3606 10.8404 16.1098 8.91623 16.1098C6.99211 16.1098 5.18468 15.3606 3.82452 14.0004C1.01633 11.1923 1.01633 6.62394 3.82452 3.81575C5.22857 2.41171 7.07147 1.71024 8.91623 1.71024C10.7609 1.71024 12.6052 2.41296 14.0092 3.81575C16.8174 6.62394 16.8174 11.1923 14.0092 14.0004Z" stroke-width="0.25"></path></svg><svg viewBox="0 0 50 50" class="close"><path d="M 9.15625 6.3125 L 6.3125 9.15625 L 22.15625 25 L 6.21875 40.96875 L 9.03125 43.78125 L 25 27.84375 L 40.9375 43.78125 L 43.78125 40.9375 L 27.84375 25 L 43.6875 9.15625 L 40.84375 6.3125 L 25 22.15625 Z"></path></svg><span> Search</span>`;
+  searchLiMobile.append(searchAnchorMobile);
+  iconNavMobileUl.append(searchLiMobile);
   navUl.append(iconNavMobile);
-  mainNav.append(iconNavDesktop);
 
-  // Secondary Logo (80th Year)
-  const year80LogoDiv = document.createElement('div');
-  year80LogoDiv.classList.add('logo', 'year-80-logo');
-  const year80LogoLink = document.createElement('a');
-  const secondaryLogoAnchor = secondaryLogoLinkRow.querySelector('a');
-  if (secondaryLogoAnchor) year80LogoLink.href = secondaryLogoAnchor.href;
-  moveInstrumentation(secondaryLogoLinkRow, year80LogoLink);
+  // Icon Nav (Desktop)
+  const iconNavDesktop = document.createElement('div');
+  iconNavDesktop.classList.add('icon-nav', 'desktop-menus-icon');
+  const iconNavDesktopUl = document.createElement('ul');
+  iconNavDesktop.append(iconNavDesktopUl);
 
-  const secondaryPicture = secondaryLogoRow.querySelector('picture');
-  if (secondaryPicture) {
-    const img = secondaryPicture.querySelector('img');
+  const mailLiDesktop = document.createElement('li');
+  mailLiDesktop.classList.add('mail');
+  const mailAnchorDesktop = document.createElement('a');
+  mailAnchorDesktop.href = 'https://www.mahindra.com/contact-us';
+  mailAnchorDesktop.innerHTML = `<svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 48 38.4" style="enable-background:new 0 0 48 38.4;" xml:space="preserve" width="21" height="21" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M3.6,38.4c-1,0-1.8-0.4-2.5-1.1S0,35.8,0,34.8V3.6c0-1,0.4-1.8,1.1-2.5S2.6,0,3.6,0h40.8c1,0,1.8,0.4,2.5,1.1C47.6,1.8,48,2.6,48,3.6v31.2c0,1-0.4,1.8-1.1,2.5c-0.7,0.7-1.6,1.1-2.5,1.1H3.6z M24,20.3L3.6,6.9v27.9h40.8V6.9L24,20.3z M24,16.7L44.2,3.6H3.9L24,16.7z M3.6,6.9V3.6v31.2V6.9z"></path></svg>`;
+  mailLiDesktop.append(mailAnchorDesktop);
+  iconNavDesktopUl.append(mailLiDesktop);
+
+  const searchLiDesktop = document.createElement('li');
+  searchLiDesktop.classList.add('search');
+  const searchAnchorDesktop = document.createElement('a');
+  searchAnchorDesktop.href = '#';
+  searchAnchorDesktop.innerHTML = `<svg viewBox="0 0 21 21" fill="none" class="lens"><path d="M15.0934 2.73157L15.0934 2.73156C11.6883 -0.67354 6.14543 -0.67354 2.74033 2.73156C-0.666039 6.13793 -0.666063 11.6795 2.74035 15.0847C4.38993 16.7342 6.58308 17.6433 8.91623 17.6433C10.9916 17.6433 12.9533 16.9181 14.5221 15.5975L19.5217 20.5972C19.6721 20.7476 19.8687 20.8212 20.0632 20.8212C20.2588 20.8212 20.4554 20.7476 20.6059 20.5972C20.905 20.2981 20.905 19.8121 20.6059 19.513L15.6062 14.5132C18.4815 11.0845 18.3159 5.95535 15.0934 2.73157ZM14.0092 14.0004C12.6491 15.3606 10.8404 16.1098 8.91623 16.1098C6.99211 16.1098 5.18468 15.3606 3.82452 14.0004C1.01633 11.1923 1.01633 6.62394 3.82452 3.81575C5.22857 2.41171 7.07147 1.71024 8.91623 1.71024C10.7609 1.71024 12.6052 2.41296 14.0092 3.81575C16.8174 6.62394 16.8174 11.1923 14.0092 14.0004Z" stroke-width="0.25"></path></svg><svg viewBox="0 0 50 50" class="close"><path d="M 9.15625 6.3125 L 6.3125 9.15625 L 22.15625 25 L 6.21875 40.96875 L 9.03125 43.78125 L 25 27.84375 L 40.9375 43.78125 L 43.78125 40.9375 L 27.84375 25 L 43.6875 9.15625 L 40.84375 6.3125 L 25 22.15625 Z"></path></svg>`;
+  searchLiDesktop.append(searchAnchorDesktop);
+  iconNavDesktopUl.append(searchLiDesktop);
+  nav.append(iconNavDesktop);
+
+  // Search Screen Wrap (common for both mobile and desktop)
+  const searchScreenWrap = document.createElement('div');
+  searchScreenWrap.classList.add('search-screen-wrap');
+  const searchScreenWrapInner = document.createElement('div');
+  searchScreenWrapInner.classList.add('wrap');
+  searchScreenWrap.append(searchScreenWrapInner);
+
+  const searchForm = document.createElement('form');
+  searchForm.action = 'https://www.mahindra.com/search';
+  searchForm.method = 'get';
+  searchForm.id = 'search-block-form';
+  searchForm.setAttribute('accept-charset', 'UTF-8');
+  searchScreenWrapInner.append(searchForm);
+
+  const searchWrap = document.createElement('div');
+  searchWrap.classList.add('search-wrap');
+  searchForm.append(searchWrap);
+
+  const searchIconDiv = document.createElement('div');
+  searchIconDiv.classList.add('search-icon');
+  searchIconDiv.innerHTML = `<svg viewBox="0 0 21 21" fill="none"><path d="M15.0934 2.73157L15.0934 2.73156C11.6883 -0.67354 6.14543 -0.67354 2.74033 2.73156C-0.666039 6.13793 -0.666063 11.6795 2.74035 15.0847C4.38993 16.7342 6.58308 17.6433 8.91623 17.6433C10.9916 17.6433 12.9533 16.9181 14.5221 15.5975L19.5217 20.5972C19.6721 20.7476 19.8687 20.8212 20.0632 20.8212C20.2588 20.8212 20.4554 20.7476 20.6059 20.5972C20.905 20.2981 20.905 19.8121 20.6059 19.513L15.6062 14.5132C18.4815 11.0845 18.3159 5.95535 15.0934 2.73157ZM14.0092 14.0004C12.6491 15.3606 10.8404 16.1098 8.91623 16.1098C6.99211 16.1098 5.18468 15.3606 3.82452 14.0004C1.01633 11.1923 1.01633 6.62394 3.82452 3.81575C5.22857 2.41171 7.07147 1.71024 8.91623 1.71024C10.7609 1.71024 12.6052 2.41296 14.0092 3.81575C16.8174 6.62394 16.8174 11.1923 14.0092 14.0004Z" stroke-width="0.25"></path></svg>`;
+  searchWrap.append(searchIconDiv);
+
+  const searchInput = document.createElement('input');
+  searchInput.type = 'text';
+  searchInput.classList.add('input-text', 'searchtext');
+  searchInput.required = true;
+  searchInput.name = 'key';
+  searchInput.id = 'searchInput';
+  searchInput.autocomplete = 'off';
+  searchWrap.append(searchInput);
+
+  const submitButton = document.createElement('button');
+  submitButton.classList.add('submit-button');
+  submitButton.innerHTML = `<div class="label"> Submit </div><svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M11.3536 4.35355C11.5488 4.15829 11.5488 3.84171 11.3536 3.64645L8.17157 0.464465C7.97631 0.269203 7.65973 0.269203 7.46447 0.464465C7.2692 0.659728 7.2692 0.97631 7.46447 1.17157L10.2929 4L7.46447 6.82843C7.2692 7.02369 7.2692 7.34027 7.46447 7.53553C7.65973 7.7308 7.97631 7.7308 8.17157 7.53553L11.3536 4.35355ZM4.37114e-08 4.5L11 4.5L11 3.5L-4.37114e-08 3.5L4.37114e-08 4.5Z" fill="black"></path></svg>`;
+  searchWrap.append(submitButton);
+
+  const searchResultBox = document.createElement('div');
+  searchResultBox.classList.add('searchResultBox');
+  searchResultBox.style.display = 'none';
+  searchForm.append(searchResultBox);
+
+  const searchSuggestionsWrap1 = document.createElement('div');
+  searchSuggestionsWrap1.classList.add('search-suggestions-wrap');
+  searchSuggestionsWrap1.innerHTML = `<div class="label">Popular Keywords:</div><div class="tokens-wrap"><ul><li>Business</li><li>FY 21</li><li>Brands</li><li>XUV700</li><li>Global</li><li>Nanhi Kali</li></ul></div>`;
+  searchScreenWrapInner.append(searchSuggestionsWrap1);
+
+  const searchSuggestionsWrap2 = document.createElement('div');
+  searchSuggestionsWrap2.classList.add('search-suggestions-wrap');
+  searchSuggestionsWrap2.innerHTML = `<div class="label">Recommended for you:</div><div class="tokens-wrap"><ul><li>Annual Report 2021 - 2022</li><li>Leadership Announcement</li><li>Latest Press Release</li><li>Brand Guidelines</li></ul></div>`;
+  searchScreenWrapInner.append(searchSuggestionsWrap2);
+
+  searchLiMobile.append(searchScreenWrap.cloneNode(true)); // Clone for mobile
+  searchLiDesktop.append(searchScreenWrap); // Use original for desktop
+
+  // Anniversary Logo
+  const anniversaryLogoDiv = document.createElement('div');
+  anniversaryLogoDiv.classList.add('logo', 'year-80-logo');
+  const anniversaryLogoLink = document.createElement('a');
+  anniversaryLogoLink.href = anniversaryLogoLinkRow?.querySelector('a')?.href || '#';
+  const anniversaryLogoPicture = anniversaryLogoRow?.querySelector('picture');
+  if (anniversaryLogoPicture) {
+    const img = anniversaryLogoPicture.querySelector('img');
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '74' }]);
-    optimizedPic.querySelector('img').classList.add('hiddenlogo1', 'years-80');
-    moveInstrumentation(secondaryLogoRow, optimizedPic.querySelector('img'));
-    year80LogoLink.append(optimizedPic);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    anniversaryLogoLink.append(optimizedPic);
   }
-  year80LogoDiv.append(year80LogoLink);
-  wrap.append(year80LogoDiv);
+  anniversaryLogoLink.querySelector('img')?.classList.add('hiddenlogo1', 'years-80');
+  moveInstrumentation(anniversaryLogoRow, anniversaryLogoLink);
+  moveInstrumentation(anniversaryLogoLinkRow, anniversaryLogoLink);
+  anniversaryLogoDiv.append(anniversaryLogoLink);
+  wrap.append(anniversaryLogoDiv);
 
-  block.replaceChildren(mainHeader);
-
-  // Hamburger menu toggle
+  // Event Listeners for mobile navigation and search
   hamburger.addEventListener('click', () => {
-    mainNav.classList.toggle('active');
+    nav.classList.toggle('active');
     hamburger.classList.toggle('active');
+    document.body.classList.toggle('no-scroll');
   });
+
+  const allSearchTriggers = block.querySelectorAll('.search > a');
+  allSearchTriggers.forEach((trigger) => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      const parentLi = trigger.closest('li.search');
+      parentLi.classList.toggle('active');
+      const searchScreen = parentLi.querySelector('.search-screen-wrap');
+      if (searchScreen) {
+        searchScreen.classList.toggle('active');
+      }
+      document.body.classList.toggle('no-scroll');
+    });
+  });
+
+  block.replaceChildren(header);
 }

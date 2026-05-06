@@ -237,7 +237,7 @@
           }
         },
         {
-          "title": "Press Release Item",
+          "title": "Mega Menu Press Release Item",
           "id": "press-release-item",
           "plugins": {
             "xwalk": {
@@ -252,15 +252,15 @@
           }
         },
         {
-          "title": "Icon Nav Item",
-          "id": "icon-nav-item",
+          "title": "Contact Item",
+          "id": "contact-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "icon-nav-item",
-                  "name": "Icon Nav Item"
+                  "model": "contact-item",
+                  "name": "Contact Item"
                 }
               }
             }
