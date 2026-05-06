@@ -1037,13 +1037,13 @@
       {
         "component": "text",
         "label": "Section Heading",
-        "name": "sectionHeading",
+        "name": "heading",
         "valueType": "string"
       },
       {
         "component": "richtext",
         "label": "Section Description",
-        "name": "sectionDescription",
+        "name": "description",
         "valueType": "string"
       },
       {
@@ -1059,19 +1059,13 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Desktop Image",
-        "name": "desktopImage",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Mobile Image",
-        "name": "mobileImage",
+        "label": "Business Vertical Image",
+        "name": "image",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Title",
+        "label": "Business Vertical Title",
         "name": "title",
         "valueType": "string"
       },
@@ -1083,8 +1077,8 @@
       },
       {
         "component": "aem-content",
-        "label": "Learn More Link",
-        "name": "ctaLink",
+        "label": "Business Vertical Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
