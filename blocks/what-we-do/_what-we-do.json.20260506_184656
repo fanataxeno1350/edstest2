@@ -43,7 +43,7 @@
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Section Description",
           "name": "description",
           "valueType": "string"
@@ -61,19 +61,13 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image (Desktop)",
-          "name": "imageDesktop",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Image (Mobile)",
-          "name": "imageMobile",
+          "label": "Business Vertical Image",
+          "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Business Title",
+          "label": "Business Vertical Title",
           "name": "title",
           "valueType": "string"
         },
@@ -85,7 +79,7 @@
         },
         {
           "component": "aem-content",
-          "label": "Business Link",
+          "label": "Business Vertical Link",
           "name": "link",
           "valueType": "string"
         }
