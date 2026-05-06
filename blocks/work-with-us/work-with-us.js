@@ -1,38 +1,44 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
+export default async function decorate(block) {
   const children = [...block.children];
 
-  const sectionHeaderDiv = document.createElement('div');
-  sectionHeaderDiv.classList.add('section-header', 'text-center');
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center');
 
-  const headingRow = children.shift();
-  if (headingRow) {
-    const headingCell = headingRow.querySelector('div');
-    if (headingCell) {
-      const heading = document.createElement('h2');
-      heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-      heading.textContent = headingCell.textContent.trim();
-      moveInstrumentation(headingRow, heading);
-      sectionHeaderDiv.appendChild(heading);
-    }
-  }
+  const sectionTitleRow = children.shift(); // First row is sectionTitle
+  const sectionTitle = document.createElement('h2');
+  sectionTitle.classList.add('heading', 'font-regular');
+  moveInstrumentation(sectionTitleRow, sectionTitle);
+  sectionTitle.textContent = sectionTitleRow.textContent.trim();
+  sectionHeader.append(sectionTitle);
 
   const positionRelativeDiv = document.createElement('div');
-  positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
+  positionRelativeDiv.classList.add('position-relative');
 
   const containerDiv = document.createElement('div');
   containerDiv.classList.add('container');
 
   const gridLayoutDiv = document.createElement('div');
-  gridLayoutDiv.classList.add('grid-layout');
+  gridLayoutDiv.classList.add('grid-layout', 'swiper'); // Add swiper class for initialization
+
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('swiper-wrapper'); // Swiper wrapper
 
   children.forEach((row) => {
-    const [imageCell, altTextCell, titleCell, descriptionCell, ctaLinkCell, ctaLabelCell] = [...row.children];
+    const [
+      imageMobile576Cell,
+      imageMobile799Cell,
+      imageDesktopCell,
+      slideTitleCell,
+      slideDescriptionCell,
+      ctaLinkCell,
+      ctaLabelCell,
+    ] = [...row.children];
 
     const slidesDiv = document.createElement('div');
-    slidesDiv.classList.add('slides');
+    slidesDiv.classList.add('slides', 'swiper-slide'); // Add swiper-slide class
 
     const wrapDiv = document.createElement('div');
     wrapDiv.classList.add('wrap');
@@ -40,55 +46,95 @@ export default function decorate(block) {
     const imageWrapDiv = document.createElement('div');
     imageWrapDiv.classList.add('image-wrap');
 
-    const picture = imageCell?.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, altTextCell?.textContent.trim() || img.alt, false, [{ width: '750' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        imageWrapDiv.appendChild(optimizedPic);
-        optimizedPic.querySelector('img').classList.add('img-fluid');
+    const picture = document.createElement('picture');
+
+    const imgMobile576 = imageMobile576Cell.querySelector('img');
+    if (imgMobile576) {
+      const source576 = document.createElement('source');
+      source576.media = '(max-width: 576px)';
+      source576.srcset = imgMobile576.src;
+      picture.append(source576);
+    }
+
+    const imgMobile799 = imageMobile799Cell.querySelector('img');
+    if (imgMobile799) {
+      const source799 = document.createElement('source');
+      source799.media = '(max-width: 799px)';
+      source799.srcset = imgMobile799.src;
+      picture.append(source799);
+    }
+
+    const imgDesktop = imageDesktopCell.querySelector('img');
+    if (imgDesktop) {
+      // createOptimizedPicture returns a <picture> element, not just an <img>
+      const optimizedPicture = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '750' }]);
+      optimizedPicture.querySelector('img').classList.add('img-fluid');
+      // Append all children of the optimized picture to the current picture element
+      while (optimizedPicture.firstChild) {
+        picture.append(optimizedPicture.firstChild);
       }
     }
-    wrapDiv.appendChild(imageWrapDiv);
+
+    if (picture.children.length > 0) {
+      imageWrapDiv.append(picture);
+    }
 
     const contentWrapDiv = document.createElement('div');
     contentWrapDiv.classList.add('content-wrap');
 
-    const cardSectionHeaderDiv = document.createElement('div');
-    cardSectionHeaderDiv.classList.add('section-header');
+    const innerSectionHeader = document.createElement('div');
+    innerSectionHeader.classList.add('section-header');
 
-    const cardTitle = document.createElement('h3');
-    cardTitle.classList.add('heading', 'font-regular');
-    cardTitle.textContent = titleCell?.textContent.trim() || '';
-    cardSectionHeaderDiv.appendChild(cardTitle);
+    const slideTitle = document.createElement('h3');
+    slideTitle.classList.add('heading', 'font-regular');
+    slideTitle.textContent = slideTitleCell.textContent.trim();
+    innerSectionHeader.append(slideTitle);
 
-    const description = document.createElement('p');
-    description.classList.add('text-size-body');
-    description.textContent = descriptionCell?.textContent.trim() || '';
-    cardSectionHeaderDiv.appendChild(description);
+    const slideDescription = document.createElement('p');
+    slideDescription.classList.add('text-size-body');
+    slideDescription.innerHTML = slideDescriptionCell.innerHTML; // Correctly handles richtext
+    innerSectionHeader.append(slideDescription);
 
     const ctaLink = document.createElement('a');
-    ctaLink.classList.add('btn', 'btn-primary', 'stretched-link');
-    const foundLink = ctaLinkCell?.querySelector('a');
-    if (foundLink) {
-      ctaLink.href = foundLink.href;
+    const foundCtaLink = ctaLinkCell.querySelector('a');
+    if (foundCtaLink) {
+      ctaLink.href = foundCtaLink.href;
     }
-    ctaLink.textContent = ctaLabelCell?.textContent.trim() || '';
-    cardSectionHeaderDiv.appendChild(ctaLink);
+    ctaLink.classList.add('btn', 'btn-primary', 'stretched-link');
+    ctaLink.textContent = ctaLabelCell.textContent.trim();
+    innerSectionHeader.append(ctaLink);
 
-    contentWrapDiv.appendChild(cardSectionHeaderDiv);
-    wrapDiv.appendChild(contentWrapDiv);
-    slidesDiv.appendChild(wrapDiv);
-    gridLayoutDiv.appendChild(slidesDiv);
+    contentWrapDiv.append(innerSectionHeader);
+
+    wrapDiv.append(imageWrapDiv, contentWrapDiv);
     moveInstrumentation(row, slidesDiv);
+    slidesDiv.append(wrapDiv);
+    swiperWrapper.append(slidesDiv); // Append to swiper-wrapper
   });
 
-  containerDiv.appendChild(gridLayoutDiv);
-  positionRelativeDiv.appendChild(containerDiv);
+  gridLayoutDiv.append(swiperWrapper); // Append swiper-wrapper to grid-layout
+  containerDiv.append(gridLayoutDiv);
+  positionRelativeDiv.append(containerDiv);
 
-  block.innerHTML = '';
-  block.classList.add('section', 'work-with-us', 'pb-0');
-  block.appendChild(sectionHeaderDiv);
-  block.appendChild(positionRelativeDiv);
+  block.replaceChildren(sectionHeader, positionRelativeDiv);
+
+  // Swiper initialization
+  await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+  await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
+
+  // Add pagination dots
+  const paginationDiv = document.createElement('div');
+  paginationDiv.classList.add('swiper-pagination');
+  gridLayoutDiv.append(paginationDiv);
+
+  // eslint-disable-next-line no-undef
+  new Swiper(gridLayoutDiv, {
+    slidesPerView: 'auto',
+    loop: false, // Original HTML doesn't specify loop, default to false
+    pagination: {
+      el: paginationDiv,
+      clickable: true,
+    },
+    // Original HTML has no prev/next buttons, so omit navigation
+  });
 }

@@ -149,7 +149,14 @@ function moveHeaderFooterBlocks(doc) {
 }
 
 async function loadLazy(doc) {
-  // loadHeader(doc.querySelector('header'));
+  // 
+  // aemigrate: skip boilerplate nav when a migrated header block is present
+  {
+    const mainEl = doc.querySelector('main');
+    const hasMigratedHeader = mainEl && [...mainEl.querySelectorAll('.block[data-block-name]')]
+      .some((b) => b.dataset.blockName && b.dataset.blockName.split('-').includes('header'));
+    if (!hasMigratedHeader) loadHeader(doc.querySelector('header'));
+  }
 
   const main = doc.querySelector('main');
   await loadSections(main);

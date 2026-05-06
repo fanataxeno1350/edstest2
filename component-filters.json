@@ -17,68 +17,88 @@
       "columns",
       "fragment",
       "---new--blocks-----",
-      "main-header",
-      "spotlight-home",
-      "what-we-do-wrap",
-      "spirit-of-rise",
-      "latest-stories",
+      "header",
+      "hero-slider",
+      "what-we-do",
+      "purpose-led-cards",
+      "purpose-led-cards-2",
+      "purpose-led-cards-3",
+      "performance-driven-2",
+      "future-ready",
+      "latest-news",
       "work-with-us",
-      "faqs-section",
-      "organization-schema",
-      "footer-main"
+      "faqs",
+      "footer"
     ]
   },
   {
-    "id": "faqs-section",
+    "id": "faqs",
     "components": [
       "faq-item"
     ]
   },
   {
-    "id": "footer-main",
+    "id": "footer",
     "components": [
-      "social-link-item",
-      "footer-link-block",
+      "footer-section-item",
       "footer-link-item",
-      "secondary-nav-link-item"
+      "footer-social-item"
     ]
   },
   {
-    "id": "latest-stories",
+    "id": "future-ready",
     "components": [
-      "story-item",
-      "elfsight-widget"
+      "future-ready-card"
     ]
   },
   {
-    "id": "main-header",
+    "id": "header",
     "components": [
       "navigation-item",
-      "icon-link-item",
-      "press-release-item"
+      "press-release-item",
+      "icon-link-item"
     ]
   },
   {
-    "id": "organization-schema",
+    "id": "hero-slider",
     "components": [
-      "sameas-link"
+      "hero-slide-item",
+      "hero-quick-link-item"
     ]
   },
   {
-    "id": "spirit-of-rise",
+    "id": "latest-news",
     "components": [
-      "performance-driven-card"
+      "elfsight-widget-embed",
+      "news-item"
     ]
   },
   {
-    "id": "spotlight-home",
+    "id": "performance-driven-2",
     "components": [
-      "spotlight-slide",
-      "quick-link-item"
+      "performance-driven-card-item"
     ]
   },
   {
-    "id": "what-we-do-wrap",
+    "id": "purpose-led-cards-2",
+    "components": [
+      "purpose-led-card-item"
+    ]
+  },
+  {
+    "id": "purpose-led-cards-3",
+    "components": [
+      "purpose-led-card-item"
+    ]
+  },
+  {
+    "id": "purpose-led-cards",
+    "components": [
+      "purpose-led-card-item"
+    ]
+  },
+  {
+    "id": "what-we-do",
     "components": [
       "business-vertical-item"
     ]
@@ -86,7 +106,7 @@
   {
     "id": "work-with-us",
     "components": [
-      "work-with-us-item"
+      "work-with-us-slide-item"
     ]
   }
 ]
