@@ -63,7 +63,10 @@
         "latest-news",
         "work-with-us",
         "faqs",
-        "footer"
+        "footer",
+        "hero-carousel",
+        "purpose-led-grid",
+        "performance-driven-cards"
       ]
     }
   ]

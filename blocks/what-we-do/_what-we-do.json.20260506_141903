@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "What We Do",
+      "title": "What-We-Do",
       "id": "what-we-do",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "what-we-do",
               "model": "what-we-do",
-              "name": "What We Do"
+              "name": "What-We-Do"
             }
           }
         }
       }
     },
     {
-      "title": "Business Vertical Item",
+      "title": "Business-Vertical-Item",
       "id": "business-vertical-item",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "business-vertical-item",
-              "name": "Business Vertical Item"
+              "name": "Business-Vertical-Item"
             }
           }
         }
@@ -39,13 +39,13 @@
         {
           "component": "text",
           "label": "Section Heading",
-          "name": "sectionHeading",
+          "name": "heading",
           "valueType": "string"
         },
         {
           "component": "richtext",
           "label": "Section Description",
-          "name": "sectionDescription",
+          "name": "description",
           "valueType": "string"
         },
         {
@@ -62,18 +62,18 @@
         {
           "component": "reference",
           "label": "Desktop Image",
-          "name": "desktopImage",
+          "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Image",
-          "name": "mobileImage",
+          "label": "Tablet/Mobile Image",
+          "name": "imageTablet",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Title",
+          "label": "Business Vertical Title",
           "name": "title",
           "valueType": "string"
         },
@@ -85,8 +85,8 @@
         },
         {
           "component": "aem-content",
-          "label": "Learn More Link",
-          "name": "ctaLink",
+          "label": "Business Vertical Link",
+          "name": "link",
           "valueType": "string"
         }
       ]

@@ -28,7 +28,10 @@
       "latest-news",
       "work-with-us",
       "faqs",
-      "footer"
+      "footer",
+      "hero-carousel",
+      "purpose-led-grid",
+      "performance-driven-cards"
     ]
   },
   {
@@ -55,8 +58,14 @@
     "id": "header",
     "components": [
       "navigation-item",
-      "press-release-item",
-      "icon-link-item"
+      "press-release-item"
+    ]
+  },
+  {
+    "id": "hero-carousel",
+    "components": [
+      "hero-slide-item",
+      "hero-quick-link-item"
     ]
   },
   {
@@ -80,6 +89,12 @@
     ]
   },
   {
+    "id": "performance-driven-cards",
+    "components": [
+      "performance-driven-card-item"
+    ]
+  },
+  {
     "id": "purpose-led-cards-2",
     "components": [
       "purpose-led-card-item"
@@ -95,6 +110,12 @@
     "id": "purpose-led-cards",
     "components": [
       "purpose-led-card-item"
+    ]
+  },
+  {
+    "id": "purpose-led-grid",
+    "components": [
+      "purpose-led-grid-item"
     ]
   },
   {
