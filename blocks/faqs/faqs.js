@@ -2,93 +2,75 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  // block.classList.add('faqs'); // The outer block div already carries this class from AEM.
+
   const children = [...block.children];
+  const root = document.createElement('div');
+  root.classList.add('container'); // From ORIGINAL HTML
 
-  const section = document.createElement('section');
-  section.classList.add('section', 'faqs-section');
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center'); // From ORIGINAL HTML
+  root.append(sectionHeader);
 
-  const container = document.createElement('div');
-  container.classList.add('container');
-  section.append(container);
+  const [headingRow, ...faqItemRows] = children;
 
-  // Section Heading
-  const headingRow = children.shift();
   if (headingRow) {
-    const sectionHeader = document.createElement('div');
-    sectionHeader.classList.add('section-header', 'text-center');
-
     const heading = document.createElement('h2');
-    heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-    heading.setAttribute('data-aos', 'fade-up');
+    heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate'); // From ORIGINAL HTML
+    heading.setAttribute('data-aos', 'fade-up'); // From ORIGINAL HTML
     moveInstrumentation(headingRow, heading);
-    // FIX: headingRow is a row, not a cell. Read textContent from the cell directly.
-    heading.textContent = headingRow.children[0]?.textContent.trim() || '';
+    heading.textContent = headingRow.textContent.trim();
     sectionHeader.append(heading);
-    container.append(sectionHeader);
   }
 
-  // FAQ Items
   const accoDiv = document.createElement('div');
-  accoDiv.classList.add('acco-div');
-  container.append(accoDiv);
+  accoDiv.classList.add('acco-div'); // From ORIGINAL HTML
+  root.append(accoDiv);
 
   const ul = document.createElement('ul');
   accoDiv.append(ul);
 
-  children.forEach((row, index) => {
-    const [questionCell, answerCell] = [...row.children];
+  faqItemRows.forEach((row, index) => {
+    const [questionCell, answerCell] = [...row.children]; // Correct: index destructuring for fixed schema
 
     const li = document.createElement('li');
-    li.classList.add('aos-init', 'aos-animate');
-    li.setAttribute('data-aos', 'fade-up');
+    li.classList.add('aos-init', 'aos-animate'); // From ORIGINAL HTML
+    li.setAttribute('data-aos', 'fade-up'); // From ORIGINAL HTML
     if (index === 0) {
-      li.classList.add('active');
+      li.classList.add('active'); // From ORIGINAL HTML
     }
+    moveInstrumentation(row, li);
 
-    const question = document.createElement('h2');
-    question.setAttribute('data-once', 'faqsAccordion');
-    question.textContent = questionCell?.textContent.trim() || '';
-    moveInstrumentation(questionCell, question);
-    li.append(question);
+    const questionHeading = document.createElement('h2');
+    questionHeading.setAttribute('data-once', 'faqsAccordion'); // From ORIGINAL HTML
+    questionHeading.textContent = questionCell?.textContent.trim() || '';
+    li.append(questionHeading);
 
     const accoContentDiv = document.createElement('div');
-    accoContentDiv.classList.add('acco-content-div');
+    accoContentDiv.classList.add('acco-content-div'); // From ORIGINAL HTML
     if (index === 0) {
-      accoContentDiv.classList.add('show');
+      accoContentDiv.classList.add('show'); // From ORIGINAL HTML
     }
-    moveInstrumentation(answerCell, accoContentDiv);
-    accoContentDiv.innerHTML = answerCell?.innerHTML || '';
+    accoContentDiv.innerHTML = answerCell?.innerHTML || ''; // Correct: richtext field uses innerHTML
     li.append(accoContentDiv);
+
+    questionHeading.addEventListener('click', () => {
+      const currentlyActive = ul.querySelector('li.active');
+      if (currentlyActive && currentlyActive !== li) {
+        currentlyActive.classList.remove('active');
+        currentlyActive.querySelector('.acco-content-div').classList.remove('show');
+      }
+
+      li.classList.toggle('active');
+      accoContentDiv.classList.toggle('show');
+    });
 
     ul.append(li);
   });
 
-  // Add event listener for accordion behavior
-  ul.querySelectorAll('li h2').forEach((h2) => {
-    h2.addEventListener('click', () => {
-      const li = h2.closest('li');
-      const accoContentDiv = li.querySelector('.acco-content-div');
+  block.replaceChildren(root);
 
-      if (li.classList.contains('active')) {
-        li.classList.remove('active');
-        accoContentDiv.classList.remove('show');
-      } else {
-        // Close other open accordions
-        ul.querySelectorAll('li.active').forEach((activeLi) => {
-          activeLi.classList.remove('active');
-          activeLi.querySelector('.acco-content-div').classList.remove('show');
-        });
-
-        li.classList.add('active');
-        accoContentDiv.classList.add('show');
-      }
-    });
-  });
-
-  block.replaceChildren(section);
-
-  // Image optimization (if any images were present)
-  section.querySelectorAll('picture > img').forEach((img) => {
+  root.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
