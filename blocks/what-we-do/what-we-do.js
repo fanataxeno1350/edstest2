@@ -190,7 +190,7 @@ export default function decorate(block) {
     }
     flickityPageDots.append(dot);
   });
-
+  console.log(section);
   block.replaceChildren(section);
 
   // Initialize Flickity for mobile slider
