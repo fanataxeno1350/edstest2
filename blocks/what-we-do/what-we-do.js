@@ -100,7 +100,9 @@ export default function decorate(block) {
 
     const desktopTitleDiv = document.createElement('div');
     desktopTitleDiv.classList.add('title');
-    desktopTitleDiv.textContent = titleCell.textContent.trim();
+    if (titleCell){
+      desktopTitleDiv.textContent = titleCell.textContent.trim();
+    }
     const arrowIcon = arrowIconCell.querySelector('picture');
     if (arrowIcon) {
       const arrowImg = arrowIcon.querySelector('img');
@@ -118,7 +120,9 @@ export default function decorate(block) {
     const ctaAnchor = ctaLinkCell.querySelector('a');
     if (ctaAnchor) {
       desktopCtaLink.href = ctaAnchor.href;
-      desktopCtaLink.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
+      if (titleCell){
+        desktopCtaLink.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
+      }
     }
     desktopWrap.append(desktopCtaLink);
 
@@ -154,7 +158,9 @@ export default function decorate(block) {
 
     const mobileTitleDiv = document.createElement('div');
     mobileTitleDiv.classList.add('title');
-    mobileTitleDiv.textContent = titleCell.textContent.trim();
+    if (titleCell){
+      mobileTitleDiv.textContent = titleCell.textContent.trim();
+    }
     const mobileArrowIcon = arrowIconCell.querySelector('picture');
     if (mobileArrowIcon) {
       const mobileArrowImg = mobileArrowIcon.querySelector('img');
@@ -171,7 +177,9 @@ export default function decorate(block) {
     mobileCtaLink.classList.add('stretched-link');
     if (ctaAnchor) {
       mobileCtaLink.href = ctaAnchor.href;
-      mobileCtaLink.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
+      if (titleCell){
+        mobileCtaLink.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
+      }
     }
     mobileWrap.append(mobileCtaLink);
   });
