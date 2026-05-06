@@ -237,7 +237,22 @@
           }
         },
         {
-          "title": "Latest Press Release Item",
+          "title": "Nav Icon Link Item",
+          "id": "nav-icon-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "nav-icon-link-item",
+                  "name": "Nav Icon Link Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Press Release Item",
           "id": "press-release-item",
           "plugins": {
             "xwalk": {
