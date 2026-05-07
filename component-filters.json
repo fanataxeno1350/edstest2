@@ -16,7 +16,21 @@
       "cards",
       "columns",
       "fragment",
-      "---new--blocks-----"
+      "---new--blocks-----",
+      "header"
+    ]
+  },
+  {
+    "id": "header",
+    "components": [
+      "navigation-item",
+      "contact-link-item",
+      "mega-menu-about-item",
+      "mega-menu-what-we-do-item",
+      "mega-menu-investor-relations-item",
+      "mega-menu-newsroom-item",
+      "press-release-item",
+      "mega-menu-careers-item"
     ]
   }
 ]
