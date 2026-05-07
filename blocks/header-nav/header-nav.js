@@ -1,49 +1,43 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
-  const children = [...block.children];
+export default async function decorate(block) {
+  const [logoRow, logoLinkRow, logoTextRow, ...navItemRows] = [...block.children];
 
   const header = document.createElement('header');
   const nav = document.createElement('nav');
   const container = document.createElement('div');
   container.classList.add('container', 'd-flex', 'align-items-center', 'justify-content-between');
 
-  // Logo Section
+  // Logo section
   const logoWrapper = document.createElement('div');
-  const logoLinkEl = document.createElement('a');
-  logoLinkEl.classList.add('logo', 'd-flex', 'align-items-center', 'gap-2');
+  const logoLink = document.createElement('a');
+  logoLink.classList.add('logo', 'd-flex', 'align-items-center', 'gap-2');
 
-  const [logoRow, logoLinkRow, logoLabelRow, ...navItemRows] = children;
+  const logoHref = logoLinkRow?.querySelector('a')?.href || '/';
+  logoLink.href = logoHref;
+  moveInstrumentation(logoLinkRow, logoLink);
 
-  const logoPicture = logoRow.querySelector('picture');
-  if (logoPicture) {
-    const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(logoPicture, optimizedPic.querySelector('img'));
-    logoLinkEl.appendChild(optimizedPic);
+  const picture = logoRow?.querySelector('picture');
+  if (picture) {
+    const img = picture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      // moveInstrumentation should be called on the original img element, not the new optimized one
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      logoLink.append(optimizedPic);
+    }
   }
+  moveInstrumentation(logoRow, logoLink);
 
-  const logoAnchor = logoLinkRow.querySelector('a');
-  if (logoAnchor) {
-    logoLinkEl.href = logoAnchor.href;
-  } else {
-    // Default link if not provided, but should ideally come from model
-    logoLinkEl.href = '/';
-  }
+  const logoText = document.createElement('h4');
+  logoText.textContent = logoTextRow?.textContent.trim() || '';
+  moveInstrumentation(logoTextRow, logoText);
+  logoLink.append(logoText);
+  logoWrapper.append(logoLink);
+  container.append(logoWrapper);
 
-  const logoLabel = document.createElement('h4');
-  logoLabel.textContent = logoLabelRow.textContent.trim();
-  logoLinkEl.appendChild(logoLabel);
-
-  moveInstrumentation(logoRow, logoLinkEl);
-  moveInstrumentation(logoLinkRow, logoLinkEl);
-  moveInstrumentation(logoLabelRow, logoLinkEl);
-
-  logoWrapper.appendChild(logoLinkEl);
-  container.appendChild(logoWrapper);
-
-  // Navigation List Section
+  // Navigation List
   const navList = document.createElement('div');
   navList.classList.add('nav-list');
 
@@ -52,25 +46,19 @@ export default function decorate(block) {
     const navItemLink = document.createElement('a');
     navItemLink.classList.add('navitems');
 
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      navItemLink.href = foundLink.href;
-    } else {
-      navItemLink.href = '#'; // Default link if not provided
-    }
-    navItemLink.textContent = labelCell.textContent.trim();
+    const linkHref = linkCell?.querySelector('a')?.href || '#';
+    navItemLink.href = linkHref;
+    navItemLink.textContent = labelCell?.textContent.trim() || '';
 
-    moveInstrumentation(row, navItemLink); // Move instrumentation for each nav item row
-    navList.appendChild(navItemLink);
+    moveInstrumentation(row, navItemLink);
+    navList.append(navItemLink);
   });
+  container.append(navList);
 
-  container.appendChild(navList);
-
-  // Navbar Toggler
+  // Navbar Toggler Button
   const toggler = document.createElement('button');
   toggler.classList.add('navbar-toggler');
   toggler.type = 'button';
-
   toggler.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
       <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
@@ -78,13 +66,12 @@ export default function decorate(block) {
   `;
 
   toggler.addEventListener('click', () => {
-    navList.classList.toggle('show'); // Assuming 'show' class controls visibility
+    navList.classList.toggle('show'); // Assuming 'show' class controls visibility for mobile nav
   });
+  container.append(toggler);
 
-  container.appendChild(toggler);
-
-  nav.appendChild(container);
-  header.appendChild(nav);
+  nav.append(container);
+  header.append(nav);
 
   block.replaceChildren(header);
 }

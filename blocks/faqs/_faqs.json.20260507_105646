@@ -38,8 +38,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "FAQs Section Title",
-          "name": "title",
+          "label": "FAQs Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {

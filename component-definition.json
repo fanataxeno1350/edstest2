@@ -114,7 +114,7 @@
           }
         },
         {
-          "title": "About-Us",
+          "title": "About Us",
           "id": "about-us",
           "plugins": {
             "xwalk": {
@@ -123,29 +123,29 @@
                 "template": {
                   "filter": "about-us",
                   "model": "about-us",
-                  "name": "About-Us"
+                  "name": "About Us"
                 }
               }
             }
           }
         },
         {
-          "title": "Service-Item",
-          "id": "service-item",
+          "title": "About Feature Item",
+          "id": "about-feature-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "service-item",
-                  "name": "Service-Item"
+                  "model": "about-feature-item",
+                  "name": "About Feature Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Blog-Section",
+          "title": "Blog Section",
           "id": "blog-section",
           "plugins": {
             "xwalk": {
@@ -154,22 +154,22 @@
                 "template": {
                   "filter": "blog-section",
                   "model": "blog-section",
-                  "name": "Blog-Section"
+                  "name": "Blog Section"
                 }
               }
             }
           }
         },
         {
-          "title": "Blog-Card-Item",
-          "id": "blog-card-item",
+          "title": "Blog Card",
+          "id": "blog-card",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "blog-card-item",
-                  "name": "Blog-Card-Item"
+                  "model": "blog-card",
+                  "name": "Blog Card"
                 }
               }
             }
@@ -201,6 +201,21 @@
                 "template": {
                   "model": "social-link-item",
                   "name": "Social-Link-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "External-Embed",
+          "id": "external-embed",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "external-embed",
+                  "name": "External-Embed"
                 }
               }
             }
@@ -254,15 +269,15 @@
           }
         },
         {
-          "title": "Footer-Link-Section",
-          "id": "footer-link-section",
+          "title": "Footer-Links-Section",
+          "id": "footer-links-section",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-link-section",
-                  "name": "Footer-Link-Section"
+                  "model": "footer-links-section",
+                  "name": "Footer-Links-Section"
                 }
               }
             }
@@ -346,7 +361,7 @@
           }
         },
         {
-          "title": "Hero Section",
+          "title": "Hero-Section",
           "id": "hero-section",
           "plugins": {
             "xwalk": {
@@ -355,7 +370,7 @@
                 "template": {
                   "filter": "hero-section",
                   "model": "hero-section",
-                  "name": "Hero Section"
+                  "name": "Hero-Section"
                 }
               }
             }
@@ -378,22 +393,38 @@
           }
         },
         {
-          "title": "Service Card Item",
-          "id": "service-card-item",
+          "title": "Service Card",
+          "id": "service-card",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "service-card-item",
-                  "name": "Service Card Item"
+                  "model": "service-card",
+                  "name": "Service Card"
                 }
               }
             }
           }
         },
         {
-          "title": "Why-Techatom",
+          "title": "Toast Message",
+          "id": "toast-message",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "toast-message",
+                  "model": "toast-message",
+                  "name": "Toast Message"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Why Techatom",
           "id": "why-techatom",
           "plugins": {
             "xwalk": {
@@ -402,14 +433,14 @@
                 "template": {
                   "filter": "why-techatom",
                   "model": "why-techatom",
-                  "name": "Why-Techatom"
+                  "name": "Why Techatom"
                 }
               }
             }
           }
         },
         {
-          "title": "Why-Card-Item",
+          "title": "Why Card Item",
           "id": "why-card-item",
           "plugins": {
             "xwalk": {
@@ -417,7 +448,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "why-card-item",
-                  "name": "Why-Card-Item"
+                  "name": "Why Card Item"
                 }
               }
             }

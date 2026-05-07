@@ -62,7 +62,8 @@
         "faqs",
         "contact-section",
         "footer",
-        "about-section"
+        "about-section",
+        "toast-message"
       ]
     }
   ]

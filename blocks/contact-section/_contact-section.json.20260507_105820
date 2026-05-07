@@ -30,21 +30,6 @@
           }
         }
       }
-    },
-    {
-      "title": "External-Embed",
-      "id": "external-embed",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "external-embed",
-              "name": "External-Embed"
-            }
-          }
-        }
-      }
     }
   ],
   "models": [
@@ -53,20 +38,20 @@
       "fields": [
         {
           "component": "text",
-          "label": "Section Heading",
-          "name": "sectionHeading",
+          "label": "Main Heading",
+          "name": "mainHeading",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Section Subheading",
-          "name": "sectionSubheading",
+          "label": "Sub Heading",
+          "name": "subHeading",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Work Location",
-          "name": "workLocation",
+          "label": "Location Detail",
+          "name": "locationDetail",
           "valueType": "string"
         },
         {
@@ -82,10 +67,10 @@
           "name": "socialLinks"
         },
         {
-          "component": "container",
-          "item": "external-embed",
-          "label": "External Embeds",
-          "name": "externalEmbeds"
+          "component": "aem-content",
+          "label": "Map Embed Iframe Src",
+          "name": "mapEmbed",
+          "valueType": "string"
         },
         {
           "component": "text",
@@ -118,31 +103,8 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Social Link",
-          "name": "socialLink",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "external-embed",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Embed URL",
-          "name": "data-embed-url",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Embed Kind",
-          "name": "data-embed-kind",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Embed Config",
-          "name": "data-embed-config",
+          "label": "Social Link URL",
+          "name": "link",
           "valueType": "string"
         }
       ]
@@ -152,8 +114,7 @@
     {
       "id": "contact-section",
       "components": [
-        "social-link-item",
-        "external-embed"
+        "social-link-item"
       ]
     }
   ]

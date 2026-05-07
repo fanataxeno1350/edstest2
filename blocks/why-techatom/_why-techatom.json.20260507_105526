@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Why Techatom",
+      "title": "Why-Techatom",
       "id": "why-techatom",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "why-techatom",
               "model": "why-techatom",
-              "name": "Why Techatom"
+              "name": "Why-Techatom"
             }
           }
         }
       }
     },
     {
-      "title": "Why Card Item",
+      "title": "Why-Card-Item",
       "id": "why-card-item",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "why-card-item",
-              "name": "Why Card Item"
+              "name": "Why-Card-Item"
             }
           }
         }
@@ -37,8 +37,8 @@
       "id": "why-techatom",
       "fields": [
         {
-          "component": "text",
-          "label": "Section Headline",
+          "component": "richtext",
+          "label": "Main Headline",
           "name": "headline",
           "valueType": "string"
         },
@@ -55,8 +55,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Icon",
-          "name": "icon",
+          "label": "Card Image",
+          "name": "image",
           "valueType": "string"
         },
         {
@@ -69,12 +69,6 @@
           "component": "richtext",
           "label": "Card Description",
           "name": "description",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Card Link",
-          "name": "cardLink",
           "valueType": "string"
         }
       ]

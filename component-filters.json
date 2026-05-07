@@ -27,7 +27,8 @@
       "faqs",
       "contact-section",
       "footer",
-      "about-section"
+      "about-section",
+      "toast-message"
     ]
   },
   {
@@ -39,19 +40,20 @@
   {
     "id": "about-us",
     "components": [
-      "service-item"
+      "about-feature-item"
     ]
   },
   {
     "id": "blog-section",
     "components": [
-      "blog-card-item"
+      "blog-card"
     ]
   },
   {
     "id": "contact-section",
     "components": [
-      "social-link-item"
+      "social-link-item",
+      "external-embed"
     ]
   },
   {
@@ -63,7 +65,7 @@
   {
     "id": "footer",
     "components": [
-      "footer-link-section",
+      "footer-links-section",
       "footer-link-item"
     ]
   },
@@ -86,8 +88,12 @@
   {
     "id": "service-section",
     "components": [
-      "service-card-item"
+      "service-card"
     ]
+  },
+  {
+    "id": "toast-message",
+    "components": []
   },
   {
     "id": "why-techatom",

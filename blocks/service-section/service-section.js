@@ -2,81 +2,118 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Destructure root rows based on BlockJson model
-  const [sectionTitleRow, pointerImageRow, ...serviceCardRows] = [...block.children];
+  const [headlineRow, pointerImageRow, ...cardRows] = [...block.children];
 
   const section = document.createElement('section');
-  // section.classList.add('service-section'); // Removed: block already has this class from AEM
-  section.id = 'services'; // ID is allowed as it's not a class
+  // The block already has 'service-section' from AEM, do not add it again.
+  // section.classList.add('service-section');
+  section.id = 'services';
+  moveInstrumentation(block, section); // Move block instrumentation to the main section element
 
-  const container1 = document.createElement('div');
-  container1.classList.add('container', 'position-relative');
+  // Container for headline and pointer image
+  const topContainer = document.createElement('div');
+  topContainer.classList.add('container', 'position-relative');
 
-  const title = document.createElement('h2');
-  moveInstrumentation(sectionTitleRow, title);
-  title.textContent = sectionTitleRow.textContent.trim();
-  container1.append(title);
-
-  const pointerPicture = pointerImageRow.querySelector('picture');
-  if (pointerPicture) {
-    const pointerImg = pointerPicture.querySelector('img');
-    const optimizedPointerPic = createOptimizedPicture(pointerImg.src, pointerImg.alt, false, [{ width: '750' }]);
-    const newPointerImg = optimizedPointerPic.querySelector('img');
-    newPointerImg.classList.add('pointer');
-    moveInstrumentation(pointerImageRow, newPointerImg);
-    container1.append(optimizedPointerPic);
+  // Headline
+  if (headlineRow) {
+    const h2 = document.createElement('h2');
+    moveInstrumentation(headlineRow, h2);
+    h2.textContent = headlineRow.textContent.trim();
+    topContainer.append(h2);
   }
 
-  section.append(container1);
+  // Pointer Image
+  if (pointerImageRow) {
+    const pointerPicture = pointerImageRow.querySelector('picture');
+    if (pointerPicture) {
+      const pointerImg = pointerPicture.querySelector('img');
+      if (pointerImg) {
+        const optimizedPointerPic = createOptimizedPicture(
+          pointerImg.src,
+          pointerImg.alt,
+          false,
+          [{ width: '750' }],
+        );
+        optimizedPointerPic.querySelector('img').classList.add('pointer');
+        // moveInstrumentation should be on the picture element, not the inner img
+        moveInstrumentation(pointerImageRow, optimizedPointerPic);
+        topContainer.append(optimizedPointerPic);
+      }
+    }
+  }
+  section.append(topContainer);
 
-  const container2 = document.createElement('div');
-  container2.classList.add('container');
+  // Container for service cards
+  const cardsContainer = document.createElement('div');
+  cardsContainer.classList.add('container');
 
-  const row = document.createElement('div');
-  row.classList.add('row', 'justify-content-around');
+  const rowDiv = document.createElement('div');
+  rowDiv.classList.add('row', 'justify-content-around');
 
-  serviceCardRows.forEach((cardRow) => {
-    // Destructure cells for service-card-item based on BlockJson model
-    const [cardLinkCell, cardImageCell, cardTitleCell, cardDescriptionCell, ctaLabelCell] = [...cardRow.children];
+  cardRows.forEach((row) => {
+    const [cardLinkCell, cardImageCell, cardTitleCell, cardDescriptionCell, buttonLabelCell] = [
+      ...row.children,
+    ];
 
     const cardLink = cardLinkCell.querySelector('a');
     const cardHref = cardLink ? cardLink.href : '#';
 
     const serviceCard = document.createElement('a');
-    serviceCard.classList.add('d-block', 'col-lg-4', 'col-md-6', 'col-12', 'service-card');
     serviceCard.href = cardHref;
-    moveInstrumentation(cardRow, serviceCard);
+    serviceCard.classList.add('d-block', 'col-lg-4', 'col-md-6', 'col-12', 'service-card');
+    moveInstrumentation(row, serviceCard);
 
+    // Card Image
     const cardPicture = cardImageCell.querySelector('picture');
     if (cardPicture) {
       const cardImg = cardPicture.querySelector('img');
-      const optimizedCardPic = createOptimizedPicture(cardImg.src, cardImg.alt, false, [{ width: '750' }]);
-      const newCardImg = optimizedCardPic.querySelector('img');
-      newCardImg.classList.add('img-fluid', 'service-img');
-      serviceCard.append(optimizedCardPic);
+      if (cardImg) {
+        const optimizedCardPic = createOptimizedPicture(
+          cardImg.src,
+          cardImg.alt,
+          false,
+          [{ width: '750' }],
+        );
+        optimizedCardPic.querySelector('img').classList.add('img-fluid', 'service-img');
+        // moveInstrumentation should be on the picture element, not the inner img
+        moveInstrumentation(cardImageCell, optimizedCardPic);
+        serviceCard.append(optimizedCardPic);
+      }
     }
 
-    const cardTitle = document.createElement('h3');
-    cardTitle.textContent = cardTitleCell.textContent.trim();
-    serviceCard.append(cardTitle);
+    // Card Title
+    if (cardTitleCell) {
+      const h3 = document.createElement('h3');
+      h3.textContent = cardTitleCell.textContent.trim();
+      moveInstrumentation(cardTitleCell, h3);
+      serviceCard.append(h3);
+    }
 
-    const cardDescription = document.createElement('p');
-    // cardDescription is a richtext field, so innerHTML is correct.
-    // The original HTML shows <p> inside the cell, so assigning to <p> will create <p><p>...</p></p>.
-    // It's better to use a <div> for richtext content to avoid invalid nesting.
-    const cardDescriptionDiv = document.createElement('div'); // Changed to div
-    cardDescriptionDiv.innerHTML = cardDescriptionCell.innerHTML;
-    serviceCard.append(cardDescriptionDiv); // Appending the div
+    // Card Description
+    if (cardDescriptionCell) {
+      const p = document.createElement('p');
+      p.innerHTML = cardDescriptionCell.innerHTML;
+      moveInstrumentation(cardDescriptionCell, p);
+      serviceCard.append(p);
+    }
 
-    const ctaButton = document.createElement('button');
-    ctaButton.textContent = ctaLabelCell.textContent.trim();
-    serviceCard.append(ctaButton);
+    // Button Label
+    if (buttonLabelCell) {
+      const button = document.createElement('button');
+      button.textContent = buttonLabelCell.textContent.trim();
+      moveInstrumentation(buttonLabelCell, button);
+      serviceCard.append(button);
+    }
 
-    row.append(serviceCard);
+    rowDiv.append(serviceCard);
   });
 
-  container2.append(row);
-  section.append(container2);
+  cardsContainer.append(rowDiv);
+  section.append(cardsContainer);
 
   block.replaceChildren(section);
+
+  // The image optimization loop at the end is redundant because createOptimizedPicture
+  // is already called for each image during the initial construction.
+  // Removing this loop to prevent double processing and potential issues.
 }

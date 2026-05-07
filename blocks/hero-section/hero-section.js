@@ -1,23 +1,16 @@
-import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default async function decorate(block) {
+export default function decorate(block) {
   const [
-    star1Row,
-    star2Row,
+    decorStar1Row,
+    decorStar2Row,
     headlineRow,
-    headlineSpanRow,
     descriptionRow,
     ctaLinkRow,
     ctaLabelRow,
-    heroImageRow,
+    mainImageRow,
   ] = [...block.children];
-
-  const section = document.createElement('section');
-  section.classList.add('hero-section');
-  // The block's own class 'hero-section' is already on the outer block div.
-  // Adding it here would cause double padding/CSS. Removed.
-  moveInstrumentation(block, section);
 
   const container = document.createElement('div');
   container.classList.add('container');
@@ -28,73 +21,78 @@ export default async function decorate(block) {
   const heroDescription = document.createElement('div');
   heroDescription.classList.add('hero-description', 'col-lg-6', 'col-12');
 
-  // Star 1
-  const star1Picture = star1Row.querySelector('picture');
-  if (star1Picture) {
-    const star1Img = star1Picture.querySelector('img');
-    const optimizedStar1 = createOptimizedPicture(star1Img.src, star1Img.alt, false, [{ width: '750' }]);
-    optimizedStar1.querySelector('img').classList.add('star-1');
-    moveInstrumentation(star1Row, optimizedStar1.querySelector('img'));
-    heroDescription.append(optimizedStar1);
+  // Decorative Star 1
+  const decorStar1Picture = decorStar1Row?.querySelector('picture');
+  if (decorStar1Picture) {
+    const decorStar1Img = decorStar1Picture.querySelector('img');
+    const star1 = document.createElement('img');
+    star1.src = decorStar1Img?.src || '';
+    star1.alt = decorStar1Img?.alt || '';
+    star1.classList.add('star-1');
+    moveInstrumentation(decorStar1Row, star1);
+    heroDescription.append(star1);
   }
 
-  // Star 2
-  const star2Picture = star2Row.querySelector('picture');
-  if (star2Picture) {
-    const star2Img = star2Picture.querySelector('img');
-    const optimizedStar2 = createOptimizedPicture(star2Img.src, star2Img.alt, false, [{ width: '750' }]);
-    optimizedStar2.querySelector('img').classList.add('star-2');
-    moveInstrumentation(star2Row, optimizedStar2.querySelector('img'));
-    heroDescription.append(optimizedStar2);
+  // Decorative Star 2
+  const decorStar2Picture = decorStar2Row?.querySelector('picture');
+  if (decorStar2Picture) {
+    const decorStar2Img = decorStar2Picture.querySelector('img');
+    const star2 = document.createElement('img');
+    star2.src = decorStar2Img?.src || '';
+    star2.alt = decorStar2Img?.alt || '';
+    star2.classList.add('star-2');
+    moveInstrumentation(decorStar2Row, star2);
+    heroDescription.append(star2);
   }
 
   // Headline
-  const h1 = document.createElement('h1');
-  moveInstrumentation(headlineRow, h1);
-  h1.textContent = headlineRow.textContent.trim();
-
-  // Headline Span
-  const span = document.createElement('span');
-  moveInstrumentation(headlineSpanRow, span);
-  span.textContent = headlineSpanRow.textContent.trim();
-  h1.append(span);
-  heroDescription.append(h1);
+  const headline = document.createElement('h1');
+  moveInstrumentation(headlineRow, headline);
+  // Headline is richtext, so use innerHTML from the cell itself
+  headline.innerHTML = headlineRow.children[0]?.innerHTML || '';
+  heroDescription.append(headline);
 
   // Description
-  const p = document.createElement('p');
-  moveInstrumentation(descriptionRow, p);
-  p.textContent = descriptionRow.textContent.trim();
-  heroDescription.append(p);
+  const description = document.createElement('p');
+  moveInstrumentation(descriptionRow, description);
+  // Description is text, so use textContent from the cell itself
+  description.textContent = descriptionRow.children[0]?.textContent.trim() || '';
+  heroDescription.append(description);
 
-  // CTA Link
-  const ctaLink = ctaLinkRow.querySelector('a');
-  const ctaLabel = ctaLabelRow.textContent.trim();
-  if (ctaLink && ctaLabel) {
-    const anchor = document.createElement('a');
-    anchor.href = ctaLink.href;
-    anchor.textContent = ctaLabel;
-    anchor.classList.add('btn', 'btn-primary', 'shadow');
-    moveInstrumentation(ctaLinkRow, anchor);
-    moveInstrumentation(ctaLabelRow, anchor);
-    heroDescription.append(anchor);
+  // CTA Link and Label
+  const ctaLink = document.createElement('a');
+  const foundCtaLink = ctaLinkRow?.querySelector('a');
+  if (foundCtaLink) {
+    ctaLink.href = foundCtaLink.href;
   }
+  // CTA Label is text, so use textContent from the cell itself
+  ctaLink.textContent = ctaLabelRow?.children[0]?.textContent.trim() || '';
+  ctaLink.classList.add('btn', 'btn-primary', 'shadow');
+  moveInstrumentation(ctaLinkRow, ctaLink);
+  moveInstrumentation(ctaLabelRow, ctaLink);
+  heroDescription.append(ctaLink);
 
   row.append(heroDescription);
 
-  // Hero Image
-  const heroImageDiv = document.createElement('div');
-  heroImageDiv.classList.add('hero-image', 'col-lg-6', 'col-12');
-  const heroImagePicture = heroImageRow.querySelector('picture');
-  if (heroImagePicture) {
-    const heroImg = heroImagePicture.querySelector('img');
-    const optimizedHeroImage = createOptimizedPicture(heroImg.src, heroImg.alt, false, [{ width: '750' }]);
-    optimizedHeroImage.querySelector('img').classList.add('img-fluid');
-    moveInstrumentation(heroImageRow, optimizedHeroImage.querySelector('img'));
-    heroImageDiv.append(optimizedHeroImage);
+  // Main Image
+  const heroImage = document.createElement('div');
+  heroImage.classList.add('hero-image', 'col-lg-6', 'col-12');
+  const mainImagePicture = mainImageRow?.querySelector('picture');
+  if (mainImagePicture) {
+    const mainImg = mainImagePicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(mainImg.src, mainImg.alt, false, [{ width: '750' }]);
+    // moveInstrumentation should be on the picture element, not just the img inside it
+    moveInstrumentation(mainImageRow, optimizedPic);
+    optimizedPic.classList.add('img-fluid'); // Apply img-fluid to the picture element
+    heroImage.append(optimizedPic);
   }
-  row.append(heroImageDiv);
+  row.append(heroImage);
 
   container.append(row);
-  section.append(container);
-  block.replaceChildren(section);
+  block.replaceChildren(container);
+
+  // This block.querySelectorAll('picture > img') loop is redundant and should be removed.
+  // createOptimizedPicture is already called for the main image, and the decorative stars
+  // are SVGs or already handled. This would re-optimize images that are already optimized
+  // or not meant for optimization in this context.
 }
