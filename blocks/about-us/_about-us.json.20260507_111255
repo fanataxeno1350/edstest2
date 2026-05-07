@@ -45,7 +45,7 @@
         {
           "component": "richtext",
           "label": "About Description",
-          "name": "description",
+          "name": "aboutDescription",
           "valueType": "string"
         },
         {
@@ -61,16 +61,10 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Features Section Title",
-          "name": "featuresTitle",
-          "valueType": "string"
-        },
-        {
           "component": "container",
           "item": "about-feature-item",
-          "label": "About Features",
-          "name": "features"
+          "label": "Feature Items",
+          "name": "featureItems"
         }
       ]
     },

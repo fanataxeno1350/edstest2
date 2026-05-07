@@ -17,6 +17,21 @@
       }
     },
     {
+      "title": "Footer-Links-Section",
+      "id": "footer-links-section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-links-section",
+              "name": "Footer-Links-Section"
+            }
+          }
+        }
+      }
+    },
+    {
       "title": "Footer-Link-Item",
       "id": "footer-link-item",
       "plugins": {
@@ -26,21 +41,6 @@
             "template": {
               "model": "footer-link-item",
               "name": "Footer-Link-Item"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Footer-Service-Item",
-      "id": "footer-service-item",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footer-service-item",
-              "name": "Footer-Service-Item"
             }
           }
         }
@@ -59,24 +59,24 @@
         },
         {
           "component": "aem-content",
-          "label": "Logo Link",
+          "label": "Footer Logo Link",
           "name": "logoLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Brand Name",
-          "name": "brandName",
+          "label": "Footer Logo Label",
+          "name": "logoLabel",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Newsletter Title",
-          "name": "newsletterTitle",
+          "label": "Newsletter Headline",
+          "name": "newsletterHeadline",
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Newsletter Description",
           "name": "newsletterDescription",
           "valueType": "string"
@@ -90,7 +90,7 @@
         {
           "component": "text",
           "label": "Newsletter Email Placeholder",
-          "name": "newsletterPlaceholder",
+          "name": "newsletterEmailPlaceholder",
           "valueType": "string"
         },
         {
@@ -100,34 +100,39 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Useful Links Title",
-          "name": "usefulLinksTitle",
-          "valueType": "string"
+          "component": "container",
+          "item": "footer-links-section",
+          "label": "Footer Sections",
+          "name": "footerSections"
         },
         {
           "component": "text",
-          "label": "Services Links Title",
-          "name": "servicesLinksTitle",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Copyright Text",
+          "label": "Copyright",
           "name": "copyright",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-links-section",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Section Title",
+          "name": "sectionTitle",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "footer-link-item",
-          "label": "Useful Links",
-          "name": "usefulLinks"
+          "label": "Links",
+          "name": "links"
         },
         {
-          "component": "container",
-          "item": "footer-service-item",
-          "label": "Service Links",
-          "name": "serviceLinks"
+          "component": "richtext",
+          "label": "Navigation Hierarchy",
+          "name": "hierarchy-tree",
+          "valueType": "string"
         }
       ]
     },
@@ -145,29 +150,6 @@
           "label": "Link URL",
           "name": "link",
           "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Navigation Hierarchy",
-          "name": "hierarchy-tree",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "footer-service-item",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Service Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Service Link URL",
-          "name": "link",
-          "valueType": "string"
         }
       ]
     }
@@ -176,8 +158,8 @@
     {
       "id": "footer",
       "components": [
-        "footer-link-item",
-        "footer-service-item"
+        "footer-links-section",
+        "footer-link-item"
       ]
     }
   ]

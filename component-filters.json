@@ -28,7 +28,13 @@
       "contact-section",
       "footer",
       "about-section",
-      "toast-message"
+      "toast-message",
+      "toast",
+      "why-choose-us",
+      "services",
+      "blog-listing",
+      "faq",
+      "contact"
     ]
   },
   {
@@ -41,6 +47,12 @@
     "id": "about-us",
     "components": [
       "about-feature-item"
+    ]
+  },
+  {
+    "id": "blog-listing",
+    "components": [
+      "blog-card-item"
     ]
   },
   {
@@ -57,6 +69,18 @@
     ]
   },
   {
+    "id": "contact",
+    "components": [
+      "social-link-item"
+    ]
+  },
+  {
+    "id": "faq",
+    "components": [
+      "faq-accordion-item"
+    ]
+  },
+  {
     "id": "faqs",
     "components": [
       "faq-item"
@@ -65,8 +89,8 @@
   {
     "id": "footer",
     "components": [
-      "footer-links-section",
-      "footer-link-item"
+      "footer-link-item",
+      "footer-service-item"
     ]
   },
   {
@@ -78,11 +102,15 @@
   {
     "id": "header",
     "components": [
-      "navigation-item"
+      "nav-item"
     ]
   },
   {
     "id": "hero-section",
+    "components": []
+  },
+  {
+    "id": "hero",
     "components": []
   },
   {
@@ -92,8 +120,24 @@
     ]
   },
   {
+    "id": "services",
+    "components": [
+      "service-card-item"
+    ]
+  },
+  {
     "id": "toast-message",
     "components": []
+  },
+  {
+    "id": "toast",
+    "components": []
+  },
+  {
+    "id": "why-choose-us",
+    "components": [
+      "why-choose-us-item"
+    ]
   },
   {
     "id": "why-techatom",

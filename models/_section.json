@@ -63,7 +63,13 @@
         "contact-section",
         "footer",
         "about-section",
-        "toast-message"
+        "toast-message",
+        "toast",
+        "why-choose-us",
+        "services",
+        "blog-listing",
+        "faq",
+        "contact"
       ]
     }
   ]

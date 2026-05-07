@@ -1,0 +1,79 @@
+{
+  "definitions": [
+    {
+      "title": "FAQ",
+      "id": "faq",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "faq",
+              "model": "faq",
+              "name": "FAQ"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "FAQ-Accordion-Item",
+      "id": "faq-accordion-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "faq-accordion-item",
+              "name": "FAQ-Accordion-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "faq",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Section Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "faq-accordion-item",
+          "label": "Accordion Items",
+          "name": "items"
+        }
+      ]
+    },
+    {
+      "id": "faq-accordion-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Question",
+          "name": "question",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Answer",
+          "name": "answer",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "faq",
+      "components": [
+        "faq-accordion-item"
+      ]
+    }
+  ]
+}
