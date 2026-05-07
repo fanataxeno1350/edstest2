@@ -51,25 +51,7 @@
         "cards",
         "columns",
         "fragment",
-        "---new--blocks-----",
-        "header",
-        "hero-slider",
-        "what-we-do",
-        "purpose-led-cards",
-        "purpose-led-cards-2",
-        "purpose-led-cards-3",
-        "performance-driven-2",
-        "future-ready",
-        "latest-news",
-        "work-with-us",
-        "faqs",
-        "footer",
-        "hero-carousel",
-        "purpose-led-grid",
-        "performance-driven-cards",
-        "home-slider",
-        "purpose-led",
-        "performance-driven"
+        "---new--blocks-----"
       ]
     }
   ]
